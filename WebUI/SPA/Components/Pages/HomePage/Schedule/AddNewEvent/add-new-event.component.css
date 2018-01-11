@@ -1,0 +1,118 @@
+.frame {
+    width: 800px;
+    height: 650px;
+}
+
+.h2 {
+    float: left;
+}
+
+.text-box {
+    width: 100px;
+}
+
+
+.when-section {
+    height: 90px;
+}
+
+    .when-section #occurence-date-selector {
+        float: left;
+    }
+
+    .when-section #occurence-time-selector {
+        float: left;
+    }
+
+    .when-section .label-input-pair {
+        margin-top: 10px;
+        margin-right: 15px;
+    }
+
+
+.what-section {
+    height: calc(100% - 120px);
+}
+
+    .what-section #factors-list {
+        width: 100%;
+        margin-top: 15px;
+        height: calc(100% - 15px);
+        overflow-y:scroll;
+    }
+
+    .what-section #add-new-medicine-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: -4px;
+    }
+
+    .what-section .label-input-pair {
+        float: left;
+        margin-right: 10px;
+    }
+
+        .what-section .label-input-pair:last-of-type {
+            margin-right: 0;
+        }
+
+
+
+.medicine-factor-item {
+    width: calc(100% - 10px);
+    border: solid 1px #e2e2e2;
+    background-color: white;
+    float: left;
+    height: 60px;
+}
+
+    .medicine-factor-item .draggable-area {
+        background-color: #e2e2e2;
+        float: left;
+        width: 20px;
+        height: 100%;
+        cursor: move;
+    }
+
+    .medicine-factor-item .right-side {
+        background-color: #f7f7f7;
+        float: right;
+        padding: 10px;
+        width: calc(100% - 40px);
+        height: calc(100% - 20px);
+    }
+
+    .medicine-factor-item .medicine-type-text-box {
+        width: 250px;
+    }
+
+    .medicine-factor-item .method-type-drop-down {
+    }
+
+    .medicine-factor-item .nr-pieces-text-box {
+        width: 25px;
+    }
+
+    .medicine-factor-item .x-label {
+        float: left;
+        margin-left: -3px;
+        margin-right: 5px;
+        height: 45px;
+        vertical-align: middle;
+        line-height: 45px;
+        padding-top: 4px;
+        font-family: Arial;
+        font-size: 10pt;
+        font-weight: bold;
+    }
+
+    .medicine-factor-item .piece-size-text-box {
+        width: 50px;
+    }
+
+    .medicine-factor-item .piece-unit-drop-down {
+        width: 60px;
+    }
+
+    .medicine-factor-item .instructions-drop-down {
+    }

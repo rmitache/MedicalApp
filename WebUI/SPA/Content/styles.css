@@ -1,0 +1,82 @@
+﻿
+
+/*General*/
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*Fonts*/
+.h1 {
+    font-family: Arial;
+    font-size: 18pt;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.h2 {
+    font-family: Arial;
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+.h3 {
+    font-family: Arial;
+    font-size: 9pt;
+}
+
+
+/*Controls*/
+.button,
+.btn {
+    color: #3d57bf;
+    padding: 8px 15px 8px 15px;
+    border-radius: 4px;
+    background-color: #e8e8ec;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 11pt;
+    text-transform: uppercase;
+    font-weight:bold;
+}
+    .button,
+    .btn:hover {
+        background-color: #dddddd ;
+    }
+
+.text-box {
+    border: solid 1px #dbdbdb;
+    font-size: 10pt;
+    font-family: Arial;
+    padding: 5px;
+}
+
+.drop-down {
+    border: solid 1px #dbdbdb;
+    font-size: 10pt;
+    font-family: Arial;
+    padding: 5px;
+    padding-top:3px;
+    height:28px;
+}
+
+.label-input-pair {
+    float: left;
+}
+
+    .label-input-pair span {
+        float: left;
+    }
+
+    .label-input-pair .text-box,
+    .label-input-pair .drop-down{
+        float: left;
+        clear: left;
+    }

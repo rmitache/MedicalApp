@@ -1,0 +1,159 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <UserSecretsId>e78e0db1-356f-4867-8301-15da6ec907a5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="wwwroot\Assets\**" />
+    <Compile Remove="wwwroot\Images\**" />
+    <Compile Remove="wwwroot\img\**" />
+    <Compile Remove="wwwroot\Pages\**" />
+    <Compile Remove="wwwroot\Vendor\**" />
+    <Content Remove="SPA\**" />
+    <Content Remove="wwwroot\Assets\**" />
+    <Content Remove="wwwroot\Images\**" />
+    <Content Remove="wwwroot\img\**" />
+    <Content Remove="wwwroot\Pages\**" />
+    <Content Remove="wwwroot\Vendor\**" />
+    <EmbeddedResource Remove="wwwroot\Assets\**" />
+    <EmbeddedResource Remove="wwwroot\Images\**" />
+    <EmbeddedResource Remove="wwwroot\img\**" />
+    <EmbeddedResource Remove="wwwroot\Pages\**" />
+    <EmbeddedResource Remove="wwwroot\Vendor\**" />
+    <None Remove="wwwroot\Assets\**" />
+    <None Remove="wwwroot\Images\**" />
+    <None Remove="wwwroot\img\**" />
+    <None Remove="wwwroot\Pages\**" />
+    <None Remove="wwwroot\Vendor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\globalStyles.css" />
+    <Content Remove="wwwroot\globalStyles.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\global-application-state.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
+    <None Remove="SPA\Core\CLO\i-clo.factory.ts" />
+    <None Remove="SPA\Core\core.module.ts" />
+    <None Remove="SPA\Core\Helpers\comparers.ts" />
+    <None Remove="SPA\Core\Helpers\DataStructures\data-structures.ts" />
+    <None Remove="SPA\Core\Helpers\DataStructures\misc.ts" />
+    <None Remove="SPA\Core\Helpers\list.ts" />
+    <None Remove="SPA\Core\Helpers\observable-list.ts" />
+    <None Remove="SPA\Core\Helpers\observable-property.ts" />
+    <None Remove="SPA\Core\Managers\CommandManager\Classes\command-flow.ts" />
+    <None Remove="SPA\Core\Managers\CommandManager\Classes\execution-engine.ts" />
+    <None Remove="SPA\Core\Managers\command-manager.module.ts" />
+    <None Remove="SPA\Core\Managers\command.manager.ts" />
+    <None Remove="SPA\Core\Services\HttpHandlerService\http-handler.service.ts" />
+    <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
+    <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog.component.ts" />
+    <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
+    <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog.service.ts" />
+    <None Remove="SPA\Core\Services\ModalDialogService\simple-modal.component.ts" />
+    <None Remove="SPA\DomainModel\clo-exports.ts" />
+    <None Remove="SPA\DomainModel\domain-model.module.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-category.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-instruction.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-method.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\MedicineRuleItem.ts" />
+    <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.clo.ts" />
+    <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SPA\Content\Images\" />
+    <Folder Include="SPA\DomainModel\Factors\Medicine\CLOFactories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\global-application-state.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
+    <TypeScriptCompile Include="SPA\Core\CLO\i-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\Core\core.module.ts" />
+    <TypeScriptCompile Include="SPA\Core\CLO\base.clo.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\Comparers\comparers.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\data-structures.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\misc.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\list.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\observable-list.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\observable-property.ts" />
+    <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\Classes\execution-engine.ts" />
+    <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\Classes\command-flow.ts" />
+    <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\command.manager.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\HttpHandlerService\http-handler.service.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\simple-modal.component.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.service.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\modal-dialog.component.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-method.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-instruction.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\medicine-rule-item.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-category.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\General\CLOs\unit-of-measure.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\generic-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\clo-exports.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOFactories\patient-account-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+
+    <!-- In development, the dist files won't exist on the first run or when cloning to
+         a different machine, so rebuild them if not already present. -->
+    <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

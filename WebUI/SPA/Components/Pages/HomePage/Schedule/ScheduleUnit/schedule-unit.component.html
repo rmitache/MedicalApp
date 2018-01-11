@@ -1,0 +1,16 @@
+<!--ScheduleUnit representation-->
+<div class="frame">
+    <div class="unit-header h2">{{viewModel.Title}}</div>
+    <div class="unit-content">
+
+        <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
+            <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
+            <div class="factor-records-list">
+                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item">
+                    - {{record.MedicineType.Name}} {{record.NrOfPieces}} x {{record.PieceSize}}{{record.PieceSizeUnitOfMeasure.Name}}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

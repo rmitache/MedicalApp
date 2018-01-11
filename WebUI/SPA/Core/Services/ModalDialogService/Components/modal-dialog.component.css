@@ -1,0 +1,76 @@
+﻿/*Dialogs*/
+.modal {
+    display: block;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    backface-visibility: hidden;
+    overflow: visible;
+}
+
+.modal-backdrop {
+    background-color: gray;
+    opacity: 0.5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    background-color: white;
+    border-radius: 4px;
+}
+
+.modal-header {
+    border-radius: 4px 4px 0 0;
+    background-color: #e2e2e2;
+    border-bottom: 1px solid #cecece;
+    height: 40px;
+}
+
+    .modal-header .modal-title {
+        display: inline-block;
+        font-family: Arial;
+        font-size: 11pt;
+        font-weight: bold;
+        margin-top: 14px;
+        margin-left: 15px;
+    }
+
+     .close {
+        margin-top:7px;
+        margin-right:10px;
+        float: right;
+        width: 16px;
+        height: 16px;
+        padding: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: Arial;
+        font-weight: bold;
+        text-align:right;
+    }
+
+.modal-body {
+    padding: 15px;
+}
+
+.modal-footer {
+    height: 30px;
+}
+    .modal-footer .buttons-right-area {
+        float:right;
+        margin-right:5px;
+        margin-bottom:15px;
+    }
+    .modal-footer .buttons-right-area .btn {
+        float:left;
+        margin-right:10px;
+    }

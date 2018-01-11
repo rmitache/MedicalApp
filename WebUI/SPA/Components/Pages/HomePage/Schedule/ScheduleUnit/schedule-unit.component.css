@@ -1,0 +1,46 @@
+.frame {
+    height: 100%;
+    width: 100%;
+}
+
+    .frame .unit-header {
+        height: 30px;
+        width: 100%;
+        line-height: 30px;
+    }
+
+.time-group {
+    width: 100%;
+    overflow: auto;
+    margin-top: 15px;
+}
+
+    .time-group:first-of-type {
+        margin-top: 0;
+    }
+
+    .time-group .hours-and-minutes-label {
+        font-family: Tahoma;
+        font-size: 10pt;
+        font-weight: bold;
+
+
+        display: block;
+        float: left;
+        width: 40px;
+        margin-top: -2px;
+    }
+
+    .time-group .factor-records-list {
+        clear:both;
+        float: left;
+        width: calc(100% - 40px);
+        margin-left: 5px;
+    }
+
+        .time-group .factor-records-list .factor-record-item {
+            float: left;
+            clear: both;
+            font-family: Arial;
+            font-size: 10pt;
+        }
