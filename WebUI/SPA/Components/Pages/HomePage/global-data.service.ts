@@ -41,7 +41,7 @@ export class GlobalDataService {
             PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
                 Name: 'mg'
             }),
-            Instructions: []
+            Instruction: null
         });
         records.push(testRecord1);
 
@@ -65,7 +65,7 @@ export class GlobalDataService {
             PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
                 Name: 'mg'
             }),
-            Instructions: []
+            Instruction: null
         });
         records.push(testRecord2);
 
@@ -89,7 +89,7 @@ export class GlobalDataService {
             PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
                 Name: 'mg'
             }),
-            Instructions: []
+            Instruction: null
         });
         records.push(testRecord3);
 

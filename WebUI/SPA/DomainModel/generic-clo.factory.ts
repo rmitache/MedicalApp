@@ -2,6 +2,7 @@
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
+import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/CLOFactories/medicine-factor-record-clo.factory';
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 
 
@@ -88,11 +89,11 @@ export class GenericCLOFactory {
 
     // Constructor
     constructor(
-        private readonly patientAccountCLOFactory: PatientAccountCLOFactory
-
+        private readonly patientAccountCLOFactory: PatientAccountCLOFactory,
+        private readonly medicineFactorRecordCLOFactory: MedicineFactorRecordCLOFactory
     ) {
         this.factoryTypeInstanceDictionary['PatientAccountCLO'] = patientAccountCLOFactory;
-
+        this.factoryTypeInstanceDictionary['MedicineFactorRecordCLO'] = medicineFactorRecordCLOFactory;
     }
 
     // Public Methods
@@ -114,6 +115,15 @@ export class GenericCLOFactory {
         let clone: T = factory.Convert_ToCLO(blo);
         return clone;
     }
+    public CreateDefaultClo<T>(type: IType<T>): T {
+
+        // Obtain the actual factory implementation by type 
+        let factory: ICLOFactory<T> = this.getFactoryByCLOTypeName<T>(type.name);
+        let clo: T = factory.Create_DefaultCLO();
+
+        return clo;
+    }
+
 
     /*
     //public ConvertToCloList<T>(type: IType<T>, bloArray: Object[]): DataStructures.List<T> {
@@ -125,15 +135,7 @@ export class GenericCLOFactory {
 
     //    return cloArray;
     //}
-    //public CreateDefaultClo<T>(type: IType<T>): T {
 
-    //    // Obtain the actual factory implementation by type 
-    //    let factory: ICreatable<T> = this.getCreationFactoryByType<T>(type);
-
-    //    let clo: T = factory.Create_DefaultClo();
-
-    //    return clo;
-    //}
     //public CreateFromParams<T>(type: IType<T>, ...params: any[]): T {
 
     //    // Obtain the actual factory implementation by type 

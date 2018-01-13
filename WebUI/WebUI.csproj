@@ -71,6 +71,7 @@
     <None Remove="SPA\Core\Services\ModalDialogService\simple-modal.component.ts" />
     <None Remove="SPA\DomainModel\clo-exports.ts" />
     <None Remove="SPA\DomainModel\domain-model.module.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-category.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />
@@ -86,7 +87,6 @@
   <ItemGroup>
     <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
-    <Folder Include="SPA\DomainModel\Factors\Medicine\CLOFactories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -112,6 +112,7 @@
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\modal-dialog.component.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-method.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-instruction.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />

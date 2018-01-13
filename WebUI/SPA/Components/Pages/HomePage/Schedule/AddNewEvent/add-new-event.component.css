@@ -34,7 +34,7 @@
     height: calc(100% - 120px);
 }
 
-    .what-section #factors-list {
+    .what-section #factor-records-list {
         width: 100%;
         margin-top: 15px;
         height: calc(100% - 15px);
@@ -58,15 +58,16 @@
 
 
 
-.medicine-factor-item {
+.medicine-factor-record-item {
     width: calc(100% - 10px);
     border: solid 1px #e2e2e2;
     background-color: white;
     float: left;
     height: 60px;
+    margin-bottom:10px;
 }
 
-    .medicine-factor-item .draggable-area {
+    .medicine-factor-record-item .draggable-area {
         background-color: #e2e2e2;
         float: left;
         width: 20px;
@@ -74,7 +75,7 @@
         cursor: move;
     }
 
-    .medicine-factor-item .right-side {
+    .medicine-factor-record-item .right-side {
         background-color: #f7f7f7;
         float: right;
         padding: 10px;
@@ -82,18 +83,18 @@
         height: calc(100% - 20px);
     }
 
-    .medicine-factor-item .medicine-type-text-box {
+    .medicine-factor-record-item .medicine-type-text-box {
         width: 250px;
     }
 
-    .medicine-factor-item .method-type-drop-down {
+    .medicine-factor-record-item .method-type-drop-down {
     }
 
-    .medicine-factor-item .nr-pieces-text-box {
+    .medicine-factor-record-item .nr-pieces-text-box {
         width: 25px;
     }
 
-    .medicine-factor-item .x-label {
+    .medicine-factor-record-item .x-label {
         float: left;
         margin-left: -3px;
         margin-right: 5px;
@@ -106,13 +107,13 @@
         font-weight: bold;
     }
 
-    .medicine-factor-item .piece-size-text-box {
+    .medicine-factor-record-item .piece-size-text-box {
         width: 50px;
     }
 
-    .medicine-factor-item .piece-unit-drop-down {
+    .medicine-factor-record-item .piece-unit-drop-down {
         width: 60px;
     }
 
-    .medicine-factor-item .instructions-drop-down {
+    .medicine-factor-record-item .instructions-drop-down {
     }

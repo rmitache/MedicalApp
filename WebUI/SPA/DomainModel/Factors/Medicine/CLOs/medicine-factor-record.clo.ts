@@ -16,7 +16,7 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     public NrOfPieces: number;
     public PieceSize: number;
     public PieceSizeUnitOfMeasure: UnitOfMeasureCLO;
-    public Instructions: MedicineInstructionCLO[];
+    public Instruction: MedicineInstructionCLO;
 
 
 
@@ -27,13 +27,13 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     }
 
     // Public methods
-    public GetTime():Time {
+    public GetTime(): Time {
         return new Time(this.OccurenceDateTime.getHours(), this.OccurenceDateTime.getMinutes());
     }
 }
 
 
-enum RecordType {
+export enum RecordType {
     UserEntry,
     PlanProjection
 }

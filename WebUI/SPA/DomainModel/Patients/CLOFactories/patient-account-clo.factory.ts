@@ -22,6 +22,9 @@ export class PatientAccountCLOFactory implements ICLOFactory<PatientAccountCLO> 
 
         return newCLO;
     }
+    public Create_DefaultCLO(): PatientAccountCLO {
+        throw new Error("Create_DefaultCLO not implemented");
+    }
     //public Clone_CLO(clo: PatientAccountCLO): PatientAccountCLO {
 
     //    let clonedClo: PatientAccountCLO = new PatientAccountCLO();
