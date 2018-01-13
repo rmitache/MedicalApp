@@ -84,6 +84,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOFactories\" />
   </ItemGroup>
