@@ -9,12 +9,11 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 })
 export class FactorRecordEditableItem {
     // Fields
-    //@Input('TimeGroupRepresentations')
-    //private timeGroupRepresentations: TimeGroupRepresentation[] = [];
-    //private readonly viewModel: ViewModel = {
-    //    Title: null,
-    //    TimeGroups: null
-    //};
+    @Input('MedicineFactorRecord')
+    private medicineFactorRecord: CLOs.MedicineFactorRecordCLO;
+    private readonly viewModel: ViewModel = {
+        RecordCLO: null
+    };
 
 
     // Constructor 
@@ -24,14 +23,12 @@ export class FactorRecordEditableItem {
     }
     ngOnInit() {
         
-
-        //this.viewModel.TimeGroups = this.timeGroupRepresentations;
-        //this.viewModel.Title = this.title;
+        this.viewModel.RecordCLO = this.medicineFactorRecord;
+        alert(this.medicineFactorRecord);
     }
 }
 
-//interface ViewModel {
-//    Title: string;
-//    TimeGroups: TimeGroupRepresentation[];
-//}
+interface ViewModel {
+    RecordCLO: CLOs.MedicineFactorRecordCLO;
+}
 
