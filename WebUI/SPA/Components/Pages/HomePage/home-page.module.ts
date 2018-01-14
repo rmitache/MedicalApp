@@ -23,6 +23,9 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         // HomePage
         HomePageComponent,
         HeaderBarComponent,
+
+        // Shared
+        
     ],
     imports: [
         CommonModule,

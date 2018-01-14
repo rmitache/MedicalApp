@@ -73,6 +73,7 @@ body {
 
     .label-input-pair span {
         float: left;
+        color:gray;
     }
 
     .label-input-pair .text-box,

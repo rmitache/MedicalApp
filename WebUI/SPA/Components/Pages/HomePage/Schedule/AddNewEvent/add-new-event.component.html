@@ -17,53 +17,8 @@
         <icon-button [IconName]="'plus'" id="add-new-medicine-button" (click)="viewModel.CreateNewFactorRecord()"></icon-button>
         <br />
         <div id="factor-records-list">
-
-            <div class="medicine-factor-record-item"  *ngFor="let factorRecord of viewModel.FactorRecords">
-                <div class="draggable-area"></div>
-                <div class="right-side">
-                    <div class="label-input-pair">
-                        <span class="h3">Medication Type</span>
-                        <input type="text" class="text-box medicine-type-text-box" />
-                    </div>
-                    <div class="label-input-pair">
-                        <span class="h3">Method</span>
-                        <select class="drop-down method-type-drop-down">
-                            <option>Capsules</option>
-                            <option>Tablets</option>
-                            <option>IV</option>
-                            <option>Inhalator</option>
-                            <option>Drops</option>
-                            <option>Teaspoons</option>
-                        </select>
-                    </div>
-                    <div class="label-input-pair">
-                        <span class="h3">Pieces</span>
-                        <input type="text" class="text-box nr-pieces-text-box" />
-                    </div>
-                    <div class="x-label">x</div>
-                    <div class="label-input-pair">
-                        <span class="h3">Piece size</span>
-                        <input type="text" class="text-box piece-size-text-box" />
-                    </div>
-                    <div class="label-input-pair">
-                        <span class="h3">Unit</span>
-                        <select class="drop-down text-box piece-unit-drop-down">
-                            <option>mg</option>
-                            <option>ml</option>
-                        </select>
-                    </div>
-                    <div class="label-input-pair">
-                        <span class="h3">Instructions</span>
-                        <select class="drop-down instructions-drop-down">
-                            <option>Unspecified</option>
-                            <option>On empty stomach</option>
-                            <option>With food</option>
-                        </select>
-                    </div>
-
-
-                </div>
-            </div>
+            <factor-record-editable-item *ngFor="let factorRecord of viewModel.FactorRecords"></factor-record-editable-item>
+            
 
         </div>
     </div>

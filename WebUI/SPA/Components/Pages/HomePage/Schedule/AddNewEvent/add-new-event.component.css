@@ -57,63 +57,7 @@
         }
 
 
-
-.medicine-factor-record-item {
-    width: calc(100% - 10px);
-    border: solid 1px #e2e2e2;
-    background-color: white;
-    float: left;
-    height: 60px;
-    margin-bottom:10px;
-}
-
-    .medicine-factor-record-item .draggable-area {
-        background-color: #e2e2e2;
+    .what-section .factor-record-editable-item {
         float: left;
-        width: 20px;
-        height: 100%;
-        cursor: move;
-    }
-
-    .medicine-factor-record-item .right-side {
-        background-color: #f7f7f7;
-        float: right;
-        padding: 10px;
-        width: calc(100% - 40px);
-        height: calc(100% - 20px);
-    }
-
-    .medicine-factor-record-item .medicine-type-text-box {
-        width: 250px;
-    }
-
-    .medicine-factor-record-item .method-type-drop-down {
-    }
-
-    .medicine-factor-record-item .nr-pieces-text-box {
-        width: 25px;
-    }
-
-    .medicine-factor-record-item .x-label {
-        float: left;
-        margin-left: -3px;
-        margin-right: 5px;
-        height: 45px;
-        vertical-align: middle;
-        line-height: 45px;
-        padding-top: 4px;
-        font-family: Arial;
-        font-size: 10pt;
-        font-weight: bold;
-    }
-
-    .medicine-factor-record-item .piece-size-text-box {
-        width: 50px;
-    }
-
-    .medicine-factor-record-item .piece-unit-drop-down {
-        width: 60px;
-    }
-
-    .medicine-factor-record-item .instructions-drop-down {
+        margin-bottom: 10px;
     }
