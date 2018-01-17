@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 import { TimeGroupRepresentation } from 'SPA/Components/Pages/HomePage/Schedule/schedule.component';
 
 @Component({
@@ -36,5 +37,6 @@ export class ScheduleUnitComponent {
 interface ViewModel {
     Title: string;
     TimeGroups: TimeGroupRepresentation[];
+    
 }
 

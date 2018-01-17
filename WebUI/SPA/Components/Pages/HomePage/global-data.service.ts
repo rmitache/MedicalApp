@@ -37,7 +37,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 1,
             PieceSize: 500,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
             Instruction: null
         });
         records.push(testRecord1);
@@ -56,7 +56,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 1,
             PieceSize: 450,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
             Instruction: null
         });
         records.push(testRecord2);
@@ -75,7 +75,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 3,
             PieceSize: 250,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
             Instruction: null
         });
         records.push(testRecord3);
