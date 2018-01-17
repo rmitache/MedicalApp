@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { ScheduleComponent } from './schedule.component';
 import { NavigationPanelComponent } from './NavigationPanel/navigation-panel.component';
 import { ScheduleUnitComponent } from './ScheduleUnit/schedule-unit.component';
@@ -11,7 +12,8 @@ import { FactorRecordEditableItem } from 'SPA/Components/Pages/HomePage/Shared/F
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        FormsModule
     ],
     declarations: [
         ScheduleComponent,

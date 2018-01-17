@@ -71,15 +71,17 @@
     <None Remove="SPA\Core\Services\ModalDialogService\simple-modal.component.ts" />
     <None Remove="SPA\DomainModel\clo-exports.ts" />
     <None Remove="SPA\DomainModel\domain-model.module.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-category.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-instruction.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-method.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\MedicineRuleItem.ts" />
-    <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.clo.ts" />
+    <None Remove="SPA\DomainModel\enum-exports.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-factor-record.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\MedicineRuleItem.ts" />
+    <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
   </ItemGroup>
@@ -87,6 +89,8 @@
   <ItemGroup>
     <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
+    <Folder Include="SPA\DomainModel\General\CLOs\" />
+    <Folder Include="SPA\DomainModel\Plans\CLOs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -112,15 +116,17 @@
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\modal-dialog.component.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-method.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-instruction.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-form.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\medicine-rule-item.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-category.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\General\CLOs\unit-of-measure.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\enum-exports.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-rule-item.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-factor-record.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\General\Enums\unit-of-measure.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\generic-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\clo-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />

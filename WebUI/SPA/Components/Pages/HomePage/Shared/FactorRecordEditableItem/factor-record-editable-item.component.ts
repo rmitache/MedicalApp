@@ -12,9 +12,8 @@ export class FactorRecordEditableItem {
     @Input('MedicineFactorRecord')
     private medicineFactorRecord: CLOs.MedicineFactorRecordCLO;
     private readonly viewModel: ViewModel = {
-        RecordCLO: null
+        FactorRecordCLO: null
     };
-
 
     // Constructor 
     constructor(
@@ -23,12 +22,11 @@ export class FactorRecordEditableItem {
     }
     ngOnInit() {
         
-        this.viewModel.RecordCLO = this.medicineFactorRecord;
-        alert(this.medicineFactorRecord);
+        this.viewModel.FactorRecordCLO = this.medicineFactorRecord;
     }
 }
 
 interface ViewModel {
-    RecordCLO: CLOs.MedicineFactorRecordCLO;
+    FactorRecordCLO: CLOs.MedicineFactorRecordCLO;
 }
 

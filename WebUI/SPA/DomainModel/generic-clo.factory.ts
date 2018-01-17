@@ -2,7 +2,7 @@
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
-import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/CLOFactories/medicine-factor-record-clo.factory';
+import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 
 

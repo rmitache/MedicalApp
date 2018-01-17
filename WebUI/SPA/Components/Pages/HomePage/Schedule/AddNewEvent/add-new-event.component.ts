@@ -25,8 +25,6 @@ export class AddNewEventComponent implements IModalDialog {
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
     ) {
-
-        // Default CreateNewFactorRecord
     }
 
     // IModalDialog

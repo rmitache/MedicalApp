@@ -7,7 +7,7 @@
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
             <div class="factor-records-list">
                 <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item">
-                    - {{record.MedicineType.Name}} {{record.NrOfPieces}} x {{record.PieceSize}}{{record.PieceSizeUnitOfMeasure.Name}}
+                    - {{record.MedicineType.Name}} {{record.NrOfPieces}} x {{record.PieceSize}}{{record.PieceSizeUnitOfMeasure}}
                 </div>
                 
             </div>

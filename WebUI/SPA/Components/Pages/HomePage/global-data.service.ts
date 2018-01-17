@@ -1,9 +1,11 @@
-import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
+import * as moment from 'moment';
+
+import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
-import * as moment from 'moment';
 
 @Injectable()
 export class GlobalDataService {
@@ -26,10 +28,7 @@ export class GlobalDataService {
             MedicineType: new CLOs.MedicineTypeCLO({
                 ID: 1,
                 Name: 'Vitamin C Liposomal',
-                PieceSize: 500,
-                PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                    Name: 'mg'
-                })
+                PieceSize: 500
 
             }),
             OccurenceDateTime: new Date(Date.now()),
@@ -38,9 +37,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 1,
             PieceSize: 500,
-            PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                Name: 'mg'
-            }),
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
             Instruction: null
         });
         records.push(testRecord1);
@@ -50,10 +47,7 @@ export class GlobalDataService {
             MedicineType: new CLOs.MedicineTypeCLO({
                 ID: 2,
                 Name: 'Magnesium',
-                PieceSize: 450,
-                PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                    Name: 'mg'
-                })
+                PieceSize: 450
 
             }),
             OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
@@ -62,9 +56,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 1,
             PieceSize: 450,
-            PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                Name: 'mg'
-            }),
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
             Instruction: null
         });
         records.push(testRecord2);
@@ -74,10 +66,7 @@ export class GlobalDataService {
             MedicineType: new CLOs.MedicineTypeCLO({
                 ID: 3,
                 Name: 'Lymph Cleanse',
-                PieceSize: 250,
-                PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                    Name: 'mg'
-                })
+                PieceSize: 250
 
             }),
             OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
@@ -86,9 +75,7 @@ export class GlobalDataService {
             }),
             NrOfPieces: 3,
             PieceSize: 250,
-            PieceSizeUnitOfMeasure: new CLOs.UnitOfMeasureCLO({
-                Name: 'mg'
-            }),
+            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.mg,
             Instruction: null
         });
         records.push(testRecord3);

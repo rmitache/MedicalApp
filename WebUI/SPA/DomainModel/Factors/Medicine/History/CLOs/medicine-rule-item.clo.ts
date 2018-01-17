@@ -1,0 +1,20 @@
+﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
+import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
+
+export class MedicineRuleItemCLO extends BaseCLO {
+    // Fields
+    public ID: number;
+    public MedicineType: CLOs.MedicineTypeCLO;
+    public MedicineMethod: CLOs.MedicineMethodCLO;
+    public NrOfPieces: number;
+    public PieceSize: number;
+    public PieceSizeUnitOfMeasure: Enums.UnitOfMeasure;
+    public Instructions: CLOs.MedicineInstructionCLO[];
+
+
+    // Constructor
+    constructor() {
+        super();
+    }
+}

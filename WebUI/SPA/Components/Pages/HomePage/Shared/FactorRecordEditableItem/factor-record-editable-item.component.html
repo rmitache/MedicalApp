@@ -2,8 +2,12 @@
     <div class="draggable-area"></div>
     <div class="right-side">
         <div class="label-input-pair">
-            <span class="h3">Medication Type</span>
-            <input type="text" class="text-box medicine-type-text-box" value="{{viewModel.RecordCLO}}" />
+            <span class="h3">Medicine Type</span>
+            <!--<input type="text" class="text-box medicine-type-text-box" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
+            <input type="text" class="text-box medicine-type-text-box" 
+                   [ngModel]="viewModel.FactorRecordCLO?.MedicineType?.Name"
+                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event"/>
+
         </div>
         <div class="label-input-pair">
             <span class="h3">Method</span>
