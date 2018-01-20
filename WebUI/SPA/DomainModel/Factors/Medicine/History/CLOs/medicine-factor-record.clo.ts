@@ -10,11 +10,11 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     public RecordType: Enums.FactorRecordType;
     public MedicineType: CLOs.MedicineTypeCLO;
     public OccurenceDateTime: Date;
-    public Method: CLOs.MedicineMethodCLO;
+    public Method: Enums.MedicineMethod;
     public NrOfPieces: number;
     public PieceSize: number;
     public PieceSizeUnitOfMeasure: Enums.UnitOfMeasure;
-    public Instruction: CLOs.MedicineInstructionCLO;
+    public Instruction: Enums.MedicineInstruction;
 
 
 

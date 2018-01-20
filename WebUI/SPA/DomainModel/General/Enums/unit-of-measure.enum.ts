@@ -2,5 +2,5 @@
 
 
 export enum UnitOfMeasure {
-    Milligrams = "mg"
+    Milligrams = 'mg'
 }

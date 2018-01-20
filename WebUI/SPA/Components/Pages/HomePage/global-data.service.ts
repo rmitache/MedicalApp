@@ -32,9 +32,7 @@ export class GlobalDataService {
 
             }),
             OccurenceDateTime: new Date(Date.now()),
-            Method: new CLOs.MedicineMethodCLO({
-                Name: 'Pills'
-            }),
+            Method: Enums.MedicineMethod.Drops,
             NrOfPieces: 1,
             PieceSize: 500,
             PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
@@ -51,9 +49,7 @@ export class GlobalDataService {
 
             }),
             OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
-            Method: new CLOs.MedicineMethodCLO({
-                Name: 'Pills'
-            }),
+            Method: Enums.MedicineMethod.Pills,
             NrOfPieces: 1,
             PieceSize: 450,
             PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
@@ -70,9 +66,7 @@ export class GlobalDataService {
 
             }),
             OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
-            Method: new CLOs.MedicineMethodCLO({
-                Name: 'Pills'
-            }),
+            Method: Enums.MedicineMethod.Pills,
             NrOfPieces: 3,
             PieceSize: 250,
             PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
@@ -82,6 +76,11 @@ export class GlobalDataService {
 
         return records;
     }
-   
+    public GetMedicineFactorsLibrary() {
+
+        // Get MedicineTypes (flat dictionary, where each MedicineType has a null MedicineCategory, to begin with)
+
+        // Get Medicine Forms, Instructions and Methods
+    }
 }
 

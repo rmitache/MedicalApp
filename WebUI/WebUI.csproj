@@ -76,9 +76,9 @@
     <None Remove="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-factor-record.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.clo.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.enum.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.enum.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\MedicineRuleItem.ts" />
     <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
@@ -119,9 +119,9 @@
     <TypeScriptCompile Include="SPA\DomainModel\enum-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-method.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-instruction.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-form.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-rule-item.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-factor-record.clo.ts" />
