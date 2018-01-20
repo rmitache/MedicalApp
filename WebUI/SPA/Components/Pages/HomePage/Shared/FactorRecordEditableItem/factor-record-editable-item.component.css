@@ -2,6 +2,7 @@
 .frame {
     background-color: white;
     height: 70px;
+    width:100%;
 }
 
 .label-input-pair {
@@ -31,10 +32,11 @@
 }
 
 .medicine-type-text-box {
-    width: 250px;
+    width: 280px;
 }
 
 .method-type-drop-down {
+    width:110px;
 }
 
 .nr-pieces-text-box {

@@ -2,7 +2,9 @@ import { Component, Input, EventEmitter, Output, ComponentRef } from '@angular/c
 import * as moment from 'moment';
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 
 @Component({
     selector: 'add-new-event',
@@ -18,8 +20,16 @@ export class AddNewEventComponent implements IModalDialog {
         FactorRecords: [],
         CreateNewFactorRecord: () => {
             this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
-        }
+        },
+        OccurenceDate: new Date()
     };
+    private datePickerSettings = {
+        bigBanner: true,
+        timePicker: true,
+        format: 'dd-MMM-yyyy hh:mm',
+        defaultOpen: false,
+        closeOnSelect : true 
+    }
 
     // Constructor 
     constructor(
@@ -42,4 +52,5 @@ export class AddNewEventComponent implements IModalDialog {
 interface ViewModel {
     FactorRecords: CLOs.MedicineFactorRecordCLO[];
     CreateNewFactorRecord();
+    OccurenceDate: Date;
 }

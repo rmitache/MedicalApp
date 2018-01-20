@@ -76,11 +76,10 @@ export class GlobalDataService {
 
         return records;
     }
-    public GetMedicineFactorsLibrary() {
+    public GetMedicineFactorsLibrary():CLOs.MedicineTypeCLO[] {
 
         // Get MedicineTypes (flat dictionary, where each MedicineType has a null MedicineCategory, to begin with)
-
-        // Get Medicine Forms, Instructions and Methods
+        return null;
     }
 }
 

@@ -12,12 +12,7 @@
         <div class="label-input-pair">
             <span class="h3">Method</span>
             <select class="drop-down method-type-drop-down">
-                <option>Capsules</option>
-                <option>Tablets</option>
-                <option>IV</option>
-                <option>Inhalator</option>
-                <option>Drops</option>
-                <option>Teaspoons</option>
+                <option *ngFor="let method of medicineMethodsEnum | keys">{{method.value}}</option>
             </select>
         </div>
         <div class="label-input-pair">
@@ -32,16 +27,13 @@
         <div class="label-input-pair">
             <span class="h3">Unit</span>
             <select class="drop-down text-box piece-unit-drop-down">
-                <option>mg</option>
-                <option>ml</option>
+                <option *ngFor="let unit of unitsOfMeasureEnum | keys">{{unit.value}}</option>
             </select>
         </div>
         <div class="label-input-pair">
             <span class="h3">Instructions</span>
             <select class="drop-down instructions-drop-down">
-                <option>Unspecified</option>
-                <option>On empty stomach</option>
-                <option>With food</option>
+                <option *ngFor="let instruction of medicineInstructionsEnum | keys">{{instruction.value}}</option>
             </select>
         </div>
 

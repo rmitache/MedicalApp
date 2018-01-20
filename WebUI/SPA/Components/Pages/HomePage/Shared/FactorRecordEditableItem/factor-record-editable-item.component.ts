@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 
 @Component({
     selector: 'factor-record-editable-item',
@@ -14,6 +15,9 @@ export class FactorRecordEditableItem {
     private readonly viewModel: ViewModel = {
         FactorRecordCLO: null
     };
+    private medicineMethodsEnum = Enums.MedicineMethod;
+    private unitsOfMeasureEnum = Enums.UnitOfMeasure;
+    private medicineInstructionsEnum = Enums.MedicineInstruction;
 
     // Constructor 
     constructor(

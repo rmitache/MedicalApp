@@ -258,6 +258,14 @@
       "integrity": "sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=",
       "dev": true
     },
+    "angular2-datetimepicker": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/angular2-datetimepicker/-/angular2-datetimepicker-1.1.1.tgz",
+      "integrity": "sha1-acTZkcSKYNq4CiDYfoU5bBhfH0I=",
+      "requires": {
+        "font-awesome": "4.7.0"
+      }
+    },
     "angular2-router-loader": {
       "version": "0.3.5",
       "resolved": "https://registry.npmjs.org/angular2-router-loader/-/angular2-router-loader-0.3.5.tgz",
@@ -2405,6 +2413,11 @@
         "inherits": "2.0.3",
         "readable-stream": "2.3.3"
       }
+    },
+    "font-awesome": {
+      "version": "4.7.0",
+      "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz",
+      "integrity": "sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM="
     },
     "for-in": {
       "version": "1.0.2",

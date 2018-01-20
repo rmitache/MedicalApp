@@ -59,6 +59,7 @@
     "zone.js": "0.8.12"
   },
   "dependencies": {
+    "angular2-datetimepicker": "^1.1.1",
     "moment": "^2.20.1"
   }
 }

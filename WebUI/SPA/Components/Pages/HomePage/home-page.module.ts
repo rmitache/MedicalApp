@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+
 // Project modules
 import { CoreModule } from 'SPA/Core/core.module';
 import { DomainModelModule } from 'SPA/DomainModel/domain-model.module';
@@ -33,6 +34,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         FormsModule,
         BrowserModule,
         CoreModule,
+
 
         DomainModelModule,
         ScheduleModule

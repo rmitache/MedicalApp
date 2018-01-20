@@ -22,7 +22,7 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     constructor(init?: Partial<MedicineFactorRecordCLO>) {
         super();
         Object.assign(this, init);
-    }
+    } 
 
     // Public methods
     public GetTime(): Time {
