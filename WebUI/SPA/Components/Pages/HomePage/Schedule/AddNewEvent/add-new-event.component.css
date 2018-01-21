@@ -7,20 +7,19 @@
     float: left;
 }
 
-.text-box {
-    width: 100px;
-}
 
 
 .when-section {
     height: 90px;
 }
 
-    .when-section #occurence-date-time-text-box {
+    .when-section #occurrence-date-time-picker  {
         float: left;
-        width:250px;
+        clear:both;
     }
-
+    .when-section #occurrence-date-time-picker .ui-inputtext {
+        width: 250px;
+    }
 
     .when-section .label-input-pair {
         margin-top: 10px;

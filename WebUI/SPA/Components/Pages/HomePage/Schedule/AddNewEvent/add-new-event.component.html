@@ -3,10 +3,12 @@
         <span class="h2">WHEN</span>
         <br />
         <div class="label-input-pair">
-            <span class="h3">Date and Time:</span>
-            <!--<input type="text" class="text-box" id="occurence-date-time-text-box" value="{{viewModel.FactorRecords[0]?.ID}}" />-->
-            <p-calendar [(ngModel)]="viewModel.OccurenceDate"></p-calendar>
-            <!--<angular2-date-picker [(ngModel)]="viewModel.OccurenceDate" [settings]="datePickerSettings"></angular2-date-picker>-->
+            <span class="h3 label">Date and Time:</span>
+            <!--<input type="text" class="text-box" id="occurrence-date-time-picker" value="{{viewModel.FactorRecords[0]?.ID}}" />-->
+            <p-calendar id="occurrence-date-time-picker"  
+                        [(ngModel)]="viewModel.OccurenceDate"
+                        [showTime]="true"
+                        ></p-calendar>
 
         </div>
         

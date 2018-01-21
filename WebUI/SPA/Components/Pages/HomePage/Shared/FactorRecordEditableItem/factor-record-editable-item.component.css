@@ -2,7 +2,7 @@
 .frame {
     background-color: white;
     height: 70px;
-    width:100%;
+    width:calc(100% - 5px);
 }
 
 .label-input-pair {
@@ -32,7 +32,7 @@
 }
 
 .medicine-type-text-box {
-    width: 280px;
+    width: 270px;
 }
 
 .method-type-drop-down {

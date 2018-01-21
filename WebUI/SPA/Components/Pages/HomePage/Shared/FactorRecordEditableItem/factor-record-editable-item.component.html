@@ -2,7 +2,7 @@
     <div class="draggable-area"></div>
     <div class="right-side">
         <div class="label-input-pair">
-            <span class="h3">Medicine Type</span>
+            <span class="h3 label">Medicine Type</span>
             <!--<input type="text" class="text-box medicine-type-text-box" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
             <input type="text" class="text-box medicine-type-text-box" 
                    [ngModel]="viewModel.FactorRecordCLO?.MedicineType?.Name"
@@ -10,28 +10,28 @@
 
         </div>
         <div class="label-input-pair">
-            <span class="h3">Method</span>
+            <span class="h3 label">Method</span>
             <select class="drop-down method-type-drop-down">
                 <option *ngFor="let method of medicineMethodsEnum | keys">{{method.value}}</option>
             </select>
         </div>
         <div class="label-input-pair">
-            <span class="h3">Pieces</span>
+            <span class="h3 label">Pieces</span>
             <input type="text" class="text-box nr-pieces-text-box" />
         </div>
         <div class="x-label">x</div>
         <div class="label-input-pair">
-            <span class="h3">Piece size</span>
+            <span class="h3 label">Piece size</span>
             <input type="text" class="text-box piece-size-text-box" />
         </div>
         <div class="label-input-pair">
-            <span class="h3">Unit</span>
+            <span class="h3 label">Unit</span>
             <select class="drop-down text-box piece-unit-drop-down">
                 <option *ngFor="let unit of unitsOfMeasureEnum | keys">{{unit.value}}</option>
             </select>
         </div>
         <div class="label-input-pair">
-            <span class="h3">Instructions</span>
+            <span class="h3 label">Instructions</span>
             <select class="drop-down instructions-drop-down">
                 <option *ngFor="let instruction of medicineInstructionsEnum | keys">{{instruction.value}}</option>
             </select>

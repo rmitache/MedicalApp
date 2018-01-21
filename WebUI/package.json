@@ -57,7 +57,6 @@
         "webpack-hot-middleware": "2.18.2",
         "webpack-merge": "4.1.0",
         "zone.js": "0.8.12",
-        "angular2-datetimepicker": "^1.1.1",
         "font-awesome": "^4.7.0",
         "moment": "^2.20.1",
         "primeng": "^4.3.0"

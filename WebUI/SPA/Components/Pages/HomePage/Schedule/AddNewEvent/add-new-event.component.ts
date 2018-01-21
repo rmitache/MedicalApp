@@ -23,13 +23,7 @@ export class AddNewEventComponent implements IModalDialog {
         },
         OccurenceDate: new Date()
     };
-    private datePickerSettings = {
-        bigBanner: true,
-        timePicker: true,
-        format: 'dd-MMM-yyyy hh:mm',
-        defaultOpen: false,
-        closeOnSelect : true 
-    }
+  
 
     // Constructor 
     constructor(

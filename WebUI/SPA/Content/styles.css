@@ -64,14 +64,14 @@ body {
     font-family: Arial;
     padding: 5px;
     padding-top:3px;
-    height:28px;
+    height:27px;
 }
 
 .label-input-pair {
     float: left;
 }
 
-    .label-input-pair span {
+    .label-input-pair .label {
         float: left;
         color:gray;
     }
