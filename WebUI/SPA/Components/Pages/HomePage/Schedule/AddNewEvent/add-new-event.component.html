@@ -4,14 +4,10 @@
         <br />
         <div class="label-input-pair">
             <span class="h3 label">Date and Time:</span>
-            <!--<input type="text" class="text-box" id="occurrence-date-time-picker" value="{{viewModel.FactorRecords[0]?.ID}}" />-->
-            <p-calendar id="occurrence-date-time-picker"  
+            <p-calendar id="occurrence-date-time-picker"
                         [(ngModel)]="viewModel.OccurenceDate"
-                        [showTime]="true"
-                        ></p-calendar>
-
+                        [showTime]="true"></p-calendar>
         </div>
-        
     </div>
 
     <div class="what-section">
@@ -19,11 +15,10 @@
         <icon-button [IconName]="'plus'" id="add-new-medicine-button" (click)="viewModel.CreateNewFactorRecord()"></icon-button>
         <br />
         <div id="factor-records-list">
-            <factor-record-editable-item *ngFor="let factorRecord of viewModel.FactorRecords" 
+            <factor-record-editable-item *ngFor="let factorRecord of viewModel.FactorRecords"
                                          [MedicineFactorRecord]="factorRecord"
+                                         [MedicineSearchService]="searchService"
                                          (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-editable-item>
-            
-
         </div>
     </div>
 </div> 

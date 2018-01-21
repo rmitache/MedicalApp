@@ -4,9 +4,9 @@
         <div class="label-input-pair">
             <span class="h3 label">Medicine Type</span>
             <!--<input type="text" class="text-box medicine-type-text-box" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
-            <input type="text" class="text-box medicine-type-text-box" 
+            <input type="text" class="text-box medicine-type-text-box"
                    [ngModel]="viewModel.FactorRecordCLO?.MedicineType?.Name"
-                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event"/>
+                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event" />
 
         </div>
         <div class="label-input-pair">
@@ -39,4 +39,9 @@
         <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
+
+
+    <p-autoComplete [(ngModel)]="viewModel.MedicineTypeSearchString" 
+                    [suggestions]="viewModel.MedicineTypeSearchResults" 
+                    (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>
 </div>

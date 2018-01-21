@@ -23,6 +23,11 @@ export class AddNewEventComponent implements IModalDialog {
         },
         OccurenceDate: new Date()
     };
+    private searchService: IMedicineTypesSearchService = {
+        Search: (searchString) => {
+            return [];
+        }
+    };
   
 
     // Constructor 
@@ -58,4 +63,8 @@ interface ViewModel {
     FactorRecords: CLOs.MedicineFactorRecordCLO[];
     CreateNewFactorRecord();
     OccurenceDate: Date;
+}
+
+export interface IMedicineTypesSearchService {
+    Search(searchString:string):CLOs.MedicineTypeCLO[];
 }
