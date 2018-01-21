@@ -32,48 +32,59 @@
 }
 
     .right-side .medicine-type-text-box {
-        width: 250px;
-    }
-
-    .right-side .method-type-drop-down {
-        width: 110px;
-    }
-
-    .right-side .nr-pieces-text-box {
-        width: 25px;
-    }
-
-    .right-side .x-label {
+        width: 260px;
         float: left;
-        margin-left: -3px;
-        margin-right: 5px;
-        height: 45px;
-        vertical-align: middle;
-        line-height: 45px;
-        padding-top: 4px;
-        font-family: Arial;
-        font-size: 10pt;
-        font-weight: bold;
+        clear: both;
     }
 
-    .right-side .piece-size-text-box {
-        width: 50px;
-    }
 
-    .right-side .piece-unit-drop-down {
-        width: 60px;
-    }
+/deep/ .ui-autocomplete input {
+    height: 27px;
+    width: 260px;
+    font-size: 10pt;
+    font-family: Arial;
+}
 
-    .right-side .instructions-drop-down {
-    }
+.right-side .method-type-drop-down {
+    width: 110px;
+}
 
-    .right-side .close {
-        margin-top:-3px;
-        float: right;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-        font-family: Arial;
-        font-weight: bold;
-        text-align: right;
-    }
+.right-side .nr-pieces-text-box {
+    width: 25px;
+}
+
+.right-side .x-label {
+    float: left;
+    margin-left: -3px;
+    margin-right: 5px;
+    height: 45px;
+    vertical-align: middle;
+    line-height: 45px;
+    padding-top: 4px;
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.right-side .piece-size-text-box {
+    width: 50px;
+}
+
+.right-side .piece-unit-drop-down {
+    width: 60px;
+}
+
+.right-side .instructions-drop-down {
+}
+
+.right-side .close {
+    margin-top: 10px;
+    float: right;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    font-family: Arial;
+    font-weight: bold;
+    text-align: right;
+    color:gray;
+}

@@ -51,11 +51,12 @@ body {
         background-color: #dddddd ;
     }
 
-.text-box {
+.ui-inputtext {
     border: solid 1px #dbdbdb;
     font-size: 10pt;
     font-family: Arial;
     padding: 5px;
+    border-radius: 0px;
 }
 
 .drop-down {
@@ -63,8 +64,9 @@ body {
     font-size: 10pt;
     font-family: Arial;
     padding: 5px;
-    padding-top:3px;
-    height:27px;
+    padding-top: 3px;
+    height: 27px;
+    border-radius:0px;
 }
 
 .label-input-pair {
@@ -76,7 +78,7 @@ body {
         color:gray;
     }
 
-    .label-input-pair .text-box,
+    .label-input-pair .ui-inputtext,
     .label-input-pair .drop-down{
         float: left;
         clear: left;

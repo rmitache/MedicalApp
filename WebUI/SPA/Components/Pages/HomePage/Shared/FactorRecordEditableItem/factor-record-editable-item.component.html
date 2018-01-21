@@ -3,10 +3,15 @@
     <div class="right-side">
         <div class="label-input-pair">
             <span class="h3 label">Medicine Type</span>
-            <!--<input type="text" class="text-box medicine-type-text-box" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
-            <input type="text" class="text-box medicine-type-text-box"
+            <!--<input type="text" class="ui-inputtext medicine-type-ui-inputtext" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
+            <!--<input type="text" class="ui-inputtext medicine-type-text-box"
                    [ngModel]="viewModel.FactorRecordCLO?.MedicineType?.Name"
-                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event" />
+                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event" />-->
+
+            <p-autoComplete class="medicine-type-text-box"
+                            [(ngModel)]="viewModel.MedicineTypeSearchString"
+                            [suggestions]="viewModel.MedicineTypeSearchResults"
+                            (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>
 
         </div>
         <div class="label-input-pair">
@@ -17,16 +22,16 @@
         </div>
         <div class="label-input-pair">
             <span class="h3 label">Pieces</span>
-            <input type="text" class="text-box nr-pieces-text-box" />
+            <input type="text" class="ui-inputtext nr-pieces-text-box" />
         </div>
         <div class="x-label">x</div>
         <div class="label-input-pair">
             <span class="h3 label">Piece size</span>
-            <input type="text" class="text-box piece-size-text-box" />
+            <input type="text" class="ui-inputtext piece-size-text-box" />
         </div>
         <div class="label-input-pair">
             <span class="h3 label">Unit</span>
-            <select class="drop-down text-box piece-unit-drop-down">
+            <select class="drop-down piece-unit-drop-down">
                 <option *ngFor="let unit of unitsOfMeasureEnum | keys">{{unit.value}}</option>
             </select>
         </div>
@@ -41,7 +46,5 @@
     </div>
 
 
-    <p-autoComplete [(ngModel)]="viewModel.MedicineTypeSearchString" 
-                    [suggestions]="viewModel.MedicineTypeSearchResults" 
-                    (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>
+   
 </div>
