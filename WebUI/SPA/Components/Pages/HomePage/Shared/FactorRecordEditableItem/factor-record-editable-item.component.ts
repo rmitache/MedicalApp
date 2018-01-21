@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 
@@ -11,7 +11,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 export class FactorRecordEditableItem {
     // Fields
     @Input('MedicineFactorRecord')
-    private medicineFactorRecord: CLOs.MedicineFactorRecordCLO;
+    private medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO;
     private readonly viewModel: ViewModel = {
         FactorRecordCLO: null
     };
@@ -26,7 +26,15 @@ export class FactorRecordEditableItem {
     }
     ngOnInit() {
         
-        this.viewModel.FactorRecordCLO = this.medicineFactorRecord;
+        this.viewModel.FactorRecordCLO = this.medicineFactorRecordCLO;
+    }
+
+    // Events 
+    @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
+
+    // EventHandlers
+    private onRemoveClicked() {
+        this.RemoveClicked.emit(this.medicineFactorRecordCLO);
     }
 }
 

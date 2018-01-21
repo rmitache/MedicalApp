@@ -2,7 +2,7 @@
 .frame {
     background-color: white;
     height: 70px;
-    width:calc(100% - 5px);
+    width: calc(100% - 5px);
 }
 
 .label-input-pair {
@@ -31,38 +31,49 @@
     height: calc(100% - 30px);
 }
 
-.medicine-type-text-box {
-    width: 270px;
-}
+    .right-side .medicine-type-text-box {
+        width: 250px;
+    }
 
-.method-type-drop-down {
-    width:110px;
-}
+    .right-side .method-type-drop-down {
+        width: 110px;
+    }
 
-.nr-pieces-text-box {
-    width: 25px;
-}
+    .right-side .nr-pieces-text-box {
+        width: 25px;
+    }
 
-.x-label {
-    float: left;
-    margin-left: -3px;
-    margin-right: 5px;
-    height: 45px;
-    vertical-align: middle;
-    line-height: 45px;
-    padding-top: 4px;
-    font-family: Arial;
-    font-size: 10pt;
-    font-weight: bold;
-}
+    .right-side .x-label {
+        float: left;
+        margin-left: -3px;
+        margin-right: 5px;
+        height: 45px;
+        vertical-align: middle;
+        line-height: 45px;
+        padding-top: 4px;
+        font-family: Arial;
+        font-size: 10pt;
+        font-weight: bold;
+    }
 
-.piece-size-text-box {
-    width: 50px;
-}
+    .right-side .piece-size-text-box {
+        width: 50px;
+    }
 
-.piece-unit-drop-down {
-    width: 60px;
-}
+    .right-side .piece-unit-drop-down {
+        width: 60px;
+    }
 
-.instructions-drop-down {
-}
+    .right-side .instructions-drop-down {
+    }
+
+    .right-side .close {
+        margin-top:-3px;
+        float: right;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        font-family: Arial;
+        font-weight: bold;
+        text-align: right;
+    }

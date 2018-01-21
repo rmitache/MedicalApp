@@ -31,6 +31,17 @@ export class AddNewEventComponent implements IModalDialog {
     ) {
     }
 
+    // EventHandlers
+    private onRemoveFactorRecordTriggered(medicineFactorRecordCLO:CLOs.MedicineFactorRecordCLO) {
+        
+
+        const index: number = this.viewModel.FactorRecords.indexOf(medicineFactorRecordCLO);
+        
+        if (index !== -1) {
+            this.viewModel.FactorRecords.splice(index, 1);
+        }    
+    }
+
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
         // No logic necessary for now

@@ -36,7 +36,7 @@
                 <option *ngFor="let instruction of medicineInstructionsEnum | keys">{{instruction.value}}</option>
             </select>
         </div>
-
+        <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
 </div>

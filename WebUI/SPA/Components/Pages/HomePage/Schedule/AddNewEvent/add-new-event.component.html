@@ -19,7 +19,9 @@
         <icon-button [IconName]="'plus'" id="add-new-medicine-button" (click)="viewModel.CreateNewFactorRecord()"></icon-button>
         <br />
         <div id="factor-records-list">
-            <factor-record-editable-item *ngFor="let factorRecord of viewModel.FactorRecords" [MedicineFactorRecord]="factorRecord"></factor-record-editable-item>
+            <factor-record-editable-item *ngFor="let factorRecord of viewModel.FactorRecords" 
+                                         [MedicineFactorRecord]="factorRecord"
+                                         (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-editable-item>
             
 
         </div>
