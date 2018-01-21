@@ -13,9 +13,13 @@ const treeShakableModules = [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    'zone.js',
+    'zone.js'
 ];
 const nonTreeShakableModules = [
+    'primeng/primeng',
+    'primeng/resources/themes/omega/theme.css',
+    'font-awesome/css/font-awesome.min.css',
+    'primeng/resources/primeng.min.css',
     'es6-promise',
     'es6-shim',
     'event-source-polyfill'
@@ -47,7 +51,7 @@ module.exports = (env) => {
         },
         module: {
             rules: [
-                { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' },
+                { test: /\.(png|gif|jpg|jpeg|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' },
                 { test: /\.css(\?|$)/, use: extractCSS.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }) }
             ]
         },

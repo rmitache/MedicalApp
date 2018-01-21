@@ -9,13 +9,14 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 import { KeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
 import { FactorRecordEditableItem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordEditableItem/factor-record-editable-item.component';
+import { CalendarModule } from 'primeng/primeng';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         AngularDateTimePickerModule,
-
+        CalendarModule
     ],
     declarations: [
         ScheduleComponent,
