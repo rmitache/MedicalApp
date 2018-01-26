@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [user]
+    WITH PASSWORD = N'q}wMKdlvbk|e?WGn,td4j|yLmsFT7_&#$!~<assjqawikJr{', SID = 0xFF7D34FA87AC0948973A07073D58FCE2, DEFAULT_DATABASE = [DEV_MedicalApp], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

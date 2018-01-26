@@ -1,3 +1,9 @@
+/deep/ .ui-autocomplete input {
+    height: 27px;
+    width: 260px;
+    font-size: 10pt;
+    font-family: Arial;
+}
 
 .frame {
     background-color: white;
@@ -37,54 +43,56 @@
         clear: both;
     }
 
+    .right-side .method-type-drop-down {
+        width: 110px;
+    }
 
-/deep/ .ui-autocomplete input {
-    height: 27px;
-    width: 260px;
-    font-size: 10pt;
-    font-family: Arial;
-}
+    .right-side .nr-pieces-text-box {
+        width: 25px;
+    }
 
-.right-side .method-type-drop-down {
-    width: 110px;
-}
+    .right-side .x-label {
+        float: left;
+        margin-left: -3px;
+        margin-right: 5px;
+        height: 45px;
+        vertical-align: middle;
+        line-height: 45px;
+        padding-top: 4px;
+        font-family: Arial;
+        font-size: 10pt;
+        font-weight: bold;
+    }
 
-.right-side .nr-pieces-text-box {
-    width: 25px;
-}
+    .right-side .piece-size-text-box {
+        width: 50px;
+    }
 
-.right-side .x-label {
-    float: left;
-    margin-left: -3px;
-    margin-right: 5px;
-    height: 45px;
-    vertical-align: middle;
-    line-height: 45px;
-    padding-top: 4px;
-    font-family: Arial;
-    font-size: 10pt;
-    font-weight: bold;
-}
+    .right-side .piece-unit-drop-down {
+        width: 60px;
+    }
 
-.right-side .piece-size-text-box {
-    width: 50px;
-}
+    .right-side .instructions-drop-down {
+    }
 
-.right-side .piece-unit-drop-down {
-    width: 60px;
-}
+    .right-side .close {
+        margin-top: 10px;
+        float: right;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        font-family: Arial;
+        font-weight: bold;
+        text-align: right;
+        color: gray;
+    }
 
-.right-side .instructions-drop-down {
-}
 
-.right-side .close {
-    margin-top: 10px;
+.hide-controls-overlay {
+    width: calc(100% - 320px);
+    margin-right:25px;
+    height: 70px;
+    background-color: #f7f7f7;
     float: right;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    font-family: Arial;
-    font-weight: bold;
-    text-align: right;
-    color:gray;
+    margin-top: -70px;
 }

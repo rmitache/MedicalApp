@@ -11,6 +11,8 @@
             <p-autoComplete class="medicine-type-text-box"
                             [(ngModel)]="viewModel.MedicineTypeSearchString"
                             [suggestions]="viewModel.MedicineTypeSearchResults"
+                            [emptyMessage]="'No medicine types could be found. Please try a different name'"
+                            [placeholder]="'Type to choose a Medicine Type'"
                             (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>
 
         </div>
@@ -44,7 +46,7 @@
         <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
-
+    <div class="hide-controls-overlay"></div>
 
    
 </div>
