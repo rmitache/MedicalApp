@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using DAL.Entities;
 using DAL.Repositories.MedicineTypesRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,6 @@ namespace WebUI
         {
             services
                 .AddMvc()
-                //.AddControllersAsServices()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 
@@ -45,13 +45,15 @@ namespace WebUI
             var containerBuilder = new ContainerBuilder();
 
             // WebUI
-            var assembly = Assembly.GetExecutingAssembly();
-            containerBuilder.RegisterAssemblyTypes(assembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
+            var webUIAssembly = Assembly.GetExecutingAssembly();
+            containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
 
             //containerBuilder.RegisterType<HomePageController>()
             //    .InstancePerLifetimeScope();
 
             // DAL
+            containerBuilder.RegisterType<DataEntitiesContext>()
+                .InstancePerDependency();
             containerBuilder.RegisterType<MedicineTypeRepository>()
                 .As<IMedicineTypeRepository>()
                 .InstancePerDependency()

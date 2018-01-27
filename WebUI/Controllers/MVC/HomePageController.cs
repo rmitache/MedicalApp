@@ -38,6 +38,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public JsonResult Get()
         {
+            var medicineTypes = this.medicineTypeRepo.GetAllMedicineTypes();
             // Generate mock json objects for initial data BUNDLE///////////////////////////////////////////////////////
             var LoggedInUserJSON = new
             {
