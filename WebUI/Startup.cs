@@ -2,8 +2,8 @@ using System;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using DAL.Entities;
-using DAL.Repositories.MedicineTypesRepository;
+using DataAccessLayer.Entities;
+using DataAccessLayer.Repositories.MedicineTypesRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -48,8 +48,6 @@ namespace WebUI
             var webUIAssembly = Assembly.GetExecutingAssembly();
             containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
 
-            //containerBuilder.RegisterType<HomePageController>()
-            //    .InstancePerLifetimeScope();
 
             // DAL
             containerBuilder.RegisterType<DataEntitiesContext>()

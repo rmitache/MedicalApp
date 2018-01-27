@@ -1,9 +1,8 @@
-﻿using DAL.Entities;
+﻿using DataAccessLayer.Entities;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
-namespace DAL.Repositories.MedicineTypesRepository
+namespace DataAccessLayer.Repositories.MedicineTypesRepository
 {
     public class MedicineTypeRepository : IMedicineTypeRepository
     {
@@ -17,9 +16,9 @@ namespace DAL.Repositories.MedicineTypesRepository
         }
 
         // Public methods
-        public List<t_medicine_type> GetAllMedicineTypes()
+        public List<TMedicineType> GetAllMedicineTypes()
         {
-            return entitiesContext.t_medicine_type.Select(medicineType => medicineType).ToList();
+            return entitiesContext.TMedicineType.Select(medicineType => medicineType).ToList();
         }
     }
 }
