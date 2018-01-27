@@ -49,18 +49,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\DataEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DataEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DataEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\tj_medicine_type_to_medicine_category.cs">
+      <DependentUpon>DataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\t_medicine_category.cs">
+      <DependentUpon>DataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\t_medicine_type.cs">
+      <DependentUpon>DataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\t_user.cs">
+      <DependentUpon>DataEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MedicineTypesRepository\Implementation\MedicineTypeRepository.cs" />
+    <Compile Include="Repositories\MedicineTypesRepository\IMedicineTypeRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.Config" />
+    <EntityDeploy Include="Entities\DataEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\DataEntities.edmx.diagram">
+      <DependentUpon>DataEntities.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\DataEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataEntities.edmx</DependentUpon>
+      <LastGenOutput>DataEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DataEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataEntities.edmx</DependentUpon>
+      <LastGenOutput>DataEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

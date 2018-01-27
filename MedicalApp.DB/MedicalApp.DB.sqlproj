@@ -69,6 +69,8 @@
     <Build Include="Security\user.sql" />
     <Build Include="Security\user_1.sql" />
     <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Tables\tj_medicine_type_to_medicine_category.sql" />
+    <Build Include="dbo\Tables\t_medicine_category.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Repositories.MedicineTypesRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -10,7 +11,16 @@ namespace WebUI.Controllers
 
     public class HomePageController : Controller
     {
-        // MVC
+        // Fields 
+        private IMedicineTypeRepository medicineTypeRepo { get; set; }
+
+        // Constructor
+        public HomePageController(IMedicineTypeRepository medicineTypeRepo)
+        {
+            this.medicineTypeRepo = medicineTypeRepo;
+        }
+
+        // MVC methods
         public IActionResult Index()
         {
             return View();
@@ -22,7 +32,8 @@ namespace WebUI.Controllers
         }
 
 
-        // WebAPI
+        
+        // WebAPI methods
         [Route("HomePage/GetInitialData")]
         [HttpGet]
         public JsonResult Get()
