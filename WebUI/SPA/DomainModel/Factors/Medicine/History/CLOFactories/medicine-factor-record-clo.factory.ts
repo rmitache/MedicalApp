@@ -2,7 +2,7 @@
 import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-
+import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.MedicineFactorRecordCLO> {
 
@@ -29,5 +29,8 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.Instruction = null;
 
         return newCLO;
+    }
+    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        throw new Error("Convert_ToCloList not implemented");
     }
 }

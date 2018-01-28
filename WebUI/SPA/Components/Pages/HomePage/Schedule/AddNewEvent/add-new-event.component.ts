@@ -5,6 +5,8 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
+import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 
 @Component({
     selector: 'add-new-event',
@@ -16,6 +18,12 @@ export class AddNewEventComponent implements IModalDialog {
     // Fields
     @Input('SelectedDate')
     private selectedDate: Date;
+    private searchService: IMedicineTypesSearchService = {
+        Search: (searchString) => {
+            return this.availableMedicineTypes.ToArray();
+        }
+    };
+    private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     private readonly viewModel: ViewModel = {
         FactorRecords: [],
         CreateNewFactorRecord: () => {
@@ -23,17 +31,15 @@ export class AddNewEventComponent implements IModalDialog {
         },
         OccurenceDate: new Date()
     };
-    private searchService: IMedicineTypesSearchService = {
-        Search: (searchString) => {
-            return [];
-        }
-    };
+    
   
 
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
+        private readonly globalDataService: GlobalDataService
     ) {
+        this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
     }
 
     // EventHandlers

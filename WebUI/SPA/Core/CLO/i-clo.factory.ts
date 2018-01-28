@@ -7,7 +7,7 @@ export interface IType<T> extends Function {
 export interface ICLOFactory<T> {
     // Conversion to CLO
     Convert_ToCLO(blo: Object): T;
-    //Convert_ToCloList(bloArray: Object[]): DataStructures.List<T>;
+    Convert_ToCloList(bloArray: Object[]): DataStructures.List<T>;
 
     // Creation
     Create_DefaultCLO(): T;

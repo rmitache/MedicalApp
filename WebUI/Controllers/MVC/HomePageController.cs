@@ -36,9 +36,9 @@ namespace WebUI.Controllers
         [HttpGet]
         public JsonResult Get()
         {
+            // Get blos for initial bundle------------------------------------------------------------------------------------------------
             var medicineTypes = this.medicineTypeService.GetAllMedicineTypes();
-            // Generate mock json objects for initial data BUNDLE///////////////////////////////////////////////////////
-            var LoggedInUserJSON = new
+            var loggedInUserJSON = new
             {
                 ID = 1,
                 Email = "john.doe@rocketmail.com",
@@ -46,15 +46,14 @@ namespace WebUI.Controllers
                 BirthDate = new DateTime(1980, 10, 15),
                 Language = "en"
             };
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+            //----------------------------------------------------------------------------------------------------------------------------
 
 
             // Return the bundle
             var bundle = new
             {
-                LoggedInUser = LoggedInUserJSON
+                LoggedInUser = loggedInUserJSON,
+                MedicineTypes = medicineTypes
             };
             return Json(bundle);
         }

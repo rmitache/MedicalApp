@@ -11,6 +11,7 @@
             <p-autoComplete class="medicine-type-text-box"
                             [(ngModel)]="viewModel.MedicineTypeSearchString"
                             [suggestions]="viewModel.MedicineTypeSearchResults"
+                            [field]="Name"
                             [emptyMessage]="'No medicine types could be found. Please try a different name'"
                             [placeholder]="'Type to choose a Medicine Type'"
                             (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>

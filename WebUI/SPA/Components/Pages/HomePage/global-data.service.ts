@@ -6,6 +6,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 @Injectable()
 export class GlobalDataService {
@@ -76,10 +77,13 @@ export class GlobalDataService {
 
         return records;
     }
-    public GetMedicineFactorsLibrary():CLOs.MedicineTypeCLO[] {
-
+    public GetMedicineTypesFromBundle():DataStructures.List<CLOs.MedicineTypeCLO> {
+       
         // Get MedicineTypes (flat dictionary, where each MedicineType has a null MedicineCategory, to begin with)
-        return null;
+        let blos = this.startupDataBundleService.GetBundle['MedicineTypes'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO, blos);
+
+        return cloList;
     }
 }
 

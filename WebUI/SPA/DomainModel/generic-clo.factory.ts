@@ -3,6 +3,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
 import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
+import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 
 
@@ -90,10 +91,12 @@ export class GenericCLOFactory {
     // Constructor
     constructor(
         private readonly patientAccountCLOFactory: PatientAccountCLOFactory,
-        private readonly medicineFactorRecordCLOFactory: MedicineFactorRecordCLOFactory
+        private readonly medicineFactorRecordCLOFactory: MedicineFactorRecordCLOFactory,
+        private readonly medicinetypeCLOFactory: MedicineTypeCLOFactory
     ) {
         this.factoryTypeInstanceDictionary['PatientAccountCLO'] = patientAccountCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineFactorRecordCLO'] = medicineFactorRecordCLOFactory;
+        this.factoryTypeInstanceDictionary['MedicineTypeCLO'] = medicinetypeCLOFactory;
     }
 
     // Public Methods
@@ -104,6 +107,15 @@ export class GenericCLOFactory {
         let clo: T = factory.Convert_ToCLO(blo);
 
         return clo;
+    }
+    public ConvertToCloList<T>(type: IType<T>, bloArray: Object[]): DataStructures.List<T> {
+
+        // Obtain the actual factory implementation by type 
+        let factory: ICLOFactory<T> = this.getFactoryByCLOTypeName<T>(type.name);
+
+        let cloArray: DataStructures.List<T> = factory.Convert_ToCloList(bloArray);
+
+        return cloArray;
     }
     public ConvertToBlo(clo: any): Object {
 
@@ -125,17 +137,9 @@ export class GenericCLOFactory {
     }
 
 
+    
+
     /*
-    //public ConvertToCloList<T>(type: IType<T>, bloArray: Object[]): DataStructures.List<T> {
-
-    //    // Obtain the actual factory implementation by type 
-    //    let factory: IConvertible<T> = this.getConversionFactoryByType<T>(type);
-
-    //    let cloArray: DataStructures.List<T> = factory.Convert_ToCloList(bloArray);
-
-    //    return cloArray;
-    //}
-
     //public CreateFromParams<T>(type: IType<T>, ...params: any[]): T {
 
     //    // Obtain the actual factory implementation by type 

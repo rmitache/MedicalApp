@@ -2,6 +2,7 @@
 import {GenericCLOFactory } from './generic-clo.factory';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
 import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
+import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
 
 @NgModule({
     providers: [
@@ -10,7 +11,8 @@ import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFa
 
         // All CLOFactories
         PatientAccountCLOFactory,
-        MedicineFactorRecordCLOFactory
+        MedicineFactorRecordCLOFactory,
+        MedicineTypeCLOFactory
     ]
 })
 
