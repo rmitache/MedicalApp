@@ -3,18 +3,17 @@
     <div class="right-side">
         <div class="label-input-pair">
             <span class="h3 label">Medicine Type</span>
-            <!--<input type="text" class="ui-inputtext medicine-type-ui-inputtext" [(ngModel)]="viewModel.FactorRecordCLO.MedicineType.Name" />-->
-            <!--<input type="text" class="ui-inputtext medicine-type-text-box"
-                   [ngModel]="viewModel.FactorRecordCLO?.MedicineType?.Name"
-                   (ngModelChange)="viewModel.FactorRecordCLO.MedicineType.Name = $event" />-->
 
+
+            {{viewModel.MedicineTypeName}}
             <p-autoComplete class="medicine-type-text-box"
-                            [(ngModel)]="viewModel.MedicineTypeSearchString"
                             [suggestions]="viewModel.MedicineTypeSearchResults"
-                            [field]="Name"
                             [emptyMessage]="'No medicine types could be found. Please try a different name'"
                             [placeholder]="'Type to choose a Medicine Type'"
-                            (completeMethod)="onMedicineTypeTextBoxChanged($event)"></p-autoComplete>
+                            (completeMethod)="onMedicineTypeTextBoxChanged($event)"
+                            
+                            (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>
+
 
         </div>
         <div class="label-input-pair">
@@ -47,7 +46,7 @@
         <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
-    <div class="hide-controls-overlay"></div>
+    <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible()"></div>
 
    
 </div>

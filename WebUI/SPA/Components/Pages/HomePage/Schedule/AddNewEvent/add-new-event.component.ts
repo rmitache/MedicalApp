@@ -19,11 +19,19 @@ export class AddNewEventComponent implements IModalDialog {
     @Input('SelectedDate')
     private selectedDate: Date;
     private searchService: IMedicineTypesSearchService = {
+        GetMedicineTypeByName: (name) => {
+            return this.availableMedicineTypes.ToArray().find(clo => {
+                return clo.Name === name;
+            });
+        },
         Search: (searchString) => {
-            return this.availableMedicineTypes.ToArray();
+            return this.availableMedicineTypes.ToArray().map(clo => {
+                return clo.Name;
+            });
         }
     };
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
+    private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {
         FactorRecords: [],
         CreateNewFactorRecord: () => {
@@ -31,8 +39,8 @@ export class AddNewEventComponent implements IModalDialog {
         },
         OccurenceDate: new Date()
     };
-    
-  
+
+
 
     // Constructor 
     constructor(
@@ -43,14 +51,14 @@ export class AddNewEventComponent implements IModalDialog {
     }
 
     // EventHandlers
-    private onRemoveFactorRecordTriggered(medicineFactorRecordCLO:CLOs.MedicineFactorRecordCLO) {
-        
+    private onRemoveFactorRecordTriggered(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
+
 
         const index: number = this.viewModel.FactorRecords.indexOf(medicineFactorRecordCLO);
-        
+
         if (index !== -1) {
             this.viewModel.FactorRecords.splice(index, 1);
-        }    
+        }
     }
 
     // IModalDialog
@@ -72,5 +80,6 @@ interface ViewModel {
 }
 
 export interface IMedicineTypesSearchService {
-    Search(searchString:string):CLOs.MedicineTypeCLO[];
+    GetMedicineTypeByName(name: string): CLOs.MedicineTypeCLO;
+    Search(searchString: string): string[];
 }

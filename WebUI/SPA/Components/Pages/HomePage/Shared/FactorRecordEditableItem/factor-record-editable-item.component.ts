@@ -18,16 +18,33 @@ export class FactorRecordEditableItem {
     private medicineMethodsEnum = Enums.MedicineMethod;
     private unitsOfMeasureEnum = Enums.UnitOfMeasure;
     private medicineInstructionsEnum = Enums.MedicineInstruction;
-
     private readonly viewModel: ViewModel = {
         FactorRecordCLO: null,
-        MedicineTypeSearchString: '',
-        MedicineTypeSearchResults: []
+        MedicineTypeName: '',
+        MedicineTypeSearchResults: [],
+        OverlayIsVisible: () => {
+            return this.viewModel.FactorRecordCLO.MedicineType === null;
+        }
     };
-    
+
+    // Private methods
+    private loadMedicineTypeByName(newMedicineTypeName: string) {
+
+        // Get and load the newMedicineTypeCLO
+        let newMedicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(newMedicineTypeName);
+        this.viewModel.FactorRecordCLO.MedicineType = newMedicineTypeCLO;
+
+        // Define available Methods - based on the FORM: some FORMS allow multiple kinds of methods. Extra: there should be support for 
+
+        // Mapping examples between Forms and Methods
+        // Form = Powder or Liquid 
+        //      -> Methods = 
 
 
+        // Set PieceSize and disable
 
+        // 
+    }
 
     // Constructor 
     constructor(
@@ -35,7 +52,7 @@ export class FactorRecordEditableItem {
 
     }
     ngOnInit() {
-        
+
         this.viewModel.FactorRecordCLO = this.medicineFactorRecordCLO;
     }
 
@@ -47,14 +64,22 @@ export class FactorRecordEditableItem {
         this.RemoveClicked.emit(this.medicineFactorRecordCLO);
     }
     private onMedicineTypeTextBoxChanged(event) {
+
         let searchResults = this.medicineTypesSearchService.Search(event.query);
         this.viewModel.MedicineTypeSearchResults = searchResults;
+
+    }
+    private onMedicineTypeSelected(value) {
+        
+        this.viewModel.MedicineTypeName = value;
+        this.loadMedicineTypeByName(value);
     }
 }
 
 interface ViewModel {
     FactorRecordCLO: CLOs.MedicineFactorRecordCLO;
-    MedicineTypeSearchString: string;
-    MedicineTypeSearchResults: CLOs.MedicineTypeCLO[];
+    MedicineTypeName: string;
+    MedicineTypeSearchResults: string[];
+    OverlayIsVisible(): boolean;
 }
 
