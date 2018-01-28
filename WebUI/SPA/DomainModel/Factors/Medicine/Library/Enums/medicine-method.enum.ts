@@ -4,5 +4,6 @@ export enum MedicineMethod {
     Teaspoons = 'Teaspoons',
     IV = 'IV',
     Drops = 'Drops',
-    Inhalator = 'Inhalator'
+    Inhalator = 'Inhalator',
+    Satchets = 'Satchets'
 }

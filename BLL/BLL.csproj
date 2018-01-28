@@ -9,13 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DomainModel\Factors\Medicine\Factories\" />
-    <Folder Include="DomainModel\Factors\Medicine\Services\" />
+    <Folder Include="DomainModel\Factors\Medicine\History\Enums\" />
+    <Folder Include="DomainModel\General\BLOs\" />
     <Folder Include="DomainModel\Indicators\TestResults\" />
     <Folder Include="DomainModel\Patients\Factories\" />
     <Folder Include="DomainModel\Patients\Services\" />
     <Folder Include="DomainModel\Plans\Factories\" />
     <Folder Include="DomainModel\Plans\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

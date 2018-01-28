@@ -1,4 +1,4 @@
-﻿namespace BLL.DomainModel.Factors.Medicine.BLOs
+﻿namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
 {
     public  class MedicineCategory
     {

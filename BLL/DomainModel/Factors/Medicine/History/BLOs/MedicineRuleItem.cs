@@ -1,4 +1,5 @@
-﻿using BLL.DomainModel.General.BLOs;
+﻿using BLL.DomainModel.Factors.Medicine.Library.Enums;
+using BLL.DomainModel.General.Enums;
 using BLL.DomainModel.Plans.BLOs;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using BLL.DomainModel.Factors.Medicine.Library.Services;
 using DataAccessLayer.Repositories.MedicineTypesRepository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +10,12 @@ namespace WebUI.Controllers
     public class HomePageController : Controller
     {
         // Fields 
-        private IMedicineTypeRepository medicineTypeRepo { get; set; }
+        private IMedicineTypeService medicineTypeService { get; set; }
 
         // Constructor
-        public HomePageController(IMedicineTypeRepository medicineTypeRepo)
+        public HomePageController(IMedicineTypeService medicineTypeService)
         {
-            this.medicineTypeRepo = medicineTypeRepo;
+            this.medicineTypeService = medicineTypeService;
         }
 
         // MVC methods
@@ -35,7 +36,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            var medicineTypes = this.medicineTypeRepo.GetAllMedicineTypes();
+            var medicineTypes = this.medicineTypeService.GetAllMedicineTypes();
             // Generate mock json objects for initial data BUNDLE///////////////////////////////////////////////////////
             var LoggedInUserJSON = new
             {

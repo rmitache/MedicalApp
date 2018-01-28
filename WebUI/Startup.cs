@@ -48,14 +48,23 @@ namespace WebUI
             var webUIAssembly = Assembly.GetExecutingAssembly();
             containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
 
+            // BLL
+            containerBuilder.RegisterAssemblyTypes(Assembly.LoadFrom("BLL"))
+                .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Factory"))
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
 
             // DAL
+            containerBuilder.RegisterAssemblyTypes(Assembly.LoadFrom("DataAccessLayer"))
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
             containerBuilder.RegisterType<DataEntitiesContext>()
                 .InstancePerDependency();
-            containerBuilder.RegisterType<MedicineTypeRepository>()
-                .As<IMedicineTypeRepository>()
-                .InstancePerDependency()
-                .PropertiesAutowired();
+            //containerBuilder.RegisterType<MedicineTypeRepository>()
+            //    .As<IMedicineTypeRepository>()
+            //    .InstancePerDependency()
+            //    .PropertiesAutowired();
             //-----------------------------------------------------------------------------------------------------------------------------
 
             containerBuilder.Populate(services);

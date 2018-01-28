@@ -102,12 +102,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DAL">
-      <HintPath>bin\Debug\DAL.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\global-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />

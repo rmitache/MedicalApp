@@ -1,10 +1,10 @@
-﻿using BLL.DomainModel.Factors.BLOs;
-using BLL.DomainModel.General.BLOs;
+﻿using BLL.DomainModel.Factors.Medicine.Library.Enums;
+using BLL.DomainModel.General.Enums;
 using System;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
-    public abstract class MedicineFactor: IFactor
+    public class MedicineFactorRecord
     {
         // Properties
         public MedicineType MedicineType { get; set; }
