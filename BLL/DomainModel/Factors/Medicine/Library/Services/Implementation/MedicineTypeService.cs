@@ -24,8 +24,9 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         public List<MedicineType> GetAllMedicineTypes()
         {
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes();
-            //var blos 
-            return null;
+            var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities);
+            
+            return blos;
         }
     }
 }

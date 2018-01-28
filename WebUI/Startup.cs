@@ -3,13 +3,14 @@ using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DataAccessLayer.Entities;
+using BLL;
 using DataAccessLayer.Repositories.MedicineTypesRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using System.Linq;
 using Newtonsoft.Json.Serialization;
 using WebUI.Controllers;
 
@@ -49,13 +50,15 @@ namespace WebUI
             containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
 
             // BLL
-            containerBuilder.RegisterAssemblyTypes(Assembly.LoadFrom("BLL"))
+            Assembly bllAssembly = typeof(BLL.DomainModel.Factors.Medicine.BLOs.MedicineFactorRecord).Assembly;
+            containerBuilder.RegisterAssemblyTypes(bllAssembly)
                 .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Factory"))
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
             // DAL
-            containerBuilder.RegisterAssemblyTypes(Assembly.LoadFrom("DataAccessLayer"))
+            Assembly dalAssembly = typeof(MedicineTypeRepository).Assembly;
+            containerBuilder.RegisterAssemblyTypes(dalAssembly)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
@@ -72,7 +75,7 @@ namespace WebUI
             return new AutofacServiceProvider(container);
 
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
