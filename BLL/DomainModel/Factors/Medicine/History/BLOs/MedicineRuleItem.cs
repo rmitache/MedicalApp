@@ -6,12 +6,16 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
     public  class MedicineRuleItem: RuleItem
     {
+        public int? ID { get; set; }
         public MedicineType MedicineType { get; set; }
-        public MedicineMethod Method { get; set; }
-        public int NrOfPieces { get; set; }
-        public int PieceSize { get; set; }
-        public UnitOfMeasure PieceSizeUnitOfMeasure { get; set; }
-        public MedicineInstruction[] Instructions { get; set; }
+
+        public UnitDoseType UnitDoseType { get; set; }
+        public int UnitDoseQuantifier { get; set; }
+        public int UnitDoseSize { get; set; }
+        public UnitOfMeasure UnitDoseUoM { get; set; }
+
+        public Instruction Instruction { get; set; }
+        public AdministrationMethod Method { get; set; }
     }
 
 

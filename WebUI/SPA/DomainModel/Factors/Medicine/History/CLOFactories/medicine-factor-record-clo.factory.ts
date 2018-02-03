@@ -19,14 +19,17 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
     public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
         let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.ID = -1;
-        newCLO.RecordType = Enums.FactorRecordType.UserEntry;
+        newCLO.Type = Enums.FactorRecordType.UserEntry;
         newCLO.MedicineType = null;
         newCLO.OccurenceDateTime = new Date();
-        newCLO.Method = null;
-        newCLO.NrOfPieces = null;
-        newCLO.PieceSize = null;
-        newCLO.PieceSizeUnitOfMeasure = null;
-        newCLO.Instruction = null;
+
+        newCLO.UnitDoseType = Enums.UnitDoseType.Unspecified;
+        newCLO.UnitDoseQuantifier = 1;
+        newCLO.UnitDoseSize = 0;
+        newCLO.UnitDoseUoM = Enums.UnitOfMeasure.Unspecified;
+
+        newCLO.Instruction = Enums.Instruction.Unspecified;
+
 
         return newCLO;
     }

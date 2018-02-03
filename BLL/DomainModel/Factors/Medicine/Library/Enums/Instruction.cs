@@ -4,10 +4,10 @@ using System.Text;
 
 namespace BLL.DomainModel.Factors.Medicine.Library.Enums
 {
-    public enum MedicineForm
+    public enum Instruction
     {
-        Pills = 0,
-        Powder = 1,
-        Liquid = 2
+        Unspecified = 0,
+        WithFood = 1,
+        WithoutFood = 2
     }
 }

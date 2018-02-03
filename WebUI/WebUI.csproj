@@ -86,6 +86,7 @@
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-method.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\MedicineRuleItem.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Library\Enums\unit-dose-type.enum.ts" />
     <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
@@ -131,9 +132,10 @@
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-method.enum.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-instruction.enum.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\medicine-form.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\administration-method.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\unit-dose-type.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\instruction.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\base-form.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-rule-item.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-factor-record.clo.ts" />

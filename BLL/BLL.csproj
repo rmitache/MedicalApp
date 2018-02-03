@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DomainModel\Factors\Medicine\History\Enums\" />
     <Folder Include="DomainModel\General\BLOs\" />
     <Folder Include="DomainModel\Indicators\TestResults\" />
     <Folder Include="DomainModel\Patients\Factories\" />

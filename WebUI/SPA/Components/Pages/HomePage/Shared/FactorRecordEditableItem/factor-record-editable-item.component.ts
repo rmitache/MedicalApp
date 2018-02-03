@@ -15,9 +15,11 @@ export class FactorRecordEditableItem {
     private medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO;
     @Input('MedicineSearchService')
     private medicineTypesSearchService: IMedicineTypesSearchService;
-    private medicineMethodsEnum = Enums.MedicineMethod;
+
+    //private medicineMethodsEnum = Enums.MedicineMethod;
     private unitsOfMeasureEnum = Enums.UnitOfMeasure;
-    private medicineInstructionsEnum = Enums.MedicineInstruction;
+    //private medicineInstructionsEnum = Enums.MedicineInstruction;
+
     private readonly viewModel: ViewModel = {
         FactorRecordCLO: null,
         MedicineTypeName: '',
@@ -82,4 +84,5 @@ interface ViewModel {
     MedicineTypeSearchResults: string[];
     OverlayIsVisible(): boolean;
 }
+
 

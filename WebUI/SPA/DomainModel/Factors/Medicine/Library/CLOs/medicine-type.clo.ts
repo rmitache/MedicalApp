@@ -9,10 +9,12 @@ export class MedicineTypeCLO extends BaseCLO {
     public Name: string;
     public ShortName: string;
     public ProducerName: string;
-    public Form: Enums.MedicineForm;
-    public PieceSize: number;
-    public PieceSizeUnitOfMeasure: Enums.UnitOfMeasure;
     public ParentCategories: CLOs.MedicineCategoryCLO[];
+
+    public PackagedUnitDoseType?: Enums.UnitDoseType;
+    public PackagedUnitDoseSize: number;
+    public PackagedUnitDoseUoM: Enums.UnitOfMeasure;
+
 
 
     // Constructor

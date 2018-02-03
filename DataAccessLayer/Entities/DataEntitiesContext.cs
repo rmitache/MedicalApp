@@ -64,16 +64,18 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.FormId).HasColumnName("form_id");
+                entity.Property(e => e.BaseFormId).HasColumnName("base_form_id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PieceSize).HasColumnName("piece_size");
+                entity.Property(e => e.PackagedUnitDoseSize).HasColumnName("packaged_unit_dose_size");
 
-                entity.Property(e => e.PieceSizeUnitOfMeasureId).HasColumnName("piece_size_unit_of_measure_id");
+                entity.Property(e => e.PackagedUnitDoseTypeId).HasColumnName("packaged_unit_dose_type_id");
+
+                entity.Property(e => e.PackagedUnitDoseUomId).HasColumnName("packaged_unit_dose_uom_id");
 
                 entity.Property(e => e.ProducerName)
                     .HasColumnName("producer_name")

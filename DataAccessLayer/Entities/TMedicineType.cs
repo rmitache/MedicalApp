@@ -14,9 +14,10 @@ namespace DataAccessLayer.Entities
         public string Name { get; set; }
         public string ShortName { get; set; }
         public string ProducerName { get; set; }
-        public int FormId { get; set; }
-        public int? PieceSize { get; set; }
-        public int? PieceSizeUnitOfMeasureId { get; set; }
+        public int BaseFormId { get; set; }
+        public int? PackagedUnitDoseTypeId { get; set; }
+        public int? PackagedUnitDoseSize { get; set; }
+        public int? PackagedUnitDoseUomId { get; set; }
 
         public ICollection<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
     }

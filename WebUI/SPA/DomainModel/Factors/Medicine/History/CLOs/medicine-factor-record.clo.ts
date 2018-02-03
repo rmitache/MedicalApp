@@ -7,14 +7,16 @@ import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 export class MedicineFactorRecordCLO extends BaseCLO {
     // Fields
     public ID: number;
-    public RecordType: Enums.FactorRecordType;
+    public Type: Enums.FactorRecordType;
     public MedicineType: CLOs.MedicineTypeCLO;
     public OccurenceDateTime: Date;
-    public Method: Enums.MedicineMethod;
-    public NrOfPieces: number;
-    public PieceSize: number;
-    public PieceSizeUnitOfMeasure: Enums.UnitOfMeasure;
-    public Instruction: Enums.MedicineInstruction;
+
+    public UnitDoseType: Enums.UnitDoseType;
+    public UnitDoseQuantifier: number;
+    public UnitDoseSize: number;
+    public UnitDoseUoM: Enums.UnitOfMeasure;
+
+    public Instruction: Enums.Instruction;
 
 
 

@@ -29,51 +29,22 @@ export class GlobalDataService {
             MedicineType: new CLOs.MedicineTypeCLO({
                 ID: 1,
                 Name: 'Vitamin C Liposomal',
-                PieceSize: 500
+                PackagedUnitDoseType: Enums.UnitDoseType.Satchel,
+                PackagedUnitDoseSize: 1000,
+                PackagedUnitDoseUoM: Enums.UnitOfMeasure.Milligrams
 
             }),
             OccurenceDateTime: new Date(Date.now()),
-            Method: Enums.MedicineMethod.Drops,
-            NrOfPieces: 1,
-            PieceSize: 500,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
+
+            UnitDoseType: Enums.UnitDoseType.Satchel,
+            UnitDoseQuantifier: 1,
+            UnitDoseSize: 1000,
+            UnitDoseUoM: Enums.UnitOfMeasure.Milligrams,
             Instruction: null
         });
         records.push(testRecord1);
 
-        let testRecord2: CLOs.MedicineFactorRecordCLO = new CLOs.MedicineFactorRecordCLO({
-            ID: 2,
-            MedicineType: new CLOs.MedicineTypeCLO({
-                ID: 2,
-                Name: 'Magnesium',
-                PieceSize: 450
 
-            }),
-            OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
-            Method: Enums.MedicineMethod.Pills,
-            NrOfPieces: 1,
-            PieceSize: 450,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
-            Instruction: null
-        });
-        records.push(testRecord2);
-
-        let testRecord3: CLOs.MedicineFactorRecordCLO = new CLOs.MedicineFactorRecordCLO({
-            ID: 3,
-            MedicineType: new CLOs.MedicineTypeCLO({
-                ID: 3,
-                Name: 'Lymph Cleanse',
-                PieceSize: 250
-
-            }),
-            OccurenceDateTime: moment().subtract(1, 'hours').toDate(),
-            Method: Enums.MedicineMethod.Pills,
-            NrOfPieces: 3,
-            PieceSize: 250,
-            PieceSizeUnitOfMeasure: Enums.UnitOfMeasure.Milligrams,
-            Instruction: null
-        });
-        records.push(testRecord3);
 
         return records;
     }

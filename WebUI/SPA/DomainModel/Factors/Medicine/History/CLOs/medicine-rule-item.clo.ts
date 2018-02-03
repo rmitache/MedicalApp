@@ -6,11 +6,13 @@ export class MedicineRuleItemCLO extends BaseCLO {
     // Fields
     public ID: number;
     public MedicineType: CLOs.MedicineTypeCLO;
-    public MedicineMethod: Enums.MedicineMethod;
-    public NrOfPieces: number;
-    public PieceSize: number;
-    public PieceSizeUnitOfMeasure: Enums.UnitOfMeasure;
-    public Instruction: Enums.MedicineInstruction[];
+
+    public UnitDoseType: Enums.UnitDoseType;
+    public UnitDoseQuantifier: number;
+    public UnitDoseSize: number;
+    public UnitDoseUoM: Enums.UnitOfMeasure;
+
+    public Instruction: Enums.Instruction;
 
 
     // Constructor

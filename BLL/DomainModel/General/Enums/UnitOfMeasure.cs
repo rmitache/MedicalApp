@@ -2,13 +2,8 @@
 {
     public enum UnitOfMeasure
     {
-        Milligrams = 0
+        Unspecified = 0,
+        Milligrams = 1
     }
-
-
-    //public static class UnitOfMeasure
-    //{
-    //    public static string Milligrams = "mg";
-    //}
 
 }

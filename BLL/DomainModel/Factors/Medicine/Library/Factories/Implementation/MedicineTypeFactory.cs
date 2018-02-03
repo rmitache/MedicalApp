@@ -18,13 +18,13 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Factories
         public MedicineType Convert_ToBLO(TMedicineType dataEntity)
         {
             MedicineType blo = new MedicineType();
+            blo.ID = dataEntity.Id;
             blo.Name = dataEntity.Name;
             blo.ShortName = dataEntity.ShortName;
             blo.ProducerName = dataEntity.ProducerName;
-            blo.Form = (Enums.MedicineForm)dataEntity.FormId;
-            blo.PieceSize = dataEntity.PieceSize;
-            blo.PieceSizeUnitOfMeasure = (UnitOfMeasure)dataEntity.PieceSizeUnitOfMeasureId;
-            blo.ParentCategories = null;
+            blo.PackagedUnitDoseType = (Enums.UnitDoseType)dataEntity.PackagedUnitDoseTypeId;
+            blo.PackagedUnitDoseUoM = (UnitOfMeasure)dataEntity.PackagedUnitDoseUomId;
+            blo.ParentCategories = new BLOs.MedicineCategory[] { };
 
             return blo;
         }
