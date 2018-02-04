@@ -14,12 +14,15 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.ID = blo['ID'];
         newCLO.Name = blo['Name'];
         newCLO.ProducerName = blo['ProducerName'];
+        newCLO.BaseForm = HelperFunctions.GetEnumEntryByIndex(Enums.BaseForm, parseInt(blo['BaseForm']));
         newCLO.ParentCategories = [];
 
-        newCLO.PackagedUnitDoseType = HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType']));
+        newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
+            HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;
         newCLO.PackagedUnitDoseSize = parseInt(blo['PackagedUnitDoseSize']);
-        newCLO.PackagedUnitDoseUoM = HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM']));
-        
+        newCLO.PackagedUnitDoseUoM = (blo['PackagedUnitDoseUoM'] !== null) ?
+            HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM'])) : null;
+
 
 
         return newCLO;

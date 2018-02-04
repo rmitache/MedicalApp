@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BLL.DomainModel.Factors.Medicine.Library.Factories
 {
-    public class MedicineTypeFactory: IMedicineTypeFactory
+    public class MedicineTypeFactory : IMedicineTypeFactory
     {
         // Constructor
         public MedicineTypeFactory()
@@ -22,10 +22,12 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Factories
             blo.Name = dataEntity.Name;
             blo.ShortName = dataEntity.ShortName;
             blo.ProducerName = dataEntity.ProducerName;
-            blo.PackagedUnitDoseType = (Enums.UnitDoseType)dataEntity.PackagedUnitDoseTypeId;
-            blo.PackagedUnitDoseUoM = (UnitOfMeasure)dataEntity.PackagedUnitDoseUomId;
+            blo.BaseForm = (Enums.BaseForm)dataEntity.BaseFormId;
             blo.ParentCategories = new BLOs.MedicineCategory[] { };
 
+            blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.UnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.UnitDoseType?)null;
+            blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
+            blo.PackagedUnitDoseUoM = (dataEntity.PackagedUnitDoseUomId != null) ? (UnitOfMeasure)dataEntity.PackagedUnitDoseUomId : (UnitOfMeasure?)null;
             return blo;
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities)

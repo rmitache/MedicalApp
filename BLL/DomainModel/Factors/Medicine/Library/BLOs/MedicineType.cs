@@ -11,6 +11,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         public string Name { get; set; }
         public string ShortName { get; set; }
         public string ProducerName { get; set; }
+        public BaseForm BaseForm { get; set; }
         public MedicineCategory[] ParentCategories { get; set; }
 
 

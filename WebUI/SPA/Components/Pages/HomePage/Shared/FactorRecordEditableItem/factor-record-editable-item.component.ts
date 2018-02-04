@@ -36,16 +36,10 @@ export class FactorRecordEditableItem {
         // Get and load the newMedicineTypeCLO
         let newMedicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(newMedicineTypeName);
         this.viewModel.FactorRecordCLO.MedicineType = newMedicineTypeCLO;
-
-        // Define available Methods - based on the FORM: some FORMS allow multiple kinds of methods. Extra: there should be support for 
-
-        // Mapping examples between Forms and Methods
-        // Form = Powder or Liquid 
-        //      -> Methods = 
-
-
+       
+        
         // Set PieceSize and disable
-
+        //if(this.viewModel.FactorRecordCLO.MedicineType.PackagedUnitDoseType
         // 
     }
 

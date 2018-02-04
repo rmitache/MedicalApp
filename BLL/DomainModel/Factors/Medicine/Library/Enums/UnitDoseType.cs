@@ -7,8 +7,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Enums
     public enum UnitDoseType
     {
         
-        Unspecified = 0,
-
         // Packaged
         Pills = 1,
         Satchel = 2,

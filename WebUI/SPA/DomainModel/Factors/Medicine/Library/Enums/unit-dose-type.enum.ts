@@ -1,6 +1,5 @@
 ﻿
 export enum UnitDoseType {
-    Unspecified = 'Unspecified',
 
     // Packaged
     Pills = 'Pills',
