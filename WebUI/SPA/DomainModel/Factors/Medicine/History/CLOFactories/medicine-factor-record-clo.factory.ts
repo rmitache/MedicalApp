@@ -24,9 +24,9 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.OccurenceDateTime = new Date();
 
         newCLO.UnitDoseType = null;
-        newCLO.UnitDoseQuantifier = 1;
-        newCLO.UnitDoseSize = 0;
-        newCLO.UnitDoseUoM = Enums.UnitOfMeasure.Unspecified;
+        newCLO.UnitDoseQuantifier = null;
+        newCLO.UnitDoseSize = null;
+        newCLO.UnitDoseUoM = null;
 
         newCLO.Instruction = Enums.Instruction.Unspecified;
 

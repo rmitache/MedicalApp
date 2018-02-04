@@ -5,9 +5,7 @@
             <span class="h3 label">Medicine Type</span>
 
 
-            {{viewModel.MedicineTypeName}}
-            <p-autoComplete 
-                            [suggestions]="viewModel.MedicineTypeSearchResults"
+            <p-autoComplete [suggestions]="viewModel.MedicineTypeSearchResults"
                             [emptyMessage]="'No medicine types could be found. Please try a different name'"
                             [placeholder]="'Type to choose a Medicine Type'"
                             (completeMethod)="onMedicineTypeTextBoxChanged($event)"
@@ -18,39 +16,39 @@
 
         <div class="label-input-pair quantifier-input-pair">
             <span class="h3 label">Dosage</span>
-            <input type="text" class="ui-inputtext" />
+            <input type="text" class="ui-inputtext" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseQuantifier" />
         </div>
 
         <div class="label-input-pair dose-type-input-pair">
             <span class="h3 label"></span>
-            <select class="drop-down">
-                <option *ngFor="let doseType of unitDoseTypesEnum | keys">{{doseType.value}}</option>
+            <select class="drop-down" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseType" [attr.disabled]="UserDefinedControlsAreLocked?'true':null">
+                <option *ngFor="let doseType of unitDoseTypesEnum | keys" [ngValue]="doseType.key">{{doseType.value}}</option>
             </select>
         </div>
 
         <div class="x-label">of</div>
         <div class="label-input-pair dose-size-input-pair">
             <span class="h3 label"></span>
-            <input type="text" class="ui-inputtext" />
+            <input type="text" class="ui-inputtext" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseSize" [attr.disabled]="UserDefinedControlsAreLocked?'true':null" />
         </div>
 
         <div class="label-input-pair dose-uom-input-pair">
             <span class="h3 label"></span>
-            <select class="drop-down">
-                <option *ngFor="let uom of unitsOfMeasureEnum | keys">{{uom.value}}</option>
+            <select class="drop-down" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseUoM" [attr.disabled]="UserDefinedControlsAreLocked?'true':null">
+                <option *ngFor="let uom of unitsOfMeasureEnum | keys" [ngValue]="uom.key">{{uom.value}}</option>
             </select>
         </div>
 
-        <div class="label-input-pair instructions-input-pair">
+        <div class="label-input-pair instructions-input-pair" >
             <span class="h3 label">Instructions</span>
-            <select class="drop-down">
-                <option *ngFor="let instruction of medicineInstructionsEnum | keys">{{instruction.value}}</option>
+            <select class="drop-down" [(ngModel)]="viewModel.FactorRecordCLO.Instruction">
+                <option *ngFor="let instruction of medicineInstructionsEnum | keys" [ngValue]="instruction.key">{{instruction.value}}</option>
             </select>
         </div>
         <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
-    <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible()"></div>
+    <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible"></div>
 
 
 </div>

@@ -23,4 +23,11 @@ export class MedicineTypeCLO extends BaseCLO {
         super();
         Object.assign(this, init);
     }
+
+    // Public methods
+    public IsPackagedIntoUnitDoses(): boolean {
+        return (this.PackagedUnitDoseType !== null &&
+            this.PackagedUnitDoseSize !== null &&
+            this.PackagedUnitDoseUoM !== null);
+    }
 }

@@ -31,7 +31,7 @@ export class GlobalDataService {
                 Name: 'Vitamin C Liposomal',
                 PackagedUnitDoseType: Enums.UnitDoseType.Satchel,
                 PackagedUnitDoseSize: 1000,
-                PackagedUnitDoseUoM: Enums.UnitOfMeasure.Milligrams
+                PackagedUnitDoseUoM: Enums.UnitOfMeasure.mg
 
             }),
             OccurenceDateTime: new Date(Date.now()),
@@ -39,7 +39,7 @@ export class GlobalDataService {
             UnitDoseType: Enums.UnitDoseType.Satchel,
             UnitDoseQuantifier: 1,
             UnitDoseSize: 1000,
-            UnitDoseUoM: Enums.UnitOfMeasure.Milligrams,
+            UnitDoseUoM: Enums.UnitOfMeasure.mg,
             Instruction: null
         });
         records.push(testRecord1);

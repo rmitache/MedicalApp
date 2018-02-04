@@ -24,23 +24,38 @@ export class FactorRecordEditableItem {
         FactorRecordCLO: null,
         MedicineTypeName: '',
         MedicineTypeSearchResults: [],
-        OverlayIsVisible: () => {
-            return false;
-            //return this.viewModel.FactorRecordCLO.MedicineType === null;
-        }
+        OverlayIsVisible: true,
+        UserDefinedControlsAreLocked: true
     };
 
     // Private methods
-    private loadMedicineTypeByName(newMedicineTypeName: string) {
+    private loadMedicineTypeByName(selectedMedicineTypeName: string) {
 
-        // Get and load the newMedicineTypeCLO
-        let newMedicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(newMedicineTypeName);
-        this.viewModel.FactorRecordCLO.MedicineType = newMedicineTypeCLO;
+        // Get and load the medicineTypeCLO
+        let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
+        this.viewModel.FactorRecordCLO.MedicineType = medicineTypeCLO;
        
-        
-        // Set PieceSize and disable
-        //if(this.viewModel.FactorRecordCLO.MedicineType.PackagedUnitDoseType
-        // 
+        // Handle fields
+        this.viewModel.OverlayIsVisible = false;
+        if (medicineTypeCLO.IsPackagedIntoUnitDoses() === true) {
+            this.viewModel.FactorRecordCLO.UnitDoseQuantifier = 1;
+            this.viewModel.FactorRecordCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
+            this.viewModel.FactorRecordCLO.UnitDoseSize = medicineTypeCLO.PackagedUnitDoseSize;
+            this.viewModel.FactorRecordCLO.UnitDoseUoM = medicineTypeCLO.PackagedUnitDoseUoM;
+
+            // Make the controls readonly
+            this.viewModel.UserDefinedControlsAreLocked = true;
+        }
+        else {
+            
+            this.viewModel.FactorRecordCLO.UnitDoseQuantifier = 1;
+            this.viewModel.FactorRecordCLO.UnitDoseType = Enums.UnitDoseType.Teaspoons;
+            this.viewModel.FactorRecordCLO.UnitDoseSize = 100;
+            this.viewModel.FactorRecordCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
+
+            // Unlock the controls
+            this.viewModel.UserDefinedControlsAreLocked = true;
+        }
     }
 
     // Constructor 
@@ -77,7 +92,8 @@ interface ViewModel {
     FactorRecordCLO: CLOs.MedicineFactorRecordCLO;
     MedicineTypeName: string;
     MedicineTypeSearchResults: string[];
-    OverlayIsVisible(): boolean;
+    OverlayIsVisible: boolean;
+    UserDefinedControlsAreLocked: boolean;
 }
 
 

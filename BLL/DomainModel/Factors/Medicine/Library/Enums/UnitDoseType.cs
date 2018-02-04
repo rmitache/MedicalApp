@@ -6,16 +6,16 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Enums
 {
     public enum UnitDoseType
     {
-        
+
         // Packaged
-        Pills = 1,
-        Satchel = 2,
-        Dispenser = 3,
+        Pills = 0,
+        Satchel = 1,
+        Dispenser = 2,
 
         // FreeForm
-        Teaspoons = 4,
-        Drops = 5,
-        Custom = 6
+        Teaspoons = 3,
+        Drops = 4,
+        Custom = 5
 
    
     }
