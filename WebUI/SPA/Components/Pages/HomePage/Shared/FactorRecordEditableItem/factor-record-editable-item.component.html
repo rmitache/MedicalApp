@@ -1,52 +1,56 @@
 <div class="frame">
     <div class="draggable-area"></div>
     <div class="right-side">
-        <div class="label-input-pair">
+        <div class="label-input-pair medicine-type-input-pair">
             <span class="h3 label">Medicine Type</span>
 
 
             {{viewModel.MedicineTypeName}}
-            <p-autoComplete class="medicine-type-text-box"
+            <p-autoComplete 
                             [suggestions]="viewModel.MedicineTypeSearchResults"
                             [emptyMessage]="'No medicine types could be found. Please try a different name'"
                             [placeholder]="'Type to choose a Medicine Type'"
                             (completeMethod)="onMedicineTypeTextBoxChanged($event)"
-                            
                             (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>
 
 
         </div>
-        <!--<div class="label-input-pair">
-            <span class="h3 label">Method</span>
-            <select class="drop-down method-type-drop-down">
-                <option *ngFor="let method of medicineMethodsEnum | keys">{{method.value}}</option>
+
+        <div class="label-input-pair quantifier-input-pair">
+            <span class="h3 label">Dosage</span>
+            <input type="text" class="ui-inputtext" />
+        </div>
+
+        <div class="label-input-pair dose-type-input-pair">
+            <span class="h3 label"></span>
+            <select class="drop-down">
+                <option *ngFor="let doseType of unitDoseTypesEnum | keys">{{doseType.value}}</option>
             </select>
         </div>
-        <div class="label-input-pair">
-            <span class="h3 label">Pieces</span>
-            <input type="text" class="ui-inputtext nr-pieces-text-box" />
+
+        <div class="x-label">of</div>
+        <div class="label-input-pair dose-size-input-pair">
+            <span class="h3 label"></span>
+            <input type="text" class="ui-inputtext" />
         </div>
-        <div class="x-label">x</div>
-        <div class="label-input-pair">
-            <span class="h3 label">Piece size</span>
-            <input type="text" class="ui-inputtext piece-size-text-box" />
-        </div>
-        <div class="label-input-pair">
-            <span class="h3 label">Unit</span>
-            <select class="drop-down piece-unit-drop-down">
-                <option *ngFor="let unit of unitsOfMeasureEnum | keys">{{unit.value}}</option>
+
+        <div class="label-input-pair dose-uom-input-pair">
+            <span class="h3 label"></span>
+            <select class="drop-down">
+                <option *ngFor="let uom of unitsOfMeasureEnum | keys">{{uom.value}}</option>
             </select>
         </div>
-        <div class="label-input-pair">
+
+        <div class="label-input-pair instructions-input-pair">
             <span class="h3 label">Instructions</span>
-            <select class="drop-down instructions-drop-down">
+            <select class="drop-down">
                 <option *ngFor="let instruction of medicineInstructionsEnum | keys">{{instruction.value}}</option>
             </select>
-        </div>-->
+        </div>
         <div class="close" (click)="onRemoveClicked()">X</div>
 
     </div>
     <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible()"></div>
 
-   
+
 </div>

@@ -76,6 +76,8 @@ body {
     .label-input-pair .label {
         float: left;
         color:gray;
+
+        height:15px;
     }
 
     .label-input-pair .ui-inputtext,

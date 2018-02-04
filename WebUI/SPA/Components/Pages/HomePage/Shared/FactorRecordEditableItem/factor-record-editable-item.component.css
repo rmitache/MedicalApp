@@ -37,19 +37,24 @@
     height: calc(100% - 30px);
 }
 
-    .right-side .medicine-type-text-box {
+    .right-side .medicine-type-input-pair {
         width: 260px;
-        float: left;
-        clear: both;
+        margin-right: 35px;
     }
 
-    .right-side .method-type-drop-down {
-        width: 110px;
+    .right-side .quantifier-input-pair {
+        margin-right: 2px !important;
     }
 
-    .right-side .nr-pieces-text-box {
-        width: 25px;
+        .right-side .quantifier-input-pair .ui-inputtext {
+            width: 20px;
+            text-align: right;
+        }
+
+    .right-side .dose-type-input-pair .drop-down {
+        width: 100px;
     }
+
 
     .right-side .x-label {
         float: left;
@@ -61,18 +66,32 @@
         padding-top: 4px;
         font-family: Arial;
         font-size: 10pt;
-        font-weight: bold;
     }
 
-    .right-side .piece-size-text-box {
+    .right-side .dose-type-input-pair .ui-inputtext {
         width: 50px;
     }
 
-    .right-side .piece-unit-drop-down {
+    .right-side .dose-size-input-pair .ui-inputtext {
+        width: 20px;
+        text-align: right;
+    }
+
+    .right-side .dose-size-input-pair .ui-inputtext {
+        width: 40px;
+        text-align: right;
+    }
+
+
+    .right-side .dose-uom-input-pair .drop-down {
         width: 60px;
     }
 
-    .right-side .instructions-drop-down {
+
+    .right-side .instructions-input-pair {
+        margin-left:80px;
+    }
+    .right-side .instructions-input-pair .drop-down {
     }
 
     .right-side .close {
@@ -90,7 +109,7 @@
 
 .hide-controls-overlay {
     width: calc(100% - 320px);
-    margin-right:25px;
+    margin-right: 25px;
     height: 70px;
     background-color: #f7f7f7;
     float: right;

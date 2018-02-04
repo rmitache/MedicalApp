@@ -16,16 +16,17 @@ export class FactorRecordEditableItem {
     @Input('MedicineSearchService')
     private medicineTypesSearchService: IMedicineTypesSearchService;
 
-    //private medicineMethodsEnum = Enums.MedicineMethod;
+    private unitDoseTypesEnum = Enums.UnitDoseType;
     private unitsOfMeasureEnum = Enums.UnitOfMeasure;
-    //private medicineInstructionsEnum = Enums.MedicineInstruction;
+    private medicineInstructionsEnum = Enums.Instruction;
 
     private readonly viewModel: ViewModel = {
         FactorRecordCLO: null,
         MedicineTypeName: '',
         MedicineTypeSearchResults: [],
         OverlayIsVisible: () => {
-            return this.viewModel.FactorRecordCLO.MedicineType === null;
+            return false;
+            //return this.viewModel.FactorRecordCLO.MedicineType === null;
         }
     };
 
