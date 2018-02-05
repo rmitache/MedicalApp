@@ -2,7 +2,7 @@
 using BLL.DomainModel.General.Enums;
 using System;
 
-namespace BLL.DomainModel.Factors.Medicine.BLOs
+namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
     public enum MedicineFactorRecordType
     {

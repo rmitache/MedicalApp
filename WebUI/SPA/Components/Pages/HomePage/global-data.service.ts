@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
+import 'rxjs/add/operator/toPromise'
 
+import { HttpHandlerService } from 'SPA/Core/Services/HttpHandlerService/http-handler.service';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { StartupDataBundleService } from './startup-data-bundle.service';
@@ -10,10 +11,13 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 
 @Injectable()
 export class GlobalDataService {
+    // Fields
+    private readonly apiUrl: string = '/HomePage/';;
     // Constructor
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly startupDataBundleService: StartupDataBundleService
+        private readonly startupDataBundleService: StartupDataBundleService,
+        private readonly httpHandlerService: HttpHandlerService
     ) { }
 
     // Public methods
@@ -48,13 +52,26 @@ export class GlobalDataService {
 
         return records;
     }
-    public GetMedicineTypesFromBundle():DataStructures.List<CLOs.MedicineTypeCLO> {
-       
+    public GetMedicineTypesFromBundle(): DataStructures.List<CLOs.MedicineTypeCLO> {
+
         // Get MedicineTypes (flat dictionary, where each MedicineType has a null MedicineCategory, to begin with)
         let blos = this.startupDataBundleService.GetBundle['MedicineTypes'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO, blos);
 
         return cloList;
+    }
+    public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<void> {
+        const apiMethodName: string = 'AddFactorRecords';
+        debugger;
+        let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
+        debugger;
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
+            .toPromise()
+            .then((response) => {
+                alert('data was saved !');
+            });
+
+        return getDataPromise;
     }
 }
 

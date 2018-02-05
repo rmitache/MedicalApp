@@ -196,7 +196,7 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
             return this._finalizeAndDestroy();
         }
 
-        let response = callback();
+        let response = callback(this._childInstance);
         if (typeof response === 'boolean') {
             if (response) {
                 return this._finalizeAndDestroy();

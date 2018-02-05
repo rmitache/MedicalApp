@@ -2,7 +2,7 @@
 using BLL.DomainModel.Factors.Medicine.Library.Enums;
 using BLL.DomainModel.General.Enums;
 
-namespace BLL.DomainModel.Factors.Medicine.BLOs
+namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
 {
     public  class MedicineType
     {

@@ -1,8 +1,9 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.Enums;
+﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
+using BLL.DomainModel.Factors.Medicine.Library.Enums;
 using BLL.DomainModel.General.Enums;
 using System;
 
-namespace BLL.DomainModel.Factors.Medicine.BLOs
+namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
     public class MedicineFactorRecord
     {

@@ -5,7 +5,7 @@ import { HttpHandlerService } from 'SPA/Core/Services/HttpHandlerService/http-ha
 @Injectable()
 export class StartupDataBundleService {
     // Fields
-    private initialDataApiUrl: string = '/HomePage/';
+    private readonly initialDataApiUrl: string = '/HomePage/';
     private bundle: Object | null = null;
 
     // Properties

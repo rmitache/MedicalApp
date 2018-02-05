@@ -16,7 +16,7 @@ export interface IModalDialogOptions {
     closeDialogSubject?: Subject<void>;
 }
 
-export type ModalDialogOnAction = () => Promise<any> | Observable<any> | boolean | void;
+export type ModalDialogOnAction = (childComponentInstance?: any) => Promise<any> | Observable<any> | boolean | void;
 
 export interface IModalDialogButton {
     text: string;

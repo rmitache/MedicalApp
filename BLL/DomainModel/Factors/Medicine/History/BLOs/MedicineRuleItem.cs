@@ -1,8 +1,9 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.Enums;
+﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
+using BLL.DomainModel.Factors.Medicine.Library.Enums;
 using BLL.DomainModel.General.Enums;
 using BLL.DomainModel.Plans.BLOs;
 
-namespace BLL.DomainModel.Factors.Medicine.BLOs
+namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
     public  class MedicineRuleItem: RuleItem
     {

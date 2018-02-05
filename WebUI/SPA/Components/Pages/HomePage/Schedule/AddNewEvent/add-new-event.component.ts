@@ -50,6 +50,12 @@ export class AddNewEventComponent implements IModalDialog {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
     }
 
+    // Public methods
+    public SaveData(): Promise<void> {
+        let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecords);
+        return saveDataOperationPromise;
+    }
+
     // EventHandlers
     private onRemoveFactorRecordTriggered(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
 

@@ -21,7 +21,7 @@ export class ScheduleComponent {
     private readonly viewModel: ViewModel = {
         CurrentDate: null,
         CurrentWeekNumber: null,
-        FactorRecords: null,
+        AvailableFactorRecords: null,
         CurrentDisplayModeEnum: DisplayModes.Day,
         DisplayRepresentation: null
     };
@@ -52,9 +52,9 @@ export class ScheduleComponent {
     ngOnInit() {
 
         // Init ViewModel properties
-        this.viewModel.FactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle();
+        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle();
         this.viewModel.CurrentDate = new Date();
-        this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.FactorRecords);
+        this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -67,10 +67,17 @@ export class ScheduleComponent {
             childComponent: AddNewEventComponent,
             actionButtons: [
                 {
-                    text: 'Ok'
+                    text: 'Ok',
+                    onAction: (childComponentInstance:any) => {
+                        let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
+                        return addNewEventComponentInstance.SaveData();
+                    }
                 },
                 {
-                    text: 'Cancel'
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    }
                 }
             ]
 
@@ -89,7 +96,7 @@ export class ScheduleComponent {
 interface ViewModel {
     CurrentDate: Date;
     CurrentWeekNumber: number;
-    FactorRecords: CLOs.MedicineFactorRecordCLO[];
+    AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
     CurrentDisplayModeEnum: DisplayModes;
     DisplayRepresentation: DisplayRepresentation;
 }

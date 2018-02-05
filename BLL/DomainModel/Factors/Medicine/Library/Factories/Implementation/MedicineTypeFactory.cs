@@ -1,8 +1,8 @@
-﻿using BLL.DomainModel.Factors.Medicine.BLOs;
-using BLL.DomainModel.General.Enums;
+﻿using BLL.DomainModel.General.Enums;
 using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
+using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 
 namespace BLL.DomainModel.Factors.Medicine.Library.Factories
 {

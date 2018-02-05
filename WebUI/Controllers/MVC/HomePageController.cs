@@ -1,8 +1,12 @@
 using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using BLL.DomainModel.Factors.Medicine.Library.Services;
-using DataAccessLayer.Repositories.MedicineTypesRepository;
+using BLL.DomainModel.Factors.Medicine.History.BLOs;
+using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace WebUI.Controllers
 {
@@ -37,7 +41,7 @@ namespace WebUI.Controllers
         public JsonResult Get()
         {
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-            var medicineTypes = this.medicineTypeService.GetAllMedicineTypes();
+            List<MedicineType> medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -57,5 +61,29 @@ namespace WebUI.Controllers
             };
             return Json(bundle);
         }
+        [Route("HomePage/AddFactorRecords")]
+        [HttpPost]
+        public HttpResponseMessage Post(MedicineFactorRecord[] factorRecordCLOs)
+        {
+            //return Request.CreateResponse(HttpStatusCode.OK, null);
+            return null;
+        }
+
+
+
+        // Models
+
+        //[HttpPost]
+        //public HttpResponseMessage UpdateFilterSetting(BLO.FilterSetting filterSetting)
+        //{
+        //    BLO.FilterSetting updatedFilterSetting = _filterSettingsApi.Update(filterSetting);
+        //    return Request.CreateResponse(HttpStatusCode.OK, updatedFilterSetting);
+        //}
+        //[HttpPost]
+        //public HttpResponseMessage DeleteFilterSetting([FromBody] int id)
+        //{
+        //    _filterSettingsApi.DeleteByID(id);
+        //    return Request.CreateResponse(HttpStatusCode.OK, "Completed");
+        //}
     }
 }
