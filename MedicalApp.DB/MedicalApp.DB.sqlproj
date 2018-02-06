@@ -71,6 +71,7 @@
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="dbo\Tables\tj_medicine_type_to_medicine_category.sql" />
     <Build Include="dbo\Tables\t_medicine_category.sql" />
+    <Build Include="dbo\Tables\t_medicine_factor_record.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

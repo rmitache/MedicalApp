@@ -71,22 +71,11 @@ namespace WebUI.Controllers
 
 
 
-        // Models
-        public class AddFactorRecordsModel
-        {
-            public MedicineFactorRecord factorRecord { get; set; }
-        }
-        //[HttpPost]
-        //public HttpResponseMessage UpdateFilterSetting(BLO.FilterSetting filterSetting)
+        // Models - needed when we want to pass multiple parameters to a controller method
+        //public class AddFactorRecordsModel
         //{
-        //    BLO.FilterSetting updatedFilterSetting = _filterSettingsApi.Update(filterSetting);
-        //    return Request.CreateResponse(HttpStatusCode.OK, updatedFilterSetting);
+        //    public MedicineFactorRecord factorRecord { get; set; }
         //}
-        //[HttpPost]
-        //public HttpResponseMessage DeleteFilterSetting([FromBody] int id)
-        //{
-        //    _filterSettingsApi.DeleteByID(id);
-        //    return Request.CreateResponse(HttpStatusCode.OK, "Completed");
-        //}
+      
     }
 }

@@ -8,6 +8,7 @@ namespace DataAccessLayer.Entities
     {
         public virtual DbSet<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
         public virtual DbSet<TMedicineCategory> TMedicineCategory { get; set; }
+        public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
         public virtual DbSet<TUser> TUser { get; set; }
 
@@ -56,6 +57,38 @@ namespace DataAccessLayer.Entities
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TMedicineFactorRecord>(entity =>
+            {
+                entity.ToTable("t_medicine_factor_record");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AdministrationMethodId).HasColumnName("administration_method_id");
+
+                entity.Property(e => e.InstructionId).HasColumnName("instruction_id");
+
+                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
+
+                entity.Property(e => e.OccurrenceDateTime)
+                    .HasColumnName("occurrence_date_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
+
+                entity.Property(e => e.UnitDoseSize).HasColumnName("unit_dose_size");
+
+                entity.Property(e => e.UnitDoseTypeId).HasColumnName("unit_dose_type_id");
+
+                entity.Property(e => e.UnitDoseUomId).HasColumnName("unit_dose_uom_id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TMedicineFactorRecord)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_t_medicine_factor_record_t_user");
             });
 
             modelBuilder.Entity<TMedicineType>(entity =>
