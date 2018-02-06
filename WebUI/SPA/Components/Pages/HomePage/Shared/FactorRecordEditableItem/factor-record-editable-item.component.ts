@@ -54,7 +54,7 @@ export class FactorRecordEditableItem {
             this.viewModel.FactorRecordCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
 
             // Unlock the controls
-            this.viewModel.UserDefinedControlsAreLocked = true;
+            this.viewModel.UserDefinedControlsAreLocked = false;
         }
     }
 

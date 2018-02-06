@@ -1,5 +1,5 @@
 ﻿export enum Instruction {
-    Unspecified = 'Unspecified',
-    WithFood = 'With Food',
-    WithoutFood = 'Without Food'
+    Unspecified = 0,
+    WithFood = 1,
+    WithoutFood = 2
 }

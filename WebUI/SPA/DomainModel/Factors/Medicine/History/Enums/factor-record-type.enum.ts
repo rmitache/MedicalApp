@@ -1,4 +1,4 @@
 ﻿export enum FactorRecordType {
-    UserEntry,
-    PlanProjection
+    UserEntry = 0,
+    PlanProjection = 1
 }

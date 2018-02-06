@@ -2,6 +2,7 @@
 
 
 export enum UnitOfMeasure {
-    Unspecified = 'Unspecified',
-    mg = 'mg'
+    Unspecified = 0,
+    mg = 1
 }
+

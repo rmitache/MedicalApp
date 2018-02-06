@@ -1,6 +1,6 @@
 ﻿
 export enum BaseForm {
-    Unspecified = 'Unspecified',
-    Powder = 'Powder',
-    Liquid = 'Liquid'
+    Unspecified = 0,
+    Powder = 1,
+    Liquid = 2
 }

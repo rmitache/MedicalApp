@@ -15,6 +15,8 @@ export class ScheduleUnitComponent {
     private title: string = '';
     @Input('TimeGroupRepresentations')
     private timeGroupRepresentations: TimeGroupRepresentation[] = [];
+    private unitDoseTypesEnum = Enums.UnitDoseType;
+    private uomTypesEnum = Enums.UnitOfMeasure;
     private readonly viewModel: ViewModel = {
         Title: null,
         TimeGroups: null

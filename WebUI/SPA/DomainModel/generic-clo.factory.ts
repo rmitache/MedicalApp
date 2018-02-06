@@ -83,6 +83,12 @@ export class GenericCLOFactory {
                 outputObj[propertyName] = self.ConvertToBlo(valueOnCLO);
             }
             //---------------------------------------------------------------
+            // Value is null ------------------------------------------------
+            else if (valueOnCLO === null) {
+                alert(propertyName + " = NULL!");
+                outputObj[propertyName] = null;
+            }
+            //---------------------------------------------------------------
         }
 
         return outputObj;

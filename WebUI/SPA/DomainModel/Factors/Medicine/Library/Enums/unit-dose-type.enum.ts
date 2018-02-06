@@ -2,12 +2,12 @@
 export enum UnitDoseType {
 
     // Packaged
-    Pills = 'Pills',
-    Satchel = 'Satchel',
-    Dispenser = 'Dispenser',
+    Pills = 0,
+    Satchel = 1,
+    Dispenser = 2,
 
     // FreeForm
-    Teaspoons = 'Teaspoons',
-    Drops = 'Drops',
-    Custom = 'Custom'
+    Teaspoons = 3,
+    Drops = 4,
+    Custom = 5
 }
