@@ -34,6 +34,7 @@ export class FactorRecordEditableItem {
         // Get and load the medicineTypeCLO
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
         this.viewModel.FactorRecordCLO.MedicineType = medicineTypeCLO;
+        debugger;
        
         // Handle fields
         this.viewModel.OverlayIsVisible = false;

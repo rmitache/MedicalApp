@@ -33,7 +33,7 @@ export class GenericCLOFactory {
                 relevantPropertyNames.push(propertyName);
             }
         }
-
+        
         // Go through the extracted properties and convert their values 
         for (let i = 0; i < relevantPropertyNames.length; i++) {
             let propertyName = relevantPropertyNames[i];
@@ -85,7 +85,6 @@ export class GenericCLOFactory {
             //---------------------------------------------------------------
             // Value is null ------------------------------------------------
             else if (valueOnCLO === null) {
-                alert(propertyName + " = NULL!");
                 outputObj[propertyName] = null;
             }
             //---------------------------------------------------------------

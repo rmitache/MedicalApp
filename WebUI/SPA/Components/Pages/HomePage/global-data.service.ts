@@ -12,7 +12,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 @Injectable()
 export class GlobalDataService {
     // Fields
-    private readonly apiUrl: string = '/HomePage/';;
+    private readonly apiUrl: string = '/HomePage';
     // Constructor
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
@@ -62,13 +62,12 @@ export class GlobalDataService {
     }
     public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<void> {
         const apiMethodName: string = 'AddFactorRecords';
-        debugger;
+
         let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
-        debugger;
         let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
             .toPromise()
             .then((response) => {
-                alert('data was saved !');
+                
             });
 
         return getDataPromise;

@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         }
 
 
-        
+
         // WebAPI methods
         [Route("HomePage/GetInitialData")]
         [HttpGet]
@@ -63,7 +63,7 @@ namespace WebUI.Controllers
         }
         [Route("HomePage/AddFactorRecords")]
         [HttpPost]
-        public HttpResponseMessage Post(MedicineFactorRecord[] factorRecordCLOs)
+        public HttpResponseMessage Post([FromBody]MedicineFactorRecord[] factorRecords)
         {
             //return Request.CreateResponse(HttpStatusCode.OK, null);
             return null;
@@ -72,7 +72,10 @@ namespace WebUI.Controllers
 
 
         // Models
-
+        public class AddFactorRecordsModel
+        {
+            public MedicineFactorRecord factorRecord { get; set; }
+        }
         //[HttpPost]
         //public HttpResponseMessage UpdateFilterSetting(BLO.FilterSetting filterSetting)
         //{

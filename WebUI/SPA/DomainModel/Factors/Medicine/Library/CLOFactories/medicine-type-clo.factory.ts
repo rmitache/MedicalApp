@@ -19,7 +19,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 
         newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
             HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;
-        newCLO.PackagedUnitDoseSize = parseInt(blo['PackagedUnitDoseSize']);
+        newCLO.PackagedUnitDoseSize = (blo['PackagedUnitDoseSize'] !== null) ?
+            parseInt(blo['PackagedUnitDoseSize']) : null;
         newCLO.PackagedUnitDoseUoM = (blo['PackagedUnitDoseUoM'] !== null) ?
             HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM'])) : null;
 
