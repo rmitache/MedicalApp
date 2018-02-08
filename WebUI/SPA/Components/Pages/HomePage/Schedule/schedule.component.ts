@@ -52,7 +52,7 @@ export class ScheduleComponent {
     ngOnInit() {
 
         // Init ViewModel properties
-        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle();
+        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle().ToArray();
         this.viewModel.CurrentDate = new Date();
         this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
     }

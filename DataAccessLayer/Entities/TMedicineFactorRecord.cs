@@ -16,6 +16,7 @@ namespace DataAccessLayer.Entities
         public int? InstructionId { get; set; }
         public int? AdministrationMethodId { get; set; }
 
+        public TMedicineType MedicineType { get; set; }
         public TUser User { get; set; }
     }
 }

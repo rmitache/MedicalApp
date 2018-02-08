@@ -85,6 +85,12 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
+                entity.HasOne(d => d.MedicineType)
+                    .WithMany(p => p.TMedicineFactorRecord)
+                    .HasForeignKey(d => d.MedicineTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_t_medicine_factor_record_t_medicine_type");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TMedicineFactorRecord)
                     .HasForeignKey(d => d.UserId)

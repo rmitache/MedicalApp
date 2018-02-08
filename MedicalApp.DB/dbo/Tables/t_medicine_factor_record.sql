@@ -10,6 +10,9 @@
     [instruction_id]           INT      NULL,
     [administration_method_id] INT      NULL,
     CONSTRAINT [PK_t_medicine_factor_record] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_t_medicine_factor_record_t_medicine_type] FOREIGN KEY ([medicine_type_id]) REFERENCES [dbo].[t_medicine_type] ([id]),
     CONSTRAINT [FK_t_medicine_factor_record_t_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[t_user] ([id]) ON DELETE CASCADE
 );
+
+
 

@@ -1,10 +1,13 @@
-﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
+﻿import { Injectable } from '@angular/core';
+import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 
+
+@Injectable()
 export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO> {
 
 

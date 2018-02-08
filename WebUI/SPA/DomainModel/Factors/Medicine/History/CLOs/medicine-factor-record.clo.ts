@@ -17,7 +17,7 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     public UnitDoseUoM: Enums.UnitOfMeasure;
 
     public Instruction: Enums.Instruction;
-
+    public AdministrationMethod: Enums.AdministrationMethod;
 
 
     // Constructor

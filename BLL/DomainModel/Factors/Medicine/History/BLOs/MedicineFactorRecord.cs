@@ -19,7 +19,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.BLOs
         public UnitOfMeasure UnitDoseUoM { get; set; }
 
         public Instruction Instruction { get; set; }
-        public AdministrationMethod Method { get; set; }
+        public AdministrationMethod AdministrationMethod { get; set; }
 
 
 

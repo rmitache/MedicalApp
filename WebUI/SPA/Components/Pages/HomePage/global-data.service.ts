@@ -24,37 +24,8 @@ export class GlobalDataService {
     public GetLoggedInUserFromBundle(): CLOs.PatientAccountCLO {
         return this.genericCLOFactory.ConvertToCLO<CLOs.PatientAccountCLO>(CLOs.PatientAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
     }
-    public GetFactorRecordsForTodayFromBundle(): CLOs.MedicineFactorRecordCLO[] {
-        const records: CLOs.MedicineFactorRecordCLO[] = [];
-
-
-        let testRecord1: CLOs.MedicineFactorRecordCLO = new CLOs.MedicineFactorRecordCLO({
-            ID: 1,
-            MedicineType: new CLOs.MedicineTypeCLO({
-                ID: 1,
-                Name: 'Vitamin C Liposomal',
-                PackagedUnitDoseType: Enums.UnitDoseType.Satchel,
-                PackagedUnitDoseSize: 1000,
-                PackagedUnitDoseUoM: Enums.UnitOfMeasure.mg
-
-            }),
-            OccurenceDateTime: new Date(Date.now()),
-
-            UnitDoseType: Enums.UnitDoseType.Satchel,
-            UnitDoseQuantifier: 1,
-            UnitDoseSize: 1000,
-            UnitDoseUoM: Enums.UnitOfMeasure.mg,
-            Instruction: null
-        });
-        records.push(testRecord1);
-
-
-
-        return records;
-    }
     public GetMedicineTypesFromBundle(): DataStructures.List<CLOs.MedicineTypeCLO> {
 
-        // Get MedicineTypes (flat dictionary, where each MedicineType has a null MedicineCategory, to begin with)
         let blos = this.startupDataBundleService.GetBundle['MedicineTypes'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO, blos);
 
@@ -64,13 +35,33 @@ export class GlobalDataService {
         const apiMethodName: string = 'AddFactorRecords';
 
         let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
-        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
             .toPromise()
             .then((response) => {
                 
             });
 
+        return postDataPromise;
+    }
+    public GetFactorRecordsForTodayFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForToday'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
+        return cloList;
+    }
+    public GetFactorRecords(): Promise<CLOs.MedicineFactorRecordCLO[]> {
+        const apiMethodName: string = 'GetFactorRecords';
+
+        let dummyDate = Date.now();
+
+        let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName, dummyDate)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList(CLOs.MedicineFactorRecordCLO, blos).ToArray();
+            });
+
+
         return getDataPromise;
     }
 }
 
+        

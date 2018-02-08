@@ -7,6 +7,7 @@ using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using BLL.DomainModel.Factors.Medicine.History.Services;
 
 namespace WebUI.Controllers
 {
@@ -15,11 +16,16 @@ namespace WebUI.Controllers
     {
         // Fields 
         private IMedicineTypeService medicineTypeService { get; set; }
+        private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
 
         // Constructor
-        public HomePageController(IMedicineTypeService medicineTypeService)
+        public HomePageController(
+            IMedicineTypeService medicineTypeService,
+            IMedicineFactorRecordService medicineFactorRecordService
+            )
         {
             this.medicineTypeService = medicineTypeService;
+            this.medicineFactorRecordService = medicineFactorRecordService;
         }
 
         // MVC methods
@@ -41,7 +47,8 @@ namespace WebUI.Controllers
         public JsonResult Get()
         {
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-            List<MedicineType> medicineTypes = medicineTypeService.GetAllMedicineTypes();
+            var medicineTypes = medicineTypeService.GetAllMedicineTypes();
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, 1);
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -49,6 +56,7 @@ namespace WebUI.Controllers
                 SignupDate = new DateTime(2017, 12, 28),
                 BirthDate = new DateTime(1980, 10, 15),
                 Language = "en"
+                
             };
             //----------------------------------------------------------------------------------------------------------------------------
 
@@ -57,25 +65,28 @@ namespace WebUI.Controllers
             var bundle = new
             {
                 LoggedInUser = loggedInUserJSON,
-                MedicineTypes = medicineTypes
+                MedicineTypes = medicineTypes,
+                FactorRecordsForToday = factorRecords
             };
             return Json(bundle);
         }
         [Route("HomePage/AddFactorRecords")]
         [HttpPost]
-        public HttpResponseMessage Post([FromBody]MedicineFactorRecord[] factorRecords)
+        public JsonResult Post([FromBody]List<MedicineFactorRecord> factorRecords)
         {
-            //return Request.CreateResponse(HttpStatusCode.OK, null);
-            return null;
+            int userID = 1;
+            var factorRecordsUpdatedIDs = this.medicineFactorRecordService.AddMedicineFactorRecords(factorRecords, userID);
+            return Json(factorRecordsUpdatedIDs);
+        }
+        [Route("HomePage/GetFactorRecords")]
+        [HttpGet]
+        public JsonResult Get([FromBody]DateTime date)
+        {
+            int userID = 1;
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, userID);
+            return Json(blos);
         }
 
 
-
-        // Models - needed when we want to pass multiple parameters to a controller method
-        //public class AddFactorRecordsModel
-        //{
-        //    public MedicineFactorRecord factorRecord { get; set; }
-        //}
-      
     }
 }
