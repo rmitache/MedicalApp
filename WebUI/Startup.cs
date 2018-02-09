@@ -26,20 +26,15 @@ namespace WebUI
         public IConfiguration Configuration { get; }
 
 
-        //services.addtr
-        //        Classes.FromAssemblyNamed("Infare.FE4.BLL")
-        //      .IncludeNonPublicTypes()
-        //      .InNamespace("Infare.FE4.BLL", true)
-        //      .WithServiceDefaultInterfaces()
-        //      .LifestyleTransient(),
-
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
                 .AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                });
 
 
             // DI configuration------------------------------------------------------------------------------------------------------------
