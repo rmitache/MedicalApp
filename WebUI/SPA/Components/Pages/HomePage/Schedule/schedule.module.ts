@@ -10,13 +10,17 @@ import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
 import { FactorRecordEditableItem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordEditableItem/factor-record-editable-item.component';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
+import { BlockUIModule } from 'primeng/primeng';
+import { ProgressSpinnerModule } from 'primeng/primeng';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         CalendarModule,
-        AutoCompleteModule
+        AutoCompleteModule,
+        BlockUIModule,
+        ProgressSpinnerModule
     ],
     declarations: [
         ScheduleComponent,

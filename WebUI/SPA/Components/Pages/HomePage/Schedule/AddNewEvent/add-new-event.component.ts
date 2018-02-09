@@ -7,6 +7,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 @Component({
     selector: 'add-new-event',
@@ -37,7 +38,7 @@ export class AddNewEventComponent implements IModalDialog {
         CreateNewFactorRecord: () => {
             this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
         },
-        OccurenceDate: new Date()
+        OccurenceDateTime: new Date()
     };
 
 
@@ -51,7 +52,14 @@ export class AddNewEventComponent implements IModalDialog {
     }
 
     // Public methods
-    public SaveData(): Promise<void> {
+    public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
+
+        // Loop through all FactorRecords and set OccurrenceDateTime
+        this.viewModel.FactorRecords.forEach(record => {
+            record.OccurenceDateTime = this.viewModel.OccurenceDateTime;
+        });
+
+
         let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecords);
         return saveDataOperationPromise;
     }
@@ -82,7 +90,7 @@ export class AddNewEventComponent implements IModalDialog {
 interface ViewModel {
     FactorRecords: CLOs.MedicineFactorRecordCLO[];
     CreateNewFactorRecord();
-    OccurenceDate: Date;
+    OccurenceDateTime: Date;
 }
 
 export interface IMedicineTypesSearchService {

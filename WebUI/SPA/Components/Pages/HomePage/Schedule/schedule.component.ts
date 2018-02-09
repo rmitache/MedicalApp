@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { Time, Interval, TimeInterval } from 'SPA/Core/Helpers/DataStructures/misc';
+import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
@@ -23,7 +23,8 @@ export class ScheduleComponent {
         CurrentWeekNumber: null,
         AvailableFactorRecords: null,
         CurrentDisplayModeEnum: DisplayModes.Day,
-        DisplayRepresentation: null
+        DisplayRepresentation: null,
+        Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -38,6 +39,9 @@ export class ScheduleComponent {
             // OBS -> Not implemented yet
         }
         return currentStrategy;
+    }
+    private refreshDisplayRepresentation() {
+        this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
     }
 
     // Constructor 
@@ -54,7 +58,7 @@ export class ScheduleComponent {
         // Init ViewModel properties
         this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle().ToArray();
         this.viewModel.CurrentDate = new Date();
-        this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
+        this.refreshDisplayRepresentation();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -66,11 +70,27 @@ export class ScheduleComponent {
             title: 'Add new Event',
             childComponent: AddNewEventComponent,
             actionButtons: [
+                
                 {
-                    text: 'Ok',
-                    onAction: (childComponentInstance:any) => {
-                        let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                        return addNewEventComponentInstance.SaveData();
+                    text: 'Save',
+                    onAction: (childComponentInstance: any) => {
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.viewModel.Blocked = true;
+                            let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
+                            addNewEventComponentInstance.SaveData()
+                                .then((cloList) => {
+
+                                    this.viewModel.AvailableFactorRecords = this.viewModel.AvailableFactorRecords.concat(cloList.ToArray());
+                                    this.refreshDisplayRepresentation();
+
+                                    setTimeout(() => {
+                                        this.viewModel.Blocked = false;
+                                        resolve();
+                                    }, 200);
+                                    
+                                });
+                        });
+                        return promiseWrapper;
                     }
                 },
                 {
@@ -99,6 +119,7 @@ interface ViewModel {
     AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
     CurrentDisplayModeEnum: DisplayModes;
     DisplayRepresentation: DisplayRepresentation;
+    Blocked: boolean;
 }
 enum DisplayModes {
     Day,
@@ -114,19 +135,19 @@ class DayDisplayModeStrategy implements IDisplayModeStrategy {
     private unitsConfiguration = [
         {
             Title: 'Night',
-            TimeInterval: new TimeInterval(new Time(0, 0), new Time(5, 59))
+            TimeInterval: new TimeRange(new Time(0, 0), new Time(5, 59))
         },
         {
             Title: 'Morning',
-            TimeInterval: new TimeInterval(new Time(6, 0), new Time(9, 59))
+            TimeInterval: new TimeRange(new Time(6, 0), new Time(9, 59))
         },
         {
             Title: 'MidDay',
-            TimeInterval: new TimeInterval(new Time(10, 0), new Time(17, 59))
+            TimeInterval: new TimeRange(new Time(10, 0), new Time(17, 59))
         },
         {
             Title: 'Evening',
-            TimeInterval: new TimeInterval(new Time(18, 0), new Time(23, 59))
+            TimeInterval: new TimeRange(new Time(18, 0), new Time(23, 59))
 
         }
     ];
@@ -187,7 +208,7 @@ class DisplayRepresentation {
 }
 class UnitRepresentation {
     public readonly Title: string;
-    public readonly TimeInterval: TimeInterval;
+    public readonly TimeInterval: TimeRange;
     public readonly TimeGroupRepresentations: { [timeKey: string]: TimeGroupRepresentation } = {};
 
     constructor(init?: Partial<UnitRepresentation>) {

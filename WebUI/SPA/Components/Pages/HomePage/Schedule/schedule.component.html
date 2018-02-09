@@ -1,3 +1,10 @@
+<p-blockUI [blocked]="viewModel.Blocked">
+    <div class="inner-div">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+    
+</p-blockUI>
+
 <div class="frame">
     <div class="header">
         <div class="left-section">
@@ -5,7 +12,7 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
         </div>
         <div class="center-section">
-            <navigation-panel [SelectedDate]="viewModel.CurrentDate" 
+            <navigation-panel [SelectedDate]="viewModel.CurrentDate"
                               (PreviousClicked)="onTimeNavigationPreviousTriggered()"
                               (NextClicked)="onTimeNavigationNextTriggered()"></navigation-panel>
         </div>
@@ -17,7 +24,7 @@
         </div>
     </div>
     <div class="body">
-        <schedule-unit *ngFor="let unitRepr of viewModel.DisplayRepresentation.UnitRepresentations" 
+        <schedule-unit *ngFor="let unitRepr of viewModel.DisplayRepresentation.UnitRepresentations"
                        [Title]="unitRepr.Title"
                        [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
 

@@ -8,6 +8,8 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import { Range } from 'SPA/Core/Helpers/DataStructures/misc';
+import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 @Injectable()
 export class GlobalDataService {
@@ -31,14 +33,15 @@ export class GlobalDataService {
 
         return cloList;
     }
-    public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<void> {
+    public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
         const apiMethodName: string = 'AddFactorRecords';
 
         let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
             .toPromise()
-            .then((response) => {
-                
+            .then((blosWithUpdatedIDs) => {
+                let clos = this.genericCLOFactory.ConvertToCloList(CLOs.MedicineFactorRecordCLO, blosWithUpdatedIDs);
+                return clos;
             });
 
         return postDataPromise;
@@ -48,7 +51,7 @@ export class GlobalDataService {
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
         return cloList;
     }
-    public GetFactorRecords(): Promise<CLOs.MedicineFactorRecordCLO[]> {
+    public GetFactorRecords(date:Date): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
         let dummyDate = Date.now();
@@ -56,7 +59,7 @@ export class GlobalDataService {
         let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName, dummyDate)
             .toPromise()
             .then((blos) => {
-                return this.genericCLOFactory.ConvertToCloList(CLOs.MedicineFactorRecordCLO, blos).ToArray();
+                return this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos).ToArray();
             });
 
 

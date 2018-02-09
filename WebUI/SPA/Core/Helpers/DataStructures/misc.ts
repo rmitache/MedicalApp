@@ -14,13 +14,13 @@
     }
 }
 
-export class Interval<T> {
+export class Range<T> {
     constructor(public readonly IntervalStart: T, public readonly IntervalEnd: T) {
     }
 
 }
 
-export class TimeInterval extends Interval<Time> {
+export class TimeRange extends Range<Time> {
 
 
     constructor(public readonly IntervalStart: Time, public readonly IntervalEnd: Time) {

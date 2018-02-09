@@ -33,6 +33,35 @@ body {
 }
 
 
+/*Block-UI*/
+.ui-blockui {
+    position:absolute;
+    opacity:0.4;
+}
+
+    .ui-blockui .inner-div {
+        opacity: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        /*background-color: white;*/
+        border-radius:10px;
+    }
+    .ui-blockui .inner-div .span {
+        display:inline-block;
+        margin-left:auto;
+        margin-right:auto;
+    }
+@keyframes ui-progress-spinner-color {
+    100%, 0% {
+        stroke: white;
+    }
+    50% {
+        stroke: blue;
+    }
+
+}
 /*Controls*/
 .button,
 .btn {
