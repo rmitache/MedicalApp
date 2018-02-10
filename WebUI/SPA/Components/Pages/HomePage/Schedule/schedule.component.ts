@@ -24,6 +24,7 @@ export class ScheduleComponent {
         AvailableFactorRecords: null,
         CurrentDisplayModeEnum: DisplayModes.Day,
         DisplayRepresentation: null,
+
         Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
@@ -70,13 +71,18 @@ export class ScheduleComponent {
             title: 'Add new Event',
             childComponent: AddNewEventComponent,
             actionButtons: [
-                
                 {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
+                        return !addNewEventComponentInstance.IsValidForSave();
+                    },
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
                             this.viewModel.Blocked = true;
                             let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
+
+
                             addNewEventComponentInstance.SaveData()
                                 .then((cloList) => {
 
@@ -94,6 +100,9 @@ export class ScheduleComponent {
                     }
                 },
                 {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
                     text: 'Cancel',
                     onAction: () => {
                         return true;

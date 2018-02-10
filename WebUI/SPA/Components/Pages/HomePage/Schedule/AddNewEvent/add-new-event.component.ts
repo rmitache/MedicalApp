@@ -49,7 +49,9 @@ export class AddNewEventComponent implements IModalDialog {
         private readonly globalDataService: GlobalDataService
     ) {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
+        this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
     }
+    
 
     // Public methods
     public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
@@ -63,6 +65,9 @@ export class AddNewEventComponent implements IModalDialog {
 
         let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecords);
         return saveDataOperationPromise;
+    }
+    public IsValidForSave(): boolean {
+        return false;
     }
 
     // EventHandlers

@@ -46,8 +46,9 @@ import { Subject } from 'rxjs/Subject';
         </div>
         <div [ngClass]="settings.footerClass" *ngIf="actionButtons && actionButtons.length">
           <div class="buttons-right-area">
-            <div *ngFor="let button of actionButtons" (click)="doAction(button.onAction)"
-              [ngClass]="button.buttonClass || settings.buttonClass">{{button.text}}</div>
+            <button *ngFor="let button of actionButtons" [attr.disabled]="button.isDisabledFunction(_childInstance)?'true':null" (click)="doAction(button.onAction)"
+              [ngClass]="button.buttonClass || settings.buttonClass">{{button.text}}
+            </button>
           </div>
         </div>
       </div>
@@ -133,6 +134,8 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
         this._inProgress = true;
         this._closeIfSuccessful(action);
     }
+
+
 
     /**
      * Method to run on close

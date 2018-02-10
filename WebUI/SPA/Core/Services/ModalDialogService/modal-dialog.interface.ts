@@ -22,6 +22,7 @@ export interface IModalDialogButton {
     text: string;
     buttonClass?: string;
     onAction?: ModalDialogOnAction;
+    isDisabledFunction?: (childComponentInstance: any) => boolean;
 }
 
 export interface IModalDialogSettings {

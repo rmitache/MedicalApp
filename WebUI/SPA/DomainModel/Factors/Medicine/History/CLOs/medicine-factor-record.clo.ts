@@ -30,6 +30,7 @@ export class MedicineFactorRecordCLO extends BaseCLO {
     public GetTime(): Time {
         return new Time(this.OccurenceDateTime.getHours(), this.OccurenceDateTime.getMinutes());
     }
+    
 }
 
 
