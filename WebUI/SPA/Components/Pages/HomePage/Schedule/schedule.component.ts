@@ -24,7 +24,6 @@ export class ScheduleComponent {
         AvailableFactorRecords: null,
         CurrentDisplayModeEnum: DisplayModes.Day,
         DisplayRepresentation: null,
-
         Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
@@ -93,7 +92,7 @@ export class ScheduleComponent {
                                         this.viewModel.Blocked = false;
                                         resolve();
                                     }, 200);
-                                    
+
                                 });
                         });
                         return promiseWrapper;
@@ -113,13 +112,30 @@ export class ScheduleComponent {
 
         });
     }
-    private onTimeNavigationPreviousTriggered() {
-        let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days');
-        this.viewModel.CurrentDate = newDate.toDate();
+    
+    private onNavigateBackwardTriggered() {
+        let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
+
+        // Init ViewModel properties
+        let promise = this.dataService.GetFactorRecords(newDate)
+            .then(factorRecordCLOs => {
+                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
+                this.viewModel.CurrentDate = newDate;
+                this.refreshDisplayRepresentation();
+            });
     }
-    private onTimeNavigationNextTriggered() {
-        let newDate = moment(this.viewModel.CurrentDate).add(1, 'days');
-        this.viewModel.CurrentDate = newDate.toDate();
+    private onNavigateForwardTriggered() {
+        let newDate = moment(this.viewModel.CurrentDate).add(1, 'days').toDate();
+
+        // Init ViewModel properties
+        let promise = this.dataService.GetFactorRecords(newDate)
+            .then(factorRecordCLOs => {
+                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
+                this.viewModel.CurrentDate = newDate;
+                this.refreshDisplayRepresentation();
+            });
+
+
     }
 }
 interface ViewModel {

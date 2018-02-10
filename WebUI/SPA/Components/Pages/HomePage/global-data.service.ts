@@ -54,9 +54,11 @@ export class GlobalDataService {
     public GetFactorRecords(date:Date): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
-        let dummyDate = Date.now();
+        let model = {
+            Date: date
+        };
 
-        let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName, dummyDate)
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
             .toPromise()
             .then((blos) => {
                 return this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos).ToArray();

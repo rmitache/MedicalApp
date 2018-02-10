@@ -2,7 +2,7 @@
     <div class="inner-div">
         <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
-    
+
 </p-blockUI>
 
 <div class="frame">
@@ -13,8 +13,8 @@
         </div>
         <div class="center-section">
             <navigation-panel [SelectedDate]="viewModel.CurrentDate"
-                              (PreviousClicked)="onTimeNavigationPreviousTriggered()"
-                              (NextClicked)="onTimeNavigationNextTriggered()"></navigation-panel>
+                              (PreviousClicked)="onNavigateBackwardTriggered()"
+                              (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
         </div>
         <div class="right-section">
             <!--<select class="view-mode-selector">

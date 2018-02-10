@@ -79,14 +79,19 @@ namespace WebUI.Controllers
             return Json(factorRecordsUpdatedIDs);
         }
         [Route("HomePage/GetFactorRecords")]
-        [HttpGet]
-        public JsonResult Get([FromBody]DateTime date)
+        [HttpPost]
+        public JsonResult Post([FromBody] GetFactorRecordsModel model)
         {
             int userID = 1;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, userID);
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.Date, userID);
             return Json(blos);
         }
 
+        public class GetFactorRecordsModel
+        {
+            public DateTime Date;
+
+        }
 
     }
 }
