@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ComponentRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList } from '@angular/core';
 import * as moment from 'moment';
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -8,6 +8,8 @@ import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+import { FactorRecordEditableItem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordEditableItem/factor-record-editable-item.component';
+
 
 @Component({
     selector: 'add-new-event',
@@ -31,6 +33,7 @@ export class AddNewEventComponent implements IModalDialog {
             });
         }
     };
+    @ViewChildren('factorRecords') factorRecordItems: QueryList<FactorRecordEditableItem>;
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {
@@ -41,8 +44,6 @@ export class AddNewEventComponent implements IModalDialog {
         OccurenceDateTime: new Date()
     };
 
-
-
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
@@ -51,8 +52,10 @@ export class AddNewEventComponent implements IModalDialog {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
         this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
     }
-    
+    ngAfterViewInit() {
 
+
+    }
     // Public methods
     public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
 
@@ -67,7 +70,21 @@ export class AddNewEventComponent implements IModalDialog {
         return saveDataOperationPromise;
     }
     public IsValidForSave(): boolean {
-        return false;
+        let allItemsAreValid = true;
+
+        for (var i = 0; i < this.factorRecordItems.toArray().length; i++) {
+            let factorItem = this.factorRecordItems.toArray()[i];
+
+            if (!factorItem.IsValid) {
+                allItemsAreValid = false;
+                break;
+            }
+        }
+
+
+
+
+        return allItemsAreValid;
     }
 
     // EventHandlers
@@ -89,7 +106,6 @@ export class AddNewEventComponent implements IModalDialog {
         //}
         //this.text = options.data.text;
     }
-
 }
 
 

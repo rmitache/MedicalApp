@@ -75,8 +75,8 @@ export class FactorRecordEditableItem {
 
         this.form.
             valueChanges.
-            subscribe(form => {
-                this.IsValid = (form.valid === true);
+            subscribe(() => {
+                this.IsValid = (this.form.valid === true);
             });
     }
     ngAfterViewInit() {
