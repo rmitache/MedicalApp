@@ -34,7 +34,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             this.medicineFactorRecordRepo.AddMedicineFactorRecords(dataEntities);
 
 
-            // Update IDs on BLOs
+            // Update IDs on BLOs which will be returned
             for(int i=0;i <dataEntities.Count;i++)
             {
                 blos[i].ID = dataEntities[i].Id;

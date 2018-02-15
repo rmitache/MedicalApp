@@ -59,10 +59,6 @@ namespace WebUI
                 .InstancePerDependency();
             containerBuilder.RegisterType<DataEntitiesContext>()
                 .InstancePerDependency();
-            //containerBuilder.RegisterType<MedicineTypeRepository>()
-            //    .As<IMedicineTypeRepository>()
-            //    .InstancePerDependency()
-            //    .PropertiesAutowired();
             //-----------------------------------------------------------------------------------------------------------------------------
 
             containerBuilder.Populate(services);

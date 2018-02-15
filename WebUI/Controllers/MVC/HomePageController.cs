@@ -8,6 +8,7 @@ using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.Services;
+using BLL.DomainModel.Plans.Services;
 
 namespace WebUI.Controllers
 {
@@ -17,15 +18,18 @@ namespace WebUI.Controllers
         // Fields 
         private IMedicineTypeService medicineTypeService { get; set; }
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
+        private IPlanService planService { get; set; }
 
         // Constructor
         public HomePageController(
             IMedicineTypeService medicineTypeService,
-            IMedicineFactorRecordService medicineFactorRecordService
+            IMedicineFactorRecordService medicineFactorRecordService,
+            IPlanService planService
             )
         {
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;
+            this.planService = planService;
         }
 
         // MVC methods
@@ -49,6 +53,7 @@ namespace WebUI.Controllers
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, 1);
+            var plans = planService.GetAllPlans(1);
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -66,7 +71,8 @@ namespace WebUI.Controllers
             {
                 LoggedInUser = loggedInUserJSON,
                 MedicineTypes = medicineTypes,
-                FactorRecordsForToday = factorRecords
+                FactorRecordsForToday = factorRecords,
+                Plans = plans
             };
             return Json(bundle);
         }

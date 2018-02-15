@@ -92,13 +92,17 @@
     <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
-    <Folder Include="SPA\DomainModel\Plans\CLOs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -150,6 +154,11 @@
     <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOFactories\patient-account-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

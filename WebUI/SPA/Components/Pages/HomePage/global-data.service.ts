@@ -22,7 +22,7 @@ export class GlobalDataService {
         private readonly httpHandlerService: HttpHandlerService
     ) { }
 
-    // Public methods
+    // Public methods - Retreive data from bundle 
     public GetLoggedInUserFromBundle(): CLOs.PatientAccountCLO {
         return this.genericCLOFactory.ConvertToCLO<CLOs.PatientAccountCLO>(CLOs.PatientAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
     }
@@ -33,6 +33,15 @@ export class GlobalDataService {
 
         return cloList;
     }
+    public GetPlansFromBundle(): DataStructures.List<CLOs.PlanCLO> {
+
+        let blos = this.startupDataBundleService.GetBundle['Plans'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos);
+
+        return cloList;
+    }
+
+    // Public methods 
     public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
         const apiMethodName: string = 'AddFactorRecords';
 

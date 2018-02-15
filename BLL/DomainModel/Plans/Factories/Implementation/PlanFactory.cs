@@ -1,11 +1,7 @@
-﻿using BLL.DomainModel.General.Enums;
-using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Enums;
 using BLL.DomainModel.Plans.BLOs;
 
 namespace BLL.DomainModel.Plans.Factories
@@ -13,11 +9,11 @@ namespace BLL.DomainModel.Plans.Factories
     public class PlanFactory : IPlanFactory
     {
         // Fields
-        private readonly IMedicineTypeFactory medicineTypeFactory;
+        private readonly IPlanVersionFactory planVersionFactory;
         // Constructor
-        public PlanFactory(IMedicineTypeFactory medicineTypeFactory)
+        public PlanFactory(IPlanVersionFactory planVersionFactory)
         {
-            this.medicineTypeFactory = medicineTypeFactory;
+            this.planVersionFactory = planVersionFactory;
         }
 
         // Public methods
@@ -25,16 +21,9 @@ namespace BLL.DomainModel.Plans.Factories
         {
             Plan blo = new Plan();
             blo.ID = dataEntity.Id;
-            //blo.Type = MedicineFactorRecordType.UserEntry;
-            //blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
-            //blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
-
-            //blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
-            //blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
-            //blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
-            //blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
-
-            //blo.Instruction = (Instruction)dataEntity.InstructionId;
+            blo.Name = dataEntity.Name;
+            blo.DateCreated = dataEntity.DateCreated;
+            blo.Versions = this.planVersionFactory.Convert_ToBLOList(dataEntity.TPlanVersion.ToList());
 
 
             return blo;
