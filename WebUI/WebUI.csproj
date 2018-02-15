@@ -53,7 +53,9 @@
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\global-application-state.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
+    <None Remove="SPA\Components\Shared\shared.module.ts" />
     <None Remove="SPA\Core\CLO\i-clo.factory.ts" />
     <None Remove="SPA\Core\core.module.ts" />
     <None Remove="SPA\Core\Helpers\comparers.ts" />
@@ -108,7 +110,9 @@
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\global-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\shared.module.ts" />
     <TypeScriptCompile Include="SPA\Core\CLO\i-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\Core\core.module.ts" />
     <TypeScriptCompile Include="SPA\Core\CLO\base.clo.ts" />

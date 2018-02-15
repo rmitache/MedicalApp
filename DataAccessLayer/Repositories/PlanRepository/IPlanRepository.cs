@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Repositories.MedicineTypesRepository
+namespace DataAccessLayer.Repositories.PlanRepository
 {
-    public interface IMedicineTypeRepository
+    public interface IPlanRepository
     {
-        List<TMedicineType> GetAllMedicineTypes();
+        List<TPlan> GetAllPlans(int userID);
     }
 }

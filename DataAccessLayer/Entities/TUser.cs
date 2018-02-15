@@ -8,6 +8,7 @@ namespace DataAccessLayer.Entities
         public TUser()
         {
             TMedicineFactorRecord = new HashSet<TMedicineFactorRecord>();
+            TPlan = new HashSet<TPlan>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace DataAccessLayer.Entities
         public string Language { get; set; }
 
         public ICollection<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
+        public ICollection<TPlan> TPlan { get; set; }
     }
 }

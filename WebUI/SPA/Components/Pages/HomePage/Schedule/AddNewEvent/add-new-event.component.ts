@@ -19,8 +19,6 @@ import { FactorRecordEditableItem } from 'SPA/Components/Pages/HomePage/Shared/F
 })
 export class AddNewEventComponent implements IModalDialog {
     // Fields
-    @Input('SelectedDate')
-    private selectedDate: Date;
     private searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.ToArray().find(clo => {
@@ -41,7 +39,7 @@ export class AddNewEventComponent implements IModalDialog {
         CreateNewFactorRecord: () => {
             this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
         },
-        OccurenceDateTime: new Date()
+        OccurenceDateTime: null
     };
 
     // Constructor 
@@ -52,10 +50,7 @@ export class AddNewEventComponent implements IModalDialog {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
         this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
     }
-    ngAfterViewInit() {
 
-
-    }
     // Public methods
     public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
 
@@ -105,6 +100,9 @@ export class AddNewEventComponent implements IModalDialog {
         //    throw new Error(`Data information for simple modal dialog is missing`);
         //}
         //this.text = options.data.text;
+
+        let dateFromSchedule = options.data as Date;
+        this.viewModel.OccurenceDateTime = dateFromSchedule;
     }
 }
 

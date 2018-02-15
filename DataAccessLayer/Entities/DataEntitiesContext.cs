@@ -10,6 +10,8 @@ namespace DataAccessLayer.Entities
         public virtual DbSet<TMedicineCategory> TMedicineCategory { get; set; }
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
+        public virtual DbSet<TPlan> TPlan { get; set; }
+        public virtual DbSet<TPlanVersion> TPlanVersion { get; set; }
         public virtual DbSet<TUser> TUser { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -123,6 +125,50 @@ namespace DataAccessLayer.Entities
                 entity.Property(e => e.ShortName)
                     .HasColumnName("short_name")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TPlan>(entity =>
+            {
+                entity.ToTable("t_plan");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("date_created")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TPlan)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_t_plan_t_user");
+            });
+
+            modelBuilder.Entity<TPlanVersion>(entity =>
+            {
+                entity.ToTable("t_plan_version");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnName("end_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.PlanId).HasColumnName("plan_id");
+
+                entity.Property(e => e.StartDate)
+                    .HasColumnName("start_date")
+                    .HasColumnType("date");
+
+                entity.HasOne(d => d.Plan)
+                    .WithMany(p => p.TPlanVersion)
+                    .HasForeignKey(d => d.PlanId)
+                    .HasConstraintName("FK_t_plan_version_t_plan");
             });
 
             modelBuilder.Entity<TUser>(entity =>

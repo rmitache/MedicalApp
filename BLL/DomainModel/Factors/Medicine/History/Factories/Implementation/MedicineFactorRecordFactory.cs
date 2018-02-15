@@ -23,9 +23,9 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
         public TMedicineFactorRecord Convert_ToDataEntity(MedicineFactorRecord blo, int userID)
         {
             TMedicineFactorRecord dataEntity = new TMedicineFactorRecord();
-            dataEntity.Id = blo.ID ?? default(int);
+            dataEntity.Id = blo.ID ;
             dataEntity.UserId = userID;
-            dataEntity.MedicineTypeId = blo.MedicineType.ID ?? default(int);
+            dataEntity.MedicineTypeId = blo.MedicineType.ID;
             dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
 
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;

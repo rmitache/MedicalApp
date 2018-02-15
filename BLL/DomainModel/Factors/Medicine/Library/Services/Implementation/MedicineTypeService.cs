@@ -1,6 +1,6 @@
 ﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using DataAccessLayer.Repositories.MedicineTypesRepository;
+using DataAccessLayer.Repositories.MedicineTypeRepository;
 using System.Collections.Generic;
 
 namespace BLL.DomainModel.Factors.Medicine.Library.Services

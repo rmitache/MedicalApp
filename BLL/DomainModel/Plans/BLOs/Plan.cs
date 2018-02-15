@@ -5,6 +5,7 @@ namespace BLL.DomainModel.Plans.BLOs
     public class Plan
     {
         // Properties
+        public int ID { get; set; }
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }
         public PlanStatus Status { get; set; }

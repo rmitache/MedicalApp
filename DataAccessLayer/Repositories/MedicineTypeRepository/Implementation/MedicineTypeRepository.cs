@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataAccessLayer.Repositories.MedicineTypesRepository
+namespace DataAccessLayer.Repositories.MedicineTypeRepository
 {
     public class MedicineTypeRepository : IMedicineTypeRepository
     {

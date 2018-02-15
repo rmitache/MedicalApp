@@ -4,7 +4,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DataAccessLayer.Entities;
 using BLL;
-using DataAccessLayer.Repositories.MedicineTypesRepository;
+using DataAccessLayer.Repositories.MedicineTypeRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;

@@ -7,7 +7,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
     public  class MedicineType
     {
         // Properties
-        public int? ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
         public string ProducerName { get; set; }

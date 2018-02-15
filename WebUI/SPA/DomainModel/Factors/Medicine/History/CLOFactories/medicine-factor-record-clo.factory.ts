@@ -36,7 +36,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
     }
     public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
         let newCLO = new CLOs.MedicineFactorRecordCLO();
-        newCLO.ID = null;
+        newCLO.ID = 0;
         newCLO.Type = Enums.FactorRecordType.UserEntry;
         newCLO.MedicineType = null;
         newCLO.OccurenceDateTime = new Date();

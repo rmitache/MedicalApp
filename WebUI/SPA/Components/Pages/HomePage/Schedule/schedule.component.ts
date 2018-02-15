@@ -40,6 +40,15 @@ export class ScheduleComponent {
         }
         return currentStrategy;
     }
+    private loadFactorRecordsForDate(date: Date): Promise<void> {
+        let promise = this.dataService.GetFactorRecords(date)
+            .then(factorRecordCLOs => {
+                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
+                this.viewModel.CurrentDate = date;
+                this.refreshDisplayRepresentation();
+            });
+        return promise;
+    }
     private refreshDisplayRepresentation() {
         this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
     }
@@ -69,6 +78,7 @@ export class ScheduleComponent {
         this.modalDialogService.openDialog(this.viewContainerRef, {
             title: 'Add new Event',
             childComponent: AddNewEventComponent,
+            data: this.viewModel.CurrentDate,
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
@@ -79,19 +89,18 @@ export class ScheduleComponent {
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
                             this.viewModel.Blocked = true;
+
                             let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-
-
                             addNewEventComponentInstance.SaveData()
                                 .then((cloList) => {
 
-                                    this.viewModel.AvailableFactorRecords = this.viewModel.AvailableFactorRecords.concat(cloList.ToArray());
-                                    this.refreshDisplayRepresentation();
-
-                                    setTimeout(() => {
-                                        this.viewModel.Blocked = false;
-                                        resolve();
-                                    }, 200);
+                                    this.loadFactorRecordsForDate(this.viewModel.CurrentDate)
+                                        .then(() => {
+                                            setTimeout(() => {
+                                                this.viewModel.Blocked = false;
+                                                resolve();
+                                            }, 200);
+                                        });
 
                                 });
                         });
@@ -112,30 +121,14 @@ export class ScheduleComponent {
 
         });
     }
-    
+
     private onNavigateBackwardTriggered() {
         let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
-
-        // Init ViewModel properties
-        let promise = this.dataService.GetFactorRecords(newDate)
-            .then(factorRecordCLOs => {
-                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
-                this.viewModel.CurrentDate = newDate;
-                this.refreshDisplayRepresentation();
-            });
+        this.loadFactorRecordsForDate(newDate);
     }
     private onNavigateForwardTriggered() {
         let newDate = moment(this.viewModel.CurrentDate).add(1, 'days').toDate();
-
-        // Init ViewModel properties
-        let promise = this.dataService.GetFactorRecords(newDate)
-            .then(factorRecordCLOs => {
-                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
-                this.viewModel.CurrentDate = newDate;
-                this.refreshDisplayRepresentation();
-            });
-
-
+        this.loadFactorRecordsForDate(newDate);
     }
 }
 interface ViewModel {

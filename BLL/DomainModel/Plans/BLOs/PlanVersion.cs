@@ -5,6 +5,8 @@ namespace BLL.DomainModel.Plans.BLOs
     public class PlanVersion
     {
         // Properties
+        public int ID { get; set; }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public SectionHeader[] SectionHeaders { get; set; }

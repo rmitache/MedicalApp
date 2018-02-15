@@ -1,0 +1,28 @@
+<p-blockUI [blocked]="viewModel.Blocked">
+    <div class="inner-div">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+
+</p-blockUI>
+
+<div class="frame">
+    <div class="header">
+        <div class="left-section">
+            <span class="header-label h1">PLANS</span>
+            <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
+        </div>
+        
+        <div class="right-section">
+           <select class="view-mode-selector">
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="body">
+        Plan items 
+
+
+
+    </div>
+</div> 
