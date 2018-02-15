@@ -121,7 +121,6 @@ export class ScheduleComponent {
 
         });
     }
-
     private onNavigateBackwardTriggered() {
         let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
         this.loadFactorRecordsForDate(newDate);

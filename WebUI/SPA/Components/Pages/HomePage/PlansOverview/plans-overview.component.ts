@@ -18,7 +18,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 export class PlansOverviewComponent {
     // Fields
     private readonly viewModel: ViewModel = {
-        
+        AvailablePlans: null,
         Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
@@ -34,7 +34,8 @@ export class PlansOverviewComponent {
         this.appState = applicationState as IReadOnlyApplicationState;
     }
     ngOnInit() {
-
+        // Init ViewModel properties
+        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
 
     }
     ngOnDestroy() {
@@ -48,7 +49,7 @@ export class PlansOverviewComponent {
 
 }
 interface ViewModel {
-
+    AvailablePlans: CLOs.PlanCLO[]
     Blocked: boolean;
 }
 enum DisplayModes {

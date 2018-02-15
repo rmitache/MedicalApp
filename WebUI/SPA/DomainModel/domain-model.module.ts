@@ -3,6 +3,8 @@ import {GenericCLOFactory } from './generic-clo.factory';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
 import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
 import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
+import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
+import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
 
 @NgModule({
     providers: [
@@ -12,7 +14,9 @@ import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/
         // All CLOFactories
         PatientAccountCLOFactory,
         MedicineFactorRecordCLOFactory,
-        MedicineTypeCLOFactory
+        MedicineTypeCLOFactory,
+        PlanCLOFactory,
+        VersionCLOFactory
     ]
 })
 
