@@ -1,3 +1,21 @@
+/deep/ .ui-menu {
+    width:150px;
+}
+/deep/ .ui-splitbutton {
+    float:right;
+}
+
+/deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
+    display: none;
+}
+
+    /deep/ .ui-splitbutton .ui-button-text-only  {
+        visibility:hidden;
+    }
+
+/deep/ .ui-splitbutton-menubutton  {
+    border-radius: 4px;
+}
 
 
 .frame {
@@ -6,12 +24,8 @@
     padding: 10px;
     height: 70px;
     border-radius: 3px;
-    cursor: pointer;
 }
 
-    .frame:hover {
-        background-color: #e4fbab;
-    }
 
 .top-part {
     width: 100%;

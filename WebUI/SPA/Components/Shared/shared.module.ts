@@ -10,6 +10,7 @@ import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { BlockUIModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
+import { SplitButtonModule } from 'primeng/primeng';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
         CalendarModule,
         AutoCompleteModule,
         BlockUIModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        SplitButtonModule
     ],
     declarations: [
         IconButtonComponent,
@@ -30,7 +32,8 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
         IconButtonComponent,
         KeysPipe,
         EnumKeysPipe,
-        FactorRecordEditableItem
+        FactorRecordEditableItem,
+        SplitButtonModule
     ]
 })
 export class SharedModule { }

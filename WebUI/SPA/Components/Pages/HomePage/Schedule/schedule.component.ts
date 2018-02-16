@@ -239,8 +239,8 @@ export class TimeGroupRepresentation {
     public readonly FactorRecords: CLOs.MedicineFactorRecordCLO[] = [];
     public ToStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         let record = factorRecordCLO;
-        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.UnitDoseSize
-            + Enums.UnitOfMeasure[record.UnitDoseUoM];
+        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
+            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM];
 
         // - {{record.MedicineType.Name}} ({{unitDoseTypesEnum[record.UnitDoseType]}})  {{record.UnitDoseQuantifier}} x {{record.UnitDoseSize}} {{uomTypesEnum[record.UnitDoseUoM]}}
 

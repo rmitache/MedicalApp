@@ -42,15 +42,22 @@
 
     .frame .body {
         height: calc(100% - 51px);
-        width: calc(100% - 36px);
-        padding: 5px 18px 5px 18px;
+        width: calc(100% - 18px);
+        padding: 5px 0px 5px 18px;
 
-        overflow-y:scroll;
     }
+
+
+#plan-items-list {
+    width: calc(100%);
+    margin-top: 12px;
+    height: calc(100% - 45px);
+    overflow-y: auto;
+}
 
 
 .plan-item {
     float: left;
-    width:100%;
+    width: calc(100% - 30px);
 }
 

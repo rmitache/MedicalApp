@@ -28,7 +28,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         HomePageComponent,
         HeaderBarComponent,
 
-    
+
     ],
     imports: [
         CommonModule,
@@ -37,6 +37,9 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         BrowserModule,
         CoreModule,
         BrowserAnimationsModule,
+        RouterModule.forRoot(
+            [{ path: '', component: HomePageComponent }]
+        ),
 
         DomainModelModule,
         ScheduleModule,

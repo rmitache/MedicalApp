@@ -48,6 +48,11 @@ export class PlansOverviewComponent {
     private onAddNewPlanTriggered() {
         alert('new plan!');
     }
+    private onChangePlanTriggered(planCLO: CLOs.PlanCLO) {
+
+
+        alert('change triggered for ' + planCLO.Name);
+    }
 
 }
 interface ViewModel {

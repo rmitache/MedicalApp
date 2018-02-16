@@ -1,8 +1,8 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-
+import { MenuItem } from 'primeng/primeng';
 
 @Component({
     selector: 'plan-item',
@@ -15,6 +15,15 @@ export class PlanItemComponent {
     @Input('Plan')
     private readonly planCLO: CLOs.PlanCLO;
     private readonly planStatusesEnum = Enums.PlanStatus;
+    private menuItems: MenuItem[] = [
+        {
+            label: 'View/Change',
+            command: (event) => {
+                this.onChangePlanTriggered();
+            }
+        },
+        //{ label: 'Pause' }
+    ];
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         RelativeStartDateString: null,
@@ -31,10 +40,13 @@ export class PlanItemComponent {
         this.viewModel.RelativeEndDateString = moment(this.planCLO.Versions[this.planCLO.Versions.length - 1].EndDate).fromNow().toString();
     }
 
+    // Events
+    @Output() public ChangeClicked: EventEmitter<any> = new EventEmitter();
+
 
     // Event handlers
-    private onAddNewPlanTriggered() {
-        alert('new plan!');
+    private onChangePlanTriggered() {
+        this.ChangeClicked.emit(this.planCLO);
     }
 
 }

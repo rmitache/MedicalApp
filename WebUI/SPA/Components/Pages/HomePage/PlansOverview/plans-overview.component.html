@@ -2,25 +2,30 @@
     <div class="inner-div">
         <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
-
 </p-blockUI>
 
 <div class="frame">
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">PLANS</span>
-            <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
+            <icon-button [IconName]="'plus'" (Clicked)="onAddNewPlanTriggered()"></icon-button>
         </div>
 
         <div class="right-section">
-            <select class="view-mode-selector">
-                <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
-            </select>
+            
         </div>
     </div>
     <div class="body">
-        <plan-item #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
-                   [Plan]="plan"></plan-item>
+        <select class="view-mode-selector">
+            <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
+        </select>
+        <div id="plan-items-list">
+            <plan-item #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
+                       [Plan]="plan"
+                       (ChangeClicked)="onChangePlanTriggered($event)"
+                       ></plan-item>
 
+        </div>
+        
     </div>
 </div> 

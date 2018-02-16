@@ -101,6 +101,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\API\" />
+    <Folder Include="SPA\Components\Pages\HomePage\PlansOverview\PlanEditor\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>

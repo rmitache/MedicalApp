@@ -1,5 +1,5 @@
 ﻿export enum PlanStatus {
     Active = 0,
-    Upcoming = 1,
-    Archived = 2
+    Inactive = 1,
+    Upcoming = 2
 }
