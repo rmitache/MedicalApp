@@ -34,7 +34,7 @@ import { Subject } from 'rxjs/Subject';
     <div [ngClass]="settings.modalClass">
       <div [ngClass]="[ showAlert ? settings.alertClass : '', settings.contentClass]">
         <div [ngClass]="settings.headerClass">
-          <h4 [ngClass]="settings.headerTitleClass">{{title}}</h4>
+          <span [ngClass]="settings.headerTitleClass" class="h1">{{title}}</span>
           <div (click)="close()" 
             [title]="settings.closeButtonTitle"
             [ngClass]="settings.closeButtonClass">

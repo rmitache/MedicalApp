@@ -30,16 +30,11 @@
 
 .modal-header {
     border-radius: 4px 4px 0 0;
-    background-color: #e2e2e2;
-    border-bottom: 1px solid #cecece;
     height: 40px;
 }
 
     .modal-header .modal-title {
         display: inline-block;
-        font-family: Arial;
-        font-size: 11pt;
-        font-weight: bold;
         margin-top: 14px;
         margin-left: 15px;
     }

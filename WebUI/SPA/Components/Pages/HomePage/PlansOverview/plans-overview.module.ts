@@ -12,7 +12,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { PlansOverviewComponent } from './plans-overview.component';
-
+import { PlanItemComponent } from './PlanItem/plan-item.component';
 
 @NgModule({
     imports: [
@@ -26,7 +26,8 @@ import { PlansOverviewComponent } from './plans-overview.component';
         SharedModule
     ],
     declarations: [
-        PlansOverviewComponent
+        PlansOverviewComponent,
+        PlanItemComponent
     ],
     exports: [PlansOverviewComponent],
     entryComponents: [

@@ -14,15 +14,13 @@
 
         <div class="right-section">
             <select class="view-mode-selector">
-                <option>Active</option>
-                <option>Inactive</option>
+                <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
             </select>
         </div>
     </div>
     <div class="body">
-        <div *ngFor="let plan of viewModel.AvailablePlans">
-            {{plan.Name}}
-        </div>
+        <plan-item #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
+                   [Plan]="plan"></plan-item>
 
     </div>
 </div> 

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
@@ -21,6 +21,8 @@ export class PlansOverviewComponent {
         AvailablePlans: null,
         Blocked: false
     };
+    private readonly planStatusesEnum = Enums.PlanStatus;
+
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 

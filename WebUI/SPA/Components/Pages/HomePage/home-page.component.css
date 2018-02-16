@@ -3,32 +3,38 @@
     width: calc(100% - 30px);
     height: calc(100% - 40px - 30px);
     padding: 15px;
+    background-color: #f5f5f5;
 }
 
 
 .schedule {
     float: left;
-    width: calc(100% - 240px - 15px);
+    width: calc(100% - 300px - 15px);
     height: calc(65% - 30px);
 }
+
 .plans-overview {
-    background-color: #f5f5f5;
     float: right;
-    width: 240px;
+    width: 300px;
     height: calc(65% - 30px);
 }
 
 .indicators-timeline-placeholder {
-    background-color: #f5f5f5;
+    background-color: white;
+    border: solid 1px #f2f2f2;
+    border-radius: 5px;
     float: left;
-    width: calc(100% - 240px - 15px);
+    width: calc(100% - 300px - 15px);
     height: calc(35%);
-    margin-top:30px;
+    margin-top: 30px;
 }
+
 .test-result-list-placeholder {
-    background-color: #f5f5f5;
+    background-color: white;
+    border: solid 1px #f2f2f2;
+    border-radius: 5px;
     float: right;
-    width: 240px;
+    width: 300px;
     height: calc(35%);
     margin-top: 30px;
 }
