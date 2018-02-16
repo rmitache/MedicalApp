@@ -5,12 +5,12 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { MenuItem } from 'primeng/primeng';
 
 @Component({
-    selector: 'plan-item',
-    templateUrl: './plan-item.component.html',
-    styleUrls: ['./plan-item.component.css'],
-    host: { 'class': 'plan-item' }
+    selector: 'plan-elem',
+    templateUrl: './plan-elem.component.html',
+    styleUrls: ['./plan-elem.component.css'],
+    host: { 'class': 'plan-elem' }
 })
-export class PlanItemComponent {
+export class PlanElemComponent {
     // Fields
     @Input('Plan')
     private readonly planCLO: CLOs.PlanCLO;

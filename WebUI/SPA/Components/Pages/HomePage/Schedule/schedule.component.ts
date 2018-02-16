@@ -1,15 +1,18 @@
+// Angular and 3rd party stuff
 import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
+
+// Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 
+// Components
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 
 @Component({
@@ -240,7 +243,7 @@ export class TimeGroupRepresentation {
     public ToStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         let record = factorRecordCLO;
         return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
-            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM];
+            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] +')';
 
         // - {{record.MedicineType.Name}} ({{unitDoseTypesEnum[record.UnitDoseType]}})  {{record.UnitDoseQuantifier}} x {{record.UnitDoseSize}} {{uomTypesEnum[record.UnitDoseUoM]}}
 

@@ -7,12 +7,12 @@ import { AutoComplete } from 'primeng/primeng';
 
 
 @Component({
-    selector: 'factor-record-editable-item',
-    templateUrl: './factor-record-editable-item.component.html',
-    styleUrls: ['./factor-record-editable-item.component.css'],
-    host: { 'class': 'factor-record-editable-item' }
+    selector: 'factor-record-elem',
+    templateUrl: './factor-record-elem.component.html',
+    styleUrls: ['./factor-record-elem.component.css'],
+    host: { 'class': 'factor-record-elem' }
 })
-export class FactorRecordEditableItem {
+export class FactorRecordElem {
     // Fields
     @Input('MedicineFactorRecord')
     private readonly medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO;

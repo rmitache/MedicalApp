@@ -19,11 +19,11 @@
         <select class="view-mode-selector">
             <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
         </select>
-        <div id="plan-items-list">
-            <plan-item #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
+        <div id="plan-elems-list">
+            <plan-elem #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
                        [Plan]="plan"
                        (ChangeClicked)="onChangePlanTriggered($event)"
-                       ></plan-item>
+                       ></plan-elem>
 
         </div>
         

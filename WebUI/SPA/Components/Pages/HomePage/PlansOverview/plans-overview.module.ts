@@ -12,7 +12,9 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { PlansOverviewComponent } from './plans-overview.component';
-import { PlanItemComponent } from './PlanItem/plan-item.component';
+import { PlanElemComponent } from './PlanElem/plan-elem.component';
+import { PlanEditorComponent } from './PlanEditor/plan-editor.component';
+
 
 @NgModule({
     imports: [
@@ -27,11 +29,12 @@ import { PlanItemComponent } from './PlanItem/plan-item.component';
     ],
     declarations: [
         PlansOverviewComponent,
-        PlanItemComponent
+        PlanElemComponent,
+        PlanEditorComponent
     ],
     exports: [PlansOverviewComponent],
     entryComponents: [
-        
+        PlanEditorComponent
     ]
 })
 export class PlansOverviewModule { }

@@ -1,0 +1,60 @@
+
+
+.frame {
+    width: 900px;
+    height: 650px;
+}
+
+.top-section {
+    width: 100%;
+    height: 70px;
+}
+
+    .top-section #plan-name-input {
+        width: 280px;
+    }
+
+    .top-section #start-date-picker {
+        float: left;
+        clear: both;
+    }
+
+    .top-section #end-date-picker {
+        float: left;
+        clear: both;
+    }
+
+    .top-section .label-input-pair {
+        float: left;
+        margin-right: 55px;
+    }
+
+/deep/ .top-section #start-date-picker .ui-inputtext {
+    width: 90px !important;
+}
+
+/deep/ .top-section #end-date-picker .ui-inputtext {
+    width: 90px !important;
+}
+
+
+.rules-section {
+    width: 100%;
+    height: calc(100% - 70px);
+}
+
+    .rules-section .h2 {
+        float: left;
+    }
+
+    .rules-section .rules-list {
+        width: 100%;
+        border: solid 1px blue;
+        height: calc(100% - 20px);
+    }
+
+    .rules-section #add-new-rule-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: -4px;
+    }
