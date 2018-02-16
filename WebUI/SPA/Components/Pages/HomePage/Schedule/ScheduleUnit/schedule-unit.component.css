@@ -10,9 +10,14 @@
     }
 
 .time-group {
-    width: 100%;
     overflow: auto;
     margin-top: 15px;
+
+
+    background-color: #fafafa;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 3px;
 }
 
     .time-group:first-of-type {
@@ -34,7 +39,7 @@
     .time-group .factor-records-list {
         clear:both;
         float: left;
-        width: calc(100% - 40px);
+        width: calc(100% - 5px);
         margin-left: 5px;
     }
 
@@ -42,5 +47,10 @@
             float: left;
             clear: both;
             font-family: Arial;
-            font-size: 10pt;
+            font-size: 9pt;
+            width: 100%;
+            margin-top: 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }

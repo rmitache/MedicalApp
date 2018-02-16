@@ -32,6 +32,11 @@ body {
     font-size: 9pt;
 }
 
+.label {
+    font-size: 10pt;
+    font-family: Arial;
+    color: #989797;
+}
 
 /*Block-UI*/
 .ui-blockui {
@@ -143,12 +148,14 @@ body {
 
     .label-input-pair .label {
         float: left;
-        color: gray;
+        padding-bottom: 3px;
         height: 15px;
     }
 
     .label-input-pair .ui-inputtext,
-    .label-input-pair .drop-down {
+    .label-input-pair .drop-down ,
+    .label-input-pair .input-label{
         float: left;
         clear: left;
+        
     }

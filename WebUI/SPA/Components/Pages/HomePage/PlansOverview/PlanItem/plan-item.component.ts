@@ -16,7 +16,9 @@ export class PlanItemComponent {
     private readonly planCLO: CLOs.PlanCLO;
     private readonly planStatusesEnum = Enums.PlanStatus;
     private readonly viewModel: ViewModel = {
-        PlanCLO: null
+        PlanCLO: null,
+        RelativeStartDateString: null,
+        RelativeEndDateString: null
     };
 
     // Constructor 
@@ -25,7 +27,8 @@ export class PlanItemComponent {
     }
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
-
+        this.viewModel.RelativeStartDateString = moment(this.planCLO.Versions[0].StartDate).fromNow().toString();
+        this.viewModel.RelativeEndDateString = moment(this.planCLO.Versions[this.planCLO.Versions.length - 1].EndDate).fromNow().toString();
     }
 
 
@@ -37,5 +40,7 @@ export class PlanItemComponent {
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
+    RelativeStartDateString: string;
+    RelativeEndDateString: string;
 }
 

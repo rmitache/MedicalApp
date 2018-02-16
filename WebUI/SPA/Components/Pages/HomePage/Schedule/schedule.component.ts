@@ -3,6 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import * as Enums from 'SPA/DomainModel/enum-exports';
+
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
@@ -235,6 +237,14 @@ class UnitRepresentation {
 export class TimeGroupRepresentation {
     public readonly Time: Time;
     public readonly FactorRecords: CLOs.MedicineFactorRecordCLO[] = [];
+    public ToStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
+        let record = factorRecordCLO;
+        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.UnitDoseSize
+            + Enums.UnitOfMeasure[record.UnitDoseUoM];
+
+        // - {{record.MedicineType.Name}} ({{unitDoseTypesEnum[record.UnitDoseType]}})  {{record.UnitDoseQuantifier}} x {{record.UnitDoseSize}} {{uomTypesEnum[record.UnitDoseUoM]}}
+
+    }
 
     constructor(time: Time) {
         this.Time = time;

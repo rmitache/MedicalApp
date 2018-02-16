@@ -6,8 +6,8 @@
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
             <div class="factor-records-list">
-                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item">
-                    - {{record.MedicineType.Name}} ({{unitDoseTypesEnum[record.UnitDoseType]}})  {{record.UnitDoseQuantifier}} x {{record.UnitDoseSize}} {{uomTypesEnum[record.UnitDoseUoM]}}
+                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item" title="{{timeGroup.value.ToStringLabel(record)}}">
+                    {{timeGroup.value.ToStringLabel(record)}}
                 </div>
                 
             </div>

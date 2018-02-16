@@ -1,4 +1,17 @@
 <div class="frame">
-    <span class="h2 plan-name">{{viewModel.PlanCLO.Name}}</span>
-    <span class="status">{{viewModel.PlanCLO.Versions[0].StartDate.toString()}}</span>
+    <div class="top-part">
+        <span class="h2 plan-name">{{viewModel.PlanCLO.Name}}</span>
+    </div>
+    <div class="bottom-part">
+
+        <div class="label-input-pair started-date-label-input-pair">
+            <span class="label">Started:</span>
+            <span class="h3 input-label">{{viewModel.RelativeStartDateString}}</span>
+        </div>
+        <div class="label-input-pair ends-date-label-input-pair">
+            <span class="label">Ends:</span>
+            <span class="h3 input-label">{{viewModel.RelativeEndDateString}}</span>
+        </div>
+    </div>
+   
 </div> 
