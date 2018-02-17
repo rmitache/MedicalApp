@@ -1,16 +1,22 @@
-﻿import { Injectable } from '@angular/core';
-import { BaseCLO } from 'SPA/Core/CLO/base.clo';
-import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
+﻿// Angular and 3rd party stuff
+import { Injectable } from '@angular/core';
+
+// Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
+import { BaseCLO } from 'SPA/Core/CLO/base.clo';
+import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
+import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
 
 @Injectable()
 export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 
     // Constructor
-    constructor() {
+    constructor(
+        private readonly ruleCLOFactory: RuleCLOFactory
+    ) {
 
     }
 
@@ -21,12 +27,19 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
         newCLO.ID = blo['ID'];
         newCLO.StartDate = new Date(blo['StartDate']);
         newCLO.EndDate = new Date(blo['EndDate']);
+        //newCLO.Rules = this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray();
+
 
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.VersionCLO {
-        throw new Error("Create_DefaultCLO not implemented!");
+        let newCLO = new CLOs.VersionCLO();
+        newCLO.ID = 0;
+        newCLO.StartDate = new Date();
+        newCLO.EndDate = null;
+        newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
 
+        return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.VersionCLO> {
         let cloList = new DataStructures.List<CLOs.VersionCLO>();

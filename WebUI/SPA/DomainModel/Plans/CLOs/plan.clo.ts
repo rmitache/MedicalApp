@@ -19,4 +19,12 @@ export class PlanCLO extends BaseCLO {
     constructor() {
         super();
     }
+
+    // Public methods
+    public GetLatestVersion(): CLOs.VersionCLO {
+        if (this.Versions && this.Versions.length > 0)
+            return this.Versions[this.Versions.length - 1];
+        else
+            return null;
+    }
 }

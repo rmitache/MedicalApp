@@ -1,13 +1,18 @@
+// Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList } from '@angular/core';
 import * as moment from 'moment';
-import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
+
+// Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
+import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+
+// Components
 import { FactorRecordElem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordElem/factor-record-elem.component';
 
 

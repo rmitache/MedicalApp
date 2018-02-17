@@ -10,6 +10,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
 import { PlanEditorComponent } from './PlanEditor/plan-editor.component';
@@ -28,36 +29,13 @@ export class PlansOverviewComponent {
         Blocked: false
     };
     private readonly planStatusesEnum = Enums.PlanStatus;
-
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 
-    // Constructor 
-    constructor(
-        applicationState: GlobalApplicationState,
-        private readonly dataService: GlobalDataService,
-        private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
-    ) {
-        this.appState = applicationState as IReadOnlyApplicationState;
-    }
-    ngOnInit() {
-        // Init ViewModel properties
-        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
-
-    }
-    ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
-    }
-
-    // Event handlers
-    private onAddNewPlanTriggered() {
-        alert('new plan!');
-    }
-    private onChangePlanTriggered(planCLO: CLOs.PlanCLO) {
-
+    // Private methods
+    private openPlanEditor(title:string, planCLO: CLOs.PlanCLO) {
         this.modalDialogService.openDialog(this.viewContainerRef, {
-            title: 'Change/View Plan',
+            title: title,
             childComponent: PlanEditorComponent,
             data: planCLO,
             actionButtons: [
@@ -88,15 +66,40 @@ export class PlansOverviewComponent {
 
 
         });
+
+    }
+
+    // Constructor 
+    constructor(
+        applicationState: GlobalApplicationState,
+        private readonly genericCLOFactory: GenericCLOFactory,
+        private readonly dataService: GlobalDataService,
+        private readonly modalDialogService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef
+    ) {
+        this.appState = applicationState as IReadOnlyApplicationState;
+    }
+    ngOnInit() {
+        // Init ViewModel properties
+        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Event handlers
+    private onAddNewPlanTriggered() {
+        let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
+        this.openPlanEditor('Create a new Plan', newPlanCLO);
+    }
+    private onChangePlanTriggered(planCLO: CLOs.PlanCLO) {
+        this.openPlanEditor('Change Plan', planCLO);
     }
 
 }
 interface ViewModel {
     AvailablePlans: CLOs.PlanCLO[]
     Blocked: boolean;
-}
-enum DisplayModes {
-    Active,
-    Inactive
 }
 

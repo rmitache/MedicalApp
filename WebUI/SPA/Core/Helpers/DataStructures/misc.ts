@@ -35,3 +35,26 @@ export class TimeRange extends Range<Time> {
             return false;
     }
 }
+
+export class DaysInWeek {
+    public readonly Days = {
+        Monday: false,
+        Tuesday: false,
+        Wednesday: false,
+        Thursday: false,
+        Friday: false,
+        Saturday: false,
+        Sunday: false
+    };
+
+    constructor(array: boolean[]) {
+        let index = 0;
+        for (var key in this.Days) {
+
+            this.Days[key] = array[index];
+
+            // 
+            index++;
+        }
+    }
+}

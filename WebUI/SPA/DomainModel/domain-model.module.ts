@@ -5,6 +5,7 @@ import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFa
 import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
 import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
 import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
+import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
 
 @NgModule({
     providers: [
@@ -16,7 +17,8 @@ import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
         MedicineFactorRecordCLOFactory,
         MedicineTypeCLOFactory,
         PlanCLOFactory,
-        VersionCLOFactory
+        VersionCLOFactory,
+        RuleCLOFactory
     ]
 })
 

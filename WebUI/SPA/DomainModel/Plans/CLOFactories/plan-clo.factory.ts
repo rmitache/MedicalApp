@@ -27,7 +27,13 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.PlanCLO {
-        throw new Error("Create_DefaultCLO not implemented!");
+        let newCLO = new CLOs.PlanCLO();
+        newCLO.ID = 0;
+        newCLO.Name = 'Untitled Plan';
+        newCLO.DateCreated = new Date();
+        newCLO.Versions = [this.versionCLOFactory.Create_DefaultCLO()];
+
+        return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.PlanCLO> {
         let cloList = new DataStructures.List<CLOs.PlanCLO>();

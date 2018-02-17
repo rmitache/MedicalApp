@@ -1,4 +1,7 @@
-﻿import { Injectable } from '@angular/core';
+﻿// Angular and 3rd party stuff
+import { Injectable } from '@angular/core';
+
+// Project modules
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
@@ -6,6 +9,7 @@ import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFa
 import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
 import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
 import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
+import { RuleCLOFactory } from './Plans/CLOFactories/rule-clo.factory';
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 
 
@@ -101,13 +105,15 @@ export class GenericCLOFactory {
         private readonly medicineFactorRecordCLOFactory: MedicineFactorRecordCLOFactory,
         private readonly medicinetypeCLOFactory: MedicineTypeCLOFactory,
         private readonly planCLOFactory: PlanCLOFactory,
-        private readonly versionCLOFactory: VersionCLOFactory
+        private readonly versionCLOFactory: VersionCLOFactory,
+        private readonly ruleCLOFactory: RuleCLOFactory
     ) {
         this.factoryTypeInstanceDictionary['PatientAccountCLO'] = patientAccountCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineFactorRecordCLO'] = medicineFactorRecordCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineTypeCLO'] = medicinetypeCLOFactory;
         this.factoryTypeInstanceDictionary['PlanCLO'] = planCLOFactory;
         this.factoryTypeInstanceDictionary['VersionCLO'] = versionCLOFactory;
+        this.factoryTypeInstanceDictionary['RuleCLO'] = ruleCLOFactory;
     }
 
     // Public Methods

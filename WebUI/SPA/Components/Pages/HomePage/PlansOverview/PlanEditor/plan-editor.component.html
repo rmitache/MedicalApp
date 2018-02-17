@@ -23,7 +23,8 @@
         <icon-button [IconName]="'plus'" id="add-new-rule-button" (click)="viewModel.CreateNewRule()"></icon-button>
         <br />
         <div class="rules-list">
-
+            <rule-elem *ngFor="let rule of viewModel.CurrentVersionCLO.Rules">
+            </rule-elem>
         </div>
     </div>
     

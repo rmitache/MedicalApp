@@ -93,15 +93,19 @@
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOs\rule-item.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\CLOs\rule.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\Enums\ordinal-frequency.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
+    <None Remove="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\API\" />
-    <Folder Include="SPA\Components\Pages\HomePage\PlansOverview\PlanEditor\PlanRule\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
@@ -155,10 +159,15 @@
     <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOFactories\patient-account-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\rule-item.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\rule.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\ordinal-frequency.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
   </ItemGroup>
 

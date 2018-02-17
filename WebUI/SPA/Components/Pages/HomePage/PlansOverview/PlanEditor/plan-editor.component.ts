@@ -40,6 +40,11 @@ export class PlanEditorComponent implements IModalDialog {
     private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
+        CurrentVersionCLO: null,
+        CreateNewRule: () => {
+            let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
+            latestVersion.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
+        },
     };
 
     // Constructor 
@@ -75,12 +80,15 @@ export class PlanEditorComponent implements IModalDialog {
 
         let planCLO = options.data as CLOs.PlanCLO;
         this.viewModel.PlanCLO = planCLO;
+        this.viewModel.CurrentVersionCLO = planCLO.GetLatestVersion();
     }
 }
 
 
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
+    CurrentVersionCLO: CLOs.VersionCLO
+    CreateNewRule();
 }
 
 export interface IMedicineTypesSearchService {

@@ -2,7 +2,7 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 
-export class MedicineRuleItemCLO extends BaseCLO {
+export class MedicineRuleItemCLO extends BaseCLO{
     // Fields
     public ID: number;
     public MedicineType: CLOs.MedicineTypeCLO;
@@ -13,6 +13,7 @@ export class MedicineRuleItemCLO extends BaseCLO {
     public UnitDoseUoM: Enums.UnitOfMeasure;
 
     public Instruction: Enums.Instruction;
+    public AdministrationMethod: Enums.AdministrationMethod;
 
 
     // Constructor

@@ -12,3 +12,5 @@ export * from './Factors/Medicine/History/CLOs/medicine-factor-record.clo';
 // Plans 
 export * from './Plans/CLOs/plan.clo';
 export * from './Plans/CLOs/version.clo';
+export * from './Plans/CLOs/rule.clo';
+export * from './Plans/CLOs/rule-item.clo';
