@@ -5,7 +5,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
-import { DaysInWeek } from 'SPA/Core/Helpers/DataStructures/misc';
+import { DaysInWeek, Time } from 'SPA/Core/Helpers/DataStructures/misc';
 
 @Injectable()
 export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {

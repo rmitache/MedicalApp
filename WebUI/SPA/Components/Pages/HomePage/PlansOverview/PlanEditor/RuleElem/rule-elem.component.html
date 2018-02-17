@@ -11,7 +11,8 @@
             <select class="drop-down" name="rulefreq" [(ngModel)]="viewModel.RuleCLO.FrequencyType">
                 <option *ngFor="let freqType of ruleFreqTypesEnum | enumkeys" [value]="freqType.value">{{freqType.key}}</option>
             </select>
-            <div *ngIf="false" class="non-daily-controls-div">
+            <div [class.hidden-non-daily-controls-div]="viewModel.HideNonDailyControlsDiv==true"                  
+                 class="non-daily-controls-div">
                 <span class="label on-label">on</span>
                 <div class="week-days-list">
                     <div class="check-box-label-pair">
@@ -45,11 +46,24 @@
                 </div>
             </div>
             <div class="moments-in-day-div">
+                <span class="label at-label">at</span>
+                <p-chips id="moments-in-day-input"
+                         name="momentsinday" 
+                         styleClass="chips-input" 
+                         addOnTab="true"
+                         addOnBlur="true"
+                         placeholder="Type to add moments"
+                         (onAdd)="onAddMomentInDay($event.value)"
+                         (onRemove)="onRemoveMomentInDay($event.value)"
+                         [(ngModel)]="viewModel.MomentsInDayAsStrings"></p-chips>
             </div>
         </div>
+        <div class="what-section">
+            <span class="h3 what-label">WHAT</span>
+            <br />
+            </div>
 
-
-    </div>
+        </div>
 
 </form>
 

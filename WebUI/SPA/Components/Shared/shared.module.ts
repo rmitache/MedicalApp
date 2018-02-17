@@ -11,6 +11,8 @@ import { AutoCompleteModule } from 'primeng/primeng';
 import { BlockUIModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
+import { ChipsModule } from 'primeng/primeng';
+
 
 @NgModule({
     imports: [
@@ -20,7 +22,8 @@ import { SplitButtonModule } from 'primeng/primeng';
         AutoCompleteModule,
         BlockUIModule,
         ProgressSpinnerModule,
-        SplitButtonModule
+        SplitButtonModule,
+        ChipsModule
     ],
     declarations: [
         IconButtonComponent,
@@ -33,7 +36,8 @@ import { SplitButtonModule } from 'primeng/primeng';
         KeysPipe,
         EnumKeysPipe,
         FactorRecordElem,
-        SplitButtonModule
+        SplitButtonModule,
+        ChipsModule
     ]
 })
 export class SharedModule { }

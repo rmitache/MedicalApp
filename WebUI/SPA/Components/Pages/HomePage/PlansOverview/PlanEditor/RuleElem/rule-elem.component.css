@@ -9,6 +9,7 @@
 }
 
 .when-section {
+    height: 90px;
 }
 
     .when-section .when-label {
@@ -22,37 +23,70 @@
     }
 
     .when-section .non-daily-controls-div {
-        width:340px;
+        width: 340px;
         float: left;
     }
 
         .when-section .non-daily-controls-div .on-label {
             display: block;
-            margin-right:10px;
-            margin-top:5px;
+            margin-right: 10px;
+            margin-top: 5px;
             float: left;
         }
 
+    .when-section .hidden-non-daily-controls-div {
+        display: none;
+    }
+
+    .when-section .moments-in-day-div {
+        float: left;
+        height: 50px;
+        width: 300px;
+    }
+
+        .when-section .moments-in-day-div .at-label {
+            display: block;
+            margin-right: 10px;
+            margin-top: 5px;
+            float: left;
+        }
+
+
+        .when-section .moments-in-day-div #moments-in-day-input {
+            float: left;
+            width:250px;
+            height:20px;
+        }
+
+.what-section {
+    width: 100%;
+    height: calc(100% - 140px);
+}
+
+    .what-section .what-label {
+        display: inline-block;
+        padding-bottom: 10px;
+    }
 
 .check-box-label-pair {
     background-color: white;
     border: solid 1px #dbdbdb;
     padding: 5px;
-    border-radius: 3px;
     float: left;
     margin-right: 2px;
-    width:30px;
+    width: 30px;
 }
 
-.check-box-label-pair input {
-    float: left;
-    clear: both;
-    margin-left:10px;
-}
-.check-box-label-pair span {
-    float: left;
-    clear: both;
-    color:black;
-    width:30px;
-    text-align:center;
-}
+    .check-box-label-pair input {
+        float: left;
+        clear: both;
+        margin-left: 10px;
+    }
+
+    .check-box-label-pair span {
+        float: left;
+        clear: both;
+        color: black;
+        width: 30px;
+        text-align: center;
+    }

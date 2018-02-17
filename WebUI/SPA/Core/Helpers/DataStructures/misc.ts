@@ -58,3 +58,27 @@ export class DaysInWeek {
         }
     }
 }
+
+export function ParseStringToTime(str: string): Time {
+    // Check for colon
+    let strArray = str.split(':');
+    if (strArray.length !== 2) {
+        return null;
+    }
+
+    // Parse Hours
+    let hours = Number(strArray[0]);
+    if (isNaN(hours) || strArray[0].length > 2 || hours < 0 || hours > 23) {
+        return null;
+    }
+
+    // Parse Minutes
+    let minutes = Number(strArray[1]);
+    if (isNaN(minutes) || strArray[1].length < 2 || strArray[1].length > 2 || minutes < 0 || minutes > 59) {
+        return null;
+    }
+
+    // Create Time instance
+    let timeObj: Time = new Time(hours, minutes);
+    return timeObj;
+}

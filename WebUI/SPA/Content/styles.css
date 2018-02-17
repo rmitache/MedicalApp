@@ -105,11 +105,11 @@ body {
         }
 
 .ui-inputtext {
-    border: solid 1px #dbdbdb;
-    font-size: 10pt;
-    font-family: Arial;
-    padding: 5px;
-    border-radius: 0px;
+    border: solid 1px #dbdbdb !important;
+    font-size: 10pt !important;
+    font-family: Arial !important;
+    padding: 5px !important;
+    border-radius: 0px !important;
 }
 
     .ui-inputtext:disabled {

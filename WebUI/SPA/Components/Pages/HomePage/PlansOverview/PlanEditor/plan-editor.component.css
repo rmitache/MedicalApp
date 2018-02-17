@@ -48,9 +48,10 @@
     }
 
     .rules-section .rules-list {
-        width: 100%;
-        height: calc(100% - 20px);
-        padding-top:15px;
+        width: calc(100% - 20px);
+        height: calc(100% - 40px);
+        margin-top:15px;
+        overflow-y:scroll;
     }
 
     .rules-section #add-new-rule-button {
