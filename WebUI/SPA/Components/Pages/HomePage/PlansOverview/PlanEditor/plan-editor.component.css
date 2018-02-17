@@ -50,6 +50,7 @@
     .rules-section .rules-list {
         width: 100%;
         height: calc(100% - 20px);
+        padding-top:15px;
     }
 
     .rules-section #add-new-rule-button {

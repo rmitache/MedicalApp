@@ -21,7 +21,8 @@ export class RuleElemComponent {
     @Output()
     public IsValid: boolean = false;
     @ViewChild(NgForm) form;
-    private readonly unitDoseTypesEnum = Enums.UnitDoseType;
+    private readonly ordinalFreqTypesEnum = Enums.OrdinalFrequency;
+    private readonly ruleFreqTypesEnum = Enums.RuleFrequencyType;
     private readonly viewModel: ViewModel = {
         RuleCLO: null
     };

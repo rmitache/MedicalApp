@@ -16,7 +16,11 @@ if (module.hot) {
         const oldRootElem = document.querySelector('home-page');
         const newRootElem = document.createElement('home-page');
         oldRootElem!.parentNode!.insertBefore(newRootElem, oldRootElem);
-        modulePromise.then(appModule => appModule.destroy());
+        modulePromise.then(appModule => {
+            appModule.destroy();
+            oldRootElem.parentNode.removeChild(oldRootElem);
+
+        });
     });
 } else {
     enableProdMode();

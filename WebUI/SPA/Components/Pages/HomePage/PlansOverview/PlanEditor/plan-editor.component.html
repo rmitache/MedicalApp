@@ -1,19 +1,19 @@
 <div class="frame">
     <div class="top-section">
         <div class="label-input-pair">
-            <span class="h3 label">Name:</span>
+            <span class="label">Name:</span>
             <input required type="text" class="ui-inputtext" name="planName" id="plan-name-input" value="."
                    [(ngModel)]="viewModel.PlanCLO.Name" />
 
         </div>
         <div class="label-input-pair">
-            <span class="h3 label">Start date:</span>
+            <span class="label">Start date:</span>
             <p-calendar id="start-date-picker"
                         disabled="true"
                         showIcon="true"></p-calendar>
         </div>
         <div class="label-input-pair">
-            <span class="h3 label">End date:</span>
+            <span class="label">End date:</span>
             <p-calendar id="end-date-picker"
                         showIcon="true"></p-calendar>
         </div>
@@ -23,7 +23,7 @@
         <icon-button [IconName]="'plus'" id="add-new-rule-button" (click)="viewModel.CreateNewRule()"></icon-button>
         <br />
         <div class="rules-list">
-            <rule-elem *ngFor="let rule of viewModel.CurrentVersionCLO.Rules">
+            <rule-elem *ngFor="let rule of viewModel.CurrentVersionCLO.Rules" [Rule]="rule">
             </rule-elem>
         </div>
     </div>

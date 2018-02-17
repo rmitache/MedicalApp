@@ -1,9 +1,51 @@
 <form #ruleForm="ngForm">
 
     <div class="frame">
-        im a rule
-        <div class="draggable-area"></div>
-        <div class="right-side">
+
+        <div class="when-section">
+            <span class="h3 when-label">WHEN</span>
+            <br />
+            <select class="drop-down" name="ordinalfrequency" [(ngModel)]="viewModel.RuleCLO.OrdinalFrequency">
+                <option *ngFor="let ordFreq of ordinalFreqTypesEnum | enumkeys" [value]="ordFreq.value">{{ordFreq.key}}</option>
+            </select>
+            <select class="drop-down" name="rulefreq" [(ngModel)]="viewModel.RuleCLO.FrequencyType">
+                <option *ngFor="let freqType of ruleFreqTypesEnum | enumkeys" [value]="freqType.value">{{freqType.key}}</option>
+            </select>
+            <div *ngIf="false" class="non-daily-controls-div">
+                <span class="label on-label">on</span>
+                <div class="week-days-list">
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">MON</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">TUE</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">WED</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">THU</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">FRI</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">SAT</span>
+                    </div>
+                    <div class="check-box-label-pair">
+                        <input type="checkbox" />
+                        <span class="label">SUN</span>
+                    </div>
+                </div>
+            </div>
+            <div class="moments-in-day-div">
+            </div>
         </div>
 
 
