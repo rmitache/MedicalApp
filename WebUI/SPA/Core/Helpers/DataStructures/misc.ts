@@ -8,7 +8,7 @@
     }
     public ToString(): string {
         let strHours: string, strMins: string;
-        strHours = (this.Hours < 10) ? (' ' + this.Hours) : this.Hours + '';
+        strHours = (this.Hours < 10) ? ('' + this.Hours) : this.Hours + '';
         strMins = (this.Minutes < 10) ? ('0' + this.Minutes) : this.Minutes + '';
         return strHours + ":" + strMins;
     }

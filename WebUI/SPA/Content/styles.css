@@ -118,7 +118,7 @@ body {
     }
 
     .ui-inputtext:invalid {
-        border: solid 1px red;
+        border: solid 1px red !important;
     }
     .ui-inputtext:focus {
         border: solid 1px gray !important;

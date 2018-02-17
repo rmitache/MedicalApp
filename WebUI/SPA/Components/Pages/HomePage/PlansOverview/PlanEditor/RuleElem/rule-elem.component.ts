@@ -60,18 +60,22 @@ export class RuleElemComponent {
     private onRemoveRuleClicked() {
         this.RemoveClicked.emit(this.ruleCLO);
     }
-    private onAddMomentInDay(value: any) {
+    private onAddMomentInDay(value: string) {
         let time = ParseStringToTime(value);
+        
 
         if (time !== null) {
             this.viewModel.RuleCLO.MomentsInDay.push(time);
         } else {
-            this.viewModel.RuleCLO.MomentsInDay.pop();
             this.viewModel.MomentsInDayAsStrings.pop();
         }
     }
-    private onRemoveMomentInDay(value: any) {
-        alert(value);
+    private onRemoveMomentInDay(value: string) {
+        var index = this.viewModel.RuleCLO.MomentsInDay.findIndex(item => item.ToString() === value);
+        if (index === -1) {
+            throw new Error('cannot find Time in MomentsInDay with value =' + value);
+        }
+        this.viewModel.RuleCLO.MomentsInDay.splice(index, 1);
     }
     
     
