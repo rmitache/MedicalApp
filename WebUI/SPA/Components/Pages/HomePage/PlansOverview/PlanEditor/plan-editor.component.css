@@ -51,9 +51,13 @@
         width: calc(100% - 20px);
         height: calc(100% - 40px);
         margin-top:15px;
-        overflow-y:scroll;
+        overflow-y:auto;
     }
-
+    .rules-section .rules-list .rule-elem {
+        float:left;
+        margin-bottom:10px;
+        width:100%;
+    }
     .rules-section #add-new-rule-button {
         float: left;
         margin-left: 10px;

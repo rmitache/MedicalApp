@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
-import { FactorRecordElem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordElem/factor-record-elem.component';
+import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { BlockUIModule } from 'primeng/primeng';
@@ -29,13 +29,13 @@ import { ChipsModule } from 'primeng/primeng';
         IconButtonComponent,
         KeysPipe,
         EnumKeysPipe,
-        FactorRecordElem
+        IFRPGroupElem
     ],
     exports: [
         IconButtonComponent,
         KeysPipe,
         EnumKeysPipe,
-        FactorRecordElem,
+        IFRPGroupElem,
         SplitButtonModule,
         ChipsModule
     ]

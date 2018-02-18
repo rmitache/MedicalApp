@@ -13,7 +13,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
-import { FactorRecordElem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordElem/factor-record-elem.component';
+import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class AddNewEventComponent implements IModalDialog {
             });
         }
     };
-    @ViewChildren('factorRecords') factorRecordItems: QueryList<FactorRecordElem>;
+    @ViewChildren('factorRecords') factorRecordItems: QueryList<IFRPGroupElem>;
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {

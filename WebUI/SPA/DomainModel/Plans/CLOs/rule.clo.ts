@@ -11,7 +11,7 @@ export class RuleCLO extends BaseCLO {
     public FrequencyType: RuleFrequencyType;
     public DaysInWeek?: DaysInWeek;
     public MomentsInDay: Time[];
-
+    public MedicineRuleItems: CLOs.MedicineRuleItemCLO[];
 
     // Constructor
     constructor() {

@@ -79,6 +79,7 @@
     <None Remove="SPA\DomainModel\domain-model.module.ts" />
     <None Remove="SPA\DomainModel\enum-exports.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOs\i-factor-record-properties-group.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
@@ -96,7 +97,6 @@
     <None Remove="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
-    <None Remove="SPA\DomainModel\Plans\CLOs\rule-item.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\rule.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\ordinal-frequency.enum.ts" />
@@ -143,6 +143,7 @@
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\enum-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\i-factor-record-properties-group.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\administration-method.enum.ts" />
@@ -162,7 +163,6 @@
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\rule-item.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\rule.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />

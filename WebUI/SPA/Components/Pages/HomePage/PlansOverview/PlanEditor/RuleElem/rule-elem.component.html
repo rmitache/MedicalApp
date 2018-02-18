@@ -1,9 +1,11 @@
 <form #ruleForm="ngForm">
 
     <div class="frame">
-
+        <div class="close" (click)="onRemoveClicked()">X</div>
         <div class="when-section">
+
             <span class="h3 when-label">WHEN</span>
+
             <br />
             <select class="drop-down" name="ordinalfrequency" [(ngModel)]="viewModel.RuleCLO.OrdinalFrequency">
                 <option *ngFor="let ordFreq of ordinalFreqTypesEnum | enumkeys" [value]="ordFreq.value">{{ordFreq.key}}</option>
@@ -11,12 +13,12 @@
             <select class="drop-down" name="rulefreq" [(ngModel)]="viewModel.RuleCLO.FrequencyType">
                 <option *ngFor="let freqType of ruleFreqTypesEnum | enumkeys" [value]="freqType.value">{{freqType.key}}</option>
             </select>
-            <div [class.hidden-non-daily-controls-div]="viewModel.HideNonDailyControlsDiv==true"                  
+            <div [class.hidden-non-daily-controls-div]="viewModel.HideNonDailyControlsDiv==true"
                  class="non-daily-controls-div">
                 <span class="label on-label">on</span>
                 <div class="week-days-list">
                     <div class="check-box-label-pair">
-                        <input name="monday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Days.Monday" type="checkbox"  />
+                        <input name="monday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Days.Monday" type="checkbox" />
                         <span class="label">MON</span>
                     </div>
                     <div class="check-box-label-pair">
@@ -48,9 +50,8 @@
             <div class="moments-in-day-div">
                 <span class="label at-label">at</span>
                 <p-chips id="moments-in-day-input"
-                         name="momentsinday" 
-                         styleClass="chips-input" 
-                         required
+                         name="momentsinday"
+                         styleClass="chips-input"
                          addOnTab="true"
                          addOnBlur="true"
                          placeholder="Type to add moments"
@@ -61,10 +62,18 @@
         </div>
         <div class="what-section">
             <span class="h3 what-label">WHAT</span>
+            <icon-button [IconName]="'plus'" id="add-new-rule-item-button" (click)="viewModel.CreateNewRuleItem()"></icon-button>
             <br />
-            </div>
 
+            <div id="rule-items-list">
+                <!--<factor-record-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
+                                    [MedicineFactorRecord]="factorRecord"
+                                    [MedicineSearchService]="searchService"
+                                    (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-elem>-->
+            </div>
         </div>
+
+    </div>
 
 </form>
 

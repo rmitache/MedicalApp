@@ -2,10 +2,21 @@
 
 .frame {
     background-color: #f7f7f7;
-    height: 250px;
+    height: 350px;
     width: calc(100% - 20px);
     padding: 10px;
     border-radius: 4px;
+}
+
+.close {
+    float: right;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    font-family: Arial;
+    font-weight: bold;
+    text-align: right;
+    color: gray;
 }
 
 .when-section {
@@ -56,13 +67,14 @@
             float: left;
             width: 250px;
             height: 20px;
-            margin-top:-1px;
+            margin-top: -1px;
         }
 
 /deep/ .when-section .moments-in-day-div #moments-in-day-input .ui-inputtext {
 }
+
 /deep/ .when-section .moments-in-day-div #moments-in-day-input .ui-chips-input-token {
-    margin-top:-5px;
+    margin-top: -5px;
 }
 
 .what-section {
@@ -71,9 +83,23 @@
 }
 
     .what-section .what-label {
-        display: inline-block;
+        float:left;
         padding-bottom: 10px;
     }
+
+    .what-section #add-new-rule-item-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: -4px;
+    }
+    .what-section #rule-items-list {
+        width: calc(100%);
+        margin-top: 15px;
+        height: calc(100% - 15px);
+        overflow-y: scroll;
+        border:solid 1px red;
+    }
+
 
 .check-box-label-pair {
     background-color: white;

@@ -13,7 +13,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 
 // Components
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { FactorRecordElem } from 'SPA/Components/Pages/HomePage/Shared/FactorRecordElem/factor-record-elem.component';
+import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({

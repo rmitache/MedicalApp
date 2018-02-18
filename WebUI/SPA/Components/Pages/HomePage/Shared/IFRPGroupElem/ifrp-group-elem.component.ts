@@ -7,15 +7,15 @@ import { AutoComplete } from 'primeng/primeng';
 
 
 @Component({
-    selector: 'factor-record-elem',
-    templateUrl: './factor-record-elem.component.html',
-    styleUrls: ['./factor-record-elem.component.css'],
-    host: { 'class': 'factor-record-elem' }
+    selector: 'ifrp-group-elem',
+    templateUrl: './ifrp-group-elem.component.html',
+    styleUrls: ['./ifrp-group-elem.component.css'],
+    host: { 'class': 'ifrp-group-elem' }
 })
-export class FactorRecordElem {
+export class IFRPGroupElem {
     // Fields
     @Input('MedicineFactorRecord')
-    private readonly medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO;
+    private readonly medicineFactorRecordCLO: CLOs.IFactorRecordPropertiesGroup;
     @Input('MedicineSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     @Output()
@@ -43,7 +43,6 @@ export class FactorRecordElem {
         this.viewModel.FactorRecordCLO.MedicineType = medicineTypeCLO;
 
         // Handle fields
-
         if (medicineTypeCLO.IsPackagedIntoUnitDoses() === true) {
             this.viewModel.FactorRecordCLO.UnitDoseQuantifier = 1;
             this.viewModel.FactorRecordCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
@@ -111,7 +110,7 @@ export class FactorRecordElem {
 }
 
 interface ViewModel {
-    FactorRecordCLO: CLOs.MedicineFactorRecordCLO;
+    FactorRecordCLO: CLOs.IFactorRecordPropertiesGroup;
     MedicineTypeName: string;
     MedicineTypeSearchResults: string[];
     OverlayIsVisible: boolean;

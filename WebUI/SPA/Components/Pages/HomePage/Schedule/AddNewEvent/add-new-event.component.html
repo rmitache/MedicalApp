@@ -17,10 +17,10 @@
         <icon-button [IconName]="'plus'" id="add-new-medicine-button" (click)="viewModel.CreateNewFactorRecord()"></icon-button>
         <br />
         <div id="factor-records-list">
-            <factor-record-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
+            <ifrp-group-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
                                          [MedicineFactorRecord]="factorRecord"
                                          [MedicineSearchService]="searchService"
-                                         (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-elem>
+                                         (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></ifrp-group-elem>
         </div>
     </div>
 </div> 
