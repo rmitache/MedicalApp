@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 
@@ -28,7 +28,7 @@ export class PlanEditorComponent implements IModalDialog {
     @ViewChildren('ruleelems')
     private ruleElems: QueryList<RuleElemComponent>;
     @Output()
-    public IsValid: boolean;
+    public IsValid: boolean = false;
     @ViewChild(NgForm)
     private form;
     private readonly viewModel: ViewModel = {
@@ -52,7 +52,7 @@ export class PlanEditorComponent implements IModalDialog {
             }
         }
 
-        if (this.ruleElems.toArray().length === 0) {
+        if (this.viewModel.CurrentVersionCLO.Rules.length === 0) {
             allChildElemsAreValid = false;
         }
 
@@ -60,6 +60,9 @@ export class PlanEditorComponent implements IModalDialog {
     }
     private checkIfSelfValid(): boolean {
         return (this.form.valid === true);
+    }
+    private refreshIsValid() {
+        this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
     }
 
     // Constructor 
@@ -72,7 +75,7 @@ export class PlanEditorComponent implements IModalDialog {
         this.form.
             valueChanges.
             subscribe(() => {
-                this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
+                this.refreshIsValid();
             });
     }
     // Public methods
@@ -82,13 +85,21 @@ export class PlanEditorComponent implements IModalDialog {
     }
 
     // EventHandlers
-    private onChildGroupListChanged() {
-        this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
+    private onChildGroupElemChanged() {
+        this.refreshIsValid();
     }
     private onAddNewRuleTriggered() {
-        let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
-        latestVersion.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
+        this.viewModel.CurrentVersionCLO.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
 
+    }
+    private onRemoveRuleTriggered(ruleCLO: CLOs.RuleCLO) {
+        const index: number = this.viewModel.CurrentVersionCLO.Rules.indexOf(ruleCLO);
+
+        if (index !== -1) {
+            this.viewModel.CurrentVersionCLO.Rules.splice(index, 1);
+        }
+
+        this.refreshIsValid();
     }
 
     // IModalDialog
@@ -99,14 +110,13 @@ export class PlanEditorComponent implements IModalDialog {
         //}
         //this.text = options.data.text;
 
-        let planCLO = options.data as CLOs.PlanCLO;
-        this.viewModel.PlanCLO = planCLO;
-        this.viewModel.CurrentVersionCLO = planCLO.GetLatestVersion();
+        this.viewModel.PlanCLO = options.data as CLOs.PlanCLO;
+        this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
     }
 }
 
 
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
-    CurrentVersionCLO: CLOs.VersionCLO
+    CurrentVersionCLO: CLOs.VersionCLO;
 }

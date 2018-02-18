@@ -82,7 +82,7 @@ export class RuleElemComponent {
     private onAddIFRPGroupTriggered() {
         this.viewModel.RuleCLO.MedicineRuleItems.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineRuleItemCLO));
     }
-    private onRemoveRuleClicked() {
+    private onRemoveClicked() {
         this.RemoveClicked.emit(this.ruleCLO);
     }
     private onAddMomentInDay(value: string) {

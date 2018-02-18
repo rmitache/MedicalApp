@@ -46,6 +46,11 @@ export class AddNewEventComponent implements IModalDialog {
         OccurenceDateTime: null
     };
 
+    // Private methods
+    private refreshIsValid() {
+        this.IsValid = this.ifrpGroupList.IsValid;
+    }
+
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
@@ -71,7 +76,7 @@ export class AddNewEventComponent implements IModalDialog {
 
     // EventHandlers
     private onChildGroupListChanged() {
-        this.IsValid = this.ifrpGroupList.IsValid;
+        this.refreshIsValid();
     }
     private onAddFactorRecordTriggered() {
         this.viewModel.FactorRecordCLOs.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));

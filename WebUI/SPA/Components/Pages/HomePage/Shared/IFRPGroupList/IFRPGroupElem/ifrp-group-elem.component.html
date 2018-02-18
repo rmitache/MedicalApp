@@ -10,6 +10,7 @@
 
                 <p-autoComplete required #autocomplete
                                 appendTo="body"
+                                lazy="true"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
                                 [emptyMessage]="'No medicine types could be found. Please try a different name'"
                                 [placeholder]="'Type to choose a Medicine Type'"

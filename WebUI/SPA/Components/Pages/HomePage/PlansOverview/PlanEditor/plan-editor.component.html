@@ -11,7 +11,10 @@
             </div>
             <div class="label-input-pair">
                 <span class="label">Start date:</span>
-                <p-calendar required id="start-date-picker" name="startdatepicker"
+                <p-calendar id="start-date-picker"
+                            name="startdatepicker"
+                            readonlyInput="true"
+                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDate"
                             showIcon="true"></p-calendar>
             </div>
             <div class="label-input-pair">
@@ -25,7 +28,10 @@
             <icon-button [IconName]="'plus'" id="add-new-rule-button" (click)="onAddNewRuleTriggered()"></icon-button>
             <br />
             <div class="rules-list">
-                <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules" [RuleCLO]="rule">
+                <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules" 
+                           (ValidStateChanged)="onChildGroupElemChanged()"
+                           (RemoveClicked)="onRemoveRuleTriggered($event)"
+                           [RuleCLO]="rule">
                 </rule-elem>
             </div>
         </div>
