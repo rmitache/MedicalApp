@@ -13,7 +13,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
-import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 
 @Component({
