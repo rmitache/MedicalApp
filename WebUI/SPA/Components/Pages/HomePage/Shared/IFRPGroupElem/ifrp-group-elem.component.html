@@ -1,7 +1,7 @@
-<form #factorRecordForm="ngForm">
+<form #form="ngForm">
 
     <div class="frame">
-
+        {{IsValid}}
         <div class="draggable-area"></div>
         <div class="right-side">
             <div class="label-input-pair medicine-type-input-pair">
@@ -9,25 +9,26 @@
 
 
                 <p-autoComplete required #autocomplete
+                                appendTo="body"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
                                 [emptyMessage]="'No medicine types could be found. Please try a different name'"
                                 [placeholder]="'Type to choose a Medicine Type'"
                                 [dropdown]="true"
                                 (completeMethod)="onMedicineTypeTextBoxChanged($event)"
                                 (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>
-                
+
 
             </div>
 
             <div class="label-input-pair quantifier-input-pair">
                 <span class="label">Dosage</span>
-                <input required min="1" pattern="^\d+$"  type="text" class="ui-inputtext" name="unitdosequantifier"
-                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier"  />
+                <input required min="1" pattern="^\d+$" type="text" class="ui-inputtext" name="unitdosequantifier"
+                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
             </div>
 
             <div class="label-input-pair dose-type-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" name="unitdosetype" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseType" 
+                <select class="drop-down" name="unitdosetype" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseType"
                         [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let doseType of unitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
                 </select>
@@ -36,7 +37,7 @@
             <div class="x-label">of</div>
             <div class="label-input-pair dose-size-input-pair">
                 <span class="label"></span>
-                <input type="text" name="unitdosesize" 
+                <input type="text" name="unitdosesize"
                        class="ui-inputtext" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
             </div>
 

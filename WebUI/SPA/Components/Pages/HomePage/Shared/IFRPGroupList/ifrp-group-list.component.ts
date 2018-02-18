@@ -40,12 +40,36 @@ export class IFRPGroupListComponent {
             });
         }
     };
+    @Output()
+    public IsValid: boolean = false;
     @ViewChildren('IFRPGroupElems')
     private iFRPGroupElems: QueryList<IFRPGroupElemComponent>;
     private readonly viewModel: ViewModel = {
         IFRPGroupCLOs: []
     };
 
+    // Private methods
+    private checkChildrenAreValid(): boolean {
+        let allChildElemsAreValid = true;
+        if (!this.iFRPGroupElems) {
+            return false;
+        }
+
+        for (var i = 0; i < this.iFRPGroupElems.toArray().length; i++) {
+            let elem = this.iFRPGroupElems.toArray()[i];
+
+            if (!elem.IsValid) {
+                allChildElemsAreValid = false;
+                break;
+            }
+        }
+
+        if (this.iFRPGroupCLOs.length === 0) {
+            allChildElemsAreValid = false;
+        }
+
+        return allChildElemsAreValid;
+    }
     // Constructor 
     constructor(
     ) { }
@@ -53,41 +77,30 @@ export class IFRPGroupListComponent {
         this.viewModel.IFRPGroupCLOs = this.iFRPGroupCLOs;
     }
 
-    // Public methods
-    public IsValidForSave(): boolean {
-        let allItemsAreValid = true;
-
-        for (var i = 0; i < this.iFRPGroupElems.toArray().length; i++) {
-            let elem = this.iFRPGroupElems.toArray()[i];
-
-            if (!elem.IsValid) {
-                allItemsAreValid = false;
-                break;
-            }
-        }
-
-
-
-
-        return allItemsAreValid;
-    }
 
     // Events 
     @Output() public AddNewClicked: EventEmitter<any> = new EventEmitter();
+    @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
 
 
     // EventHandlers
+    private onChildGroupElemChanged() {
+        this.IsValid = this.checkChildrenAreValid();
+        this.ValidStateChanged.emit();
+    }
     private onAddNewIFRPGroupTriggered() {
         this.AddNewClicked.emit();
     }
     private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup) {
 
-        alert('remove triggered');
-        //const index: number = this.viewModel.FactorRecordCLOs.indexOf(medicineFactorRecordCLO);
+        const index: number = this.viewModel.IFRPGroupCLOs.indexOf(iFRPGroupCLO);
 
-        //if (index !== -1) {
-        //    this.viewModel.FactorRecordCLOs.splice(index, 1);
-        //}
+        if (index !== -1) {
+            this.viewModel.IFRPGroupCLOs.splice(index, 1);
+        }
+
+        this.IsValid = this.checkChildrenAreValid();
+        this.ValidStateChanged.emit();
     }
 }
 

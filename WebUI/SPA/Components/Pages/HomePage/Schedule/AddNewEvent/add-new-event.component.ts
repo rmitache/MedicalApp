@@ -24,6 +24,8 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 })
 export class AddNewEventComponent implements IModalDialog {
     // Fields
+    @Output()
+    public IsValid: boolean;
     private searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.ToArray().find(clo => {
@@ -66,22 +68,13 @@ export class AddNewEventComponent implements IModalDialog {
         let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
         return saveDataOperationPromise;
     }
-    public IsValidForSave(): boolean {
-        return this.ifrpGroupList.IsValidForSave();
-    }
 
     // EventHandlers
+    private onChildGroupListChanged() {
+        this.IsValid = this.ifrpGroupList.IsValid;
+    }
     private onAddFactorRecordTriggered() {
         this.viewModel.FactorRecordCLOs.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
-    }
-    private onRemoveFactorRecordTriggered(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
-
-
-        const index: number = this.viewModel.FactorRecordCLOs.indexOf(medicineFactorRecordCLO);
-
-        if (index !== -1) {
-            this.viewModel.FactorRecordCLOs.splice(index, 1);
-        }
     }
 
     // IModalDialog

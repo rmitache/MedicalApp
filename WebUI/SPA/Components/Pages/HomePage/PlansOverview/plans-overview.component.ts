@@ -41,9 +41,8 @@ export class PlansOverviewComponent {
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
-                        //let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                        //return !addNewEventComponentInstance.IsValidForSave();
-                        return false;
+                        let planEditorInstance = childComponentInstance as PlanEditorComponent;
+                        return !planEditorInstance.IsValid;
                     },
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {

@@ -6,6 +6,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
 import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
+import { MedicineRuleItemCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-rule-item-clo.factory';
 import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
 import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
 import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
@@ -103,6 +104,7 @@ export class GenericCLOFactory {
     constructor(
         private readonly patientAccountCLOFactory: PatientAccountCLOFactory,
         private readonly medicineFactorRecordCLOFactory: MedicineFactorRecordCLOFactory,
+        private readonly medicineRuleItemCLOFactory: MedicineRuleItemCLOFactory,
         private readonly medicinetypeCLOFactory: MedicineTypeCLOFactory,
         private readonly planCLOFactory: PlanCLOFactory,
         private readonly versionCLOFactory: VersionCLOFactory,
@@ -110,6 +112,7 @@ export class GenericCLOFactory {
     ) {
         this.factoryTypeInstanceDictionary['PatientAccountCLO'] = patientAccountCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineFactorRecordCLO'] = medicineFactorRecordCLOFactory;
+        this.factoryTypeInstanceDictionary['MedicineRuleItemCLO'] = medicineRuleItemCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineTypeCLO'] = medicinetypeCLOFactory;
         this.factoryTypeInstanceDictionary['PlanCLO'] = planCLOFactory;
         this.factoryTypeInstanceDictionary['VersionCLO'] = versionCLOFactory;

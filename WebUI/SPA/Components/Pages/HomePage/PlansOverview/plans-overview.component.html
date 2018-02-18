@@ -21,7 +21,7 @@
         </select>
         <div id="plan-elems-list">
             <plan-elem #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
-                       [Plan]="plan"
+                       [PlanCLO]="plan"
                        (ChangeClicked)="onChangePlanTriggered($event)"
                        ></plan-elem>
 

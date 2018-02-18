@@ -1,6 +1,7 @@
-<form #ruleForm="ngForm">
+<form #form="ngForm">
 
     <div class="frame">
+        {{IsValid}}
         <div class="close" (click)="onRemoveClicked()">X</div>
         <div class="when-section">
 
@@ -61,17 +62,11 @@
             </div>
         </div>
         <div class="what-section">
-            <!--<span class="h3 what-label">WHAT</span>
-            <icon-button [IconName]="'plus'" id="add-new-rule-item-button" (click)="viewModel.CreateNewRuleItem()"></icon-button>
-            <br />
-
-            <div id="rule-items-list">
-                <factor-record-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
-                                    [MedicineFactorRecord]="factorRecord"
-                                    [MedicineSearchService]="searchService"
-                                    (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-elem>
-            </div>-->
-            <ifrp-group-list></ifrp-group-list>
+            <ifrp-group-list #ifrpgrouplist
+                             [IFRPGroupCLOs]="viewModel.RuleCLO.MedicineRuleItems"
+                             [AvailableMedicineTypes]="availableMedicineTypes"
+                             (ValidStateChanged)="onChildGroupListChanged()"
+                             (AddNewClicked)="onAddIFRPGroupTriggered()"></ifrp-group-list>
         </div>
 
     </div>

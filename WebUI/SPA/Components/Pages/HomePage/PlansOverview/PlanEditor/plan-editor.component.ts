@@ -1,6 +1,7 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
 import * as moment from 'moment';
+import { NgForm } from '@angular/forms';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -13,7 +14,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 
 // Components
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { RuleElemComponent } from './RuleElem/rule-elem.component';
 
 
 @Component({
@@ -24,48 +25,69 @@ import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 })
 export class PlanEditorComponent implements IModalDialog {
     // Fields
-    private searchService: IMedicineTypesSearchService = {
-        GetMedicineTypeByName: (name) => {
-            return this.availableMedicineTypes.ToArray().find(clo => {
-                return clo.Name === name;
-            });
-        },
-        Search: (searchString) => {
-            return this.availableMedicineTypes.ToArray().map(clo => {
-                return clo.Name;
-            });
-        }
-    };
-    private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
+    @ViewChildren('ruleelems')
+    private ruleElems: QueryList<RuleElemComponent>;
+    @Output()
+    public IsValid: boolean;
+    @ViewChild(NgForm)
+    private form;
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
-        CurrentVersionCLO: null,
-        CreateNewRule: () => {
-            let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
-            latestVersion.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
-        },
+        CurrentVersionCLO: null
     };
+
+    // Private methods
+    private checkIfChildElemsValid(): boolean {
+        let allChildElemsAreValid = true;
+        if (!this.ruleElems) {
+            return false;
+        }
+
+        for (var i = 0; i < this.ruleElems.toArray().length; i++) {
+            let elem = this.ruleElems.toArray()[i];
+
+            if (!elem.IsValid) {
+                allChildElemsAreValid = false;
+                break;
+            }
+        }
+
+        if (this.ruleElems.toArray().length === 0) {
+            allChildElemsAreValid = false;
+        }
+
+        return allChildElemsAreValid;
+    }
+    private checkIfSelfValid(): boolean {
+        return (this.form.valid === true);
+    }
 
     // Constructor 
     constructor(
-        private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly globalDataService: GlobalDataService
+        private readonly genericCLOFactory: GenericCLOFactory
     ) {
-        this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
     }
+    ngOnInit() {
 
+        this.form.
+            valueChanges.
+            subscribe(() => {
+                this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
+            });
+    }
     // Public methods
     public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
         alert("save data !");
         return null;
     }
-    public IsValidForSave(): boolean {
-        return false;
-    }
 
     // EventHandlers
-    private onRemoveFactorRecordTriggered(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
-
+    private onChildGroupListChanged() {
+        this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
+    }
+    private onAddNewRuleTriggered() {
+        let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
+        latestVersion.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
 
     }
 
@@ -87,10 +109,4 @@ export class PlanEditorComponent implements IModalDialog {
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
     CurrentVersionCLO: CLOs.VersionCLO
-    CreateNewRule();
-}
-
-export interface IMedicineTypesSearchService {
-    GetMedicineTypeByName(name: string): CLOs.MedicineTypeCLO;
-    Search(searchString: string): string[];
 }

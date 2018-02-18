@@ -1,11 +1,20 @@
+// Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import * as CLOs from 'SPA/DomainModel/clo-exports';
+
+// Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
-import { AutoComplete } from 'primeng/primeng';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { ParseStringToTime } from 'SPA/Core/Helpers/DataStructures/misc';
+import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+
+// Components
+import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
+
 
 
 @Component({
@@ -16,13 +25,17 @@ import { ParseStringToTime } from 'SPA/Core/Helpers/DataStructures/misc';
 })
 export class RuleElemComponent {
     // Fields
-    @Input('Rule')
+    @Input('RuleCLO')
     private readonly ruleCLO: CLOs.RuleCLO;
     @Input('MedicineSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
+    private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     @Output()
-    public IsValid: boolean = false;
-    @ViewChild(NgForm) form;
+    public IsValid: boolean;
+    @ViewChild(NgForm)
+    private form;
+    @ViewChild('ifrpgrouplist')
+    private groupList: IFRPGroupListComponent;
     private readonly ordinalFreqTypesEnum = Enums.OrdinalFrequency;
     private readonly ruleFreqTypesEnum = Enums.RuleFrequencyType;
     private readonly viewModel: ViewModel = {
@@ -34,8 +47,12 @@ export class RuleElemComponent {
 
     // Constructor 
     constructor(
-        private readonly cdRef: ChangeDetectorRef
+        private readonly genericCLOFactory: GenericCLOFactory,
+        private readonly globalDataService: GlobalDataService
+
     ) {
+        this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
+
     }
     ngOnInit() {
         this.viewModel.RuleCLO = this.ruleCLO;
@@ -44,7 +61,7 @@ export class RuleElemComponent {
         this.form.
             valueChanges.
             subscribe(() => {
-                this.IsValid = (this.form.valid === true);
+                this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid;
                 this.viewModel.HideNonDailyControlsDiv = (this.viewModel.RuleCLO.FrequencyType == Enums.RuleFrequencyType.Day);
             });
     }
@@ -54,15 +71,23 @@ export class RuleElemComponent {
 
     // Events 
     @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
+    @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
 
 
     // EventHandlers
+    private onChildGroupListChanged() {
+        this.IsValid = this.groupList.IsValid;
+        this.ValidStateChanged.emit();
+    }
+    private onAddIFRPGroupTriggered() {
+        this.viewModel.RuleCLO.MedicineRuleItems.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineRuleItemCLO));
+    }
     private onRemoveRuleClicked() {
         this.RemoveClicked.emit(this.ruleCLO);
     }
     private onAddMomentInDay(value: string) {
         let time = ParseStringToTime(value);
-        
+
 
         if (time !== null) {
             this.viewModel.RuleCLO.MomentsInDay.push(time);
@@ -77,8 +102,8 @@ export class RuleElemComponent {
         }
         this.viewModel.RuleCLO.MomentsInDay.splice(index, 1);
     }
-    
-    
+
+
 }
 
 interface ViewModel {

@@ -76,6 +76,7 @@ export class IFRPGroupElemComponent {
             valueChanges.
             subscribe(() => {
                 this.IsValid = (this.form.valid === true);
+                this.ValidStateChanged.emit();
             });
     }
     ngAfterViewInit() {
@@ -87,7 +88,7 @@ export class IFRPGroupElemComponent {
 
     // Events 
     @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
-
+    @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
     private onRemoveClicked() {

@@ -12,7 +12,7 @@ import { MenuItem } from 'primeng/primeng';
 })
 export class PlanElemComponent {
     // Fields
-    @Input('Plan')
+    @Input('PlanCLO')
     private readonly planCLO: CLOs.PlanCLO;
     private readonly planStatusesEnum = Enums.PlanStatus;
     private menuItems: MenuItem[] = [

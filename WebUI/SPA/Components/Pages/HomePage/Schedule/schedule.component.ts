@@ -81,14 +81,14 @@ export class ScheduleComponent {
     // Event handlers
     private onAddNewEventTriggered() {
         this.modalDialogService.openDialog(this.viewContainerRef, {
-            title: 'Add new Event',
+            title: 'Add new one-off Event',
             childComponent: AddNewEventComponent,
             data: this.viewModel.CurrentDate,
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
                         let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                        return !addNewEventComponentInstance.IsValidForSave();
+                        return !addNewEventComponentInstance.IsValid;
                     },
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {
