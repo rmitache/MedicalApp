@@ -1,11 +1,14 @@
-﻿import { NgModule } from '@angular/core';
+﻿// Angular and 3rd party stuff
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+// Project modules
 import { FormsModule } from '@angular/forms';
 
 import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
-import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { BlockUIModule } from 'primeng/primeng';
@@ -29,13 +32,15 @@ import { ChipsModule } from 'primeng/primeng';
         IconButtonComponent,
         KeysPipe,
         EnumKeysPipe,
-        IFRPGroupElem
+        IFRPGroupElemComponent,
+        IFRPGroupListComponent
     ],
     exports: [
         IconButtonComponent,
         KeysPipe,
         EnumKeysPipe,
-        IFRPGroupElem,
+        IFRPGroupElemComponent,
+        IFRPGroupListComponent,
         SplitButtonModule,
         ChipsModule
     ]

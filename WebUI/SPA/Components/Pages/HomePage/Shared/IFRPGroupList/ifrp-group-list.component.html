@@ -1,0 +1,13 @@
+
+
+<div class="what-section">
+    <span class="h2">WHAT</span>
+    <icon-button [IconName]="'plus'" id="add-new-button" (click)="onAddNewIFRPGroupTriggered()"></icon-button>
+    <br />
+    <div id="elems-list">
+        <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.IFRPGroupCLOs"
+                         [IFRPGroupCLO]="clo"
+                         [MedicineTypeSearchService]="searchService"
+                         (RemoveClicked)="onRemoveIFRPGroupTriggered($event)"></ifrp-group-elem>
+    </div>
+</div>

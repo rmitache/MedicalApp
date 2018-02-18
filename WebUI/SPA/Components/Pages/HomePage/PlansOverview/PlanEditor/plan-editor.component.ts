@@ -13,7 +13,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 
 // Components
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({
@@ -37,7 +37,6 @@ export class PlanEditorComponent implements IModalDialog {
         }
     };
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
-    private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         CurrentVersionCLO: null,

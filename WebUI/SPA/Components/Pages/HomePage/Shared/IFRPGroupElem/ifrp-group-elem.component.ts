@@ -12,11 +12,11 @@ import { AutoComplete } from 'primeng/primeng';
     styleUrls: ['./ifrp-group-elem.component.css'],
     host: { 'class': 'ifrp-group-elem' }
 })
-export class IFRPGroupElem {
+export class IFRPGroupElemComponent {
     // Fields
-    @Input('MedicineFactorRecord')
-    private readonly medicineFactorRecordCLO: CLOs.IFactorRecordPropertiesGroup;
-    @Input('MedicineSearchService')
+    @Input('IFRPGroupCLO')
+    private readonly iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
+    @Input('MedicineTypeSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     @Output()
     public IsValid: boolean = false;
@@ -28,7 +28,7 @@ export class IFRPGroupElem {
     private readonly medicineInstructionsEnum = Enums.Instruction;
 
     private readonly viewModel: ViewModel = {
-        FactorRecordCLO: null,
+        IFRPGroupCLO: null,
         MedicineTypeName: '',
         MedicineTypeSearchResults: [],
         OverlayIsVisible: true,
@@ -40,24 +40,24 @@ export class IFRPGroupElem {
 
         // Get and load the medicineTypeCLO
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
-        this.viewModel.FactorRecordCLO.MedicineType = medicineTypeCLO;
+        this.viewModel.IFRPGroupCLO.MedicineType = medicineTypeCLO;
 
         // Handle fields
         if (medicineTypeCLO.IsPackagedIntoUnitDoses() === true) {
-            this.viewModel.FactorRecordCLO.UnitDoseQuantifier = 1;
-            this.viewModel.FactorRecordCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
-            this.viewModel.FactorRecordCLO.UnitDoseSize = medicineTypeCLO.PackagedUnitDoseSize;
-            this.viewModel.FactorRecordCLO.UnitDoseUoM = medicineTypeCLO.PackagedUnitDoseUoM;
+            this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
+            this.viewModel.IFRPGroupCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
+            this.viewModel.IFRPGroupCLO.UnitDoseSize = medicineTypeCLO.PackagedUnitDoseSize;
+            this.viewModel.IFRPGroupCLO.UnitDoseUoM = medicineTypeCLO.PackagedUnitDoseUoM;
 
             // Make the controls readonly
             this.viewModel.UserDefinedControlsAreLocked = true;
         }
         else {
 
-            this.viewModel.FactorRecordCLO.UnitDoseQuantifier = 1;
-            this.viewModel.FactorRecordCLO.UnitDoseType = Enums.UnitDoseType.Teaspoons;
-            this.viewModel.FactorRecordCLO.UnitDoseSize = 100;
-            this.viewModel.FactorRecordCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
+            this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
+            this.viewModel.IFRPGroupCLO.UnitDoseType = Enums.UnitDoseType.Teaspoons;
+            this.viewModel.IFRPGroupCLO.UnitDoseSize = 100;
+            this.viewModel.IFRPGroupCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
 
             // Unlock the controls
             this.viewModel.UserDefinedControlsAreLocked = false;
@@ -70,8 +70,8 @@ export class IFRPGroupElem {
     ) {
     }
     ngOnInit() {
-        this.viewModel.FactorRecordCLO = this.medicineFactorRecordCLO;
-
+        this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
+        
         this.form.
             valueChanges.
             subscribe(() => {
@@ -91,7 +91,7 @@ export class IFRPGroupElem {
 
     // EventHandlers
     private onRemoveClicked() {
-        this.RemoveClicked.emit(this.medicineFactorRecordCLO);
+        this.RemoveClicked.emit(this.iFRPGroupCLO);
     }
     private onMedicineTypeTextBoxChanged(event) {
 
@@ -110,7 +110,7 @@ export class IFRPGroupElem {
 }
 
 interface ViewModel {
-    FactorRecordCLO: CLOs.IFactorRecordPropertiesGroup;
+    IFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
     MedicineTypeName: string;
     MedicineTypeSearchResults: string[];
     OverlayIsVisible: boolean;

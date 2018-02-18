@@ -1,0 +1,42 @@
+.frame {
+    width: 900px;
+    height: 650px;
+}
+
+.h2 {
+    float: left;
+}
+
+
+.what-section {
+    height: calc(100% );
+}
+
+    .what-section #elems-list {
+        width: calc(100%);
+        margin-top: 15px;
+        height: calc(100% - 15px);
+        overflow-y: scroll;
+    }
+
+    .what-section #add-new-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: -4px;
+    }
+
+    .what-section .label-input-pair {
+        float: left;
+        margin-right: 10px;
+    }
+
+        .what-section .label-input-pair:last-of-type {
+            margin-right: 0;
+        }
+
+
+    .what-section .ifrp-group-elem {
+        float: left;
+        margin-bottom: 10px;
+        width: 100%;
+    }

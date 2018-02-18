@@ -54,23 +54,24 @@
                          styleClass="chips-input"
                          addOnTab="true"
                          addOnBlur="true"
-                         placeholder="Type to add moments"
+                         placeholder="Type in format HH:MM"
                          (onAdd)="onAddMomentInDay($event.value)"
                          (onRemove)="onRemoveMomentInDay($event.value)"
                          [(ngModel)]="viewModel.MomentsInDayAsStrings"></p-chips>
             </div>
         </div>
         <div class="what-section">
-            <span class="h3 what-label">WHAT</span>
+            <!--<span class="h3 what-label">WHAT</span>
             <icon-button [IconName]="'plus'" id="add-new-rule-item-button" (click)="viewModel.CreateNewRuleItem()"></icon-button>
             <br />
 
             <div id="rule-items-list">
-                <!--<factor-record-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
+                <factor-record-elem #factorRecords *ngFor="let factorRecord of viewModel.FactorRecords"
                                     [MedicineFactorRecord]="factorRecord"
                                     [MedicineSearchService]="searchService"
-                                    (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-elem>-->
-            </div>
+                                    (RemoveClicked)="onRemoveFactorRecordTriggered($event)"></factor-record-elem>
+            </div>-->
+            <ifrp-group-list></ifrp-group-list>
         </div>
 
     </div>

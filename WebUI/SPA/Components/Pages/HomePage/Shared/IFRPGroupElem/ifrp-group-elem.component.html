@@ -22,12 +22,12 @@
             <div class="label-input-pair quantifier-input-pair">
                 <span class="label">Dosage</span>
                 <input required min="1" pattern="^\d+$"  type="text" class="ui-inputtext" name="unitdosequantifier"
-                       [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseQuantifier"  />
+                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier"  />
             </div>
 
             <div class="label-input-pair dose-type-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" name="unitdosetype" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseType" 
+                <select class="drop-down" name="unitdosetype" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseType" 
                         [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let doseType of unitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
                 </select>
@@ -37,19 +37,19 @@
             <div class="label-input-pair dose-size-input-pair">
                 <span class="label"></span>
                 <input type="text" name="unitdosesize" 
-                       class="ui-inputtext" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseSize" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
+                       class="ui-inputtext" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
             </div>
 
             <div class="label-input-pair dose-uom-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" name="unitdoseuom" [(ngModel)]="viewModel.FactorRecordCLO.UnitDoseUoM" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
+                <select class="drop-down" name="unitdoseuom" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseUoM" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let uom of unitsOfMeasureEnum | enumkeys" [value]="uom.value">{{uom.key}}</option>
                 </select>
             </div>
 
             <div class="label-input-pair instructions-input-pair">
                 <span class="label">Instructions</span>
-                <select class="drop-down" name="instruction" [(ngModel)]="viewModel.FactorRecordCLO.Instruction">
+                <select class="drop-down" name="instruction" [(ngModel)]="viewModel.IFRPGroupCLO.Instruction">
                     <option *ngFor="let instruction of medicineInstructionsEnum | enumkeys" [value]="instruction.value">{{instruction.key}}</option>
                 </select>
             </div>

@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, QueryList } from '@angular/core';
 import * as moment from 'moment';
 
 // Project modules
@@ -13,8 +13,8 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
-import { IFRPGroupElem } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
-
+import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupElem/ifrp-group-elem.component';
+import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 
 @Component({
     selector: 'add-new-event',
@@ -36,14 +36,11 @@ export class AddNewEventComponent implements IModalDialog {
             });
         }
     };
-    @ViewChildren('factorRecords') factorRecordItems: QueryList<IFRPGroupElem>;
+    @ViewChild('ifrpgrouplist')
+    private ifrpGroupList: IFRPGroupListComponent;
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
-    private readonly availableMedicineTypesNames: string[];
     private readonly viewModel: ViewModel = {
-        FactorRecords: [],
-        CreateNewFactorRecord: () => {
-            this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
-        },
+        FactorRecordCLOs: [],
         OccurenceDateTime: null
     };
 
@@ -53,48 +50,37 @@ export class AddNewEventComponent implements IModalDialog {
         private readonly globalDataService: GlobalDataService
     ) {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
-        this.viewModel.FactorRecords.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
+        this.viewModel.FactorRecordCLOs.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
     }
 
     // Public methods
     public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
 
         // Loop through all FactorRecords and set OccurrenceDateTime
-        this.viewModel.FactorRecords.forEach(record => {
+        this.viewModel.FactorRecordCLOs.forEach(record => {
             record.OccurenceDateTime = this.viewModel.OccurenceDateTime;
 
         });
 
 
-        let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecords);
+        let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
         return saveDataOperationPromise;
     }
     public IsValidForSave(): boolean {
-        let allItemsAreValid = true;
-
-        for (var i = 0; i < this.factorRecordItems.toArray().length; i++) {
-            let factorItem = this.factorRecordItems.toArray()[i];
-
-            if (!factorItem.IsValid) {
-                allItemsAreValid = false;
-                break;
-            }
-        }
-
-
-
-
-        return allItemsAreValid;
+        return this.ifrpGroupList.IsValidForSave();
     }
 
     // EventHandlers
+    private onAddFactorRecordTriggered() {
+        this.viewModel.FactorRecordCLOs.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineFactorRecordCLO));
+    }
     private onRemoveFactorRecordTriggered(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
 
 
-        const index: number = this.viewModel.FactorRecords.indexOf(medicineFactorRecordCLO);
+        const index: number = this.viewModel.FactorRecordCLOs.indexOf(medicineFactorRecordCLO);
 
         if (index !== -1) {
-            this.viewModel.FactorRecords.splice(index, 1);
+            this.viewModel.FactorRecordCLOs.splice(index, 1);
         }
     }
 
@@ -113,8 +99,7 @@ export class AddNewEventComponent implements IModalDialog {
 
 
 interface ViewModel {
-    FactorRecords: CLOs.MedicineFactorRecordCLO[];
-    CreateNewFactorRecord();
+    FactorRecordCLOs: CLOs.MedicineFactorRecordCLO[];
     OccurenceDateTime: Date;
 }
 
