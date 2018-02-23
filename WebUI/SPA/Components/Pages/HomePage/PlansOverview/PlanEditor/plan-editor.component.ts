@@ -123,7 +123,7 @@ interface ViewModel {
     CurrentVersionCLO: CLOs.VersionCLO;
     CurrentMode: PlanEditorMode;
 }
-
+ 
 export enum PlanEditorMode {
     CreateNew,
     Change,
