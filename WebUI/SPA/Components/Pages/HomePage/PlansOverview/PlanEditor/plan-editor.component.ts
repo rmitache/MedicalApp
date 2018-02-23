@@ -33,7 +33,8 @@ export class PlanEditorComponent implements IModalDialog {
     private form;
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
-        CurrentVersionCLO: null
+        CurrentVersionCLO: null,
+        CurrentMode: null
     };
 
     // Private methods
@@ -110,7 +111,8 @@ export class PlanEditorComponent implements IModalDialog {
         //}
         //this.text = options.data.text;
 
-        this.viewModel.PlanCLO = options.data as CLOs.PlanCLO;
+        this.viewModel.PlanCLO = options.data.planCLO as CLOs.PlanCLO;
+        this.viewModel.CurrentMode = options.data.planEditorMode as PlanEditorMode;
         this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
     }
 }
@@ -119,4 +121,11 @@ export class PlanEditorComponent implements IModalDialog {
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
     CurrentVersionCLO: CLOs.VersionCLO;
+    CurrentMode: PlanEditorMode;
+}
+
+export enum PlanEditorMode {
+    CreateNew,
+    Change,
+    HardEdit
 }

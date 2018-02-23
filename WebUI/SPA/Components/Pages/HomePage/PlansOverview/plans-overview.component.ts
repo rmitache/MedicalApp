@@ -13,7 +13,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
-import { PlanEditorComponent } from './PlanEditor/plan-editor.component';
+import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
 
 
 @Component({
@@ -33,18 +33,21 @@ export class PlansOverviewComponent {
     private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
-    private openPlanEditor(title:string, planCLO: CLOs.PlanCLO) {
+    private openPlanEditor(title: string, saveButtonText:string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
         this.modalDialogService.openDialog(this.viewContainerRef, {
             title: title,
             childComponent: PlanEditorComponent,
-            data: planCLO,
+            data: {
+                planCLO: planCLO,
+                planEditorMode: mode
+            },
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
                         let planEditorInstance = childComponentInstance as PlanEditorComponent;
                         return !planEditorInstance.IsValid;
                     },
-                    text: 'Save',
+                    text: saveButtonText,
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
                             resolve();
@@ -90,10 +93,10 @@ export class PlansOverviewComponent {
     // Event handlers
     private onAddNewPlanTriggered() {
         let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
-        this.openPlanEditor('Create a new Plan', newPlanCLO);
+        this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
     }
     private onChangePlanTriggered(planCLO: CLOs.PlanCLO) {
-        this.openPlanEditor('Change Plan', planCLO);
+        this.openPlanEditor('Change Plan', 'Apply changes', planCLO, PlanEditorMode.Change);
     }
 
 }

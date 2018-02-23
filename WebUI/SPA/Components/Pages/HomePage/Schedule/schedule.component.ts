@@ -27,7 +27,7 @@ export class ScheduleComponent {
         CurrentDate: null,
         CurrentWeekNumber: null,
         AvailableFactorRecords: null,
-        CurrentDisplayModeEnum: DisplayModes.Day,
+        CurrentDisplayModeEnum: ScheduleDisplayMode.Day,
         DisplayRepresentation: null,
         Blocked: false
     };
@@ -38,9 +38,9 @@ export class ScheduleComponent {
     private getCurrentDisplayStrategy(): IDisplayModeStrategy {
         // Get Current Mode strategy
         let currentStrategy: IDisplayModeStrategy = null;
-        if (this.viewModel.CurrentDisplayModeEnum === DisplayModes.Day) {
+        if (this.viewModel.CurrentDisplayModeEnum === ScheduleDisplayMode.Day) {
             currentStrategy = new DayDisplayModeStrategy();
-        } else if (this.viewModel.CurrentDisplayModeEnum === DisplayModes.Week) {
+        } else if (this.viewModel.CurrentDisplayModeEnum === ScheduleDisplayMode.Week) {
             // OBS -> Not implemented yet
         }
         return currentStrategy;
@@ -139,11 +139,11 @@ interface ViewModel {
     CurrentDate: Date;
     CurrentWeekNumber: number;
     AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
-    CurrentDisplayModeEnum: DisplayModes;
+    CurrentDisplayModeEnum: ScheduleDisplayMode;
     DisplayRepresentation: DisplayRepresentation;
     Blocked: boolean;
 }
-enum DisplayModes {
+enum ScheduleDisplayMode {
     Day,
     Week
 }
