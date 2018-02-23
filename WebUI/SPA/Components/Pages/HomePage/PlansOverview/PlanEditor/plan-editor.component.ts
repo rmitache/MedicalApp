@@ -114,7 +114,7 @@ export class PlanEditorComponent implements IModalDialog {
         this.viewModel.PlanCLO = options.data.planCLO as CLOs.PlanCLO;
         this.viewModel.CurrentMode = options.data.planEditorMode as PlanEditorMode;
         this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
-    }
+    } 
 }
 
 
