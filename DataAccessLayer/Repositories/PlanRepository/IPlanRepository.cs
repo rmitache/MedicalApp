@@ -10,5 +10,6 @@ namespace DataAccessLayer.Repositories.PlanRepository
     public interface IPlanRepository
     {
         List<TPlan> GetAllPlans(int userID);
+        TPlan AddPlan(TPlan plan);
     }
 }

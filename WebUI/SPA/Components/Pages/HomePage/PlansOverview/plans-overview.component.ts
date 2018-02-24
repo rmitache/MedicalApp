@@ -50,7 +50,24 @@ export class PlansOverviewComponent {
                     text: saveButtonText,
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
-                            resolve();
+                            this.viewModel.Blocked = true;
+
+                            let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
+                            planEditorComponentInstance.SaveData()
+                                .then((planCLO) => {
+
+                                    // TODO: After successfully adding a new Plan
+                                    // - Should refresh the PlansOverview
+                                    // - Should refresh the Schedule 
+
+
+
+                                    setTimeout(() => {
+                                        this.viewModel.Blocked = false;
+                                        resolve();
+                                    }, 200);
+
+                                });
                         });
                         return promiseWrapper;
                     }

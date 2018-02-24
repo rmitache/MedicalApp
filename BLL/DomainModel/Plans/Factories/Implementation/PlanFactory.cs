@@ -9,12 +9,12 @@ namespace BLL.DomainModel.Plans.Factories
     public class PlanFactory : IPlanFactory
     {
         // Fields
-        private readonly IVersionFactory planVersionFactory;
+        private readonly IVersionFactory versionFactory;
 
         // Constructor
-        public PlanFactory(IVersionFactory planVersionFactory)
+        public PlanFactory(IVersionFactory versionFactory)
         {
-            this.planVersionFactory = planVersionFactory;
+            this.versionFactory = versionFactory;
         }
 
         // Public methods
@@ -25,7 +25,7 @@ namespace BLL.DomainModel.Plans.Factories
             dataEntity.UserId = userID;
             dataEntity.Name = blo.Name;
             dataEntity.DateCreated = blo.DateCreated;
-            dataEntity.TPlanVersion = this.planVersionFactory.Convert_ToDataEntitiesList(blo.Versions);
+            dataEntity.TPlanVersion = this.versionFactory.Convert_ToDataEntitiesList(blo.Versions);
 
             return dataEntity;
         }
@@ -40,7 +40,7 @@ namespace BLL.DomainModel.Plans.Factories
             blo.ID = dataEntity.Id;
             blo.Name = dataEntity.Name;
             blo.DateCreated = dataEntity.DateCreated;
-            blo.Versions = this.planVersionFactory.Convert_ToBLOList(dataEntity.TPlanVersion.ToList());
+            blo.Versions = this.versionFactory.Convert_ToBLOList(dataEntity.TPlanVersion.ToList());
 
 
             return blo;

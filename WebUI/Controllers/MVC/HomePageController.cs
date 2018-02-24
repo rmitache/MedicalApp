@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.Services;
 using BLL.DomainModel.Plans.Services;
+using BLL.DomainModel.Plans.BLOs;
 
 namespace WebUI.Controllers
 {
@@ -76,6 +77,7 @@ namespace WebUI.Controllers
             };
             return Json(bundle);
         }
+
         [Route("HomePage/AddFactorRecords")]
         [HttpPost]
         public JsonResult Post([FromBody]List<MedicineFactorRecord> factorRecords)
@@ -84,6 +86,7 @@ namespace WebUI.Controllers
             var factorRecordsUpdatedIDs = this.medicineFactorRecordService.AddMedicineFactorRecords(factorRecords, userID);
             return Json(factorRecordsUpdatedIDs);
         }
+
         [Route("HomePage/GetFactorRecords")]
         [HttpPost]
         public JsonResult Post([FromBody] GetFactorRecordsModel model)
@@ -93,6 +96,17 @@ namespace WebUI.Controllers
             return Json(blos);
         }
 
+        [Route("HomePage/AddPlan")]
+        [HttpPost]
+        public JsonResult Post([FromBody]Plan plan)
+        {
+            int userID = 1;
+            var planWithUpdatedID = this.planService.AddPlan(plan, userID);
+            return Json(planWithUpdatedID);
+        }
+
+
+        // Models
         public class GetFactorRecordsModel
         {
             public DateTime Date;

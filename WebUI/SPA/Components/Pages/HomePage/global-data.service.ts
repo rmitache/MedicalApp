@@ -60,7 +60,7 @@ export class GlobalDataService {
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
         return cloList;
     }
-    public GetFactorRecords(date:Date): Promise<CLOs.MedicineFactorRecordCLO[]> {
+    public GetFactorRecords(date: Date): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
         let model = {
@@ -76,6 +76,18 @@ export class GlobalDataService {
 
         return getDataPromise;
     }
+    public AddPlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
+        const apiMethodName: string = 'AddPlan';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.PlanCLO>(CLOs.PlanCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
 }
 
-        

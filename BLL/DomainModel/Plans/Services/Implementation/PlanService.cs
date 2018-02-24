@@ -34,6 +34,16 @@ namespace BLL.DomainModel.Plans.Services
             var blos = this.planFactory.Convert_ToBLOList(dataEntities);
             return blos;
         }
+        public Plan AddPlan(Plan blo, int userID)
+        {
+            var dataEntity = this.planFactory.Convert_ToDataEntity(blo, userID);
+            this.planRepository.AddPlan(dataEntity);
+
+            // Update IDs
+            blo.ID = dataEntity.Id;
+
+            return blo;
+        }
     }
 
 }

@@ -58,9 +58,20 @@ namespace BLL.Other.Datastructures
 
             return new List<Time>(array);
         }
-        public static string ToCommaSeparatedString( List<Time> timeList)
+        public static string ToCommaSeparatedString(List<Time> timeList)
         {
-            return null;
+            string str = "";
+            for (int i = 0; i < timeList.Count; i++)
+            {
+                str += timeList[i].ToString() + ",";
+            }
+
+            //
+            if (timeList.Count > 0)
+                str = str.Remove(str.Length - 1);
+
+
+            return str;
         }
 
         // Public methods

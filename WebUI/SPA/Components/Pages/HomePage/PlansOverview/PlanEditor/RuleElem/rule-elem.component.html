@@ -7,7 +7,7 @@
             <span class="h3 when-label">WHEN</span>
 
             <br />
-            <select class="drop-down" name="ordinalfrequency" [(ngModel)]="viewModel.RuleCLO.OrdinalFrequency">
+            <select class="drop-down" name="ordinalfrequency" [(ngModel)]="viewModel.RuleCLO.OrdinalFrequencyType">
                 <option *ngFor="let ordFreq of ordinalFreqTypesEnum | enumkeys" [value]="ordFreq.value">{{ordFreq.key}}</option>
             </select>
             <select class="drop-down" name="rulefreq" [(ngModel)]="viewModel.RuleCLO.FrequencyType">

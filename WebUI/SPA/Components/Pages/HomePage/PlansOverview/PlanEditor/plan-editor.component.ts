@@ -68,7 +68,9 @@ export class PlanEditorComponent implements IModalDialog {
 
     // Constructor 
     constructor(
-        private readonly genericCLOFactory: GenericCLOFactory
+        private readonly genericCLOFactory: GenericCLOFactory,
+        private readonly globalDataService: GlobalDataService
+
     ) {
     }
     ngOnInit() {
@@ -79,10 +81,11 @@ export class PlanEditorComponent implements IModalDialog {
                 this.refreshIsValid();
             });
     }
+
     // Public methods
-    public SaveData(): Promise<List<CLOs.MedicineFactorRecordCLO>> {
-        alert("save data !");
-        return null;
+    public SaveData(): Promise<CLOs.PlanCLO> {
+        let saveDataPromise = this.globalDataService.AddPlan(this.viewModel.PlanCLO);
+        return saveDataPromise;
     }
 
     // EventHandlers

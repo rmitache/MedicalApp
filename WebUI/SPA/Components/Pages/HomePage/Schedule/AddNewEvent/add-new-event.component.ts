@@ -70,8 +70,8 @@ export class AddNewEventComponent implements IModalDialog {
         });
 
 
-        let saveDataOperationPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
-        return saveDataOperationPromise;
+        let saveDataPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
+        return saveDataPromise;
     }
 
     // EventHandlers

@@ -30,6 +30,7 @@ namespace BLL.DomainModel.Plans.Factories
             dataEntity.FrequencyTypeId = (int)blo.FrequencyType;
             dataEntity.DaysInWeek = blo.DaysInWeek.ToCommaSeparatedString();
             dataEntity.MomentsInDay = Time.ToCommaSeparatedString(blo.MomentsInDay);
+            dataEntity.TPlanMedicineRuleItem = this.medicineRuleItemFactory.Convert_ToDataEntitiesList(blo.MedicineRuleItems);
 
             return dataEntity;
         }

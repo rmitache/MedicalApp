@@ -27,6 +27,13 @@ namespace DataAccessLayer.Repositories.PlanRepository
                 .Include(plan => plan.TPlanVersion)
                 .ToList();
         }
+        public TPlan AddPlan(TPlan plan)
+        {
+            entitiesContext.TPlan.Add(plan);
+            entitiesContext.SaveChanges();
+
+            return plan;
+        }
     }
 }
 

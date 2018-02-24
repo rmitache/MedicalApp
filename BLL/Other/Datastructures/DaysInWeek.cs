@@ -16,8 +16,11 @@ namespace BLL.Other.Datastructures
         public bool Sunday { get; set; } = true;
 
         // Constructor
-        public DaysInWeek(bool[] daysInWeekArray)
+        public DaysInWeek()
+        {
 
+        }
+        public DaysInWeek(bool[] daysInWeekArray)
         {
             if (daysInWeekArray.Length == 0 || daysInWeekArray.Length > 7)
             {

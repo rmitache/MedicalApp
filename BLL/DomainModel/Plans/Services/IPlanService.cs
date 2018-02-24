@@ -11,6 +11,7 @@ namespace BLL.DomainModel.Plans.Services
     public interface IPlanService
     {
         List<Plan> GetAllPlans(int userID);
+        Plan AddPlan(Plan blo, int userID);
     }
 
 
