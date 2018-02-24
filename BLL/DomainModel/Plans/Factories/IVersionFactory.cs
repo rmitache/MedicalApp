@@ -8,10 +8,10 @@ using System.Text;
 
 namespace BLL.DomainModel.Plans.Factories
 {
-    public interface IPlanVersionFactory
+    public interface IVersionFactory
     {
-        //TMedicineFactorRecord Convert_ToDataEntity(MedicineFactorRecord blo, int userID);
-        //List<TMedicineFactorRecord> Convert_ToDataEntitiesList(List<MedicineFactorRecord> blos, int userID);
+        TPlanVersion Convert_ToDataEntity(BLOs.Version blo);
+        List<TPlanVersion> Convert_ToDataEntitiesList(List<BLOs.Version> blos);
         BLOs.Version Convert_ToBLO(TPlanVersion dataEntity);
         List<BLOs.Version> Convert_ToBLOList(List<TPlanVersion> dataEntities);
     }

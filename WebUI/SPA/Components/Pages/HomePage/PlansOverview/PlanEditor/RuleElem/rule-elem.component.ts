@@ -36,7 +36,7 @@ export class RuleElemComponent {
     private form;
     @ViewChild('ifrpgrouplist')
     private groupList: IFRPGroupListComponent;
-    private readonly ordinalFreqTypesEnum = Enums.OrdinalFrequency;
+    private readonly ordinalFreqTypesEnum = Enums.OrdinalFrequencyType;
     private readonly ruleFreqTypesEnum = Enums.RuleFrequencyType;
     private readonly viewModel: ViewModel = {
         RuleCLO: null,

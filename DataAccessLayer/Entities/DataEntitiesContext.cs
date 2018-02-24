@@ -11,6 +11,8 @@ namespace DataAccessLayer.Entities
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
         public virtual DbSet<TPlan> TPlan { get; set; }
+        public virtual DbSet<TPlanMedicineRuleItem> TPlanMedicineRuleItem { get; set; }
+        public virtual DbSet<TPlanRule> TPlanRule { get; set; }
         public virtual DbSet<TPlanVersion> TPlanVersion { get; set; }
         public virtual DbSet<TUser> TUser { get; set; }
 
@@ -147,6 +149,66 @@ namespace DataAccessLayer.Entities
                     .WithMany(p => p.TPlan)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_t_plan_t_user");
+            });
+
+            modelBuilder.Entity<TPlanMedicineRuleItem>(entity =>
+            {
+                entity.ToTable("t_plan_medicine_rule_item");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AdministrationMethodId).HasColumnName("administration_method_id");
+
+                entity.Property(e => e.InstructionId).HasColumnName("instruction_id");
+
+                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
+
+                entity.Property(e => e.PlanRuleId).HasColumnName("plan_rule_id");
+
+                entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
+
+                entity.Property(e => e.UnitDoseSize).HasColumnName("unit_dose_size");
+
+                entity.Property(e => e.UnitDoseTypeId).HasColumnName("unit_dose_type_id");
+
+                entity.Property(e => e.UnitDoseUomId).HasColumnName("unit_dose_uom_id");
+
+                entity.HasOne(d => d.MedicineType)
+                    .WithMany(p => p.TPlanMedicineRuleItem)
+                    .HasForeignKey(d => d.MedicineTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_t_plan_medicine_rule_item_t_medicine_type");
+
+                entity.HasOne(d => d.PlanRule)
+                    .WithMany(p => p.TPlanMedicineRuleItem)
+                    .HasForeignKey(d => d.PlanRuleId)
+                    .HasConstraintName("FK_t_plan_medicine_rule_item_t_plan_rule");
+            });
+
+            modelBuilder.Entity<TPlanRule>(entity =>
+            {
+                entity.ToTable("t_plan_rule");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DaysInWeek)
+                    .HasColumnName("days_in_week")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FrequencyTypeId).HasColumnName("frequency_type_id");
+
+                entity.Property(e => e.MomentsInDay)
+                    .HasColumnName("moments_in_day")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.OrdinalFrequencyTypeId).HasColumnName("ordinal_frequency_type_id");
+
+                entity.Property(e => e.PlanVersionId).HasColumnName("plan_version_id");
+
+                entity.HasOne(d => d.PlanVersion)
+                    .WithMany(p => p.TPlanRule)
+                    .HasForeignKey(d => d.PlanVersionId)
+                    .HasConstraintName("FK_t_plan_rule_t_plan_version");
             });
 
             modelBuilder.Entity<TPlanVersion>(entity =>

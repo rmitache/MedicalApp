@@ -10,7 +10,7 @@ export * from './Factors/Medicine/Library/Enums/unit-dose-type.enum';
 
 // Plans
 export * from './Plans/Enums/plan-status.enum'
-export * from './Plans/Enums/ordinal-frequency.enum'
+export * from './Plans/Enums/ordinal-frequency-type.enum'
 export * from './Plans/Enums/rule-frequency-type.enum'
 
 // General

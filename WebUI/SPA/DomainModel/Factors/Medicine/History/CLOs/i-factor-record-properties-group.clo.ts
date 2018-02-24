@@ -11,4 +11,3 @@ export interface IFactorRecordPropertiesGroup {
     Instruction: Enums.Instruction;
     AdministrationMethod: Enums.AdministrationMethod;
 }
-// IFRPGroupElem

@@ -7,7 +7,7 @@ import { DaysInWeek, Time } from 'SPA/Core/Helpers/DataStructures/data-structure
 export class RuleCLO extends BaseCLO {
     // Fields
     public ID: number;
-    public OrdinalFrequency: Enums.OrdinalFrequency;
+    public OrdinalFrequencyType: Enums.OrdinalFrequencyType;
     public FrequencyType: RuleFrequencyType;
     public DaysInWeek?: DaysInWeek;
     public MomentsInDay: Time[];

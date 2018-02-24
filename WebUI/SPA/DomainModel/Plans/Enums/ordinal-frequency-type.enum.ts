@@ -1,4 +1,5 @@
-﻿export enum OrdinalFrequency {
+﻿export enum OrdinalFrequencyType
+{
     Every = 0,
     Every2nd = 1,
     Every3rd = 2,

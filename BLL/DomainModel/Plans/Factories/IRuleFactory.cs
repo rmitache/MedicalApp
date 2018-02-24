@@ -8,11 +8,11 @@ using System.Text;
 
 namespace BLL.DomainModel.Plans.Factories
 {
-    public interface IPlanFactory
+    public interface IRuleFactory
     {
-        TPlan Convert_ToDataEntity(Plan blo, int userID);
-        List<TPlan> Convert_ToDataEntitiesList(List<Plan> blos, int userID);
-        Plan Convert_ToBLO(TPlan dataEntity);
-        List<Plan> Convert_ToBLOList(List<TPlan> dataEntities);
+        TPlanRule Convert_ToDataEntity(Rule blo);
+        List<TPlanRule> Convert_ToDataEntitiesList(List<Rule> blos);
+        Rule Convert_ToBLO(TPlanRule dataEntity);
+        List<Rule> Convert_ToBLOList(List<TPlanRule> dataEntities);
     }
 }

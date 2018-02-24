@@ -4,63 +4,56 @@ using System.Linq;
 using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Enums;
 
 namespace BLL.DomainModel.Factors.Medicine.History.Factories
 {
-    public class MedicineFactorRecordFactory : IMedicineFactorRecordFactory
+    public class MedicineRuleItemFactory : IMedicineRuleItemFactory
     {
         // Fields
         private readonly IMedicineTypeFactory medicineTypeFactory;
+
         // Constructor
-        public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory)
+        public MedicineRuleItemFactory(IMedicineTypeFactory medicineTypeFactory)
         {
             this.medicineTypeFactory = medicineTypeFactory;
         }
 
         // Public methods
-        public TMedicineFactorRecord Convert_ToDataEntity(MedicineFactorRecord blo, int userID)
+        public TPlanMedicineRuleItem Convert_ToDataEntity(MedicineRuleItem blo)
         {
-            TMedicineFactorRecord dataEntity = new TMedicineFactorRecord();
+            TPlanMedicineRuleItem dataEntity = new TPlanMedicineRuleItem();
             dataEntity.Id = blo.ID ;
-            dataEntity.UserId = userID;
-            dataEntity.MedicineTypeId = blo.MedicineType.ID;
-            dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
 
+            dataEntity.MedicineTypeId = blo.MedicineType.ID;
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
             dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
             dataEntity.UnitDoseSize = blo.UnitDoseSize;
             dataEntity.UnitDoseUomId = (int) blo.UnitDoseUoM;
-
             dataEntity.InstructionId = (int)blo.Instruction;
             dataEntity.AdministrationMethodId = (int)blo.AdministrationMethod;
+
             return dataEntity;
         }
-        public List<TMedicineFactorRecord> Convert_ToDataEntitiesList(List<MedicineFactorRecord> blos, int userID)
+        public List<TPlanMedicineRuleItem> Convert_ToDataEntitiesList(List<MedicineRuleItem> blos)
         {
-            var dataEntitiesList = blos.Select(blo => Convert_ToDataEntity(blo, userID)).ToList();
+            var dataEntitiesList = blos.Select(blo => Convert_ToDataEntity(blo)).ToList();
             return dataEntitiesList;
         }
-        public MedicineFactorRecord Convert_ToBLO(TMedicineFactorRecord dataEntity)
+        public MedicineRuleItem Convert_ToBLO(TPlanMedicineRuleItem dataEntity)
         {
-            MedicineFactorRecord blo = new MedicineFactorRecord();
-            blo.ID = dataEntity.Id;
-            blo.Type = MedicineFactorRecordType.UserEntry;
+            MedicineRuleItem blo = new MedicineRuleItem();
             blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
-            blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
-
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
             blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
             blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
             blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
-
             blo.Instruction = (Instruction)dataEntity.InstructionId;
 
 
             return blo;
         }
-        public List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities)
+        public List<MedicineRuleItem> Convert_ToBLOList(List<TPlanMedicineRuleItem> dataEntities)
         {
             var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
             return blosList;

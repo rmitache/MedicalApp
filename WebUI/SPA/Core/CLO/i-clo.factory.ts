@@ -9,6 +9,9 @@ export interface ICLOFactory<T> {
     Convert_ToCLO(blo: Object): T;
     Convert_ToCloList(bloArray: Object[]): DataStructures.List<T>;
 
+    // Conversion to BLO - not necessary as it is handled automatically by simply calling 
+
+
     // Creation
     Create_DefaultCLO(): T;
     //Create_FromParams(...params: any[]): T;

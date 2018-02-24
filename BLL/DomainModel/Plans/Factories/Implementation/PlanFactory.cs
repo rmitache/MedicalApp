@@ -9,14 +9,31 @@ namespace BLL.DomainModel.Plans.Factories
     public class PlanFactory : IPlanFactory
     {
         // Fields
-        private readonly IPlanVersionFactory planVersionFactory;
+        private readonly IVersionFactory planVersionFactory;
+
         // Constructor
-        public PlanFactory(IPlanVersionFactory planVersionFactory)
+        public PlanFactory(IVersionFactory planVersionFactory)
         {
             this.planVersionFactory = planVersionFactory;
         }
 
         // Public methods
+        public TPlan Convert_ToDataEntity(Plan blo, int userID)
+        {
+            TPlan dataEntity = new TPlan();
+            dataEntity.Id = blo.ID;
+            dataEntity.UserId = userID;
+            dataEntity.Name = blo.Name;
+            dataEntity.DateCreated = blo.DateCreated;
+            dataEntity.TPlanVersion = this.planVersionFactory.Convert_ToDataEntitiesList(blo.Versions);
+
+            return dataEntity;
+        }
+        public List<TPlan> Convert_ToDataEntitiesList(List<Plan> blos, int userID)
+        {
+            var dataEntitiesList = blos.Select(blo => Convert_ToDataEntity(blo, userID)).ToList();
+            return dataEntitiesList;
+        }
         public Plan Convert_ToBLO(TPlan dataEntity)
         {
             Plan blo = new Plan();
@@ -33,5 +50,7 @@ namespace BLL.DomainModel.Plans.Factories
             var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
             return blosList;
         }
+
+        
     }
 }

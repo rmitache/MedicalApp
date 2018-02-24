@@ -33,7 +33,7 @@ export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {
     public Create_DefaultCLO(): CLOs.RuleCLO {
         let newCLO = new CLOs.RuleCLO();
         newCLO.ID = 0;
-        newCLO.OrdinalFrequency = Enums.OrdinalFrequency.Every;
+        newCLO.OrdinalFrequencyType = Enums.OrdinalFrequencyType.Every;
         newCLO.FrequencyType = Enums.RuleFrequencyType.Day;
         newCLO.DaysInWeek = new DaysInWeek([true, true, true, true, true, true, true]); // all days of week as default
         newCLO.MomentsInDay = [];
