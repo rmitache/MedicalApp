@@ -89,5 +89,19 @@ export class GlobalDataService {
 
         return postDataPromise;
     }
+    public GetPlans(): Promise<CLOs.PlanCLO[]> {
+        const apiMethodName: string = 'GetPlans';
+
+
+        let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos).ToArray();
+            });
+
+
+        return getDataPromise;
+    }
+
 }
 

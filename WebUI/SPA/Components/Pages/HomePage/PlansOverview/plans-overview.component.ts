@@ -55,12 +55,13 @@ export class PlansOverviewComponent {
                             let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
                             planEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
+                                    
+                                    this.reloadPlansFromServer();
+
 
                                     // TODO: After successfully adding a new Plan
                                     // - Should refresh the PlansOverview
                                     // - Should refresh the Schedule 
-
-
 
                                     setTimeout(() => {
                                         this.viewModel.Blocked = false;
@@ -87,7 +88,13 @@ export class PlansOverviewComponent {
         });
 
     }
-
+    private reloadPlansFromServer(): Promise<void> {
+        let promise = this.dataService.GetPlans()
+            .then(planCLOs => {
+                this.viewModel.AvailablePlans = planCLOs;
+            });
+        return promise;
+    }
     // Constructor 
     constructor(
         applicationState: GlobalApplicationState,

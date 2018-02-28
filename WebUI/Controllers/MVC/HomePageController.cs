@@ -104,6 +104,14 @@ namespace WebUI.Controllers
             var planWithUpdatedID = this.planService.AddPlan(plan, userID);
             return Json(planWithUpdatedID);
         }
+        [Route("HomePage/GetPlans")]
+        [HttpGet]
+        public JsonResult GetPlans()
+        {
+            int userID = 1;
+            var blos = this.planService.GetAllPlans(userID);
+            return Json(blos);
+        }
 
 
         // Models

@@ -45,7 +45,7 @@ export class ScheduleComponent {
         }
         return currentStrategy;
     }
-    private loadFactorRecordsForDate(date: Date): Promise<void> {
+    private reloadFactorRecordsForDateFromServer(date: Date): Promise<void> {
         let promise = this.dataService.GetFactorRecords(date)
             .then(factorRecordCLOs => {
                 this.viewModel.AvailableFactorRecords = factorRecordCLOs;
@@ -99,7 +99,7 @@ export class ScheduleComponent {
                             addNewEventComponentInstance.SaveData()
                                 .then((cloList) => {
 
-                                    this.loadFactorRecordsForDate(this.viewModel.CurrentDate)
+                                    this.reloadFactorRecordsForDateFromServer(this.viewModel.CurrentDate)
                                         .then(() => {
                                             setTimeout(() => {
                                                 this.viewModel.Blocked = false;
@@ -128,11 +128,11 @@ export class ScheduleComponent {
     }
     private onNavigateBackwardTriggered() {
         let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
-        this.loadFactorRecordsForDate(newDate);
+        this.reloadFactorRecordsForDateFromServer(newDate);
     }
     private onNavigateForwardTriggered() {
         let newDate = moment(this.viewModel.CurrentDate).add(1, 'days').toDate();
-        this.loadFactorRecordsForDate(newDate);
+        this.reloadFactorRecordsForDateFromServer(newDate);
     }
 }
 interface ViewModel {
