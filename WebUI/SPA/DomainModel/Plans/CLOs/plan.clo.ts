@@ -1,6 +1,8 @@
 ﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import * as moment from 'moment';
+
 
 export class PlanCLO extends BaseCLO {
     // Fields
@@ -11,9 +13,38 @@ export class PlanCLO extends BaseCLO {
 
 
     // Should be getters only
-    public Status: Enums.PlanStatus;
-    public HasStarted: boolean;
-    public HasEnded: boolean;
+    public get Status(): Enums.PlanStatus {
+       
+        if (this.HasStarted && !this.HasEnded) {
+            return Enums.PlanStatus.Active;
+        }
+        else {
+            return Enums.PlanStatus.Inactive;
+        }
+
+    }
+    public get HasStarted(): boolean {
+        if (this.GetFirstVersion().StartDate.getMilliseconds() < new Date().getMilliseconds()) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+    public get HasEnded(): boolean {
+        
+        if (this.GetLatestVersion().EndDate === null) {
+            return false;
+        }
+
+        if (this.GetLatestVersion().EndDate.getMilliseconds() < new Date().getMilliseconds()) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
 
     // Constructor
     constructor() {
@@ -24,6 +55,12 @@ export class PlanCLO extends BaseCLO {
     public GetLatestVersion(): CLOs.VersionCLO {
         if (this.Versions && this.Versions.length > 0)
             return this.Versions[this.Versions.length - 1];
+        else
+            return null;
+    }
+    public GetFirstVersion(): CLOs.VersionCLO {
+        if (this.Versions && this.Versions.length > 0)
+            return this.Versions[0];
         else
             return null;
     }

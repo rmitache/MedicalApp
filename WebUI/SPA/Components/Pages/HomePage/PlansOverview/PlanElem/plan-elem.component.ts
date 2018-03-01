@@ -26,8 +26,19 @@ export class PlanElemComponent {
     ];
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
-        RelativeStartDateString: null,
-        RelativeEndDateString: null
+        StatusString: null,
+        GetRelativeStartDateString: () => {
+            return moment(this.planCLO.GetFirstVersion().StartDate).fromNow().toString();
+        },
+        GetRelativeEndDateString: () => {
+            let str;
+            if (this.planCLO.GetLatestVersion().EndDate === null) {
+                str = 'Never';
+            } else {
+                str = moment(this.planCLO.GetLatestVersion().EndDate).fromNow().toString();
+            }
+            return str;
+        }
     };
 
     // Constructor 
@@ -36,8 +47,7 @@ export class PlanElemComponent {
     }
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
-        this.viewModel.RelativeStartDateString = moment(this.planCLO.Versions[0].StartDate).fromNow().toString();
-        this.viewModel.RelativeEndDateString = moment(this.planCLO.Versions[this.planCLO.Versions.length - 1].EndDate).fromNow().toString();
+        this.viewModel.StatusString = Enums.PlanStatus[this.planCLO.Status];
     }
 
     // Events
@@ -52,7 +62,8 @@ export class PlanElemComponent {
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
-    RelativeStartDateString: string;
-    RelativeEndDateString: string;
+    StatusString: string;
+    GetRelativeStartDateString(): string;
+    GetRelativeEndDateString(): string;
 }
 

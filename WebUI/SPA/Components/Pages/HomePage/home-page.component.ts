@@ -1,11 +1,18 @@
+// Angular and 3rd party stuff
 import { Component, ChangeDetectorRef } from '@angular/core';
-import '../../../Content/styles.css';
+import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
-import * as CLOs from 'SPA/DomainModel/clo-exports';
+
+// Project modules
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
+import '../../../Content/styles.css';
+import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { GlobalApplicationState } from './global-application-state';
+
+// Components
 import { GlobalDataService } from './global-data.service';
+
 
 @Component({
     selector: 'home-page',
@@ -22,6 +29,13 @@ export class HomePageComponent {
     ) {
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
+
+        // Init momentjs - update thresholds
+        moment.relativeTimeThreshold('s');  // 45
+        moment.relativeTimeThreshold('m, 59');  // 45
+        moment.relativeTimeThreshold('h', 23);  // 22
+        moment.relativeTimeThreshold('d',28);  // 26
+        moment.relativeTimeThreshold('M');  // 11
 
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);

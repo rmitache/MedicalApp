@@ -20,13 +20,14 @@ export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.RuleCLO {
-
-        let newCLO = new CLOs.RuleCLO();
-        //newCLO.ID = blo['ID'];
-        //newCLO.StartDate = new Date(blo['StartDate']);
-        //newCLO.EndDate = new Date(blo['EndDate']);
         
-
+        let newCLO = new CLOs.RuleCLO();
+        newCLO.ID = blo['ID'];
+        newCLO.OrdinalFrequencyType = blo['OrdinalFrequencyType'];
+        newCLO.FrequencyType = blo['FrequencyType'];
+        newCLO.DaysInWeek = DaysInWeek.FromJSON(blo['DaysInWeek']);
+        newCLO.MomentsInDay = Time.FromJSONArray(blo['MomentsInDay']);
+        newCLO.MedicineRuleItems = this.medicineRuleItemCLOFactory.Convert_ToCloList(blo['MedicineRuleItems']).ToArray();
 
         return newCLO;
     }
@@ -42,6 +43,7 @@ export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {
         return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.RuleCLO> {
+
         let cloList = new DataStructures.List<CLOs.RuleCLO>();
         bloArray.forEach(blo => {
             let clo = this.Convert_ToCLO(blo);

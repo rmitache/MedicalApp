@@ -22,12 +22,11 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.VersionCLO {
-
         let newCLO = new CLOs.VersionCLO();
         newCLO.ID = blo['ID'];
         newCLO.StartDate = new Date(blo['StartDate']);
-        newCLO.EndDate = new Date(blo['EndDate']);
-        //newCLO.Rules = this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray();
+        newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
+        newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
 
 
         return newCLO;

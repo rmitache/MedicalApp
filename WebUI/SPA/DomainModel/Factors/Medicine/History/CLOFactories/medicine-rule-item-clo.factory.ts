@@ -16,7 +16,7 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.MedicineRuleItemCLO {
-
+        
         let newCLO = new CLOs.MedicineRuleItemCLO();
         newCLO.ID = blo['ID'];
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);

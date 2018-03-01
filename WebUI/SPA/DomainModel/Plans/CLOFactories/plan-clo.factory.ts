@@ -16,7 +16,6 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.PlanCLO {
-
         let newCLO = new CLOs.PlanCLO();
         newCLO.ID = blo['ID'];
         newCLO.Name = blo['Name'];

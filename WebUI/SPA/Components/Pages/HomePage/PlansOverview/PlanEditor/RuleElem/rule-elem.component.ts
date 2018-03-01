@@ -8,7 +8,6 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { ParseStringToTime } from 'SPA/Core/Helpers/DataStructures/misc';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
@@ -86,7 +85,7 @@ export class RuleElemComponent {
         this.RemoveClicked.emit(this.ruleCLO);
     }
     private onAddMomentInDay(value: string) {
-        let time = ParseStringToTime(value);
+        let time = Time.ParseString(value);
 
 
         if (time !== null) {

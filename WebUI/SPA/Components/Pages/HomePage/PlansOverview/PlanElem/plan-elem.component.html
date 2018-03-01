@@ -4,14 +4,14 @@
         <p-splitButton label="View" [model]="menuItems"></p-splitButton>
     </div>
     <div class="bottom-part">
-
+        {{viewModel.StatusString}}
         <div class="label-input-pair started-date-label-input-pair">
             <span class="label">Started:</span>
-            <span class="input-label">{{viewModel.RelativeStartDateString}}</span>
+            <span class="input-label">{{viewModel.GetRelativeStartDateString()}}</span>
         </div>
         <div class="label-input-pair ends-date-label-input-pair">
             <span class="label">Ends:</span>
-            <span class="input-label">{{viewModel.RelativeEndDateString}}</span>
+            <span class="input-label">{{viewModel.GetRelativeEndDateString()}}</span>
         </div>
     </div>
    

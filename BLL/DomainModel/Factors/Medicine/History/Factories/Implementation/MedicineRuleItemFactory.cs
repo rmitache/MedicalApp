@@ -43,6 +43,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
         public MedicineRuleItem Convert_ToBLO(TPlanMedicineRuleItem dataEntity)
         {
             MedicineRuleItem blo = new MedicineRuleItem();
+            blo.ID = dataEntity.Id;
             blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
             blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
