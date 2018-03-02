@@ -16,11 +16,11 @@
         </div>
     </div>
     <div class="body">
-        <select class="view-mode-selector">
+        <select class="view-mode-selector" [(ngModel)]="viewModel.SelectedViewMode">
             <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
         </select>
         <div id="plan-elems-list">
-            <plan-elem #factorRecords *ngFor="let plan of viewModel.AvailablePlans"
+            <plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"
                        [PlanCLO]="plan"
                        (ChangeClicked)="onChangePlanTriggered($event)"
                        ></plan-elem>

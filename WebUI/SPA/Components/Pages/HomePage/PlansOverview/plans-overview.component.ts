@@ -26,6 +26,12 @@ export class PlansOverviewComponent {
     // Fields
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
+        GetFilteredPlans: () => {
+            return this.viewModel.AvailablePlans.filter(plan => {
+                return plan.Status as number == this.viewModel.SelectedViewMode as number;
+            });
+        },
+        SelectedViewMode: PlansOverviewDisplayMode.Inactive,
         Blocked: false
     };
     private readonly planStatusesEnum = Enums.PlanStatus;
@@ -95,6 +101,7 @@ export class PlansOverviewComponent {
             });
         return promise;
     }
+
     // Constructor 
     constructor(
         applicationState: GlobalApplicationState,
@@ -125,7 +132,13 @@ export class PlansOverviewComponent {
 
 }
 interface ViewModel {
-    AvailablePlans: CLOs.PlanCLO[]
+    AvailablePlans: CLOs.PlanCLO[];
+    GetFilteredPlans();
+    SelectedViewMode: PlansOverviewDisplayMode;
     Blocked: boolean;
+}
+enum PlansOverviewDisplayMode {
+    Active = 0,
+    Inactive = 1
 }
 
