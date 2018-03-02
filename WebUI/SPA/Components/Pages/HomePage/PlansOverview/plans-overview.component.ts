@@ -31,7 +31,7 @@ export class PlansOverviewComponent {
                 return plan.Status as number == this.viewModel.SelectedViewMode as number;
             });
         },
-        SelectedViewMode: PlansOverviewDisplayMode.Inactive,
+        SelectedViewMode: PlansOverviewDisplayMode.Active,
         Blocked: false
     };
     private readonly planStatusesEnum = Enums.PlanStatus;
@@ -115,7 +115,6 @@ export class PlansOverviewComponent {
     ngOnInit() {
         // Init ViewModel properties
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
-
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -126,8 +125,8 @@ export class PlansOverviewComponent {
         let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
         this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
     }
-    private onChangePlanTriggered(planCLO: CLOs.PlanCLO) {
-        this.openPlanEditor('Change Plan', 'Apply changes', planCLO, PlanEditorMode.Change);
+    private onAdjustPlanTriggered(planCLO: CLOs.PlanCLO) {
+        this.openPlanEditor('Adjust Plan', 'Save changes', planCLO, PlanEditorMode.Change);
     }
 
 }

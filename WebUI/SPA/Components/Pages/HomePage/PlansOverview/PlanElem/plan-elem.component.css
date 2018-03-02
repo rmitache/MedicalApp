@@ -1,35 +1,39 @@
 /deep/ .ui-menu {
-    width:150px;
+    width: 150px;
 }
+
 /deep/ .ui-splitbutton {
-    float:right;
+    float: right;
 }
 
-/deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
-    display: none;
-}
-
-    /deep/ .ui-splitbutton .ui-button-text-only  {
-        visibility:hidden;
+    /deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
+        display: none;
     }
 
-/deep/ .ui-splitbutton-menubutton  {
+    /deep/ .ui-splitbutton .ui-button-text-only {
+        visibility: hidden;
+    }
+
+/deep/ .ui-splitbutton-menubutton {
     border-radius: 4px;
 }
 
 
 .frame {
-    background-color: #effccf;
+    background-color: #ecf1e1;
     width: calc(100% - 10px);
     padding: 10px;
-    height: 70px;
+    height: 80px;
     border-radius: 3px;
 }
 
+.active {
+    background-color: #e5f5bf;
+}
 
 .top-part {
     width: 100%;
-    height: 52%;
+    height: 48px;
 }
 
     .top-part .plan-name {

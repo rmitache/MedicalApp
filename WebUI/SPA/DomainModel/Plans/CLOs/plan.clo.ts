@@ -14,8 +14,9 @@ export class PlanCLO extends BaseCLO {
 
     // Should be getters only
     public get Status(): Enums.PlanStatus {
-       
+        
         if (this.HasStarted && !this.HasEnded) {
+            
             return Enums.PlanStatus.Active;
         }
         else {
@@ -24,7 +25,7 @@ export class PlanCLO extends BaseCLO {
 
     }
     public get HasStarted(): boolean {
-        if (this.GetFirstVersion().StartDate.getMilliseconds() < new Date().getMilliseconds()) {
+        if (this.GetFirstVersion().StartDate.getTime() < new Date().getTime()) {
             return true;
         } else {
             return false;
@@ -36,8 +37,9 @@ export class PlanCLO extends BaseCLO {
         if (this.GetLatestVersion().EndDate === null) {
             return false;
         }
+        
 
-        if (this.GetLatestVersion().EndDate.getMilliseconds() < new Date().getMilliseconds()) {
+        if (this.GetLatestVersion().EndDate.getTime() < new Date().getTime()) {
             return true;
         } else {
             return false;

@@ -22,7 +22,7 @@
         <div id="plan-elems-list">
             <plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"
                        [PlanCLO]="plan"
-                       (ChangeClicked)="onChangePlanTriggered($event)"
+                       (AdjustClicked)="onAdjustPlanTriggered($event)"
                        ></plan-elem>
 
         </div>

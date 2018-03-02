@@ -17,28 +17,19 @@ export class PlanElemComponent {
     private readonly planStatusesEnum = Enums.PlanStatus;
     private menuItems: MenuItem[] = [
         {
-            label: 'View/Change',
+            label: 'Adjust',
             command: (event) => {
-                this.onChangePlanTriggered();
+                this.onAdjustPlanTriggered();
             }
-        },
-        //{ label: 'Pause' }
+        }
     ];
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         StatusString: null,
-        GetRelativeStartDateString: () => {
-            return moment(this.planCLO.GetFirstVersion().StartDate).fromNow().toString();
-        },
-        GetRelativeEndDateString: () => {
-            let str;
-            if (this.planCLO.GetLatestVersion().EndDate === null) {
-                str = 'Never';
-            } else {
-                str = moment(this.planCLO.GetLatestVersion().EndDate).fromNow().toString();
-            }
-            return str;
-        }
+        StartDatePrefixString: null,
+        RelativeStartDateString: null,
+        EndDatePrefixString: null,
+        RelativeEndDateString: null
     };
 
     // Constructor 
@@ -48,22 +39,45 @@ export class PlanElemComponent {
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
         this.viewModel.StatusString = Enums.PlanStatus[this.planCLO.Status];
+
+        // StartDate
+        this.viewModel.StartDatePrefixString = this.planCLO.HasStarted ? 'Started' : 'Starts';
+        this.viewModel.RelativeStartDateString = moment(this.planCLO.GetFirstVersion().StartDate).fromNow().toString();
+
+        // EndDate
+        // already ended
+        // no ending
+        // will end soon
+        // hasn't started
+        if (this.planCLO.HasEnded) {
+            this.viewModel.EndDatePrefixString = 'Ended';
+            this.viewModel.RelativeEndDateString = moment(this.planCLO.GetLatestVersion().EndDate).fromNow().toString();
+        } else if (this.planCLO.GetLatestVersion().EndDate === null) {
+            this.viewModel.RelativeEndDateString = 'Doesnt end';
+        } else if (this.planCLO.HasStarted && !this.planCLO.HasEnded) {
+            this.viewModel.EndDatePrefixString = 'Ending';
+            this.viewModel.RelativeEndDateString = moment(this.planCLO.GetLatestVersion().EndDate).fromNow().toString();
+        } else if (this.planCLO.HasStarted && !this.planCLO.HasEnded) {
+            
+        } 
     }
 
     // Events
-    @Output() public ChangeClicked: EventEmitter<any> = new EventEmitter();
+    @Output() public AdjustClicked: EventEmitter<any> = new EventEmitter();
 
 
     // Event handlers
-    private onChangePlanTriggered() {
-        this.ChangeClicked.emit(this.planCLO);
+    private onAdjustPlanTriggered() {
+        this.AdjustClicked.emit(this.planCLO);
     }
 
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
     StatusString: string;
-    GetRelativeStartDateString(): string;
-    GetRelativeEndDateString(): string;
+    StartDatePrefixString: string;
+    RelativeStartDateString: string;
+    EndDatePrefixString: string;
+    RelativeEndDateString: string;
 }
 

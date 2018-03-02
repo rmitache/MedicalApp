@@ -33,10 +33,17 @@ body {
     font-weight: bold;
 }
 
-.label {
-    font-size: 10pt;
+.label,
+.label-text-gray {
+    font-size: 9pt;
     font-family: Arial;
     color: #989797;
+}
+
+.label-text-dark {
+    font-size: 9pt;
+    font-family: Verdana;
+    color: #585858;
 }
 
 /*Block-UI*/
@@ -82,8 +89,6 @@ body {
     font-size: 11pt;
     text-transform: uppercase;
     font-weight: bold;
-
-
     border: 0;
     box-shadow: none;
 }
@@ -120,6 +125,7 @@ body {
     .ui-inputtext:invalid {
         border: solid 1px red !important;
     }
+
     .ui-inputtext:focus {
         border: solid 1px gray !important;
     }
@@ -154,9 +160,8 @@ body {
     }
 
     .label-input-pair .ui-inputtext,
-    .label-input-pair .drop-down ,
-    .label-input-pair .input-label{
+    .label-input-pair .drop-down,
+    .label-input-pair .input-label {
         float: left;
         clear: left;
-        
     }
