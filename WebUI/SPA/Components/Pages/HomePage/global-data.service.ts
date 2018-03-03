@@ -33,7 +33,7 @@ export class GlobalDataService {
 
         return cloList;
     }
-    public GetPlansFromBundle(): DataStructures.List<CLOs.PlanCLO> {
+    public GetShallowPlansFromBundle(): DataStructures.List<CLOs.PlanCLO> {
 
         let blos = this.startupDataBundleService.GetBundle['Plans'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos);
@@ -89,8 +89,8 @@ export class GlobalDataService {
 
         return postDataPromise;
     }
-    public GetPlans(): Promise<CLOs.PlanCLO[]> {
-        const apiMethodName: string = 'GetPlans';
+    public GetPlans_Shallow(): Promise<CLOs.PlanCLO[]> {
+        const apiMethodName: string = 'GetPlans_Shallow';
 
 
         let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName)

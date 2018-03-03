@@ -18,18 +18,27 @@ namespace DataAccessLayer.Repositories.PlanRepository
         }
 
         // Public methods
-        public List<TPlan> GetAllPlans(int userID)
+        public List<TPlan> GetPlans(int userID, bool includeRules)
         {
-            return entitiesContext.TPlan
+            var query = entitiesContext.TPlan
                 .AsNoTracking()
                 .Where(
                     plan =>
                         plan.UserId == userID)
-                .Include(plan => plan.TPlanVersion)
-                .ThenInclude(version => version.TPlanRule)
-                .ThenInclude(rule => rule.TPlanMedicineRuleItem)
-                .ThenInclude(medicineRuleItem => medicineRuleItem.MedicineType)
-                .ToList();
+                .Include(plan => plan.TPlanVersion);
+
+
+            if (includeRules)
+            {
+                query
+                    .ThenInclude(version => version.TPlanRule)
+                    .ThenInclude(rule => rule.TPlanMedicineRuleItem)
+                    .ThenInclude(medicineRuleItem => medicineRuleItem.MedicineType);
+            }
+
+
+
+            return query.ToList();
         }
         public TPlan AddPlan(TPlan plan)
         {

@@ -10,7 +10,7 @@ namespace BLL.DomainModel.Plans.Services
 {
     public interface IPlanService
     {
-        List<Plan> GetAllPlans(int userID);
+        List<Plan> GetPlans(int userID, bool includeRules);
         Plan AddPlan(Plan blo, int userID);
     }
 

@@ -54,7 +54,7 @@ namespace WebUI.Controllers
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, 1);
-            var plans = planService.GetAllPlans(1);
+            var shallowPlans = planService.GetPlans(1, false);
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -73,7 +73,7 @@ namespace WebUI.Controllers
                 LoggedInUser = loggedInUserJSON,
                 MedicineTypes = medicineTypes,
                 FactorRecordsForToday = factorRecords,
-                Plans = plans
+                Plans = shallowPlans
             };
             return Json(bundle);
         }
@@ -104,12 +104,12 @@ namespace WebUI.Controllers
             var planWithUpdatedID = this.planService.AddPlan(plan, userID);
             return Json(planWithUpdatedID);
         }
-        [Route("HomePage/GetPlans")]
+        [Route("HomePage/GetPlans_Shallow")]
         [HttpGet]
-        public JsonResult GetPlans()
+        public JsonResult GetPlans_Shallow()
         {
             int userID = 1;
-            var blos = this.planService.GetAllPlans(userID);
+            var blos = this.planService.GetPlans(userID, false);
             return Json(blos);
         }
 

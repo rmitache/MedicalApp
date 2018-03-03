@@ -9,7 +9,7 @@ namespace DataAccessLayer.Repositories.PlanRepository
 {
     public interface IPlanRepository
     {
-        List<TPlan> GetAllPlans(int userID);
+        List<TPlan> GetPlans(int userID, bool includeRules );
         TPlan AddPlan(TPlan plan);
     }
 }

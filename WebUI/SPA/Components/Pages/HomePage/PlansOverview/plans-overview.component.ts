@@ -95,7 +95,7 @@ export class PlansOverviewComponent {
 
     }
     private reloadPlansFromServer(): Promise<void> {
-        let promise = this.dataService.GetPlans()
+        let promise = this.dataService.GetPlans_Shallow()
             .then(planCLOs => {
                 this.viewModel.AvailablePlans = planCLOs;
             });
@@ -114,7 +114,7 @@ export class PlansOverviewComponent {
     }
     ngOnInit() {
         // Init ViewModel properties
-        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+        this.viewModel.AvailablePlans = this.dataService.GetShallowPlansFromBundle().ToArray();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
