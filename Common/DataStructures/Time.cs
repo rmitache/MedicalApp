@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL.Other.Datastructures
+namespace Common.Datastructures
 {
     public class Time
     {

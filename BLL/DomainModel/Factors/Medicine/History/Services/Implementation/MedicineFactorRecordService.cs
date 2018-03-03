@@ -1,7 +1,7 @@
 ﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.History.Factories;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using DataAccessLayer.Entities;
+using Common.Datastructures;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using System;
 using System.Collections.Generic;
@@ -42,9 +42,9 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
 
             return blos;
         }
-        public List<MedicineFactorRecord> GetMedicineFactorRecords(DateTime date, int userID)
+        public List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int userID)
         {
-            var dataEntities = this.medicineFactorRecordRepo.GetMedicineFactorRecords(date, userID);
+            var dataEntities = this.medicineFactorRecordRepo.GetMedicineFactorRecords(dateRange, userID);
             var blos = this.medicineFactorRecordFactory.Convert_ToBLOList(dataEntities);
             return blos;
         }

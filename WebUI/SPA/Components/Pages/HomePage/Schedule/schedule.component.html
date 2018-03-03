@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="body">
-        <schedule-unit *ngFor="let unitRepr of viewModel.DisplayRepresentation.UnitRepresentations"
+        <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
                        [Title]="unitRepr.Title"
                        [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
 

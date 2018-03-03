@@ -23,39 +23,44 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 })
 export class ScheduleComponent {
     // Fields
+    private availableDataWindowSizeInDays = 60;
     private readonly viewModel: ViewModel = {
-        CurrentDate: null,
-        CurrentWeekNumber: null,
+        AvailableDateRange: null,
         AvailableFactorRecords: null,
-        CurrentDisplayModeEnum: ScheduleDisplayMode.Day,
-        DisplayRepresentation: null,
+
+        VisibleDateRange: null,
+        VisibleFactorRecords: null,
+        VisibleDisplayRepresentation: null,
+
+        SelectedViewMode: ScheduleDisplayMode.Day,
         Blocked: false
     };
+
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
-    private getCurrentDisplayStrategy(): IDisplayModeStrategy {
+    private getCurrentDisplayStrategy(): IDisplayMode {
         // Get Current Mode strategy
-        let currentStrategy: IDisplayModeStrategy = null;
-        if (this.viewModel.CurrentDisplayModeEnum === ScheduleDisplayMode.Day) {
+        let currentStrategy: IDisplayMode = null;
+        if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Day) {
             currentStrategy = new DayDisplayModeStrategy();
-        } else if (this.viewModel.CurrentDisplayModeEnum === ScheduleDisplayMode.Week) {
+        } else if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Week) {
             // OBS -> Not implemented yet
         }
         return currentStrategy;
     }
-    private reloadFactorRecordsForDateFromServer(date: Date): Promise<void> {
-        let promise = this.dataService.GetFactorRecords(date)
+    private reloadFactorRecordsFromServer(dateRange: Range<moment.Moment>): Promise<void> {
+        let jsDateRange = new Range<Date>(dateRange.RangeStart.toDate(), dateRange.RangeEnd.toDate());
+        let promise = this.dataService.GetFactorRecords(jsDateRange)
             .then(factorRecordCLOs => {
                 this.viewModel.AvailableFactorRecords = factorRecordCLOs;
-                this.viewModel.CurrentDate = date;
                 this.refreshDisplayRepresentation();
             });
         return promise;
     }
     private refreshDisplayRepresentation() {
-        this.viewModel.DisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
+        this.viewModel.VisibleDisplayRepresentation = this.getCurrentDisplayStrategy().GenerateDisplayRepresentation(this.viewModel.AvailableFactorRecords);
     }
 
     // Constructor 
@@ -69,9 +74,16 @@ export class ScheduleComponent {
     }
     ngOnInit() {
 
-        // Init ViewModel properties
-        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForTodayFromBundle().ToArray();
-        this.viewModel.CurrentDate = new Date();
+        // Init Available (super) DataSet
+        this.viewModel.AvailableDateRange = new Range<moment.Moment>(
+            moment(new Date()).startOf('day').subtract(this.availableDataWindowSizeInDays / 2, 'days'),
+            moment(new Date()).endOf('day').add(this.availableDataWindowSizeInDays / 2, 'days'));
+        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
+
+        debugger;
+        //this.viewModel.CurrentDate = new Date();
+
+
         this.refreshDisplayRepresentation();
     }
     ngOnDestroy() {
@@ -83,7 +95,7 @@ export class ScheduleComponent {
         this.modalDialogService.openDialog(this.viewContainerRef, {
             title: 'Add new one-off Event',
             childComponent: AddNewEventComponent,
-            data: this.viewModel.CurrentDate,
+            data: this.viewModel.AvailableDateRange.RangeStart.toDate(),
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
@@ -99,7 +111,7 @@ export class ScheduleComponent {
                             addNewEventComponentInstance.SaveData()
                                 .then((cloList) => {
 
-                                    this.reloadFactorRecordsForDateFromServer(this.viewModel.CurrentDate)
+                                    this.reloadFactorRecordsFromServer(this.viewModel.AvailableDateRange)
                                         .then(() => {
                                             setTimeout(() => {
                                                 this.viewModel.Blocked = false;
@@ -127,20 +139,24 @@ export class ScheduleComponent {
         });
     }
     private onNavigateBackwardTriggered() {
-        let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
-        this.reloadFactorRecordsForDateFromServer(newDate);
+        //let newDate = moment(this.viewModel.CurrentDate).subtract(1, 'days').toDate();
+        this.reloadFactorRecordsFromServer(this.viewModel.AvailableDateRange);
     }
     private onNavigateForwardTriggered() {
-        let newDate = moment(this.viewModel.CurrentDate).add(1, 'days').toDate();
-        this.reloadFactorRecordsForDateFromServer(newDate);
+        //let newDate = moment(this.viewModel.CurrentDate).add(1, 'days').toDate();
+        this.reloadFactorRecordsFromServer(this.viewModel.AvailableDateRange);
     }
 }
 interface ViewModel {
-    CurrentDate: Date;
-    CurrentWeekNumber: number;
+
+    AvailableDateRange: Range<moment.Moment>;
     AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
-    CurrentDisplayModeEnum: ScheduleDisplayMode;
-    DisplayRepresentation: DisplayRepresentation;
+
+    VisibleDateRange: Range<moment.Moment>;
+    VisibleFactorRecords: CLOs.MedicineFactorRecordCLO[];
+    VisibleDisplayRepresentation: DisplayRepresentation;
+
+    SelectedViewMode: ScheduleDisplayMode;
     Blocked: boolean;
 }
 enum ScheduleDisplayMode {
@@ -150,10 +166,10 @@ enum ScheduleDisplayMode {
 
 
 // STRATEGIES
-interface IDisplayModeStrategy {
+interface IDisplayMode {
     GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
 }
-class DayDisplayModeStrategy implements IDisplayModeStrategy {
+class DayDisplayModeStrategy implements IDisplayMode {
     private unitsConfiguration = [
         {
             Title: 'Night',
@@ -225,10 +241,10 @@ class DayDisplayModeStrategy implements IDisplayModeStrategy {
 
 
 // REPRESENTATION 
-class DisplayRepresentation {
+export class DisplayRepresentation {
     public readonly UnitRepresentations: UnitRepresentation[] = [];
 }
-class UnitRepresentation {
+export class UnitRepresentation {
     public readonly Title: string;
     public readonly TimeInterval: TimeRange;
     public readonly TimeGroupRepresentations: { [timeKey: string]: TimeGroupRepresentation } = {};
@@ -243,7 +259,7 @@ export class TimeGroupRepresentation {
     public ToStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         let record = factorRecordCLO;
         return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
-            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] +')';
+            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
 
         // - {{record.MedicineType.Name}} ({{unitDoseTypesEnum[record.UnitDoseType]}})  {{record.UnitDoseQuantifier}} x {{record.UnitDoseSize}} {{uomTypesEnum[record.UnitDoseUoM]}}
 

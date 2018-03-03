@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.Services;
 using BLL.DomainModel.Plans.Services;
 using BLL.DomainModel.Plans.BLOs;
+using Common.Datastructures;
 
 namespace WebUI.Controllers
 {
@@ -51,10 +52,8 @@ namespace WebUI.Controllers
         [HttpGet]
         public JsonResult Get()
         {
+
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-            var medicineTypes = medicineTypeService.GetAllMedicineTypes();
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(DateTime.Now, 1);
-            var shallowPlans = planService.GetPlans(1, false);
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -62,8 +61,15 @@ namespace WebUI.Controllers
                 SignupDate = new DateTime(2017, 12, 28),
                 BirthDate = new DateTime(1980, 10, 15),
                 Language = "en"
-                
+
             };
+            var medicineTypes = medicineTypeService.GetAllMedicineTypes();
+            var shallowPlans = planService.GetPlans(1, false);
+            var initialScheduleRange = new Range<DateTime>(
+                    DateTime.Today.Subtract(new TimeSpan(30,0,0,0)),
+                    DateTime.Today.AddDays(30)
+                );
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -72,8 +78,9 @@ namespace WebUI.Controllers
             {
                 LoggedInUser = loggedInUserJSON,
                 MedicineTypes = medicineTypes,
-                FactorRecordsForToday = factorRecords,
-                Plans = shallowPlans
+                Plans = shallowPlans,
+                FactorRecordsForInitialRange = factorRecords,
+                
             };
             return Json(bundle);
         }
@@ -92,7 +99,7 @@ namespace WebUI.Controllers
         public JsonResult Post([FromBody] GetFactorRecordsModel model)
         {
             int userID = 1;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.Date, userID);
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, userID);
             return Json(blos);
         }
 
@@ -117,7 +124,7 @@ namespace WebUI.Controllers
         // Models
         public class GetFactorRecordsModel
         {
-            public DateTime Date;
+            public Range<DateTime> DateRange;
 
         }
 

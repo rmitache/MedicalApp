@@ -54,7 +54,7 @@
 }
 
 export class Range<T> {
-    constructor(public readonly IntervalStart: T, public readonly IntervalEnd: T) {
+    constructor(public readonly RangeStart: T, public readonly RangeEnd: T) {
     }
 
 }
@@ -62,13 +62,13 @@ export class Range<T> {
 export class TimeRange extends Range<Time> {
 
 
-    constructor(public readonly IntervalStart: Time, public readonly IntervalEnd: Time) {
-        super(IntervalStart, IntervalEnd);
+    constructor(public readonly RangeStart: Time, public readonly RangeEnd: Time) {
+        super(RangeStart, RangeEnd);
     }
 
     public ContainsTime(time: Time): boolean {
-        if (time.ToSeconds() >= this.IntervalStart.ToSeconds() &&
-            time.ToSeconds() <= this.IntervalEnd.ToSeconds())
+        if (time.ToSeconds() >= this.RangeStart.ToSeconds() &&
+            time.ToSeconds() <= this.RangeEnd.ToSeconds())
             return true;
         else
             return false;

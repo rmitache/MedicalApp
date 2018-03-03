@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Entities;
+﻿using Common.Datastructures;
+using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -31,14 +32,15 @@ namespace DataAccessLayer.Repositories.MedicineFactorRecordRepository
 
             return factorRecordDataEntities;
         }
-        public List<TMedicineFactorRecord> GetMedicineFactorRecords(DateTime date, int userID)
+        public List<TMedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int userID)
         {
             return entitiesContext.TMedicineFactorRecord
                 .AsNoTracking()
                 .Where(
                     record =>
                         record.UserId == userID &&
-                        record.OccurrenceDateTime.DayOfYear == date.DayOfYear)
+                        record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date &&
+                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.Add(new TimeSpan(23, 59, 59)))
                 .Include(record => record.MedicineType)
                 .ToList();
         }

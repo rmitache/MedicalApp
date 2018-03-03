@@ -55,16 +55,16 @@ export class GlobalDataService {
 
         return postDataPromise;
     }
-    public GetFactorRecordsForTodayFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
-        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForToday'];
+    public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForInitialRange'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
         return cloList;
     }
-    public GetFactorRecords(date: Date): Promise<CLOs.MedicineFactorRecordCLO[]> {
+    public GetFactorRecords(dateRange: Range<Date>): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
         let model = {
-            Date: date
+            DateRange: dateRange
         };
 
         let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)

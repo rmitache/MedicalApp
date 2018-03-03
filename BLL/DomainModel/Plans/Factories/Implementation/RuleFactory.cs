@@ -5,7 +5,7 @@ using BLL.DomainModel.Factors.Medicine.Library.Factories;
 using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Factors.Medicine.History.Factories;
 using BLL.DomainModel.Plans.Enums;
-using BLL.Other.Datastructures;
+using Common.Datastructures;
 
 namespace BLL.DomainModel.Plans.Factories
 {
