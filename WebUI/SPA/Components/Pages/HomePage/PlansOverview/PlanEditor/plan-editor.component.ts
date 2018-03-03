@@ -60,7 +60,9 @@ export class PlanEditorComponent implements IModalDialog {
         return allChildElemsAreValid;
     }
     private checkIfSelfValid(): boolean {
-        return (this.form.valid === true);
+        let formValid = this.form.valid;
+
+        return formValid;
     }
     private refreshIsValid() {
         this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
@@ -129,6 +131,5 @@ interface ViewModel {
  
 export enum PlanEditorMode {
     CreateNew,
-    Change,
-    HardEdit
+    Change
 }

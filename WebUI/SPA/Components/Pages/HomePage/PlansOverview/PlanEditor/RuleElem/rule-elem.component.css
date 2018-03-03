@@ -1,4 +1,6 @@
-
+/deep/ .chips-input {
+    border: solid 1px red !important;
+}
 
 .frame {
     background-color: #f7f7f7;

@@ -51,7 +51,8 @@
                 <span class="label at-label">at</span>
                 <p-chips id="moments-in-day-input"
                          name="momentsinday"
-                         styleClass="chips-input"
+                        
+                         [styleClass]="viewModel.ShowChipsInputInvalid ? 'chips-input' : ''"
                          addOnTab="true"
                          addOnBlur="true"
                          placeholder="Type in format HH:MM"

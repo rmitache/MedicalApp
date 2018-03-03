@@ -40,9 +40,15 @@ export class RuleElemComponent {
     private readonly viewModel: ViewModel = {
         RuleCLO: null,
         HideNonDailyControlsDiv: true,
-        MomentsInDayAsStrings: null
+        MomentsInDayAsStrings: null,
+        ShowChipsInputInvalid: false
     };
 
+    // Private methods
+    private refreshIsValid() {
+        this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid && this.viewModel.MomentsInDayAsStrings.length > 0;
+        this.viewModel.ShowChipsInputInvalid = this.viewModel.MomentsInDayAsStrings.length < 1;
+    }
 
     // Constructor 
     constructor(
@@ -60,7 +66,7 @@ export class RuleElemComponent {
         this.form.
             valueChanges.
             subscribe(() => {
-                this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid;
+                this.refreshIsValid();
                 this.viewModel.HideNonDailyControlsDiv = (this.viewModel.RuleCLO.FrequencyType == Enums.RuleFrequencyType.Day);
             });
     }
@@ -75,7 +81,7 @@ export class RuleElemComponent {
 
     // EventHandlers
     private onChildGroupListChanged() {
-        this.IsValid = this.groupList.IsValid;
+        this.refreshIsValid();
         this.ValidStateChanged.emit();
     }
     private onAddIFRPGroupTriggered() {
@@ -109,6 +115,7 @@ interface ViewModel {
     RuleCLO: CLOs.RuleCLO;
     HideNonDailyControlsDiv: boolean;
     MomentsInDayAsStrings: string[];
+    ShowChipsInputInvalid: boolean;
 }
 
 
