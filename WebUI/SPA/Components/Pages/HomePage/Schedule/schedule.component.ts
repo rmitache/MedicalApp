@@ -23,7 +23,7 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 })
 export class ScheduleComponent {
     // Fields
-    private availableDataWindowSizeInDays = 4;
+    private availableDataWindowSizeInDays = 60;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableFactorRecords: null,
@@ -55,9 +55,6 @@ export class ScheduleComponent {
             .then(factorRecordCLOs => {
                 this.viewModel.AvailableDateRange = newDateRange;
                 this.viewModel.AvailableFactorRecords = factorRecordCLOs;
-
-
-                this.recreateDisplayRepresentation();
             });
         return promise;
     }
@@ -122,6 +119,7 @@ export class ScheduleComponent {
 
                                     this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
                                         .then(() => {
+                                            this.recreateDisplayRepresentation();
                                             setTimeout(() => {
                                                 this.viewModel.Blocked = false;
                                                 resolve();
@@ -152,6 +150,21 @@ export class ScheduleComponent {
             this.viewModel.SelectedDateRange = prevSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
+        else {
+            let newAvailableDateRange = new Range<moment.Moment>(
+                this.viewModel.AvailableDateRange.RangeStart.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'),
+                this.viewModel.AvailableDateRange.RangeEnd.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'));
+
+            this.viewModel.Blocked = true;
+            this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
+                .then(() => {
+                    this.viewModel.SelectedDateRange = prevSelectedDateRange;
+                    this.recreateDisplayRepresentation();
+                    setTimeout(() => {
+                        this.viewModel.Blocked = false;
+                    }, 200);
+                });
+        }
     }
     private onNavigateForwardTriggered() {
         // Check if nextSelectedDateRange is within the AvailableDateRange
@@ -160,9 +173,22 @@ export class ScheduleComponent {
             this.viewModel.SelectedDateRange = nextSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
-        //else {
-        //    this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange);
-        //}
+        else {
+            let newAvailableDateRange = new Range<moment.Moment>(
+                this.viewModel.AvailableDateRange.RangeStart.clone().add(this.availableDataWindowSizeInDays / 2, 'days'),
+                this.viewModel.AvailableDateRange.RangeEnd.clone().add(this.availableDataWindowSizeInDays / 2, 'days'));
+
+            this.viewModel.Blocked = true;
+            this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
+                .then(() => {
+                    this.viewModel.SelectedDateRange = newAvailableDateRange;
+                    this.recreateDisplayRepresentation();
+                    setTimeout(() => {
+                        this.viewModel.Blocked = false;
+                    }, 200);
+                    
+                });
+        }
         
         
     }
