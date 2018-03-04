@@ -1,7 +1,7 @@
 <div class="frame">
     <icon-button [IconName]="'arrow-left'" class="previous-button" (Clicked)="onPreviousClicked()"></icon-button>
     <span class="current-date-label h2">
-        {{viewModel.GetSelectedDateString()}}
+        {{viewModel.GetLabel()}}
     </span>
     <icon-button [IconName]="'arrow-right'" class="next-button" (Clicked)="onNextClicked()"></icon-button>
 </div> 

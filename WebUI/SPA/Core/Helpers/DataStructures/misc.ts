@@ -56,6 +56,7 @@
 export class Range<T> {
     constructor(public readonly RangeStart: T, public readonly RangeEnd: T) {
     }
+   
 
 }
 

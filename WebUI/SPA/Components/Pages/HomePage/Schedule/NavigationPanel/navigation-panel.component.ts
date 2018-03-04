@@ -9,11 +9,11 @@ import * as moment from 'moment';
 })
 export class NavigationPanelComponent {
     // Fields
-    @Input('SelectedDate')
-    private selectedDate: Date;
+    @Input('Label')
+    private label: string;
     private readonly viewModel: ViewModel = {
-        GetSelectedDateString: () => {
-            return moment(this.selectedDate).format('Do MMM, YYYY');
+        GetLabel: () => {
+            return this.label;
         }
     };
 
@@ -41,5 +41,5 @@ export class NavigationPanelComponent {
 
 
 interface ViewModel {
-    GetSelectedDateString();
+    GetLabel();
 }

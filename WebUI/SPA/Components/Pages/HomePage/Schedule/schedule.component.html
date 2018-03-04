@@ -12,7 +12,7 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
         </div>
         <div class="center-section">
-            <navigation-panel [SelectedDate]="viewModel.CurrentDate"
+            <navigation-panel [Label]="viewModel.NavigationLabel"
                               (PreviousClicked)="onNavigateBackwardTriggered()"
                               (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
         </div>
