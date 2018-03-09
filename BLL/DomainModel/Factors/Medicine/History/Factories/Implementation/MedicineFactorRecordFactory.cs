@@ -141,7 +141,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     }
                     else
                     {
-                        maxDate = (version.EndDate > windowEndDate) ? (DateTime)version.EndDate : windowEndDate;
+                        maxDate = (version.EndDate < windowEndDate) ? (DateTime)version.EndDate : windowEndDate;
                     }
 
                     // Create MedicineItems for each Rule

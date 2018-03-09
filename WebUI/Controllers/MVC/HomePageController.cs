@@ -66,8 +66,8 @@ namespace WebUI.Controllers
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var shallowPlans = planService.GetPlans(1, false);
             var initialScheduleRange = new Range<DateTime>(
-                    DateTime.Today.Subtract(new TimeSpan(30,0,0,0)),
-                    DateTime.Today.AddDays(30)
+                    DateTime.Today.Subtract(new TimeSpan(5,0,0,0)),
+                    DateTime.Today.AddDays(5)
                 );
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
             //----------------------------------------------------------------------------------------------------------------------------

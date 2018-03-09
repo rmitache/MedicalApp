@@ -23,7 +23,7 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 })
 export class ScheduleComponent {
     // Fields
-    private availableDataWindowSizeInDays = 60;
+    private availableDataWindowSizeInDays = 10;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableFactorRecords: null,
@@ -59,8 +59,7 @@ export class ScheduleComponent {
         return promise;
     }
     private recreateDisplayRepresentation() {
-
-        // use selectedDateRange to get a subset of data from AvailableFactorRecords
+        // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
             return fRec.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 fRec.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
@@ -151,10 +150,10 @@ export class ScheduleComponent {
             this.recreateDisplayRepresentation();
         }
         else {
+            // If it isn't, load a new "window" of FactorRecords from the server
             let newAvailableDateRange = new Range<moment.Moment>(
                 this.viewModel.AvailableDateRange.RangeStart.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'),
                 this.viewModel.AvailableDateRange.RangeEnd.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'));
-
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
@@ -167,21 +166,25 @@ export class ScheduleComponent {
         }
     }
     private onNavigateForwardTriggered() {
-        // Check if nextSelectedDateRange is within the AvailableDateRange
+
+        // Variables
         let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
+
+        // Check if nextSelectedDateRange is within the AvailableDateRange
         if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
             this.viewModel.SelectedDateRange = nextSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
         else {
+            
+            // If it isn't, load a new "window" of FactorRecords from the server
             let newAvailableDateRange = new Range<moment.Moment>(
                 this.viewModel.AvailableDateRange.RangeStart.clone().add(this.availableDataWindowSizeInDays / 2, 'days'),
                 this.viewModel.AvailableDateRange.RangeEnd.clone().add(this.availableDataWindowSizeInDays / 2, 'days'));
-
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
-                    this.viewModel.SelectedDateRange = newAvailableDateRange;
+                    this.viewModel.SelectedDateRange = nextSelectedDateRange;
                     this.recreateDisplayRepresentation();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
@@ -189,8 +192,6 @@ export class ScheduleComponent {
                     
                 });
         }
-        
-        
     }
 }
 interface ViewModel {
