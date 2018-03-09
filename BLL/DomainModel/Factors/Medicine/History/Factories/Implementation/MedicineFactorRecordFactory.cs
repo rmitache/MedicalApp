@@ -9,6 +9,10 @@ using BLL.DomainModel.Factors.Medicine.Library.Enums;
 using BLL.DomainModel.Plans.BLOs;
 using Common.Datastructures;
 using System;
+using BLL.DomainModel.Plans.Enums;
+using Ical.Net.CalendarComponents;
+using Ical.Net.DataTypes;
+using Ical.Net;
 
 namespace BLL.DomainModel.Factors.Medicine.History.Factories
 {
@@ -18,22 +22,41 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
         private readonly IMedicineTypeFactory medicineTypeFactory;
 
         // Private methods
-        private List<DateTime> getRuleHitPattern(Rule rule, DateTime minDate, DateTime maxDate)
+        private List<DateTime> getRuleHitPattern(Rule rule, DateTime versionStartDate, DateTime minDate, DateTime maxDate)
         {
-            List<DateTime> dates = new List<DateTime>();
-
-            //rule.FrequencyType
-            //    rule.OrdinalFrequencyType
-
-            for (var dt = minDate; dt <= maxDate; dt = dt.AddDays(1))
+            // Variables
+            List<DateTime> dates = null;
+            CalendarEvent eventObj = new CalendarEvent
             {
-                if (rule.DaysInWeek.CheckDayOfWeek(dt.DayOfWeek))
+                Start = new CalDateTime(versionStartDate),
+                RecurrenceRules = new List<RecurrencePattern>()
+            };
+            int everyX = (int)rule.OrdinalFrequencyType + 1;
+
+            // Daily frequency
+            if (rule.FrequencyType == RuleFrequencyType.Daily)
+            {
+                eventObj.RecurrenceRules.Add(new RecurrencePattern()
                 {
-                    dates.Add(dt);
-                }
+                    Frequency = FrequencyType.Daily,
+                    Interval = everyX,
+                    FirstDayOfWeek = DayOfWeek.Monday
+                });
+            }
+            else
+            // Weekly
+            {
+                eventObj.RecurrenceRules.Add(new RecurrencePattern()
+                {
+                    Frequency = FrequencyType.Weekly,
+                    Interval = everyX,
+                    FirstDayOfWeek = DayOfWeek.Monday
+                });
             }
 
 
+            //
+            dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurence => occurence.Period.StartTime.Date).ToList();
             return dates;
         }
         private MedicineFactorRecord createFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDateTime)
@@ -114,7 +137,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     DateTime maxDate;
                     if (version.EndDate == null)
                     {
-                        maxDate = windowEndDate; 
+                        maxDate = windowEndDate;
                     }
                     else
                     {
@@ -124,7 +147,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     // Create MedicineItems for each Rule
                     foreach (Rule rule in version.Rules)
                     {
-                        var hitDates = getRuleHitPattern(rule, minDate, maxDate);
+                        var hitDates = getRuleHitPattern(rule, version.StartDate, minDate, maxDate);
                         foreach (DateTime hitDate in hitDates)
                         {
                             foreach (Time time in rule.MomentsInDay)
