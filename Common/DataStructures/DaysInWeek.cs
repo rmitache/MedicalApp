@@ -76,6 +76,38 @@ namespace Common.Datastructures
 
             return str;
         }
+        public bool CheckDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            if(dayOfWeek== DayOfWeek.Monday)
+            {
+                return this.Monday;
+            }
+            if (dayOfWeek == DayOfWeek.Tuesday)
+            {
+                return this.Tuesday;
+            }
+            if (dayOfWeek == DayOfWeek.Wednesday)
+            {
+                return this.Wednesday;
+            }
+            if (dayOfWeek == DayOfWeek.Thursday)
+            {
+                return this.Thursday;
+            }
+            if (dayOfWeek == DayOfWeek.Friday)
+            {
+                return this.Friday;
+            }
+            if (dayOfWeek == DayOfWeek.Saturday)
+            {
+                return this.Saturday;
+            }
+            if (dayOfWeek == DayOfWeek.Sunday)
+            {
+                return this.Sunday;
+            }
 
+            return false;
+        }
     }
 }

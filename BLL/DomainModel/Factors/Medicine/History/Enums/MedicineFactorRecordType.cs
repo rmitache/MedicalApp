@@ -8,8 +8,6 @@ namespace BLL.DomainModel.Factors.Medicine.History.BLOs
     {
         UserEntry = 0,
         PlanProjection = 1
-
-
     }
 
 

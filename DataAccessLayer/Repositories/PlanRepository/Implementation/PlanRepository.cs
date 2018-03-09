@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace DataAccessLayer.Repositories.PlanRepository
 {
@@ -20,25 +20,29 @@ namespace DataAccessLayer.Repositories.PlanRepository
         // Public methods
         public List<TPlan> GetPlans(int userID, bool includeRules)
         {
-            var query = entitiesContext.TPlan
-                .AsNoTracking()
-                .Where(
-                    plan =>
-                        plan.UserId == userID)
-                .Include(plan => plan.TPlanVersion);
 
 
             if (includeRules)
             {
-                query
+
+                return entitiesContext.TPlan
+                .AsNoTracking()
+                .Where(plan => plan.UserId == userID)
+                .Include(plan => plan.TPlanVersion)
                     .ThenInclude(version => version.TPlanRule)
-                    .ThenInclude(rule => rule.TPlanMedicineRuleItem)
-                    .ThenInclude(medicineRuleItem => medicineRuleItem.MedicineType);
+                        .ThenInclude(rule => rule.TPlanMedicineRuleItem)
+                            .ThenInclude(medicineRuleItem => medicineRuleItem.MedicineType)
+                            .ToList();
+            }
+            else
+            {
+                return entitiesContext.TPlan
+                .AsNoTracking()
+                .Where(plan => plan.UserId == userID)
+                .Include(plan => plan.TPlanVersion)
+                .ToList();
             }
 
-
-
-            return query.ToList();
         }
         public TPlan AddPlan(TPlan plan)
         {

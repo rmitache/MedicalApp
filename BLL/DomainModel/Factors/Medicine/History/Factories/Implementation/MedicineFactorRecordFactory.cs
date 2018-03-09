@@ -6,6 +6,9 @@ using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
 using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using BLL.DomainModel.Factors.Medicine.Library.Enums;
+using BLL.DomainModel.Plans.BLOs;
+using Common.Datastructures;
+using System;
 
 namespace BLL.DomainModel.Factors.Medicine.History.Factories
 {
@@ -13,6 +16,45 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
     {
         // Fields
         private readonly IMedicineTypeFactory medicineTypeFactory;
+
+        // Private methods
+        private List<DateTime> getRuleHitPattern(Rule rule, DateTime minDate, DateTime maxDate)
+        {
+            List<DateTime> dates = new List<DateTime>();
+
+            //rule.FrequencyType
+            //    rule.OrdinalFrequencyType
+
+            for (var dt = minDate; dt <= maxDate; dt = dt.AddDays(1))
+            {
+                if (rule.DaysInWeek.CheckDayOfWeek(dt.DayOfWeek))
+                {
+                    dates.Add(dt);
+                }
+            }
+
+
+            return dates;
+        }
+        private MedicineFactorRecord createFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDateTime)
+        {
+            MedicineFactorRecord blo = new MedicineFactorRecord();
+            blo.ID = -1;
+            blo.Type = MedicineFactorRecordType.PlanProjection;
+            blo.MedicineType = ruleItem.MedicineType;
+            blo.OccurenceDateTime = occurrenceDateTime;
+
+            blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
+            blo.UnitDoseType = ruleItem.UnitDoseType;
+            blo.UnitDoseSize = ruleItem.UnitDoseSize;
+            blo.UnitDoseUoM = ruleItem.UnitDoseUoM;
+
+            blo.Instruction = ruleItem.Instruction;
+
+
+            return blo;
+        }
+
         // Constructor
         public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory)
         {
@@ -23,7 +65,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
         public TMedicineFactorRecord Convert_ToDataEntity(MedicineFactorRecord blo, int userID)
         {
             TMedicineFactorRecord dataEntity = new TMedicineFactorRecord();
-            dataEntity.Id = blo.ID ;
+            dataEntity.Id = blo.ID;
             dataEntity.UserId = userID;
             dataEntity.MedicineTypeId = blo.MedicineType.ID;
             dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
@@ -31,7 +73,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
             dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
             dataEntity.UnitDoseSize = blo.UnitDoseSize;
-            dataEntity.UnitDoseUomId = (int) blo.UnitDoseUoM;
+            dataEntity.UnitDoseUomId = (int)blo.UnitDoseUoM;
 
             dataEntity.InstructionId = (int)blo.Instruction;
             dataEntity.AdministrationMethodId = (int)blo.AdministrationMethod;
@@ -59,6 +101,53 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
 
 
             return blo;
+        }
+        public List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, DateTime windowEndDate)
+        {
+            var projectedFactorRecordsList = new List<MedicineFactorRecord>();
+            foreach (Plan plan in planBLOs)
+            {
+                foreach (Plans.BLOs.Version version in plan.Versions)
+                {
+                    // Prepare range dates
+                    DateTime minDate = (version.StartDate > windowStartDate) ? version.StartDate : windowStartDate;
+                    DateTime maxDate;
+                    if (version.EndDate == null)
+                    {
+                        maxDate = windowEndDate; 
+                    }
+                    else
+                    {
+                        maxDate = (version.EndDate > windowEndDate) ? (DateTime)version.EndDate : windowEndDate;
+                    }
+
+                    // Create MedicineItems for each Rule
+                    foreach (Rule rule in version.Rules)
+                    {
+                        var hitDates = getRuleHitPattern(rule, minDate, maxDate);
+                        foreach (DateTime hitDate in hitDates)
+                        {
+                            foreach (Time time in rule.MomentsInDay)
+                            {
+                                var occurrenceDateTime = new DateTime(hitDate.Year, hitDate.Month, hitDate.Day,
+                                    time.Hours, time.Minutes, 0);
+                                foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
+                                {
+                                    var newFactorRecord = createFromMedicineRuleItem(ruleItem, occurrenceDateTime);
+                                    projectedFactorRecordsList.Add(newFactorRecord);
+                                }
+                            }
+                        }
+
+                    }
+
+
+                }
+
+            }
+
+
+            return projectedFactorRecordsList;
         }
         public List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities)
         {

@@ -1,6 +1,7 @@
 ﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
 using BLL.DomainModel.Factors.Medicine.History.Factories;
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
+using BLL.DomainModel.Plans.Services;
 using Common.Datastructures;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using System;
@@ -15,16 +16,19 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
         private readonly IMedicineFactorRecordRepository medicineFactorRecordRepo;
         private readonly IMedicineFactorRecordFactory medicineFactorRecordFactory;
         private readonly IMedicineTypeFactory medicineTypeFactory;
+        private readonly IPlanService planService;
 
         // Constructor
         public MedicineFactorRecordService(
             IMedicineFactorRecordRepository medicineFactorRecordRepo,
             IMedicineFactorRecordFactory medicineFactorRecordFactory,
-            IMedicineTypeFactory medicineTypeFactory)
+            IMedicineTypeFactory medicineTypeFactory,
+            IPlanService planService)
         {
             this.medicineFactorRecordRepo = medicineFactorRecordRepo;
             this.medicineFactorRecordFactory = medicineFactorRecordFactory;
             this.medicineTypeFactory = medicineTypeFactory;
+            this.planService = planService;
         }
 
         // Public methods
@@ -35,7 +39,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
 
 
             // Update IDs on BLOs which will be returned
-            for(int i=0;i <dataEntities.Count;i++)
+            for (int i = 0; i < dataEntities.Count; i++)
             {
                 blos[i].ID = dataEntities[i].Id;
             }
@@ -44,9 +48,17 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
         }
         public List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int userID)
         {
-            var dataEntities = this.medicineFactorRecordRepo.GetMedicineFactorRecords(dateRange, userID);
-            var blos = this.medicineFactorRecordFactory.Convert_ToBLOList(dataEntities);
-            return blos;
+            // FactorRecords of type UserEntry
+            var userEntryDataEntities = this.medicineFactorRecordRepo.GetMedicineFactorRecords(dateRange, userID);
+            var userEntryFactorRecordBLOs = this.medicineFactorRecordFactory.Convert_ToBLOList(userEntryDataEntities);
+
+            // FactorRecords projected from the user's plans
+            var plans = this.planService.GetPlans(userID, true);
+            var planProjectionFactorRecordBLOs = this.medicineFactorRecordFactory.Create_FromMedicinePlans(plans, dateRange.RangeStart, dateRange.RangeEnd);
+
+            // 
+            var allFactorRecordBLOs = planProjectionFactorRecordBLOs.Concat(userEntryFactorRecordBLOs).OrderBy(rec => rec.OccurenceDateTime).ToList();
+            return allFactorRecordBLOs;
         }
 
 
