@@ -101,7 +101,17 @@ export class DaysInWeek {
             index++;
         }
     }
-
+    public Clone(): DaysInWeek {
+        return new DaysInWeek([
+            this.Days.Monday,
+            this.Days.Tuesday,
+            this.Days.Wednesday,
+            this.Days.Thursday,
+            this.Days.Friday,
+            this.Days.Saturday,
+            this.Days.Sunday
+        ]);
+    }
     public static FromJSON(blo: any): DaysInWeek {
         let newObj = new DaysInWeek();
         newObj.Days.Monday = blo['Monday'];

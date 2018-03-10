@@ -22,15 +22,7 @@ export class PatientAccountCLOFactory implements ICLOFactory<CLOs.PatientAccount
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.PatientAccountCLO> {
         throw new Error("Convert_ToCloList not implemented");
     }
-    //public Clone_CLO(clo: PatientAccountCLO): PatientAccountCLO {
-
-    //    let clonedClo: PatientAccountCLO = new PatientAccountCLO();
-    //    clonedClo.ID = clo.ID;
-    //    clonedClo.Email = clo.Email;
-    //    clonedClo.Name = clo.Name;
-
-    //    return clonedClo;
-
-    //    return null;
-    //}
+    public Clone_CLOAsNewBLO(clo: CLOs.PatientAccountCLO): CLOs.PatientAccountCLO {
+        throw new Error('Clone_CLO Not implemented');
+    }
 }

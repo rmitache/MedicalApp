@@ -43,4 +43,7 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 
         return cloList;
     }
+    public Clone_CLOAsNewBLO(clo: CLOs.MedicineTypeCLO): CLOs.MedicineTypeCLO {
+        throw new Error('Clone_CLO Not implemented');
+    }
 }

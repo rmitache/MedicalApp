@@ -28,7 +28,7 @@ namespace BLL.DomainModel.Plans.Services
         }
 
         // Public methods
-        public List<Plan> GetPlans(int userID, bool includeRules )
+        public List<Plan> GetPlans(int userID, bool includeRules)
         {
             var dataEntities = this.planRepository.GetPlans(userID, includeRules);
             var blos = this.planFactory.Convert_ToBLOList(dataEntities);

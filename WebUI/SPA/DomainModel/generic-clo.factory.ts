@@ -147,6 +147,12 @@ export class GenericCLOFactory {
         let clone: T = factory.Convert_ToCLO(blo);
         return clone;
     }
+    public CloneCLOAsNewBLO<T extends BaseCLO>(clo: T): T {
+        let factory: ICLOFactory<T> = this.getFactoryByCLOTypeName<T>(clo.GetTypeName());
+        
+        let clone: T = factory.Clone_CLOAsNewBLO(clo);
+        return clone;
+    }
     public CreateDefaultClo<T>(type: IType<T>): T {
 
         // Obtain the actual factory implementation by type 

@@ -56,4 +56,19 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
 
         return cloList;
     }
+    public Clone_CLOAsNewBLO(clo: CLOs.MedicineRuleItemCLO): CLOs.MedicineRuleItemCLO {
+        let newCLO = new CLOs.MedicineRuleItemCLO();
+        newCLO.ID = 0;
+        newCLO.MedicineType = clo.MedicineType;
+
+        newCLO.UnitDoseType = clo.UnitDoseType;
+        newCLO.UnitDoseQuantifier = clo.UnitDoseQuantifier;
+        newCLO.UnitDoseSize = clo.UnitDoseSize;
+        newCLO.UnitDoseUoM = clo.UnitDoseUoM;
+
+        newCLO.Instruction = clo.Instruction;
+        newCLO.AdministrationMethod = clo.AdministrationMethod;
+
+        return newCLO;
+    }
 }

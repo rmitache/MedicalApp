@@ -49,4 +49,17 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 
         return cloList;
     }
+    public Clone_CLOAsNewBLO(clo: CLOs.VersionCLO): CLOs.VersionCLO {
+        let newCLO = new CLOs.VersionCLO();
+        newCLO.ID = 0;
+        newCLO.StartDate = clo.StartDate;
+        newCLO.EndDate = clo.EndDate;
+        newCLO.Rules = [];
+        for (var i = 0; i < clo.Rules.length; i++) {
+            var newRule = this.ruleCLOFactory.Clone_CLOAsNewBLO(clo.Rules[i]);
+            newCLO.Rules.push(newRule);
+        }
+
+        return newCLO;
+    }
 }

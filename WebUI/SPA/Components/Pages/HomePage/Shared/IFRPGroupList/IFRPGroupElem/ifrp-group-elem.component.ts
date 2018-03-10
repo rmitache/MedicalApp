@@ -71,19 +71,28 @@ export class IFRPGroupElemComponent {
     }
     ngOnInit() {
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
-        
+
         this.form.
             valueChanges.
             subscribe(() => {
                 this.IsValid = (this.form.valid === true);
                 this.ValidStateChanged.emit();
             });
+
+        //
+        if (this.iFRPGroupCLO.MedicineType !== null) {
+            this.autoCompleteComponentInstance.inputFieldValue = this.iFRPGroupCLO.MedicineType.Name;
+            this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnitDoses() === true);
+            this.viewModel.OverlayIsVisible = false;
+        }
+
+
     }
     ngAfterViewInit() {
 
-        // Auto-focus by default onto the autocomplete input field
-        this.autoCompleteComponentInstance.domHandler.findSingle(this.autoCompleteComponentInstance.el.nativeElement, 'input').focus();
-        this.cdRef.detectChanges();
+        //// Auto-focus by default onto the autocomplete input field
+        //this.autoCompleteComponentInstance.domHandler.findSingle(this.autoCompleteComponentInstance.el.nativeElement, 'input').focus();
+        //this.cdRef.detectChanges();
     }
 
     // Events 

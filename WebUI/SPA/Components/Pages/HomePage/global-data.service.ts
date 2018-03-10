@@ -89,8 +89,21 @@ export class GlobalDataService {
 
         return postDataPromise;
     }
-    public GetPlans_Shallow(): Promise<CLOs.PlanCLO[]> {
-        const apiMethodName: string = 'GetPlans_Shallow';
+    public AdjustPlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
+        const apiMethodName: string = 'AdjustPlan';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.PlanCLO>(CLOs.PlanCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
+    public GetPlans(): Promise<CLOs.PlanCLO[]> {
+        const apiMethodName: string = 'GetPlans';
 
 
         let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName)

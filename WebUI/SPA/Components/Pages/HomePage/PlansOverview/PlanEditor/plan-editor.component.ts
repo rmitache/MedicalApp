@@ -86,7 +86,18 @@ export class PlanEditorComponent implements IModalDialog {
 
     // Public methods
     public SaveData(): Promise<CLOs.PlanCLO> {
-        let saveDataPromise = this.globalDataService.AddPlan(this.viewModel.PlanCLO);
+        let saveDataPromise;
+
+        // CreateNew
+        if (this.viewModel.CurrentMode === PlanEditorMode.CreateNew) {
+            saveDataPromise = this.globalDataService.AddPlan(this.viewModel.PlanCLO);
+        }
+        // Adjust
+        else if (this.viewModel.CurrentMode === PlanEditorMode.Adjust) {
+            let nextLastVersion = this.viewModel.PlanCLO.Versions[this.viewModel.PlanCLO.Versions.length - 2];
+            nextLastVersion.EndDate = moment(this.viewModel.CurrentVersionCLO.StartDate).subtract(1,'days').toDate(); // end the next last version before starting the new one
+            saveDataPromise = this.globalDataService.AdjustPlan(this.viewModel.PlanCLO);
+        }
         return saveDataPromise;
     }
 
@@ -110,15 +121,26 @@ export class PlanEditorComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        // No logic necessary for now
-        //if (!options || !options.data) {
-        //    throw new Error(`Data information for simple modal dialog is missing`);
-        //}
-        //this.text = options.data.text;
 
+        
         this.viewModel.PlanCLO = options.data.planCLO as CLOs.PlanCLO;
         this.viewModel.CurrentMode = options.data.planEditorMode as PlanEditorMode;
-        this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
+
+        // CreateNew
+        if (this.viewModel.CurrentMode === PlanEditorMode.CreateNew) {
+            //
+            this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
+        } else if (this.viewModel.CurrentMode === PlanEditorMode.Adjust)
+        // Adjust
+        {
+            // Create a new version
+            let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.viewModel.PlanCLO.GetLatestVersion());
+            newVersion.StartDate = moment().startOf('day').toDate();
+            this.viewModel.PlanCLO.Versions.push(newVersion);
+
+            //
+            this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
+        } 
     } 
 }
 
@@ -131,5 +153,5 @@ interface ViewModel {
  
 export enum PlanEditorMode {
     CreateNew,
-    Change
+    Adjust
 }

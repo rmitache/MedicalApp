@@ -4,16 +4,18 @@
         <div class="top-section">
             <div class="label-input-pair">
                 <span class="label">Name:</span>
-                <input required type="text" class="ui-inputtext" name="planName" id="plan-name-input" 
+                <input required type="text" class="ui-inputtext" name="planName" id="plan-name-input"
                        [(ngModel)]="viewModel.PlanCLO.Name" />
 
             </div>
             <div class="label-input-pair">
-                <span class="label">Start date:</span>
+                <span class="label">
+                    {{(viewModel.CurrentMode===0) ? 'Start date:' : 'Taking effect from:' }}
+                </span>
                 <p-calendar id="start-date-picker"
                             name="startdatepicker"
                             readonlyInput="true"
-                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDate"
+                            [(ngModel)]="viewModel.CurrentVersionCLO.StartDate"
                             showIcon="true"></p-calendar>
             </div>
             <div class="label-input-pair">
@@ -29,7 +31,7 @@
             <icon-button [IconName]="'plus'" id="add-new-rule-button" (click)="onAddNewRuleTriggered()"></icon-button>
             <br />
             <div class="rules-list">
-                <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules" 
+                <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
                            (ValidStateChanged)="onChildGroupElemChanged()"
                            (RemoveClicked)="onRemoveRuleTriggered($event)"
                            [RuleCLO]="rule">

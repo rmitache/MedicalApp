@@ -52,4 +52,19 @@ export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {
 
         return cloList;
     }
+    public Clone_CLOAsNewBLO(clo: CLOs.RuleCLO): CLOs.RuleCLO {
+        let newCLO = new CLOs.RuleCLO();
+        newCLO.ID = 0;
+        newCLO.OrdinalFrequencyType = clo.OrdinalFrequencyType;
+        newCLO.FrequencyType = clo.FrequencyType;
+        newCLO.DaysInWeek = clo.DaysInWeek.Clone();
+        newCLO.MomentsInDay = clo.MomentsInDay.slice();
+        newCLO.MedicineRuleItems = [];
+        for (var i = 0; i < clo.MedicineRuleItems.length; i++) {
+            var newRuleItem = this.medicineRuleItemCLOFactory.Clone_CLOAsNewBLO(clo.MedicineRuleItems[i]);
+            newCLO.MedicineRuleItems.push(newRuleItem);
+        }
+
+        return newCLO;
+    }
 }

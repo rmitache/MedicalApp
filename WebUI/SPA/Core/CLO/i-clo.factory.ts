@@ -17,7 +17,7 @@ export interface ICLOFactory<T> {
     //Create_FromParams(...params: any[]): T;
 
     // Cloning
-    //Clone_CLO(clo: T): T
+    Clone_CLOAsNewBLO(clo: T): T
     //Clone_CloList(cloList: T[]): DataStructures.List<T>;
 }
 

@@ -92,7 +92,7 @@ export class PlansOverviewComponent {
 
     }
     private reloadPlansFromServer(): Promise<void> {
-        let promise = this.dataService.GetPlans_Shallow()
+        let promise = this.dataService.GetPlans()
             .then(planCLOs => {
                 this.viewModel.AvailablePlans = planCLOs;
             });
@@ -128,7 +128,7 @@ export class PlansOverviewComponent {
         this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
     }
     private onAdjustPlanTriggered(planCLO: CLOs.PlanCLO) {
-        this.openPlanEditor('Adjust Plan', 'Save changes', planCLO, PlanEditorMode.Change);
+        this.openPlanEditor('Adjust Plan', 'Save changes', planCLO, PlanEditorMode.Adjust);
     }
 
 }

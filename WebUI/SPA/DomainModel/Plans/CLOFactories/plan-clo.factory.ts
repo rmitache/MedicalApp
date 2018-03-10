@@ -43,4 +43,7 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
 
         return cloList;
     }
+    public Clone_CLOAsNewBLO(clo: CLOs.PlanCLO): CLOs.PlanCLO {
+        throw new Error('Clone_CLO Not implemented');
+    }
 }

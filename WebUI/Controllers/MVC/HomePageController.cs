@@ -50,7 +50,7 @@ namespace WebUI.Controllers
         // WebAPI methods
         [Route("HomePage/GetInitialData")]
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult GetInitialData()
         {
 
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
@@ -64,9 +64,9 @@ namespace WebUI.Controllers
 
             };
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
-            var shallowPlans = planService.GetPlans(1, false);
+            var shallowPlans = planService.GetPlans(1, true);
             var initialScheduleRange = new Range<DateTime>(
-                    DateTime.Today.Subtract(new TimeSpan(5,0,0,0)),
+                    DateTime.Today.Subtract(new TimeSpan(5, 0, 0, 0)),
                     DateTime.Today.AddDays(5)
                 );
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
@@ -80,14 +80,14 @@ namespace WebUI.Controllers
                 MedicineTypes = medicineTypes,
                 Plans = shallowPlans,
                 FactorRecordsForInitialRange = factorRecords,
-                
+
             };
             return Json(bundle);
         }
 
         [Route("HomePage/AddFactorRecords")]
         [HttpPost]
-        public JsonResult Post([FromBody]List<MedicineFactorRecord> factorRecords)
+        public JsonResult AddFactorRecords([FromBody]List<MedicineFactorRecord> factorRecords)
         {
             int userID = 1;
             var factorRecordsUpdatedIDs = this.medicineFactorRecordService.AddMedicineFactorRecords(factorRecords, userID);
@@ -96,7 +96,7 @@ namespace WebUI.Controllers
 
         [Route("HomePage/GetFactorRecords")]
         [HttpPost]
-        public JsonResult Post([FromBody] GetFactorRecordsModel model)
+        public JsonResult GetFactorRecords([FromBody] GetFactorRecordsModel model)
         {
             int userID = 1;
             var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, userID);
@@ -105,18 +105,26 @@ namespace WebUI.Controllers
 
         [Route("HomePage/AddPlan")]
         [HttpPost]
-        public JsonResult Post([FromBody]Plan plan)
+        public JsonResult AddPlan([FromBody]Plan plan)
         {
             int userID = 1;
             var planWithUpdatedID = this.planService.AddPlan(plan, userID);
             return Json(planWithUpdatedID);
         }
-        [Route("HomePage/GetPlans_Shallow")]
-        [HttpGet]
-        public JsonResult GetPlans_Shallow()
+        [Route("HomePage/AdjustPlan")]
+        [HttpPost]
+        public JsonResult AdjustPlan([FromBody]Plan plan)
         {
             int userID = 1;
-            var blos = this.planService.GetPlans(userID, false);
+            //var planWithUpdatedID = this.planService.AddPlan(plan, userID);
+            return Json(null);
+        }
+        [Route("HomePage/GetPlans")]
+        [HttpGet]
+        public JsonResult GetPlans()
+        {
+            int userID = 1;
+            var blos = this.planService.GetPlans(userID, true);
             return Json(blos);
         }
 
