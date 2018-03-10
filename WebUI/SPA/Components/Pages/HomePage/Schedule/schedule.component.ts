@@ -11,6 +11,7 @@ import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
+import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 // Components
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
@@ -74,10 +75,15 @@ export class ScheduleComponent {
     constructor(
         applicationState: GlobalApplicationState,
         private readonly dataService: GlobalDataService,
+        private readonly commandManager: CommandManager,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
+
+        // Register self to CommandManager
+        this.commandManager.RegisterComponentInstance(this);
+
     }
     ngOnInit() {
 
@@ -93,6 +99,14 @@ export class ScheduleComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public methods
+    public RefreshUI() {
+        this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
+            .then(() => {
+                this.recreateDisplayRepresentation();
+            });
     }
 
     // Event handlers
@@ -145,7 +159,7 @@ export class ScheduleComponent {
     private onNavigateBackwardTriggered() {
         // Check if prevSelectedDateRange is within the AvailableDateRange
         let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
-        if (prevSelectedDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
+        if (prevSelectedDateRange.RangeStart > this.viewModel.AvailableDateRange.RangeStart) {
             this.viewModel.SelectedDateRange = prevSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
@@ -171,7 +185,7 @@ export class ScheduleComponent {
         let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
 
         // Check if nextSelectedDateRange is within the AvailableDateRange
-        if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
+        if (nextSelectedDateRange.RangeEnd < this.viewModel.AvailableDateRange.RangeEnd) {
             this.viewModel.SelectedDateRange = nextSelectedDateRange;
             this.recreateDisplayRepresentation();
         }

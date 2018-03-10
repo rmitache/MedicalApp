@@ -29,6 +29,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             CalendarEvent eventObj = new CalendarEvent
             {
                 Start = new CalDateTime(versionStartDate),
+                Duration = new TimeSpan(0,10,0),
                 RecurrenceRules = new List<RecurrencePattern>()
             };
             int everyX = (int)rule.OrdinalFrequencyType + 1;

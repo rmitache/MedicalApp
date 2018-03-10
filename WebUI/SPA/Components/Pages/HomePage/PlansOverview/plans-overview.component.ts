@@ -11,6 +11,7 @@ import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Component
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 // Components
 import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
@@ -63,11 +64,7 @@ export class PlansOverviewComponent {
                                 .then((planCLO) => {
                                     
                                     this.reloadPlansFromServer();
-
-
-                                    // TODO: After successfully adding a new Plan
-                                    // - Should refresh the PlansOverview
-                                    // - Should refresh the Schedule 
+                                    this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 
                                     setTimeout(() => {
                                         this.viewModel.Blocked = false;
@@ -105,12 +102,17 @@ export class PlansOverviewComponent {
     // Constructor 
     constructor(
         applicationState: GlobalApplicationState,
+        private readonly commandManager: CommandManager,
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly dataService: GlobalDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
+
+        // Register self to CommandManager
+        this.commandManager.RegisterComponentInstance(this);
+
     }
     ngOnInit() {
         // Init ViewModel properties

@@ -52,6 +52,7 @@
   <ItemGroup>
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\global-application-state.ts" />
     <None Remove="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
@@ -117,6 +118,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\global-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
