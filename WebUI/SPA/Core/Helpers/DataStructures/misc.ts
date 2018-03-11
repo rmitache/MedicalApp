@@ -77,50 +77,63 @@ export class TimeRange extends Range<Time> {
 }
 
 export class DaysInWeek {
-    public readonly Days = {
-        Monday: false,
-        Tuesday: false,
-        Wednesday: false,
-        Thursday: false,
-        Friday: false,
-        Saturday: false,
-        Sunday: false
-    };
+
+    public Monday: boolean = true;
+    public Tuesday: boolean = true;
+    public Wednesday: boolean = true;
+    public Thursday: boolean = true;
+    public Friday: boolean = true;
+    public Saturday: boolean = true;
+    public Sunday: boolean = true;
+
 
     constructor(array?: boolean[]) {
         if (array === null || array === undefined) {
             return;
         }
 
-        let index = 0;
-        for (var key in this.Days) {
-
-            this.Days[key] = array[index];
-
-            // 
-            index++;
+        if (array.length > 0) {
+            this.Monday = array[0];
+        }
+        if (array.length > 1) {
+            this.Tuesday = array[1];
+        }
+        if (array.length > 2) {
+            this.Wednesday = array[2];
+        }
+        if (array.length > 3) {
+            this.Thursday = array[3];
+        }
+        if (array.length > 4) {
+            this.Friday = array[4];
+        }
+        if (array.length > 5) {
+            this.Saturday = array[5];
+        }
+        if (array.length > 6) {
+            this.Sunday = array[6];
         }
     }
     public Clone(): DaysInWeek {
         return new DaysInWeek([
-            this.Days.Monday,
-            this.Days.Tuesday,
-            this.Days.Wednesday,
-            this.Days.Thursday,
-            this.Days.Friday,
-            this.Days.Saturday,
-            this.Days.Sunday
+            this.Monday,
+            this.Tuesday,
+            this.Wednesday,
+            this.Thursday,
+            this.Friday,
+            this.Saturday,
+            this.Sunday
         ]);
     }
     public static FromJSON(blo: any): DaysInWeek {
         let newObj = new DaysInWeek();
-        newObj.Days.Monday = blo['Monday'];
-        newObj.Days.Tuesday = blo['Tuesday'];
-        newObj.Days.Wednesday = blo['Wednesday'];
-        newObj.Days.Thursday = blo['Thursday'];
-        newObj.Days.Friday = blo['Friday'];
-        newObj.Days.Saturday = blo['Saturday'];
-        newObj.Days.Sunday = blo['Sunday'];
+        newObj.Monday = blo['Monday'];
+        newObj.Tuesday = blo['Tuesday'];
+        newObj.Wednesday = blo['Wednesday'];
+        newObj.Thursday = blo['Thursday'];
+        newObj.Friday = blo['Friday'];
+        newObj.Saturday = blo['Saturday'];
+        newObj.Sunday = blo['Sunday'];
 
         return newObj;
     }
