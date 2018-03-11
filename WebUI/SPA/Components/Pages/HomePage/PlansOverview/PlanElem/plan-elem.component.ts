@@ -45,10 +45,6 @@ export class PlanElemComponent {
         this.viewModel.RelativeStartDateString = moment(this.planCLO.GetFirstVersion().StartDate).fromNow().toString();
 
         // EndDate
-        // already ended
-        // no ending
-        // will end soon
-        // hasn't started
         if (this.planCLO.HasEnded) {
             this.viewModel.EndDatePrefixString = 'Ended';
             this.viewModel.RelativeEndDateString = moment(this.planCLO.GetLatestVersion().EndDate).fromNow().toString();

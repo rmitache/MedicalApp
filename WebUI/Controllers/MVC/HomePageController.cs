@@ -67,7 +67,7 @@ namespace WebUI.Controllers
             var shallowPlans = planService.GetPlans(1, true);
             var initialScheduleRange = new Range<DateTime>(
                     DateTime.Today.Subtract(new TimeSpan(5, 0, 0, 0)),
-                    DateTime.Today.AddDays(5)
+                    DateTime.Today.Add(new TimeSpan(5, 23, 59, 59))
                 );
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
             //----------------------------------------------------------------------------------------------------------------------------
@@ -116,8 +116,8 @@ namespace WebUI.Controllers
         public JsonResult AdjustPlan([FromBody]Plan plan)
         {
             int userID = 1;
-            //var planWithUpdatedID = this.planService.AddPlan(plan, userID);
-            return Json(null);
+            var adjustedPlanWithUpdatedIDs = this.planService.AdjustPlan(plan, userID);
+            return Json(adjustedPlanWithUpdatedIDs);
         }
         [Route("HomePage/GetPlans")]
         [HttpGet]

@@ -17,14 +17,20 @@ namespace BLL.DomainModel.Plans.Services
         // Fields
         private readonly IPlanRepository planRepository;
         private readonly IPlanFactory planFactory;
+        private readonly IVersionRepository versionRepository;
+        private readonly IVersionFactory versionFactory;
 
         // Constructor
         public PlanService(
             IPlanRepository planRepository,
-            IPlanFactory planFactory)
+            IPlanFactory planFactory,
+            IVersionRepository versionRepository,
+            IVersionFactory versionFactory)
         {
             this.planRepository = planRepository;
             this.planFactory = planFactory;
+            this.versionRepository = versionRepository;
+            this.versionFactory = versionFactory;
         }
 
         // Public methods
@@ -44,6 +50,19 @@ namespace BLL.DomainModel.Plans.Services
 
             return blo;
         }
-    }
+        public Plan AdjustPlan(Plan blo, int userID)
+        {
+            // Update next last Version
+            BLOs.Version nextLastVersion = blo.Versions[blo.Versions.Count - 2];
+            var nextLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(nextLastVersion);
+            this.versionRepository.UpdateVersion(nextLastVersionDataEntity, blo.ID);
 
+            // Add the new version
+            BLOs.Version lastVersion = blo.Versions[blo.Versions.Count - 1];
+            var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(lastVersion);
+            this.versionRepository.AddVersion(lastVersionDataEntity, blo.ID);
+
+            return blo;
+        }
+    }
 }

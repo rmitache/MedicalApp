@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ical.Net.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,6 +76,40 @@ namespace Common.Datastructures
                 Sunday.ToString().ToLower();
 
             return str;
+        }
+        public List<WeekDay> ToICalWeekDayList()
+        {
+            List<WeekDay> list = new List<WeekDay>();
+            if (this.Monday)
+            {
+                list.Add(new WeekDay("MO"));
+            }
+            if (this.Tuesday)
+            {
+                list.Add(new WeekDay("TU"));
+            }
+            if (this.Wednesday)
+            {
+                list.Add(new WeekDay("WE"));
+            }
+            if (this.Thursday)
+            {
+                list.Add(new WeekDay("TH"));
+            }
+            if (this.Friday)
+            {
+                list.Add(new WeekDay("FR"));
+            }
+            if (this.Saturday)
+            {
+                list.Add(new WeekDay("SA"));
+            }
+            if (this.Sunday)
+            {
+                list.Add(new WeekDay("SU"));
+            }
+
+            return list;
         }
         public bool CheckDayOfWeek(DayOfWeek dayOfWeek)
         {

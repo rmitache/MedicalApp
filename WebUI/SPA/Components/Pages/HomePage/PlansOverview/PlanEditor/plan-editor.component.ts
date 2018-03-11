@@ -135,7 +135,7 @@ export class PlanEditorComponent implements IModalDialog {
         {
             // Create a new version
             let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.viewModel.PlanCLO.GetLatestVersion());
-            newVersion.StartDate = moment().startOf('day').toDate();
+            newVersion.StartDate = moment().add(1,'days').startOf('day').toDate(); // update the StartDate to be tomorrow
             this.viewModel.PlanCLO.Versions.push(newVersion);
 
             //

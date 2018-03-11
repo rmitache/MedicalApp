@@ -47,14 +47,16 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             else
             // Weekly
             {
+                var x = rule.DaysInWeek.ToICalWeekDayList();
                 eventObj.RecurrenceRules.Add(new RecurrencePattern()
                 {
                     Frequency = FrequencyType.Weekly,
                     Interval = everyX,
-                    FirstDayOfWeek = DayOfWeek.Monday
+                    FirstDayOfWeek = DayOfWeek.Monday,
+                    ByDay= rule.DaysInWeek.ToICalWeekDayList()
+
                 });
             }
-
 
             //
             dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurence => occurence.Period.StartTime.Date).ToList();
@@ -142,7 +144,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     }
                     else
                     {
-                        maxDate = (version.EndDate < windowEndDate) ? (DateTime)version.EndDate : windowEndDate;
+                        maxDate = (version.EndDate < windowEndDate) ? ((DateTime)version.EndDate).Add(new TimeSpan(0, 23, 59, 59)) : windowEndDate;
                     }
 
                     // Create MedicineItems for each Rule
