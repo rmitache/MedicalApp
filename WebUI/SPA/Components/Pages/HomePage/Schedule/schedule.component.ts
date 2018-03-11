@@ -285,7 +285,7 @@ class DayDisplayMode implements IDisplayMode {
             throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
         }
 
-        return currentSelDateRange.RangeStart.format('Do MMM, YYYY');
+        return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
     }
     public GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]) {
 

@@ -36,8 +36,8 @@
 
         .frame .header .center-section {
             float: left;
-            width: 180px;
-            margin-left: calc(50% - 275px);
+            width: 240px;
+            margin-left: calc(50% - 295px);
         }
 
         .frame .header .right-section {
