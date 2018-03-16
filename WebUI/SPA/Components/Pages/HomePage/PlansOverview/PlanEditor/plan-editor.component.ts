@@ -2,6 +2,7 @@
 import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
+import { Calendar } from 'primeng/primeng';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -30,7 +31,11 @@ export class PlanEditorComponent implements IModalDialog {
     @Output()
     public IsValid: boolean = false;
     @ViewChild(NgForm)
-    private form;
+    private form: NgForm;
+    @ViewChild('startDatePicker')
+    private startDatePicker: Calendar;
+    @ViewChild('endDatePicker')
+    private endDatePicker: Calendar;
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         CurrentVersionCLO: null,
@@ -60,12 +65,34 @@ export class PlanEditorComponent implements IModalDialog {
         return allChildElemsAreValid;
     }
     private checkIfSelfValid(): boolean {
+        // General form validation
         let formValid = this.form.valid;
 
-        return formValid;
+        // Special validation between StartDate and EndDate 
+        let startDateAndEndDateValid = true;;
+        //let startDate = moment(this.startDatePicker.inputFieldValue, 'DD-MM-YYYY');
+        //let endDate = (this.endDatePicker.inputFieldValue == '' || this.endDatePicker.inputFieldValue == null)
+        //    ? null : moment(this.endDatePicker.inputFieldValue, 'DD-MM-YYYY');
+
+
+        //alert('endDate=' + endDate + ' & startDate= ' + startDate);
+        //if (endDate === null || startDate < endDate) {
+        //    this.startDatePicker.styleClass = '';
+        //    this.endDatePicker.styleClass = '';
+        //    startDateAndEndDateValid = true;
+        //} else {
+        //    this.startDatePicker.styleClass = 'invalid-calendar';
+        //    this.endDatePicker.styleClass = 'invalid-calendar';
+        //    startDateAndEndDateValid = false;
+        //}
+
+
+        //
+        return formValid && startDateAndEndDateValid;
     }
     private refreshIsValid() {
-        this.IsValid = this.checkIfChildElemsValid() && this.checkIfSelfValid();
+
+        this.IsValid = this.checkIfSelfValid() && this.checkIfChildElemsValid();
     }
 
     // Constructor 
@@ -76,7 +103,6 @@ export class PlanEditorComponent implements IModalDialog {
     ) {
     }
     ngOnInit() {
-
         this.form.
             valueChanges.
             subscribe(() => {
@@ -95,7 +121,7 @@ export class PlanEditorComponent implements IModalDialog {
         // Adjust
         else if (this.viewModel.CurrentMode === PlanEditorMode.Adjust) {
             let nextLastVersion = this.viewModel.PlanCLO.Versions[this.viewModel.PlanCLO.Versions.length - 2];
-            nextLastVersion.EndDate = moment(this.viewModel.CurrentVersionCLO.StartDate).subtract(1,'days').toDate(); // end the next last version before starting the new one
+            nextLastVersion.EndDate = moment(this.viewModel.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate(); // end the next last version before starting the new one
             saveDataPromise = this.globalDataService.AdjustPlan(this.viewModel.PlanCLO);
         }
         return saveDataPromise;
@@ -122,7 +148,7 @@ export class PlanEditorComponent implements IModalDialog {
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
 
-        
+
         this.viewModel.PlanCLO = options.data.planCLO as CLOs.PlanCLO;
         this.viewModel.CurrentMode = options.data.planEditorMode as PlanEditorMode;
 
@@ -135,13 +161,13 @@ export class PlanEditorComponent implements IModalDialog {
         {
             // Create a new version
             let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.viewModel.PlanCLO.GetLatestVersion());
-            newVersion.StartDate = moment().add(1,'days').startOf('day').toDate(); // update the StartDate to be tomorrow
+            newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // update the StartDate to be tomorrow
             this.viewModel.PlanCLO.Versions.push(newVersion);
 
             //
             this.viewModel.CurrentVersionCLO = this.viewModel.PlanCLO.GetLatestVersion();
-        } 
-    } 
+        }
+    }
 }
 
 
@@ -150,8 +176,20 @@ interface ViewModel {
     CurrentVersionCLO: CLOs.VersionCLO;
     CurrentMode: PlanEditorMode;
 }
- 
+
 export enum PlanEditorMode {
     CreateNew,
     Adjust
 }
+
+// PlanEditorMode logic
+// - Template
+//      - StartDate label text
+// - dialogInit()
+//      - How the planCLO is setup (Ex: In Adjust mode 
+// - SaveData()
+//      - How data is manipulated and prepared
+//      - Which persistence method is used
+// - Validation rules
+//      - 
+

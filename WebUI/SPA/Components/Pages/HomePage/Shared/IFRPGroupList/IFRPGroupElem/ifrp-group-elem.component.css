@@ -5,15 +5,19 @@
     font-family: Arial;
 }
 
-/deep/ .ui-autocomplete .ui-button {
+ /deep/ .ui-autocomplete .ui-button {
     float: right;
     margin-top: -26px;
-    height:25px;
+    height: 25px;
 }
 
+.medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
+    border: 1px solid red !important;
+}
 
-
-
+input.ng-invalid.ng-touched {
+    border: 1px solid red!important;
+}
 
 .frame {
     background-color: white;

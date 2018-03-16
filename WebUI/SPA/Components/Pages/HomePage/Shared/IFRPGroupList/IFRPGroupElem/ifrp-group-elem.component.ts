@@ -1,9 +1,13 @@
+// Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { AutoComplete } from 'primeng/primeng';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
-import { AutoComplete } from 'primeng/primeng';
+import * as CLOs from 'SPA/DomainModel/clo-exports';
 
 
 @Component({
@@ -21,15 +25,15 @@ export class IFRPGroupElemComponent {
     @Output()
     public IsValid: boolean = false;
     @ViewChild('autocomplete') readonly autoCompleteComponentInstance: AutoComplete;
-    @ViewChild(NgForm) form;
 
+    private reactiveForm: FormGroup;
+    
     private readonly unitDoseTypesEnum = Enums.UnitDoseType;
     private readonly unitsOfMeasureEnum = Enums.UnitOfMeasure;
     private readonly medicineInstructionsEnum = Enums.Instruction;
 
     private readonly viewModel: ViewModel = {
         IFRPGroupCLO: null,
-        MedicineTypeName: '',
         MedicineTypeSearchResults: [],
         OverlayIsVisible: true,
         UserDefinedControlsAreLocked: true
@@ -66,33 +70,48 @@ export class IFRPGroupElemComponent {
 
     // Constructor 
     constructor(
+        private fb: FormBuilder,
         private readonly cdRef: ChangeDetectorRef
     ) {
+        this.reactiveForm = this.fb.group({
+            medicineTypeName: ['',
+                Validators.compose([
+                    Validators.required])],
+            unitDoseQuantifierInput: [null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.min(1),
+                    Validators.pattern(new RegExp(/^\d+$/))])],
+            unitdosetype: null,
+            unitdosesize: [null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.min(1),
+                    Validators.pattern(new RegExp(/^\d+$/))])],
+            unitdoseuom: null,
+            instruction: null
+        });
     }
     ngOnInit() {
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
-        this.form.
-            valueChanges.
-            subscribe(() => {
-                this.IsValid = (this.form.valid === true);
+        this.reactiveForm
+            .statusChanges
+            .subscribe((newStatus) => {
+                this.IsValid = (this.reactiveForm.valid === true);
                 this.ValidStateChanged.emit();
+                
             });
 
+        
         //
         if (this.iFRPGroupCLO.MedicineType !== null) {
-            this.autoCompleteComponentInstance.inputFieldValue = this.iFRPGroupCLO.MedicineType.Name;
+            this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
             this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnitDoses() === true);
             this.viewModel.OverlayIsVisible = false;
         }
 
 
-    }
-    ngAfterViewInit() {
-
-        //// Auto-focus by default onto the autocomplete input field
-        //this.autoCompleteComponentInstance.domHandler.findSingle(this.autoCompleteComponentInstance.el.nativeElement, 'input').focus();
-        //this.cdRef.detectChanges();
     }
 
     // Events 
@@ -110,7 +129,6 @@ export class IFRPGroupElemComponent {
 
     }
     private onMedicineTypeSelected(value) {
-        this.viewModel.MedicineTypeName = value;
         this.loadMedicineTypeByName(value);
         setTimeout(() => {
             this.viewModel.OverlayIsVisible = false;
@@ -121,7 +139,6 @@ export class IFRPGroupElemComponent {
 
 interface ViewModel {
     IFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
-    MedicineTypeName: string;
     MedicineTypeSearchResults: string[];
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;

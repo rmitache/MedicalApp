@@ -1,4 +1,6 @@
-
+/deep/ .invalid-calendar {
+    border: solid 1px red !important;
+}
 
 .frame {
     width: 940px;

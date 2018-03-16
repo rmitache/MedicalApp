@@ -1,13 +1,16 @@
-<form #form="ngForm">
+<form [formGroup]="reactiveForm">
 
     <div class="frame">
         <div class="draggable-area"></div>
         <div class="right-side">
+
+
             <div class="label-input-pair medicine-type-input-pair">
                 <span class="label">Medicine Type</span>
 
 
-                <p-autoComplete required #autocomplete
+                <p-autoComplete #autocomplete
+                                formControlName="medicineTypeName"
                                 appendTo="body"
                                 lazy="true"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
@@ -22,13 +25,18 @@
 
             <div class="label-input-pair quantifier-input-pair">
                 <span class="label">Dosage</span>
-                <input required min="1" pattern="^\d+$" type="text" class="ui-inputtext" name="unitdosequantifier"
+
+                <input type="text" class="ui-inputtext"
+                       formControlName="unitDoseQuantifierInput"
                        [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
+
             </div>
 
             <div class="label-input-pair dose-type-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" name="unitdosetype" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseType"
+                <select class="drop-down"
+                        formControlName="unitdosetype"
+                        name="unitdosetype" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseType"
                         [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let doseType of unitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
                 </select>
@@ -37,23 +45,29 @@
             <div class="x-label">of</div>
             <div class="label-input-pair dose-size-input-pair">
                 <span class="label"></span>
-                <input type="text" name="unitdosesize"
+                <input type="text"
+                       formControlName="unitdosesize"
                        class="ui-inputtext" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
             </div>
 
             <div class="label-input-pair dose-uom-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" name="unitdoseuom" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseUoM" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
+                <select class="drop-down" 
+                        formControlName="unitdoseuom" 
+                        [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseUoM" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let uom of unitsOfMeasureEnum | enumkeys" [value]="uom.value">{{uom.key}}</option>
                 </select>
             </div>
-
+            
             <div class="label-input-pair instructions-input-pair">
                 <span class="label">Instructions</span>
-                <select class="drop-down" name="instruction" [(ngModel)]="viewModel.IFRPGroupCLO.Instruction">
+                <select class="drop-down" 
+                        formControlName="instruction" 
+                        [(ngModel)]="viewModel.IFRPGroupCLO.Instruction">
                     <option *ngFor="let instruction of medicineInstructionsEnum | enumkeys" [value]="instruction.value">{{instruction.key}}</option>
                 </select>
             </div>
+
             <div class="close" (click)="onRemoveClicked()">X</div>
 
         </div>

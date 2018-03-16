@@ -14,7 +14,9 @@
                 <span class="label">
                     {{(viewModel.CurrentMode===0) ? 'Start date:' : 'Adjustments taking effect from:' }}
                 </span>
-                <p-calendar id="start-date-picker"
+                <p-calendar #startDatePicker
+                            dateFormat="dd-mm-yy"
+                            id="start-date-picker"
                             name="startdatepicker"
                             readonlyInput="true"
                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDate"
@@ -22,7 +24,9 @@
             </div>
             <div class="label-input-pair">
                 <span class="label">End date:</span>
-                <p-calendar id="end-date-picker"
+                <p-calendar #endDatePicker
+                            dateFormat="dd-mm-yy"
+                            id="end-date-picker"
                             name="enddatepicker"
                             [(ngModel)]="viewModel.CurrentVersionCLO.EndDate"
                             showIcon="true"></p-calendar>
