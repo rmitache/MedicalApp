@@ -124,8 +124,9 @@ export class IFRPGroupListComponent {
             this.viewModel.IFRPGroupCLOs.splice(index, 1);
         }
 
-        this.isValid = this.checkChildrenAreValid();
-        this.ValidStateChanged.emit();
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
     }
 }
 

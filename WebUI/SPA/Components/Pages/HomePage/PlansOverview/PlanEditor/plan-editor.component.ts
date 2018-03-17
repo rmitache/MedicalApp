@@ -28,8 +28,7 @@ export class PlanEditorComponent implements IModalDialog {
     // Fields
     @ViewChildren('ruleelems')
     private ruleElems: QueryList<RuleElemComponent>;
-    @Output()
-    public IsValid: boolean = false;
+    private isValid: boolean = false;
     @ViewChild(NgForm)
     private form: NgForm;
     @ViewChild('startDatePicker')
@@ -92,7 +91,7 @@ export class PlanEditorComponent implements IModalDialog {
     }
     private refreshIsValid() {
 
-        this.IsValid = this.checkIfSelfValid() && this.checkIfChildElemsValid();
+        this.isValid = this.checkIfSelfValid() && this.checkIfChildElemsValid();
     }
 
     // Constructor 
@@ -126,6 +125,10 @@ export class PlanEditorComponent implements IModalDialog {
         }
         return saveDataPromise;
     }
+    public GetValidState() {
+        return this.isValid;
+    }
+
 
     // EventHandlers
     private onChildRuleElemValidStateChanged() {

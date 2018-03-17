@@ -21,7 +21,7 @@
     color: gray;
 }
 
-/deep/ .ifrp-group-elem .frame {
+.what-section /deep/ .ifrp-group-elem .frame {
     border: solid 1px gray !important;
     border-radius: 6px 0 0 6px;
 }

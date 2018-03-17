@@ -52,7 +52,7 @@ export class PlansOverviewComponent {
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
                         let planEditorInstance = childComponentInstance as PlanEditorComponent;
-                        return !planEditorInstance.IsValid;
+                        return !planEditorInstance.GetValidState();
                     },
                     text: saveButtonText,
                     onAction: (childComponentInstance: any) => {

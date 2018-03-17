@@ -31,13 +31,13 @@
         margin-right: 55px;
     }
 
-/deep/ .top-section #start-date-picker .ui-inputtext {
-    width: 90px !important;
-}
+    .top-section #start-date-picker /deep/ .ui-inputtext {
+        width: 90px !important;
+    }
 
-/deep/ .top-section #end-date-picker .ui-inputtext {
-    width: 90px !important;
-}
+    .top-section #end-date-picker /deep/ .ui-inputtext {
+        width: 90px !important;
+    }
 
 
 .rules-section {
