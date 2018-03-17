@@ -1,5 +1,14 @@
-/deep/ .invalid-calendar {
-    border: solid 1px red !important;
+.top-section /deep/ #plan-name-input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+}
+
+.top-section /deep/ #start-date-picker.ng-invalid .ui-inputtext{
+    border: 1px solid red !important;
+}
+
+.top-section /deep/ #start-date-picker.ng-invalid.ng-touched .ui-inputtext ,
+.top-section /deep/ #end-date-picker.ng-invalid.ng-touched .ui-inputtext {
+    border: 1px solid red !important;
 }
 
 .frame {
@@ -34,11 +43,12 @@
     .top-section #start-date-picker /deep/ .ui-inputtext {
         width: 90px !important;
     }
+    
 
     .top-section #end-date-picker /deep/ .ui-inputtext {
         width: 90px !important;
     }
-
+    
 
 .rules-section {
     width: 100%;

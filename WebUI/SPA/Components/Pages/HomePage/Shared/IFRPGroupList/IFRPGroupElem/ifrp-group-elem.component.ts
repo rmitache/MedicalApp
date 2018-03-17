@@ -23,8 +23,8 @@ export class IFRPGroupElemComponent {
     @Input('MedicineTypeSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     private isValid: boolean = false;
-    @ViewChild('autocomplete') readonly autoCompleteComponentInstance: AutoComplete;
-
+    @ViewChild('autocomplete')
+    readonly autoCompleteComponentInstance: AutoComplete;
     private reactiveForm: FormGroup;
     
     private readonly unitDoseTypesEnum = Enums.UnitDoseType;
