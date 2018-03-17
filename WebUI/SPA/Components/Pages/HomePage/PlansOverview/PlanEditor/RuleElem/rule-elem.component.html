@@ -52,12 +52,12 @@
                 <p-chips id="moments-in-day-input"
                          name="momentsinday"
                         
-                         [styleClass]="viewModel.ShowChipsInputInvalid ? 'chips-input' : ''"
+                         [styleClass]="viewModel.ShowChipsInputInvalid ? 'chips-input-invalid' : ''"
                          addOnTab="true"
                          addOnBlur="true"
                          placeholder="Type in format HH:MM"
-                         (onAdd)="onAddMomentInDay($event.value)"
-                         (onRemove)="onRemoveMomentInDay($event.value)"
+                         (onAdd)="onAddMomentInDayChip($event.value)"
+                         (onRemove)="onRemoveMomentInDayChip($event.value)"
                          [(ngModel)]="viewModel.MomentsInDayAsStrings"></p-chips>
             </div>
         </div>

@@ -48,8 +48,16 @@ export class RuleElemComponent {
 
     // Private methods
     private refreshIsValid() {
-        //this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid && this.viewModel.MomentsInDayAsStrings.length > 0;
+        // Special hack for custom validation for chipsInput
         this.viewModel.ShowChipsInputInvalid = this.viewModel.MomentsInDayAsStrings.length < 1;
+
+        //
+        let prevIsValid = this.isValid;
+        this.isValid = !this.viewModel.ShowChipsInputInvalid && this.groupList.GetValidState();
+
+        if (prevIsValid !== this.isValid) {
+            this.ValidStateChanged.emit();
+        }
     }
 
     // Constructor 
@@ -88,7 +96,6 @@ export class RuleElemComponent {
     // EventHandlers
     private onGroupListValidStateChanged() {
         this.refreshIsValid();
-        this.ValidStateChanged.emit();
     }
     private onAddIFRPGroupTriggered() {
         this.viewModel.RuleCLO.MedicineRuleItems.push(this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineRuleItemCLO));
@@ -96,22 +103,24 @@ export class RuleElemComponent {
     private onRemoveClicked() {
         this.RemoveClicked.emit(this.ruleCLO);
     }
-    private onAddMomentInDay(value: string) {
+    private onAddMomentInDayChip(value: string) {
         let time = Time.ParseString(value);
-
 
         if (time !== null) {
             this.viewModel.RuleCLO.MomentsInDay.push(time);
         } else {
             this.viewModel.MomentsInDayAsStrings.pop();
         }
+        this.refreshIsValid();
     }
-    private onRemoveMomentInDay(value: string) {
+    private onRemoveMomentInDayChip(value: string) {
         var index = this.viewModel.RuleCLO.MomentsInDay.findIndex(item => item.ToString() === value);
         if (index === -1) {
             throw new Error('cannot find Time in MomentsInDay with value =' + value);
         }
         this.viewModel.RuleCLO.MomentsInDay.splice(index, 1);
+
+        this.refreshIsValid();
     }
 
 

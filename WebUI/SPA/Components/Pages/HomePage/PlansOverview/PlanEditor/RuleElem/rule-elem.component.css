@@ -1,4 +1,4 @@
-/deep/ .chips-input {
+.moments-in-day-div /deep/ .ng-touched .chips-input-invalid {
     border: solid 1px red !important;
 }
 
