@@ -119,7 +119,7 @@ export class ScheduleComponent {
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
                         let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                        return !addNewEventComponentInstance.IsValid;
+                        return !addNewEventComponentInstance.GetValidState();
                     },
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {

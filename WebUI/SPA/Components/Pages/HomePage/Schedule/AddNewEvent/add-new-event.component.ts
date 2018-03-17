@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, QueryList } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, ApplicationRef } from '@angular/core';
 import * as moment from 'moment';
 
 // Project modules
@@ -24,8 +24,7 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 })
 export class AddNewEventComponent implements IModalDialog {
     // Fields
-    @Output()
-    public IsValid: boolean;
+    private isValid: boolean;
     private searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.ToArray().find(clo => {
@@ -48,7 +47,7 @@ export class AddNewEventComponent implements IModalDialog {
 
     // Private methods
     private refreshIsValid() {
-        this.IsValid = this.ifrpGroupList.IsValid;
+        this.isValid = this.ifrpGroupList.GetValidState();
     }
 
     // Constructor 
@@ -73,9 +72,12 @@ export class AddNewEventComponent implements IModalDialog {
         let saveDataPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
         return saveDataPromise;
     }
+    public GetValidState() {
+        return this.isValid;
+    }
 
     // EventHandlers
-    private onChildGroupListChanged() {
+    private onGroupListValidStateChanged() {
         this.refreshIsValid();
     }
     private onAddFactorRecordTriggered() {

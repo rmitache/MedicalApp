@@ -29,10 +29,12 @@ export class RuleElemComponent {
     @Input('MedicineSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
-    @Output()
-    public IsValid: boolean;
+    //@Output()
+    private isValid: boolean;
+
     @ViewChild(NgForm)
     private form;
+
     @ViewChild('ifrpgrouplist')
     private groupList: IFRPGroupListComponent;
     private readonly ordinalFreqTypesEnum = Enums.OrdinalFrequencyType;
@@ -46,7 +48,7 @@ export class RuleElemComponent {
 
     // Private methods
     private refreshIsValid() {
-        this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid && this.viewModel.MomentsInDayAsStrings.length > 0;
+        //this.IsValid = /*(this.form.valid === true) && */this.groupList.IsValid && this.viewModel.MomentsInDayAsStrings.length > 0;
         this.viewModel.ShowChipsInputInvalid = this.viewModel.MomentsInDayAsStrings.length < 1;
     }
 
@@ -74,13 +76,17 @@ export class RuleElemComponent {
 
     }
 
+    // Public methods
+    public GetValidState() {
+        return this.isValid;
+    }
+
     // Events 
     @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
 
-
     // EventHandlers
-    private onChildGroupListChanged() {
+    private onGroupListValidStateChanged() {
         this.refreshIsValid();
         this.ValidStateChanged.emit();
     }

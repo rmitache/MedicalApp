@@ -38,7 +38,7 @@
             <br />
             <div class="rules-list">
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
-                           (ValidStateChanged)="onChildGroupElemChanged()"
+                           (ValidStateChanged)="onChildRuleElemValidStateChanged()"
                            (RemoveClicked)="onRemoveRuleTriggered($event)"
                            [RuleCLO]="rule">
                 </rule-elem>

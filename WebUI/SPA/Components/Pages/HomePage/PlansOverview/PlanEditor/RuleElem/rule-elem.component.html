@@ -65,7 +65,7 @@
             <ifrp-group-list #ifrpgrouplist
                              [IFRPGroupCLOs]="viewModel.RuleCLO.MedicineRuleItems"
                              [AvailableMedicineTypes]="availableMedicineTypes"
-                             (ValidStateChanged)="onChildGroupListChanged()"
+                             (ValidStateChanged)="onGroupListValidStateChanged()"
                              (AddNewClicked)="onAddIFRPGroupTriggered()"></ifrp-group-list>
         </div>
 

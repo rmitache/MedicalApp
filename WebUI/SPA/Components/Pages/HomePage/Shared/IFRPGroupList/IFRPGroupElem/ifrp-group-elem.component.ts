@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AutoComplete } from 'primeng/primeng';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,8 +22,7 @@ export class IFRPGroupElemComponent {
     private readonly iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
     @Input('MedicineTypeSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
-    @Output()
-    public IsValid: boolean = false;
+    private isValid: boolean = false;
     @ViewChild('autocomplete') readonly autoCompleteComponentInstance: AutoComplete;
 
     private reactiveForm: FormGroup;
@@ -67,11 +66,20 @@ export class IFRPGroupElemComponent {
             this.viewModel.UserDefinedControlsAreLocked = false;
         }
     }
+    private refreshIsValid() {
+        let prevIsValid = this.isValid;
+        this.isValid = this.reactiveForm.valid;
+
+        if (prevIsValid !== this.isValid) {
+            this.ValidStateChanged.emit();
+        }
+    }
 
     // Constructor 
     constructor(
         private fb: FormBuilder,
-        private readonly cdRef: ChangeDetectorRef
+        private readonly cdRef: ChangeDetectorRef,
+        
     ) {
         this.reactiveForm = this.fb.group({
             medicineTypeName: ['',
@@ -98,11 +106,9 @@ export class IFRPGroupElemComponent {
         this.reactiveForm
             .statusChanges
             .subscribe((newStatus) => {
-                this.IsValid = (this.reactiveForm.valid === true);
-                this.ValidStateChanged.emit();
+                this.refreshIsValid();
                 
             });
-
         
         //
         if (this.iFRPGroupCLO.MedicineType !== null) {
@@ -110,8 +116,11 @@ export class IFRPGroupElemComponent {
             this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnitDoses() === true);
             this.viewModel.OverlayIsVisible = false;
         }
+    }
 
-
+    // Public methods
+    public GetValidState() {
+        return this.isValid;
     }
 
     // Events 
@@ -132,7 +141,7 @@ export class IFRPGroupElemComponent {
         this.loadMedicineTypeByName(value);
         setTimeout(() => {
             this.viewModel.OverlayIsVisible = false;
-        }, 100);
+        }, 1);
 
     }
 }

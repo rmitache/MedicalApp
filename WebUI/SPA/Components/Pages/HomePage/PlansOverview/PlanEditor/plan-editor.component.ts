@@ -52,7 +52,7 @@ export class PlanEditorComponent implements IModalDialog {
         for (var i = 0; i < this.ruleElems.toArray().length; i++) {
             let elem = this.ruleElems.toArray()[i];
 
-            if (!elem.IsValid) {
+            if (!elem.GetValidState()) {
                 allChildElemsAreValid = false;
                 break;
             }
@@ -128,7 +128,7 @@ export class PlanEditorComponent implements IModalDialog {
     }
 
     // EventHandlers
-    private onChildGroupElemChanged() {
+    private onChildRuleElemValidStateChanged() {
         this.refreshIsValid();
     }
     private onAddNewRuleTriggered() {

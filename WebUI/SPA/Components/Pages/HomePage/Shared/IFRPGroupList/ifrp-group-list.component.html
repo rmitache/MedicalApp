@@ -8,7 +8,7 @@
             <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.IFRPGroupCLOs"
                              [IFRPGroupCLO]="clo"
                              [MedicineTypeSearchService]="searchService"
-                             (ValidStateChanged)="onChildGroupElemChanged()"
+                             (ValidStateChanged)="onChildGroupElemValidStateChanged()"
                              (RemoveClicked)="onRemoveIFRPGroupTriggered($event)"></ifrp-group-elem>
         </div>
     </div>

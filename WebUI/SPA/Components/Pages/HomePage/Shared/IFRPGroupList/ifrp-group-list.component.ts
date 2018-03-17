@@ -1,6 +1,7 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ApplicationRef  } from '@angular/core';
 import * as moment from 'moment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -40,8 +41,10 @@ export class IFRPGroupListComponent {
             });
         }
     };
-    @Output()
-    public IsValid: boolean = false;
+    
+    private isValid: boolean = false;
+
+
     @ViewChildren('IFRPGroupElems')
     private iFRPGroupElems: QueryList<IFRPGroupElemComponent>;
     private readonly viewModel: ViewModel = {
@@ -50,15 +53,17 @@ export class IFRPGroupListComponent {
 
     // Private methods
     private checkChildrenAreValid(): boolean {
+
         let allChildElemsAreValid = true;
         if (!this.iFRPGroupElems) {
             return false;
         }
 
         for (var i = 0; i < this.iFRPGroupElems.toArray().length; i++) {
+            
             let elem = this.iFRPGroupElems.toArray()[i];
 
-            if (!elem.IsValid) {
+            if (!elem.GetValidState()) {
                 allChildElemsAreValid = false;
                 break;
             }
@@ -70,13 +75,28 @@ export class IFRPGroupListComponent {
 
         return allChildElemsAreValid;
     }
+    private refreshIsValid() {
+        let prevIsValid = this.isValid;
+        this.isValid = this.checkChildrenAreValid();
+
+        if (prevIsValid !== this.isValid) {
+            this.ValidStateChanged.emit();
+        }
+    }
+
     // Constructor 
     constructor(
-    ) { }
+    ) {
+        
+    }
     ngOnInit() {
         this.viewModel.IFRPGroupCLOs = this.iFRPGroupCLOs;
     }
 
+    // Public methods
+    public GetValidState() {
+        return this.isValid;
+    }
 
     // Events 
     @Output() public AddNewClicked: EventEmitter<any> = new EventEmitter();
@@ -84,12 +104,17 @@ export class IFRPGroupListComponent {
 
 
     // EventHandlers
-    private onChildGroupElemChanged() {
-        this.IsValid = this.checkChildrenAreValid();
-        this.ValidStateChanged.emit();
+    private onChildGroupElemValidStateChanged() {
+        this.refreshIsValid();
     }
     private onAddNewIFRPGroupTriggered() {
+        
         this.AddNewClicked.emit();
+
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
+        
     }
     private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup) {
 
@@ -99,7 +124,7 @@ export class IFRPGroupListComponent {
             this.viewModel.IFRPGroupCLOs.splice(index, 1);
         }
 
-        this.IsValid = this.checkChildrenAreValid();
+        this.isValid = this.checkChildrenAreValid();
         this.ValidStateChanged.emit();
     }
 }

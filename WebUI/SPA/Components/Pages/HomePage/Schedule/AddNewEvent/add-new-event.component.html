@@ -3,7 +3,7 @@
         <span class="h2">WHEN</span>
         <br />
         <div class="label-input-pair">
-            <span class="label">Date and Time:</span>
+            <span class="label">Event date and time:</span>
             <p-calendar id="occurrence-date-time-picker"
                         dateFormat="dd-mm-yy"
                         showIcon="true"
@@ -17,7 +17,7 @@
         <ifrp-group-list #ifrpgrouplist 
                          [IFRPGroupCLOs]="viewModel.FactorRecordCLOs"
                          [AvailableMedicineTypes]="availableMedicineTypes"
-                         (ValidStateChanged)="onChildGroupListChanged()"
+                         (ValidStateChanged)="onGroupListValidStateChanged()"
                          (AddNewClicked)="onAddFactorRecordTriggered()"
                          ></ifrp-group-list>
     </div>
