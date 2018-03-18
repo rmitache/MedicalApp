@@ -1,7 +1,7 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Calendar } from 'primeng/primeng';
 
 // Project modules
@@ -87,24 +87,7 @@ export class PlanEditorComponent implements IModalDialog {
                         Validators.required
                     ])],
                 endDate: null
-            }, {
-                    // StartDate <= EndDate validation
-                    validator: (group: FormGroup) => {
-
-                        var startDateInput = group.controls['startDate'];
-                        var endDateInput = group.controls['endDate'];
-
-                        if ((endDateInput.value !== '' && endDateInput.value !== null) &&
-                            (moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
-
-                            startDateInput.setErrors({ incorrect: true });
-                            endDateInput.setErrors({ incorrect: true });
-                        } else {
-                            startDateInput.setErrors(null);
-                            endDateInput.setErrors(null);
-                        }
-                    }
-                }),
+            }, { validator: basicPlanDatesValidator }),
 
         });
 
@@ -114,7 +97,8 @@ export class PlanEditorComponent implements IModalDialog {
             this.reactiveForm,
             this.dialogInitParameters.planCLO,
             this.viewModel,
-            this.globalDataService
+            this.globalDataService,
+            this.genericCLOFactory
         ) as IPlanEditorModeImplementation;
 
         // Subscriptions
@@ -200,5 +184,85 @@ class CreateNewMode implements IPlanEditorModeImplementation {
         return saveDataPromise;
     }
 }
+class AdjustMode implements IPlanEditorModeImplementation {
+
+    // Fields
+    private prevVersion: CLOs.VersionCLO = null;
+
+    // Constructor
+    constructor(
+        private reactiveForm: FormGroup,
+        private planCLO: CLOs.PlanCLO,
+        private vm: ViewModel,
+        private globalDataService: GlobalDataService,
+        private genericCLOFactory: GenericCLOFactory) {
+
+        // Create a new version for the planCLO
+        this.prevVersion = planCLO.GetLatestVersion();
+        let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
+        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
+        planCLO.Versions.push(newVersion);
+
+        // If prevVersion starts in the future - throw exception -> this should have different logic as in HardEdit instead of creating a new version
+        if (moment(this.prevVersion.StartDate).startOf('day') > moment().startOf('day')) {
+            throw new Error('Adjusting a plan whose last version starts in the future is not yet supported!');
+        }
+
+        // Custom form logic 
+        this.reactiveForm.get('planName').disable();
+        this.reactiveForm.get('dates').setValidators([basicPlanDatesValidator, (group: FormGroup) => {
+
+            var startDateInput = group.controls['startDate'];
+            var endDateInput = group.controls['endDate'];
+
+            // newVersion.StartDate must be > prevVersion.StartDate
+            if ((moment(startDateInput.value).startOf('day') <= moment(this.prevVersion.StartDate).startOf('day'))) {
+                startDateInput.setErrors({ incorrect: true });
+            }
+            else {
+                startDateInput.setErrors(null);
+            }
+
+            return null;
+        }]);
+
+        // Prepare ViewModel 
+        this.vm.PlanCLO = planCLO;
+        this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.StartDateLabel = 'Taking effect from:';
+        this.vm.EndDateLabel = 'New end date will be:';
+    }
+
+    // Public methods
+    public SaveData() {
+
+        // Automatically end the next last version before starting the new one
+        this.prevVersion.EndDate = moment(this.vm.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate();
+
+        // Save the data
+        let saveDataPromise = this.globalDataService.AdjustPlan(this.vm.PlanCLO);
+        return saveDataPromise;
+    }
+}
 var modeImplementationsLookup = {};
 modeImplementationsLookup[PlanEditorMode.CreateNew] = CreateNewMode;
+modeImplementationsLookup[PlanEditorMode.Adjust] = AdjustMode;
+
+// Custom validators
+function basicPlanDatesValidator(group: FormGroup) {
+
+    var startDateInput = group.controls['startDate'];
+    var endDateInput = group.controls['endDate'];
+
+    if ((endDateInput.value !== '' && endDateInput.value !== null) &&
+        (moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
+
+        startDateInput.setErrors({ incorrect: true });
+        endDateInput.setErrors({ incorrect: true });
+    } else {
+        startDateInput.setErrors(null);
+        endDateInput.setErrors(null);
+    }
+
+    return null;
+}

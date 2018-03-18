@@ -128,7 +128,8 @@ export class PlansOverviewComponent {
         this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
     }
     private onAdjustPlanTriggered(planCLO: CLOs.PlanCLO) {
-        this.openPlanEditor('Adjust Plan', 'Save changes', planCLO, PlanEditorMode.Adjust);
+        let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
+        this.openPlanEditor('Adjust Plan', 'Save changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
     }
 
 }

@@ -1,5 +1,4 @@
 <form [formGroup]="reactiveForm">
-
     <div class="frame">
         <div class="draggable-area"></div>
         <div class="right-side">
@@ -52,17 +51,17 @@
 
             <div class="label-input-pair dose-uom-input-pair">
                 <span class="label"></span>
-                <select class="drop-down" 
-                        formControlName="unitdoseuom" 
+                <select class="drop-down"
+                        formControlName="unitdoseuom"
                         [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseUoM" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null">
                     <option *ngFor="let uom of unitsOfMeasureEnum | enumkeys" [value]="uom.value">{{uom.key}}</option>
                 </select>
             </div>
-            
+
             <div class="label-input-pair instructions-input-pair">
                 <span class="label">Instructions</span>
-                <select class="drop-down" 
-                        formControlName="instruction" 
+                <select class="drop-down"
+                        formControlName="instruction"
                         [(ngModel)]="viewModel.IFRPGroupCLO.Instruction">
                     <option *ngFor="let instruction of medicineInstructionsEnum | enumkeys" [value]="instruction.value">{{instruction.key}}</option>
                 </select>

@@ -29,8 +29,8 @@ export class RuleElemComponent {
     @Input('MedicineSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
-    //@Output()
-    private isValid: boolean;
+    
+    private isValid: boolean = false;
 
     @ViewChild(NgForm)
     private form;
@@ -57,6 +57,7 @@ export class RuleElemComponent {
 
         if (prevIsValid !== this.isValid) {
             this.ValidStateChanged.emit();
+            
         }
     }
 
@@ -80,9 +81,7 @@ export class RuleElemComponent {
                 this.viewModel.HideNonDailyControlsDiv = (this.viewModel.RuleCLO.FrequencyType == Enums.RuleFrequencyType.Day);
             });
     }
-    ngAfterViewInit() {
-
-    }
+    
 
     // Public methods
     public GetValidState() {

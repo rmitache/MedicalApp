@@ -41,10 +41,7 @@ export class IFRPGroupListComponent {
             });
         }
     };
-    
     private isValid: boolean = false;
-
-
     @ViewChildren('IFRPGroupElems')
     private iFRPGroupElems: QueryList<IFRPGroupElemComponent>;
     private readonly viewModel: ViewModel = {
@@ -91,6 +88,10 @@ export class IFRPGroupListComponent {
     }
     ngOnInit() {
         this.viewModel.IFRPGroupCLOs = this.iFRPGroupCLOs;
+
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
     }
 
     // Public methods
