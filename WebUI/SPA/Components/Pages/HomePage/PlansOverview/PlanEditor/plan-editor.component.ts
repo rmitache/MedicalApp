@@ -154,7 +154,8 @@ interface ViewModel {
 // PlanMode logic and classes
 export enum PlanEditorMode {
     CreateNew,
-    Adjust
+    Adjust,
+    HardEdit
 }
 interface IPlanEditorModeImplementation {
     SaveData(): Promise<CLOs.PlanCLO>;

@@ -24,7 +24,7 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 })
 export class ScheduleComponent {
     // Fields
-    private availableDataWindowSizeInDays = 10;
+    private availableDataWindowSizeInDays = 50;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableFactorRecords: null,

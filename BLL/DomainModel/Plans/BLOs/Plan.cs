@@ -11,8 +11,6 @@ namespace BLL.DomainModel.Plans.BLOs
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }
         public PlanStatus Status { get; set; }
-        public bool HasStarted { get; set; }
-        public bool HasEnded { get; set; }
         public List<Version> Versions { get; set; }
 
         // Constructor

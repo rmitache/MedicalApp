@@ -2,8 +2,8 @@
 {
     public enum PlanStatus
     {
-        Active,
-        Upcoming,
-        Archived
+        Active = 0,
+        Inactive = 1,
+        Upcoming = 2
     }
 }

@@ -14,13 +14,14 @@ export class PlanCLO extends BaseCLO {
 
     // Should be getters only
     public get Status(): Enums.PlanStatus {
-        
+
         if (this.HasStarted && !this.HasEnded) {
-            
             return Enums.PlanStatus.Active;
         }
-        else {
+        else if (this.HasStarted && this.HasEnded) {
             return Enums.PlanStatus.Inactive;
+        } else {
+            return Enums.PlanStatus.Upcoming;
         }
 
     }
@@ -33,11 +34,11 @@ export class PlanCLO extends BaseCLO {
         }
     }
     public get HasEnded(): boolean {
-        
+
         if (this.GetLatestVersion().EndDate === null) {
             return false;
         }
-        
+
 
         if (this.GetLatestVersion().EndDate.getTime() < new Date().getTime()) {
             return true;
