@@ -114,17 +114,6 @@ export class DaysInWeek {
             this.Sunday = array[6];
         }
     }
-    public Clone(): DaysInWeek {
-        return new DaysInWeek([
-            this.Monday,
-            this.Tuesday,
-            this.Wednesday,
-            this.Thursday,
-            this.Friday,
-            this.Saturday,
-            this.Sunday
-        ]);
-    }
     public static FromJSON(blo: any): DaysInWeek {
         let newObj = new DaysInWeek();
         newObj.Monday = blo['Monday'];
@@ -136,6 +125,28 @@ export class DaysInWeek {
         newObj.Sunday = blo['Sunday'];
 
         return newObj;
+    }
+
+    // Public methods
+    public Clone(): DaysInWeek {
+        return new DaysInWeek([
+            this.Monday,
+            this.Tuesday,
+            this.Wednesday,
+            this.Thursday,
+            this.Friday,
+            this.Saturday,
+            this.Sunday
+        ]);
+    }
+    public ResetAllDaysToTrue() {
+        this.Monday = true;
+        this.Tuesday = true;
+        this.Wednesday = true;
+        this.Thursday = true;
+        this.Friday = true;
+        this.Saturday = true;
+        this.Sunday = true;
     }
 }
 

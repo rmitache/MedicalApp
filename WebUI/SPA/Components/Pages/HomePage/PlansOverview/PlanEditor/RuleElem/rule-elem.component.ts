@@ -78,7 +78,11 @@ export class RuleElemComponent {
             valueChanges.
             subscribe(() => {
                 this.refreshIsValid();
+                let previousRuleFreqType = this.viewModel.RuleCLO.FrequencyType;
                 this.viewModel.HideNonDailyControlsDiv = (this.viewModel.RuleCLO.FrequencyType == Enums.RuleFrequencyType.Day);
+                if (this.viewModel.HideNonDailyControlsDiv ) {
+                    this.viewModel.RuleCLO.DaysInWeek.ResetAllDaysToTrue();
+                }
             });
     }
     
