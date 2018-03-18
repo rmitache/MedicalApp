@@ -64,7 +64,7 @@ namespace WebUI.Controllers
 
             };
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
-            var shallowPlans = planService.GetPlans(1, true);
+            var plans = planService.GetPlans(1, true);
             var initialScheduleRange = new Range<DateTime>(
                     DateTime.Today.Subtract(new TimeSpan(25, 0, 0, 0)),
                     DateTime.Today.Add(new TimeSpan(25, 23, 59, 59))
@@ -78,7 +78,7 @@ namespace WebUI.Controllers
             {
                 LoggedInUser = loggedInUserJSON,
                 MedicineTypes = medicineTypes,
-                Plans = shallowPlans,
+                Plans = plans,
                 FactorRecordsForInitialRange = factorRecords,
 
             };

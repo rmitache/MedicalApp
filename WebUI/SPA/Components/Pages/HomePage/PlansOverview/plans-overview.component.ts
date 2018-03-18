@@ -25,19 +25,19 @@ import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.co
 })
 export class PlansOverviewComponent {
     // Fields
+    private readonly planStatusesEnum = Enums.PlanStatus;
+    private readonly subscriptions: Subscription[] = [];
+    private readonly appState: IReadOnlyApplicationState;
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
         GetFilteredPlans: () => {
             return this.viewModel.AvailablePlans.filter(plan => {
-                return plan.Status as number == this.viewModel.SelectedViewMode as number;
+                return plan.Status as number == this.viewModel.SelectedViewPlanStatus as number;
             });
         },
-        SelectedViewMode: PlansOverviewDisplayMode.Active,
+        SelectedViewPlanStatus: Enums.PlanStatus.Active,
         Blocked: false
     };
-    private readonly planStatusesEnum = Enums.PlanStatus;
-    private readonly subscriptions: Subscription[] = [];
-    private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
     private openPlanEditor(title: string, saveButtonText:string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
@@ -116,7 +116,7 @@ export class PlansOverviewComponent {
     }
     ngOnInit() {
         // Init ViewModel properties
-        this.viewModel.AvailablePlans = this.dataService.GetShallowPlansFromBundle().ToArray();
+        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -127,20 +127,27 @@ export class PlansOverviewComponent {
         let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
         this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
     }
-    private onAdjustPlanTriggered(planCLO: CLOs.PlanCLO) {
-        let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
-        this.openPlanEditor('Adjust Plan', 'Save changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
+    private onPlanActionTriggered(arr: any[]) {
+        let planCLO: CLOs.PlanCLO = arr[0];
+        let actionTypeID: PlanActionType = arr[1];
+
+
+        if (actionTypeID == PlanActionType.Adjust) {
+            let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
+            this.openPlanEditor('Adjust Plan', 'Save changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
+        }
     }
 
 }
 interface ViewModel {
     AvailablePlans: CLOs.PlanCLO[];
     GetFilteredPlans();
-    SelectedViewMode: PlansOverviewDisplayMode;
+    SelectedViewPlanStatus: Enums.PlanStatus;
     Blocked: boolean;
 }
-enum PlansOverviewDisplayMode {
-    Active = 0,
-    Inactive = 1
-}
 
+export enum PlanActionType {
+    CreateNew,
+    Adjust,
+    HardEdit
+}

@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { MenuItem } from 'primeng/primeng';
+import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
 
 @Component({
     selector: 'plan-elem',
@@ -59,12 +60,12 @@ export class PlanElemComponent {
     }
 
     // Events
-    @Output() public AdjustClicked: EventEmitter<any> = new EventEmitter();
+    @Output() public ActionTriggered: EventEmitter<any> = new EventEmitter();
 
 
     // Event handlers
     private onAdjustPlanTriggered() {
-        this.AdjustClicked.emit(this.planCLO);
+        this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
     }
 
 }

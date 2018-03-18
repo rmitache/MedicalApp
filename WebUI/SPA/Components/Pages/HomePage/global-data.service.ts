@@ -33,7 +33,7 @@ export class GlobalDataService {
 
         return cloList;
     }
-    public GetShallowPlansFromBundle(): DataStructures.List<CLOs.PlanCLO> {
+    public GetPlansFromBundle(): DataStructures.List<CLOs.PlanCLO> {
 
         let blos = this.startupDataBundleService.GetBundle['Plans'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos);
