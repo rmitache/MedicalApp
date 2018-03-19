@@ -16,16 +16,28 @@ export class PlanElemComponent {
     @Input('PlanCLO')
     private readonly planCLO: CLOs.PlanCLO;
     private readonly planStatusesEnum = Enums.PlanStatus;
-    private menuItems: MenuItem[] = [
-        {
-            label: 'Adjust',
-            command: (event) => {
-                this.onAdjustPlanTriggered();
+    private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
+        Active: [
+            {
+                label: 'Adjust',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
+                }
             }
-        }
-    ];
+        ],
+        Inactive: [],
+        Upcoming: []
+    };
+    
+
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
+
+        GetMenuItems: () => {
+            let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
+            return this.menuItemsToPlanStatusMap[planStatusName];
+        },
+
         StatusString: null,
         StartDatePrefixString: null,
         RelativeStartDateString: null,
@@ -61,20 +73,18 @@ export class PlanElemComponent {
 
     // Events
     @Output() public ActionTriggered: EventEmitter<any> = new EventEmitter();
-
-
-    // Event handlers
-    private onAdjustPlanTriggered() {
-        this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
-    }
-
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
+
+    GetMenuItems(): MenuItem[];
+
     StatusString: string;
     StartDatePrefixString: string;
     RelativeStartDateString: string;
     EndDatePrefixString: string;
     RelativeEndDateString: string;
 }
-
+interface MenuItemsToPLanStatusMap {
+    [planStatusName: string]: MenuItem[];
+}
