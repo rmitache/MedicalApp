@@ -5,7 +5,7 @@
     font-family: Arial;
 }
 
- /deep/ .ui-autocomplete .ui-button {
+/deep/ .ui-autocomplete .ui-button {
     float: right;
     margin-top: -26px;
     height: 25px;
@@ -16,7 +16,7 @@
 }
 
 input.ng-invalid.ng-touched {
-    border: 1px solid red!important;
+    border: 1px solid red !important;
 }
 
 .frame {
@@ -82,17 +82,10 @@ input.ng-invalid.ng-touched {
         font-size: 10pt;
     }
 
-    .right-side .dose-type-input-pair .ui-inputtext {
-        width: 50px;
-    }
+
 
     .right-side .dose-size-input-pair .ui-inputtext {
-        width: 20px;
-        text-align: right;
-    }
-
-    .right-side .dose-size-input-pair .ui-inputtext {
-        width: 40px;
+        width: 80px;
         text-align: right;
     }
 
@@ -103,10 +96,11 @@ input.ng-invalid.ng-touched {
 
 
     .right-side .instructions-input-pair {
-        margin-left:80px;
+        margin-left: 60px;
     }
-    .right-side .instructions-input-pair .drop-down {
-    }
+
+        .right-side .instructions-input-pair .drop-down {
+        }
 
     .right-side .close {
         float: right;
