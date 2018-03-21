@@ -16,7 +16,7 @@
         width: calc(100%);
         margin-top: 15px;
         height: calc(100% - 15px);
-        overflow-y: scroll;
+        box-sizing:padding-box;
     }
 
     .what-section #add-new-button {

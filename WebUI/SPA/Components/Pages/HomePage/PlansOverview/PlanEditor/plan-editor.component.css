@@ -16,7 +16,15 @@
     height: 650px;
 }
 
+.info-msg {
+    padding: 10px;
+    background-color: #f1f7f8;
+    border-radius: 2px;
+    color: #6b6f70;
+}
+
 .top-section {
+    padding-top: 20px;
     width: 100%;
     height: 70px;
 }
@@ -52,7 +60,7 @@
 
 .rules-section {
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 110px);
 }
 
     .rules-section .h2 {
@@ -60,7 +68,7 @@
     }
 
     .rules-section .rules-list {
-        width: calc(100% - 20px);
+        width: calc(100% );
         height: calc(100% - 40px);
         margin-top:15px;
         overflow-y:auto;

@@ -38,6 +38,8 @@ export class PlanEditorComponent implements IModalDialog {
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         CurrentVersionCLO: null,
+
+        InfoMessage:null,
         StartDateLabel: null,
         EndDateLabel: null
     };
@@ -147,6 +149,8 @@ export class PlanEditorComponent implements IModalDialog {
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
     CurrentVersionCLO: CLOs.VersionCLO;
+
+    InfoMessage: string;
     StartDateLabel: string;
     EndDateLabel: string;
 }
@@ -169,12 +173,10 @@ class CreateNewMode implements IPlanEditorModeImplementation {
         private vm: ViewModel,
         private globalDataService: GlobalDataService) {
 
-        // Custom form logic 
-        //this.reactiveForm.get();
-
         // Prepare ViewModel 
         this.vm.PlanCLO = planCLO;
         this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.InfoMessage = 'This will create a new Plan from scratch, with a first Version which you will edit.';
         this.vm.StartDateLabel = 'Start date:';
         this.vm.EndDateLabel = 'End date:';
     }
