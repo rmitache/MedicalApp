@@ -25,8 +25,24 @@ export class PlanElemComponent {
                 }
             }
         ],
+        ActiveWithUpcomingAdjustment: [],
         Inactive: [],
-        Upcoming: []
+        UpcomingAsNew: [
+            {
+                label: 'Hard modify',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+                }
+            }
+        ],
+        UpcomingAsRestarted: [
+            {
+                label: 'Hard modify',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+                }
+            }
+        ]
     };
 
 
@@ -81,7 +97,7 @@ export class PlanElemComponent {
             // Upcoming
             case Enums.PlanStatus.UpcomingAsNew:
             case Enums.PlanStatus.UpcomingAsRestarted:
-                this.viewModel.StartDatePrefixString = 'Starts in:';
+                this.viewModel.StartDatePrefixString = 'Starts:';
                 this.viewModel.RelativeStartDateString = moment(latestVersion.StartDate).fromNow().toString();
 
                 if (this.planCLO.GetLatestVersion().EndDate !== null) {

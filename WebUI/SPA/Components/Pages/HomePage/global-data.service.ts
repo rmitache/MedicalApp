@@ -89,8 +89,8 @@ export class GlobalDataService {
 
         return postDataPromise;
     }
-    public AdjustPlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
-        const apiMethodName: string = 'AdjustPlan';
+    public UpdatePlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
+        const apiMethodName: string = 'UpdatePlan';
         
         let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)

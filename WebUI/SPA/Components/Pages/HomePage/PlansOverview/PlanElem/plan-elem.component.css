@@ -1,20 +1,24 @@
-/deep/ .ui-menu {
-    width: 150px;
+.top-part /deep/ .ui-menu {
+    width: 120px;
 }
-
-/deep/ .ui-splitbutton {
+.top-part /deep/ .ui-menu .ui-menuitem-link {
+    font-family:Arial;
+    font-size:11px;
+    font-weight:bold;
+}
+.top-part /deep/ .ui-splitbutton {
     float: right;
 }
 
-    /deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
+    .top-part /deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
         display: none;
     }
 
-    /deep/ .ui-splitbutton .ui-button-text-only {
+    .top-part /deep/ .ui-splitbutton .ui-button-text-only {
         visibility: hidden;
     }
 
-/deep/ .ui-splitbutton-menubutton {
+.top-part /deep/ .ui-splitbutton-menubutton {
     border-radius: 4px;
 }
 

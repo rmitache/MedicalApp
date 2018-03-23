@@ -41,7 +41,7 @@ export class PlansOverviewComponent {
                     return plan.Status as number === Enums.PlanStatus.Active || plan.Status as number === Enums.PlanStatus.ActiveWithUpcomingAdjustment;
                 }
                 if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Inactive) {
-                    return plan.Status as number === Enums.PlanStatus.Inactive ;
+                    return plan.Status as number === Enums.PlanStatus.Inactive;
                 }
                 if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Upcoming) {
                     return plan.Status as number === Enums.PlanStatus.UpcomingAsNew || plan.Status as number === Enums.PlanStatus.UpcomingAsRestarted;
@@ -55,7 +55,7 @@ export class PlansOverviewComponent {
     };
 
     // Private methods
-    private openPlanEditor(title: string, saveButtonText:string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
+    private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
         this.modalDialogService.openDialog(this.viewContainerRef, {
             title: title,
             childComponent: PlanEditorComponent,
@@ -77,7 +77,7 @@ export class PlansOverviewComponent {
                             let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
                             planEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
-                                    
+
                                     this.reloadPlansFromServer();
                                     this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 
@@ -145,11 +145,16 @@ export class PlansOverviewComponent {
     private onPlanActionTriggered(arr: any[]) {
         let planCLO: CLOs.PlanCLO = arr[0];
         let actionTypeID: PlanActionType = arr[1];
+        let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
 
-
-        if (actionTypeID == PlanActionType.Adjust) {
-            let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
-            this.openPlanEditor('Adjust Plan', 'Save changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
+        if (actionTypeID === PlanActionType.Adjust) {
+            // Adjust
+            this.openPlanEditor('Adjust Plan', 'Confirm adjustment', cloneOfPlanCLO, PlanEditorMode.Adjust);
+        } else if (actionTypeID === PlanActionType.HardEdit) {
+            // HardEdit
+            this.openPlanEditor('Hard modify version', 'Save changes', cloneOfPlanCLO, PlanEditorMode.HardEdit);
+        } else {
+            throw new Error('Action not recognized');
         }
     }
 

@@ -111,14 +111,16 @@ namespace WebUI.Controllers
             var planWithUpdatedID = this.planService.AddPlan(plan, userID);
             return Json(planWithUpdatedID);
         }
-        [Route("HomePage/AdjustPlan")]
+
+        [Route("HomePage/UpdatePlan")]
         [HttpPost]
-        public JsonResult AdjustPlan([FromBody]Plan plan)
+        public JsonResult UpdatePlan([FromBody]Plan plan)
         {
             int userID = 1;
-            var adjustedPlanWithUpdatedIDs = this.planService.AdjustPlan(plan, userID);
-            return Json(adjustedPlanWithUpdatedIDs);
+            var adjustedPlanWithUpdatedVersionIDs = this.planService.UpdatePlan(plan, userID);
+            return Json(adjustedPlanWithUpdatedVersionIDs);
         }
+
         [Route("HomePage/GetPlans")]
         [HttpGet]
         public JsonResult GetPlans()

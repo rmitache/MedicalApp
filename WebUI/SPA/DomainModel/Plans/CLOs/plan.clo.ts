@@ -17,7 +17,7 @@ export class PlanCLO extends BaseCLO {
 
         // Variables
         let latestVersion = this.GetLatestVersion();
-        let prevVersion = (this.Versions.length > 1) ? this.Versions[this.Versions.length - 2] : null;
+        let prevVersion = this.GetPreviousLatestVersion();
 
 
         // Active status-----------------------------------------------------------------------------
@@ -55,6 +55,12 @@ export class PlanCLO extends BaseCLO {
     public GetLatestVersion(): CLOs.VersionCLO {
         if (this.Versions && this.Versions.length > 0)
             return this.Versions[this.Versions.length - 1];
+        else
+            return null;
+    }
+    public GetPreviousLatestVersion(): CLOs.VersionCLO {
+        if (this.Versions && this.Versions.length > 1)
+            return this.Versions[this.Versions.length - 2];
         else
             return null;
     }

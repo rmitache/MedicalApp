@@ -50,19 +50,33 @@ namespace BLL.DomainModel.Plans.Services
 
             return blo;
         }
-        public Plan AdjustPlan(Plan blo, int userID)
+        public Plan UpdatePlan(Plan planBLO, int userID)
         {
-            // Update next last Version
-            BLOs.Version nextLastVersion = blo.Versions[blo.Versions.Count - 2];
-            var nextLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(nextLastVersion);
-            this.versionRepository.UpdateVersion(nextLastVersionDataEntity, blo.ID);
+            // Adjust
+            if (planBLO.Versions.Count > 1 && planBLO.GetLatestVersion().ID > 0)
+            {
+                // Update previousLastVersion and Add the new latestVersion
+                var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
+                this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
+                var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
+                this.versionRepository.AddVersion(lastVersionDataEntity, planBLO.ID);
+            }
+            // HardEdit
+            else
+            {
+                // Try and update both the previousLastVersion and the latestVersion
+                if (planBLO.Versions.Count > 1)
+                {
+                    var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
+                    this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
+                }
+                var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
+                this.versionRepository.UpdateVersion(lastVersionDataEntity, planBLO.ID);
+            }
 
-            // Add the new version
-            BLOs.Version lastVersion = blo.Versions[blo.Versions.Count - 1];
-            var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(lastVersion);
-            this.versionRepository.AddVersion(lastVersionDataEntity, blo.ID);
 
-            return blo;
+
+            return planBLO;
         }
     }
 }
