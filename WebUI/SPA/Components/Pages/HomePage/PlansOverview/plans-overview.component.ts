@@ -25,17 +25,32 @@ import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.co
 })
 export class PlansOverviewComponent {
     // Fields
-    private readonly planStatusesEnum = Enums.PlanStatus;
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
+    private readonly planStatusViewModes = {
+        Active: 'Active',
+        Inactive: 'Inactive',
+        Upcoming: 'Upcoming'
+    };
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
         GetFilteredPlans: () => {
             return this.viewModel.AvailablePlans.filter(plan => {
-                return plan.Status as number == this.viewModel.SelectedViewPlanStatus as number;
+
+                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Active) {
+                    return plan.Status as number === Enums.PlanStatus.Active || plan.Status as number === Enums.PlanStatus.ActiveWithUpcomingAdjustment;
+                }
+                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Inactive) {
+                    return plan.Status as number === Enums.PlanStatus.Inactive ;
+                }
+                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Upcoming) {
+                    return plan.Status as number === Enums.PlanStatus.UpcomingAsNew || plan.Status as number === Enums.PlanStatus.UpcomingAsRestarted;
+                }
+
+                return null;
             });
         },
-        SelectedViewPlanStatus: Enums.PlanStatus.Active,
+        SelectedPlanStatusViewMode: this.planStatusViewModes.Active,
         Blocked: false
     };
 
@@ -142,7 +157,7 @@ export class PlansOverviewComponent {
 interface ViewModel {
     AvailablePlans: CLOs.PlanCLO[];
     GetFilteredPlans();
-    SelectedViewPlanStatus: Enums.PlanStatus;
+    SelectedPlanStatusViewMode: any;
     Blocked: boolean;
 }
 

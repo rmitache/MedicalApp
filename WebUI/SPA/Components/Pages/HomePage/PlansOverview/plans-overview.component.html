@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="body">
-        <select class="view-mode-selector" [(ngModel)]="viewModel.SelectedViewPlanStatus">
-            <option *ngFor="let planStatus of planStatusesEnum | enumkeys" [value]="planStatus.value">{{planStatus.key}}</option>
+        <select class="view-mode-selector" [(ngModel)]="viewModel.SelectedPlanStatusViewMode">
+            <option *ngFor="let planStatusItem of planStatusViewModes | keys" [value]="planStatusItem.value">{{planStatusItem.key}}</option>
         </select>
         <div id="plan-elems-list">
             <plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"

@@ -14,6 +14,7 @@ export class KeysPipe implements PipeTransform {
 @Pipe({ name: 'enumkeys' })
 export class EnumKeysPipe implements PipeTransform {
     transform(value, args: string[]): any {
+        
         let keys = [];
         for (let key in value) {
             if (!isNaN(Number(value[key]))) {
