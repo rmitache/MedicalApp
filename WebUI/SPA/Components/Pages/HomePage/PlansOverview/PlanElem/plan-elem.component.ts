@@ -25,7 +25,14 @@ export class PlanElemComponent {
                 }
             }
         ],
-        ActiveWithUpcomingAdjustment: [],
+        ActiveWithUpcomingAdjustment: [
+            {
+                label: 'Hard modify',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+                }
+            }
+        ],
         Inactive: [],
         UpcomingAsNew: [
             {
