@@ -1,5 +1,6 @@
 ﻿// Angular and 3rd party stuff
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -34,7 +35,7 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
     public Create_DefaultCLO(): CLOs.VersionCLO {
         let newCLO = new CLOs.VersionCLO();
         newCLO.ID = 0;
-        newCLO.StartDate = new Date();
+        newCLO.StartDate = moment().startOf('day').add(1, 'days').toDate();
         newCLO.EndDate = null;
         newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
 

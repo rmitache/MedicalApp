@@ -10,7 +10,6 @@ namespace BLL.DomainModel.Plans.BLOs
         public int ID { get; set; }
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }
-        public PlanStatus Status { get; set; }
         public List<Version> Versions { get; set; }
 
         // Constructor

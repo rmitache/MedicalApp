@@ -9,9 +9,50 @@ export class VersionCLO extends BaseCLO {
     public EndDate: Date;
     public Rules: CLOs.RuleCLO[]
 
+    // Properties
+    public get Status(): Enums.VersionStatus {
+
+        // Determine the Status
+        if (this.HasStarted && !this.HasEnded) {
+            // Active
+            return Enums.VersionStatus.Active;
+        }
+        if (this.HasStarted && this.HasEnded) {
+            // Inactive
+            return Enums.VersionStatus.Inactive;
+        }
+        if (!this.HasStarted && !this.HasEnded) {
+            // Upcoming
+            return Enums.VersionStatus.Upcoming;
+        }
+    }
+    public get HasStarted(): boolean {
+        if (this.StartDate.getTime() < new Date().getTime()) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+    public get HasEnded(): boolean {
+
+        // Neverending
+        if (this.EndDate === null) {
+            return false;
+        }
+
+        if (this.EndDate.getTime() < new Date().getTime()) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
 
     // Constructor
     constructor() {
         super();
     }
+
+
 }

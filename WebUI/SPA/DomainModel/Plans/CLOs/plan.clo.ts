@@ -12,40 +12,37 @@ export class PlanCLO extends BaseCLO {
     public Versions: CLOs.VersionCLO[];
 
 
-    // Should be getters only
+    // Properties
     public get Status(): Enums.PlanStatus {
 
-        if (this.HasStarted && !this.HasEnded) {
+        // Variables
+        let latestVersion = this.GetLatestVersion();
+        let prevVersion = (this.Versions.length > 1) ? this.Versions[this.Versions.length - 2] : null;
+
+
+        // Active status-----------------------------------------------------------------------------
+        if (latestVersion.Status === Enums.VersionStatus.Active) {
             return Enums.PlanStatus.Active;
         }
-        else if (this.HasStarted && this.HasEnded) {
+        if (prevVersion !== null && prevVersion.Status === Enums.VersionStatus.Active && latestVersion.Status === Enums.VersionStatus.Upcoming) {
+            return Enums.PlanStatus.ActiveWithUpcomingAdjustment;
+        }
+        //-------------------------------------------------------------------------------------------
+        // Inactive status---------------------------------------------------------------------------
+        if (latestVersion.Status === Enums.VersionStatus.Inactive) {
             return Enums.PlanStatus.Inactive;
-        } else {
-            return Enums.PlanStatus.Upcoming;
         }
-
-    }
-    public get HasStarted(): boolean {
-        if (this.GetFirstVersion().StartDate.getTime() < new Date().getTime()) {
-            return true;
-        } else {
-            return false;
-
+        //-------------------------------------------------------------------------------------------
+        // Upcoming status---------------------------------------------------------------------------
+        if (latestVersion.Status === Enums.VersionStatus.Upcoming && prevVersion === null) {
+            return Enums.PlanStatus.UpcomingAsNew;
         }
-    }
-    public get HasEnded(): boolean {
-
-        if (this.GetLatestVersion().EndDate === null) {
-            return false;
+        if (prevVersion !== null && latestVersion.Status === Enums.VersionStatus.Upcoming && prevVersion.Status === Enums.VersionStatus.Inactive) {
+            return Enums.PlanStatus.UpcomingAsRestarted;
         }
+        //-------------------------------------------------------------------------------------------
 
-
-        if (this.GetLatestVersion().EndDate.getTime() < new Date().getTime()) {
-            return true;
-        } else {
-            return false;
-
-        }
+        throw new Error('No Status could be determined for Plan with name "' + this.Name + '"');
     }
 
 

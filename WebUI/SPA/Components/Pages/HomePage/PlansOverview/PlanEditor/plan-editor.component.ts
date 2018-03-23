@@ -176,7 +176,7 @@ class CreateNewMode implements IPlanEditorModeImplementation {
         // Prepare ViewModel 
         this.vm.PlanCLO = planCLO;
         this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-        this.vm.InfoMessage = 'This will create a new Plan from scratch, with a first Version which you will edit.';
+        this.vm.InfoMessage = 'This will create a new Plan from scratch, with a first Version which you can edit below.';
         this.vm.StartDateLabel = 'Start date:';
         this.vm.EndDateLabel = 'End date:';
     }
@@ -232,6 +232,11 @@ class AdjustMode implements IPlanEditorModeImplementation {
         // Prepare ViewModel 
         this.vm.PlanCLO = planCLO;
         this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.InfoMessage = 'You are about to create a new Version for this Plan. ' +
+            'The previous Version started on ' + moment(this.prevVersion.StartDate).format('Do MMM YYYY');
+        this.vm.InfoMessage += (this.prevVersion.EndDate == null) ?
+            ', without any specific end date.' :
+            ' and is/was due to end on ' + moment(this.prevVersion.EndDate).format('Do MMM YYYY') + '.';
         this.vm.StartDateLabel = 'Taking effect from:';
         this.vm.EndDateLabel = 'New end date will be:';
     }

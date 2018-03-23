@@ -104,6 +104,7 @@
     <None Remove="SPA\DomainModel\Plans\Enums\ordinal-frequency-type.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
+    <None Remove="SPA\DomainModel\Plans\Enums\version-status.enum.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -171,6 +172,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\ordinal-frequency-type.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\version-status.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
   </ItemGroup>
