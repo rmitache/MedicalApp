@@ -7,8 +7,9 @@ import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IFactorRecordPropertiesGroup{
     // Fields
     public ID: number;
-    public Type: Enums.FactorRecordType;
     public OccurenceDateTime: Date;
+    public Type: Enums.FactorRecordType;
+    public ParentPlanName: string;
 
     public MedicineType: CLOs.MedicineTypeCLO;
     public UnitDoseType: Enums.UnitDoseType;

@@ -50,7 +50,7 @@ export class PlanEditorComponent implements IModalDialog {
         if (!this.ruleElems) {
             return false;
         }
-
+        
         for (var i = 0; i < this.ruleElems.toArray().length; i++) {
             let elem = this.ruleElems.toArray()[i];
 
@@ -127,6 +127,9 @@ export class PlanEditorComponent implements IModalDialog {
     }
     private onAddNewRuleTriggered() {
         this.viewModel.CurrentVersionCLO.Rules.push(this.genericCLOFactory.CreateDefaultClo(CLOs.RuleCLO));
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
     }
     private onRemoveRuleTriggered(ruleCLO: CLOs.RuleCLO) {
         const index: number = this.viewModel.CurrentVersionCLO.Rules.indexOf(ruleCLO);
@@ -135,7 +138,9 @@ export class PlanEditorComponent implements IModalDialog {
             this.viewModel.CurrentVersionCLO.Rules.splice(index, 1);
         }
 
-        this.refreshIsValid();
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
     }
 
     // IModalDialog

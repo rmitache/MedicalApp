@@ -62,13 +62,14 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurence => occurence.Period.StartTime.Date).ToList();
             return dates;
         }
-        private MedicineFactorRecord createFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDateTime)
+        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDateTime, Plan parentPlan)
         {
             MedicineFactorRecord blo = new MedicineFactorRecord();
             blo.ID = -1;
             blo.Type = MedicineFactorRecordType.PlanProjection;
             blo.MedicineType = ruleItem.MedicineType;
             blo.OccurenceDateTime = occurrenceDateTime;
+            blo.ParentPlanName = parentPlan.Name;
 
             blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
             blo.UnitDoseType = ruleItem.UnitDoseType;
@@ -159,7 +160,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                                     time.Hours, time.Minutes, 0);
                                 foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
                                 {
-                                    var newFactorRecord = createFromMedicineRuleItem(ruleItem, occurrenceDateTime);
+                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, occurrenceDateTime, plan);
                                     projectedFactorRecordsList.Add(newFactorRecord);
                                 }
                             }

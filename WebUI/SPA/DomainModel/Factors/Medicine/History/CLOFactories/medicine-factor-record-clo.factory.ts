@@ -20,14 +20,14 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.ID = blo['ID'];
         newCLO.Type = blo['Type'];
-        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
+        newCLO.OccurenceDateTime = blo['ParentPlanName'];
 
+        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.UnitDoseType = blo['UnitDoseType'];
         newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
         newCLO.UnitDoseSize = blo['UnitDoseSize'];
         newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
-
         newCLO.Instruction = blo['Instruction'];
         newCLO.AdministrationMethod = blo['AdministrationMethod'];
         

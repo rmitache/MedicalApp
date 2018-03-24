@@ -48,11 +48,11 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
         }
         public List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int userID)
         {
-            // FactorRecords of type UserEntry
+            // User Entries
             var userEntryDataEntities = this.medicineFactorRecordRepo.GetMedicineFactorRecords(dateRange, userID);
             var userEntryFactorRecordBLOs = this.medicineFactorRecordFactory.Convert_ToBLOList(userEntryDataEntities);
 
-            // FactorRecords projected from the user's plans
+            // Plan Projected
             var plans = this.planService.GetPlans(userID, true);
             var planProjectionFactorRecordBLOs = this.medicineFactorRecordFactory.Create_FromMedicinePlans(plans, dateRange.RangeStart, dateRange.RangeEnd);
 

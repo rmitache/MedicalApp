@@ -6,9 +6,10 @@
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
             <div class="factor-records-list">
-                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item" 
-                     title="{{timeGroup.value.ToStringLabel(record)}}">
-                    {{timeGroup.value.ToStringLabel(record)}}
+                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item"
+                     title="{{timeGroup.value.GetStringLabel(record)}}">
+                    {{record.ParentPlanName}}
+                    {{timeGroup.value.GetStringLabel(record)}}
 
                 </div>
                 
