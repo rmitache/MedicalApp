@@ -33,7 +33,14 @@ export class PlanElemComponent {
                 }
             }
         ],
-        Inactive: [],
+        Inactive: [
+            {
+                label: 'Re-start',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.Restart]);
+                }
+            }
+        ],
         UpcomingAsNew: [
             {
                 label: 'Hard modify',

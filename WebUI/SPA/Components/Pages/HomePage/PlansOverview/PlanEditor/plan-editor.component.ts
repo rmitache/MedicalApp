@@ -1,7 +1,7 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Calendar } from 'primeng/primeng';
 
 // Project modules
@@ -159,7 +159,8 @@ interface ViewModel {
 export enum PlanEditorMode {
     CreateNew,
     Adjust,
-    HardEdit
+    HardEdit,
+    Restart
 }
 interface IPlanEditorModeImplementation {
     SaveData(): Promise<CLOs.PlanCLO>;
@@ -199,22 +200,27 @@ class AdjustMode implements IPlanEditorModeImplementation {
         private vm: ViewModel,
         private globalDataService: GlobalDataService,
         private genericCLOFactory: GenericCLOFactory) {
-
-        // Create a new version for the planCLO
         this.prevVersion = planCLO.GetLatestVersion();
-        let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
-        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
-        planCLO.Versions.push(newVersion);
 
         // If prevVersion starts in the future - throw exception -> this should have different logic as in HardEdit instead of creating a new version
+        if (this.prevVersion === null) {
+            throw new Error('Adjusting a plan only works for plans with at least 1 previous version!');
+        }
         if (moment(this.prevVersion.StartDate).startOf('day') > moment().startOf('day')) {
             throw new Error('Adjusting a plan whose last version starts in the future is not yet supported!');
         }
 
+
+        // Create a new version for the planCLO
+        let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
+        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
+        planCLO.Versions.push(newVersion);
+
+
         // Custom form logic 
         this.reactiveForm.get('planName').disable();
-        this.reactiveForm.get('dates').setValidators([basicPlanDatesValidator, (group: FormGroup) => {
-            return adjacentVersionsPlanDatesValidator(group, this.prevVersion);
+        this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
+            return advancedPlanDatesValidator(group, this.prevVersion);
         }]);
 
         // Prepare ViewModel 
@@ -261,8 +267,8 @@ class HardEditMode implements IPlanEditorModeImplementation {
 
             // Custom form logic
             this.reactiveForm.get('planName').disable();
-            this.reactiveForm.get('dates').setValidators([basicPlanDatesValidator, (group: FormGroup) => {
-                return adjacentVersionsPlanDatesValidator(group, this.prevVersion);
+            this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
+                return advancedPlanDatesValidator(group, this.prevVersion);
             }]);
 
             // Prepare ViewModel 
@@ -292,9 +298,9 @@ class HardEditMode implements IPlanEditorModeImplementation {
         }
 
 
-        
 
-        
+
+
     }
 
     // Public methods
@@ -302,9 +308,58 @@ class HardEditMode implements IPlanEditorModeImplementation {
 
         // Automatically end the next last version before starting the new one
         if (this.prevVersion !== null) {
-            
+
             this.prevVersion.EndDate = moment(this.vm.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate();
         }
+
+        // Save the data
+        let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
+        return saveDataPromise;
+    }
+}
+class RestartMode implements IPlanEditorModeImplementation {
+
+    // Fields
+    private prevVersion: CLOs.VersionCLO = null;
+
+    // Constructor
+    constructor(
+        private reactiveForm: FormGroup,
+        private planCLO: CLOs.PlanCLO,
+        private vm: ViewModel,
+        private globalDataService: GlobalDataService,
+        private genericCLOFactory: GenericCLOFactory) {
+        this.prevVersion = planCLO.GetLatestVersion();
+
+        // If prevVersion isn't inactive - throw exception
+        if (this.prevVersion === null || this.prevVersion.Status !== Enums.VersionStatus.Inactive) {
+            throw new Error('Can only Restart a Plan where the previous version is Inactive!');
+        }
+
+        // Create a new version for the planCLO
+        let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
+        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default restartdate = tomorrow
+        newVersion.EndDate = null;
+        planCLO.Versions.push(newVersion);
+
+
+        // Custom form logic 
+        this.reactiveForm.get('planName').disable();
+        this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
+            return advancedPlanDatesValidator(group, this.prevVersion);
+        }]);
+
+        // Prepare ViewModel 
+        this.vm.PlanCLO = planCLO;
+        this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.InfoMessage = 'You are about to restart this Plan by creating a new Version for it. ' +
+            'The previous Version ended on ' + moment(this.prevVersion.EndDate).format('Do MMM YYYY');
+        this.vm.StartDateLabel = 'Starting again on:';
+        this.vm.EndDateLabel = 'Ending on:';
+    }
+
+    // Public methods
+    public SaveData() {
 
         // Save the data
         let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
@@ -315,37 +370,61 @@ var modeImplementationsLookup = {};
 modeImplementationsLookup[PlanEditorMode.CreateNew] = CreateNewMode;
 modeImplementationsLookup[PlanEditorMode.Adjust] = AdjustMode;
 modeImplementationsLookup[PlanEditorMode.HardEdit] = HardEditMode;
+modeImplementationsLookup[PlanEditorMode.Restart] = RestartMode;
 
 // Custom validators
 function basicPlanDatesValidator(group: FormGroup) {
 
+    // Variables
     var startDateInput = group.controls['startDate'];
     var endDateInput = group.controls['endDate'];
 
+    // Validation logic
     if ((endDateInput.value !== '' && endDateInput.value !== null) &&
         (moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
 
-        startDateInput.setErrors({ incorrect: true });
-        endDateInput.setErrors({ incorrect: true });
+        startDateInput.setErrors({ startDateAfterEndDate: true });
+        endDateInput.setErrors({ startDateAfterEndDate: true });
+
     } else {
-        startDateInput.setErrors(null);
-        endDateInput.setErrors(null);
+        startDateInput.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        endDateInput.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
+
+
 
     return null;
 }
-function adjacentVersionsPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionCLO) {
+function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionCLO) {
 
-
+    // Variables
     var startDateInput = group.controls['startDate'];
     var endDateInput = group.controls['endDate'];
+    var startDateErrorsCount = 0;
+    var endDateErrorsCount = 0;
 
-    // newVersion.StartDate must be > prevVersion.StartDate
-    if ((moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDate).startOf('day'))) {
-        startDateInput.setErrors({ incorrect: true });
+    // Rule 1. newVersion.StartDate must be > prevVersion.StartDate
+    if (prevVersion!== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDate).startOf('day'))) {
+        startDateErrorsCount++;
     }
-    else {
+
+    // Rule 2. newVersion.StartDate must be < newDate.EndVersion
+    if ((endDateInput.value !== '' && endDateInput.value !== null) &&
+        (moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
+        startDateErrorsCount++;
+        endDateErrorsCount++;
+    } 
+
+    // Apply logic
+    if (startDateErrorsCount > 0) {
+        startDateInput.setErrors({ incorrect: true });
+    } else {
         startDateInput.setErrors(null);
+    }
+    if (endDateErrorsCount > 0) {
+        endDateInput.setErrors({ incorrect: true });
+    } else {
+        endDateInput.setErrors(null);
     }
 
     return null;

@@ -52,7 +52,7 @@ namespace BLL.DomainModel.Plans.Services
         }
         public Plan UpdatePlan(Plan planBLO, int userID)
         {
-            // Adjust
+            // Adjust or Restart
             if (planBLO.Versions.Count > 1 && planBLO.GetLatestVersion().ID == 0)
             {
                 // Update previousLastVersion and Add the new latestVersion

@@ -153,6 +153,9 @@ export class PlansOverviewComponent {
         } else if (actionTypeID === PlanActionType.HardEdit) {
             // HardEdit
             this.openPlanEditor('Hard modify version', 'Save changes', cloneOfPlanCLO, PlanEditorMode.HardEdit);
+        } else if (actionTypeID === PlanActionType.Restart) {
+            // Restart
+            this.openPlanEditor('Restart plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
         } else {
             throw new Error('Action not recognized');
         }
@@ -169,5 +172,6 @@ interface ViewModel {
 export enum PlanActionType {
     CreateNew,
     Adjust,
-    HardEdit
+    HardEdit,
+    Restart
 }
