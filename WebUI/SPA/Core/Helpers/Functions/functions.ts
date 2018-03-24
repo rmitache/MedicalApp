@@ -1,4 +1,6 @@
-﻿export function GetEnumEntryByIndex(enumRef:any, index:number):any {
+﻿
+
+export function GetEnumEntryByIndex(enumRef: any, index: number): any {
 
     let count = -1;
 
@@ -12,3 +14,4 @@
 
     return null;
 }
+

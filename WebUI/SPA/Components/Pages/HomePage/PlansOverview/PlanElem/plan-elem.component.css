@@ -54,4 +54,15 @@
 
     .bottom-part .ends-date-label-input-pair {
         float: right;
+        height:40px;
+        width:45%;
     }
+
+        .bottom-part .ends-date-label-input-pair .label {
+            float:right;
+            clear:both;
+        }
+        .bottom-part .ends-date-label-input-pair .input-label {
+            float: right;
+            clear: both;
+        }

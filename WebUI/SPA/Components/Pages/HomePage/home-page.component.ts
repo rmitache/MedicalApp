@@ -30,12 +30,24 @@ export class HomePageComponent {
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
 
-        // Init momentjs - update thresholds
-        moment.relativeTimeThreshold('s');  // 45
-        moment.relativeTimeThreshold('m, 59');  // 45
+        // Init momentjs settings
+        //moment.updateLocale('en', {
+        //    calendar: {
+        //        lastDay: '[Yesterday]',
+        //        sameDay: '[Today]',
+        //        nextDay: '[Tomorrow]',
+        //        lastWeek: '[Last] dddd',
+        //        nextWeek: '[Next] dddd',
+        //        sameElse: 'L'
+        //    }
+        //});
+        moment.relativeTimeThreshold('s', 55);  // 45
+        moment.relativeTimeThreshold('m', 59);  // 45
         moment.relativeTimeThreshold('h', 23);  // 22
-        moment.relativeTimeThreshold('d',28);  // 26
-        moment.relativeTimeThreshold('M');  // 11
+        moment.relativeTimeThreshold('d', 28);  // 26
+        moment.relativeTimeThreshold('M', 11);  // 11
+
+
 
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
