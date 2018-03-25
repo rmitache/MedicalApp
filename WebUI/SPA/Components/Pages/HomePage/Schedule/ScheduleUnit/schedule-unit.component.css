@@ -8,7 +8,7 @@
         width: 100%;
         line-height: 30px;
         text-transform: uppercase;
-        text-align:center;
+        text-align: center;
     }
 
 .time-group {
@@ -40,28 +40,38 @@
 .plan-divs-list {
 }
 
-    .plan-divs-list .plan-div:first-of-type {
-       
-    }
+.plan-div {
+    margin-top: 5px;
+    position: relative;
+}
 
-    .plan-div .plan-name-label {
-        display: block;
-        width: 100%;
-    }
+    
 
     .plan-div .factor-record-list-in-plan-grouping {
         background-color: #e5f5bf;
-        padding: 5px;
+        padding: 7px;
+        padding-top: 0;
         border-radius: 3px;
+        width: calc(100% - 14px);
+       
+    }
+    .plan-div .plan-name-label {
+        display: block;
+
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        color:#8b8b8b;
     }
 
     .plan-div .factor-record-item {
         float: left;
         clear: both;
-        width: 100%;
         margin-top: 7px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
+        font-size:9pt;
+       
     }
