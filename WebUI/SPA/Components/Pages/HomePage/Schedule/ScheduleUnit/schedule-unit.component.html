@@ -12,7 +12,7 @@
                     <!--FactorRecords in Plan-->
                     <div class="factor-record-list-in-plan-grouping">
                         <div *ngFor="let record of dictEntry.value " class="factor-record-item label-text-dark" title="{{timeGroup.value.GetStringLabel(record)}}">
-                            &#9642; {{record.UnitDoseQuantifier}} x <span style="font-weight:bold">{{record.MedicineType.Name}}</span>
+                            &#9642; {{record.UnitDoseQuantifier}} x <span >{{record.MedicineType.Name}}</span>
                         </div>
                         <div style="clear:both"></div>
                     </div>

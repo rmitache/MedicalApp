@@ -31,6 +31,17 @@ namespace DataAccessLayer.Repositories
         }
         public TPlanVersion UpdateVersion(TPlanVersion modifiedVersion, int planID)
         {
+            // Mark the version and all children as Modified or Added
+            entitiesContext.Entry(modifiedVersion).State = EntityState.Modified;
+            modifiedVersion.TPlanRule.ToList().ForEach(modifiedRule =>
+            {
+                entitiesContext.Entry(modifiedRule).State = (modifiedRule.Id == 0) ? EntityState.Added : EntityState.Modified;
+                modifiedRule.TPlanMedicineRuleItem.ToList().ForEach(modifiedRuleItem =>
+                {
+                    entitiesContext.Entry(modifiedRuleItem).State = (modifiedRuleItem.Id == 0) ? EntityState.Added : EntityState.Modified;
+                });
+            });
+
             // Handle deleted Rules
             var originalRules = this.ruleRepository.GetRules(modifiedVersion.Id, true);
             foreach (TPlanRule originalRule in originalRules)
@@ -43,8 +54,7 @@ namespace DataAccessLayer.Repositories
                     modifiedVersion.TPlanRule.Add(originalRule);
                 } else
                 {
-
-                    // If the matchingModifiedRule wasn't deleted, handle deleted ruleItems in it
+                    // Handle deleted ruleItems in it
                     entitiesContext.Entry(matchingModifiedRule).State = EntityState.Modified;
                     foreach (TPlanMedicineRuleItem originalRuleItem in originalRule.TPlanMedicineRuleItem)
                     {
@@ -54,10 +64,7 @@ namespace DataAccessLayer.Repositories
                         {
                             entitiesContext.Entry(originalRuleItem).State = EntityState.Deleted;
                             matchingModifiedRule.TPlanMedicineRuleItem.Add(originalRuleItem);
-                        } else
-                        {
-                            entitiesContext.Entry(matchingRuleItem).State = EntityState.Modified;
-                        }
+                        } 
                     }
 
                 }
@@ -66,7 +73,6 @@ namespace DataAccessLayer.Repositories
             // Save
             modifiedVersion.PlanId = planID;
             entitiesContext.Attach(modifiedVersion);
-            entitiesContext.Entry(modifiedVersion).State = EntityState.Modified;
             entitiesContext.SaveChanges();
 
             return modifiedVersion;
