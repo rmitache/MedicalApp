@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Repositories.PlanRepository
+namespace DataAccessLayer.Repositories
 {
     public interface IPlanRepository
     {

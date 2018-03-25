@@ -4,17 +4,20 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace DataAccessLayer.Repositories.PlanRepository
+namespace DataAccessLayer.Repositories
 {
     public class VersionRepository : IVersionRepository
     {
         // Fields
         private readonly DataEntitiesContext entitiesContext;
+        private readonly IRuleRepository ruleRepository;
 
         // Constructor
-        public VersionRepository(DataEntitiesContext dbContext)
+        public VersionRepository(DataEntitiesContext dbContext,
+            IRuleRepository ruleRepository)
         {
             this.entitiesContext = dbContext;
+            this.ruleRepository = ruleRepository;
         }
 
         // Public methods
@@ -26,15 +29,42 @@ namespace DataAccessLayer.Repositories.PlanRepository
 
             return version;
         }
-        public TPlanVersion UpdateVersion(TPlanVersion version, int planID)
+        public TPlanVersion UpdateVersion(TPlanVersion modifiedVersion, int planID)
         {
-            version.PlanId = planID;
-            entitiesContext.Attach(version);
-            entitiesContext.Entry(version).State = EntityState.Modified;
+            // Handle deleted Rules
+            var originalRules = this.ruleRepository.GetRules(modifiedVersion.Id, true);
+            foreach (TPlanRule originalRule in originalRules)
+            {
+                TPlanRule matchingModifiedRule = modifiedVersion.TPlanRule.FirstOrDefault(r => r.Id == originalRule.Id);
+                bool originalRuleWasDeleted = (matchingModifiedRule == null);
+                if (originalRuleWasDeleted)
+                {
+                    entitiesContext.Entry(originalRule).State = EntityState.Deleted;
+                    modifiedVersion.TPlanRule.Add(originalRule);
+                } else
+                {
+                    // If the matchingModifiedRule wasn't deleted, handle deleted ruleItems in it
+                    foreach (TPlanMedicineRuleItem originalRuleItem in originalRule.TPlanMedicineRuleItem)
+                    {
+                        TPlanMedicineRuleItem matchingRuleItem = matchingModifiedRule.TPlanMedicineRuleItem.FirstOrDefault(rt => rt.Id == originalRuleItem.Id);
+                        bool originalItemWasDeleted = (matchingRuleItem == null);
+                        if (originalItemWasDeleted)
+                        {
+                            entitiesContext.Entry(originalRuleItem).State = EntityState.Deleted;
+                            matchingModifiedRule.TPlanMedicineRuleItem.Add(originalRuleItem);
+                        }
+                    }
 
+                }
+            }
+
+            // Save
+            modifiedVersion.PlanId = planID;
+            entitiesContext.Attach(modifiedVersion);
+            entitiesContext.Entry(modifiedVersion).State = EntityState.Modified;
             entitiesContext.SaveChanges();
 
-            return version;
+            return modifiedVersion;
         }
     }
 }

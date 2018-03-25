@@ -21,7 +21,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.ID = blo['ID'];
         newCLO.Type = blo['Type'];
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
-        newCLO.OccurenceDateTime = blo['ParentPlanName'];
+        newCLO.ParentPlanName = blo['ParentPlanName'];
 
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.UnitDoseType = blo['UnitDoseType'];
@@ -52,6 +52,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        
         let cloList = new DataStructures.List<CLOs.MedicineFactorRecordCLO>();
         bloArray.forEach(blo => {
             let clo = this.Convert_ToCLO(blo);

@@ -298,7 +298,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
             this.vm.PlanCLO = planCLO;
             this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
             this.vm.InfoMessage = 'You are about to hard edit the only Version for this Plan';
-            this.vm.StartDateLabel = 'Taking effect from:';
+            this.vm.StartDateLabel = 'New start date will be:';
             this.vm.EndDateLabel = 'New end date will be:';
         }
 

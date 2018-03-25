@@ -29,11 +29,18 @@ export class PlanElemComponent {
                     this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
 
                 }
+            },
+            {
+                label: 'Hard edit latest version',
+                command: (event) => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+
+                }
             }
         ],
         ActiveWithUpcomingAdjustment: [
             {
-                label: 'Hard modify',
+                label: 'Hard edit',
                 command: (event) => {
                     this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
                 }

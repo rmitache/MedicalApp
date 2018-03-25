@@ -65,6 +65,7 @@ export class ScheduleComponent {
             return fRec.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 fRec.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
+        
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(filteredFactorRecords);
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
@@ -92,7 +93,7 @@ export class ScheduleComponent {
             moment(new Date()).startOf('day').subtract(this.availableDataWindowSizeInDays / 2, 'days'),
             moment(new Date()).endOf('day').add(this.availableDataWindowSizeInDays / 2, 'days'));
         this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
-
+        
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
         this.recreateDisplayRepresentation();
@@ -288,7 +289,7 @@ class DayDisplayMode implements IDisplayMode {
         return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
     }
     public GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]) {
-
+        
         // Sort 
         factorRecords = factorRecords.sort((f1, f2) => {
             if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
@@ -301,7 +302,7 @@ class DayDisplayMode implements IDisplayMode {
 
             return 0;
         });
-
+        
         // Create the DisplayRepresentation
         let displayRep = new DisplayRepresentation();
         this.unitsConfiguration.forEach((unitConfig) => {
@@ -319,12 +320,20 @@ class DayDisplayMode implements IDisplayMode {
             let matchingUnitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
             if (matchingUnitRepr) {
 
-                // Add it 
+                // Find or create the matching TimeGroupRepresentation
                 let time = record.GetTime();
                 if (matchingUnitRepr.TimeGroupRepresentations[time.ToString()] === undefined) {
                     matchingUnitRepr.TimeGroupRepresentations[time.ToString()] = new TimeGroupRepresentation(record.GetTime());
                 }
-                matchingUnitRepr.TimeGroupRepresentations[time.ToString()].FactorRecords.push(record);
+                let matchingTimeGroup = matchingUnitRepr.TimeGroupRepresentations[time.ToString()];
+
+                // Find or create the matching PlanName entry
+                //if (matchingTimeGroup[record.ParentPlanName] === undefined) {
+                //    matchingUnitRepr.TimeGroupRepresentations[time.ToString()] = new TimeGroupRepresentation(record.GetTime());
+                //}
+
+                // Add it
+                matchingTimeGroup.FactorRecords.push(record);
             } else {
                 throw new Error("Record with Time =" + record.GetTime().ToString() + " does not match any schedule unit!");
             }
@@ -355,6 +364,9 @@ export class UnitRepresentation {
 export class TimeGroupRepresentation {
     public readonly Time: Time;
     public readonly FactorRecords: CLOs.MedicineFactorRecordCLO[] = [];
+
+    public readonly FactorRecordsByPlanName: { [planName: string]: CLOs.MedicineFactorRecordCLO[] };
+
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         let record = factorRecordCLO;
         return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]

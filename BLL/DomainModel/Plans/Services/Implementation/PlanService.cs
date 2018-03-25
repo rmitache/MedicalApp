@@ -5,7 +5,7 @@ using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Plans.Factories;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
-using DataAccessLayer.Repositories.PlanRepository;
+using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

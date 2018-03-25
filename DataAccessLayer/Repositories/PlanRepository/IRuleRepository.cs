@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public interface IVersionRepository
+    public interface IRuleRepository
     {
-        TPlanVersion AddVersion(TPlanVersion version, int planID);
-        TPlanVersion UpdateVersion(TPlanVersion version, int planID);
+        List<TPlanRule> GetRules(int versionID, bool includeRuleItems);
     }
 }
