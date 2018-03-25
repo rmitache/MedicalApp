@@ -43,7 +43,9 @@ namespace DataAccessLayer.Repositories
                     modifiedVersion.TPlanRule.Add(originalRule);
                 } else
                 {
+
                     // If the matchingModifiedRule wasn't deleted, handle deleted ruleItems in it
+                    entitiesContext.Entry(matchingModifiedRule).State = EntityState.Modified;
                     foreach (TPlanMedicineRuleItem originalRuleItem in originalRule.TPlanMedicineRuleItem)
                     {
                         TPlanMedicineRuleItem matchingRuleItem = matchingModifiedRule.TPlanMedicineRuleItem.FirstOrDefault(rt => rt.Id == originalRuleItem.Id);
@@ -52,6 +54,9 @@ namespace DataAccessLayer.Repositories
                         {
                             entitiesContext.Entry(originalRuleItem).State = EntityState.Deleted;
                             matchingModifiedRule.TPlanMedicineRuleItem.Add(originalRuleItem);
+                        } else
+                        {
+                            entitiesContext.Entry(matchingRuleItem).State = EntityState.Modified;
                         }
                     }
 

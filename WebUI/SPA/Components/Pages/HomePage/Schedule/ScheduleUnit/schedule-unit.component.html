@@ -5,15 +5,22 @@
 
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
-            <div class="factor-records-list">
-                <div *ngFor="let record of timeGroup.value.FactorRecords" class="factor-record-item"
-                     title="{{timeGroup.value.GetStringLabel(record)}}">
-                    {{record.ParentPlanName}}
-                    {{timeGroup.value.GetStringLabel(record)}}
+            <div class="plan-divs-list">
+                <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys" class="plan-div">
+                    <!--PlanName-->
+                    <span *ngIf="dictEntry.key!==null" class="plan-name-label label">{{dictEntry.key}}</span>
 
+                    <!--FactorRecords in Plan-->
+                    <div class="factor-record-list-in-plan-grouping">
+                        <div *ngFor="let record of dictEntry.value " class="factor-record-item label-text-dark" title="{{timeGroup.value.GetStringLabel(record)}}">
+                            &#9642; {{timeGroup.value.GetStringLabel(record)}}
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
 </div>
+

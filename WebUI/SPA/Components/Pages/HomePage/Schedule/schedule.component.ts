@@ -315,25 +315,25 @@ class DayDisplayMode implements IDisplayMode {
 
         // Loop through factorRecords and add them to their corresponding Unit representations
         factorRecords.forEach((record) => {
-
+            
             // Find which unitRepr it belongs to 
-            let matchingUnitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
-            if (matchingUnitRepr) {
+            let unitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
+            if (unitRepr) {
 
                 // Find or create the matching TimeGroupRepresentation
                 let time = record.GetTime();
-                if (matchingUnitRepr.TimeGroupRepresentations[time.ToString()] === undefined) {
-                    matchingUnitRepr.TimeGroupRepresentations[time.ToString()] = new TimeGroupRepresentation(record.GetTime());
+                if (unitRepr.TimeGroupRepresentations[time.ToString()] === undefined) {
+                    unitRepr.TimeGroupRepresentations[time.ToString()] = new TimeGroupRepresentation(record.GetTime());
                 }
-                let matchingTimeGroup = matchingUnitRepr.TimeGroupRepresentations[time.ToString()];
+                let timeGroup = unitRepr.TimeGroupRepresentations[time.ToString()];
 
                 // Find or create the matching PlanName entry
-                //if (matchingTimeGroup[record.ParentPlanName] === undefined) {
-                //    matchingUnitRepr.TimeGroupRepresentations[time.ToString()] = new TimeGroupRepresentation(record.GetTime());
-                //}
+                if (timeGroup.FactorRecordsByPlanName[record.ParentPlanName] === undefined) {
+                    timeGroup.FactorRecordsByPlanName[record.ParentPlanName] = [];
+                }
 
                 // Add it
-                matchingTimeGroup.FactorRecords.push(record);
+                timeGroup.FactorRecordsByPlanName[record.ParentPlanName].push(record);
             } else {
                 throw new Error("Record with Time =" + record.GetTime().ToString() + " does not match any schedule unit!");
             }
@@ -362,20 +362,22 @@ export class UnitRepresentation {
     }
 }
 export class TimeGroupRepresentation {
+
+    // Fields
     public readonly Time: Time;
-    public readonly FactorRecords: CLOs.MedicineFactorRecordCLO[] = [];
+    public readonly FactorRecordsByPlanName: { [planName: string]: CLOs.MedicineFactorRecordCLO[] } = {};
 
-    public readonly FactorRecordsByPlanName: { [planName: string]: CLOs.MedicineFactorRecordCLO[] };
+    // Constructor
+    constructor(time: Time) {
+        this.Time = time;
+    }
 
+    // Public methods
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
+        
         let record = factorRecordCLO;
         return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
             + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
-
-    }
-
-    constructor(time: Time) {
-        this.Time = time;
     }
 }
 
