@@ -4,6 +4,7 @@
 export enum UnitOfMeasure {
     Unspecified = 0,
     mg = 1,
-    IU = 2
+    IU = 2,
+    Units = 3
 }
 

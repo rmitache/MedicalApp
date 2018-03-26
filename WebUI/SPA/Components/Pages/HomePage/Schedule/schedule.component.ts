@@ -290,7 +290,7 @@ class DayDisplayMode implements IDisplayMode {
     }
     public GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]) {
         
-        // Sort 
+        // Sort by time (ascending)
         factorRecords = factorRecords.sort((f1, f2) => {
             if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
                 return 1;
@@ -373,6 +373,21 @@ export class TimeGroupRepresentation {
     }
 
     // Public methods
+    public GetSortedFactorRecords(planName: string): CLOs.MedicineFactorRecordCLO[] {
+        let unsortedFactorRecords = this.FactorRecordsByPlanName[planName];
+        let sorted = unsortedFactorRecords.sort((a, b) => {
+            if (a.MedicineType.Name > b.MedicineType.Name) {
+                return 1;
+            }
+
+            if (a.MedicineType.Name < b.MedicineType.Name) {
+                return -1;
+            }
+
+            return 0;
+        });
+        return sorted;
+    }
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         
         let record = factorRecordCLO;

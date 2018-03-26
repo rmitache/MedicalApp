@@ -13,7 +13,7 @@
 
 .time-group {
     overflow: auto;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
     .time-group:first-of-type {
@@ -22,13 +22,11 @@
 
     .time-group .hours-and-minutes-label {
         font-family: Tahoma;
-        font-size: 10pt;
+        font-size: 11pt;
         font-weight: bold;
-        letter-spacing: 1.5px;
         display: block;
         float: left;
         width: 40px;
-        margin-top: -2px;
     }
 
     .time-group .plan-divs-list {
@@ -41,14 +39,14 @@
 }
 
 .plan-div {
-    margin-top: 5px;
+    margin-top: 3px;
     position: relative;
 }
 
     
 
     .plan-div .factor-record-list-in-plan-grouping {
-        background-color: #e5f5bf;
+        background-color: #f6f6f6;
         padding: 7px;
         padding-top: 0;
         border-radius: 3px;

@@ -4,7 +4,8 @@
     {
         Unspecified = 0,
         Milligrams = 1,
-        IU = 2
+        IU = 2,
+        Units = 3
     }
 
 }
