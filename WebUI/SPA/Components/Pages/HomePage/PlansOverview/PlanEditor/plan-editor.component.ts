@@ -245,7 +245,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
 
         // Automatically end the next last version before starting the new one
         this.prevVersion.EndDate = moment(this.vm.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate();
-
+       
         // Save the data
         let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
         return saveDataPromise;
