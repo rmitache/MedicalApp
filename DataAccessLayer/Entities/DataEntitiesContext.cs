@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DataAccessLayer.Entities
@@ -15,6 +14,8 @@ namespace DataAccessLayer.Entities
         public virtual DbSet<TPlanMedicineRuleItem> TPlanMedicineRuleItem { get; set; }
         public virtual DbSet<TPlanRule> TPlanRule { get; set; }
         public virtual DbSet<TPlanVersion> TPlanVersion { get; set; }
+        public virtual DbSet<TSymptomEntry> TSymptomEntry { get; set; }
+        public virtual DbSet<TSymptomType> TSymptomType { get; set; }
         public virtual DbSet<TUser> TUser { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -232,6 +233,53 @@ namespace DataAccessLayer.Entities
                     .WithMany(p => p.TPlanVersion)
                     .HasForeignKey(d => d.PlanId)
                     .HasConstraintName("FK_t_plan_version_t_plan");
+            });
+
+            modelBuilder.Entity<TSymptomEntry>(entity =>
+            {
+                entity.ToTable("t_symptom_entry");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.IntensityLevelId).HasColumnName("intensity_level_id");
+
+                entity.Property(e => e.OccurrenceDateTime)
+                    .HasColumnName("occurrence_date_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.SymptomTypeId).HasColumnName("symptom_type_id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.SymptomType)
+                    .WithMany(p => p.TSymptomEntry)
+                    .HasForeignKey(d => d.SymptomTypeId)
+                    .HasConstraintName("FK_t_symptom_entry_t_symptom_type");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TSymptomEntry)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_t_symptom_entry_t_user");
+            });
+
+            modelBuilder.Entity<TSymptomType>(entity =>
+            {
+                entity.ToTable("t_symptom_type");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TUser>(entity =>
