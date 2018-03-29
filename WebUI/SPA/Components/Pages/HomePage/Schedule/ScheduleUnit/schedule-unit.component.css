@@ -11,9 +11,12 @@
         text-align: center;
     }
 
+    .frame .unit-content {
+    }
+
 .time-group {
     overflow: auto;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
     .time-group:first-of-type {
@@ -22,11 +25,11 @@
 
     .time-group .hours-and-minutes-label {
         font-family: Tahoma;
-        font-size: 11pt;
+        font-size: 14px;
         font-weight: bold;
         display: block;
         float: left;
-        width: 40px;
+        width: 100%;
     }
 
     .time-group .plan-divs-list {
@@ -43,7 +46,7 @@
     position: relative;
 }
 
-    
+
 
     .plan-div .factor-record-list-in-plan-grouping {
         background-color: #f6f6f6;
@@ -51,15 +54,14 @@
         padding-top: 0;
         border-radius: 3px;
         width: calc(100% - 14px);
-       
     }
+
     .plan-div .plan-name-label {
         display: block;
-
         position: absolute;
         top: 7px;
         right: 7px;
-        color:#8b8b8b;
+        color: #8b8b8b;
     }
 
     .plan-div .factor-record-item {
@@ -70,6 +72,5 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
-        font-size:9pt;
-       
+        font-size: 9pt;
     }

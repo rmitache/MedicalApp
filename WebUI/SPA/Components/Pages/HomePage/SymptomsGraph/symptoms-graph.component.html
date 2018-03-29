@@ -1,0 +1,19 @@
+<div class="frame">
+
+    <div class="header">
+        <div class="left-section">
+            <span class="header-label h1">SYMPTOMS</span>
+            <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
+        </div>
+        
+    </div>
+    <div class="body">
+        <div class="chart-wrapper-div">
+            <p-chart type="line" [data]="data" [options]="options" height="220px"></p-chart>
+        </div>
+
+
+
+    </div>
+    
+</div> 

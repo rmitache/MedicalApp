@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from 'SPA/Core/core.module';
 import { DomainModelModule } from 'SPA/DomainModel/domain-model.module';
 import { ScheduleModule } from './Schedule/schedule.module';
+import { SymptomsGraphModule } from './SymptomsGraph/symptoms-graph.module';
 import { PlansOverviewModule } from './PlansOverview/plans-overview.module';
 
 // Components
@@ -26,7 +27,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
     declarations: [
         // HomePage
         HomePageComponent,
-        HeaderBarComponent,
+        HeaderBarComponent
 
 
     ],
@@ -42,8 +43,11 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         ),
 
         DomainModelModule,
+
+        // Root components
         ScheduleModule,
-        PlansOverviewModule
+        PlansOverviewModule,
+        SymptomsGraphModule
     ],
     providers: [
         StartupDataBundleService,

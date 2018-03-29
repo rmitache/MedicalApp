@@ -60,5 +60,8 @@
         "font-awesome": "^4.7.0",
         "moment": "^2.20.1",
         "primeng": "^4.3.0"
+    },
+    "dependencies": {
+        "chart.js": "^2.7.2"
     }
 }

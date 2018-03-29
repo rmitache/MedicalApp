@@ -16,9 +16,9 @@ body {
 /*Fonts*/
 .h1 {
     font-family: Arial;
-    font-size: 18pt;
+    font-size: 16pt;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1.7px;
 }
 
 .h2 {
