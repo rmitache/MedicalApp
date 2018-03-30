@@ -80,6 +80,7 @@
     <None Include="AppData\my-user-data-and-medicine-types.sql" />
     <Build Include="dbo\Tables\t_symptom_type.sql" />
     <Build Include="dbo\Tables\t_symptom_entry.sql" />
+    <Build Include="dbo\Tables\t_general_health_entry.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare1.scmp" />

@@ -12,7 +12,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
-import { SymptomsGraphComponent } from './symptoms-graph.component';
+import { HealthGraphComponent } from './health-graph.component';
 
 
 
@@ -28,11 +28,11 @@ import { SymptomsGraphComponent } from './symptoms-graph.component';
         SharedModule
     ],
     declarations: [
-        SymptomsGraphComponent
+        HealthGraphComponent
     ],
-    exports: [SymptomsGraphComponent],
+    exports: [HealthGraphComponent],
     entryComponents: [
        
     ]
 })
-export class SymptomsGraphModule { }
+export class HealthGraphModule { }

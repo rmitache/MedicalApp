@@ -6,6 +6,7 @@ namespace DataAccessLayer.Entities
 {
     public partial class DataEntitiesContext : DbContext
     {
+        public virtual DbSet<TGeneralHealthEntry> TGeneralHealthEntry { get; set; }
         public virtual DbSet<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
         public virtual DbSet<TMedicineCategory> TMedicineCategory { get; set; }
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
@@ -29,6 +30,28 @@ namespace DataAccessLayer.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TGeneralHealthEntry>(entity =>
+            {
+                entity.ToTable("t_general_health_entry");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.HealthLevelId).HasColumnName("health_level_id");
+
+                entity.Property(e => e.OccurrenceDateTime)
+                    .HasColumnName("occurrence_date_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TGeneralHealthEntry)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_t_general_health_entry_t_user");
+            });
+
             modelBuilder.Entity<TjMedicineTypeToMedicineCategory>(entity =>
             {
                 entity.ToTable("tj_medicine_type_to_medicine_category");

@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from 'SPA/Core/core.module';
 import { DomainModelModule } from 'SPA/DomainModel/domain-model.module';
 import { ScheduleModule } from './Schedule/schedule.module';
-import { SymptomsGraphModule } from './SymptomsGraph/symptoms-graph.module';
+import { HealthGraphModule } from './HealthGraph/health-graph.module';
 import { PlansOverviewModule } from './PlansOverview/plans-overview.module';
 
 // Components
@@ -47,7 +47,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         // Root components
         ScheduleModule,
         PlansOverviewModule,
-        SymptomsGraphModule
+        HealthGraphModule
     ],
     providers: [
         StartupDataBundleService,

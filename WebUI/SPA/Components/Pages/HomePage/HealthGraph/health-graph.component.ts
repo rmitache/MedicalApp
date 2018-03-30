@@ -19,12 +19,12 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 
 
 @Component({
-    selector: 'symptoms-graph',
-    templateUrl: './symptoms-graph.component.html',
-    styleUrls: ['./symptoms-graph.component.css'],
-    host: { 'class': 'symptoms-graph' }
+    selector: 'health-graph',
+    templateUrl: './health-graph.component.html',
+    styleUrls: ['./health-graph.component.css'],
+    host: { 'class': 'health-graph' }
 })
-export class SymptomsGraphComponent {
+export class HealthGraphComponent {
     // Fields
     private readonly viewModel: ViewModel = {
         loggedInUser: null
@@ -47,19 +47,18 @@ export class SymptomsGraphComponent {
         }));
 
         this.data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['Night', 'Morning', 'Mid-Day', 'Evening'],
             datasets: [
-                {
-                    label: 'This month (April)',
-                    data: [0, 0, 1, 2, 1, 3, 1, 0, 0, 1, 2, 1, 3, 2, 0, 0, 1, 2, 1, 3],
-                    fill: false,
-                    borderColor: '#5da5da',
-                },
+                
                 {
                     label: 'Last month (March)',
-                    data: [2, 2, 3, 3, 2, 1, 1, 2, 2, 3, 3, 2, 1, 1, 2, 2, 3, 3, 2, 1],
-                    fill: false,
-                    borderColor: '#332288',
+                    data: [2, 2, 3, 3, 2, 1, -1, 2, 2, 3, 3, 2, 1, 1, 2, 2, 3, 3, 2, 1],
+                    backgroundColor: '#332288',
+                },
+                {
+                    label: 'This month (April)',
+                    data: [0, 0, 1, 2, 1, 3, 1, 0, 0, 1, 2, -1, 3, 2, 0, 0, 1, 2, 1, 3],
+                    backgroundColor: '#5da5da',
                 }
             ]
         }
@@ -72,7 +71,12 @@ export class SymptomsGraphComponent {
                 }
             },
             legend: {
-                position: 'top'
+                display:true,
+                position: 'top',
+                labels: {
+                    boxWidth: 15,
+
+                },
             },
             scales: {
                 xAxes: [{
@@ -96,13 +100,25 @@ export class SymptomsGraphComponent {
                     
                     ticks: {
                         fontColor:'gray',
-                        max: 4,
+                        max: 5,
                         padding: 5
                     }
                 }]
             },
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            annotation: {
+                annotations: [{
+                    drawTime: 'afterDraw', // overrides annotation.drawTime if set
+                    id: 'a-line-1', // optional
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-0',
+                    value: '25',
+                    borderColor: 'red',
+                    borderWidth: 2,   
+                }]
+            }
         };
     }
     ngOnDestroy() {
