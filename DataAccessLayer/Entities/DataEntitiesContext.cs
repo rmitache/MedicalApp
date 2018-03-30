@@ -6,7 +6,7 @@ namespace DataAccessLayer.Entities
 {
     public partial class DataEntitiesContext : DbContext
     {
-        public virtual DbSet<TGeneralHealthEntry> TGeneralHealthEntry { get; set; }
+        public virtual DbSet<THealthStatusEntry> THealthStatusEntry { get; set; }
         public virtual DbSet<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
         public virtual DbSet<TMedicineCategory> TMedicineCategory { get; set; }
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
@@ -30,9 +30,9 @@ namespace DataAccessLayer.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TGeneralHealthEntry>(entity =>
+            modelBuilder.Entity<THealthStatusEntry>(entity =>
             {
-                entity.ToTable("t_general_health_entry");
+                entity.ToTable("t_health_status_entry");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -47,7 +47,7 @@ namespace DataAccessLayer.Entities
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.TGeneralHealthEntry)
+                    .WithMany(p => p.THealthStatusEntry)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_t_general_health_entry_t_user");
             });

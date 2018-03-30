@@ -8,6 +8,10 @@ export * from './Factors/Medicine/Library/Enums/instruction.enum';
 export * from './Factors/Medicine/Library/Enums/base-form.enum';
 export * from './Factors/Medicine/Library/Enums/unit-dose-type.enum';
 
+// Symptoms - Library
+export * from './Indicators/Symptoms/Library/Enums/symptom-intensity-level.enum';
+export * from './Indicators/Symptoms/Library/Enums/health-level.enum';
+
 // Plans
 export * from './Plans/Enums/plan-status.enum'
 export * from './Plans/Enums/version-status.enum'

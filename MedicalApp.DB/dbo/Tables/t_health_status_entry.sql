@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[t_general_health_entry] (
+﻿CREATE TABLE [dbo].[t_health_status_entry] (
     [id]                   INT      NOT NULL,
     [user_id]              INT      NOT NULL,
     [health_level_id]      INT      NOT NULL,

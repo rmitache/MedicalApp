@@ -9,6 +9,12 @@ export * from './Factors/Medicine/History/CLOs/medicine-rule-item.clo';
 export * from './Factors/Medicine/History/CLOs/medicine-factor-record.clo';
 export * from './Factors/Medicine/History/CLOs/i-factor-record-properties-group.clo';
 
+// Indicators - Symptoms  - Library
+export * from './Indicators/Symptoms/Library/CLOs/symptom-type.clo';
+// Indicators - Symptoms  - History
+export * from './Indicators/Symptoms/History/CLOs/symptom-entry.clo';
+export * from './Indicators/Symptoms/History/CLOs/health-status-entry.clo';
+
 // Plans 
 export * from './Plans/CLOs/plan.clo';
 export * from './Plans/CLOs/version.clo';

@@ -50,15 +50,13 @@ export class HealthGraphComponent {
             labels: ['Night', 'Morning', 'Mid-Day', 'Evening'],
             datasets: [
                 
+                
                 {
-                    label: 'Last month (March)',
-                    data: [2, 2, 3, 3, 2, 1, -1, 2, 2, 3, 3, 2, 1, 1, 2, 2, 3, 3, 2, 1],
-                    backgroundColor: '#332288',
-                },
-                {
-                    label: 'This month (April)',
-                    data: [0, 0, 1, 2, 1, 3, 1, 0, 0, 1, 2, -1, 3, 2, 0, 0, 1, 2, 1, 3],
-                    backgroundColor: '#5da5da',
+                    label: 'Today (30th March)',
+                    data: [-3, 1, 2, 2],
+                    backgroundColor: '#c1e568',
+                    borderColor: '#81a81f',
+                    borderWidth: 1
                 }
             ]
         }
@@ -85,7 +83,7 @@ export class HealthGraphComponent {
                     },
                     ticks: {
                         fontColor: 'gray',
-                        
+                        beginAtZero: true
                     }
                 }],
                 yAxes: [{
@@ -100,8 +98,11 @@ export class HealthGraphComponent {
                     
                     ticks: {
                         fontColor:'gray',
-                        max: 5,
-                        padding: 5
+                        max: 4,
+                        min: -4,
+                        stepSize: 1,
+                        padding: 5,
+                        beginAtZero: true
                     }
                 }]
             },
