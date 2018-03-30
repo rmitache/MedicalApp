@@ -41,6 +41,10 @@
 .plan-divs-list {
 }
 
+.plan-div.user-entry .factor-record-list-in-plan-grouping {
+    background-color: #fceac9;
+}
+
 .plan-div {
     margin-top: 3px;
     position: relative;

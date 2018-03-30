@@ -6,7 +6,9 @@
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
             <div class="plan-divs-list">
-                <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys" class="plan-div">
+                <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys" 
+                     [class.user-entry]="dictEntry.key==='null'"
+                     class="plan-div">
 
 
                     <!--FactorRecords in Plan-->
@@ -18,7 +20,7 @@
                     </div>
 
                     <!--PlanName-->
-                    <span *ngIf="dictEntry.key!==null" class="plan-name-label label">{{dictEntry.key}}</span>
+                    <span *ngIf="dictEntry.key!=='null'" class="plan-name-label label">{{dictEntry.key}}</span>
                 </div>
 
             </div>
