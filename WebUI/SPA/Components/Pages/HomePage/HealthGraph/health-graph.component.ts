@@ -27,30 +27,99 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 export class HealthGraphComponent {
     // Fields
     private readonly viewModel: ViewModel = {
-        loggedInUser: null
+        AvailableDateRange: null,
+        AvailableHealthEntries: null,
+
+        SelectedDateRange: null,
+        SelectedViewMode: HealthGraphDisplayMode.Day
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
+    private chartOptions = {
+
+        elements: {
+            line: {
+                tension: 0, // disables bezier curves
+            }
+        },
+        legend: {
+            display: true,
+            position: 'top',
+            labels: {
+                boxWidth: 15,
+
+            },
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+
+                },
+                ticks: {
+                    fontColor: 'gray',
+                    beginAtZero: true
+                }
+            }],
+            yAxes: [{
+
+                gridLines: {
+                    display: true,
+                    drawTicks: true,
+                    drawOnChartArea: false,
+                    tickMarkLength: 5,
+                    drawBorder: false,
+                },
+
+                ticks: {
+                    fontColor: 'gray',
+                    max: 4,
+                    min: -4,
+                    stepSize: 1,
+                    padding: 5,
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        annotation: {
+            annotations: [{
+                drawTime: 'afterDraw', // overrides annotation.drawTime if set
+                id: 'a-line-1', // optional
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: '25',
+                borderColor: 'red',
+                borderWidth: 2,
+            }]
+        }
+    };
 
     data: any;
-    options: any;
 
     // Constructor 
     constructor(
-        applicationState: GlobalApplicationState
+        applicationState: GlobalApplicationState,
+        private readonly dataService: GlobalDataService,
+        private readonly commandManager: CommandManager,
+        private readonly modalDialogService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef
     ) {
-
         this.appState = applicationState as IReadOnlyApplicationState;
 
-        this.subscriptions.push(this.appState.LoggedInUserCLO.Changed.subscribe((newValue) => {
-            this.viewModel.loggedInUser = newValue;
-        }));
+        // Register self to CommandManager
+        this.commandManager.RegisterComponentInstance(this);
+
+        
+    }
+    ngOnInit() {
 
         this.data = {
             labels: ['Night', 'Morning', 'Mid-Day', 'Evening'],
             datasets: [
-                
-                
+
+
                 {
                     label: 'Today (30th March)',
                     data: [-3, 1, 2, 2],
@@ -61,66 +130,15 @@ export class HealthGraphComponent {
             ]
         }
 
-        this.options = {
+        //// Init Available (super) DataSet
+        //this.viewModel.AvailableDateRange = new Range<moment.Moment>(
+        //    moment(new Date()).startOf('day').subtract(this.availableDataWindowSizeInDays / 2, 'days'),
+        //    moment(new Date()).endOf('day').add(this.availableDataWindowSizeInDays / 2, 'days'));
+        //this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
 
-            elements: {
-                line: {
-                    tension: 0, // disables bezier curves
-                }
-            },
-            legend: {
-                display:true,
-                position: 'top',
-                labels: {
-                    boxWidth: 15,
-
-                },
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        
-                    },
-                    ticks: {
-                        fontColor: 'gray',
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-                   
-                    gridLines: {
-                        display: true,
-                        drawTicks: true,
-                        drawOnChartArea: false,
-                        tickMarkLength: 5,
-                        drawBorder: false,
-                    },
-                    
-                    ticks: {
-                        fontColor:'gray',
-                        max: 4,
-                        min: -4,
-                        stepSize: 1,
-                        padding: 5,
-                        beginAtZero: true
-                    }
-                }]
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            annotation: {
-                annotations: [{
-                    drawTime: 'afterDraw', // overrides annotation.drawTime if set
-                    id: 'a-line-1', // optional
-                    type: 'line',
-                    mode: 'horizontal',
-                    scaleID: 'y-axis-0',
-                    value: '25',
-                    borderColor: 'red',
-                    borderWidth: 2,   
-                }]
-            }
-        };
+        //// Then init the SelectedDateRange and create the display representation
+        //this.viewModel.SelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
+        //this.recreateDisplayRepresentation();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -129,5 +147,22 @@ export class HealthGraphComponent {
 
 
 interface ViewModel {
-    loggedInUser: CLOs.PatientAccountCLO | null;
+    AvailableDateRange: Range<moment.Moment>;
+    AvailableHealthEntries: CLOs.HealthStatusEntry[];
+
+    SelectedDateRange: Range<moment.Moment>;
+    SelectedViewMode: HealthGraphDisplayMode;
+}
+enum HealthGraphDisplayMode {
+    Day,
+    Week
+}
+
+// STRATEGIES
+interface IDisplayMode {
+    GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
+    GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
+    GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
+    GetChartOptions(): any;
+    GetChartData(factorRecords: CLOs.MedicineFactorRecordCLO[]): any;
 }

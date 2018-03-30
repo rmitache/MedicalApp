@@ -40,6 +40,22 @@ export class GlobalDataService {
         
         return cloList;
     }
+    public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForInitialRange'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
+        return cloList;
+    }
+    public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntry> {
+        //let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
+        alert('GetHealthStatusEntriesForInitialRangeFromBundle');
+        let blos = [
+            {
+                
+            }
+        ];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntry>(CLOs.HealthStatusEntry, blos);
+        return cloList;
+    }
 
     // Public methods 
     public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
@@ -54,11 +70,6 @@ export class GlobalDataService {
             });
 
         return postDataPromise;
-    }
-    public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
-        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForInitialRange'];
-        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
-        return cloList;
     }
     public GetFactorRecords(dateRange: Range<Date>): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
