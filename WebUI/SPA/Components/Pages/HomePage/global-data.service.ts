@@ -10,11 +10,30 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { Range } from 'SPA/Core/Helpers/DataStructures/misc';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 
 @Injectable()
 export class GlobalDataService {
     // Fields
     private readonly apiUrl: string = '/HomePage';
+
+    // Private methods
+    private generateRandomHealthStatusEntryBLOs(dateRange: Range<Date>): Object[] {
+        let datesArray: Date[] = HelperFunctions.EnumerateDaysBetweenDates(dateRange.RangeStart, dateRange.RangeEnd, true);
+        let blos = [];
+
+        datesArray.forEach(date => {
+            let newBLO = {
+                ID: 1,
+                OccurenceDateTime: date,
+                HealthLevel: HelperFunctions.RandomIntFromInterval(-3, 3)
+            }
+            blos.push(newBLO);
+        });
+
+        return blos;
+    }
+
     // Constructor
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
@@ -37,7 +56,7 @@ export class GlobalDataService {
 
         let blos = this.startupDataBundleService.GetBundle['Plans'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos);
-        
+
         return cloList;
     }
     public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
@@ -47,12 +66,10 @@ export class GlobalDataService {
     }
     public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         //let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
-        alert('GetHealthStatusEntriesForInitialRangeFromBundle');
-        let blos = [
-            {
-                
-            }
-        ];
+        let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
+            moment().endOf('month').startOf('day').toDate());
+
+        let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
     }
@@ -89,7 +106,7 @@ export class GlobalDataService {
     }
     public AddPlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
         const apiMethodName: string = 'AddPlan';
-        
+
         let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()
@@ -102,7 +119,7 @@ export class GlobalDataService {
     }
     public UpdatePlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
         const apiMethodName: string = 'UpdatePlan';
-        
+
         let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()

@@ -13,9 +13,7 @@ import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Component
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-
-// Components
-
+import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Component({
@@ -41,7 +39,7 @@ export class HealthGraphComponent {
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
-    
+
 
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
@@ -49,13 +47,14 @@ export class HealthGraphComponent {
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.SelectedViewMode === HealthGraphDisplayMode.Month) {
             currentStrategy = new MonthDisplayMode();
-        } else  {
+        } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
         }
         return currentStrategy;
     }
     private recreateDisplayRepresentation() {
+
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredHealthStatusEntries = this.viewModel.AvailableHealthEntries.filter(entry => {
             return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
@@ -89,8 +88,8 @@ export class HealthGraphComponent {
 
         // Init Available (super) DataSet
         this.viewModel.AvailableDateRange = new Range<moment.Moment>(
-            moment(new Date()).startOf('day').subtract(this.availableDataWindowSizeInDays / 2, 'days'),
-            moment(new Date()).endOf('day').add(this.availableDataWindowSizeInDays / 2, 'days'));
+            moment().startOf('day').subtract(this.availableDataWindowSizeInDays, 'days'),
+            moment().endOf('day'));
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // Then init the SelectedDateRange and create the display representation
@@ -127,124 +126,121 @@ interface IDisplayMode {
     GenerateChartOptions(): any;
     GenerateChartData(filteredHealthStatusEntries: CLOs.HealthStatusEntryCLO[]): any;
 }
-
 class MonthDisplayMode implements IDisplayMode {
-    // Fields
-    
+    // Private methods
+    private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+        var dataPoints = [];
+        healthStatusEntryCLOs.forEach(clo => {
+            var dp = {
+                x: moment(clo.OccurenceDateTime),
+                y: clo.HealthLevel
+            };
+            dataPoints.push(dp);
+        });
+        
+        return dataPoints;
+    }
+
 
     // Public methods
     public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
-        return new Range<moment.Moment>(referenceDate.clone().startOf('day'), referenceDate.clone().endOf('day'));
+
+        // Get the month of the referenceDate as an initial range
+        let range = new Range<moment.Moment>(referenceDate.clone().startOf('month').startOf('day'),
+            referenceDate.clone().endOf('month').endOf('day'));
+        return range;
     }
-    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
-        // Check if length of range is = 0
-        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
-        if (length !== 0) {
-            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
-        }
-
-        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(1, 'days'), currentSelDateRange.RangeEnd.clone().add(1, 'days'));
+    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+        throw new Error('GetNextSelectedDateRange not implemented yet');
     }
-    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
-        // Check if length of range is = 0
-        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
-        if (length !== 0) {
-            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
-        }
-
-        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(1, 'days'), currentSelDateRange.RangeEnd.clone().subtract(1, 'days'));
-
+    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+        throw new Error('GetPreviousSelectedDateRange not implemented yet');
     }
     public GenerateChartOptions() {
         let chartOptions = {
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        //var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-        elements: {
-            line: {
-                tension: 0, // disables bezier curves
-            }
-        },
-        legend: {
-            display: true,
-            position: 'top',
-            labels: {
-                boxWidth: 15,
+                        //if (label) {
+                        //    label += ': ';
+                        //}
+                        //label += Math.round(tooltipItem.yLabel * 100) / 100;
+                        //return label;
 
-            },
-        },
-        scales: {
-            xAxes: [{
-                type: "time",
-                time: {
-                    unit: 'day',
-                    round: 'day',
-                    tooltipFormat: "h:mm:ss a",
-                    displayFormats: {
-                        hour: 'MMM D'
+                        return 'wtf bro';
                     }
-                },
-                gridLines: {
-                    display: false,
-                },
-                ticks: {
-                    fontColor: 'gray',
-                    beginAtZero: true
                 }
-            }],
-            yAxes: [{
-
-                gridLines: {
-                    display: true,
-                    drawTicks: true,
-                    drawOnChartArea: true,
-                    tickMarkLength: 5,
-                    drawBorder: false,
-                },
-
-                ticks: {
-                    fontColor: 'gray',
-
-                    padding: 5,
-                    beginAtZero: true
+            },
+            elements: {
+                line: {
+                    tension: 0, // disables bezier curves
                 }
-            }]
-        },
-        responsive: true,
-        maintainAspectRatio: false
-    };
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    boxWidth: 15,
+
+                },
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        unit: 'day',
+                        round: 'day',
+                        unitStepSize: 1,
+                        tooltipFormat: "dddd MMM D, YYYY",
+                        displayFormats: {
+                            hour: 'MMM D'
+                        }
+                    },
+                    gridLines: {
+                        display: true,
+                        offsetGridLines: true
+                    },
+                    ticks: {
+                        fontColor: 'gray',
+                        beginAtZero: true,
+                    }
+                }],
+                yAxes: [{
+
+                    gridLines: {
+                        display: true,
+                        drawTicks: true,
+                        drawOnChartArea: true,
+                        tickMarkLength: 5,
+                        drawBorder: true,
+                    },
+
+                    ticks: {
+                        fontColor: 'gray',
+                        padding: 5,
+                        beginAtZero: true
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        };
         return chartOptions;
     }
-    public GenerateChartData(factorRecords: CLOs.HealthStatusEntryCLO[]) {
+    public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+
+        // Prepare data
+        var labelText = (filteredHealthStatusEntryCLOs.length > 0) ? moment(filteredHealthStatusEntryCLOs[0].OccurenceDateTime).format('MMMM YYYY') : 'No data is available';
+        var dataPoints = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs);
+
+        // Set data
         var data = {
             datasets: [
-
-
                 {
-                    label: 'How you felt',
-                    data: [{
-                        x: moment().add(-10, "days"),
-                        y: Math.random() * 100
-                    },
-                    {
-                        x: moment().add(-8, "days"),
-                        y: Math.random() * 100
-                    },
-                    {
-                        x: moment().add(-6, "days"),
-                        y: Math.random() * 100
-                    },
-                    {
-                        x: moment().add(-4, "days"),
-                        y: Math.random() * 100
-                    },
-                    {
-                        x: moment().add(-2, "days"),
-                        y: Math.random() * 100
-                    },
-                    {
-                        x: moment().add(-0, "days"),
-                        y: Math.random() * 100
-                    }
-                    ],
+                    label: labelText,
+                    data: dataPoints,
                     backgroundColor: '#c1e568',
                     borderColor: '#81a81f',
                     borderWidth: 1

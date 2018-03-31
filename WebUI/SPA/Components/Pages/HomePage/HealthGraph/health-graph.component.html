@@ -5,15 +5,10 @@
             <span class="header-label h1">HEALTH</span>
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
         </div>
-        
     </div>
     <div class="body">
         <div class="chart-wrapper-div">
             <p-chart #chart type="bar"  [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="220px"></p-chart>
         </div>
-
-
-
     </div>
-    
 </div> 
