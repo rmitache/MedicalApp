@@ -45,7 +45,7 @@ export class GlobalDataService {
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
         return cloList;
     }
-    public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntry> {
+    public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         //let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
         alert('GetHealthStatusEntriesForInitialRangeFromBundle');
         let blos = [
@@ -53,7 +53,7 @@ export class GlobalDataService {
                 
             }
         ];
-        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntry>(CLOs.HealthStatusEntry, blos);
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
     }
 

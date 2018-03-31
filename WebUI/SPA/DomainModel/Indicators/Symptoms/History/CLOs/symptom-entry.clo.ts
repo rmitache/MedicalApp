@@ -2,7 +2,7 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 
-export class SymptomEntry extends BaseCLO {
+export class SymptomEntryCLO extends BaseCLO {
     // Fields
     public ID: number;
     public OccurenceDateTime: Date;

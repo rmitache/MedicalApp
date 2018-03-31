@@ -6,7 +6,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 @Injectable()
-export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatusEntry> {
+export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatusEntryCLO> {
 
     // Constructor
     constructor() {
@@ -14,17 +14,17 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
     }
 
     // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.HealthStatusEntry {
+    public Convert_ToCLO(blo: any): CLOs.HealthStatusEntryCLO {
 
-        let newCLO = new CLOs.HealthStatusEntry();
+        let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = blo['ID'];
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
         newCLO.HealthLevel = blo['HealthLevel'];
 
         return newCLO;
     }
-    public Create_DefaultCLO(): CLOs.HealthStatusEntry {
-        let newCLO = new CLOs.HealthStatusEntry();
+    public Create_DefaultCLO(): CLOs.HealthStatusEntryCLO {
+        let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = 0;
         newCLO.OccurenceDateTime = new Date();
         newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
@@ -32,9 +32,9 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
 
         return newCLO;
     }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.HealthStatusEntry> {
+    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         
-        let cloList = new DataStructures.List<CLOs.HealthStatusEntry>();
+        let cloList = new DataStructures.List<CLOs.HealthStatusEntryCLO>();
         bloArray.forEach(blo => {
             let clo = this.Convert_ToCLO(blo);
             cloList.Add(clo);
@@ -42,7 +42,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
 
         return cloList;
     }
-    public Clone_CLOAsNewBLO(clo: CLOs.HealthStatusEntry): CLOs.HealthStatusEntry {
+    public Clone_CLOAsNewBLO(clo: CLOs.HealthStatusEntryCLO): CLOs.HealthStatusEntryCLO {
         throw new Error('Clone_CLO Not implemented');
     }
 }

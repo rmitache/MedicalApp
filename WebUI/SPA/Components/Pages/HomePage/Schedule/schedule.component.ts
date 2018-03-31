@@ -232,7 +232,7 @@ interface IDisplayMode {
     GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetNavigationLabel(currentSelDateRange: Range<moment.Moment>):string;
-    GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
+    GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
 }
 class DayDisplayMode implements IDisplayMode {
     // Fields
@@ -288,10 +288,10 @@ class DayDisplayMode implements IDisplayMode {
 
         return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
     }
-    public GenerateDisplayRepresentation(factorRecords: CLOs.MedicineFactorRecordCLO[]) {
+    public GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]) {
         
         // Sort by time (ascending)
-        factorRecords = factorRecords.sort((f1, f2) => {
+        filteredFactorRecords = filteredFactorRecords.sort((f1, f2) => {
             if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
                 return 1;
             }
@@ -314,7 +314,7 @@ class DayDisplayMode implements IDisplayMode {
         });
 
         // Loop through factorRecords and add them to their corresponding Unit representations
-        factorRecords.forEach((record) => {
+        filteredFactorRecords.forEach((record) => {
             
             // Find which unitRepr it belongs to 
             let unitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
