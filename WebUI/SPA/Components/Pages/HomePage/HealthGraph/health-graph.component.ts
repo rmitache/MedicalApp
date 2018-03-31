@@ -213,7 +213,7 @@ class MonthDisplayMode implements IDisplayMode {
                 }
             },
             legend: {
-                display: true,
+                display: false,
                 position: 'top',
                 labels: {
                     boxWidth: 15,
