@@ -65,6 +65,7 @@ export class HealthGraphComponent {
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions();
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries);
+
         this.chartInstance.reinit();
 
     }
@@ -129,16 +130,56 @@ interface IDisplayMode {
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
     private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
-        var dataPoints = [];
+
+        //var positiveDataPoints = [];
+        //var positiveDataPointsBgColors = [];
+        //var negativeDataPoints = []
+        //var negativeDataPointsBgColors = [];
+
+        //healthStatusEntryCLOs.forEach(clo => {
+        //    var dp = {
+        //        x: moment(clo.OccurenceDateTime),
+        //        y: clo.HealthLevel
+        //    };
+
+
+        //    if (clo.HealthLevel >= 0) {
+        //        positiveDataPoints.push(dp);
+        //        positiveDataPointsBgColors.push('#9dc340'); // green
+        //    } else {
+        //        negativeDataPoints.push(dp);
+        //        negativeDataPointsBgColors.push('#f35d5d'); // red
+        //    }
+        //});
+
+        //return {
+        //    positiveDataPoints: positiveDataPoints,
+        //    positiveDataPointsBgColors: positiveDataPointsBgColors,
+        //    negativeDataPoints: negativeDataPoints,
+        //    negativeDataPointsBgColors: negativeDataPointsBgColors
+        //};
+
+        var dataPoints = []
+        var dataPointsBgColors = [];
+
         healthStatusEntryCLOs.forEach(clo => {
             var dp = {
                 x: moment(clo.OccurenceDateTime),
                 y: clo.HealthLevel
             };
+
             dataPoints.push(dp);
+            if (clo.HealthLevel >= 0) {
+                dataPointsBgColors.push('#9dc340'); // green
+            } else {
+                dataPointsBgColors.push('#f35d5d'); // red
+            }
         });
-        
-        return dataPoints;
+
+        return {
+            dataPoints: dataPoints,
+            dataPointsBgColors: dataPointsBgColors
+        };
     }
 
 
@@ -161,15 +202,8 @@ class MonthDisplayMode implements IDisplayMode {
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem, data) {
-                        //var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                        //if (label) {
-                        //    label += ': ';
-                        //}
-                        //label += Math.round(tooltipItem.yLabel * 100) / 100;
-                        //return label;
-
-                        return 'wtf bro';
+                        var healthLevelName = Enums.HealthLevel[tooltipItem.yLabel];
+                        return healthLevelName;
                     }
                 }
             },
@@ -200,11 +234,12 @@ class MonthDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         display: true,
-                        offsetGridLines: true
+                        drawOnChartArea: false,
                     },
                     ticks: {
                         fontColor: 'gray',
                         beginAtZero: true,
+
                     }
                 }],
                 yAxes: [{
@@ -220,7 +255,12 @@ class MonthDisplayMode implements IDisplayMode {
                     ticks: {
                         fontColor: 'gray',
                         padding: 5,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1,
+                        callback: function (label, index, labels) {
+                            return Enums.HealthLevel[label];
+
+                        }
                     }
                 }]
             },
@@ -232,18 +272,15 @@ class MonthDisplayMode implements IDisplayMode {
     public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
 
         // Prepare data
-        var labelText = (filteredHealthStatusEntryCLOs.length > 0) ? moment(filteredHealthStatusEntryCLOs[0].OccurenceDateTime).format('MMMM YYYY') : 'No data is available';
-        var dataPoints = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs);
+        var dataPointsInfo = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs);
 
         // Set data
         var data = {
             datasets: [
                 {
-                    label: labelText,
-                    data: dataPoints,
-                    backgroundColor: '#c1e568',
-                    borderColor: '#81a81f',
-                    borderWidth: 1
+                    label: 'General state',
+                    data: dataPointsInfo.dataPoints,
+                    backgroundColor: dataPointsInfo.dataPointsBgColors,
                 }
             ]
         }

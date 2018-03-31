@@ -27,7 +27,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
         let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = 0;
         newCLO.OccurenceDateTime = new Date();
-        newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
+        newCLO.HealthLevel = Enums.HealthLevel.Neutral;
 
 
         return newCLO;
