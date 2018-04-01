@@ -129,6 +129,12 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
 
             return blo;
         }
+        public List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities)
+        {
+            var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
+            return blosList;
+        }
+
         public List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, DateTime windowEndDate)
         {
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
@@ -176,10 +182,6 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
 
             return projectedFactorRecordsList;
         }
-        public List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities)
-        {
-            var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
-            return blosList;
-        }
+
     }
 }

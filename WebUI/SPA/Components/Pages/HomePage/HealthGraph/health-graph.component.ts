@@ -27,7 +27,6 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
 })
 export class HealthGraphComponent {
     // Fields
-    private availableDataWindowSizeInDays = 50;
     @ViewChild("chart")
     private chartInstance: UIChart;
     private readonly viewModel: ViewModel = {
@@ -93,9 +92,8 @@ export class HealthGraphComponent {
     ngOnInit() {
 
         // Init Available (super) DataSet
-        this.viewModel.AvailableDateRange = new Range<moment.Moment>(
-            moment().startOf('day').subtract(this.availableDataWindowSizeInDays, 'days'),
-            moment().endOf('day'));
+        this.viewModel.AvailableDateRange = new Range<moment.Moment>(moment().startOf('month').startOf('day'),// current month
+            moment().endOf('month').startOf('day')); 
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // Then init the SelectedDateRange and create the display representation
@@ -128,9 +126,9 @@ export class HealthGraphComponent {
                                 .then((cloList) => {
 
                                     this.recreateDisplayRepresentation();
-                                            setTimeout(() => {
-                                                this.viewModel.Blocked = false;
-                                                resolve();
+                                    setTimeout(() => {
+                                        this.viewModel.Blocked = false;
+                                        resolve();
                                     }, 500);
 
 
@@ -315,7 +313,7 @@ class MonthDisplayMode implements IDisplayMode {
                         drawOnChartArea: true,
                         tickMarkLength: 5,
                         drawBorder: true,
-                        zeroLineColor : 'black'
+                        zeroLineColor: 'black'
                     },
 
                     ticks: {

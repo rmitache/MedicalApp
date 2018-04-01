@@ -13,8 +13,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
     {
         THealthStatusEntry Convert_ToDataEntity(HealthStatusEntry blo, int userID);
         List<THealthStatusEntry> Convert_ToDataEntitiesList(List<HealthStatusEntry> blos, int userID);
-        //MedicineFactorRecord Convert_ToBLO(TMedicineFactorRecord dataEntity);
-        //List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities);
-        //List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, DateTime windowEndDate);
+        HealthStatusEntry Convert_ToBLO(THealthStatusEntry dataEntity);
+        List<HealthStatusEntry> Convert_ToBLOList(List<THealthStatusEntry> dataEntities);
     }
 }

@@ -14,6 +14,7 @@ using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net;
 using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
+using BLL.DomainModel.Indicators.Symptoms.History.Enums;
 
 namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
 {
@@ -40,5 +41,21 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
             var dataEntitiesList = blos.Select(blo => Convert_ToDataEntity(blo, userID)).ToList();
             return dataEntitiesList;
         }
+
+        public HealthStatusEntry Convert_ToBLO(THealthStatusEntry dataEntity)
+        {
+            HealthStatusEntry blo = new HealthStatusEntry();
+            blo.ID = dataEntity.Id;
+            blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
+            blo.HealthLevel = (HealthLevel)dataEntity.HealthLevelId;
+
+            return blo;
+        }
+        public List<HealthStatusEntry> Convert_ToBLOList(List<THealthStatusEntry> dataEntities)
+        {
+            var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
+            return blosList;
+        }
+
     }
 }

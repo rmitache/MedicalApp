@@ -39,6 +39,14 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Services
             return blo;
         }
 
+        public List<HealthStatusEntry> GetHealthStatusEntries(Range<DateTime> dateRange, int userID)
+        {
+            var dataEntities = this.healthStatusEntryRepo.GetHealthStatusEntries(dateRange, userID);
+            var blos = this.healthStatusEntryFactory.Convert_ToBLOList(dataEntities);
+
+            return blos;
+        }
+
     }
 
 

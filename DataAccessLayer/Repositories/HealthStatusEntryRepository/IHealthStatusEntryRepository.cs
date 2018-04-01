@@ -12,5 +12,6 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
     public interface IHealthStatusEntryRepository
     {
         THealthStatusEntry AddHealthStatusEntry(THealthStatusEntry dataEntity);
+        List<THealthStatusEntry> GetHealthStatusEntries(Range<DateTime> dateRange, int userID);
     }
 }

@@ -24,7 +24,6 @@ import { RuleElemComponent } from './PlanEditor/RuleElem/rule-elem.component';
         ReactiveFormsModule,
         AutoCompleteModule,
         ProgressSpinnerModule,
-
         SharedModule
     ],
     declarations: [

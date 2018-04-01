@@ -65,16 +65,18 @@ export class GlobalDataService {
         return cloList;
     }
     public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
-        //let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
-        let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
-            moment().endOf('month').startOf('day').toDate());
+        let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
 
-        let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);
+        // Autogenerate code
+        //let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
+        //    moment().endOf('month').startOf('day').toDate());
+        //let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);
+
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
     }
 
-    // Public methods 
+    // FactorRecords
     public AddFactorRecords(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
         const apiMethodName: string = 'AddFactorRecords';
 
@@ -104,6 +106,8 @@ export class GlobalDataService {
 
         return getDataPromise;
     }
+
+    // Plans
     public AddPlan(planCLO: CLOs.PlanCLO): Promise<CLOs.PlanCLO> {
         const apiMethodName: string = 'AddPlan';
 
@@ -143,6 +147,8 @@ export class GlobalDataService {
 
         return getDataPromise;
     }
+
+    // HealthStatusEntries
     public AddHealthStatusEntry(healthStatusEntryCLO: CLOs.HealthStatusEntryCLO): Promise<CLOs.HealthStatusEntryCLO> {
         const apiMethodName: string = 'AddHealthStatusEntry';
 
@@ -155,6 +161,22 @@ export class GlobalDataService {
             });
 
         return postDataPromise;
+    }
+    public GetHealthStatusEntries(dateRange: Range<Date>): Promise<CLOs.HealthStatusEntryCLO[]> {
+        const apiMethodName: string = 'GetHealthStatusEntries';
+
+        let model = {
+            DateRange: dateRange
+        };
+
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos).ToArray();
+            });
+
+
+        return getDataPromise;
     }
 
 }

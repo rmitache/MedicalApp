@@ -13,7 +13,7 @@ using BLL.DomainModel.Plans.BLOs;
 using Common.Datastructures;
 using BLL.DomainModel.Indicators.Symptoms.History.Services;
 using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
-
+using Common;
 namespace WebUI.Controllers
 {
 
@@ -24,6 +24,16 @@ namespace WebUI.Controllers
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
         private IPlanService planService { get; set; }
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
+
+        // Private methods
+        private Range<DateTime> GetCurrentMonthStartAndEndDates()
+        {
+            DateTime now = DateTime.Now;
+            
+            var startDate = new DateTime(now.Year, now.Month, 1).StartOfDay();
+            var endDate = startDate.AddMonths(1).AddDays(-1).EndOfDay();
+            return new Range<DateTime>(startDate, endDate);
+        }
 
         // Constructor
         public HomePageController(
@@ -53,7 +63,7 @@ namespace WebUI.Controllers
 
 
 
-        // WebAPI methods
+        // Startup
         [Route("HomePage/GetInitialData")]
         [HttpGet]
         public JsonResult GetInitialData()
@@ -75,7 +85,9 @@ namespace WebUI.Controllers
                     DateTime.Today.Subtract(new TimeSpan(25, 0, 0, 0)),
                     DateTime.Today.Add(new TimeSpan(25, 23, 59, 59))
                 );
+            var currentMonthRange = this.GetCurrentMonthStartAndEndDates();
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(currentMonthRange, 1);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -86,11 +98,13 @@ namespace WebUI.Controllers
                 MedicineTypes = medicineTypes,
                 Plans = plans,
                 FactorRecordsForInitialRange = factorRecords,
-
+                HealthStatusEntriesForInitialRange = healthStatusEntries
             };
             return Json(bundle);
         }
 
+
+        // FactorRecords-------------------------------------------------------------------------------------------------------
         [Route("HomePage/AddFactorRecords")]
         [HttpPost]
         public JsonResult AddFactorRecords([FromBody]List<MedicineFactorRecord> factorRecords)
@@ -102,13 +116,15 @@ namespace WebUI.Controllers
 
         [Route("HomePage/GetFactorRecords")]
         [HttpPost]
-        public JsonResult GetFactorRecords([FromBody] GetFactorRecordsModel model)
+        public JsonResult GetFactorRecords([FromBody] DateRangeModel model)
         {
             int userID = 1;
             var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, userID);
             return Json(blos);
         }
+        //---------------------------------------------------------------------------------------------------------------------
 
+        // Plans---------------------------------------------------------------------------------------------------------------
         [Route("HomePage/AddPlan")]
         [HttpPost]
         public JsonResult AddPlan([FromBody]Plan plan)
@@ -135,7 +151,9 @@ namespace WebUI.Controllers
             var blos = this.planService.GetPlans(userID, true);
             return Json(blos);
         }
+        //---------------------------------------------------------------------------------------------------------------------
 
+        // HealthStatusEntries-------------------------------------------------------------------------------------------------
         [Route("HomePage/AddHealthStatusEntry")]
         [HttpPost]
         public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
@@ -144,13 +162,21 @@ namespace WebUI.Controllers
             var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, userID);
             return Json(bloWithUpdatedID);
         }
+        [Route("HomePage/GetHealthStatusEntries")]
+        [HttpPost]
+        public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
+        {
+            int userID = 1;
+            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, userID);
+            return Json(blos);
+        }
+        //---------------------------------------------------------------------------------------------------------------------
 
 
         // Models
-        public class GetFactorRecordsModel
+        public class DateRangeModel
         {
             public Range<DateTime> DateRange;
-
         }
 
     }

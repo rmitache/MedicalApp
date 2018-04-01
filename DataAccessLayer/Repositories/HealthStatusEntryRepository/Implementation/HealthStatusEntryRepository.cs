@@ -28,7 +28,18 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
 
             return dataEntity;
         }
-        
+        public List<THealthStatusEntry> GetHealthStatusEntries(Range<DateTime> dateRange, int userID)
+        {
+            return entitiesContext.THealthStatusEntry
+                .AsNoTracking()
+                .Where(
+                    record =>
+                        record.UserId == userID &&
+                        record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date &&
+                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.Add(new TimeSpan(23, 59, 59)))
+                .Include(record => record.TSymptomEntry)
+                .ToList();
+        }
     }
 }
 
