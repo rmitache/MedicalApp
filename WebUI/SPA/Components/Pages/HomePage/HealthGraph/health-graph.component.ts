@@ -57,8 +57,17 @@ export class HealthGraphComponent {
         }
         return currentStrategy;
     }
+    private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+        let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
+        let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
+            .then(clos => {
+                this.viewModel.AvailableDateRange = newDateRange;
+                this.viewModel.AvailableHealthEntries = clos;
+            });
+        return promise;
+    }
     private recreateDisplayRepresentation() {
-
+        
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredHealthStatusEntries = this.viewModel.AvailableHealthEntries.filter(entry => {
             return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
@@ -68,7 +77,8 @@ export class HealthGraphComponent {
         // 
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions();
-        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries);
+        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries,
+            new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
 
         this.chartInstance.reinit();
 
@@ -93,7 +103,7 @@ export class HealthGraphComponent {
 
         // Init Available (super) DataSet
         this.viewModel.AvailableDateRange = new Range<moment.Moment>(moment().startOf('month').startOf('day'),// current month
-            moment().endOf('month').startOf('day')); 
+            moment().endOf('month').startOf('day'));
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // Then init the SelectedDateRange and create the display representation
@@ -102,6 +112,14 @@ export class HealthGraphComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public methods
+    public RefreshUI() {
+        this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
+            .then(() => {
+                this.recreateDisplayRepresentation();
+            });
     }
 
     // Event handlers
@@ -124,22 +142,17 @@ export class HealthGraphComponent {
                             let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
                             componentInstance.SaveData()
                                 .then((cloList) => {
-
-                                    this.recreateDisplayRepresentation();
-                                    setTimeout(() => {
-                                        this.viewModel.Blocked = false;
-                                        resolve();
-                                    }, 500);
+                                    
 
 
-                                    //this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
-                                    //    .then(() => {
-                                    //        this.recreateDisplayRepresentation();
-                                    //        setTimeout(() => {
-                                    //            this.viewModel.Blocked = false;
-                                    //            resolve();
-                                    //        }, 200);
-                                    //    });
+                                    this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
+                                        .then(() => {
+                                            this.recreateDisplayRepresentation();
+                                            setTimeout(() => {
+                                                this.viewModel.Blocked = false;
+                                                resolve();
+                                            }, 200);
+                                        });
 
                                 });
                         });
@@ -184,51 +197,52 @@ interface IDisplayMode {
     GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GenerateChartOptions(): any;
-    GenerateChartData(filteredHealthStatusEntries: CLOs.HealthStatusEntryCLO[]): any;
+    GenerateChartData(filteredHealthStatusEntries: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>): any;
 }
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
-    private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+    private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+        var sum: number = 0;
+        healthStatusEntryCLOs.forEach(clo => {
+            sum += clo.HealthLevel;
+        });
 
-        //var positiveDataPoints = [];
-        //var positiveDataPointsBgColors = [];
-        //var negativeDataPoints = []
-        //var negativeDataPointsBgColors = [];
-
-        //healthStatusEntryCLOs.forEach(clo => {
-        //    var dp = {
-        //        x: moment(clo.OccurenceDateTime),
-        //        y: clo.HealthLevel
-        //    };
-
-
-        //    if (clo.HealthLevel >= 0) {
-        //        positiveDataPoints.push(dp);
-        //        positiveDataPointsBgColors.push('#9dc340'); // green
-        //    } else {
-        //        negativeDataPoints.push(dp);
-        //        negativeDataPointsBgColors.push('#f35d5d'); // red
-        //    }
-        //});
-
-        //return {
-        //    positiveDataPoints: positiveDataPoints,
-        //    positiveDataPointsBgColors: positiveDataPointsBgColors,
-        //    negativeDataPoints: negativeDataPoints,
-        //    negativeDataPointsBgColors: negativeDataPointsBgColors
-        //};
-
+        if (healthStatusEntryCLOs.length > 0)
+            return sum / healthStatusEntryCLOs.length;
+        else
+            return 0;
+    }
+    private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], range: Range<moment.Moment>) {
+       
+        // Variables
         var dataPoints = []
         var dataPointsBgColors = [];
 
-        healthStatusEntryCLOs.forEach(clo => {
-            var dp = {
-                x: moment(clo.OccurenceDateTime),
-                y: clo.HealthLevel
-            };
+        // Create a dictionary of dates and clos 
+        var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
+        healthStatusEntryCLOs.forEach((clo, index) => {
 
+            let dateKey = moment(clo.OccurenceDateTime).format('DD/MM/YYYY');
+            if (datesToCLOsDictionary[dateKey] === undefined) {
+                datesToCLOsDictionary[dateKey] = [];
+            };
+            datesToCLOsDictionary[dateKey].push(clo);
+        });
+
+        // Loop through dates and create datapoints
+        var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
+        datesInRangeArray.forEach((date, index) => {
+            let dateKey = date.format('DD/MM/YYYY');
+            var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
+            var avgHealthLevel = this.getAverageHealthLevel(clos);
+
+            // Create datapoints
+            var dp = {
+                x: date,
+                y: avgHealthLevel
+            };
             dataPoints.push(dp);
-            if (clo.HealthLevel >= 0) {
+            if (avgHealthLevel >= 0) {
                 dataPointsBgColors.push('#9dc340'); // green
             } else {
                 dataPointsBgColors.push('#f35d5d'); // red
@@ -320,6 +334,8 @@ class MonthDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         padding: 5,
                         beginAtZero: true,
+                        min: -3,
+                        max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
                             if (label !== 0)
@@ -336,10 +352,10 @@ class MonthDisplayMode implements IDisplayMode {
         };
         return chartOptions;
     }
-    public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+    public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>) {
 
         // Prepare data
-        var dataPointsInfo = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs);
+        var dataPointsInfo = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs, currentSelDateRange);
 
         // Set data
         var data = {

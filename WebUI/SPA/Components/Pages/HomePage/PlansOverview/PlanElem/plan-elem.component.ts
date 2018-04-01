@@ -125,10 +125,6 @@ export class PlanElemComponent {
                 
                 let endDate = moment(latestVersion.EndDate).startOf('day');
                 if (this.planCLO.GetLatestVersion().EndDate !== null) {
-
-                    
-                    //alert(endDate.diff(moment().startOf('day'), 'days'));
-
                     this.viewModel.EndDatePrefixString = 'Ending:';
                     this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDate);
                 }

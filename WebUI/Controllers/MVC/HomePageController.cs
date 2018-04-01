@@ -162,6 +162,7 @@ namespace WebUI.Controllers
             var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, userID);
             return Json(bloWithUpdatedID);
         }
+
         [Route("HomePage/GetHealthStatusEntries")]
         [HttpPost]
         public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)

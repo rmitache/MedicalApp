@@ -52,13 +52,13 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         this.reactiveForm = this.fb.group({
             occurrenceDateTime: [null, Validators.compose([
                 (control: AbstractControl) => {
-                    var selDateTime = moment(control.value);
-                    if (selDateTime > moment()) {
-                        return { incorrect: true };
-                    }
-                    else {
+                    //var selDateTime = moment(control.value);
+                    //if (selDateTime > moment()) {
+                    //    return { incorrect: true };
+                    //}
+                    //else {
                         return null;
-                    }
+                    //}
                 }
             ])],
             healthLevel: [null, Validators.compose([

@@ -34,9 +34,7 @@ namespace DataAccessLayer.Entities
             {
                 entity.ToTable("t_health_status_entry");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.HealthLevelId).HasColumnName("health_level_id");
 
@@ -262,9 +260,7 @@ namespace DataAccessLayer.Entities
             {
                 entity.ToTable("t_symptom_entry");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.HealthStatusEntryId).HasColumnName("health_status_entry_id");
 
@@ -291,9 +287,7 @@ namespace DataAccessLayer.Entities
             {
                 entity.ToTable("t_symptom_type");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
