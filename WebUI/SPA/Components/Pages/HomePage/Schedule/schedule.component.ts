@@ -12,6 +12,7 @@ import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Component
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
@@ -44,7 +45,7 @@ export class ScheduleComponent {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Day) {
-            currentStrategy = new DayDisplayMode();
+            currentStrategy = new DayDisplayMode(this.genericCLOFactory);
         } else if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Week) {
             // OBS -> Not implemented yet
         }
@@ -78,7 +79,9 @@ export class ScheduleComponent {
         private readonly dataService: GlobalDataService,
         private readonly commandManager: CommandManager,
         private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
+        private viewContainerRef: ViewContainerRef,
+        private readonly genericCLOFactory: GenericCLOFactory,
+
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -287,6 +290,11 @@ class DayDisplayMode implements IDisplayMode {
         return wasConflated;
     }
 
+    // Constructor
+    constructor(private readonly genericCLOFactory: GenericCLOFactory) {
+
+    }
+
     // Public methods
     public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
         return new Range<moment.Moment>(referenceDate.clone().startOf('day'), referenceDate.clone().endOf('day'));
@@ -320,7 +328,10 @@ class DayDisplayMode implements IDisplayMode {
         return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
     }
     public GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]) {
-        
+
+        // Clone filteredFactorRecords
+        filteredFactorRecords = this.genericCLOFactory.CloneCLOArray(filteredFactorRecords);
+
         // Sort by time (ascending)
         filteredFactorRecords = filteredFactorRecords.sort((f1, f2) => {
             if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
@@ -373,8 +384,6 @@ class DayDisplayMode implements IDisplayMode {
             }
 
         });
-
-
 
         return displayRep;
     }

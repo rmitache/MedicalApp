@@ -151,6 +151,18 @@ export class GenericCLOFactory {
         let clone: T = factory.Convert_ToCLO(blo);
         return clone;
     }
+    public CloneCLOArray<T extends BaseCLO>(cloArray: T[]): T[] {
+        if (cloArray.length === 0) {
+            throw new Error('List to be cloned has length 0');
+        }
+
+        let clonedCLOs = [];
+        cloArray.forEach(sourceCLO => {
+            let newClone = this.CloneCLO(sourceCLO);
+            clonedCLOs.push(newClone);
+        });
+        return clonedCLOs;
+    }
     public CloneCLOAsNewBLO<T extends BaseCLO>(clo: T): T {
         let factory: ICLOFactory<T> = this.getFactoryByCLOTypeName<T>(clo.GetTypeName());
         
