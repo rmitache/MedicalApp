@@ -13,6 +13,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { HealthGraphComponent } from './health-graph.component';
+import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 
 
 
@@ -28,11 +29,12 @@ import { HealthGraphComponent } from './health-graph.component';
         SharedModule
     ],
     declarations: [
-        HealthGraphComponent
+        HealthGraphComponent,
+        AddNewHealthStatusEntryComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [
-       
+        AddNewHealthStatusEntryComponent
     ]
 })
 export class HealthGraphModule { }

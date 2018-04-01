@@ -15,6 +15,9 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 
+// Components
+import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
+
 
 @Component({
     selector: 'health-graph',
@@ -35,7 +38,9 @@ export class HealthGraphComponent {
 
         ChartOptions: null,
         ChartData: null,
-        SelectedViewMode: HealthGraphDisplayMode.Month
+        SelectedViewMode: HealthGraphDisplayMode.Month,
+        Blocked: false
+
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -100,6 +105,54 @@ export class HealthGraphComponent {
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
+
+    // Event handlers
+    private onAddNewHealthStatusEntryTriggered() {
+        this.modalDialogService.openDialog(this.viewContainerRef, {
+            title: 'Add new Health Entry ',
+            childComponent: AddNewHealthStatusEntryComponent,
+            data: moment().toDate(),
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let addNewEventComponentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+                        return !addNewEventComponentInstance.GetValidState();
+                    },
+                    text: 'Save',
+                    onAction: (childComponentInstance: any) => {
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.viewModel.Blocked = true;
+
+                            let addNewEventComponentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+                            addNewEventComponentInstance.SaveData()
+                                .then((cloList) => {
+
+                                    //this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
+                                    //    .then(() => {
+                                    //        this.recreateDisplayRepresentation();
+                                    //        setTimeout(() => {
+                                    //            this.viewModel.Blocked = false;
+                                    //            resolve();
+                                    //        }, 200);
+                                    //    });
+
+                                });
+                        });
+                        return promiseWrapper;
+                    }
+                },
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    }
+                }
+            ]
+        });
+    }
 }
 
 
@@ -112,6 +165,7 @@ interface ViewModel {
     ChartOptions: any;
     ChartData: any;
     SelectedViewMode: HealthGraphDisplayMode;
+    Blocked: boolean;
 }
 enum HealthGraphDisplayMode {
     Day,
@@ -235,6 +289,7 @@ class MonthDisplayMode implements IDisplayMode {
                     gridLines: {
                         display: true,
                         drawOnChartArea: false,
+                        offsetGridLines: true
                     },
                     ticks: {
                         fontColor: 'gray',
@@ -253,6 +308,7 @@ class MonthDisplayMode implements IDisplayMode {
                         drawOnChartArea: true,
                         tickMarkLength: 5,
                         drawBorder: true,
+                        zeroLineColor : 'black'
                     },
 
                     ticks: {
@@ -261,7 +317,10 @@ class MonthDisplayMode implements IDisplayMode {
                         beginAtZero: true,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-                            return Enums.HealthLevel[label];
+                            if (label !== 0)
+                                return Enums.HealthLevel[label];
+                            else
+                                return '';
 
                         }
                     }

@@ -151,7 +151,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     // Create MedicineItems for each Rule
                     foreach (Rule rule in version.Rules)
                     {
-                        var hitDates = getRuleHitPattern(rule, version.StartDate, minDate, maxDate);
+                        var hitDates = getRuleHitPattern(rule, plan.GetFirstVersion().StartDate, minDate, maxDate);
                         foreach (DateTime hitDate in hitDates)
                         {
                             foreach (Time time in rule.MomentsInDay)
