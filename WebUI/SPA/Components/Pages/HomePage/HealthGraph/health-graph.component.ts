@@ -239,7 +239,10 @@ class MonthDisplayMode implements IDisplayMode {
                     ticks: {
                         fontColor: 'gray',
                         beginAtZero: true,
-
+                        autoSkip: false,
+                        callback: function (value, index, values) {
+                            return value;
+                        }
                     }
                 }],
                 yAxes: [{

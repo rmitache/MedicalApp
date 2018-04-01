@@ -1,6 +1,7 @@
 ﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import * as moment from 'moment';
 
 export class VersionCLO extends BaseCLO {
     // Fields
@@ -27,7 +28,7 @@ export class VersionCLO extends BaseCLO {
         }
     }
     public get HasStarted(): boolean {
-        if (this.StartDate.getTime() < new Date().getTime()) {
+        if (moment(this.StartDate).startOf('day') <= moment()) {
             return true;
         } else {
             return false;
@@ -41,7 +42,7 @@ export class VersionCLO extends BaseCLO {
             return false;
         }
 
-        if (this.EndDate.getTime() < new Date().getTime()) {
+        if (moment(this.EndDate).endOf('day') <= moment()) {
             return true;
         } else {
             return false;
