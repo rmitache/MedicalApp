@@ -262,16 +262,18 @@ class DayDisplayMode implements IDisplayMode {
     // Private methods
     private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
         // Verifies whether two FactorRecords are conflatable
+        
         var areEquivalent: boolean =
             (firstFactorRecord.AdministrationMethod === secondFactorRecord.AdministrationMethod) &&
-            (firstFactorRecord.OccurenceDateTime.getTime() === secondFactorRecord.OccurenceDateTime.getTime()) &&
+            //(firstFactorRecord.OccurenceDateTime.getTime() === secondFactorRecord.OccurenceDateTime.getTime()) &&
             (firstFactorRecord.Instruction === secondFactorRecord.Instruction) &&
             (firstFactorRecord.MedicineType.ID === secondFactorRecord.MedicineType.ID) &&
             (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName) &&
-            (firstFactorRecord.UnitDoseQuantifier === secondFactorRecord.UnitDoseQuantifier) &&
             (firstFactorRecord.UnitDoseSize === secondFactorRecord.UnitDoseSize) &&
             (firstFactorRecord.UnitDoseType === secondFactorRecord.UnitDoseType) &&
             (firstFactorRecord.UnitDoseUoM === secondFactorRecord.UnitDoseUoM);
+
+        
 
         return areEquivalent;
     }
