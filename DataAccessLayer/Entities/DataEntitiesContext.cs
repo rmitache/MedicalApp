@@ -266,6 +266,8 @@ namespace DataAccessLayer.Entities
                     .HasColumnName("id")
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.HealthStatusEntryId).HasColumnName("health_status_entry_id");
+
                 entity.Property(e => e.IntensityLevelId).HasColumnName("intensity_level_id");
 
                 entity.Property(e => e.OccurrenceDateTime)
@@ -274,17 +276,15 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.SymptomTypeId).HasColumnName("symptom_type_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.HasOne(d => d.HealthStatusEntry)
+                    .WithMany(p => p.TSymptomEntry)
+                    .HasForeignKey(d => d.HealthStatusEntryId)
+                    .HasConstraintName("FK_t_symptom_entry_t_health_status_entry");
 
                 entity.HasOne(d => d.SymptomType)
                     .WithMany(p => p.TSymptomEntry)
                     .HasForeignKey(d => d.SymptomTypeId)
                     .HasConstraintName("FK_t_symptom_entry_t_symptom_type");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TSymptomEntry)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_t_symptom_entry_t_user");
             });
 
             modelBuilder.Entity<TSymptomType>(entity =>

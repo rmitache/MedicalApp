@@ -49,7 +49,8 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
         SplitButtonModule,
         ChipsModule,
         ChartModule,
-        CalendarModule
+        CalendarModule,
+        BlockUIModule
     ]
 })
 export class SharedModule { }

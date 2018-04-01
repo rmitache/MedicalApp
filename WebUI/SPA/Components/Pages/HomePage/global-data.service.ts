@@ -143,6 +143,19 @@ export class GlobalDataService {
 
         return getDataPromise;
     }
+    public AddHealthStatusEntry(healthStatusEntryCLO: CLOs.HealthStatusEntryCLO): Promise<CLOs.HealthStatusEntryCLO> {
+        const apiMethodName: string = 'AddHealthStatusEntry';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(healthStatusEntryCLO);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
 
 }
 

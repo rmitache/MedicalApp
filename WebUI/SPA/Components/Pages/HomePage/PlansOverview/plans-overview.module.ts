@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  
 
 import { AutoCompleteModule } from 'primeng/primeng';
-import { BlockUIModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
 
 // Project modules
@@ -24,7 +23,6 @@ import { RuleElemComponent } from './PlanEditor/RuleElem/rule-elem.component';
         FormsModule,
         ReactiveFormsModule,
         AutoCompleteModule,
-        BlockUIModule,
         ProgressSpinnerModule,
 
         SharedModule

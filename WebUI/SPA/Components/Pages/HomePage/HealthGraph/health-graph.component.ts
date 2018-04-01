@@ -115,17 +115,24 @@ export class HealthGraphComponent {
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
-                        let addNewEventComponentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                        return !addNewEventComponentInstance.GetValidState();
+                        let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+                        return !componentInstance.GetValidState();
                     },
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
                             this.viewModel.Blocked = true;
 
-                            let addNewEventComponentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                            addNewEventComponentInstance.SaveData()
+                            let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+                            componentInstance.SaveData()
                                 .then((cloList) => {
+
+                                    this.recreateDisplayRepresentation();
+                                            setTimeout(() => {
+                                                this.viewModel.Blocked = false;
+                                                resolve();
+                                    }, 500);
+
 
                                     //this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
                                     //    .then(() => {

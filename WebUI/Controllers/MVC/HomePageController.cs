@@ -11,6 +11,8 @@ using BLL.DomainModel.Factors.Medicine.History.Services;
 using BLL.DomainModel.Plans.Services;
 using BLL.DomainModel.Plans.BLOs;
 using Common.Datastructures;
+using BLL.DomainModel.Indicators.Symptoms.History.Services;
+using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 
 namespace WebUI.Controllers
 {
@@ -21,17 +23,21 @@ namespace WebUI.Controllers
         private IMedicineTypeService medicineTypeService { get; set; }
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
         private IPlanService planService { get; set; }
+        private IHealthStatusEntryService healthStatusEntryService { get; set; }
 
         // Constructor
         public HomePageController(
             IMedicineTypeService medicineTypeService,
             IMedicineFactorRecordService medicineFactorRecordService,
-            IPlanService planService
+            IPlanService planService,
+            IHealthStatusEntryService healthStatusEntryService
             )
         {
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.planService = planService;
+            this.healthStatusEntryService = healthStatusEntryService;
+
         }
 
         // MVC methods
@@ -128,6 +134,15 @@ namespace WebUI.Controllers
             int userID = 1;
             var blos = this.planService.GetPlans(userID, true);
             return Json(blos);
+        }
+
+        [Route("HomePage/AddHealthStatusEntry")]
+        [HttpPost]
+        public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
+        {
+            int userID = 1;
+            var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, userID);
+            return Json(bloWithUpdatedID);
         }
 
 

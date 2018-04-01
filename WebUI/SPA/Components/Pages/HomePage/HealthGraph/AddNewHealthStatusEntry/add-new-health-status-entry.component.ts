@@ -83,9 +83,10 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
 
     // Public methods
-    public SaveData(): Promise<List<CLOs.HealthStatusEntryCLO>> {
+    public SaveData(): Promise<CLOs.HealthStatusEntryCLO> {
 
-        return null;
+        let saveDataPromise = this.globalDataService.AddHealthStatusEntry(this.viewModel.HealthStatusEntryCLO);
+        return saveDataPromise;
     }
     public GetValidState() {
         return this.isValid;
@@ -93,12 +94,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        // No logic necessary for now
-        //if (!options || !options.data) {
-        //    throw new Error(`Data information for simple modal dialog is missing`);
-        //}
-        //this.text = options.data.text;
-
         let dateFromParent = options.data as Date;
         this.initialDateTime = dateFromParent;
     }
