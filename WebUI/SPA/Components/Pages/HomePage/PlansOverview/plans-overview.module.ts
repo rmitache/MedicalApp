@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  
 
-import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { BlockUIModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
@@ -24,7 +23,6 @@ import { RuleElemComponent } from './PlanEditor/RuleElem/rule-elem.component';
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        CalendarModule,
         AutoCompleteModule,
         BlockUIModule,
         ProgressSpinnerModule,

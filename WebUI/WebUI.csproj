@@ -96,6 +96,7 @@
     <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\health-status-entry-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\symptom-entry-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOs\health-status-entry.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOs\symptom-entry.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\CLOs\symptom-type.clo.ts" />
@@ -171,6 +172,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\generic-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\clo-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\symptom-entry-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\health-status-entry-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOs\health-status-entry.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOs\symptom-entry.clo.ts" />

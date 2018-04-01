@@ -1,20 +1,32 @@
-<div class="frame">
-    HI THERE ADD NEW HEALTH STATUS
-    <div class="when-section">
-        <span class="h2">WHEN</span>
-        <br />
-        <div class="label-input-pair">
-            <span class="label">Event date and time:</span>
-            <p-calendar id="occurrence-date-time-picker"
-                        dateFormat="dd-mm-yy"
-                        showIcon="true"
-                        readonlyInput="true"
-                        [(ngModel)]="viewModel.OccurenceDateTime"
-                        [showTime]="true"></p-calendar>
+<form [formGroup]="reactiveForm">
+    <div class="frame">
+        <div class="when-section">
+            <span class="h2">WHEN</span>
+            <br />
+            <div class="label-input-pair">
+                <span class="label">Date and time:</span>
+                <p-calendar id="occurrence-date-time-picker"
+                            formControlName="occurrenceDateTime"
+                            dateFormat="dd-mm-yy"
+                            showIcon="true"
+                            readonlyInput="true"
+                            [(ngModel)]="viewModel.HealthStatusEntryCLO.OccurenceDateTime"
+                            [showTime]="true"></p-calendar>
+            </div>
+        </div>
+
+        <div class="what-section">
+            <span class="h2">HOW ARE YOU FEELING ?</span>
+            <br />
+
+            <div class="label-input-pair">
+                <span class="label">Health status:</span>
+                <select class="drop-down" formControlName="healthLevel"
+                        [(ngModel)]="viewModel.HealthStatusEntryCLO.HealthLevel">
+                    <option *ngFor="let healthLevel of healthLevelsEnum | enumkeys" [value]="healthLevel.value">{{healthLevel.key}}</option>
+                </select>
+            </div>
+
         </div>
     </div>
-
-    <div class="what-section">
-        
-    </div>
-</div> 
+</form>

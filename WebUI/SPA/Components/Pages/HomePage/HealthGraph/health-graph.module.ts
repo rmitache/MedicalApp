@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { BlockUIModule } from 'primeng/primeng';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
@@ -25,6 +25,7 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
         AutoCompleteModule,
         BlockUIModule,
         ProgressSpinnerModule,
+        ReactiveFormsModule,
 
         SharedModule
     ],

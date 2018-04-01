@@ -48,7 +48,8 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
         IFRPGroupListComponent,
         SplitButtonModule,
         ChipsModule,
-        ChartModule
+        ChartModule,
+        CalendarModule
     ]
 })
 export class SharedModule { }

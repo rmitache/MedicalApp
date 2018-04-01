@@ -12,9 +12,9 @@ import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
-import { List } from 'SPA/Core/Helpers/DataStructures/list';
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
 
 
