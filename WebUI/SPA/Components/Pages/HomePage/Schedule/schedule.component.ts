@@ -256,6 +256,37 @@ class DayDisplayMode implements IDisplayMode {
         }
     ];
 
+    // Private methods
+    private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
+        // Verifies whether two FactorRecords are conflatable
+        var areEquivalent: boolean =
+            (firstFactorRecord.AdministrationMethod === secondFactorRecord.AdministrationMethod) &&
+            (firstFactorRecord.OccurenceDateTime.getTime() === secondFactorRecord.OccurenceDateTime.getTime()) &&
+            (firstFactorRecord.Instruction === secondFactorRecord.Instruction) &&
+            (firstFactorRecord.MedicineType.ID === secondFactorRecord.MedicineType.ID) &&
+            (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName) &&
+            (firstFactorRecord.UnitDoseQuantifier === secondFactorRecord.UnitDoseQuantifier) &&
+            (firstFactorRecord.UnitDoseSize === secondFactorRecord.UnitDoseSize) &&
+            (firstFactorRecord.UnitDoseType === secondFactorRecord.UnitDoseType) &&
+            (firstFactorRecord.UnitDoseUoM === secondFactorRecord.UnitDoseUoM);
+
+        return areEquivalent;
+    }
+    private tryConflateWithEquivalentInList(factorRecord: CLOs.MedicineFactorRecordCLO, list: CLOs.MedicineFactorRecordCLO[]):boolean {
+        var wasConflated = false;
+        for (var i = 0; i < list.length; i++) {
+            var recInList = list[i];
+            if (this.areEquivalent(factorRecord, recInList)) {
+                recInList.UnitDoseQuantifier += factorRecord.UnitDoseQuantifier;
+
+                wasConflated = true;
+                break;
+            }
+        }
+
+        return wasConflated;
+    }
+
     // Public methods
     public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
         return new Range<moment.Moment>(referenceDate.clone().startOf('day'), referenceDate.clone().endOf('day'));
@@ -327,13 +358,16 @@ class DayDisplayMode implements IDisplayMode {
                 }
                 let timeGroup = unitRepr.TimeGroupRepresentations[time.ToString()];
 
-                // Find or create the matching PlanName entry
+                // Then find or create the matching PlanName entry
                 if (timeGroup.FactorRecordsByPlanName[record.ParentPlanName] === undefined) {
                     timeGroup.FactorRecordsByPlanName[record.ParentPlanName] = [];
                 }
+                let destArray = timeGroup.FactorRecordsByPlanName[record.ParentPlanName];
 
-                // Add it
-                timeGroup.FactorRecordsByPlanName[record.ParentPlanName].push(record);
+                // Then try to conflate with an existing equivalent factorRecord or add it
+                if (!this.tryConflateWithEquivalentInList(record, destArray)) {
+                    timeGroup.FactorRecordsByPlanName[record.ParentPlanName].push(record);
+                }
             } else {
                 throw new Error("Record with Time =" + record.GetTime().ToString() + " does not match any schedule unit!");
             }
@@ -391,7 +425,7 @@ export class TimeGroupRepresentation {
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
         
         let record = factorRecordCLO;
-        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
+        return  factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
             + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
     }
 }
