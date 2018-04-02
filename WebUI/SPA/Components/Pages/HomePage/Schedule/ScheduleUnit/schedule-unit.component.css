@@ -38,6 +38,7 @@
         width: calc(100%);
     }
 
+
 .plan-divs-list {
 }
 
@@ -71,10 +72,22 @@
     .plan-div .factor-record-item {
         float: left;
         clear: both;
-        margin-top: 7px;
+        padding-top: 7px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: black;
+        color:black;
         font-size: 9pt;
+    }
+
+
+    .plan-div .factor-record-item-added-recently {
+        color: green;
+        font-weight: bold;
+        font-size: 8px;
+        display: block;
+        float: right;
+        margin-top: -6px;
+        z-index: 9999;
+        background-color:aliceblue;
     }

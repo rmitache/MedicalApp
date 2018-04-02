@@ -8,7 +8,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.BLOs
     public  class MedicineRuleItem: FactorRecordPropertiesGroup
     {
         public int ID { get; set; }
-
+        
         //public MedicineType MedicineType { get; set; }
         //public UnitDoseType UnitDoseType { get; set; }
         //public int UnitDoseQuantifier { get; set; }

@@ -6,16 +6,18 @@
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
             <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
             <div class="plan-divs-list">
-                <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys" 
+                <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys"
                      [class.user-entry]="dictEntry.key==='null'"
                      class="plan-div">
 
 
                     <!--FactorRecords in Plan-->
                     <div class="factor-record-list-in-plan-grouping">
-                        <div *ngFor="let record of timeGroup.value.GetSortedFactorRecords(dictEntry.key)" class="factor-record-item label-text-dark" 
+                        <div *ngFor="let record of timeGroup.value.GetSortedFactorRecords(dictEntry.key)" class="factor-record-item label-text-dark"
                              title="{{timeGroup.value.GetStringLabel(record)}}">
                             &#9642; {{record.UnitDoseQuantifier}} x <span>{{record.MedicineType.Name}}</span>
+                            <span *ngIf="record.RecentlyAdded===true" class="factor-record-item-added-recently">NEW</span>
+
                         </div>
                         <div style="clear:both"></div>
                     </div>

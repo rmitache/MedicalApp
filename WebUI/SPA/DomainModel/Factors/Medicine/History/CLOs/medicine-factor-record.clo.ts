@@ -2,6 +2,8 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
+import * as moment from 'moment';
+import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
 
 
 export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IFactorRecordPropertiesGroup{
@@ -19,6 +21,7 @@ export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IFactorReco
     public Instruction: Enums.Instruction;
     public AdministrationMethod: Enums.AdministrationMethod;
 
+    public RecentlyAdded: boolean;
 
     // Constructor
     constructor(init?: Partial<MedicineFactorRecordCLO>) {

@@ -23,7 +23,8 @@ import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/History/CLOFa
         PlanCLOFactory,
         VersionCLOFactory,
         RuleCLOFactory,
-        HealthStatusEntryCLOFactory
+        HealthStatusEntryCLOFactory,
+
     ]
 })
 

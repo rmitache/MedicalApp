@@ -69,3 +69,7 @@ export function StringToColour (str) {
     }
     return colour;
 }
+
+export function RemoveWhitespace(str:string):string {
+    return str.replace(/ /g, '');
+}

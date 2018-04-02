@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/primeng';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
 import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
@@ -73,7 +74,7 @@ export class PlanElemComponent {
     };
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
-
+        Color: null,
         GetMenuItems: () => {
             let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
             return this.menuItemsToPlanStatusMap[planStatusName];
@@ -111,7 +112,7 @@ export class PlanElemComponent {
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
         this.viewModel.StatusString = Enums.PlanStatus[this.planCLO.Status];
-
+        this.viewModel.Color = StringToColour(this.viewModel.PlanCLO.Name);
 
         // StartDate and EndDate labels according to Plan.Status
         let latestVersion = this.planCLO.GetLatestVersion();
@@ -126,7 +127,7 @@ export class PlanElemComponent {
                     this.viewModel.StartDatePrefixString = 'Started:';
                     this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(firstVersion.StartDate);
                 }
-                
+
                 let endDate = moment(latestVersion.EndDate).startOf('day');
                 if (this.planCLO.GetLatestVersion().EndDate !== null) {
                     this.viewModel.EndDatePrefixString = 'Ending:';
@@ -173,7 +174,7 @@ interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
 
     GetMenuItems(): MenuItem[];
-
+    Color: string;
     StatusString: string;
     StartDatePrefixString: string;
     RelativeStartDateString: string;

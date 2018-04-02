@@ -29,7 +29,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             CalendarEvent eventObj = new CalendarEvent
             {
                 Start = new CalDateTime(versionStartDate),
-                Duration = new TimeSpan(0,10,0),
+                Duration = new TimeSpan(0, 10, 0),
                 RecurrenceRules = new List<RecurrencePattern>()
             };
             int everyX = (int)rule.OrdinalFrequencyType + 1;
@@ -53,7 +53,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                     Frequency = FrequencyType.Weekly,
                     Interval = everyX,
                     FirstDayOfWeek = DayOfWeek.Monday,
-                    ByDay= rule.DaysInWeek.ToICalWeekDayList()
+                    ByDay = rule.DaysInWeek.ToICalWeekDayList()
 
                 });
             }
@@ -62,7 +62,33 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurence => occurence.Period.StartTime.Date).ToList();
             return dates;
         }
-        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDateTime, Plan parentPlan)
+        private Dictionary<string, MedicineType> GetUniqueMedicineTypesInVersion(Plans.BLOs.Version version)
+        {
+            var dict = new Dictionary<string, MedicineType>();
+
+            // Loop through rules
+            foreach (Rule rule in version.Rules)
+            {
+
+                // Loop through ruleItems
+                foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
+                {
+                    if (!dict.ContainsKey(ruleItem.MedicineType.Name))
+                    {
+                        dict[ruleItem.MedicineType.Name] = ruleItem.MedicineType;
+                    }
+                }
+            }
+
+            return dict;
+        }
+
+
+        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(
+            MedicineRuleItem ruleItem,
+            DateTime occurrenceDateTime,
+            Plan parentPlan,
+            bool recentlyAdded)
         {
             MedicineFactorRecord blo = new MedicineFactorRecord();
             blo.ID = -1;
@@ -75,9 +101,9 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             blo.UnitDoseType = ruleItem.UnitDoseType;
             blo.UnitDoseSize = ruleItem.UnitDoseSize;
             blo.UnitDoseUoM = ruleItem.UnitDoseUoM;
-
             blo.Instruction = ruleItem.Instruction;
 
+            blo.RecentlyAdded = recentlyAdded;
 
             return blo;
         }
@@ -140,8 +166,15 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
             foreach (Plan plan in planBLOs)
             {
-                foreach (Plans.BLOs.Version version in plan.Versions)
+                for (int i = 0; i < plan.Versions.Count; i++)
                 {
+                    var version = plan.Versions[i];
+
+
+                    // Get unique medicineTypes in prev version
+
+
+
                     // Prepare range dates
                     DateTime minDate = (version.StartDate > windowStartDate) ? version.StartDate : windowStartDate;
                     DateTime maxDate;
@@ -154,7 +187,8 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                         maxDate = (version.EndDate < windowEndDate) ? ((DateTime)version.EndDate).Add(new TimeSpan(0, 23, 59, 59)) : windowEndDate;
                     }
 
-                    // Create MedicineItems for each Rule
+
+                    // Create FactorRecords for each Rule
                     foreach (Rule rule in version.Rules)
                     {
                         var hitDates = getRuleHitPattern(rule, plan.GetFirstVersion().StartDate, minDate, maxDate);
@@ -166,7 +200,17 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                                     time.Hours, time.Minutes, 0);
                                 foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
                                 {
-                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, occurrenceDateTime, plan);
+                                    //
+                                    bool recentlyAdded = false;
+                                    if (version.ID == plan.GetLatestVersion().ID)
+                                    {
+                                        var previousVersion = plan.GetPreviousLatestVersion();
+                                        var medTypesInPrevVersion = (previousVersion != null) ? this.GetUniqueMedicineTypesInVersion(previousVersion) : null;
+                                        recentlyAdded = !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name) && version.IsRecentAndHasntEnded();
+                                    }
+
+                                    //
+                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, occurrenceDateTime, plan, recentlyAdded);
                                     projectedFactorRecordsList.Add(newFactorRecord);
                                 }
                             }
