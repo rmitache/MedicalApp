@@ -16,7 +16,7 @@ namespace BLL.DomainModel.Plans.BLOs
         internal Version() { }
 
         //
-        public bool IsRecentAndHasntEnded()
+        public bool RecentlyStarted()
         {
             var currentDate = DateTime.Now.EndOfDay();
             if(!this.HasEnded() && (StartDate.StartOfDay() - currentDate).TotalDays / 7 <= 1)
@@ -24,6 +24,12 @@ namespace BLL.DomainModel.Plans.BLOs
                 return true;
             }
             return false;
+        }
+        public bool HasStarted()
+        {
+            var currentDate = DateTime.Now.StartOfDay();
+            bool hasStarted = this.StartDate > currentDate;
+            return hasStarted;
         }
         public bool HasEnded()
         {

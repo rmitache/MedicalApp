@@ -202,11 +202,11 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                                 {
                                     //
                                     bool recentlyAdded = false;
-                                    if (version.ID == plan.GetLatestVersion().ID)
+                                    if (version.ID == plan.GetLatestVersion().ID && plan.Versions.Count > 1)
                                     {
                                         var previousVersion = plan.GetPreviousLatestVersion();
                                         var medTypesInPrevVersion = (previousVersion != null) ? this.GetUniqueMedicineTypesInVersion(previousVersion) : null;
-                                        recentlyAdded = !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name) && version.IsRecentAndHasntEnded();
+                                        recentlyAdded = !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name) && version.RecentlyStarted();
                                     }
 
                                     //
