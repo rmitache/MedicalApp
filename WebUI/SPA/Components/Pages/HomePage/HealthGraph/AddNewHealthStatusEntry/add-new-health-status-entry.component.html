@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="what-section">
+        <div class="health-level-section">
             <span class="h2">HOW ARE YOU FEELING ?</span>
             <br />
 
@@ -26,6 +26,14 @@
                     <option *ngFor="let healthLevel of healthLevelsEnum | enumkeys" [value]="healthLevel.value">{{healthLevel.key}}</option>
                 </select>
             </div>
+
+        </div>
+
+        <div class="symptoms-section">
+            <span class="h2">WHAT'S WRONG ?</span>
+            <br />
+
+            <div *ngFor="let symptomEntry of viewModel.HealthStatusEntryCLO.SymptomEntries" >xx</div>
 
         </div>
     </div>

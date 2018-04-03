@@ -6,7 +6,7 @@ export class SymptomEntryCLO extends BaseCLO {
     // Fields
     public ID: number;
     public OccurenceDateTime: Date;
-    public SymptomType: CLOs.SymptomType;
+    public SymptomType: CLOs.SymptomTypeCLO;
     public IntensityLevel: Enums.SymptomIntensityLevel;
 
     // Constructor

@@ -4,37 +4,39 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/Library/CLOFactories/symptom-type-clo.factory';
 
 @Injectable()
-export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatusEntryCLO> {
+export class SymptomEntryCLOFactory implements ICLOFactory<CLOs.SymptomEntryCLO> {
 
     // Constructor
-    constructor() {
+    constructor(private readonly symptomTypeCLOFactory: SymptomTypeCLOFactory) {
 
     }
 
     // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.HealthStatusEntryCLO {
+    public Convert_ToCLO(blo: any): CLOs.SymptomEntryCLO {
 
-        let newCLO = new CLOs.HealthStatusEntryCLO();
+        let newCLO = new CLOs.SymptomEntryCLO();
         newCLO.ID = blo['ID'];
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
-        newCLO.HealthLevel = blo['HealthLevel'];
+        newCLO.IntensityLevel = blo['IntensityLevel'];
+        newCLO.SymptomType = this.symptomTypeCLOFactory.Convert_ToCLO(blo['SymptomType']);
 
         return newCLO;
     }
-    public Create_DefaultCLO(): CLOs.HealthStatusEntryCLO {
-        let newCLO = new CLOs.HealthStatusEntryCLO();
+    public Create_DefaultCLO(): CLOs.SymptomEntryCLO {
+        let newCLO = new CLOs.SymptomEntryCLO();
         newCLO.ID = 0;
         newCLO.OccurenceDateTime = new Date();
-        newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
-
+        newCLO.IntensityLevel = Enums.SymptomIntensityLevel.NotPresent;
+        newCLO.SymptomType = null;
 
         return newCLO;
     }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.HealthStatusEntryCLO> {
-        
-        let cloList = new DataStructures.List<CLOs.HealthStatusEntryCLO>();
+    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.SymptomEntryCLO> {
+
+        let cloList = new DataStructures.List<CLOs.SymptomEntryCLO>();
         bloArray.forEach(blo => {
             let clo = this.Convert_ToCLO(blo);
             cloList.Add(clo);
@@ -42,7 +44,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
 
         return cloList;
     }
-    public Clone_CLOAsNewBLO(clo: CLOs.HealthStatusEntryCLO): CLOs.HealthStatusEntryCLO {
+    public Clone_CLOAsNewBLO(clo: CLOs.SymptomEntryCLO): CLOs.SymptomEntryCLO {
         throw new Error('Clone_CLO Not implemented');
     }
 }

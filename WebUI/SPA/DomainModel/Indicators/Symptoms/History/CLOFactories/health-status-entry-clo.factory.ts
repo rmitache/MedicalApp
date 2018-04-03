@@ -4,12 +4,13 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/History/CLOFactories/symptom-entry-clo.factory';
 
 @Injectable()
 export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatusEntryCLO> {
 
     // Constructor
-    constructor() {
+    constructor(private readonly symptomEntryCLOFactory: SymptomEntryCLOFactory) {
 
     }
 
@@ -28,7 +29,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
         newCLO.ID = 0;
         newCLO.OccurenceDateTime = new Date();
         newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
-
+        newCLO.SymptomEntries = [this.symptomEntryCLOFactory.Create_DefaultCLO()];
 
         return newCLO;
     }

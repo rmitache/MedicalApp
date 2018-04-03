@@ -99,6 +99,7 @@
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\symptom-entry-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOs\health-status-entry.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\History\CLOs\symptom-entry.clo.ts" />
+    <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\CLOFactories\symptom-type-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\CLOs\symptom-type.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\Enums\health-level.enum.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\Enums\symptom-intensity-level.enum.ts" />
@@ -176,6 +177,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOFactories\health-status-entry-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOs\health-status-entry.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\History\CLOs\symptom-entry.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\CLOFactories\symptom-type-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\Enums\health-level.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\Enums\symptom-intensity-level.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\CLOs\symptom-type.clo.ts" />

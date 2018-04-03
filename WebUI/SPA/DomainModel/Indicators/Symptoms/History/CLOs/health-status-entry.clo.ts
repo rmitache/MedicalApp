@@ -7,6 +7,7 @@ export class HealthStatusEntryCLO extends BaseCLO {
     public ID: number;
     public OccurenceDateTime: Date;
     public HealthLevel: Enums.HealthLevel;
+    public SymptomEntries: CLOs.SymptomEntryCLO[];
 
     // Constructor
     constructor() {

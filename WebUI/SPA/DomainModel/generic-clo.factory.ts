@@ -14,6 +14,8 @@ import { RuleCLOFactory } from './Plans/CLOFactories/rule-clo.factory';
 import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/History/CLOFactories/health-status-entry-clo.factory';
 
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
+import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/Library/CLOFactories/symptom-type-clo.factory';
+import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/History/CLOFactories/symptom-entry-clo.factory';
 
 
 @Injectable()
@@ -111,7 +113,9 @@ export class GenericCLOFactory {
         private readonly planCLOFactory: PlanCLOFactory,
         private readonly versionCLOFactory: VersionCLOFactory,
         private readonly ruleCLOFactory: RuleCLOFactory,
-        private readonly healthStatusEntryCLOFactory: HealthStatusEntryCLOFactory
+        private readonly healthStatusEntryCLOFactory: HealthStatusEntryCLOFactory,
+        private readonly symptomEntryCLOFactory: SymptomEntryCLOFactory,
+        private readonly symptomTypeCLOFactory: SymptomTypeCLOFactory
     ) {
         this.factoryTypeInstanceDictionary['PatientAccountCLO'] = patientAccountCLOFactory;
         this.factoryTypeInstanceDictionary['MedicineFactorRecordCLO'] = medicineFactorRecordCLOFactory;
@@ -121,6 +125,8 @@ export class GenericCLOFactory {
         this.factoryTypeInstanceDictionary['VersionCLO'] = versionCLOFactory;
         this.factoryTypeInstanceDictionary['RuleCLO'] = ruleCLOFactory;
         this.factoryTypeInstanceDictionary['HealthStatusEntryCLO'] = healthStatusEntryCLOFactory;
+        this.factoryTypeInstanceDictionary['SymptomEntryCLO'] = symptomEntryCLOFactory;
+        this.factoryTypeInstanceDictionary['SymptomTypeCLO'] = symptomTypeCLOFactory;
     }
 
     // Public Methods
