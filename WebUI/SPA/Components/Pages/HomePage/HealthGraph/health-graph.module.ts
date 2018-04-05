@@ -13,6 +13,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 // Components
 import { HealthGraphComponent } from './health-graph.component';
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
+import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 
 
 
@@ -24,12 +25,13 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
         AutoCompleteModule,
         ProgressSpinnerModule,
         ReactiveFormsModule,
-
+    
         SharedModule
     ],
     declarations: [
         HealthGraphComponent,
-        AddNewHealthStatusEntryComponent
+        AddNewHealthStatusEntryComponent,
+        SymptomEntryElemComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [

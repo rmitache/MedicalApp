@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, ApplicationRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, QueryList, ViewChildren, ViewChild, ApplicationRef } from '@angular/core';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 
 // Components
 
@@ -26,9 +27,26 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 export class AddNewHealthStatusEntryComponent implements IModalDialog {
     // Fields
     private isValid: boolean = false;
+    private searchService: ISymptomTypesSearchService = {
+        GetSymptomTypeByName: (name) => {
+            return this.availableSymptomTypes.ToArray().find(clo => {
+                return clo.Name === name;
+            });
+        },
+        Search: (searchString) => {
+            return this.availableSymptomTypes.ToArray().map(clo => {
+                return clo.Name;
+            });
+        }
+    };
+
+    @ViewChildren('symptomEntryElems')
+    private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
+
     private reactiveForm: FormGroup;
-    private initialDateTime: Date = null;
+    private initialDateTime: Date = null; // initialized from dialogOnInit
     private readonly healthLevelsEnum = Enums.HealthLevel;
+    private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
         HealthStatusEntryCLO: null
     };
@@ -97,9 +115,30 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         let dateFromParent = options.data as Date;
         this.initialDateTime = dateFromParent;
     }
+
+    // Event handlers onRemoveSymptomEntryElemTriggered
+    private onSymptomEntryElemValidStateChanged() {
+        this.refreshIsValid();
+    }
+    private onRemoveSymptomEntryElemTriggered(clo: CLOs.SymptomEntryCLO) {
+
+        const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
+
+        if (index !== -1) {
+            this.viewModel.HealthStatusEntryCLO.SymptomEntries.splice(index, 1);
+        }
+
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
+    }
 }
 
 
 interface ViewModel {
     HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
+}
+export interface ISymptomTypesSearchService {
+    GetSymptomTypeByName(name: string): CLOs.SymptomTypeCLO;
+    Search(searchString: string): string[];
 }

@@ -6,65 +6,40 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { ISymptomTypesSearchService } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 
 
 @Component({
-    selector: 'ifrp-group-elem',
-    templateUrl: './ifrp-group-elem.component.html',
-    styleUrls: ['./ifrp-group-elem.component.css'],
-    host: { 'class': 'ifrp-group-elem' }
+    selector: 'symptom-entry-elem',
+    templateUrl: './symptom-entry-elem.component.html',
+    styleUrls: ['./symptom-entry-elem.component.css'],
+    host: { 'class': 'symptom-entry-elem' }
 })
-export class IFRPGroupElemComponent {
+export class SymptomEntryElemComponent {
     // Fields
-    @Input('IFRPGroupCLO')
-    private readonly iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
-    @Input('MedicineTypeSearchService')
-    private readonly medicineTypesSearchService: IMedicineTypesSearchService;
+    @Input('SymptomEntryCLO')
+    private readonly symptomEntryCLO: CLOs.SymptomEntryCLO;
+    @Input('SymptomTypeSearchService')
+    private readonly symptomTypeSearchService: ISymptomTypesSearchService;
     private isValid: boolean = false;
     @ViewChild('autocomplete')
     readonly autoCompleteComponentInstance: AutoComplete;
     private reactiveForm: FormGroup;
-    
-    private readonly unitDoseTypesEnum = Enums.UnitDoseType;
-    private readonly unitsOfMeasureEnum = Enums.UnitOfMeasure;
-    private readonly medicineInstructionsEnum = Enums.Instruction;
-
+    private readonly symptomIntensityLevelsEnum = Enums.SymptomIntensityLevel;
     private readonly viewModel: ViewModel = {
-        IFRPGroupCLO: null,
-        MedicineTypeSearchResults: [],
-        OverlayIsVisible: true,
-        UserDefinedControlsAreLocked: true
+        SymptomEntryCLO: null,
+        SymptomTypeSearchResults: [],
+        OverlayIsVisible: true
     };
 
     // Private methods
-    private loadMedicineTypeByName(selectedMedicineTypeName: string) {
+    private loadSymptomTypeByName(selectedSymptomTypeName: string) {
 
-        // Get and load the medicineTypeCLO
-        let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
-        this.viewModel.IFRPGroupCLO.MedicineType = medicineTypeCLO;
-
-        // Handle fields
-        if (medicineTypeCLO.IsPackagedIntoUnitDoses() === true) {
-            this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
-            this.viewModel.IFRPGroupCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
-            this.viewModel.IFRPGroupCLO.UnitDoseSize = medicineTypeCLO.PackagedUnitDoseSize;
-            this.viewModel.IFRPGroupCLO.UnitDoseUoM = medicineTypeCLO.PackagedUnitDoseUoM;
-
-            // Make the controls readonly
-            this.viewModel.UserDefinedControlsAreLocked = true;
-        }
-        else {
-
-            this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
-            this.viewModel.IFRPGroupCLO.UnitDoseType = Enums.UnitDoseType.Teaspoons;
-            this.viewModel.IFRPGroupCLO.UnitDoseSize = 100;
-            this.viewModel.IFRPGroupCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
-
-            // Unlock the controls
-            this.viewModel.UserDefinedControlsAreLocked = false;
-        }
+        // Get and load the symptomTypeCLO
+        let symptomTypeCLO = this.symptomTypeSearchService.GetSymptomTypeByName(selectedSymptomTypeName);
+        this.viewModel.SymptomEntryCLO.SymptomType = symptomTypeCLO;
+       
     }
     private refreshIsValid() {
         let prevIsValid = this.isValid;
@@ -82,26 +57,14 @@ export class IFRPGroupElemComponent {
         
     ) {
         this.reactiveForm = this.fb.group({
-            medicineTypeName: ['',
+            symptomTypeName: ['',
                 Validators.compose([
                     Validators.required])],
-            unitDoseQuantifierInput: [null,
-                Validators.compose([
-                    Validators.required,
-                    Validators.min(1),
-                    Validators.pattern(new RegExp(/^\d+$/))])],
-            unitdosetype: null,
-            unitdosesize: [null,
-                Validators.compose([
-                    Validators.required,
-                    Validators.min(1),
-                    Validators.pattern(new RegExp(/^\d+$/))])],
-            unitdoseuom: null,
-            instruction: null
+            symptomIntensityLevelInput: null
         });
     }
     ngOnInit() {
-        this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
+        this.viewModel.SymptomEntryCLO = this.symptomEntryCLO;
 
         this.reactiveForm
             .statusChanges
@@ -111,9 +74,8 @@ export class IFRPGroupElemComponent {
             });
         
         //
-        if (this.iFRPGroupCLO.MedicineType !== null) {
-            this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
-            this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnitDoses() === true);
+        if (this.symptomEntryCLO.SymptomType !== null) {
+            this.reactiveForm.get('symptomTypeName').setValue(this.symptomEntryCLO.SymptomType.Name);
             this.viewModel.OverlayIsVisible = false;
         }
     }
@@ -129,16 +91,16 @@ export class IFRPGroupElemComponent {
 
     // EventHandlers
     private onRemoveClicked() {
-        this.RemoveClicked.emit(this.iFRPGroupCLO);
+        this.RemoveClicked.emit(this.symptomEntryCLO);
     }
-    private onMedicineTypeTextBoxChanged(event) {
+    private onSymptomTypeTextBoxChanged(event) {
 
-        let searchResults = this.medicineTypesSearchService.Search(event.query);
-        this.viewModel.MedicineTypeSearchResults = searchResults;
+        let searchResults = this.symptomTypeSearchService.Search(event.query);
+        this.viewModel.SymptomTypeSearchResults = searchResults;
 
     }
-    private onMedicineTypeSelected(value) {
-        this.loadMedicineTypeByName(value);
+    private onSymptomTypeSelected(value) {
+        this.loadSymptomTypeByName(value);
         setTimeout(() => {
             this.viewModel.OverlayIsVisible = false;
         }, 1);
@@ -147,10 +109,9 @@ export class IFRPGroupElemComponent {
 }
 
 interface ViewModel {
-    IFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
-    MedicineTypeSearchResults: string[];
+    SymptomEntryCLO: CLOs.SymptomEntryCLO;
+    SymptomTypeSearchResults: string[];
     OverlayIsVisible: boolean;
-    UserDefinedControlsAreLocked: boolean;
 }
 
 
