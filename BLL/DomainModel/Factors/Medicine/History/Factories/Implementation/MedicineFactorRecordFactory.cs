@@ -170,11 +170,6 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                 {
                     var version = plan.Versions[i];
 
-
-                    // Get unique medicineTypes in prev version
-
-
-
                     // Prepare range dates
                     DateTime minDate = (version.StartDate > windowStartDate) ? version.StartDate : windowStartDate;
                     DateTime maxDate;
@@ -202,11 +197,11 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
                                 {
                                     //
                                     bool recentlyAdded = false;
-                                    if (version.ID == plan.GetLatestVersion().ID && plan.Versions.Count > 1)
+                                    if (version.ID == plan.GetLatestVersion().ID)
                                     {
                                         var previousVersion = plan.GetPreviousLatestVersion();
                                         var medTypesInPrevVersion = (previousVersion != null) ? this.GetUniqueMedicineTypesInVersion(previousVersion) : null;
-                                        recentlyAdded = !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name) && version.RecentlyStarted();
+                                        recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
                                     }
 
                                     //

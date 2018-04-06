@@ -19,7 +19,8 @@ namespace BLL.DomainModel.Plans.BLOs
         public bool RecentlyStarted()
         {
             var currentDate = DateTime.Now.EndOfDay();
-            if(!this.HasEnded() && (StartDate.StartOfDay() - currentDate).TotalDays / 7 <= 1)
+            
+            if(!this.HasEnded() && (this.StartDate.StartOfDay() - currentDate).TotalDays / 7 <= 1)
             {
                 return true;
             }
