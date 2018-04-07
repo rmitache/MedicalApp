@@ -20,10 +20,15 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
 {
     public class HealthStatusEntryFactory : IHealthStatusEntryFactory
     {
+        // Fields
+        private ISymptomEntryFactory symptomEntryFactory;
 
         // Constructor
-        public HealthStatusEntryFactory()
+        public HealthStatusEntryFactory(
+            ISymptomEntryFactory symptomEntryFactory
+            )
         {
+            this.symptomEntryFactory = symptomEntryFactory;
         }
 
         // Public methods
@@ -34,6 +39,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
             dataEntity.UserId = userID;
             dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
             dataEntity.HealthLevelId = (int) blo.HealthLevel;
+            dataEntity.TSymptomEntry = this.symptomEntryFactory.Convert_ToDataEntitiesList(blo.SymptomEntries);
             return dataEntity;
         }
         public List<THealthStatusEntry> Convert_ToDataEntitiesList(List<HealthStatusEntry> blos, int userID)
@@ -48,6 +54,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
             blo.ID = dataEntity.Id;
             blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
             blo.HealthLevel = (HealthLevel)dataEntity.HealthLevelId;
+            blo.SymptomEntries = this.symptomEntryFactory.Convert_ToBLOList(dataEntity.TSymptomEntry.ToList());
 
             return blo;
         }

@@ -93,7 +93,7 @@ namespace WebUI.Controllers
                 );
             var currentMonthRange = this.GetCurrentMonthStartAndEndDates();
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(currentMonthRange, 1);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(currentMonthRange, 1, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -175,7 +175,7 @@ namespace WebUI.Controllers
         public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
         {
             int userID = 1;
-            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, userID);
+            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, userID, true);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------

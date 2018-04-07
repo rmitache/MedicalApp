@@ -266,10 +266,6 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.IntensityLevelId).HasColumnName("intensity_level_id");
 
-                entity.Property(e => e.OccurrenceDateTime)
-                    .HasColumnName("occurrence_date_time")
-                    .HasColumnType("datetime");
-
                 entity.Property(e => e.SymptomTypeId).HasColumnName("symptom_type_id");
 
                 entity.HasOne(d => d.HealthStatusEntry)
