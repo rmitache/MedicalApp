@@ -1,17 +1,17 @@
-/deep/ .ui-autocomplete input {
+.frame /deep/ .ui-autocomplete input {
     height: 27px;
-    width: 260px;
+    width: 510px;
     font-size: 10pt;
     font-family: Arial;
 }
 
-/deep/ .ui-autocomplete .ui-button {
+.frame /deep/ .ui-autocomplete .ui-button {
     float: right;
     margin-top: -26px;
     height: 25px;
 }
 
-.medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
+.symptom-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
     border: 1px solid red !important;
 }
 
@@ -22,7 +22,7 @@ input.ng-invalid.ng-touched {
 .frame {
     background-color: white;
     height: 70px;
-    width: calc(100% - 5px);
+    width: calc(100%);
 }
 
 .label-input-pair {
@@ -51,56 +51,19 @@ input.ng-invalid.ng-touched {
     height: calc(100% - 30px);
 }
 
-    .right-side .medicine-type-input-pair {
-        width: 260px;
+    .right-side .symptom-type-input-pair {
+        width:510px;
         margin-right: 35px;
     }
 
-    .right-side .quantifier-input-pair {
-        margin-right: 2px !important;
-    }
 
-        .right-side .quantifier-input-pair .ui-inputtext {
-            width: 20px;
-            text-align: right;
-        }
 
-    .right-side .dose-type-input-pair .drop-down {
+    .right-side .intensity-level-input-pair .drop-down {
         width: 100px;
     }
 
 
-    .right-side .x-label {
-        float: left;
-        margin-left: -3px;
-        margin-right: 5px;
-        height: 45px;
-        vertical-align: middle;
-        line-height: 45px;
-        padding-top: 4px;
-        font-family: Arial;
-        font-size: 10pt;
-    }
 
-
-
-    .right-side .dose-size-input-pair .ui-inputtext {
-        width: 80px;
-        text-align: right;
-    }
-
-
-    .right-side .dose-uom-input-pair .drop-down {
-        width: 60px;
-    }
-
-
-    .right-side .instructions-input-pair {
-        margin-left: 50px;
-    }
-
-        .right-side .instructions-input-pair .drop-down {
-        }
 
     .right-side .close {
         float: right;
@@ -121,4 +84,5 @@ input.ng-invalid.ng-touched {
     background-color: #f7f7f7;
     float: right;
     margin-top: -70px;
+    display:none;
 }

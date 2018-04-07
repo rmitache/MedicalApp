@@ -1,4 +1,5 @@
 ﻿using BLL.DomainModel.Indicators.Symptoms.History.Enums;
+using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
 using System;
 
 namespace BLL.DomainModel.Indicators.Symptoms.History.BLOs
@@ -6,7 +7,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.BLOs
     public  class SymptomEntry
     {
         // Properties
-        //public SymptomType SymptomType { get; set; }
+        public SymptomType SymptomType { get; set; }
         public SymptomIntensityLevel IntensityLevel { get; set; }
         public DateTime OccurenceDateTime { get; set; }
 

@@ -1,11 +1,11 @@
-/deep/ .ui-autocomplete input {
+.frame /deep/ .ui-autocomplete input {
     height: 27px;
     width: 260px;
     font-size: 10pt;
     font-family: Arial;
 }
 
-/deep/ .ui-autocomplete .ui-button {
+.frame /deep/ .ui-autocomplete .ui-button {
     float: right;
     margin-top: -26px;
     height: 25px;

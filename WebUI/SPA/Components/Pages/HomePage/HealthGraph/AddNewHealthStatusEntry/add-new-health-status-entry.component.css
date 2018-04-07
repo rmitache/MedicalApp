@@ -1,14 +1,14 @@
-.drop-down.ng-invalid {
+.drop-down.ng-invalid.ng-touched {
     border: 1px solid red !important;
 }
 
-.when-section /deep/ #occurrence-date-time-picker.ng-invalid .ui-inputtext {
+.when-section /deep/ #occurrence-date-time-picker.ng-invalid.ng-touched .ui-inputtext {
     border: 1px solid red !important;
 }
 
 
 .frame {
-    width: 550px;
+    width: 750px;
     height: 650px;
 }
 
@@ -47,10 +47,19 @@
 
 .symptoms-section {
     height: calc(100% - 180px);
-    border: solid 1px blue;
+    margin-top:20px;
 }
 
-    .symptoms-section .label-input-pair {
-        margin-top: 10px;
-        margin-right: 15px;
+    .symptoms-section .h2 {
+        display: block;
+        float: left;
+    }
+
+    .symptoms-section .icon-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: -4px;
+    }
+    .symptoms-section .symptom-entry-elems-list {
+        margin-top: 15px;
     }

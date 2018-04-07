@@ -30,16 +30,18 @@
         </div>
 
         <div class="symptoms-section">
-            <span class="h2">WHAT'S WRONG ?</span>
+            <span class="h2">WHAT ARE YOUR SYMPTOMS ?</span>
+            <icon-button [IconName]="'plus'" (Clicked)="onAddNewSymptomEntryTriggered()"></icon-button>
             <br />
 
 
             <div class="symptom-entry-elems-list">
                 <symptom-entry-elem #symptomEntryElems *ngFor="let clo of viewModel.HealthStatusEntryCLO.SymptomEntries"
-                                 [SymptomEntryCLO]="clo"
-                                 [SymptomTypeSearchService]="searchService"
-                                 (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"
-                                 (RemoveClicked)="onRemoveSymptomEntryElemTriggered($event)"></symptom-entry-elem>
+                                    [SymptomEntryCLO]="clo"
+                                    [SymptomTypeSearchService]="searchService"
+                                    (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"
+                                    (RemoveClicked)="onRemoveSymptomEntryElemTriggered($event)"></symptom-entry-elem>
+                <div style="clear:both"></div>
             </div>
 
         </div>

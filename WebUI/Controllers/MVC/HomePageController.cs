@@ -14,12 +14,15 @@ using Common.Datastructures;
 using BLL.DomainModel.Indicators.Symptoms.History.Services;
 using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 using Common;
+using BLL.DomainModel.Indicators.Symptoms.Library.Services;
+
 namespace WebUI.Controllers
 {
 
     public class HomePageController : Controller
     {
         // Fields 
+        private ISymptomTypeService symptomTypeService { get; set; }
         private IMedicineTypeService medicineTypeService { get; set; }
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
         private IPlanService planService { get; set; }
@@ -37,12 +40,14 @@ namespace WebUI.Controllers
 
         // Constructor
         public HomePageController(
+            ISymptomTypeService symptomTypeService,
             IMedicineTypeService medicineTypeService,
             IMedicineFactorRecordService medicineFactorRecordService,
             IPlanService planService,
             IHealthStatusEntryService healthStatusEntryService
             )
         {
+            this.symptomTypeService = symptomTypeService; 
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.planService = planService;
@@ -79,6 +84,7 @@ namespace WebUI.Controllers
                 Language = "en"
 
             };
+            var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var plans = planService.GetPlans(1, true);
             var initialScheduleRange = new Range<DateTime>(
@@ -95,6 +101,7 @@ namespace WebUI.Controllers
             var bundle = new
             {
                 LoggedInUser = loggedInUserJSON,
+                SymptomTypes = symptomTypes,
                 MedicineTypes = medicineTypes,
                 Plans = plans,
                 FactorRecordsForInitialRange = factorRecords,

@@ -296,7 +296,7 @@ namespace DataAccessLayer.Entities
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(50);
+                    .HasMaxLength(150);
             });
 
             modelBuilder.Entity<TUser>(entity =>
