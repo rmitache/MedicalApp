@@ -1,6 +1,8 @@
 .frame {
     width: 100%;
     text-align:center;
+     background-color:lightyellow;
+
 }
 
     .frame .previous-button {
@@ -20,6 +22,6 @@
 
 
 .h2 {
-    color: #3d57bf;
+    color: black;
 
 }

@@ -39,7 +39,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             });
         }
     };
-
     @ViewChildren('symptomEntryElems')
     private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
 
@@ -48,13 +47,39 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
-        HealthStatusEntryCLO: null
+        HealthStatusEntryCLO: null,
+        ShowSymptomEntriesOverlayDiv: true
     };
 
     // Private methods
-    private refreshIsValid() {
-        this.isValid = this.reactiveForm.valid;
+    private checkChildrenAreValid(): boolean {
+
+        let allChildElemsAreValid = true;
+        if (!this.symptomEntryElems) {
+            return false;
+        }
+
+        for (var i = 0; i < this.symptomEntryElems.toArray().length; i++) {
+
+            let elem = this.symptomEntryElems.toArray()[i];
+
+            if (!elem.GetValidState()) {
+                allChildElemsAreValid = false;
+                break;
+            }
+        }
+
+        //if (this.symptomEntryElems.length === 0) {
+        //    allChildElemsAreValid = false;
+        //}
+
+        return allChildElemsAreValid;
     }
+    private refreshIsValid() {
+        let prevIsValid = this.isValid;
+        this.isValid = this.checkChildrenAreValid() && this.reactiveForm.valid;
+    }
+    
 
     // Constructor 
     constructor(
@@ -62,11 +87,13 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         private readonly globalDataService: GlobalDataService,
         private fb: FormBuilder
     ) {
+        this.availableSymptomTypes = this.globalDataService.GetSymptomTypesFromBundle();
+
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
     ngOnInit() {
         this.viewModel.HealthStatusEntryCLO.OccurenceDateTime = this.initialDateTime;
-
         this.reactiveForm = this.fb.group({
             occurrenceDateTime: [null, Validators.compose([
                 (control: AbstractControl) => {
@@ -120,6 +147,17 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private onSymptomEntryElemValidStateChanged() {
         this.refreshIsValid();
     }
+    private onRegisterSymptomsTriggered() {
+        this.viewModel.ShowSymptomEntriesOverlayDiv = false;
+        this.onAddNewSymptomEntryTriggered();
+    }
+    private onAddNewSymptomEntryTriggered() {
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
+    }
     private onRemoveSymptomEntryElemTriggered(clo: CLOs.SymptomEntryCLO) {
 
         const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
@@ -137,6 +175,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
 interface ViewModel {
     HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
+    ShowSymptomEntriesOverlayDiv: boolean;
 }
 export interface ISymptomTypesSearchService {
     GetSymptomTypeByName(name: string): CLOs.SymptomTypeCLO;

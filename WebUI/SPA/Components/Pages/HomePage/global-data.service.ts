@@ -45,6 +45,13 @@ export class GlobalDataService {
     public GetLoggedInUserFromBundle(): CLOs.PatientAccountCLO {
         return this.genericCLOFactory.ConvertToCLO<CLOs.PatientAccountCLO>(CLOs.PatientAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
     }
+    public GetSymptomTypesFromBundle(): DataStructures.List<CLOs.SymptomTypeCLO> {
+
+        let blos = this.startupDataBundleService.GetBundle['SymptomTypes'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO, blos);
+
+        return cloList;
+    }
     public GetMedicineTypesFromBundle(): DataStructures.List<CLOs.MedicineTypeCLO> {
 
         let blos = this.startupDataBundleService.GetBundle['MedicineTypes'];

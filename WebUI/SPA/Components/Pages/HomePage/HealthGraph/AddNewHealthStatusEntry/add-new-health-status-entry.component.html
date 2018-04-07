@@ -45,5 +45,13 @@
             </div>
 
         </div>
+        <div class="hide-symptoms-overlay-div" *ngIf="viewModel.ShowSymptomEntriesOverlayDiv">
+            <div class="center-div" (click)="onRegisterSymptomsTriggered()">
+                <h2>SYMPTOMS</h2>
+                <span>
+                    Click if you want to enter your Symptoms
+                </span>
+            </div>
+        </div>
     </div>
 </form>

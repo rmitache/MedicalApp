@@ -5,7 +5,6 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 export class SymptomEntryCLO extends BaseCLO {
     // Fields
     public ID: number;
-    public OccurenceDateTime: Date;
     public SymptomType: CLOs.SymptomTypeCLO;
     public IntensityLevel: Enums.SymptomIntensityLevel;
 

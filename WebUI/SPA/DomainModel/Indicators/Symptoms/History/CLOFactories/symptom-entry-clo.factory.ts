@@ -19,7 +19,6 @@ export class SymptomEntryCLOFactory implements ICLOFactory<CLOs.SymptomEntryCLO>
 
         let newCLO = new CLOs.SymptomEntryCLO();
         newCLO.ID = blo['ID'];
-        newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
         newCLO.IntensityLevel = blo['IntensityLevel'];
         newCLO.SymptomType = this.symptomTypeCLOFactory.Convert_ToCLO(blo['SymptomType']);
 
@@ -28,7 +27,6 @@ export class SymptomEntryCLOFactory implements ICLOFactory<CLOs.SymptomEntryCLO>
     public Create_DefaultCLO(): CLOs.SymptomEntryCLO {
         let newCLO = new CLOs.SymptomEntryCLO();
         newCLO.ID = 0;
-        newCLO.OccurenceDateTime = new Date();
         newCLO.IntensityLevel = Enums.SymptomIntensityLevel.NotPresent;
         newCLO.SymptomType = null;
 
