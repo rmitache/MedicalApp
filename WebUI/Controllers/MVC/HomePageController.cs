@@ -29,13 +29,24 @@ namespace WebUI.Controllers
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
 
         // Private methods
-        private Range<DateTime> GetCurrentMonthStartAndEndDates()
+        private Range<DateTime> GetMonthRangeWithPadding(DateTime referenceDate, int padding)
         {
-            DateTime now = DateTime.Now;
-            
-            var startDate = new DateTime(now.Year, now.Month, 1).StartOfDay();
-            var endDate = startDate.AddMonths(1).AddDays(-1).EndOfDay();
-            return new Range<DateTime>(startDate, endDate);
+            if(padding<0)
+            {
+                throw new Exception("GetMonthRangeWithPadding - padding must be non-negative");
+            }
+
+            // Start
+            var startPaddedDate = referenceDate.AddMonths(-padding);
+            var actualStartDate = new DateTime(startPaddedDate.Year, startPaddedDate.Month, 1).StartOfDay();
+
+            // End
+            var endPaddedDate = referenceDate.AddMonths(padding);
+            var actualEndDate = new DateTime(endPaddedDate.Year, endPaddedDate.Month, 1).AddMonths(1).AddDays(-1).EndOfDay();
+
+            //
+            var range = new Range<DateTime>(actualStartDate, actualEndDate);
+            return range;
         }
 
         // Constructor
@@ -47,7 +58,7 @@ namespace WebUI.Controllers
             IHealthStatusEntryService healthStatusEntryService
             )
         {
-            this.symptomTypeService = symptomTypeService; 
+            this.symptomTypeService = symptomTypeService;
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.planService = planService;
@@ -75,6 +86,18 @@ namespace WebUI.Controllers
         {
 
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
+
+            // Explanation: for both Schedule (FactorRecords) and HealthGraph (HealthStatusEntries) a window of 'available' data is loaded on the FE 
+            //              so that not every navigation operation results in going back to the server (a form of caching)
+            //              The padding works such that:
+            //                  - If padding is set to 0, it will load data for the current month only
+            //                  - Any value more than 0 will result in additional months ahead/before being added to the query
+            int scheduleAvailableWindowPaddingInMonths = 3;
+            int healthGraphAvailableWindowPaddingInMonths = 0;
+            var initialScheduleDateRange = this.GetMonthRangeWithPadding(DateTime.Now, scheduleAvailableWindowPaddingInMonths);
+            var initialHealthGraphRange = this.GetMonthRangeWithPadding(DateTime.Now, healthGraphAvailableWindowPaddingInMonths);
+
+
             var loggedInUserJSON = new
             {
                 ID = 1,
@@ -87,13 +110,8 @@ namespace WebUI.Controllers
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var plans = planService.GetPlans(1, true);
-            var initialScheduleRange = new Range<DateTime>(
-                    DateTime.Today.Subtract(new TimeSpan(25, 0, 0, 0)),
-                    DateTime.Today.Add(new TimeSpan(25, 23, 59, 59))
-                );
-            var currentMonthRange = this.GetCurrentMonthStartAndEndDates();
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleRange, 1);
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(currentMonthRange, 1, true);
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, 1);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, 1, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
 

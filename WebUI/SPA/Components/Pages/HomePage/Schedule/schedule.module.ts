@@ -13,7 +13,6 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { ScheduleComponent } from './schedule.component';
-import { NavigationPanelComponent } from './NavigationPanel/navigation-panel.component';
 import { ScheduleUnitComponent } from './ScheduleUnit/schedule-unit.component';
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 
@@ -31,11 +30,11 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
     ],
     declarations: [
         ScheduleComponent,
-        NavigationPanelComponent,
         ScheduleUnitComponent,
         AddNewEventComponent
     ],
-    exports: [ScheduleComponent],
+    exports: [
+        ScheduleComponent],
     entryComponents: [
         AddNewEventComponent
     ]

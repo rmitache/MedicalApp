@@ -20,7 +20,7 @@
         .frame .header .left-section {
             display: block;
             float: left;
-            /*border: solid 1px red;*/
+            width: calc(33%);
         }
 
             .frame .header .left-section .header-label {
@@ -36,13 +36,13 @@
 
         .frame .header .center-section {
             float: left;
-            width: 270px;
-            margin-left: calc(50% - 295px);
+            width: calc(34%);
         }
 
         .frame .header .right-section {
             float: right;
-            /*border: solid 1px red;*/
+            width: calc(33%);
+            height:30px;
         }
 
 

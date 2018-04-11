@@ -159,7 +159,7 @@ export class GenericCLOFactory {
     }
     public CloneCLOArray<T extends BaseCLO>(cloArray: T[]): T[] {
         if (cloArray.length === 0) {
-            throw new Error('List to be cloned has length 0');
+            return [];
         }
 
         let clonedCLOs = [];

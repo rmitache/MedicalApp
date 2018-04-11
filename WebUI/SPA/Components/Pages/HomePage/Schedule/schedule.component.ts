@@ -16,6 +16,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
+import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 @Component({
     selector: 'schedule',
@@ -26,6 +27,8 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 export class ScheduleComponent {
     // Fields
     private availableDataWindowSizeInDays = 50;
+    private availableWindowPaddingInMonths = 0; 
+
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableFactorRecords: null,
@@ -91,14 +94,15 @@ export class ScheduleComponent {
     }
     ngOnInit() {
 
+        // Get the initial range from the current DisplayMode
+        var initialSelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
+
         // Init Available (super) DataSet
-        this.viewModel.AvailableDateRange = new Range<moment.Moment>(
-            moment(new Date()).startOf('day').subtract(this.availableDataWindowSizeInDays / 2, 'days'),
-            moment(new Date()).endOf('day').add(this.availableDataWindowSizeInDays / 2, 'days'));
+        this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
         this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
         
         // Then init the SelectedDateRange and create the display representation
-        this.viewModel.SelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
+        this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
     }
     ngOnDestroy() {
@@ -163,15 +167,15 @@ export class ScheduleComponent {
     private onNavigateBackwardTriggered() {
         // Check if prevSelectedDateRange is within the AvailableDateRange
         let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
-        if (prevSelectedDateRange.RangeStart > this.viewModel.AvailableDateRange.RangeStart) {
+        if (prevSelectedDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
             this.viewModel.SelectedDateRange = prevSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
         else {
             // If it isn't, load a new "window" of FactorRecords from the server
-            let newAvailableDateRange = new Range<moment.Moment>(
-                this.viewModel.AvailableDateRange.RangeStart.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'),
-                this.viewModel.AvailableDateRange.RangeEnd.clone().subtract(this.availableDataWindowSizeInDays / 2, 'days'));
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(prevSelectedDateRange.RangeStart.clone(),
+                prevSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
@@ -189,19 +193,19 @@ export class ScheduleComponent {
         let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
 
         // Check if nextSelectedDateRange is within the AvailableDateRange
-        if (nextSelectedDateRange.RangeEnd < this.viewModel.AvailableDateRange.RangeEnd) {
+        if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
             this.viewModel.SelectedDateRange = nextSelectedDateRange;
             this.recreateDisplayRepresentation();
         }
         else {
-            
             // If it isn't, load a new "window" of FactorRecords from the server
-            let newAvailableDateRange = new Range<moment.Moment>(
-                this.viewModel.AvailableDateRange.RangeStart.clone().add(this.availableDataWindowSizeInDays / 2, 'days'),
-                this.viewModel.AvailableDateRange.RangeEnd.clone().add(this.availableDataWindowSizeInDays / 2, 'days'));
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(nextSelectedDateRange.RangeStart.clone(),
+                nextSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
+                    
                     this.viewModel.SelectedDateRange = nextSelectedDateRange;
                     this.recreateDisplayRepresentation();
                     setTimeout(() => {

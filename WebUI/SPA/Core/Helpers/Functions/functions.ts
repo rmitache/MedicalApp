@@ -35,11 +35,11 @@ export function EnumerateDaysBetweenDates(startDate: Date, endDate: Date, includ
     return dates;
 };
 
-export function EnumerateDaysBetweenDatesUsingMoment(range:Range<moment.Moment>, includeEdges: boolean): moment.Moment[] {
+export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>, includeEdges: boolean): moment.Moment[] {
     var momentDates = [];
 
-    var currDate = range.RangeStart.startOf('day');
-    var lastDate = range.RangeEnd.startOf('day');
+    var currDate = range.RangeStart.clone().startOf('day');
+    var lastDate = range.RangeEnd.clone().startOf('day');
 
     if (includeEdges) {
         currDate = currDate.subtract(1, 'days');
@@ -57,7 +57,7 @@ export function RandomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export function StringToColour (str) {
+export function StringToColour(str) {
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -70,6 +70,26 @@ export function StringToColour (str) {
     return colour;
 }
 
-export function RemoveWhitespace(str:string):string {
+// Returns a range of dates starting at the beginning of a month and ending at the end of a month 
+export function GetMonthRangeWithPaddingUsingMoment(refStartDate: moment.Moment, refEndDate: moment.Moment, padding: number) {
+    if (padding < 0) {
+        throw new Error('GetMonthRangeWithPadding - padding must be non-negative');
+    }
+
+    // Start
+    var startPaddedDate = refStartDate.clone().add(-padding, 'months');
+    var actualStartDate = startPaddedDate.startOf('month').startOf('day');
+
+    // End
+    var endPaddedDate = refEndDate.clone().add(padding, 'months');
+    var actualEndDate = endPaddedDate.endOf('month').endOf('day');
+
+
+    //
+    var range = new Range<moment.Moment>(actualStartDate, actualEndDate);
+    return range;
+}
+
+export function RemoveWhitespace(str: string): string {
     return str.replace(/ /g, '');
 }

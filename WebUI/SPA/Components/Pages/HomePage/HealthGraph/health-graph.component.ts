@@ -27,6 +27,8 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
 })
 export class HealthGraphComponent {
     // Fields
+    private availableDataWindowSizeInMonths = 1;
+
     @ViewChild("chart")
     private chartInstance: UIChart;
     private readonly viewModel: ViewModel = {
@@ -34,6 +36,7 @@ export class HealthGraphComponent {
         AvailableHealthEntries: null,
 
         SelectedDateRange: null,
+        NavigationLabel: 'N/A',
 
         ChartOptions: null,
         ChartData: null,
@@ -179,6 +182,7 @@ interface ViewModel {
     AvailableHealthEntries: CLOs.HealthStatusEntryCLO[];
 
     SelectedDateRange: Range<moment.Moment>;
+    NavigationLabel: string;
 
     ChartOptions: any;
     ChartData: any;
