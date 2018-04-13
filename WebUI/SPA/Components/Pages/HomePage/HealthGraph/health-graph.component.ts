@@ -14,6 +14,7 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
+import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
@@ -27,7 +28,7 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
 })
 export class HealthGraphComponent {
     // Fields
-    private availableDataWindowSizeInMonths = 1;
+    private availableWindowPaddingInMonths = 0;
 
     @ViewChild("chart")
     private chartInstance: UIChart;
@@ -36,7 +37,7 @@ export class HealthGraphComponent {
         AvailableHealthEntries: null,
 
         SelectedDateRange: null,
-        NavigationLabel: 'N/A',
+        NavigationLabel: null,
 
         ChartOptions: null,
         ChartData: null,
@@ -82,7 +83,7 @@ export class HealthGraphComponent {
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions();
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
-
+        this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
         this.chartInstance.reinit();
 
     }
@@ -103,14 +104,15 @@ export class HealthGraphComponent {
 
     }
     ngOnInit() {
+        // Get the initial range from the current DisplayMode
+        var initialSelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
 
-        // Init Available (super) DataSet
-        this.viewModel.AvailableDateRange = new Range<moment.Moment>(moment().startOf('month').startOf('day'),// current month
-            moment().endOf('month').startOf('day'));
+        this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
+            initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // Then init the SelectedDateRange and create the display representation
-        this.viewModel.SelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
+        this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
     }
     ngOnDestroy() {
@@ -174,6 +176,58 @@ export class HealthGraphComponent {
             ]
         });
     }
+    private onNavigateBackwardTriggered() {
+        // Check if prevSelectedDateRange is within the AvailableDateRange
+        let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
+        if (prevSelectedDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
+            this.viewModel.SelectedDateRange = prevSelectedDateRange;
+            this.recreateDisplayRepresentation();
+        }
+        else {
+            // If it isn't, load a new "window" of FactorRecords from the server
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(prevSelectedDateRange.RangeStart.clone(),
+                prevSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+
+            this.viewModel.Blocked = true;
+            this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
+                .then(() => {
+                    this.viewModel.SelectedDateRange = prevSelectedDateRange;
+                    this.recreateDisplayRepresentation();
+                    setTimeout(() => {
+                        this.viewModel.Blocked = false;
+                    }, 1);
+                });
+        }
+    }
+    private onNavigateForwardTriggered() {
+
+        // Variables
+        let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
+
+        // Check if nextSelectedDateRange is within the AvailableDateRange
+        if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
+            this.viewModel.SelectedDateRange = nextSelectedDateRange;
+            this.recreateDisplayRepresentation();
+        }
+        else {
+            // If it isn't, load a new "window" of FactorRecords from the server
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(nextSelectedDateRange.RangeStart.clone(),
+                nextSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+
+            this.viewModel.Blocked = true;
+            this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
+                .then(() => {
+
+                    this.viewModel.SelectedDateRange = nextSelectedDateRange;
+                    this.recreateDisplayRepresentation();
+                    setTimeout(() => {
+                        this.viewModel.Blocked = false;
+                    }, 1);
+
+                });
+        }
+    }
+
 }
 
 
@@ -200,6 +254,8 @@ interface IDisplayMode {
     GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
     GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
+    GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
+
     GenerateChartOptions(): any;
     GenerateChartData(filteredHealthStatusEntries: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>): any;
 }
@@ -269,10 +325,17 @@ class MonthDisplayMode implements IDisplayMode {
         return range;
     }
     public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
-        throw new Error('GetNextSelectedDateRange not implemented yet');
+        // Get the month of the referenceDate as an initial range
+        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(1, 'months').startOf('month').startOf('day'),
+            currentSelDateRange.RangeEnd.clone().add(1, 'months').endOf('month').endOf('day'));
+        return range;
     }
     public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
-        throw new Error('GetPreviousSelectedDateRange not implemented yet');
+
+        // Get the month of the referenceDate as an initial range
+        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(1, 'months').startOf('month').startOf('day'),
+            currentSelDateRange.RangeEnd.clone().subtract(1, 'months').endOf('month').endOf('day'));
+        return range;
     }
     public GenerateChartOptions() {
         let chartOptions = {
@@ -356,6 +419,15 @@ class MonthDisplayMode implements IDisplayMode {
         };
         return chartOptions;
     }
+    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
+        // Range must be within same month
+        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month() ) {
+            throw new Error('Range must be within same month');
+        }
+
+        return currentSelDateRange.RangeStart.format('MMMM, YYYY');
+    }
+
     public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>) {
 
         // Prepare data

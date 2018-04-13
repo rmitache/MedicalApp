@@ -26,8 +26,7 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 })
 export class ScheduleComponent {
     // Fields
-    private availableDataWindowSizeInDays = 50;
-    private availableWindowPaddingInMonths = 0; 
+    private availableWindowPaddingInMonths = 2; 
 
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
@@ -238,7 +237,8 @@ interface IDisplayMode {
     GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
     GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
-    GetNavigationLabel(currentSelDateRange: Range<moment.Moment>):string;
+    GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
+
     GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
 }
 class DayDisplayMode implements IDisplayMode {

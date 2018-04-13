@@ -29,7 +29,7 @@ namespace WebUI.Controllers
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
 
         // Private methods
-        private Range<DateTime> GetMonthRangeWithPadding(DateTime referenceDate, int padding)
+        private Range<DateTime> GetMonthRangeWithPadding(DateTime refStartDate, DateTime refEndDate, int padding)
         {
             if(padding<0)
             {
@@ -37,11 +37,11 @@ namespace WebUI.Controllers
             }
 
             // Start
-            var startPaddedDate = referenceDate.AddMonths(-padding);
+            var startPaddedDate = refStartDate.AddMonths(-padding);
             var actualStartDate = new DateTime(startPaddedDate.Year, startPaddedDate.Month, 1).StartOfDay();
 
             // End
-            var endPaddedDate = referenceDate.AddMonths(padding);
+            var endPaddedDate = refEndDate.AddMonths(padding);
             var actualEndDate = new DateTime(endPaddedDate.Year, endPaddedDate.Month, 1).AddMonths(1).AddDays(-1).EndOfDay();
 
             //
@@ -92,10 +92,11 @@ namespace WebUI.Controllers
             //              The padding works such that:
             //                  - If padding is set to 0, it will load data for the current month only
             //                  - Any value more than 0 will result in additional months ahead/before being added to the query
-            int scheduleAvailableWindowPaddingInMonths = 3;
+            int scheduleAvailableWindowPaddingInMonths = 2;
             int healthGraphAvailableWindowPaddingInMonths = 0;
-            var initialScheduleDateRange = this.GetMonthRangeWithPadding(DateTime.Now, scheduleAvailableWindowPaddingInMonths);
-            var initialHealthGraphRange = this.GetMonthRangeWithPadding(DateTime.Now, healthGraphAvailableWindowPaddingInMonths);
+            var refDate = DateTime.Now.Date;
+            var initialScheduleDateRange = this.GetMonthRangeWithPadding(refDate, refDate, scheduleAvailableWindowPaddingInMonths);
+            var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
 
 
             var loggedInUserJSON = new
