@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-
-
-const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
+const AotPlugin = require('@ngtools/webpack').AotPlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
@@ -53,6 +51,13 @@ module.exports = (env) => {
                     test: /\.(jpe?g|png|gif|svg)$/,
                     loader: require.resolve("file-loader") + "?name=Images/[name].[ext]"
                 } 
+                //{
+                //    test: /\.(png|jpg|jpeg|gif|svg)$/,
+                //    //use: 'url-loader?limit=25000',
+                //    //exclude: [
+                //    //    path.resolve(__dirname, 'SPA/Content/Images')
+                //    //]
+                //}
             ]
         },
         plugins: [
