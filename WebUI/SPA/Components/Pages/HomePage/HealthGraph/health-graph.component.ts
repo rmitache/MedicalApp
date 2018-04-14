@@ -19,6 +19,7 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 
 // Components
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
+import { GraphTooltipComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/GraphTooltip/graph-tooltip.component';
 
 
 @Component({
@@ -31,8 +32,10 @@ export class HealthGraphComponent {
     // Fields
     private availableWindowPaddingInMonths = 0;
 
-    @ViewChild("chart")
+    @ViewChild('chart')
     private chartInstance: UIChart;
+    @ViewChild('graphTooltip')
+    private graphTooltipInstance: GraphTooltipComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableHealthEntries: null,
@@ -50,107 +53,12 @@ export class HealthGraphComponent {
     private readonly appState: IReadOnlyApplicationState;
 
 
-
-    single = [
-        {
-            "name": new Date("2011-01-01"),
-            "value": 3
-        },
-        {
-            "name": new Date("2011-01-02"),
-            "value": -2
-        },
-        {
-            "name": new Date("2011-01-03"),
-            "value": 0
-        },
-        {
-            "name": new Date("2011-01-04"),
-            "value": 3
-        },
-        {
-            "name": new Date("2011-01-05"),
-            "value": 3
-        },
-        {
-            "name": new Date("2011-01-06"),
-            "value": -3
-        },
-        {
-            "name": new Date("2011-01-07"),
-            "value": 1
-        },
-        {
-            "name": new Date("2011-01-08"),
-            "value": 1
-        },
-        {
-            "name": new Date("2011-01-09"),
-            "value": -3
-        },
-        {
-            "name": new Date("2011-01-10"),
-            "value": 1
-        },
-        {
-            "name": new Date("2011-01-11"),
-            "value": 2
-        },
-        {
-            "name": new Date("2011-01-12"),
-            "value": -1
-        },
-        {
-            "name": new Date("2011-01-13"),
-            "value": 3
-        },
-        {
-            "name": new Date("2011-01-14"),
-            "value": 3
-        },
-        {
-            "name": new Date("2011-01-15"),
-            "value": -3
-        },
-    ];
-
-
-    // options
-    options = {
-
-        // X Axis
-        showXAxis: true,
-        showXAxisLabel: false,
-        xAxisLabel: 'Country',
-
-        // Y Axis
-        showYAxis: true,
-        showYAxisLabel: false,
-        yAxisLabel: 'Population',
-        yAxisTicks: [
-            3,2,1,0,-1,-2,-3
-        ],
-
-        yScaleMax: 5,
-        yScaleMin:-5,
-
-        // General
-        showLegend: false,
-    }
-    axisFormat(val) {
-        return 'wtf';
-    }
-
-    colorScheme = {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-    };
-
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.SelectedViewMode === HealthGraphDisplayMode.Month) {
-            currentStrategy = new MonthDisplayMode();
+            currentStrategy = new MonthDisplayMode(this.chartInstance, this.graphTooltipInstance);
         } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
@@ -210,6 +118,8 @@ export class HealthGraphComponent {
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
+
+        
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -411,6 +321,12 @@ class MonthDisplayMode implements IDisplayMode {
         };
     }
 
+    // Constructor
+    constructor(
+        private readonly chartInstance: UIChart,
+        private readonly graphTooltipInstance: GraphTooltipComponent) {
+    }
+
 
     // Public methods
     public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
@@ -436,11 +352,19 @@ class MonthDisplayMode implements IDisplayMode {
     public GenerateChartOptions() {
         let chartOptions = {
             tooltips: {
-                callbacks: {
-                    label: function (tooltipItem, data) {
-                        var healthLevelName = Enums.HealthLevel[tooltipItem.yLabel];
-                        return healthLevelName;
+                // Disable the on-canvas tooltip
+                enabled: false,
+
+                custom: (tooltipModel) => {
+
+                    if (tooltipModel.opacity === 0) {
+                        this.graphTooltipInstance.HideAndClear()
+                        return;
                     }
+
+                    var title = tooltipModel.title[0];
+                    var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
+                    this.graphTooltipInstance.SetDataAndPosition(title, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
                 }
             },
             elements: {
@@ -543,3 +467,4 @@ class MonthDisplayMode implements IDisplayMode {
     }
 
 };
+

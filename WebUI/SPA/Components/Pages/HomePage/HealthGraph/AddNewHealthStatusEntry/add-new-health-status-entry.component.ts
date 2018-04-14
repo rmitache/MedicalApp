@@ -12,9 +12,9 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 
 // Components
+import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 
 
 

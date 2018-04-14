@@ -15,6 +15,7 @@ using BLL.DomainModel.Indicators.Symptoms.History.Services;
 using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 using Common;
 using BLL.DomainModel.Indicators.Symptoms.Library.Services;
+using System.Linq;
 
 namespace WebUI.Controllers
 {
@@ -126,6 +127,7 @@ namespace WebUI.Controllers
                 FactorRecordsForInitialRange = factorRecords,
                 HealthStatusEntriesForInitialRange = healthStatusEntries
             };
+            
             return Json(bundle);
         }
 

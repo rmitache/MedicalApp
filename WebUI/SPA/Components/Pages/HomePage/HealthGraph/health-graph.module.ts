@@ -14,11 +14,13 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { HealthGraphComponent } from './health-graph.component';
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
+import { GraphTooltipComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/GraphTooltip/graph-tooltip.component';
 
 
 
 @NgModule({
     imports: [
+        
         BrowserModule,
         FormsModule,
         CalendarModule,
@@ -31,7 +33,8 @@ import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthG
     declarations: [
         HealthGraphComponent,
         AddNewHealthStatusEntryComponent,
-        SymptomEntryElemComponent
+        SymptomEntryElemComponent,
+        GraphTooltipComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [

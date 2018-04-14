@@ -1,0 +1,11 @@
+<div #tooltipDiv class="frame"
+     [style.visibility]="viewModel.Visible ? 'visible' : 'hidden'"
+     [style.top]="viewModel.TopPos + 'px'"
+     [style.left]="viewModel.LeftPos + 'px'">
+    <div class="header h3">
+        {{viewModel.Title}}
+
+    </div>
+    {{viewModel.TopPos}}
+    {{viewModel.LeftPos}}
+</div> 
