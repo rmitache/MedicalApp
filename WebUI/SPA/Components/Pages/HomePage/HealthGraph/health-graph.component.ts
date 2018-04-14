@@ -364,9 +364,9 @@ class MonthDisplayMode implements IDisplayMode {
                     
                     var dateString = tooltipModel.title[0];
                     var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
-                    var data = datesToCLOsDictionary[dateKey];
+                    var healthStatusEntriesOnDate = datesToCLOsDictionary[dateKey];
                     var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
-                    this.graphTooltipInstance.SetDataAndPosition(dateString, data, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
+                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntriesOnDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
                 }
             },
             elements: {

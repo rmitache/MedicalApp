@@ -21,6 +21,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
         newCLO.ID = blo['ID'];
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
         newCLO.HealthLevel = blo['HealthLevel'];
+        newCLO.SymptomEntries = this.symptomEntryCLOFactory.Convert_ToCloList(blo['SymptomEntries']).ToArray();
 
         return newCLO;
     }
