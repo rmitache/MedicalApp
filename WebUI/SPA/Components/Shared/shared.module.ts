@@ -10,6 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
 import { ChipsModule } from 'primeng/primeng';
 import { ChartModule } from 'primeng/primeng';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -32,7 +33,9 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         ProgressSpinnerModule,
         SplitButtonModule,
         ChipsModule,
-        ChartModule
+        ChartModule,
+
+        NgxChartsModule
     ],
     declarations: [
         IconButtonComponent,
@@ -53,7 +56,8 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         ChartModule,
         CalendarModule,
         BlockUIModule,
-        NavigationPanelComponent
+        NavigationPanelComponent,
+        NgxChartsModule
     ]
 })
 export class SharedModule { }

@@ -22,12 +22,13 @@
         <option>Day</option>
         <option>Week</option>
     </select>-->
-            {{viewModel.AvailableDateRange.RangeStart.format('DD MM YYYY')}}-{{viewModel.AvailableDateRange.RangeEnd.format('DD MM YYYY')}}
         </div>
     </div>
     <div class="body">
         <div class="chart-wrapper-div">
-            <p-chart #chart type="bar" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="180px"></p-chart>
+            <p-chart #chart type="bar" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="190px"></p-chart>
+
+            
         </div>
     </div>
 </div> 

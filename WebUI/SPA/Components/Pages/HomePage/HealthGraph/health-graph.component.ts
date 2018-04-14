@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import { ChartModule, UIChart } from 'primeng/primeng';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -49,6 +50,101 @@ export class HealthGraphComponent {
     private readonly appState: IReadOnlyApplicationState;
 
 
+
+    single = [
+        {
+            "name": new Date("2011-01-01"),
+            "value": 3
+        },
+        {
+            "name": new Date("2011-01-02"),
+            "value": -2
+        },
+        {
+            "name": new Date("2011-01-03"),
+            "value": 0
+        },
+        {
+            "name": new Date("2011-01-04"),
+            "value": 3
+        },
+        {
+            "name": new Date("2011-01-05"),
+            "value": 3
+        },
+        {
+            "name": new Date("2011-01-06"),
+            "value": -3
+        },
+        {
+            "name": new Date("2011-01-07"),
+            "value": 1
+        },
+        {
+            "name": new Date("2011-01-08"),
+            "value": 1
+        },
+        {
+            "name": new Date("2011-01-09"),
+            "value": -3
+        },
+        {
+            "name": new Date("2011-01-10"),
+            "value": 1
+        },
+        {
+            "name": new Date("2011-01-11"),
+            "value": 2
+        },
+        {
+            "name": new Date("2011-01-12"),
+            "value": -1
+        },
+        {
+            "name": new Date("2011-01-13"),
+            "value": 3
+        },
+        {
+            "name": new Date("2011-01-14"),
+            "value": 3
+        },
+        {
+            "name": new Date("2011-01-15"),
+            "value": -3
+        },
+    ];
+
+
+    // options
+    options = {
+
+        // X Axis
+        showXAxis: true,
+        showXAxisLabel: false,
+        xAxisLabel: 'Country',
+
+        // Y Axis
+        showYAxis: true,
+        showYAxisLabel: false,
+        yAxisLabel: 'Population',
+        yAxisTicks: [
+            3,2,1,0,-1,-2,-3
+        ],
+
+        yScaleMax: 5,
+        yScaleMin:-5,
+
+        // General
+        showLegend: false,
+    }
+    axisFormat(val) {
+        return 'wtf';
+    }
+
+    colorScheme = {
+        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    };
+
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
         // Get Current Mode strategy
@@ -71,7 +167,7 @@ export class HealthGraphComponent {
         return promise;
     }
     private recreateDisplayRepresentation() {
-        
+
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredHealthStatusEntries = this.viewModel.AvailableHealthEntries.filter(entry => {
             return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
@@ -84,7 +180,7 @@ export class HealthGraphComponent {
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
-        this.chartInstance.reinit();
+        //this.chartInstance.reinit();
 
     }
 
@@ -147,7 +243,7 @@ export class HealthGraphComponent {
                             let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
                             componentInstance.SaveData()
                                 .then((cloList) => {
-                                    
+
 
 
                                     this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
@@ -195,7 +291,7 @@ export class HealthGraphComponent {
                     this.recreateDisplayRepresentation();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
-                    }, 1);
+                    }, 200);
                 });
         }
     }
@@ -222,7 +318,7 @@ export class HealthGraphComponent {
                     this.recreateDisplayRepresentation();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
-                    }, 1);
+                    }, 200);
 
                 });
         }
@@ -273,7 +369,7 @@ class MonthDisplayMode implements IDisplayMode {
             return 0;
     }
     private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], range: Range<moment.Moment>) {
-       
+
         // Variables
         var dataPoints = []
         var dataPointsBgColors = [];
@@ -421,7 +517,7 @@ class MonthDisplayMode implements IDisplayMode {
     }
     public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
         // Range must be within same month
-        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month() ) {
+        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month()) {
             throw new Error('Range must be within same month');
         }
 
