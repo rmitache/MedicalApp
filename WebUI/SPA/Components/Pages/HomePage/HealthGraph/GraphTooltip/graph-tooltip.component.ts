@@ -13,6 +13,7 @@ export class GraphTooltipComponent {
     private tooltipDiv: ElementRef;
     private readonly viewModel: ViewModel = {
         Title: '',
+        DataObj: null,
         Visible: false,
         TopPos: 0,
         LeftPos: 0
@@ -28,10 +29,11 @@ export class GraphTooltipComponent {
     }
 
     // Public 
-    public SetDataAndPosition(title: string, parentPosition: any, caretX: number, caretY: number) {
+    public SetDataAndPosition(title: string, dataObj:Object, parentPosition: any, caretX: number, caretY: number) {
 
         this.viewModel.Visible = true;
         this.viewModel.Title = title;
+        this.viewModel.DataObj = dataObj;
 
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
@@ -50,6 +52,7 @@ export class GraphTooltipComponent {
 
 interface ViewModel {
     Title: string;
+    DataObj: Object;
     Visible: boolean;
     TopPos: number;
     LeftPos: number;

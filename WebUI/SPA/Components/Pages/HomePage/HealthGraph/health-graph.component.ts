@@ -3,7 +3,7 @@ import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
-import { ChartModule, UIChart } from 'primeng/primeng';
+import { ChartModule, UIChart} from 'primeng/primeng';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Project modules
@@ -77,18 +77,29 @@ export class HealthGraphComponent {
     private recreateDisplayRepresentation() {
 
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
-        let filteredHealthStatusEntries = this.viewModel.AvailableHealthEntries.filter(entry => {
+        let filteredHealthStatusEntryCLOs = this.viewModel.AvailableHealthEntries.filter(entry => {
             return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 entry.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
 
+        // Create a dictionary 
+        var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
+        filteredHealthStatusEntryCLOs.forEach((clo, index) => {
+
+            let dateKey = moment(clo.OccurenceDateTime).format('DD/MM/YYYY');
+            if (datesToCLOsDictionary[dateKey] === undefined) {
+                datesToCLOsDictionary[dateKey] = [];
+            };
+            datesToCLOsDictionary[dateKey].push(clo);
+        });
+
         // 
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
-        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions();
-        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(filteredHealthStatusEntries,
+        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(datesToCLOsDictionary);
+        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(datesToCLOsDictionary,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
-        //this.chartInstance.reinit();
+        this.chartInstance.reinit();
 
     }
 
@@ -262,8 +273,8 @@ interface IDisplayMode {
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
 
-    GenerateChartOptions(): any;
-    GenerateChartData(filteredHealthStatusEntries: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>): any;
+    GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }): any;
+    GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>): any;
 }
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
@@ -278,22 +289,13 @@ class MonthDisplayMode implements IDisplayMode {
         else
             return 0;
     }
-    private generateDataPointsForChart(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], range: Range<moment.Moment>) {
+    private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } , range: Range<moment.Moment>) {
 
         // Variables
         var dataPoints = []
         var dataPointsBgColors = [];
 
-        // Create a dictionary of dates and clos 
-        var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
-        healthStatusEntryCLOs.forEach((clo, index) => {
-
-            let dateKey = moment(clo.OccurenceDateTime).format('DD/MM/YYYY');
-            if (datesToCLOsDictionary[dateKey] === undefined) {
-                datesToCLOsDictionary[dateKey] = [];
-            };
-            datesToCLOsDictionary[dateKey].push(clo);
-        });
+       
 
         // Loop through dates and create datapoints
         var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
@@ -349,22 +351,22 @@ class MonthDisplayMode implements IDisplayMode {
             currentSelDateRange.RangeEnd.clone().subtract(1, 'months').endOf('month').endOf('day'));
         return range;
     }
-    public GenerateChartOptions() {
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
             tooltips: {
-                // Disable the on-canvas tooltip
                 enabled: false,
-
                 custom: (tooltipModel) => {
 
                     if (tooltipModel.opacity === 0) {
                         this.graphTooltipInstance.HideAndClear()
                         return;
                     }
-
-                    var title = tooltipModel.title[0];
+                    
+                    var dateString = tooltipModel.title[0];
+                    var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
+                    var data = datesToCLOsDictionary[dateKey];
                     var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
-                    this.graphTooltipInstance.SetDataAndPosition(title, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
+                    this.graphTooltipInstance.SetDataAndPosition(dateString, data, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
                 }
             },
             elements: {
@@ -447,11 +449,10 @@ class MonthDisplayMode implements IDisplayMode {
 
         return currentSelDateRange.RangeStart.format('MMMM, YYYY');
     }
-
-    public GenerateChartData(filteredHealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>) {
+    public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {
 
         // Prepare data
-        var dataPointsInfo = this.generateDataPointsForChart(filteredHealthStatusEntryCLOs, currentSelDateRange);
+        var dataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange);
 
         // Set data
         var data = {
