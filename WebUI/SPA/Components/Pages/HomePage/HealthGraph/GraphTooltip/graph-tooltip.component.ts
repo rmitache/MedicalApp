@@ -20,13 +20,15 @@ export class GraphTooltipComponent {
     private tooltipDiv: ElementRef;
     private readonly viewModel: ViewModel = {
         Title: '',
-        HealthEntryCLOs: null,
+        ChartData: null,
+        SymptomTypes: null,
+
         Visible: false,
         TopPos: 0,
         LeftPos: 0
     };
 
-    options = {
+    private options = {
         tooltips: {
             enabled: false
         },
@@ -49,7 +51,7 @@ export class GraphTooltipComponent {
                     displayFormats: {
                         hour: 'H:mm',
                         minute: 'H:mm',
-                        
+
                     },
                     min: '00:00',
                     max: '23:59'
@@ -104,26 +106,71 @@ export class GraphTooltipComponent {
         responsive: true,
         maintainAspectRatio: false
     };
-    data = {
-        datasets: [
-            {
-                
-                pointBackgroundColor: 'black',
-                pointRadius: 3,
-                showLine: true,
-                data: [
-                    {
-                        x: moment().startOf('day'),
-                        y: 2
-                    },
-                    {
-                        x: moment().endOf('day'),
-                        y: -3
-                    }
-                ]
+
+    // Private methods
+    private generateDataPointsForChart(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+
+        // Variables
+        var dataPoints = []
+        var dataPointsBgColors = [];
+
+
+        // Loop through clos and create datapoints
+        healthEntryCLOs.forEach((clo, index) => {
+
+            // Create datapoints
+            var dp = {
+                x: moment(clo.OccurenceDateTime, moment.ISO_8601),
+                y: clo.HealthLevel
+            };
+            dataPoints.push(dp);
+            if (clo.HealthLevel >= 0) {
+                dataPointsBgColors.push('#9dc340'); // green
+            } else {
+                dataPointsBgColors.push('#f35d5d'); // red
             }
-        ]
-    };
+        });
+
+        // Add min/max special datapoints
+        if (healthEntryCLOs.length > 0) {
+            var minDp = {
+                x: moment(healthEntryCLOs[0].OccurenceDateTime).startOf('day'),
+                y: null
+            }
+            dataPoints.splice(0, 0, minDp);
+            dataPointsBgColors.splice(0, 0, 'black');
+
+            var maxDp = {
+                x: moment(healthEntryCLOs[0].OccurenceDateTime).endOf('day'),
+                y: null
+            }
+            dataPoints.push(maxDp);
+            dataPointsBgColors.push(maxDp);
+        }
+
+
+
+
+        return {
+            dataPoints: dataPoints,
+            dataPointsBgColors: dataPointsBgColors
+        };
+    }
+    private getUniqueSymptomTypes(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+        var symptomTypesDict: { [symptomName: string]: CLOs.SymptomTypeCLO } = {};
+        var symptomTypesList = [];
+
+        healthEntryCLOs.forEach((healthEntryCLO, index) => {
+            healthEntryCLO.SymptomEntries.forEach((symptomEntryCLO, index) => {
+
+                if (symptomTypesDict[symptomEntryCLO.SymptomType.Name] === undefined) {
+                    symptomTypesDict[symptomEntryCLO.SymptomType.Name] = symptomEntryCLO.SymptomType;
+                    symptomTypesList.push(symptomEntryCLO.SymptomType);
+                }
+            });
+        });
+        return symptomTypesList;
+    }
 
     // Constructor 
     constructor(
@@ -139,28 +186,63 @@ export class GraphTooltipComponent {
 
         this.viewModel.Visible = true;
         this.viewModel.Title = dateString;
-        this.viewModel.HealthEntryCLOs = healthEntryCLOs;
 
+        // Set position
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
         this.viewModel.TopPos = parentPosition.top + caretY - currentHeight - 20;
         this.viewModel.LeftPos = parentPosition.left + caretX - currentWidth / 2;
 
+        // Generate dataPoints for chart
+        var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
+            if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
+                return 1;
+            }
+
+            if (f1.GetTime().ToSeconds() < f2.GetTime().ToSeconds()) {
+                return -1;
+            }
+
+            return 0;
+        });
+        var dataPointsInfo = this.generateDataPointsForChart(sortedCLOs);
+        var data = {
+            datasets: [
+                {
+                    pointRadius: 5,
+                    pointStyle: 'circle',
+                    showLine: true,
+                    data: dataPointsInfo.dataPoints,
+                    pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
+                }
+            ]
+        }
+        this.viewModel.ChartData = data;
+
+        // Get symptom entries
+        var symptomTypes = this.getUniqueSymptomTypes(healthEntryCLOs);
+        this.viewModel.SymptomTypes = symptomTypes;
     }
     public HideAndClear() {
+        this.viewModel.Visible = false;
         this.viewModel.Title = '';
+        this.viewModel.ChartData = null;
+        this.viewModel.SymptomTypes = null;
+
         this.viewModel.TopPos = 0;
         this.viewModel.LeftPos = 0;
-        this.viewModel.Visible = false;
     }
 }
 
 
 interface ViewModel {
     Title: string;
-    HealthEntryCLOs: Object;
+    ChartData: any;
+    SymptomTypes: CLOs.SymptomTypeCLO[];
+
     Visible: boolean;
     TopPos: number;
     LeftPos: number;
 
 }
+

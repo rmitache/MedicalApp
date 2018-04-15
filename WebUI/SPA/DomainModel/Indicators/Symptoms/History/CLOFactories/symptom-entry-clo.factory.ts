@@ -27,7 +27,7 @@ export class SymptomEntryCLOFactory implements ICLOFactory<CLOs.SymptomEntryCLO>
     public Create_DefaultCLO(): CLOs.SymptomEntryCLO {
         let newCLO = new CLOs.SymptomEntryCLO();
         newCLO.ID = 0;
-        newCLO.IntensityLevel = Enums.SymptomIntensityLevel.NotPresent;
+        newCLO.IntensityLevel = Enums.SymptomIntensityLevel.Mild;
         newCLO.SymptomType = null;
 
         return newCLO;

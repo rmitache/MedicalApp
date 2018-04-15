@@ -2,20 +2,29 @@
 
 .frame {
     width: 270px;
-    min-height: 180px;
+    height: 280px;
     border: solid 1px #d5d5d5;
-
     background-color: white;
     border-radius: 5px;
     position: absolute;
-    /*display: none;*/
-    padding:10px;
+    padding: 10px;
 }
 
     .frame .header {
         text-align: center;
+        height: 20px;
     }
 
+    .frame .chart-wrapper-div {
+        padding-top: 10px;
+        height:150px;
+    }
+
+
+    .frame .symptoms-list {
+        height:calc(100% - 170px - 20px);
+        width:100%;
+    }
 
 .h3 {
     color: black;

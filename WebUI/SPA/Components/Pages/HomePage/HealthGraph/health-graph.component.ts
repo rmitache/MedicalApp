@@ -3,7 +3,7 @@ import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
-import { ChartModule, UIChart} from 'primeng/primeng';
+import { ChartModule, UIChart } from 'primeng/primeng';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Project modules
@@ -85,8 +85,7 @@ export class HealthGraphComponent {
         // Create a dictionary 
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
-
-            let dateKey = moment(clo.OccurenceDateTime).format('DD/MM/YYYY');
+            let dateKey = moment(clo.OccurenceDateTime, moment.ISO_8601).format('DD/MM/YYYY');
             if (datesToCLOsDictionary[dateKey] === undefined) {
                 datesToCLOsDictionary[dateKey] = [];
             };
@@ -130,7 +129,7 @@ export class HealthGraphComponent {
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
 
-        
+
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -280,41 +279,58 @@ class MonthDisplayMode implements IDisplayMode {
     // Private methods
     private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
         var sum: number = 0;
+        var result = 0;
         healthStatusEntryCLOs.forEach(clo => {
             sum += clo.HealthLevel;
         });
 
         if (healthStatusEntryCLOs.length > 0)
-            return sum / healthStatusEntryCLOs.length;
+            result = sum / healthStatusEntryCLOs.length;
         else
-            return 0;
+            result = null;
+
+
+        if (result === 0) {
+            result = 0.2;
+        }
+        return result;
     }
-    private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } , range: Range<moment.Moment>) {
+    private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, range: Range<moment.Moment>) {
 
         // Variables
         var dataPoints = []
         var dataPointsBgColors = [];
 
-       
 
         // Loop through dates and create datapoints
         var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
         datesInRangeArray.forEach((date, index) => {
+
+            // Prepare data
             let dateKey = date.format('DD/MM/YYYY');
             var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
             var avgHealthLevel = this.getAverageHealthLevel(clos);
 
-            // Create datapoints
+
+            // Create datapoint
             var dp = {
                 x: date,
                 y: avgHealthLevel
             };
             dataPoints.push(dp);
-            if (avgHealthLevel >= 0) {
+            if (avgHealthLevel >= 0 && avgHealthLevel <= 1) {
                 dataPointsBgColors.push('#9dc340'); // green
-            } else {
+            }
+            else if (avgHealthLevel >1) {
+                dataPointsBgColors.push('green'); // red
+            }
+            else if (avgHealthLevel <= 0 && avgHealthLevel >= -1) {
                 dataPointsBgColors.push('#f35d5d'); // red
             }
+            else if (avgHealthLevel < 0) {
+                dataPointsBgColors.push('red'); // red
+            }
+
         });
 
         return {
@@ -361,12 +377,12 @@ class MonthDisplayMode implements IDisplayMode {
                         this.graphTooltipInstance.HideAndClear()
                         return;
                     }
-                    
+
                     var dateString = tooltipModel.title[0];
                     var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
-                    var healthStatusEntriesOnDate = datesToCLOsDictionary[dateKey];
+                    var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
                     var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
-                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntriesOnDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
+                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
                 }
             },
             elements: {
@@ -400,7 +416,7 @@ class MonthDisplayMode implements IDisplayMode {
                         offsetGridLines: true
                     },
                     ticks: {
-                        fontColor: 'gray',
+                        fontColor: ['gray', 'red'],
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
