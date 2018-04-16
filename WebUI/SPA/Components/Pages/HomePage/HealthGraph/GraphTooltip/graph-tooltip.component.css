@@ -2,7 +2,7 @@
 
 .frame {
     width: 270px;
-    height: 280px;
+    height: 330px;
     border: solid 1px #d5d5d5;
     background-color: white;
     border-radius: 5px;
@@ -14,7 +14,9 @@
         text-align: center;
         height: 20px;
     }
-
+    .frame .label {
+        height: 20px;
+    }
     .frame .chart-wrapper-div {
         padding-top: 10px;
         height:150px;
@@ -22,10 +24,18 @@
 
 
     .frame .symptoms-list {
-        height:calc(100% - 170px - 20px);
+        height:calc(100% - 150px - 20px - 40px);
         width:100%;
     }
-
+        .frame .symptoms-list .symptom-elem-div {
+            float: left;
+            background-color: #d5d5d5;
+            padding:5px;
+            border-radius:5px;
+            margin-right:5px;
+            margin-top:5px;
+        }
+        
     .frame .caret-div {
         width: 0;
         height: 0;
@@ -35,12 +45,14 @@
         border-bottom: none;
         position: relative;
         left: calc(50% - 10px);
-        bottom: -20px;
+        bottom: -5px;
     }
 
 
 
-
+.label {
+    color:black;
+}
 .h3 {
     color: black;
 }

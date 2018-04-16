@@ -163,10 +163,10 @@ export class GraphTooltipComponent {
         healthEntryCLOs.forEach((healthEntryCLO, index) => {
             healthEntryCLO.SymptomEntries.forEach((symptomEntryCLO, index) => {
 
-                if (symptomTypesDict[symptomEntryCLO.SymptomType.Name] === undefined) {
-                    symptomTypesDict[symptomEntryCLO.SymptomType.Name] = symptomEntryCLO.SymptomType;
+                //if (symptomTypesDict[symptomEntryCLO.SymptomType.Name] === undefined) {
+                //    symptomTypesDict[symptomEntryCLO.SymptomType.Name] = symptomEntryCLO.SymptomType;
                     symptomTypesList.push(symptomEntryCLO.SymptomType);
-                }
+                //}
             });
         });
         return symptomTypesList;
@@ -190,7 +190,7 @@ export class GraphTooltipComponent {
         // Set position
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        this.viewModel.TopPos = parentPosition.top + caretY - currentHeight - 40;
+        this.viewModel.TopPos = parentPosition.top + caretY - 360 - 20;
         this.viewModel.LeftPos = parentPosition.left + caretX - currentWidth / 2 - 5;
 
         // Generate dataPoints for chart

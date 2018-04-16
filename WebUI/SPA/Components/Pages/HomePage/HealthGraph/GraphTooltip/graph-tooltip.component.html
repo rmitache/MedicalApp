@@ -2,18 +2,23 @@
      [style.visibility]="viewModel.Visible ? 'visible' : 'hidden'"
      [style.top]="viewModel.TopPos + 'px'"
      [style.left]="viewModel.LeftPos + 'px'">
-    <div class="header h3">
-        {{viewModel.Title}}
-    </div>
+
+    <span class="label">HEALTH OVER DAY:</span>
     <div class="chart-wrapper-div">
         <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="options"></p-chart>
     </div>
+    <span class="label">SYMPTOMS:</span>
     <div class="symptoms-list">
-        <div *ngFor="let symptomTypeCLO of viewModel.SymptomTypes">  {{symptomTypeCLO.Name}}</div>
+        <div class="symptom-elem-div" *ngFor="let symptomTypeCLO of viewModel.SymptomTypes">
+            <span class="label">{{symptomTypeCLO.Name}}</span>
+        </div>
 
+    </div>
+    <div class="header h3">
+        {{viewModel.Title}}
     </div>
     <div class="caret-div">
     </div>
-    
 
-</div> 
+
+</div>
