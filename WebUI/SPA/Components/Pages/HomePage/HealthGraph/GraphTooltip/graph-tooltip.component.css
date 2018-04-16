@@ -26,6 +26,21 @@
         width:100%;
     }
 
+    .frame .caret-div {
+        width: 0;
+        height: 0;
+        border-top: solid 15px black;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;
+        border-bottom: none;
+        position: relative;
+        left: calc(50% - 10px);
+        bottom: -20px;
+    }
+
+
+
+
 .h3 {
     color: black;
 }

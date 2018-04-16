@@ -6,10 +6,14 @@
         {{viewModel.Title}}
     </div>
     <div class="chart-wrapper-div">
-        <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="options" ></p-chart>
+        <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="options"></p-chart>
     </div>
     <div class="symptoms-list">
         <div *ngFor="let symptomTypeCLO of viewModel.SymptomTypes">  {{symptomTypeCLO.Name}}</div>
 
     </div>
+    <div class="caret-div">
+    </div>
+    
+
 </div> 

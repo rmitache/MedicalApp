@@ -190,8 +190,8 @@ export class GraphTooltipComponent {
         // Set position
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        this.viewModel.TopPos = parentPosition.top + caretY - currentHeight - 20;
-        this.viewModel.LeftPos = parentPosition.left + caretX - currentWidth / 2;
+        this.viewModel.TopPos = parentPosition.top + caretY - currentHeight - 40;
+        this.viewModel.LeftPos = parentPosition.left + caretX - currentWidth / 2 - 5;
 
         // Generate dataPoints for chart
         var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
