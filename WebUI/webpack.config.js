@@ -15,7 +15,8 @@ module.exports = (env) => {
     // Configuration
     const config = {
         entry: {
-            'Pages/HomePage/homepage': './SPA/Components/Pages/HomePage/main.ts'
+            'Pages/HomePage/homepage': './SPA/Components/Pages/HomePage/main.ts',
+            'Pages/LoginPage/loginpage': './SPA/Components/Pages/LoginPage/main.ts'
         },
         stats: { modules: false },
         context: __dirname,
@@ -51,13 +52,6 @@ module.exports = (env) => {
                     test: /\.(jpe?g|png|gif|svg)$/,
                     loader: require.resolve("file-loader") + "?name=Images/[name].[ext]"
                 } 
-                //{
-                //    test: /\.(png|jpg|jpeg|gif|svg)$/,
-                //    //use: 'url-loader?limit=25000',
-                //    //exclude: [
-                //    //    path.resolve(__dirname, 'SPA/Content/Images')
-                //    //]
-                //}
             ]
         },
         plugins: [

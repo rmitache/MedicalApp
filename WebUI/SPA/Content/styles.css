@@ -86,14 +86,14 @@ body {
     background-color: #e8e8ec;
     cursor: pointer;
     font-family: Arial;
-    font-size: 11pt;
+    font-size: 10pt;
     text-transform: uppercase;
     font-weight: bold;
     border: 0;
     box-shadow: none;
 }
 
-    .button,
+    .button:hover,
     .btn:hover {
         background-color: #dddddd;
     }

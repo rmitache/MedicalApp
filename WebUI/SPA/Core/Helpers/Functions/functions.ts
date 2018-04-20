@@ -1,5 +1,6 @@
 ﻿import * as moment from 'moment';
 import { Range } from 'SPA/Core/Helpers/DataStructures/misc';
+import { FormGroup, FormControl } from '@angular/forms';
 
 
 export function GetEnumEntryByIndex(enumRef: any, index: number): any {
@@ -92,4 +93,15 @@ export function GetMonthRangeWithPaddingUsingMoment(refStartDate: moment.Moment,
 
 export function RemoveWhitespace(str: string): string {
     return str.replace(/ /g, '');
+}
+
+export function ValidateAllFields(formGroup: FormGroup) {         
+    Object.keys(formGroup.controls).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+            control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+            ValidateAllFields(control);
+        }
+    });
 }

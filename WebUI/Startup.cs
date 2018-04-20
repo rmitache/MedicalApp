@@ -3,7 +3,7 @@ using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DataAccessLayer.Entities;
-using BLL;
+
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +12,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Newtonsoft.Json.Serialization;
-using WebUI.Controllers;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace WebUI
 {
@@ -29,12 +36,30 @@ namespace WebUI
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddAuthentication(o =>
+                    {
+                        o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    })
+                .AddCookie(options =>
+                    {
+                        options.AccessDeniedPath = new PathString("/LoginPage");
+                        options.LoginPath = new PathString("/LoginPage");
+                    });
+
+
+
+            services
                 .AddMvc()
                 .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
-                });
+                    {
+                        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                        options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                    });
+
+
+
 
 
             // DI configuration------------------------------------------------------------------------------------------------------------
@@ -71,6 +96,7 @@ namespace WebUI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -84,6 +110,9 @@ namespace WebUI
                 app.UseExceptionHandler("/HomePage/Error");
             }
 
+
+            app.UseAuthentication();
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -96,6 +125,7 @@ namespace WebUI
                     name: "spa-fallback",
                     defaults: new { controller = "HomePage", action = "Index" });
             });
+
 
 
         }

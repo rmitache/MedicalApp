@@ -16,10 +16,11 @@ using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 using Common;
 using BLL.DomainModel.Indicators.Symptoms.Library.Services;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebUI.Controllers
 {
-
+    [Authorize]
     public class HomePageController : Controller
     {
         // Fields 

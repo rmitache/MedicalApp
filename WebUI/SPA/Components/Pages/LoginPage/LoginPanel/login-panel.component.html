@@ -1,0 +1,36 @@
+<form [formGroup]="reactiveForm">
+    <div class="frame">
+        <div class="header">
+            <span class="h1">Login</span>
+        </div>
+        <div class="body">
+            <div class="label-input-pair">
+                <span class="label">Email:</span>
+                <input type="text"
+                       formControlName="email"
+                       [(ngModel)]="viewModel.Email"
+                       class="ui-inputtext"
+                       id="email-input" />
+            </div>
+            <div class="label-input-pair">
+                <span class="label">Password:</span>
+                <input type="password"
+                       formControlName="password"
+                       [(ngModel)]="viewModel.Password"
+                       class="ui-inputtext"
+                       id="password-input" />
+            </div>
+            <div class="check-box-label-pair">
+                <input formControlName="keepLoggedIn" [(ngModel)]="viewModel.KeepLoggedIn" type="checkbox" />
+                <span class="label">Keep me logged in</span>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="button"
+                    (click)="onLoginClicked()">
+                Login
+            </button>
+
+        </div>
+    </div>
+</form>

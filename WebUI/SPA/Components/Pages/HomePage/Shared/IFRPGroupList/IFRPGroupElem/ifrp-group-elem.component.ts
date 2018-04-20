@@ -77,7 +77,7 @@ export class IFRPGroupElemComponent {
 
     // Constructor 
     constructor(
-        private fb: FormBuilder,
+        private readonly fb: FormBuilder,
         private readonly cdRef: ChangeDetectorRef,
         
     ) {
