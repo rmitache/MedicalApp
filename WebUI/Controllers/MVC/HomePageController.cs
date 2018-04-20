@@ -60,6 +60,7 @@ namespace WebUI.Controllers
             IHealthStatusEntryService healthStatusEntryService
             )
         {
+            
             this.symptomTypeService = symptomTypeService;
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;

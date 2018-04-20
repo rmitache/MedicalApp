@@ -16,10 +16,15 @@ namespace DataAccessLayer.Repositories.UserRepository
         }
 
         // Public methods
-        public TUser FindUser(string email, string password)
+        public TUser GetUser(string email, string password)
         {
             return entitiesContext.TUser
                 .SingleOrDefault(user => user.Email== email && user.Password==password);
+        }
+        public TUser GetUser(string email)
+        {
+            return entitiesContext.TUser
+                .SingleOrDefault(user => user.Email == email);
         }
     }
 }

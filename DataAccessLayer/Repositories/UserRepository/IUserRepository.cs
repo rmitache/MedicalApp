@@ -9,6 +9,7 @@ namespace DataAccessLayer.Repositories.UserRepository
 {
     public interface IUserRepository
     {
-        TUser FindUser(string email, string password);
+        TUser GetUser(string email, string password);
+        TUser GetUser(string email);
     }
 }

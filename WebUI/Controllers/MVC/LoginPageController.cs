@@ -1,23 +1,12 @@
-using System;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
-using BLL.DomainModel.Factors.Medicine.Library.Services;
-using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
+
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.History.Services;
-using BLL.DomainModel.Plans.Services;
-using BLL.DomainModel.Plans.BLOs;
-using Common.Datastructures;
-using BLL.DomainModel.Indicators.Symptoms.History.Services;
-using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
-using Common;
 using BLL.DomainModel.Indicators.Symptoms.Library.Services;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebUI.Controllers
 {
@@ -26,12 +15,12 @@ namespace WebUI.Controllers
     {
         // Fields 
         private ISymptomTypeService symptomTypeService { get; set; }
-
+        private WebSecurityManager webSecurityManager { get; set; }
 
         // Constructor
-        public LoginPageController()
+        public LoginPageController(WebSecurityManager webSecurityManager)
         {
-
+            this.webSecurityManager = webSecurityManager;
 
         }
 
@@ -45,12 +34,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<JsonResult> Login([FromBody]LogInUserModel model)
         {
-            bool loginSuccessful = false;
-            if (model.Email == "user@gmail.com" && model.Password == "password")
-            {
-                loginSuccessful = true;
-            }
-
+            bool loginSuccessful = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn);
 
             return Json(loginSuccessful);
         }

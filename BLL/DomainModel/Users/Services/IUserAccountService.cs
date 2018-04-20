@@ -9,6 +9,7 @@ namespace BLL.DomainModel.Users.Services
     public interface IUserAccountService
     {
         UserAccount FindUserAccount(string email, string password);
+        UserAccount FindUserAccount(string email);
     }
 
 

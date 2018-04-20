@@ -34,13 +34,25 @@ namespace BLL.DomainModel.Users.Services
         public UserAccount FindUserAccount(string email, string password)
         {
             UserAccount userAccount = null;
-            var userDataEntity = this.userRepo.FindUser(email, password);
+            var userDataEntity = this.userRepo.GetUser(email, password);
             if (userDataEntity != null)
             {
                 userAccount = this.userAccountFactory.Convert_ToBLO(userDataEntity);
 
             }
             
+            return userAccount;
+        }
+        public UserAccount FindUserAccount(string email)
+        {
+            UserAccount userAccount = null;
+            var userDataEntity = this.userRepo.GetUser(email);
+            if (userDataEntity != null)
+            {
+                userAccount = this.userAccountFactory.Convert_ToBLO(userDataEntity);
+
+            }
+
             return userAccount;
         }
     }

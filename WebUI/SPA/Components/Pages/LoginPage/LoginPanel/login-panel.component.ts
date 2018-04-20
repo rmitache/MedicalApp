@@ -18,7 +18,9 @@ export class LoginPanelComponent {
     private readonly viewModel: ViewModel = {
         Email: null,
         Password: null,
-        KeepLoggedIn: false
+        KeepLoggedIn: false,
+        Blocked: false
+
     };
 
     // Constructor 
@@ -42,13 +44,20 @@ export class LoginPanelComponent {
     private onLoginClicked() {
         HelperFunctions.ValidateAllFields(this.reactiveForm);
         if (this.reactiveForm.valid) {
-            // do login logic
             var loginModel = {
                 Email: this.viewModel.Email,
                 Password: this.viewModel.Password,
                 KeepLoggedIn: this.viewModel.KeepLoggedIn
             };
-            this.loginPageDataService.Login(loginModel);
+
+            var loginPromise = this.loginPageDataService.Login(loginModel);
+            this.viewModel.Blocked = true;
+            loginPromise.then((result) => {
+                alert(result);
+
+                this.viewModel.Blocked = false;
+            });
+
         }
     }
     
@@ -59,4 +68,5 @@ interface ViewModel {
     Email: string;
     Password: string;
     KeepLoggedIn: boolean;
+    Blocked: boolean;
 }

@@ -57,7 +57,9 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         CalendarModule,
         BlockUIModule,
         NavigationPanelComponent,
-        NgxChartsModule
+        NgxChartsModule,
+        ProgressSpinnerModule
+
     ]
 })
 export class SharedModule { }

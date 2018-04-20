@@ -20,6 +20,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace WebUI
 {
@@ -48,18 +51,17 @@ namespace WebUI
                         options.LoginPath = new PathString("/LoginPage");
                     });
 
-
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services
-                .AddMvc()
+                .AddMvc(
+                config => {
+                    config.Filters.Add(typeof(CustomExceptionFilter));
+                })
                 .AddJsonOptions(options =>
                     {
                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
                     });
-
-
-
 
 
             // DI configuration------------------------------------------------------------------------------------------------------------
@@ -68,6 +70,13 @@ namespace WebUI
             // WebUI
             var webUIAssembly = Assembly.GetExecutingAssembly();
             containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
+            //containerBuilder.RegisterType<IHttpContextAccessor>()
+            //    .As<HttpContextAccessor>()
+            //    .SingleInstance();
+            containerBuilder.RegisterType<WebSecurityManager>()
+               .AsSelf()
+               .InstancePerLifetimeScope();
+
 
             // BLL
             Assembly bllAssembly = typeof(BLL.DomainModel.Factors.Medicine.History.BLOs.MedicineFactorRecord).Assembly;
@@ -92,7 +101,6 @@ namespace WebUI
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
@@ -126,7 +134,7 @@ namespace WebUI
                     defaults: new { controller = "HomePage", action = "Index" });
             });
 
-
+            
 
         }
     }
