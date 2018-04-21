@@ -2,6 +2,7 @@
 import { ModalDialogComponent } from './Components/modal-dialog.component';
 import { IModalDialogOptions } from './modal-dialog.interface';
 import { ModalDialogInstanceService } from './modal-dialog-instance.service';
+import { SimpleModalComponent } from 'SPA/Core/Services/ModalDialogService/Components/simple-modal.component';
 
 export class ModalDialogService {
     /**
@@ -31,6 +32,28 @@ export class ModalDialogService {
     public ShowNotificationDialog(target: ViewContainerRef, title:string, message:string) {
         this.modalDialogInstanceService.closeAnyExistingModalDialog();
 
+        var dialogOptions: IModalDialogOptions = {
+            title: title,
+            bodyContentText: message,
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'OK',
+                    onAction: () => {
+                        return true;
+                    }
+                }
+            ]
+        };
+
+
+        const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
+        const componentRef = target.createComponent(factory);
+        componentRef.instance.dialogInit(componentRef, dialogOptions);
+
+        this.modalDialogInstanceService.saveExistingModalDialog(componentRef);
 
     }
 }

@@ -106,15 +106,7 @@ namespace WebUI.Controllers
             var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
 
 
-            var loggedInUserJSON = new
-            {
-                ID = 1,
-                Email = "john.doe@rocketmail.com",
-                SignupDate = new DateTime(2017, 12, 28),
-                BirthDate = new DateTime(1980, 10, 15),
-                Language = "en"
-
-            };
+            
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
@@ -144,8 +136,9 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult AddFactorRecords([FromBody]List<MedicineFactorRecord> factorRecords)
         {
-            int userID = 1;
-            var factorRecordsUpdatedIDs = this.medicineFactorRecordService.AddMedicineFactorRecords(factorRecords, userID);
+            int? userID = this.webSecurityManager.CurrentUserID;
+
+            var factorRecordsUpdatedIDs = this.medicineFactorRecordService.AddMedicineFactorRecords(factorRecords, (int)userID);
             return Json(factorRecordsUpdatedIDs);
         }
 
@@ -153,8 +146,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult GetFactorRecords([FromBody] DateRangeModel model)
         {
-            int userID = 1;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, userID);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, (int)userID);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
@@ -164,8 +157,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult AddPlan([FromBody]Plan plan)
         {
-            int userID = 1;
-            var planWithUpdatedID = this.planService.AddPlan(plan, userID);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var planWithUpdatedID = this.planService.AddPlan(plan, (int)userID);
             return Json(planWithUpdatedID);
         }
 
@@ -173,8 +166,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult UpdatePlan([FromBody]Plan plan)
         {
-            int userID = 1;
-            var adjustedPlanWithUpdatedVersionIDs = this.planService.UpdatePlan(plan, userID);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var adjustedPlanWithUpdatedVersionIDs = this.planService.UpdatePlan(plan, (int)userID);
             return Json(adjustedPlanWithUpdatedVersionIDs);
         }
 
@@ -182,8 +175,8 @@ namespace WebUI.Controllers
         [HttpGet]
         public JsonResult GetPlans()
         {
-            int userID = 1;
-            var blos = this.planService.GetPlans(userID, true);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.planService.GetPlans((int)userID, true);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
@@ -193,8 +186,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
         {
-            int userID = 1;
-            var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, userID);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, (int)userID);
             return Json(bloWithUpdatedID);
         }
 
@@ -202,8 +195,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
         {
-            int userID = 1;
-            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, userID, true);
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, (int)userID, true);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------

@@ -42,7 +42,7 @@ import { Subject } from 'rxjs/Subject';
           </div>
         </div>
         <div [ngClass]="settings.bodyClass">
-          <i #modalDialogBody></i>
+          <div #modalDialogBody></div>
         </div>
         <div [ngClass]="settings.footerClass" *ngIf="actionButtons && actionButtons.length">
           <div class="buttons-right-area">
@@ -117,6 +117,9 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
 
             this._childInstance['dialogInit'](componentRef, options);
             (document.activeElement as HTMLElement).blur();
+        } else if (options && options.bodyContentText) {
+            (this.dynamicComponentTarget.element.nativeElement as HTMLElement).innerHTML = options.bodyContentText;
+            
         }
         // set options
         this._setOptions(options);
@@ -183,6 +186,7 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
         // set references
         this.title = (options && options.title) || '';
         this.onClose = (options && options.onClose) || null;
+
         this.actionButtons = (this._childInstance && this._childInstance['actionButtons']) ||
             (options && options.actionButtons) || null;
         if (options && options.settings) {

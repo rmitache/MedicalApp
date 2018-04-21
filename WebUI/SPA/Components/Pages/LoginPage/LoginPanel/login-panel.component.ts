@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -34,6 +34,8 @@ export class LoginPanelComponent {
         private readonly fb: FormBuilder,
         private readonly loginPageDataService: LoginPageDataService,
         private readonly modalDialogService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef,
+
     ) {
         this.reactiveForm = this.fb.group({
             email: ['',
@@ -42,7 +44,7 @@ export class LoginPanelComponent {
             password: ['',
                 Validators.compose([
                     Validators.required])],
-            keepLoggedIn: null 
+            keepLoggedIn: null
         });
 
     }
@@ -64,13 +66,16 @@ export class LoginPanelComponent {
                     window.location.href = '/HomePage';
                 }
 
+                else {
 
-                this.viewModel.Blocked = false;
+                    this.viewModel.Blocked = false;
+                    this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Login failed", "Wrong password or email doesn't exist");
+                }
             });
 
         }
     }
-    
+
 }
 
 

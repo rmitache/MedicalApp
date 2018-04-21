@@ -31,7 +31,6 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
             UserAccount user = userAccountService.FindUserAccount(email);
             return user;
         }
-
         public string CurrentUserEmail
         {
             get
@@ -41,6 +40,17 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
                     return null;
 
                 return claimsIdentity.GetUserName();
+            }
+        }
+        public int? CurrentUserID
+        {
+            get
+            {
+                ClaimsIdentity claimsIdentity = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+                if (!claimsIdentity.IsAuthenticated)
+                    return null;
+
+                return int.Parse(claimsIdentity.GetUserId());
             }
         }
 
@@ -53,6 +63,7 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
             claims.Add(new Claim(ClaimTypes.Name, user.Email));
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+            
             return new ClaimsPrincipal(identity);
         }
 
