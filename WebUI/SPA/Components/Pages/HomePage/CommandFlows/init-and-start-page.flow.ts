@@ -11,7 +11,7 @@ export function InitAndStartPageFlow(
    
     // Get strong typed parameters
     const applicationState = applicationStateRef as GlobalApplicationState;
-    const loggedInUserCLO = extraParams[0] as CLOs.PatientAccountCLO;
+    const loggedInUserCLO = extraParams[0] as CLOs.UserAccountCLO;
 
     // Get component references
     const headerBarComponent = componentInstanceDictionary['HeaderBarComponent'] as HeaderBarComponent;

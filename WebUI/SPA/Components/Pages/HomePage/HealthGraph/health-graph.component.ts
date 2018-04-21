@@ -145,7 +145,7 @@ export class HealthGraphComponent {
 
     // Event handlers
     private onAddNewHealthStatusEntryTriggered() {
-        this.modalDialogService.openDialog(this.viewContainerRef, {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: 'Add new Health Entry ',
             childComponent: AddNewHealthStatusEntryComponent,
             data: moment().toDate(),

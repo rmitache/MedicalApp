@@ -3,8 +3,11 @@
         <div class="navigation-menu-item">Dashboard</div>
     </div>
     <div class="user-status-panel">
-        <span class="user-name-label">
+        <div class="user-name-label">
             {{viewModel.loggedInUser?.Email }}
-        </span>
+        </div>
+        <div (click)="onLogoutTriggered()" class="logout-item">
+            <img src="/wwwroot/Images/log-out.png"/>
+        </div>
     </div>
 </div> 

@@ -1,7 +1,7 @@
 ﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 
 
-export class PatientAccountCLO extends BaseCLO {
+export class UserAccountCLO extends BaseCLO {
     // Fields
     public ID: number;
     public Email: string;

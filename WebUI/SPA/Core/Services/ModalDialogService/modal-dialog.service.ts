@@ -18,7 +18,7 @@ export class ModalDialogService {
      * @param  {ViewContainerRef} target
      * @param  {IModalDialogOptions} dialogOptions?
      */
-    openDialog(target: ViewContainerRef, dialogOptions?: IModalDialogOptions) {
+    public OpenDialog(target: ViewContainerRef, dialogOptions?: IModalDialogOptions) {
         this.modalDialogInstanceService.closeAnyExistingModalDialog();
 
         const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
@@ -26,5 +26,11 @@ export class ModalDialogService {
         componentRef.instance.dialogInit(componentRef, dialogOptions);
 
         this.modalDialogInstanceService.saveExistingModalDialog(componentRef);
+    }
+
+    public ShowNotificationDialog(target: ViewContainerRef, title:string, message:string) {
+        this.modalDialogInstanceService.closeAnyExistingModalDialog();
+
+
     }
 }

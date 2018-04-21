@@ -1,5 +1,5 @@
-﻿// Patients
-export * from './Patients/CLOs/patient-account.clo';
+﻿// Users
+export * from './Users/CLOs/user-account.clo';
 
 // Factors - Medicine - Library
 export * from './Factors/Medicine/Library/CLOs/medicine-category.clo';

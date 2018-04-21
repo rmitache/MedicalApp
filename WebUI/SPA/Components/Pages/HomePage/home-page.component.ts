@@ -54,7 +54,7 @@ export class HomePageComponent {
     }
     public ngAfterViewInit() {
         // Initialize and start the Page
-        const loggedInUserCLO: CLOs.PatientAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
+        const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
 
         // Fix for CD ExpressionChangedAfterItHasBeenCheckedError issue

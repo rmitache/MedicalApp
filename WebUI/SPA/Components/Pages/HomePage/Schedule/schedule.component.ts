@@ -118,7 +118,7 @@ export class ScheduleComponent {
 
     // Event handlers
     private onAddNewEventTriggered() {
-        this.modalDialogService.openDialog(this.viewContainerRef, {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: 'Add new one-off Event',
             childComponent: AddNewEventComponent,
             data: moment().toDate(),

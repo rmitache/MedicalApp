@@ -29,22 +29,7 @@ export class LoginPageDataService {
 
         return this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, loginModel).toPromise();
     }
-    //public Login(username:string, password:string, keepLoggedIn:boolean): Promise<boolean> {
-    //    const apiMethodName: string = 'GetHealthStatusEntries';
-
-    //    let model = {
-    //        DateRange: dateRange
-    //    };
-
-    //    let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
-    //        .toPromise()
-    //        .then((blos) => {
-    //            return this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos).ToArray();
-    //        });
-
-
-    //    return getDataPromise;
-    //}
+    
 
 }
 

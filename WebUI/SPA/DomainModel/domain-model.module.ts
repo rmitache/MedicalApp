@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import {GenericCLOFactory } from './generic-clo.factory';
-import { PatientAccountCLOFactory } from './Patients/CLOFactories/patient-account-clo.factory';
+import { UserAccountCLOFactory } from './Users/CLOFactories/user-account-clo.factory';
 import { MedicineFactorRecordCLOFactory } from 'SPA/DomainModel/Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
 import { MedicineRuleItemCLOFactory } from 'SPA/DomainModel/Factors/Medicine/History/CLOFactories/medicine-rule-item-clo.factory';
 import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
@@ -18,7 +18,7 @@ import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/Hist
         GenericCLOFactory,
 
         // All CLOFactories
-        PatientAccountCLOFactory,
+        UserAccountCLOFactory,
         MedicineFactorRecordCLOFactory,
         MedicineRuleItemCLOFactory,
         MedicineTypeCLOFactory,

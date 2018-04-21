@@ -1,9 +1,15 @@
+// Angular and 3rd party stuff
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PatientAccountCLO } from 'SPA/DomainModel/Patients/CLOs/patient-account.clo';
+
+// Project modules
 import * as  HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
+import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
+
+// Components
 import { LoginPageDataService } from 'SPA/Components/Pages/LoginPage/login-page-data.service';
+
 
 @Component({
     selector: 'login-panel',
@@ -26,7 +32,8 @@ export class LoginPanelComponent {
     // Constructor 
     constructor(
         private readonly fb: FormBuilder,
-        private readonly loginPageDataService: LoginPageDataService
+        private readonly loginPageDataService: LoginPageDataService,
+        private readonly modalDialogService: ModalDialogService,
     ) {
         this.reactiveForm = this.fb.group({
             email: ['',
@@ -52,8 +59,11 @@ export class LoginPanelComponent {
 
             var loginPromise = this.loginPageDataService.Login(loginModel);
             this.viewModel.Blocked = true;
-            loginPromise.then((result) => {
-                alert(result);
+            loginPromise.then((loginSuccessful) => {
+                if (loginSuccessful === true) {
+                    window.location.href = '/HomePage';
+                }
+
 
                 this.viewModel.Blocked = false;
             });

@@ -104,7 +104,6 @@
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\CLOs\symptom-type.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\Enums\health-level.enum.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\Library\Enums\symptom-intensity-level.enum.ts" />
-    <None Remove="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
@@ -115,6 +114,7 @@
     <None Remove="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\version-status.enum.ts" />
+    <None Remove="SPA\DomainModel\Users\CLOs\user-account.clo.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -182,8 +182,8 @@
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\Enums\health-level.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\Enums\symptom-intensity-level.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Library\CLOs\symptom-type.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOFactories\patient-account-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Patients\CLOs\patient-account.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Users\CLOFactories\user-account-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Users\CLOs\user-account.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\version-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\plan-clo.factory.ts" />

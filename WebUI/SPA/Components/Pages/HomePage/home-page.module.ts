@@ -39,7 +39,8 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         CoreModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(
-            [{ path: '', component: HomePageComponent }]
+            [{ path: '', component: HomePageComponent },
+            { path: 'HomePage', component: HomePageComponent }]
         ),
 
         DomainModelModule,

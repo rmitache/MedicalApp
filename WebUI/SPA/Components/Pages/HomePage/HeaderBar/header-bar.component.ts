@@ -3,7 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
-import { PatientAccountCLO } from 'SPA/DomainModel/Patients/CLOs/patient-account.clo';
+import { UserAccountCLO } from 'SPA/DomainModel/Users/CLOs/user-account.clo';
+import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 
 @Component({
     selector: 'header-bar',
@@ -20,7 +21,8 @@ export class HeaderBarComponent {
 
     // Constructor 
     constructor(
-        applicationState: GlobalApplicationState 
+        applicationState: GlobalApplicationState,
+        private readonly globalDataService: GlobalDataService,
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -31,9 +33,17 @@ export class HeaderBarComponent {
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
+
+    // Event handlers
+    private onLogoutTriggered() {
+        var logoutPromise = this.globalDataService.Logout();
+        logoutPromise.then(() => {
+            window.location.href = '/LoginPage';
+        });
+    }
 }
 
 
 interface ViewModel {
-    loggedInUser: PatientAccountCLO | null;
+    loggedInUser: UserAccountCLO | null;
 }

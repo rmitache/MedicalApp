@@ -42,8 +42,8 @@ export class GlobalDataService {
     ) { }
 
     // Public methods - Retreive data from bundle 
-    public GetLoggedInUserFromBundle(): CLOs.PatientAccountCLO {
-        return this.genericCLOFactory.ConvertToCLO<CLOs.PatientAccountCLO>(CLOs.PatientAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
+    public GetLoggedInUserFromBundle(): CLOs.UserAccountCLO {
+        return this.genericCLOFactory.ConvertToCLO<CLOs.UserAccountCLO>(CLOs.UserAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
     }
     public GetSymptomTypesFromBundle(): DataStructures.List<CLOs.SymptomTypeCLO> {
 
@@ -186,5 +186,11 @@ export class GlobalDataService {
         return getDataPromise;
     }
 
+    // Login
+    public Logout(): Promise<boolean> {
+        let apiMethodName: string = 'Logout';
+
+        return this.httpHandlerService.Post('/LoginPage/' + apiMethodName, null).toPromise();
+    }
 }
 

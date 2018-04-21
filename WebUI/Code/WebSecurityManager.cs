@@ -21,33 +21,28 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
         private IUserAccountService userAccountService;
 
         // Properties
-        //// IWebSecurity implementation 
-        //public User GetCurrentUser()
-        //{
-        //    // Get the email
-        //    string email = CurrentUserEmail;
-        //    if (email == null)
-        //    {
-        //        return User.UnknownUser;
-        //    }
+        public UserAccount GetCurrentUser()
+        {
+            // Get the email
+            string email = CurrentUserEmail;
+            
 
-        //    // Get the User from the Session or from the API
-        //    User user = _securityAPI.FindUser(email);
-        //    return user;
-        //}
+            // Get the User from the Session or from the API
+            UserAccount user = userAccountService.FindUserAccount(email);
+            return user;
+        }
 
-        //public string CurrentUserEmail
-        //{
-        //    get
-        //    {
-        //        User
-        //        ClaimsIdentity claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
-        //        if (!claimsIdentity.IsAuthenticated)
-        //            return null;
+        public string CurrentUserEmail
+        {
+            get
+            {
+                ClaimsIdentity claimsIdentity = httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+                if (!claimsIdentity.IsAuthenticated)
+                    return null;
 
-        //        return claimsIdentity.GetUserName();
-        //    }
-        //}
+                return claimsIdentity.GetUserName();
+            }
+        }
 
         // Private methods
         private ClaimsPrincipal CreateUserIdentity(UserAccount user)
@@ -83,7 +78,7 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
             {
                 var identity = CreateUserIdentity(user);
                 await httpContextAccessor.HttpContext.SignInAsync(
-                    DefaultAuthenticationTypes.ApplicationCookie,
+                    CookieAuthenticationDefaults.AuthenticationScheme,
                     identity,
                     new AuthenticationProperties()
                     {
@@ -97,10 +92,9 @@ namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
 
             return userLoginResult;
         }
-
-        public void LogOut()
+        public async Task LogOut()
         {
-            httpContextAccessor.HttpContext.SignOutAsync(DefaultAuthenticationTypes.ApplicationCookie);
+            await httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }

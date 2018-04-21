@@ -17,6 +17,7 @@ using Common;
 using BLL.DomainModel.Indicators.Symptoms.Library.Services;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
 
 namespace WebUI.Controllers
 {
@@ -29,6 +30,8 @@ namespace WebUI.Controllers
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
         private IPlanService planService { get; set; }
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
+        private WebSecurityManager webSecurityManager { get; set; }
+
 
         // Private methods
         private Range<DateTime> GetMonthRangeWithPadding(DateTime refStartDate, DateTime refEndDate, int padding)
@@ -57,7 +60,8 @@ namespace WebUI.Controllers
             IMedicineTypeService medicineTypeService,
             IMedicineFactorRecordService medicineFactorRecordService,
             IPlanService planService,
-            IHealthStatusEntryService healthStatusEntryService
+            IHealthStatusEntryService healthStatusEntryService,
+            WebSecurityManager webSecurityManager
             )
         {
             
@@ -66,7 +70,7 @@ namespace WebUI.Controllers
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.planService = planService;
             this.healthStatusEntryService = healthStatusEntryService;
-
+            this.webSecurityManager = webSecurityManager;
         }
 
         // MVC methods
@@ -111,18 +115,19 @@ namespace WebUI.Controllers
                 Language = "en"
 
             };
+            var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
-            var plans = planService.GetPlans(1, true);
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, 1);
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, 1, true);
+            var plans = planService.GetPlans(loggedInUser.ID, true);
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, loggedInUser.ID);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, loggedInUser.ID, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
             // Return the bundle
             var bundle = new
             {
-                LoggedInUser = loggedInUserJSON,
+                LoggedInUser = loggedInUser,
                 SymptomTypes = symptomTypes,
                 MedicineTypes = medicineTypes,
                 Plans = plans,

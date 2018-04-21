@@ -38,7 +38,14 @@ namespace WebUI.Controllers
 
             return Json(loginSuccessful);
         }
+        [Route("LoginPage/Logout")]
+        [HttpPost]
+        public async Task<JsonResult> Logout()
+        {
+            await webSecurityManager.LogOut();
 
+            return Json(true);
+        }
         // Models
         public class LogInUserModel
         {

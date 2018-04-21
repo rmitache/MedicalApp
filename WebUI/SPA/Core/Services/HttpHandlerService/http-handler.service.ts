@@ -69,17 +69,19 @@ export class HttpHandlerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
-    public Post(serviceUrl: string, data: any): Observable<any> {
-        if (!data) {
-            throw new Error('No data provided!');
+    public Post(serviceUrl: string, data?: any): Observable<any> {
+        
+        var stringifiedData = null;
+        if (data) {
+            stringifiedData = JSON.stringify(data);
         }
-       
+
         return this.http
             .request(new CustomRequest({
                 method: RequestMethod.Post,
                 url: serviceUrl,
                 headers: this.headers
-            }, JSON.stringify(data)))
+            }, stringifiedData))
             .map(this.extractData)
             .catch(this.handleError);
     }

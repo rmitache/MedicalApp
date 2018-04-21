@@ -56,7 +56,7 @@ export class PlansOverviewComponent {
 
     // Private methods
     private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
-        this.modalDialogService.openDialog(this.viewContainerRef, {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: title,
             childComponent: PlanEditorComponent,
             data: {

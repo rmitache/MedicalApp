@@ -6,8 +6,8 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 @Injectable()
 export class GlobalApplicationState implements IReadOnlyApplicationState {
     // Properties
-    public readonly LoggedInUserCLO = new DataStructures.ObservableProperty<CLOs.PatientAccountCLO>(null, (clo) => {
-        return this.genericCLOFactory.CloneCLO<CLOs.PatientAccountCLO>(clo);
+    public readonly LoggedInUserCLO = new DataStructures.ObservableProperty<CLOs.UserAccountCLO>(null, (clo) => {
+        return this.genericCLOFactory.CloneCLO<CLOs.UserAccountCLO>(clo);
     });
    
 
@@ -19,5 +19,5 @@ export class GlobalApplicationState implements IReadOnlyApplicationState {
 
 // to ReadOnlyAppState 
 export class IReadOnlyApplicationState {
-    LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.PatientAccountCLO>;
+    LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.UserAccountCLO>;
 }
