@@ -83,6 +83,7 @@
     <Build Include="dbo\Tables\t_health_status_entry.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SqlSchemaCompare1.scmp" />
+    <None Include="SqlSchemaCompareWithLocalDB.scmp" />
+    <None Include="SqlSchemaCompareWithAzure.scmp" />
   </ItemGroup>
 </Project>

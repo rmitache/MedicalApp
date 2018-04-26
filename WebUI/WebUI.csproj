@@ -22,32 +22,7 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
-    <Compile Remove="wwwroot\Assets\**" />
-    <Compile Remove="wwwroot\Images\**" />
-    <Compile Remove="wwwroot\img\**" />
-    <Compile Remove="wwwroot\Pages\**" />
-    <Compile Remove="wwwroot\Vendor\**" />
     <Content Remove="SPA\**" />
-    <Content Remove="wwwroot\Assets\**" />
-    <Content Remove="wwwroot\Images\**" />
-    <Content Remove="wwwroot\img\**" />
-    <Content Remove="wwwroot\Pages\**" />
-    <Content Remove="wwwroot\Vendor\**" />
-    <EmbeddedResource Remove="wwwroot\Assets\**" />
-    <EmbeddedResource Remove="wwwroot\Images\**" />
-    <EmbeddedResource Remove="wwwroot\img\**" />
-    <EmbeddedResource Remove="wwwroot\Pages\**" />
-    <EmbeddedResource Remove="wwwroot\Vendor\**" />
-    <None Remove="wwwroot\Assets\**" />
-    <None Remove="wwwroot\Images\**" />
-    <None Remove="wwwroot\img\**" />
-    <None Remove="wwwroot\Pages\**" />
-    <None Remove="wwwroot\Vendor\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\globalStyles.css" />
-    <Content Remove="wwwroot\globalStyles.css.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,6 +99,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\globalStyles.css.map" />
+    <None Include="wwwroot\Pages\HomePage\homepage.js" />
+    <None Include="wwwroot\Pages\HomePage\homepage.js.map" />
+    <None Include="wwwroot\Pages\LoginPage\loginpage.js" />
+    <None Include="wwwroot\Pages\LoginPage\loginpage.js.map" />
+    <None Include="wwwroot\Vendor\912ec66d7572ff821749319396470bde.svg" />
+    <None Include="wwwroot\Vendor\vendor.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
@@ -151,7 +136,6 @@
     <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\Classes\command-flow.ts" />
     <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\command.manager.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\HttpHandlerService\http-handler.service.ts" />
-    <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\simple-modal.component.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\modal-dialog.component.ts" />

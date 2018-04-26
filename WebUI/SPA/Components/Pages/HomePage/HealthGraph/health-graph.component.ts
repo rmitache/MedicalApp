@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import { ChartModule, UIChart } from 'primeng/primeng';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';

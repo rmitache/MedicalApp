@@ -28,7 +28,7 @@ export class IconButtonComponent {
 
     }
     ngOnInit() {
-        this.viewModel.imagePathAndName = '/wwwroot/Images/' + this.iconName + '.png';
+        this.viewModel.imagePathAndName = '/Images/' + this.iconName + '.png';
         this.viewModel.tooltipText = this.tooltipText;
     }
 

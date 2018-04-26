@@ -6,7 +6,6 @@ import { ModalDialogInstanceService } from 'SPA/Core/Services/ModalDialogService
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { ExecutionEngine } from 'SPA/Core/Managers/CommandManager/Classes/execution-engine';
 
-import { SimpleModalComponent } from 'SPA/Core/Services/ModalDialogService/Components/simple-modal.component';
 import { ModalDialogComponent } from 'SPA/Core/Services/ModalDialogService/Components/modal-dialog.component';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { ModalDialogComponent } from 'SPA/Core/Services/ModalDialogService/Compo
         BrowserModule
     ],
     declarations: [
-        SimpleModalComponent,
         ModalDialogComponent
     ],
     providers: [
@@ -28,7 +26,6 @@ import { ModalDialogComponent } from 'SPA/Core/Services/ModalDialogService/Compo
         ExecutionEngine
     ],
     entryComponents: [
-        SimpleModalComponent,
         ModalDialogComponent
     ]
 })

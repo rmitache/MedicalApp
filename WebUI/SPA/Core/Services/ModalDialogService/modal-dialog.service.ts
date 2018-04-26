@@ -2,7 +2,6 @@
 import { ModalDialogComponent } from './Components/modal-dialog.component';
 import { IModalDialogOptions } from './modal-dialog.interface';
 import { ModalDialogInstanceService } from './modal-dialog-instance.service';
-import { SimpleModalComponent } from 'SPA/Core/Services/ModalDialogService/Components/simple-modal.component';
 
 export class ModalDialogService {
     /**
