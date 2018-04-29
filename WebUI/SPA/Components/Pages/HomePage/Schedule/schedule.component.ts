@@ -3,6 +3,7 @@ import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
+import { trigger, state, style, animate, transition, keyframes, query, stagger, group } from '@angular/animations';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -18,16 +19,70 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
+
+// Animations
+export const goForwardAnimation = trigger('goForwardAnimation', [
+    transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+
+        query(':enter', stagger('-150ms', [
+            animate('0.5s ease-in', keyframes([
+                style({ opacity: 0 }),
+                style({ opacity: .5 }),
+                style({ opacity: 1 }),
+            ]))]), { optional: true })
+
+        //query(':enter', stagger('50ms', [
+        //    animate('1s ease-in', keyframes([
+        //        style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
+        //        style({ opacity: .5, transform: 'translateY(55px)', offset: 0.3 }),
+        //        style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
+        //    ]))]), { optional: true })
+
+    ])
+]);
+export const goBackwardAnimation = trigger('goBackwardAnimation', [
+    transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+
+        query(':enter', stagger('150ms', [
+            animate('0.5s ease-in', keyframes([
+                style({ opacity: 0 }),
+                style({ opacity: .5 }),
+                style({ opacity: 1 }),
+            ]))]), { optional: true })
+
+        //query(':enter', stagger('50ms', [
+        //    animate('1s ease-in', keyframes([
+        //        style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
+        //        style({ opacity: .5, transform: 'translateY(55px)', offset: 0.3 }),
+        //        style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
+        //    ]))]), { optional: true })
+
+    ])
+]);
+
 @Component({
     selector: 'schedule',
     templateUrl: './schedule.component.html',
     styleUrls: ['./schedule.component.css'],
-    host: { 'class': 'schedule' }
+    host: { 'class': 'schedule' },
+    animations: [
+        goForwardAnimation,
+        goBackwardAnimation
+    ]
 })
 export class ScheduleComponent {
-    // Fields
-    private availableWindowPaddingInMonths = 2; 
 
+
+    // Fields
+    private availableWindowPaddingInMonths = 2;
+    private animationVariables = {
+        animateForward: 0,
+        animateBackward: 0
+    }
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableFactorRecords: null,
@@ -68,7 +123,7 @@ export class ScheduleComponent {
             return fRec.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 fRec.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
-        
+
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(filteredFactorRecords);
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
@@ -99,7 +154,7 @@ export class ScheduleComponent {
         // Init Available (super) DataSet
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
         this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
-        
+
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
@@ -185,6 +240,8 @@ export class ScheduleComponent {
                     }, 200);
                 });
         }
+
+        this.animationVariables.animateBackward++;
     }
     private onNavigateForwardTriggered() {
 
@@ -204,15 +261,18 @@ export class ScheduleComponent {
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
-                    
+
                     this.viewModel.SelectedDateRange = nextSelectedDateRange;
                     this.recreateDisplayRepresentation();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
                     }, 200);
-                    
+
                 });
         }
+
+
+        this.animationVariables.animateForward++;
     }
 }
 interface ViewModel {
@@ -277,7 +337,7 @@ class DayDisplayMode implements IDisplayMode {
 
         return areEquivalent;
     }
-    private tryConflateWithEquivalentInList(factorRecord: CLOs.MedicineFactorRecordCLO, list: CLOs.MedicineFactorRecordCLO[]):boolean {
+    private tryConflateWithEquivalentInList(factorRecord: CLOs.MedicineFactorRecordCLO, list: CLOs.MedicineFactorRecordCLO[]): boolean {
         var wasConflated = false;
         for (var i = 0; i < list.length; i++) {
             var recInList = list[i];
@@ -346,7 +406,7 @@ class DayDisplayMode implements IDisplayMode {
 
             return 0;
         });
-        
+
         // Create the DisplayRepresentation
         let displayRep = new DisplayRepresentation();
         this.unitsConfiguration.forEach((unitConfig) => {
@@ -359,7 +419,7 @@ class DayDisplayMode implements IDisplayMode {
 
         // Loop through factorRecords and add them to their corresponding Unit representations
         filteredFactorRecords.forEach((record) => {
-            
+
             // Find which unitRepr it belongs to 
             let unitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
             if (unitRepr) {
@@ -434,14 +494,11 @@ export class TimeGroupRepresentation {
         return sorted;
     }
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
-        
+
         let record = factorRecordCLO;
-        return  factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
+        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
             + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
     }
 }
-
-
-
 
 

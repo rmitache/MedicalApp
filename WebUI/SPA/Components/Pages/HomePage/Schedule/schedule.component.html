@@ -6,6 +6,9 @@
 </p-blockUI>
 
 <div class="frame">
+
+
+
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">SCHEDULE</span>
@@ -18,12 +21,13 @@
         </div>
         <div class="right-section">
             <!--<select class="view-mode-selector">
-        <option>Day</option>
-        <option>Week</option>
-    </select>-->
+                <option>Day</option>
+                <option>Week</option>
+            </select>-->
         </div>
     </div>
-    <div class="body">
+    <div class="body" [@goForwardAnimation]="animationVariables.animateForward"
+                      [@goBackwardAnimation]="animationVariables.animateBackward"  >
         <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
                        [Title]="unitRepr.Title"
                        [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
