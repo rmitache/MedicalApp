@@ -1,5 +1,5 @@
 ﻿import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { GlobalApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HomePageApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { ScheduleComponent } from 'SPA/Components/Pages/HomePage/Schedule/schedule.component';
 
 
@@ -10,7 +10,7 @@ export function RefreshScheduleFlow(
 ): Promise<any> {
    
     // Get strong typed parameters
-    const applicationState = applicationStateRef as GlobalApplicationState;
+    const applicationState = applicationStateRef as HomePageApplicationState;
 
     // Get component references
     const scheduleComponent = componentInstanceDictionary['ScheduleComponent'] as ScheduleComponent;

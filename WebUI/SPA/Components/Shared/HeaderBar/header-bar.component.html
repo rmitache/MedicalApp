@@ -1,6 +1,7 @@
 <div class="frame">
     <div class="navigation-menu">
-        <div class="navigation-menu-item">Dashboard</div>
+        <a class="navigation-menu-item" href="/HomePage" [ngClass]="{'active': activePageName === 'HomePage' }">Dashboard</a>
+        <a class="navigation-menu-item" href="/AnalysisPage" [ngClass]="{'active': activePageName === 'AnalysisPage' }">Analysis</a>
     </div>
     <div class="user-status-panel">
         <div class="user-name-label">

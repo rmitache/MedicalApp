@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { UserAccountCLO } from 'SPA/DomainModel/Users/CLOs/user-account.clo';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 
@@ -13,6 +13,8 @@ import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.ser
 })
 export class HeaderBarComponent {
     // Fields
+    @Input('ActivePageName')
+    private activePageName;
     private readonly viewModel: ViewModel = {
         loggedInUser: null
     };
@@ -21,7 +23,7 @@ export class HeaderBarComponent {
 
     // Constructor 
     constructor(
-        applicationState: GlobalApplicationState,
+        applicationState: HomePageApplicationState,
         private readonly globalDataService: GlobalDataService,
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;

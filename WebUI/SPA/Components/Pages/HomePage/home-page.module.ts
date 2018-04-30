@@ -15,11 +15,11 @@ import { HealthGraphModule } from './HealthGraph/health-graph.module';
 import { PlansOverviewModule } from './PlansOverview/plans-overview.module';
 
 // Components
-import { GlobalApplicationState } from './global-application-state';
+import { HomePageApplicationState } from './global-application-state';
 import { GlobalDataService } from './global-data.service';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
-import { HeaderBarComponent } from './HeaderBar/header-bar.component';
+import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 
 @NgModule({
@@ -27,9 +27,6 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
     declarations: [
         // HomePage
         HomePageComponent,
-        HeaderBarComponent
-
-
     ],
     imports: [
         CommonModule,
@@ -44,6 +41,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         ),
 
         DomainModelModule,
+        SharedModule,
 
         // Root components
         ScheduleModule,
@@ -58,7 +56,7 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
             deps: [StartupDataBundleService],
             multi: true
         },
-        GlobalApplicationState,
+        HomePageApplicationState,
         GlobalDataService
     ]
 })

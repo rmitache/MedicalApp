@@ -4,7 +4,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 @Injectable()
-export class GlobalApplicationState implements IReadOnlyApplicationState {
+export class HomePageApplicationState implements IReadOnlyApplicationState {
     // Properties
     public readonly LoggedInUserCLO = new DataStructures.ObservableProperty<CLOs.UserAccountCLO>(null, (clo) => {
         return this.genericCLOFactory.CloneCLO<CLOs.UserAccountCLO>(clo);

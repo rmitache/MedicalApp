@@ -19,6 +19,7 @@ import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-butto
 import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/NavigationPanel/navigation-panel.component';
+import { HeaderBarComponent } from './HeaderBar/header-bar.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,6 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         SplitButtonModule,
         ChipsModule,
         ChartModule,
-
     ],
     declarations: [
         IconButtonComponent,
@@ -41,7 +41,8 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         EnumKeysPipe,
         IFRPGroupElemComponent,
         IFRPGroupListComponent,
-        NavigationPanelComponent
+        NavigationPanelComponent,
+        HeaderBarComponent
     ],
     exports: [
         IconButtonComponent,
@@ -55,8 +56,8 @@ import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/N
         CalendarModule,
         BlockUIModule,
         NavigationPanelComponent,
-        ProgressSpinnerModule
-
+        ProgressSpinnerModule,
+        HeaderBarComponent
     ]
 })
 export class SharedModule { }

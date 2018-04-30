@@ -1,6 +1,6 @@
 ﻿import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { GlobalApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
-import { HeaderBarComponent } from 'SPA/Components/Pages/HomePage/HeaderBar/header-bar.component';
+import { HomePageApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HeaderBarComponent } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 
 export function InitAndStartPageFlow(
@@ -10,7 +10,7 @@ export function InitAndStartPageFlow(
 ): Promise<any> {
    
     // Get strong typed parameters
-    const applicationState = applicationStateRef as GlobalApplicationState;
+    const applicationState = applicationStateRef as HomePageApplicationState;
     const loggedInUserCLO = extraParams[0] as CLOs.UserAccountCLO;
 
     // Get component references

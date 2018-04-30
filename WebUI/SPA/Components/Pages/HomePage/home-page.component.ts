@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
@@ -8,7 +8,7 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import '../../../Content/styles.css';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { GlobalApplicationState } from './global-application-state';
+import { HomePageApplicationState } from './global-application-state';
 
 // Components
 import { GlobalDataService } from './global-data.service';
@@ -22,10 +22,11 @@ import { GlobalDataService } from './global-data.service';
 export class HomePageComponent {
     // Constructor
     constructor(
-        private readonly applicationState: GlobalApplicationState,
+        private readonly applicationState: HomePageApplicationState,
         private readonly commandManager: CommandManager,
         private readonly globalDataService: GlobalDataService,
-        private readonly changeDetectorRef: ChangeDetectorRef
+        private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly applicationRef: ApplicationRef
     ) {
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
@@ -52,12 +53,20 @@ export class HomePageComponent {
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
     }
-    public ngAfterViewInit() {
+    ngDoCheck() {
+        //console.log('cd triggered');
+    }
+    ngAfterViewInit() {
         // Initialize and start the Page
         const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
 
-        // Fix for CD ExpressionChangedAfterItHasBeenCheckedError issue
+        
+
+        //// Handle change tracking
+        //setInterval(() => {
+        //    this.applicationRef.tick();
+        //}, 100);
         this.changeDetectorRef.detectChanges();
     }
 

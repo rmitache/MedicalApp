@@ -9,7 +9,7 @@ import { ChartModule, UIChart } from 'primeng/primeng';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
-import { GlobalApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
 import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
@@ -103,7 +103,7 @@ export class HealthGraphComponent {
 
     // Constructor 
     constructor(
-        applicationState: GlobalApplicationState,
+        applicationState: HomePageApplicationState,
         private readonly dataService: GlobalDataService,
         private readonly commandManager: CommandManager,
         private readonly modalDialogService: ModalDialogService,
