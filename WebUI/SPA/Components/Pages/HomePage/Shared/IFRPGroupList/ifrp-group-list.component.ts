@@ -10,7 +10,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components

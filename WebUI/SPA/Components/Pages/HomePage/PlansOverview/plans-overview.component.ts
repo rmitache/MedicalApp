@@ -7,8 +7,8 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
-import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/home-page-application-state';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
@@ -119,7 +119,7 @@ export class PlansOverviewComponent {
         applicationState: HomePageApplicationState,
         private readonly commandManager: CommandManager,
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly dataService: GlobalDataService,
+        private readonly dataService: HomePageDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef
     ) {

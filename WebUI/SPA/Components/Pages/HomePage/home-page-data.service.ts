@@ -13,7 +13,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 
 @Injectable()
-export class GlobalDataService {
+export class HomePageDataService {
     // Fields
     private readonly apiUrl: string = '/HomePage';
 

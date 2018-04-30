@@ -1,5 +1,5 @@
 ﻿import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { HomePageApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HomePageApplicationState } from 'SPA/Components/Pages/HomePage/home-page-application-state';
 import { ScheduleComponent } from 'SPA/Components/Pages/HomePage/Schedule/schedule.component';
 
 

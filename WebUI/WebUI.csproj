@@ -29,8 +29,8 @@
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
-    <None Remove="SPA\Components\Pages\HomePage\global-application-state.ts" />
     <None Remove="SPA\Components\Pages\HomePage\HealthGraph\health-graph.module.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\home-page-application-state.ts" />
     <None Remove="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
@@ -94,6 +94,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\API\" />
+    <Folder Include="SPA\Components\Pages\AnalysisPage\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
@@ -115,7 +116,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
-    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\global-application-state.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\home-page-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />

@@ -8,10 +8,10 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import '../../../Content/styles.css';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { HomePageApplicationState } from './global-application-state';
+import { HomePageApplicationState } from './home-page-application-state';
 
 // Components
-import { GlobalDataService } from './global-data.service';
+import { HomePageDataService } from './home-page-data.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class HomePageComponent {
     constructor(
         private readonly applicationState: HomePageApplicationState,
         private readonly commandManager: CommandManager,
-        private readonly globalDataService: GlobalDataService,
+        private readonly globalDataService: HomePageDataService,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly applicationRef: ApplicationRef
     ) {

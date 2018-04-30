@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/global-application-state';
+import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/home-page-application-state';
 import { UserAccountCLO } from 'SPA/DomainModel/Users/CLOs/user-account.clo';
-import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 
 @Component({
     selector: 'header-bar',
@@ -24,7 +24,7 @@ export class HeaderBarComponent {
     // Constructor 
     constructor(
         applicationState: HomePageApplicationState,
-        private readonly globalDataService: GlobalDataService,
+        private readonly globalDataService: HomePageDataService,
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 

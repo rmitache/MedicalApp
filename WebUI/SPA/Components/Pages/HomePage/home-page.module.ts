@@ -15,8 +15,8 @@ import { HealthGraphModule } from './HealthGraph/health-graph.module';
 import { PlansOverviewModule } from './PlansOverview/plans-overview.module';
 
 // Components
-import { HomePageApplicationState } from './global-application-state';
-import { GlobalDataService } from './global-data.service';
+import { HomePageApplicationState } from './home-page-application-state';
+import { HomePageDataService } from './home-page-data.service';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
@@ -57,7 +57,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
             multi: true
         },
         HomePageApplicationState,
-        GlobalDataService
+        HomePageDataService
     ]
 })
 export class HomePageModule {

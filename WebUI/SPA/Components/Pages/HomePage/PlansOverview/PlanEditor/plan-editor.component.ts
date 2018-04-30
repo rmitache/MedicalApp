@@ -11,7 +11,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
-import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
@@ -73,7 +73,7 @@ export class PlanEditorComponent implements IModalDialog {
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly globalDataService: GlobalDataService,
+        private readonly globalDataService: HomePageDataService,
         private fb: FormBuilder
 
     ) {
@@ -177,7 +177,7 @@ class CreateNewMode implements IPlanEditorModeImplementation {
         private reactiveForm: FormGroup,
         private planCLO: CLOs.PlanCLO,
         private vm: ViewModel,
-        private globalDataService: GlobalDataService) {
+        private globalDataService: HomePageDataService) {
 
         // Prepare ViewModel 
         this.vm.PlanCLO = planCLO;
@@ -203,7 +203,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
         private reactiveForm: FormGroup,
         private planCLO: CLOs.PlanCLO,
         private vm: ViewModel,
-        private globalDataService: GlobalDataService,
+        private globalDataService: HomePageDataService,
         private genericCLOFactory: GenericCLOFactory) {
         this.prevVersion = planCLO.GetLatestVersion();
 
@@ -261,7 +261,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
         private reactiveForm: FormGroup,
         private planCLO: CLOs.PlanCLO,
         private vm: ViewModel,
-        private globalDataService: GlobalDataService,
+        private globalDataService: HomePageDataService,
         private genericCLOFactory: GenericCLOFactory) {
 
         this.prevVersion = planCLO.GetPreviousLatestVersion();
@@ -332,7 +332,7 @@ class RestartMode implements IPlanEditorModeImplementation {
         private reactiveForm: FormGroup,
         private planCLO: CLOs.PlanCLO,
         private vm: ViewModel,
-        private globalDataService: GlobalDataService,
+        private globalDataService: HomePageDataService,
         private genericCLOFactory: GenericCLOFactory) {
         this.prevVersion = planCLO.GetLatestVersion();
 

@@ -8,7 +8,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { GlobalDataService } from 'SPA/Components/Pages/HomePage/global-data.service';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
@@ -64,7 +64,7 @@ export class RuleElemComponent {
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly globalDataService: GlobalDataService
+        private readonly globalDataService: HomePageDataService
 
     ) {
         this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();

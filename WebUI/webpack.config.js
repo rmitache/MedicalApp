@@ -16,7 +16,8 @@ module.exports = (env) => {
     const config = {
         entry: {
             'Pages/HomePage/homepage': './SPA/Components/Pages/HomePage/main.ts',
-            'Pages/LoginPage/loginpage': './SPA/Components/Pages/LoginPage/main.ts'
+            'Pages/LoginPage/loginpage': './SPA/Components/Pages/LoginPage/main.ts',
+            //'Pages/AnalysisPage/analysispage': './SPA/Components/Pages/AnalysisPage/main.ts'
         },
         stats: { modules: false },
         context: __dirname,
