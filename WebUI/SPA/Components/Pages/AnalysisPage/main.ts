@@ -25,8 +25,8 @@ if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => {
         // Before restarting the app, we create a new root element and dispose the old one
-        const oldRootElem = document.querySelector('home-page');
-        const newRootElem = document.createElement('home-page');
+        const oldRootElem = document.querySelector('analysis-page');
+        const newRootElem = document.createElement('analysis-page');
         oldRootElem!.parentNode!.insertBefore(newRootElem, oldRootElem);
         modulePromise.then(appModule => {
             appModule.destroy();

@@ -12,7 +12,7 @@ import { CoreModule } from 'SPA/Core/core.module';
 import { DomainModelModule } from 'SPA/DomainModel/domain-model.module';
 
 // Components
-//import { HomePageApplicationState } from './home-page-application-state';
+import { AnalysisPageApplicationState } from './analysis-page-application-state';
 //import { HomePageDataService } from './home-page-data.service';
 //import { StartupDataBundleService } from './startup-data-bundle.service';
 import { AnalysisPageComponent } from './analysis-page.component';
@@ -22,7 +22,6 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 @NgModule({
     bootstrap: [AnalysisPageComponent],
     declarations: [
-        // HomePage
         AnalysisPageComponent,
     ],
     imports: [
@@ -53,7 +52,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
         //    deps: [StartupDataBundleService],
         //    multi: true
         //},
-        //HomePageApplicationState,
+        AnalysisPageApplicationState,
         //HomePageDataService
     ]
 })

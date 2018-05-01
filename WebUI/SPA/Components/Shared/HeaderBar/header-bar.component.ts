@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { HomePageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/HomePage/home-page-application-state';
+import { HomePageApplicationState } from 'SPA/Components/Pages/HomePage/home-page-application-state';
 import { UserAccountCLO } from 'SPA/DomainModel/Users/CLOs/user-account.clo';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
+import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
+import * as CLOs from 'SPA/DomainModel/clo-exports';
+
 
 @Component({
     selector: 'header-bar',
@@ -19,14 +22,12 @@ export class HeaderBarComponent {
         loggedInUser: null
     };
     private readonly subscriptions: Subscription[] = [];
-    private readonly appState: IReadOnlyApplicationState;
 
     // Constructor 
     constructor(
-        applicationState: HomePageApplicationState,
-        private readonly globalDataService: HomePageDataService,
+        @Inject('IReadOnlyAppStateWithUser') private readonly appState: IReadOnlyAppStateWithUser,
+        @Inject('IDataServiceWithLogout') private readonly globalDataService: IDataServiceWithLogout,
     ) {
-        this.appState = applicationState as IReadOnlyApplicationState;
 
         this.subscriptions.push(this.appState.LoggedInUserCLO.Changed.subscribe((newValue) => {
             this.viewModel.loggedInUser = newValue;
@@ -44,8 +45,14 @@ export class HeaderBarComponent {
         });
     }
 }
-
-
 interface ViewModel {
     loggedInUser: UserAccountCLO | null;
+}
+@Injectable()
+export abstract class IReadOnlyAppStateWithUser {
+    LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.UserAccountCLO>;
+}
+@Injectable()
+export abstract class IDataServiceWithLogout {
+    abstract Logout(): Promise<boolean>;
 }

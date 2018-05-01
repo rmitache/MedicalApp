@@ -7,7 +7,7 @@
 }
 
 
-.schedule {
+.factors-view {
     float: left;
     width: calc(100% - 300px - 30px);
     height: calc(100% - 30px - 240px);

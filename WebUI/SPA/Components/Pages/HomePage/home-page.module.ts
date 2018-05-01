@@ -20,6 +20,7 @@ import { HomePageDataService } from './home-page-data.service';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
+import { IReadOnlyAppStateWithUser, IDataServiceWithLogout } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 
 @NgModule({
@@ -57,7 +58,9 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
             multi: true
         },
         HomePageApplicationState,
-        HomePageDataService
+        HomePageDataService,
+        { provide: 'IReadOnlyAppStateWithUser', useExisting: HomePageApplicationState },
+        { provide: 'IDataServiceWithLogout', useExisting: HomePageDataService },
     ]
 })
 export class HomePageModule {
