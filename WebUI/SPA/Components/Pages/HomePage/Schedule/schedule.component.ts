@@ -73,7 +73,7 @@ export const goBackwardAnimation = trigger('goBackwardAnimation', [
         goForwardAnimation,
         goBackwardAnimation
     ]
-})
+})  
 export class ScheduleComponent {
 
 
@@ -502,3 +502,6 @@ export class TimeGroupRepresentation {
 }
 
 
+// DisplayRepr
+// PlanRepr
+// VersionRepr

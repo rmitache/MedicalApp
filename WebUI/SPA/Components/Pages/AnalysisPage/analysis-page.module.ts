@@ -13,10 +13,11 @@ import { DomainModelModule } from 'SPA/DomainModel/domain-model.module';
 
 // Components
 import { AnalysisPageApplicationState } from './analysis-page-application-state';
-//import { HomePageDataService } from './home-page-data.service';
-//import { StartupDataBundleService } from './startup-data-bundle.service';
+import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
+import { StartupDataBundleService } from './startup-data-bundle.service';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
+import { FactorsViewModule } from 'SPA/Components/Pages/AnalysisPage/FactorsView/factors-view.module';
 
 
 @NgModule({
@@ -35,25 +36,24 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
             [{ path: '', component: AnalysisPageComponent },
              { path: 'AnalysisPage', component: AnalysisPageComponent }]
         ),
-
         DomainModelModule,
         SharedModule,
 
         // Root components
-        //ScheduleModule,
-        //PlansOverviewModule,
-        //HealthGraphModule
+        FactorsViewModule
     ],
     providers: [
-        //StartupDataBundleService,
-        //{
-        //    provide: APP_INITIALIZER,
-        //    useFactory: (initialData: StartupDataBundleService) => () => initialData.InitializeBundle(),
-        //    deps: [StartupDataBundleService],
-        //    multi: true
-        //},
+        StartupDataBundleService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (initialData: StartupDataBundleService) => () => initialData.InitializeBundle(),
+            deps: [StartupDataBundleService],
+            multi: true
+        },
         AnalysisPageApplicationState,
-        //HomePageDataService
+        AnalysisPageDataService,
+        { provide: 'IReadOnlyAppStateWithUser', useExisting: AnalysisPageApplicationState },
+        { provide: 'IDataServiceWithLogout', useExisting: AnalysisPageDataService },
     ]
 })
 export class AnalysisPageModule {

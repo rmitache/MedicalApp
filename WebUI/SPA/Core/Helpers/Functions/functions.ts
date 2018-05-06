@@ -54,6 +54,27 @@ export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>
     return momentDates;
 };
 
+export function GetNrOfDaysBetweenDates(startDate: Date, endDate: Date, includeEdges: boolean) {
+    var start = moment(startDate).startOf('day');
+    var end = moment(endDate).endOf('day');
+
+    var nrOfDays = end.diff(start, 'days');
+    if (includeEdges) {
+        nrOfDays += 1;
+    }
+    return nrOfDays;
+}
+export function GetNrOfDaysBetweenDatesUsingMoment(startDate: moment.Moment, endDate: moment.Moment, includeEdges: boolean) {
+    var start = moment(startDate).clone().startOf('day');
+    var end = moment(endDate).clone().endOf('day');
+
+    var nrOfDays = end.diff(start, 'days');
+    if (includeEdges) {
+        nrOfDays += 1;
+    }
+    return nrOfDays;
+}
+
 export function RandomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -95,7 +116,7 @@ export function RemoveWhitespace(str: string): string {
     return str.replace(/ /g, '');
 }
 
-export function ValidateAllFields(formGroup: FormGroup) {         
+export function ValidateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
         const control = formGroup.get(field);
         if (control instanceof FormControl) {

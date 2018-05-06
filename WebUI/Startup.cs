@@ -127,7 +127,8 @@ namespace WebUI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=HomePage}/{action=Index}");
+                    template: "{controller=AnalysisPage}/{action=Index}");
+                //template: "{controller=HomePage}/{action=Index}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",

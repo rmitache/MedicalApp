@@ -29,8 +29,6 @@ export class ScheduleUnitComponent {
 
     }
     ngOnInit() {
-        
-
         this.viewModel.TimeGroups = this.timeGroupRepresentations;
         this.viewModel.Title = this.title;
     }

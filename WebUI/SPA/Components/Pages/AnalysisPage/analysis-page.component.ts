@@ -8,10 +8,10 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import '../../../Content/styles.css';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-//import { HomePageApplicationState } from './home-page-application-state';
 
 // Components
-//import { HomePageDataService } from './home-page-data.service';
+import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
+import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 
 
 @Component({
@@ -22,26 +22,17 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 export class AnalysisPageComponent {
     // Constructor
     constructor(
-        //private readonly applicationState: HomePageApplicationState,
+        private readonly applicationState: AnalysisPageApplicationState,
         private readonly commandManager: CommandManager,
-        //private readonly globalDataService: HomePageDataService,
+        private readonly globalDataService: AnalysisPageDataService,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly applicationRef: ApplicationRef
     ) {
         // Init different services and managers
-        //commandManager.Initialize(applicationState, FlowDefinitions);
+        commandManager.Initialize(applicationState, FlowDefinitions);
 
         // Init momentjs settings
-        //moment.updateLocale('en', {
-        //    calendar: {
-        //        lastDay: '[Yesterday]',
-        //        sameDay: '[Today]',
-        //        nextDay: '[Tomorrow]',
-        //        lastWeek: '[Last] dddd',
-        //        nextWeek: '[Next] dddd',
-        //        sameElse: 'L'
-        //    }
-        //});
+       
         moment.relativeTimeThreshold('s', 55);  // 45
         moment.relativeTimeThreshold('m', 59);  // 45
         moment.relativeTimeThreshold('h', 23);  // 22
@@ -51,15 +42,15 @@ export class AnalysisPageComponent {
 
 
         // Register self to CommandManager
-        //this.commandManager.RegisterComponentInstance(this);
+        this.commandManager.RegisterComponentInstance(this);
     }
     ngDoCheck() {
         //console.log('cd triggered');
     }
     ngAfterViewInit() {
         // Initialize and start the Page
-        //const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
-        //this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
+        const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
+        this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
 
         
 

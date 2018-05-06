@@ -9,29 +9,18 @@
 
 .factors-view {
     float: left;
-    width: calc(100% - 300px - 30px);
-    height: calc(100% - 30px - 240px);
+    width: calc(100%);
+    height: calc(55% - 30px);
 }
 
-.plans-overview {
-    float: right;
-    width: 300px;
-    height: calc(100% - 30px - 240px);
-}
 
-.health-graph {
+.indicators-view {
     float: left;
-    width: calc(100% - 300px - 30px);
-    height: 240px;
+    width: calc(100%);
+    height: calc(45% - 10px);
     margin-top: 30px;
-}
-
-.test-result-list-placeholder {
     background-color: white;
     border: solid 1px #f2f2f2;
     border-radius: 5px;
-    float: right;
-    width: 300px;
-    height: 240px;
-    margin-top: 30px;
 }
+

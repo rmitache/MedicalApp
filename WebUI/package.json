@@ -63,6 +63,7 @@
     },
     "dependencies": {
         "chart.js": "^2.7.2",
-        "chartjs-plugin-annotation": "^0.5.7"
+        "chartjs-plugin-annotation": "^0.5.7",
+        "moment-range": "^4.0.1"
     }
 }

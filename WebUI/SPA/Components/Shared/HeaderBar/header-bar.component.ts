@@ -54,5 +54,6 @@ export abstract class IReadOnlyAppStateWithUser {
 }
 @Injectable()
 export abstract class IDataServiceWithLogout {
+    abstract GetLoggedInUserFromBundle(): CLOs.UserAccountCLO;
     abstract Logout(): Promise<boolean>;
 }

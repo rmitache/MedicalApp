@@ -1,0 +1,14 @@
+
+.frame {
+    background-color: white;
+    border: solid 1px #f2f2f2;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+
+svg {
+    /*border:solid 1px red;*/
+}
