@@ -2,6 +2,7 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as moment from 'moment';
+import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 
 
 export class PlanCLO extends BaseCLO {
@@ -69,5 +70,25 @@ export class PlanCLO extends BaseCLO {
             return this.Versions[0];
         else
             return null;
+    }
+    public GetIntersectionsPerVersionWithDateRange(targetDateRange: Range<moment.Moment>): Range<moment.Moment>[] {
+
+        var intersectionsArray: Range<moment.Moment>[] = [];
+        var allIntersectionsAreNull = true;
+
+        this.Versions.forEach((versionCLO) => {
+            var intersectionResult = versionCLO.GetIntersectionWithDateRange(targetDateRange);
+            intersectionsArray.push(intersectionResult);
+            if (intersectionResult !== null) {
+                allIntersectionsAreNull = false;
+            }
+        });
+
+        // Returns an array 
+        if (allIntersectionsAreNull) {
+            return null;
+        } else {
+            return intersectionsArray;
+        }
     }
 }

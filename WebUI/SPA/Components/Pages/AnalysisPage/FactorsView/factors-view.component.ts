@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef,  } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef, } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -41,9 +41,23 @@ export class FactorsViewComponent {
 
     // Private methods
     public getInitialSelectedDateRange(referenceDate: moment.Moment) {
+
+        // Get the whole month of the referenceDate
         let range = new Range<moment.Moment>(referenceDate.clone().startOf('month').startOf('day'),
             referenceDate.clone().endOf('month').endOf('day'));
         return range;
+    }
+    public filterPlansByDateRange(planCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
+        var filteredPlans: CLOs.PlanCLO[] = [];
+
+        planCLOs.forEach((planCLO) => {
+            var intersections = planCLO.GetIntersectionsPerVersionWithDateRange(targetDateRange);
+            if (intersections !== null) {
+                filteredPlans.push(planCLO);
+            }
+        });
+
+        return filteredPlans;
     }
 
     // Constructor
@@ -67,7 +81,7 @@ export class FactorsViewComponent {
 
         // Init Available (super) DataSet
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
-        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+        this.viewModel.AvailablePlans = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), initialSelectedDateRange);
 
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;

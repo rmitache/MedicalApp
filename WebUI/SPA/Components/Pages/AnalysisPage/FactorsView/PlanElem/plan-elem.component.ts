@@ -41,31 +41,31 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    private getIntersection(versionCLO: CLOs.VersionCLO, targetDateRange: Range<moment.Moment>): Range<moment.Moment> {
+    //private getIntersection(versionCLO: CLOs.VersionCLO, targetDateRange: Range<moment.Moment>): Range<moment.Moment> {
 
-        // Variables
-        var intersectionRange = null;
-        var dateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
+    //    // Variables
+    //    var intersectionRange = null;
+    //    var dateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
 
-        // If a version has no EndDate, check that its StartDate is WITHIN the targetDateRange
-        if (versionCLO.EndDate === null && dateRange.contains(moment(versionCLO.StartDate))) {
-            intersectionRange = new Range<moment.Moment>(moment(versionCLO.StartDate), targetDateRange.RangeEnd.clone());
-        }
-        // If a version has no EndDate, check that its StartDate is BEFORE the targetDateRange
-        else if (versionCLO.EndDate === null && moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
-            intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
-        }
-        // If the version HAS an end date, use moment-range to get the intersection
-        else if (versionCLO.EndDate !== null) {
-            var versionDateRange = new momentRange.DateRange(moment(versionCLO.StartDate).startOf('day'), moment(versionCLO.EndDate).endOf('day'));
-            var intersectResult = dateRange.intersect(versionDateRange);
-            if (intersectResult !== null) {
-                intersectionRange = new Range<moment.Moment>(intersectResult.start, intersectResult.end);
-            }
-        }
+    //    // If a version has no EndDate, check that its StartDate is WITHIN the targetDateRange
+    //    if (versionCLO.EndDate === null && dateRange.contains(moment(versionCLO.StartDate))) {
+    //        intersectionRange = new Range<moment.Moment>(moment(versionCLO.StartDate), targetDateRange.RangeEnd.clone());
+    //    }
+    //    // If a version has no EndDate, check that its StartDate is BEFORE the targetDateRange
+    //    else if (versionCLO.EndDate === null && moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
+    //        intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
+    //    }
+    //    // If the version HAS an end date, use moment-range to get the intersection
+    //    else if (versionCLO.EndDate !== null) {
+    //        var versionDateRange = new momentRange.DateRange(moment(versionCLO.StartDate).startOf('day'), moment(versionCLO.EndDate).endOf('day'));
+    //        var intersectResult = dateRange.intersect(versionDateRange);
+    //        if (intersectResult !== null) {
+    //            intersectionRange = new Range<moment.Moment>(intersectResult.start, intersectResult.end);
+    //        }
+    //    }
 
-        return intersectionRange;
-    }
+    //    return intersectionRange;
+    //}
     private getVersionWidth(versionIntersectRange: Range<moment.Moment>, nrOfMaxDays: number) {
         var nrOfDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(versionIntersectRange.RangeStart, versionIntersectRange.RangeEnd, true);
         var proportionFactor = nrOfDaysInVersion / nrOfMaxDays;
@@ -104,12 +104,12 @@ export class PlanElemComponent {
 
         // Loop through VersionCLOs
         var totalWidthRemovedByFlooring = 0;
-        
+
         for (var i = 0; i < versionCLOs.length; i++) {
             var versionCLO = versionCLOs[i];
 
             // Only consider Versions which are within the SelectedDateRange
-            var intersectionRange = this.getIntersection(versionCLO, this.viewModel.SelectedDateRange);
+            var intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange);
             if (intersectionRange !== null) {
 
                 // Determine the Width
@@ -124,18 +124,24 @@ export class PlanElemComponent {
 
                 // Create the wrapper
                 var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
-                var newWrapper = new VersionInfoWrapper(versionCLO, flooredWidth, flooredXPosition, yPosition, intersectionRange);
+                var newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, flooredWidth, flooredXPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
-        
 
-        // Special adjustment for rounding accuracy (only for the last version IF it has no end)
+
+        // Special adjustments
         if (versionInfoWrappers.length > 0) {
+
+            // Rounding accuracy handling
             var lastVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
             if (lastVersionInfoWrapper.IntersectionEndIsVersionEnd === false) {
                 lastVersionInfoWrapper.Width += Math.round(totalWidthRemovedByFlooring);
             }
+
+            //
+            var firstVersionInfoWrapper = versionInfoWrappers[0];
+            firstVersionInfoWrapper.ShowPlanName = true;
         }
 
         return versionInfoWrappers;
@@ -173,7 +179,8 @@ export class VersionInfoWrapper {
     public XPos: number;
     public YPos: number;
     public IntersectionDateRange: Range<moment.Moment>;
-    public HasVisibleAndAdjacentNextVersion: boolean;
+    public ShowPlanName: boolean = false;
+    public PlanName: string;
 
     // Properties
     public get IntersectionStartIsVersionStart(): boolean {
@@ -186,8 +193,10 @@ export class VersionInfoWrapper {
     }
 
     // Constructor
-    constructor(versionCLO: CLOs.VersionCLO, width: number, xPos: number, yPos: number, intersectionDateRange: Range<moment.Moment>) {
+    constructor(versionCLO: CLOs.VersionCLO, planName: string, width: number, xPos: number, yPos: number, intersectionDateRange: Range<moment.Moment>) {
+
         this.VersionCLO = versionCLO;
+        this.PlanName = planName;
         this.Width = width;
         this.XPos = xPos;
         this.YPos = yPos;

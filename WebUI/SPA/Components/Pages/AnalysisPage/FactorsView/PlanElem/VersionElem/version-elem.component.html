@@ -3,16 +3,17 @@
     <!--<svg:rect height="100%" width="100%" style="fill:none;stroke-width:1;stroke:blue"></svg:rect>-->
 
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" style="stroke-width:2;stroke:#d5d5d5"
-              [attr.marker-start]="viewModel.VersionInfoWrapper.IntersectionStartIsVersionStart ? 'url(#circle-tick-start)' : ''" 
-              [attr.marker-end]="viewModel.VersionInfoWrapper.IntersectionEndIsVersionEnd ? 'url(#circle-tick-end)' : 'url(#arrow)'"
-              />
+              [attr.marker-start]="viewModel.VersionInfoWrapper.IntersectionStartIsVersionStart ? 'url(#circle-tick-start)' : ''"
+              [attr.marker-end]="viewModel.VersionInfoWrapper.IntersectionEndIsVersionEnd ? 'url(#circle-tick-end)' : 'url(#arrow)'" />
 
 
-    <!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->
-    <svg:text x="5" y="30" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.VersionInfoWrapper.XPos}} {{viewModel.VersionInfoWrapper.Width}}</svg:text>
+    <svg:text *ngIf="viewModel.VersionInfoWrapper.ShowPlanName===true" x="0" y="5" style="font-family:Arial;font-size:10px;fill:gray">
+        {{viewModel.VersionInfoWrapper.PlanName}}
+    </svg:text>
+    <!--<svg:text x="5" y="30" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.VersionInfoWrapper.XPos}} {{viewModel.VersionInfoWrapper.Width}}</svg:text>-->
 
 </svg:svg>
 
 
 
-
+<!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->

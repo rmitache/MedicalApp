@@ -14,7 +14,7 @@
 
 
             <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" style="fill:#4b4b4b; stroke:none" />
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill:#808080; stroke:none" />
             </marker>
 
             <svg:marker id="arrow-with-vert-tick" refX="6" refY="3" orient="auto" markerWidth="10" markerHeight="10">
@@ -26,6 +26,7 @@
         </svg:defs>
 
         <svg:g *ngFor="let plan of viewModel.AvailablePlans; let i = index" plan-elem
+               
                [PlanCLO]="plan"
                [SelectedDateRange]="viewModel.SelectedDateRange"
                [XPos]="0"
