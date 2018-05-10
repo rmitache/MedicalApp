@@ -1,13 +1,11 @@
 
 <svg:g [attr.transform]="'translate(' + viewModel.VersionInfoWrapper.XPos + ' 10)'">
-    <svg:line x1="0" y1="6" [attr.x2]="viewModel.VersionInfoWrapper.Width" y2="6" stroke="black" stroke-width="1.5"
+    <svg:line x1="0" y1="16" [attr.x2]="viewModel.VersionInfoWrapper.Width" y2="16" stroke="black" stroke-width="1.5"
               [attr.marker-end]="viewModel.VersionInfoWrapper.HasEndDate ? 'url(#arrow-with-vert-tick)' : 'url(#arrow)'"
               [attr.marker-start]="'url(#vert-tick)'" />
-    <!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->
-    <svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.VersionInfoWrapper.NrOfDaysRendered}}</svg:text>
+
 </svg:g>
 
-
+<!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->
 <!--<svg [attr.x]="xPos" [attr.y]="yPos" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin"></svg>-->
 <!--[attr.marker-start]="viewModel.versionInfoWrapper.IsFirstVersion ? 'url(#vert-tick)' : ''"-->
-

@@ -116,61 +116,14 @@ export class PlanElemComponent {
                 if (versionInfoWrappers.length > 0) {
                     var previousVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
                     xPosition = previousVersionInfoWrapper.XPos + previousVersionInfoWrapper.Width;
+                    xPosition = Math.round(xPosition);
                 }
 
-                //
-
-
-                //alert("Days between " + intersectionRange.RangeStart.format('DD/MM/YYYY') + " and " + intersectionRange.RangeEnd.format('DD/MM/YYYY') +
-                //    " = " + nrOfRenderedDaysInVersion);
-                //alert(nrOfDaysInSelectedDateRange);
-
-                var newWrapper = new VersionInfoWrapper(versionCLO, width, xCounter, nrOfRenderedDaysInVersion);
+                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, nrOfRenderedDaysInVersion);
                 xCounter += 150;
                 versionInfoWrappers.push(newWrapper);
             }
 
-
-
-
-
-
-            //if (versionCLO.EndDate !== null) {
-            //    //debugger;
-            //    var versionDateRange = new momentRange.DateRange(moment(versionCLO.StartDate).startOf('day'), moment(versionCLO.EndDate).endOf('day'));
-            //    var selectedDateRange = new momentRange.DateRange(this.viewModel.SelectedDateRange.RangeStart.clone().startOf('day'),
-            //        this.viewModel.SelectedDateRange.RangeEnd.clone().endOf('day'));
-            //    var intersection = versionDateRange.intersect(selectedDateRange);
-
-
-            //    //if (intersection !== null) {
-            //    var versionDateRangeString = versionDateRange.start.format('DD/MM/YYYY') + "-" + versionDateRange.end.format('DD/MM/YYYY');
-            //    var intersectionString = (intersection === null) ? 'NA' : (intersection.start.format('DD/MM/YYYY') + "-" + intersection.end.format('DD/MM/YYYY'));
-            //    alert(versionDateRangeString + " intersected with selDateRange = " + intersectionString);
-            //    //} 
-            //}
-
-            //// Only consider Versions which are within the SelectedDateRange
-            //if (this.versionIsWithinRange(versionCLO, this.viewModel.SelectedDateRange)) {
-
-
-
-            //    // Compute Width
-            //    var width;
-            //    if (i === versionCLOs.length - 1) { // last version
-            //        width = this.viewBoxMaxWidth - currentWidthUsedOfMax;
-            //    } else {
-            //        width = this.getVersionWidth(versionCLO, i, nrOfDaysInSelectedDateRange, this.viewBoxMaxWidth); // OBS what about if last version doesn't end ?
-            //        currentWidthUsedOfMax += width;
-            //    }
-
-            //    // Compute XPos
-
-
-            //    var versionInfoWrapper = new VersionInfoWrapper(versionCLO, width, xPosCounter);
-            //    versionInfoWrappers.push(versionInfoWrapper);
-            //    xPosCounter += 150;
-            //}
         }
 
         return versionInfoWrappers;

@@ -1,12 +1,13 @@
-<svg:g [attr.transform]="'translate(' + xPos + ' ' + yPos + ')'" >
-    <svg:text *ngIf="viewModel.VersionInfoWrappers.length>0" class="plan-name-label" x="0" y="8">{{viewModel.PlanCLO.Name}} - {{viewModel.PlanCLO.Versions.length}}</svg:text>
+<svg:svg height="50px" width="100%" [attr.x]="xPos" [attr.y]="yPos" >
+    <svg:rect height="100%" width="100%" style="fill:none;stroke-width:1;stroke:red"></svg:rect>
+    <svg:text *ngIf="viewModel.VersionInfoWrappers.length>0" class="plan-name-label" x="0" y="10">{{viewModel.PlanCLO.Name}} - {{viewModel.PlanCLO.Versions.length}}</svg:text>
 
 
-    <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index"  version-elem
-           [VersionInfoWrapper]="versionInfoWrapper"
-           ></svg:g>
+    <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem
+           [VersionInfoWrapper]="versionInfoWrapper"></svg:g>
 
+</svg:svg>
 
-
-</svg:g>
+    <!--<svg:g [attr.transform]="'translate(' + xPos + ' ' + yPos + ')'">
+    </svg:g>-->
 

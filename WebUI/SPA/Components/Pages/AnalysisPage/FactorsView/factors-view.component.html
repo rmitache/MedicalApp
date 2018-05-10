@@ -1,13 +1,16 @@
 <div class="frame">
     <span>{{viewModel.SelectedDateRange.RangeStart.format('DD MM YYYY')}} - {{viewModel.SelectedDateRange.RangeEnd.format('DD MM YYYY')}}</span>
     <!--Plans rendering area-->
-    <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="0 0 500 400" preserveAspectRatio="xMinYMin">
+    <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" >
         <svg:defs>
-            <svg:marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+            <svg:marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" 
+                        
+                        markerUnits="strokeWidth">
                 <svg:line stroke-linecap="round" x1="0" y1="0" x2="6" y2="3" style="stroke:black;stroke-width:1" />
                 <svg:line stroke-linecap="round" x1="0" y1="6" x2="6" y2="3" style="stroke:black;stroke-width:1" />
             </svg:marker>
-            <svg:marker id="arrow-with-vert-tick" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+            <svg:marker id="arrow-with-vert-tick"  refX="6" refY="3" orient="auto" 
+                        markerWidth="10" markerHeight="10">
                 <svg:line stroke-linecap="round" x1="0" y1="0" x2="6" y2="3" style="stroke:black;stroke-width:1" />
                 <svg:line stroke-linecap="round" x1="0" y1="6" x2="6" y2="3" style="stroke:black;stroke-width:1" />
                 <svg:line x1="6" y1="-6" x2="6" y2="6" style="stroke:black;stroke-width:2" />
@@ -21,8 +24,8 @@
                [PlanCLO]="plan"
                [SelectedDateRange]="viewModel.SelectedDateRange"
                [XPos]="0"
-               [YPos]="35 * i"
-               [ViewBoxMaxWidth]="500"
+               [YPos]="65 * i"
+               [ViewBoxMaxWidth]="100"
                ></svg:g>
 
     </svg>
