@@ -4,12 +4,17 @@
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
         <svg:defs>
 
-            <marker id="vert-tick" markerWidth="7" markerHeight="7" refX="4" refY="4">
+
+            <marker id="circle-tick-start" markerWidth="10" markerHeight="10" refX="3" refY="4" orient="auto">
+                <circle cx="4" cy="4" r="2" style="stroke: none; fill:#000000;" />
+            </marker>
+            <marker id="circle-tick-end" markerWidth="10" markerHeight="10" refX="3" refY="4" orient="auto">
                 <circle cx="4" cy="4" r="2" style="stroke: none; fill:#000000;" />
             </marker>
 
+
             <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" style="fill:black; stroke:none" />
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill:#4b4b4b; stroke:none" />
             </marker>
 
             <svg:marker id="arrow-with-vert-tick" refX="6" refY="3" orient="auto" markerWidth="10" markerHeight="10">
@@ -17,15 +22,14 @@
                 <svg:line stroke-linecap="round" x1="0" y1="6" x2="6" y2="3" style="stroke:black;stroke-width:1" />
                 <svg:line x1="6" y1="-6" x2="6" y2="6" style="stroke:black;stroke-width:2" />
             </svg:marker>
-            
+
         </svg:defs>
 
         <svg:g *ngFor="let plan of viewModel.AvailablePlans; let i = index" plan-elem
                [PlanCLO]="plan"
                [SelectedDateRange]="viewModel.SelectedDateRange"
                [XPos]="0"
-               [YPos]="50 * i"
-               [ViewBoxMaxWidth]="100"></svg:g>
+               [YPos]="50 * i"></svg:g>
 
     </svg>
 
@@ -33,6 +37,11 @@
 </div>
 
 
-<!--<svg:marker id="vert-tick" markerWidth="2" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+
+
+<!--<svg:marker id="vert-tick-start" markerWidth="2" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+    <svg:line x1="0" y1="-6" x2="0" y2="6" style="stroke:black;stroke-width:2" />
+</svg:marker>
+<svg:marker id="vert-tick-end" markerWidth="2" markerHeight="10" refX="1" refY="3" orient="auto" markerUnits="strokeWidth">
     <svg:line x1="0" y1="-6" x2="0" y2="6" style="stroke:black;stroke-width:2" />
 </svg:marker>-->

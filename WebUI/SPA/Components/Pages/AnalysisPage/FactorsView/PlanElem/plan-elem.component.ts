@@ -13,7 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Component({
@@ -32,8 +32,6 @@ export class PlanElemComponent {
     private xPos = 0;
     @Input('YPos')
     private yPos = 0;
-    @Input('ViewBoxMaxWidth')
-    private viewBoxMaxWidth;
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         SelectedDateRange: null,
@@ -49,7 +47,6 @@ export class PlanElemComponent {
         var intersectionRange = null;
         var dateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
 
-
         // If a version has no EndDate, check that its StartDate is WITHIN the targetDateRange
         if (versionCLO.EndDate === null && dateRange.contains(moment(versionCLO.StartDate))) {
             intersectionRange = new Range<moment.Moment>(moment(versionCLO.StartDate), targetDateRange.RangeEnd.clone());
@@ -58,7 +55,7 @@ export class PlanElemComponent {
         else if (versionCLO.EndDate === null && moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
             intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
         }
-        // If the version has a date, use moment-range to get the intersection
+        // If the version HAS an end date, use moment-range to get the intersection
         else if (versionCLO.EndDate !== null) {
             var versionDateRange = new momentRange.DateRange(moment(versionCLO.StartDate).startOf('day'), moment(versionCLO.EndDate).endOf('day'));
             var intersectResult = dateRange.intersect(versionDateRange);
@@ -69,25 +66,35 @@ export class PlanElemComponent {
 
         return intersectionRange;
     }
-    private getVersionWidth(versionIntersectRange: Range<moment.Moment>, nrOfMaxDays: number, viewBoxMaxWidth: number) {
+    private getVersionWidth(versionIntersectRange: Range<moment.Moment>, nrOfMaxDays: number) {
         var nrOfDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(versionIntersectRange.RangeStart, versionIntersectRange.RangeEnd, true);
-        var nrOfDaysProportionOfMax = nrOfDaysInVersion / nrOfMaxDays;
-        var versionWidth = nrOfDaysProportionOfMax * this.viewBoxMaxWidth;
+        var proportionFactor = nrOfDaysInVersion / nrOfMaxDays;
+        var versionWidth = proportionFactor * 100;
         return versionWidth;
     }
+    private getDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
+        var datesInRange = EnumerateDaysBetweenDatesUsingMoment(targetDateRange, true);
+        for (var i = 0; i < datesInRange.length; i++) {
+            var datesMatch = datesInRange[i].isSame(date, 'days');
+            if (datesMatch) {
+                return i;
+            }
+        }
 
-    // SPECIAL cases to handle:
-    //  1. Width:
-    //      - If version doesn't end -> width must be the viewboxmaxwidth minus the sum of all the other versionWidths
-    //  2. X position:
-    //      - If version is the first, x position = 0
-    //      - Else -> x position = width of previous version
-    //  3. VersionElems:
-    //      - Only consider those Versions which intersect themselves with the SelectedDateRange
-    //      - Width for VersionElems must be only between their intersection with SelectedDateRange
-    //  4. PlanElems should not be rendered at all if they don't contain at least 1 intersecting version
+        return null;
+    }
+    private getVersionXPosition(versionStartDate: moment.Moment, targetDateRange: Range<moment.Moment>) {
 
+        // Variables
+        var dateIndex = this.getDateIndexInTargetRange(versionStartDate, targetDateRange);
+        var daysInTargetDateRange = GetNrOfDaysBetweenDatesUsingMoment(targetDateRange.RangeStart, targetDateRange.RangeEnd, true);
 
+        // Convert to a position (0-100)
+        var proportionFactor = dateIndex / daysInTargetDateRange;
+        var xPos = proportionFactor * 100;
+
+        return xPos;
+    }
     private createVersionInfoWrappers(): VersionInfoWrapper[] {
 
         // Variables
@@ -96,7 +103,8 @@ export class PlanElemComponent {
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
 
         // Loop through VersionCLOs
-        var totalWidthSum = 0;
+        var totalWidthRemovedByFlooring = 0;
+        
         for (var i = 0; i < versionCLOs.length; i++) {
             var versionCLO = versionCLOs[i];
 
@@ -105,30 +113,29 @@ export class PlanElemComponent {
             if (intersectionRange !== null) {
 
                 // Determine the Width
-                var width = this.getVersionWidth(intersectionRange, nrOfDaysInSelectedDateRange, this.viewBoxMaxWidth);
-                width = Math.floor(width);
-                totalWidthSum += width;
+                var decimalWidth = this.getVersionWidth(intersectionRange, nrOfDaysInSelectedDateRange);
+                var flooredWidth = Math.floor(decimalWidth);
+                totalWidthRemovedByFlooring += decimalWidth - flooredWidth;
 
                 // Determine the X and Y positions
-                var xPosition = 0;
-                if (versionInfoWrappers.length > 0) {
-                    var previousVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
-                    xPosition = previousVersionInfoWrapper.XPos + previousVersionInfoWrapper.Width;
-                }
+                var xPosition = this.getVersionXPosition(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
+                var flooredXPosition = Math.floor(xPosition);
                 var yPosition = 5;
 
                 // Create the wrapper
                 var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
-                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, yPosition, intersectionRange);
+                var newWrapper = new VersionInfoWrapper(versionCLO, flooredWidth, flooredXPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
+        
 
-
-        // Special adjustment for rounding accuracy
-        if (totalWidthSum !== 100 && versionInfoWrappers.length > 0) {
-            var remainderOfTotalWidth = 100 - totalWidthSum;
-            versionInfoWrappers[versionInfoWrappers.length - 1].Width += remainderOfTotalWidth;
+        // Special adjustment for rounding accuracy (only for the last version IF it has no end)
+        if (versionInfoWrappers.length > 0) {
+            var lastVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
+            if (lastVersionInfoWrapper.IntersectionEndIsVersionEnd === false) {
+                lastVersionInfoWrapper.Width += Math.round(totalWidthRemovedByFlooring);
+            }
         }
 
         return versionInfoWrappers;
@@ -166,6 +173,7 @@ export class VersionInfoWrapper {
     public XPos: number;
     public YPos: number;
     public IntersectionDateRange: Range<moment.Moment>;
+    public HasVisibleAndAdjacentNextVersion: boolean;
 
     // Properties
     public get IntersectionStartIsVersionStart(): boolean {
