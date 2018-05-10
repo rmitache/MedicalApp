@@ -1,11 +1,17 @@
+<svg:svg height="35px" [attr.width]="viewModel.VersionInfoWrapper.Width +'%'" [attr.x]="viewModel.VersionInfoWrapper.XPos + '%'" [attr.y]="viewModel.VersionInfoWrapper.YPos">
+    <!--<svg:rect height="100%" width="100%" style="fill:none;stroke-width:1;stroke:blue"></svg:rect>-->
 
-<svg:g [attr.transform]="'translate(' + viewModel.VersionInfoWrapper.XPos + ' 10)'">
-    <svg:line x1="0" y1="16" [attr.x2]="viewModel.VersionInfoWrapper.Width" y2="16" stroke="black" stroke-width="1.5"
+    <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" stroke="black" stroke-width="1.5"
               [attr.marker-end]="viewModel.VersionInfoWrapper.HasEndDate ? 'url(#arrow-with-vert-tick)' : 'url(#arrow)'"
               [attr.marker-start]="'url(#vert-tick)'" />
 
-</svg:g>
+    <svg:text x="5" y="30" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.VersionInfoWrapper.Width}} {{viewModel.VersionInfoWrapper.XPos}}</svg:text>
+</svg:svg>
 
-<!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->
-<!--<svg [attr.x]="xPos" [attr.y]="yPos" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin"></svg>-->
-<!--[attr.marker-start]="viewModel.versionInfoWrapper.IsFirstVersion ? 'url(#vert-tick)' : ''"-->
+
+    <!--<svg:text x="0" y="25" style="font-family:Arial;font-size:10px;fill:blue">{{viewModel.GetDates()}}</svg:text>-->
+    <!--[attr.marker-start]="viewModel.versionInfoWrapper.IsFirstVersion ? 'url(#vert-tick)' : ''"-->
+    <!--<svg:g [attr.transform]="'translate(' + viewModel.VersionInfoWrapper.XPos + ' 10)'">
+    </svg:g>-->
+
+

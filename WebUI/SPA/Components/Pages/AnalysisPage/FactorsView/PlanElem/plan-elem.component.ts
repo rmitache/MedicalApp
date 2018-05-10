@@ -55,7 +55,7 @@ export class PlanElemComponent {
             intersectionRange = new Range<moment.Moment>(moment(versionCLO.StartDate), targetDateRange.RangeEnd.clone());
         }
         // If a version has no EndDate, check that its StartDate is BEFORE the targetDateRange
-        else if (versionCLO.EndDate === null &&  moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
+        else if (versionCLO.EndDate === null && moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
             intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
         }
         // If the version has a date, use moment-range to get the intersection
@@ -94,12 +94,9 @@ export class PlanElemComponent {
         var versionCLOs = this.planCLO.Versions;
         var versionInfoWrappers: VersionInfoWrapper[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
-        var xCounter = 0;
-        //if (this.planCLO.Name = "My Herbs") {
-        //    debugger;
-        //}
 
         // Loop through VersionCLOs
+        var totalWidthSum = 0;
         for (var i = 0; i < versionCLOs.length; i++) {
             var versionCLO = versionCLOs[i];
 
@@ -109,21 +106,28 @@ export class PlanElemComponent {
 
                 // Determine the Width
                 var width = this.getVersionWidth(intersectionRange, nrOfDaysInSelectedDateRange, this.viewBoxMaxWidth);
-                var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
+                width = Math.floor(width);
+                totalWidthSum += width;
 
                 // Determine the X position 
                 var xPosition = 0;
                 if (versionInfoWrappers.length > 0) {
                     var previousVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
                     xPosition = previousVersionInfoWrapper.XPos + previousVersionInfoWrapper.Width;
-                    xPosition = Math.round(xPosition);
                 }
 
-                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, nrOfRenderedDaysInVersion);
-                xCounter += 150;
+                // Create the wrapper
+                var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
+                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, 0, nrOfRenderedDaysInVersion);
                 versionInfoWrappers.push(newWrapper);
             }
+        }
 
+
+        // Special adjustment for rounding accuracy
+        if (totalWidthSum !== 100 && versionInfoWrappers.length > 0) {
+            var remainderOfTotalWidth = 100 - totalWidthSum;
+            versionInfoWrappers[versionInfoWrappers.length - 1].Width += remainderOfTotalWidth;
         }
 
         return versionInfoWrappers;
@@ -158,17 +162,20 @@ export class VersionInfoWrapper {
     public VersionCLO: CLOs.VersionCLO;
     public Width: number;
     public XPos: number;
+    public YPos: number;
     public NrOfDaysRendered: number;
 
     public HasEndDate: boolean;
     public StartDateIsInView: boolean;
     public EndDateIsInView: boolean;
 
-    constructor(versionCLO: CLOs.VersionCLO, width: number, xPos: number, nrOfDaysRendered: number) {
+    constructor(versionCLO: CLOs.VersionCLO, width: number, xPos: number, yPos: number, nrOfDaysRendered: number) {
         this.VersionCLO = versionCLO;
         this.Width = width;
         this.XPos = xPos;
+        this.YPos = yPos;
         this.NrOfDaysRendered = nrOfDaysRendered;
+
         this.HasEndDate = (this.VersionCLO.EndDate !== null);
     }
 }
