@@ -109,16 +109,17 @@ export class PlanElemComponent {
                 width = Math.floor(width);
                 totalWidthSum += width;
 
-                // Determine the X position 
+                // Determine the X and Y positions
                 var xPosition = 0;
                 if (versionInfoWrappers.length > 0) {
                     var previousVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
                     xPosition = previousVersionInfoWrapper.XPos + previousVersionInfoWrapper.Width;
                 }
+                var yPosition = 5;
 
                 // Create the wrapper
                 var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
-                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, 0, nrOfRenderedDaysInVersion);
+                var newWrapper = new VersionInfoWrapper(versionCLO, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
@@ -159,23 +160,30 @@ interface ViewModel {
 
 //
 export class VersionInfoWrapper {
+    // Fields
     public VersionCLO: CLOs.VersionCLO;
     public Width: number;
     public XPos: number;
     public YPos: number;
-    public NrOfDaysRendered: number;
+    public IntersectionDateRange: Range<moment.Moment>;
 
-    public HasEndDate: boolean;
-    public StartDateIsInView: boolean;
-    public EndDateIsInView: boolean;
+    // Properties
+    public get IntersectionStartIsVersionStart(): boolean {
+        var areSame = moment(this.VersionCLO.StartDate).isSame(this.IntersectionDateRange.RangeStart, 'day');
+        return areSame;
+    }
+    public get IntersectionEndIsVersionEnd(): boolean {
+        var areSame = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.RangeEnd, 'day');
+        return areSame;
+    }
 
-    constructor(versionCLO: CLOs.VersionCLO, width: number, xPos: number, yPos: number, nrOfDaysRendered: number) {
+    // Constructor
+    constructor(versionCLO: CLOs.VersionCLO, width: number, xPos: number, yPos: number, intersectionDateRange: Range<moment.Moment>) {
         this.VersionCLO = versionCLO;
         this.Width = width;
         this.XPos = xPos;
         this.YPos = yPos;
-        this.NrOfDaysRendered = nrOfDaysRendered;
+        this.IntersectionDateRange = intersectionDateRange;
 
-        this.HasEndDate = (this.VersionCLO.EndDate !== null);
     }
 }
