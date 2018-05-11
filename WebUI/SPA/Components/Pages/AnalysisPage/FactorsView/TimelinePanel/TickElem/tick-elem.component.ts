@@ -27,7 +27,8 @@ export class TickElemComponent {
     @Input('TickInfoWrapper')
     private tickInfoWrapper: TickInfoWrapper;
     private readonly viewModel: ViewModel = {
-        TickInfoWrapper: null
+        TickInfoWrapper: null,
+        DateText:null
     };
 
     // Constructor
@@ -36,10 +37,12 @@ export class TickElemComponent {
     }
     ngOnInit() {
         this.viewModel.TickInfoWrapper = this.tickInfoWrapper;
+        this.viewModel.DateText = this.tickInfoWrapper.Date.format('MMM DD');
     }
 
 }
 
 interface ViewModel {
     TickInfoWrapper: TickInfoWrapper;
+    DateText: string;
 }

@@ -38,8 +38,14 @@ export class TimelinePanelComponent {
         var datesInSelDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
 
         // Create tick info wrappers
-        for (var i = 0; i < 10; i++) {
-            var newTickInfoWrapper = new TickInfoWrapper(datesInSelDateRange[i], i * 40, 2);
+        for (var i = 0; i < 20; i++) {
+
+            // Compute XPos and Width
+            var width = 40;
+            var xPos = width * i;
+
+            // Create wrapper
+            var newTickInfoWrapper = new TickInfoWrapper(datesInSelDateRange[i], width, xPos, 2);
             tickInfoWrappers.push(newTickInfoWrapper);
         }
 
@@ -62,12 +68,15 @@ interface ViewModel {
 export class TickInfoWrapper {
     // Fields
     public Date: moment.Moment;
+    public Width: number;
     public XPos: number;
     public YPos: number;
+    
 
     // Constructor
-    constructor(date: moment.Moment,  xPos: number, yPos: number) {
+    constructor(date: moment.Moment, width:number, xPos: number, yPos: number) {
         this.Date = date;
+        this.Width = width;
         this.XPos = xPos;
         this.YPos = yPos;
     }
