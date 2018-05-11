@@ -27,23 +27,48 @@ export class TimelinePanelComponent {
     @Input('SelectedDateRange')
     private selectedDateRange: Range<moment.Moment>;
     private readonly viewModel: ViewModel = {
-        SelectedDateRange: null
+        TickInfoWrappers: null
     };
-    private array = [3, 3, 3, 3, 3, 3, 3];
 
- 
+    // Private methods
+    private createTickInfoWrappers(): TickInfoWrapper[] {
+
+        // Variables
+        var tickInfoWrappers: TickInfoWrapper[] = [];
+        var datesInSelDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
+
+        // Create tick info wrappers
+        for (var i = 0; i < 10; i++) {
+            var newTickInfoWrapper = new TickInfoWrapper(datesInSelDateRange[i], i * 40, 2);
+            tickInfoWrappers.push(newTickInfoWrapper);
+        }
+
+        return tickInfoWrappers;
+    }
+
     // Constructor
     constructor(
     ) {
 
     }
     ngOnInit() {
-        this.viewModel.SelectedDateRange = this.selectedDateRange;
+        this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();
     }
-
-    
 }
 interface ViewModel {
-    SelectedDateRange: Range<moment.Moment>;
+    TickInfoWrappers: TickInfoWrapper[];
 }
 
+export class TickInfoWrapper {
+    // Fields
+    public Date: moment.Moment;
+    public XPos: number;
+    public YPos: number;
+
+    // Constructor
+    constructor(date: moment.Moment,  xPos: number, yPos: number) {
+        this.Date = date;
+        this.XPos = xPos;
+        this.YPos = yPos;
+    }
+}

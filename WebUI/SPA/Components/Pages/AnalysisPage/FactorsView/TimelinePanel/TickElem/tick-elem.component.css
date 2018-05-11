@@ -1,15 +1,8 @@
-.frame {
-    width: calc(100% - 40px);
-    height: calc(100% - 40px);
-    padding: 20px;
-}
-
 .rect {
-    fill: transparent;
+    stroke: red;
+    stroke-width:1;
+    fill:none;
+    
 
 }
 
-.rect:hover {
-    fill: #e8e8ff;
-    border-radius:10px;
-}

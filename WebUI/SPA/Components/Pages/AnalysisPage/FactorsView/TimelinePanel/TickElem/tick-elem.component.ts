@@ -13,6 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { VersionInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { TickInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
 
 
 @Component({
@@ -23,16 +24,10 @@ import { VersionInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsVie
 })
 export class TickElemComponent {
     // Fields
-    @Input('Date')
-    private date: moment.Moment;
-    @Input('XPos')
-    private xPos = 0;
-    @Input('YPos')
-    private yPos = 0;
+    @Input('TickInfoWrapper')
+    private tickInfoWrapper: TickInfoWrapper;
     private readonly viewModel: ViewModel = {
-        Date: null,
-        XPos: 0,
-        YPos: 0,
+        TickInfoWrapper: null
     };
 
     // Constructor
@@ -40,15 +35,11 @@ export class TickElemComponent {
     ) {
     }
     ngOnInit() {
-        this.viewModel.Date = this.date;
-        this.viewModel.XPos = this.xPos;
-        this.viewModel.YPos = this.yPos;
+        this.viewModel.TickInfoWrapper = this.tickInfoWrapper;
     }
 
 }
 
 interface ViewModel {
-    Date: moment.Moment;
-    XPos: number;
-    YPos: number;
+    TickInfoWrapper: TickInfoWrapper;
 }
