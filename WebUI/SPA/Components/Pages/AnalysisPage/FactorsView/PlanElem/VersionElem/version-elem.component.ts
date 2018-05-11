@@ -27,6 +27,7 @@ export class VersionElemComponent {
     private versionInfoWrapper: VersionInfoWrapper;
     private readonly viewModel: ViewModel = {
         VersionInfoWrapper: null,
+        ShowHoverEffect:null,
         GetDates: () => {
             if (this.viewModel.VersionInfoWrapper.VersionCLO.EndDate === null) {
                 return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - No End";
@@ -47,9 +48,18 @@ export class VersionElemComponent {
        
     }
 
+
+    // Event handlers
+    private OnMouseEnter() {
+        this.viewModel.ShowHoverEffect = true;
+    }
+    private OnMouseLeave() {
+        this.viewModel.ShowHoverEffect = false;
+    }
 }
 
 interface ViewModel {
     VersionInfoWrapper: VersionInfoWrapper;
+    ShowHoverEffect: boolean;
     GetDates();
 }

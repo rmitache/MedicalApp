@@ -4,12 +4,12 @@
     padding: 20px;
 }
 
-.rect {
+.hit-box-rect {
     fill: transparent;
 
 }
 
-.rect:hover {
+.hover-effect-rect {
     fill: #e8e8ff;
-    border-radius:10px;
+    border-radius: 10px;
 }
