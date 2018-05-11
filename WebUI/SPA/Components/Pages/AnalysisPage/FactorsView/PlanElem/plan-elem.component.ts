@@ -13,7 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment, GetDateIndexInTargetRange } from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Component({
@@ -47,21 +47,10 @@ export class PlanElemComponent {
         var versionWidth = proportionFactor * 100;
         return versionWidth;
     }
-    private getDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
-        var datesInRange = EnumerateDaysBetweenDatesUsingMoment(targetDateRange, true);
-        for (var i = 0; i < datesInRange.length; i++) {
-            var datesMatch = datesInRange[i].isSame(date, 'days');
-            if (datesMatch) {
-                return i;
-            }
-        }
-
-        return null;
-    }
     private getVersionXPosition(versionStartDate: moment.Moment, targetDateRange: Range<moment.Moment>) {
 
         // Variables
-        var dateIndex = this.getDateIndexInTargetRange(versionStartDate, targetDateRange);
+        var dateIndex = GetDateIndexInTargetRange(versionStartDate, targetDateRange);
         var daysInTargetDateRange = GetNrOfDaysBetweenDatesUsingMoment(targetDateRange.RangeStart, targetDateRange.RangeEnd, true);
 
         // Convert to a position (0-100)

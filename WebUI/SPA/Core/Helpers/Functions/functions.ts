@@ -75,6 +75,18 @@ export function GetNrOfDaysBetweenDatesUsingMoment(startDate: moment.Moment, end
     return nrOfDays;
 }
 
+export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
+    var datesInRange = EnumerateDaysBetweenDatesUsingMoment(targetDateRange, true);
+    for (var i = 0; i < datesInRange.length; i++) {
+        var datesMatch = datesInRange[i].isSame(date, 'days');
+        if (datesMatch) {
+            return i;
+        }
+    }
+
+    return null;
+}
+
 export function RandomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }

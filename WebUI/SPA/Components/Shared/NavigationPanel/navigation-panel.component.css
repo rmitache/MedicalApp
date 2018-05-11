@@ -1,25 +1,26 @@
 .frame {
     width: 250px;
-    text-align:center;
-    background-color:lightyellow;
-    margin-left:auto;
-    margin-right:auto;
-
+    text-align: center;
+    background-color: #fffbe5;
+    margin-left: auto;
+    margin-right: auto;
+    height: 27px;
 }
 
     .frame .previous-button {
         float: left;
-        margin-top: 2px;
     }
 
-    .frame .current-date-label
-    {
+    .frame .current-date-label {
         /*nothing here*/
+        color: black;
+        line-height: 27px;
+        vertical-align:top;
+        display:inline-block;
     }
 
     .frame .next-button {
         float: right;
-        margin-top: 2px;
     }
 
 

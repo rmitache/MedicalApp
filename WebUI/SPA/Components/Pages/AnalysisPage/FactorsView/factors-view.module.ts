@@ -14,6 +14,8 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { FactorsViewComponent } from './factors-view.component';
 import { PlanElemComponent } from './PlanElem/plan-elem.component';
 import { VersionElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
+import { TimelinePanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
+import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/TickElem/tick-elem.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { VersionElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsV
     declarations: [
         FactorsViewComponent,
         PlanElemComponent,
-        VersionElemComponent
+        VersionElemComponent,
+        TimelinePanelComponent,
+        TickElemComponent
     ],
     exports: [
         FactorsViewComponent],

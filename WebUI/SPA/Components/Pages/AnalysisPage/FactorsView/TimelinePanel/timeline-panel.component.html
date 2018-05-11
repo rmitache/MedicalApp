@@ -1,0 +1,10 @@
+<div class="frame">
+    <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" style="border:solid 1px red;">
+
+        <svg:g *ngFor="let val of array; let i = index" tick-elem
+               [Date]="null"
+               [XPos]="40 * i"
+               [YPos]="0"></svg:g>
+
+    </svg>
+</div>
