@@ -1,13 +1,10 @@
-<div class="frame">
+<div class="frame" #frame>
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" overflow="visible">
         <svg:line x1="0%" y1="0" [attr.x2]="'100%'" y2="0" style="stroke-width:2;stroke:#d5d5d5" />
 
-        <svg:g >
-            <svg:g *ngFor="let tickInfoWrapper of viewModel.TickInfoWrappers; let i = index" tick-elem
-                   
-                   [TickInfoWrapper]="tickInfoWrapper">
-            </svg:g>
+        <svg:g *ngFor="let tickInfoWrapper of viewModel.TickInfoWrappers; let i = index" tick-elem
+               [TickWidthInPX]="viewModel.TickDynamicWidthInPX"
+               [TickInfoWrapper]="tickInfoWrapper">
         </svg:g>
-
     </svg>
 </div>

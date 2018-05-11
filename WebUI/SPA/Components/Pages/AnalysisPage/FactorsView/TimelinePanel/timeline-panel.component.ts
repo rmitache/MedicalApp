@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, Input, ElementRef, ViewChild, HostListener} from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
@@ -24,28 +24,40 @@ import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateD
 })
 export class TimelinePanelComponent {
     // Fields
+    @ViewChild('frame')
+    private frame: ElementRef;
     @Input('SelectedDateRange')
     private selectedDateRange: Range<moment.Moment>;
     private readonly viewModel: ViewModel = {
-        TickInfoWrappers: null
+        TickInfoWrappers: null,
+        TickDynamicWidthInPX: null,
+        DatesInSelectedDateRange: null
     };
 
     // Private methods
+    private refreshTickDynamicWidthInPX() {
+        var frameWidth = (this.frame.nativeElement as HTMLElement).offsetWidth;
+        var tickWidth = frameWidth / (this.viewModel.DatesInSelectedDateRange.length -1 );
+
+        this.viewModel.TickDynamicWidthInPX = Math.round(tickWidth);
+    }
     private createTickInfoWrappers(): TickInfoWrapper[] {
 
         // Variables
         var tickInfoWrappers: TickInfoWrapper[] = [];
-        var datesInSelDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
+        this.viewModel.DatesInSelectedDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
+
+        // Compute % width (which is the same for all ticks)
+        var width = 100 / (this.viewModel.DatesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
 
         // Create tick info wrappers
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < this.viewModel.DatesInSelectedDateRange.length; i++) {
 
-            // Compute XPos and Width
-            var width = 40;
+            // Compute XPos
             var xPos = width * i;
 
             // Create wrapper
-            var newTickInfoWrapper = new TickInfoWrapper(datesInSelDateRange[i], width, xPos, 2);
+            var newTickInfoWrapper = new TickInfoWrapper(this.viewModel.DatesInSelectedDateRange[i], width, xPos, 2);
             tickInfoWrappers.push(newTickInfoWrapper);
         }
 
@@ -59,10 +71,20 @@ export class TimelinePanelComponent {
     }
     ngOnInit() {
         this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();
+        this.refreshTickDynamicWidthInPX();
+    }
+
+    // Event handlers
+    @HostListener('window:resize', ['$event'])
+    private onResizeWindow(event) {
+        this.refreshTickDynamicWidthInPX();
     }
 }
 interface ViewModel {
     TickInfoWrappers: TickInfoWrapper[];
+    TickDynamicWidthInPX: number; 
+    DatesInSelectedDateRange: moment.Moment[];
+
 }
 
 export class TickInfoWrapper {

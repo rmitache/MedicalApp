@@ -412,14 +412,14 @@ class MonthDisplayMode implements IDisplayMode {
                     gridLines: {
                         display: true,
                         drawOnChartArea: false,
-                        offsetGridLines: true
                     },
                     ticks: {
-                        fontColor: ['gray', 'red'],
+                        fontColor: ['gray'],
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
+                            //if (!(index % 2)) return value;
                         }
                     }
                 }],

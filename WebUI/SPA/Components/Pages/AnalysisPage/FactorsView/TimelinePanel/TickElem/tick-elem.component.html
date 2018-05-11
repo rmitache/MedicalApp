@@ -1,8 +1,8 @@
-<svg:svg height="50px" [attr.width]="viewModel.TickInfoWrapper.Width +'px'" overflow="visible" 
-         [attr.x]="viewModel.TickInfoWrapper.XPos - viewModel.TickInfoWrapper.Width/2" [attr.y]="viewModel.TickInfoWrapper.YPos">
+<svg:svg height="50px" [attr.width]="viewModel.TickInfoWrapper.Width +'%'" overflow="visible"
+         [attr.x]="viewModel.TickInfoWrapper.XPos - viewModel.TickInfoWrapper.Width/2 + '%'" [attr.y]="viewModel.TickInfoWrapper.YPos + '%'">
 
 
-    <svg:line x1="100%" y1="0" x2="100%" y2="10" style="stroke:gray;stroke-width:1" />
+    <svg:line x1="50%" y1="0" x2="50%" y2="10" style="stroke:gray;stroke-width:1" />
 
     <svg:text x="0" y="50%" style="font-family:Arial;font-size:10px;fill:black">
         <tspan x="50%" text-anchor="middle">{{viewModel.DateText}}</tspan>
