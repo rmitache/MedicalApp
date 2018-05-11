@@ -4,3 +4,12 @@
     padding: 20px;
 }
 
+.rect {
+    fill: transparent;
+
+}
+
+.rect:hover {
+    fill: #e8e8ff;
+    border-radius:10px;
+}

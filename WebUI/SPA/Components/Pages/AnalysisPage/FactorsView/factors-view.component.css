@@ -2,13 +2,82 @@
 .frame {
     background-color: white;
     border: solid 1px #f2f2f2;
-    width: calc(100% - 40px);
-    height: calc(100% - 40px);
-    padding: 20px;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
 }
 
-
-svg {
-    /*border:solid 1px red;*/
+.left-side {
+    width: calc(100% - 200px);
+    height: 100%;
+    float: left;
 }
+
+    .left-side .header {
+        width: calc(100% - 36px);
+        height: 30px;
+        padding: 5px 18px 5px 18px;
+        vertical-align: middle;
+        line-height: 30px;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+        .left-side .header .left-section {
+            display: block;
+            float: left;
+            width: calc(33%);
+        }
+
+            .left-side .header .left-section .header-label {
+                display: block;
+                float: left;
+            }
+
+            .left-side .header .left-section .icon-button {
+                float: left;
+                margin-left: 10px;
+                margin-top: 2px;
+            }
+
+        .left-side .header .center-section {
+            float: left;
+            width: calc(34%);
+        }
+
+    .left-side .body {
+        height: calc(100% - 61px);
+        width: calc(100% - 36px);
+        padding: 5px 18px 5px 18px;
+        overflow: hidden;
+    }
+
+.right-side {
+    border-radius: 0 5px 5px 0;
+    width: calc(199px);
+    height: 100%;
+    background-color: #cae0ff;
+    float: right;
+}
+
+    .right-side .header {
+        width: calc(100% - 36px);
+        height: 30px;
+        padding: 5px 18px 5px 18px;
+        vertical-align: middle;
+        line-height: 30px;
+        border-radius: 5px 5px 0px 0px;
+    }
+/*.rendering-area {
+    height: 100%;
+    width: calc(100% - 225px);
+    float: left;
+    overflow: hidden;
+}
+
+.filters-area {
+    height: 100%;
+    width: 200px;
+    border: solid 1px black;
+    background-color: gray;
+    float: right;
+}*/

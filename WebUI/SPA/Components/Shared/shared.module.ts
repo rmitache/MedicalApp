@@ -18,7 +18,7 @@ import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
 import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
-import { NavigationPanelComponent } from 'SPA/Components/Pages/HomePage/Shared/NavigationPanel/navigation-panel.component';
+import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { HeaderBarComponent } from './HeaderBar/header-bar.component';
 
 @NgModule({

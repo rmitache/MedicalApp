@@ -1,6 +1,5 @@
-<svg:svg *ngIf="viewModel.VersionInfoWrappers.length>0" height="40px" width="100%" [attr.x]="xPos" [attr.y]="yPos">
-    <!--<svg:rect height="100%" width="100%" style="fill:none;stroke-width:1;stroke:red"></svg:rect>-->
-
+<svg:svg *ngIf="viewModel.VersionInfoWrappers.length>0" height="40px" width="100%" [attr.x]="xPos" [attr.y]="yPos" >
+    <!--<svg:rect class="rect" height="100%" width="100%" ></svg:rect>-->
     <!--<svg:text class="plan-name-label" x="0" y="10">{{viewModel.PlanCLO.Name}}</svg:text>-->
 
     <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem

@@ -41,31 +41,6 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    //private getIntersection(versionCLO: CLOs.VersionCLO, targetDateRange: Range<moment.Moment>): Range<moment.Moment> {
-
-    //    // Variables
-    //    var intersectionRange = null;
-    //    var dateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
-
-    //    // If a version has no EndDate, check that its StartDate is WITHIN the targetDateRange
-    //    if (versionCLO.EndDate === null && dateRange.contains(moment(versionCLO.StartDate))) {
-    //        intersectionRange = new Range<moment.Moment>(moment(versionCLO.StartDate), targetDateRange.RangeEnd.clone());
-    //    }
-    //    // If a version has no EndDate, check that its StartDate is BEFORE the targetDateRange
-    //    else if (versionCLO.EndDate === null && moment(versionCLO.StartDate) < targetDateRange.RangeStart) {
-    //        intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
-    //    }
-    //    // If the version HAS an end date, use moment-range to get the intersection
-    //    else if (versionCLO.EndDate !== null) {
-    //        var versionDateRange = new momentRange.DateRange(moment(versionCLO.StartDate).startOf('day'), moment(versionCLO.EndDate).endOf('day'));
-    //        var intersectResult = dateRange.intersect(versionDateRange);
-    //        if (intersectResult !== null) {
-    //            intersectionRange = new Range<moment.Moment>(intersectResult.start, intersectResult.end);
-    //        }
-    //    }
-
-    //    return intersectionRange;
-    //}
     private getVersionWidth(versionIntersectRange: Range<moment.Moment>, nrOfMaxDays: number) {
         var nrOfDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(versionIntersectRange.RangeStart, versionIntersectRange.RangeEnd, true);
         var proportionFactor = nrOfDaysInVersion / nrOfMaxDays;
@@ -160,6 +135,11 @@ export class PlanElemComponent {
         this.viewModel.YPos = this.yPos;
 
         this.viewModel.VersionInfoWrappers = this.createVersionInfoWrappers();
+    }
+
+    // Event handlers
+    private onHover() {
+       
     }
 }
 interface ViewModel {

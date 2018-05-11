@@ -10,14 +10,14 @@
 .factors-view {
     float: left;
     width: calc(100%);
-    height: calc(55% - 30px);
+    height: calc(60% - 30px);
 }
 
 
 .indicators-view {
     float: left;
     width: calc(100%);
-    height: calc(45% - 10px);
+    height: calc(40% - 10px);
     margin-top: 30px;
     background-color: white;
     border: solid 1px #f2f2f2;
