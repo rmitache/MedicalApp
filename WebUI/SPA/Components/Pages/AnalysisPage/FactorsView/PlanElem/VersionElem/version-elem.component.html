@@ -14,12 +14,12 @@
     </svg:text>
 
 
-    <!--Vertical hover lines-->
+    <!--Vertical hover lines (start and end)-->
     <svg:line x1="1" y1="16" x2="1" y2="1500"
-              [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"
+              [style.visibility]="(viewModel.ShowHoverEffect === true && viewModel.VersionInfoWrapper.IntersectionStartIsVersionStart) ? 'visible' : 'hidden'"
               style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
     <svg:line x1="100%" y1="16" x2="100%" y2="1500" transform="translate(-1 0)"
-              [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"
+              [style.visibility]="(viewModel.ShowHoverEffect === true && viewModel.VersionInfoWrapper.IntersectionEndIsVersionEnd) === true ? 'visible' : 'hidden'"
               style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
 
 
