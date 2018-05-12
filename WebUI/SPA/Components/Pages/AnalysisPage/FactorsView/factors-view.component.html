@@ -14,14 +14,12 @@
         <!--Plans rendering area-->
         <div class="body">
             <div class="factors-rendering-area">
-                <svg xmlns="http://www.w3.org/2000/svg" height="4000px" width="100%">
+                <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" overflow="visible">
                     <svg:defs>
-
-
-                        <marker id="circle-tick-start" markerWidth="10" markerHeight="10" refX="4" refY="4" orient="auto">
+                        <marker id="circle-tick-start" markerWidth="12" markerHeight="12" refX="4" refY="4" orient="auto" overflow="visible">
                             <circle cx="4" cy="4" r="2" style="stroke: none; fill:#000000;" />
                         </marker>
-                        <marker id="circle-tick-end" markerWidth="10" markerHeight="10" refX="4" refY="4" orient="auto">
+                        <marker id="circle-tick-end" markerWidth="12" markerHeight="12" refX="4" refY="4" orient="auto">
                             <circle cx="4" cy="4" r="2" style="stroke: none; fill:#000000;" />
                         </marker>
 
@@ -39,15 +37,14 @@
                     </svg:defs>
 
                     <svg:g *ngFor="let plan of viewModel.AvailablePlans; let i = index" plan-elem
+                           overflow="visible"
                            [PlanCLO]="plan"
                            [SelectedDateRange]="viewModel.SelectedDateRange"
                            [XPos]="0"
                            [YPos]="40 * i"></svg:g>
                 </svg>
             </div>
-            <timeline-panel [SelectedDateRange]="viewModel.SelectedDateRange"
-                            
-                            ></timeline-panel>
+            <timeline-panel [SelectedDateRange]="viewModel.SelectedDateRange"></timeline-panel>
         </div>
 
     </div>

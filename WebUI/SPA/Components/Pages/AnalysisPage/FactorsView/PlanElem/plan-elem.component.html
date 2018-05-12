@@ -2,7 +2,7 @@
     <!--<svg:rect class="rect" height="100%" width="100%" ></svg:rect>-->
     <!--<svg:text class="plan-name-label" x="0" y="10">{{viewModel.PlanCLO.Name}}</svg:text>-->
 
-    <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem
+    <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem overflow="visible"
            [VersionInfoWrapper]="versionInfoWrapper"></svg:g>
 
 </svg:svg>

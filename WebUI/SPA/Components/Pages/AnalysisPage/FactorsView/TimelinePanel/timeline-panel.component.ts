@@ -47,7 +47,7 @@ export class TimelinePanelComponent {
         var tickInfoWrappers: TickInfoWrapper[] = [];
         this.viewModel.DatesInSelectedDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
 
-        // Compute % width (which is the same for all ticks)
+        // Compute % width per tick 
         var width = 100 / (this.viewModel.DatesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
 
         // Create tick info wrappers

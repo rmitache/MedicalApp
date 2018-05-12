@@ -41,34 +41,15 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    private getVersionWidth(versionIntersectRange: Range<moment.Moment>, nrOfMaxDays: number) {
-        var nrOfDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(versionIntersectRange.RangeStart, versionIntersectRange.RangeEnd, true);
-        var proportionFactor = nrOfDaysInVersion / nrOfMaxDays;
-        var versionWidth = proportionFactor * 100;
-        return versionWidth;
-    }
-    private getVersionXPosition(versionStartDate: moment.Moment, targetDateRange: Range<moment.Moment>) {
-
-        // Variables
-        var dateIndex = GetDateIndexInTargetRange(versionStartDate, targetDateRange);
-        var daysInTargetDateRange = GetNrOfDaysBetweenDatesUsingMoment(targetDateRange.RangeStart, targetDateRange.RangeEnd, true);
-
-        // Convert to a position (0-100)
-        var proportionFactor = dateIndex / daysInTargetDateRange;
-        var xPos = proportionFactor * 100;
-
-        return xPos;
-    }
     private createVersionInfoWrappers(): VersionInfoWrapper[] {
 
         // Variables
         var versionCLOs = this.planCLO.Versions;
         var versionInfoWrappers: VersionInfoWrapper[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
+        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange -1);
 
-        // Loop through VersionCLOs
-        var totalWidthRemovedByFlooring = 0;
-
+        // Create versionInfoWrappers
         for (var i = 0; i < versionCLOs.length; i++) {
             var versionCLO = versionCLOs[i];
 
@@ -77,18 +58,23 @@ export class PlanElemComponent {
             if (intersectionRange !== null) {
 
                 // Determine the Width
-                var decimalWidth = this.getVersionWidth(intersectionRange, nrOfDaysInSelectedDateRange);
-                var flooredWidth = Math.floor(decimalWidth);
-                totalWidthRemovedByFlooring += decimalWidth - flooredWidth;
-
+                var nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
+                var width;
+                if (intersectionRange.RangeEnd.isSame(this.viewModel.SelectedDateRange.RangeEnd, 'day')) {
+                    width = (nrOfDaysInIntersection - 1) * widthBetweenDates;
+                } else {
+                    width = (nrOfDaysInIntersection) * widthBetweenDates;
+                }
+                
+                
                 // Determine the X and Y positions
-                var xPosition = this.getVersionXPosition(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
-                var flooredXPosition = Math.floor(xPosition);
+                var startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
+                var xPosition = (startDateIndex ) * widthBetweenDates;
                 var yPosition = 5;
 
                 // Create the wrapper
                 var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
-                var newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, flooredWidth, flooredXPosition, yPosition, intersectionRange);
+                var newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
@@ -97,13 +83,7 @@ export class PlanElemComponent {
         // Special adjustments
         if (versionInfoWrappers.length > 0) {
 
-            // Rounding accuracy handling
-            var lastVersionInfoWrapper = versionInfoWrappers[versionInfoWrappers.length - 1];
-            if (lastVersionInfoWrapper.IntersectionEndIsVersionEnd === false) {
-                lastVersionInfoWrapper.Width += Math.round(totalWidthRemovedByFlooring);
-            }
-
-            //
+            // Show plan name above first visible versionElem
             var firstVersionInfoWrapper = versionInfoWrappers[0];
             firstVersionInfoWrapper.ShowPlanName = true;
         }
@@ -128,7 +108,7 @@ export class PlanElemComponent {
 
     // Event handlers
     private onHover() {
-       
+
     }
 }
 interface ViewModel {
