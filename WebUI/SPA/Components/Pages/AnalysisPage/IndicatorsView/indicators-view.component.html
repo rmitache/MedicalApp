@@ -1,0 +1,41 @@
+<p-blockUI [blocked]="viewModel.Blocked">
+    <div class="inner-div">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+
+</p-blockUI>
+
+
+<div class="frame">
+
+    <div class="left-side">
+        <div class="header">
+            <div class="left-section">
+                <span class="header-label h1">INDICATORS</span>
+            </div>
+            <div class="center-section">
+                <navigation-panel [Label]="'May 2018'"
+                                  (PreviousClicked)="onNavigateBackwardTriggered()"
+                                  (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
+            </div>
+
+        </div>
+        <div class="body">
+            <div id="chart-wrapper-div">
+                <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="right-side">
+        <div class="header">
+            <div class="left-section">
+                <span class="header-label h2">FILTERS</span>
+            </div>
+
+        </div>
+    </div>
+</div> 

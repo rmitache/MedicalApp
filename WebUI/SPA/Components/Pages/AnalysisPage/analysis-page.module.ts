@@ -18,6 +18,7 @@ import { StartupDataBundleService } from './startup-data-bundle.service';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { FactorsViewModule } from 'SPA/Components/Pages/AnalysisPage/FactorsView/factors-view.module';
+import { IndicatorsViewModule } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/indicators-view.module';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { FactorsViewModule } from 'SPA/Components/Pages/AnalysisPage/FactorsView
         SharedModule,
 
         // Root components
-        FactorsViewModule
+        FactorsViewModule,
+        IndicatorsViewModule
     ],
     providers: [
         StartupDataBundleService,

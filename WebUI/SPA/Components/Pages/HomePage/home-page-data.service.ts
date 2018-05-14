@@ -74,7 +74,7 @@ export class HomePageDataService {
     public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
 
-        // Autogenerate code
+        // OLD - code to autogenerate RANDOM HealthStatusEntries
         //let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
         //    moment().endOf('month').startOf('day').toDate());
         //let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);

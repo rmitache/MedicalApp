@@ -1,6 +1,6 @@
 <svg:svg height="35px" overflow="visible"
-         [attr.width]="viewModel.VersionInfoWrapper.Width +'%'" 
-         [attr.x]="viewModel.VersionInfoWrapper.XPos  + '%'" 
+         [attr.width]="viewModel.VersionInfoWrapper.Width +'%'"
+         [attr.x]="viewModel.VersionInfoWrapper.XPos  + '%'"
          [attr.y]="viewModel.VersionInfoWrapper.YPos">
 
     <!--Hover effect-->
@@ -16,8 +16,9 @@
 
     <!--Horizontal line and plan name-->
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" style="stroke-width:2;stroke:#d5d5d5"
+              [style.stroke]="viewModel.ShowHoverEffect ? '#3d57bf' : '#d5d5d5'"
               [attr.marker-start]="viewModel.VersionInfoWrapper.IntersectionStartIsVersionStart ? 'url(#circle-tick-start)' : ''"
-              [attr.marker-end]="viewModel.VersionInfoWrapper.IntersectionEndIsVersionEnd ? 'url(#circle-tick-end)' : 'url(#arrow)'" />
+              [attr.marker-end]="viewModel.VersionInfoWrapper.IntersectionEndIsVersionEnd ? 'url(#arrow-with-circle-tick)' : 'url(#arrow)'" />
     <svg:text *ngIf="viewModel.VersionInfoWrapper.ShowPlanName===true" x="0" y="5" style="font-family:Arial;font-size:10px;fill:gray">
         {{viewModel.VersionInfoWrapper.PlanName}}
     </svg:text>
