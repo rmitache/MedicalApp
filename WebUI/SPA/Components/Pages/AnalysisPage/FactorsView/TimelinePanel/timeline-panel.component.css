@@ -3,7 +3,8 @@
     height: 100%;
     
 }
-.tick-label {
-
+.timeline-line {
+    stroke-width: 0.5;
+    stroke: gray;
 }
 

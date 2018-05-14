@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import { ChartModule, UIChart } from 'primeng/primeng';
+import { } from 'chartjs'
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -29,7 +30,6 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
 export class IndicatorsViewComponent {
     // Fields
     private availableWindowPaddingInMonths = 0;
-
     @ViewChild('chart')
     private chartInstance: UIChart;
     
@@ -52,6 +52,9 @@ export class IndicatorsViewComponent {
 
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
+
+        
+
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.SelectedViewMode === HealthGraphDisplayMode.Month) {
@@ -339,14 +342,10 @@ class MonthDisplayMode implements IDisplayMode {
             },
             legend: {
                 display: false,
-                position: 'top',
-                labels: {
-                    boxWidth: 15,
-
-                },
             },
             scales: {
                 xAxes: [{
+                    id: 'x-axis-0',
                     type: "time",
                     time: {
                         unit: 'day',
@@ -358,11 +357,14 @@ class MonthDisplayMode implements IDisplayMode {
                         }
                     },
                     gridLines: {
+                        color: '#cacaca',
                         display: true,
                         drawOnChartArea: false,
                     },
                     ticks: {
-                        fontColor: ['gray'],
+                        fontColor: 'gray',
+                        fontFamily: 'Arial',
+                        fontSize: 10,
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
@@ -398,7 +400,19 @@ class MonthDisplayMode implements IDisplayMode {
                 }]
             },
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            annotation: {
+
+                annotations: [{
+                    type: 'line',
+                    mode: 'vertical',
+                    scaleID: 'x-axis-0',
+                    value: moment(),
+                    borderColor: 'red',
+                    borderWidth: 2,
+
+                }]
+            }
         };
         return chartOptions;
     }
@@ -419,7 +433,6 @@ class MonthDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    label: 'General state',
                     data: dataPointsInfo.dataPoints,
                     borderColor: 'red',
                     borderWidth:1.5,

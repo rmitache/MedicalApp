@@ -5,4 +5,12 @@
     
 
 }
-
+.tick-line {
+    stroke: #cacaca;
+    stroke-width: 0.5;
+}
+.date-text {
+    font-family: Arial;
+    font-size: 10px;
+    fill: #8b8b8b;
+}
