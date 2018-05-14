@@ -46,7 +46,7 @@
 
     .left-side .body {
         height: calc(100% - 61px);
-        width: calc(100% - 18px);
+        width: calc(100% - 3px);
     }
 
         .left-side .body #chart-wrapper-div {

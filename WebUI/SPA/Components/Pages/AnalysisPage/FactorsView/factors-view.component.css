@@ -46,8 +46,8 @@
 
     .left-side .body {
         height: calc(100% - 61px);
-        width: calc(100% - 36px);
-        padding: 5px 18px 5px 18px;
+        width: calc(100% - 31px);
+        padding: 5px 18px 5px 13px;
        
     }
 
