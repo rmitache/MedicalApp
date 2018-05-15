@@ -167,6 +167,12 @@
       "integrity": "sha1-TgzvrQnfXsSMjdQEM1EvhLFWjWE=",
       "dev": true
     },
+    "@types/jquery": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/@types/jquery/-/jquery-3.3.1.tgz",
+      "integrity": "sha512-N3h+rzN518yl2xKrW0o6KKdNmWZ+OwG6SoM5TBEQFF0tTv5wXPEsoOuYQ2Kt3/89XbcSZUJLdjiT/2c3BR/ApQ==",
+      "dev": true
+    },
     "@types/node": {
       "version": "9.6.5",
       "resolved": "https://registry.npmjs.org/@types/node/-/node-9.6.5.tgz",
@@ -3253,6 +3259,11 @@
       "resolved": "https://registry.npmjs.org/jasmine-core/-/jasmine-core-2.6.4.tgz",
       "integrity": "sha1-3skmzQqfoof7bbXHVfpIfnTOysU=",
       "dev": true
+    },
+    "jquery": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
+      "integrity": "sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg=="
     },
     "js-base64": {
       "version": "2.1.9",

@@ -13,7 +13,9 @@ const treeShakableModules = [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    'zone.js'
+    'zone.js',
+    'chart.js',
+    'chartjs-plugin-annotation'
 ];
 const nonTreeShakableModules = [
     'primeng/primeng',

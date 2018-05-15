@@ -22,8 +22,8 @@
         </div>
         <div class="body">
             <div id="chart-wrapper-div">
-                <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>
-
+                <p-chart #chart type="line" id="indicators-view-chart" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>
+                <!--<canvas id="myChart" style="border:solid 1px red;" width="700" height="400"></canvas>-->
 
             </div>
         </div>
@@ -35,7 +35,6 @@
             <div class="left-section">
                 <span class="header-label h2">FILTERS</span>
             </div>
-
         </div>
     </div>
 </div> 
