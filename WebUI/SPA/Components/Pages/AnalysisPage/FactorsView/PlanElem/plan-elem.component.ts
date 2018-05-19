@@ -53,47 +53,58 @@ export class PlanElemComponent {
         var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
 
         // Create versionInfoWrappers
-        for (var i = 0; i < versionCLOs.length; i++) {
-            var versionCLO = versionCLOs[i];
+        for (let i = 0; i < versionCLOs.length; i++) {
+            let versionCLO = versionCLOs[i];
 
             // Only consider Versions which are within the SelectedDateRange
-            var intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange);
+            let intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange);
             if (intersectionRange !== null) {
 
-                // Determine the Width and ArrowHead
-                var nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
-                var width;
-                if (intersectionRange.end.isSame(this.viewModel.SelectedDateRange.RangeEnd, 'day')) {
-                    // Special hack to make sure that the width of the last version hits exactly on the end of the selDateRange
-                    width = (nrOfDaysInIntersection - 1) * widthBetweenDates;
-                } else {
-                    width = (nrOfDaysInIntersection ) * widthBetweenDates;
-                }
+                // Determine the Width
+                let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
+                
+                let width;
+                width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
 
-                
-                
-                
+
                 // Determine the X and Y positions
-                var startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
-                var xPosition = (startDateIndex ) * widthBetweenDates; // subtracting 1 from startDateIndex
-                var yPosition = 5;
+                let startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
+                let xPosition = (startDateIndex) * widthBetweenDates;
+                let yPosition = 5;
 
                 // Create the wrapper
-                var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
-                var newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
+                let nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
+
+
+
+                let newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
 
 
-        // Special adjustments
+        // Second iteration through versionInfoWrappers 
         if (versionInfoWrappers.length > 0) {
 
             // Show plan name above first visible versionElem
-            var firstVersionInfoWrapper = versionInfoWrappers[0];
+            let firstVersionInfoWrapper = versionInfoWrappers[0];
             firstVersionInfoWrapper.ShowPlanName = true;
-        }
 
+            // Handle special width adjustments for adjacent versions
+            for (let j = 0; j < versionInfoWrappers.length - 1; j++) {
+
+                // If the versionWrapper is adjacent to its next versionWrapper, slightly expand it's width
+                if (j < versionInfoWrappers.length - 1) {
+                    var currentIntersection = versionInfoWrappers[j].IntersectionDateRange;
+                    var nextIntersection = versionInfoWrappers[j + 1].IntersectionDateRange;
+
+                    if (GetNrOfDaysBetweenDatesUsingMoment(nextIntersection.start, currentIntersection.end, true) === 1) {
+                        versionInfoWrappers[j].Width += 1 * widthBetweenDates;
+                    }
+                   
+                }
+            }
+        }
         return versionInfoWrappers;
     }
 
@@ -112,10 +123,7 @@ export class PlanElemComponent {
         this.viewModel.VersionInfoWrappers = this.createVersionInfoWrappers();
     }
 
-    // Event handlers
-    private onHover() {
 
-    }
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
@@ -144,16 +152,16 @@ export class VersionInfoWrapper {
         if (versionStartSameAsIntersectionStart) {
             return 'url(#circle-tick-start)'
         }
-         return '';
-        
+        return '';
+
     }
     public get EndMarkerName(): string {
         var versionEndSameAsIntersectionStart = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
 
         if (versionEndSameAsIntersectionStart) {
             return 'url(#circle-tick-end)';
-        } 
-        
+        }
+
         return 'url(#arrow)';
     }
     // Constructor

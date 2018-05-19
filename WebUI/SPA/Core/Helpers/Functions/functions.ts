@@ -54,24 +54,22 @@ export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>
     return momentDates;
 };
 
-export function GetNrOfDaysBetweenDates(startDate: Date, endDate: Date, includeEdges: boolean) {
-    var start = moment(startDate).startOf('day');
-    var end = moment(endDate).endOf('day');
+export function GetNrOfDaysBetweenDates(firstDate: Date, secondDate: Date, includeEdges: boolean) {
+    var first = moment(firstDate).startOf('day');
+    var second = moment(secondDate).endOf('day');
 
-    var nrOfDays = end.diff(start, 'days');
-    if (includeEdges) {
-        nrOfDays += 1;
-    }
-    return nrOfDays;
+    
+    return GetNrOfDaysBetweenDatesUsingMoment(first, second,includeEdges);
 }
-export function GetNrOfDaysBetweenDatesUsingMoment(startDate: moment.Moment, endDate: moment.Moment, includeEdges: boolean) {
-    var start = moment(startDate).clone().startOf('day');
-    var end = moment(endDate).clone().endOf('day');
+export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges: boolean) {
+    var first = moment(firstDate).clone().startOf('day');
+    var second = moment(secondDate).clone().endOf('day');
 
-    var nrOfDays = end.diff(start, 'days');
+    var nrOfDays = Math.abs(first.diff(second, 'days'));
     if (includeEdges) {
         nrOfDays += 1;
     }
+
     return nrOfDays;
 }
 
