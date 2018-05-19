@@ -41,13 +41,16 @@ export class PlanElemComponent {
     };
 
     // Private methods
+    private convertDateToXPosition(date: moment.Moment) {
+        var startDateIndex = GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
+    }
     private createVersionInfoWrappers(): VersionInfoWrapper[] {
 
         // Variables
         var versionCLOs = this.planCLO.Versions;
         var versionInfoWrappers: VersionInfoWrapper[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
-        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange -1);
+        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
 
         // Create versionInfoWrappers
         for (var i = 0; i < versionCLOs.length; i++) {
@@ -57,23 +60,26 @@ export class PlanElemComponent {
             var intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange);
             if (intersectionRange !== null) {
 
-                // Determine the Width
-                var nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
+                // Determine the Width and ArrowHead
+                var nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
                 var width;
-                if (intersectionRange.RangeEnd.isSame(this.viewModel.SelectedDateRange.RangeEnd, 'day')) {
+                if (intersectionRange.end.isSame(this.viewModel.SelectedDateRange.RangeEnd, 'day')) {
+                    // Special hack to make sure that the width of the last version hits exactly on the end of the selDateRange
                     width = (nrOfDaysInIntersection - 1) * widthBetweenDates;
                 } else {
-                    width = (nrOfDaysInIntersection) * widthBetweenDates;
+                    width = (nrOfDaysInIntersection ) * widthBetweenDates;
                 }
+
+                
                 
                 
                 // Determine the X and Y positions
                 var startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
-                var xPosition = (startDateIndex ) * widthBetweenDates;
+                var xPosition = (startDateIndex ) * widthBetweenDates; // subtracting 1 from startDateIndex
                 var yPosition = 5;
 
                 // Create the wrapper
-                var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.RangeStart, intersectionRange.RangeEnd, true);
+                var nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
                 var newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
@@ -124,25 +130,41 @@ interface ViewModel {
 export class VersionInfoWrapper {
     // Fields
     public VersionCLO: CLOs.VersionCLO;
+    public PlanName: string;
     public Width: number;
     public XPos: number;
     public YPos: number;
-    public IntersectionDateRange: Range<moment.Moment>;
+    public IntersectionDateRange: momentRange.DateRange;
     public ShowPlanName: boolean = false;
-    public PlanName: string;
 
     // Properties
-    public get IntersectionStartIsVersionStart(): boolean {
-        var areSame = moment(this.VersionCLO.StartDate).isSame(this.IntersectionDateRange.RangeStart, 'day');
-        return areSame;
-    }
-    public get IntersectionEndIsVersionEnd(): boolean {
-        var areSame = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.RangeEnd, 'day');
-        return areSame;
-    }
+    public get StartMarkerName(): string {
+        var versionStartSameAsIntersectionStart = moment(this.VersionCLO.StartDate).isSame(this.IntersectionDateRange.start, 'day');
 
+        if (versionStartSameAsIntersectionStart) {
+            return 'url(#circle-tick-start)'
+        }
+         return '';
+        
+    }
+    public get EndMarkerName(): string {
+        var versionEndSameAsIntersectionStart = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
+
+        if (versionEndSameAsIntersectionStart) {
+            return 'url(#circle-tick-end)';
+        } 
+        
+        return 'url(#arrow)';
+    }
     // Constructor
-    constructor(versionCLO: CLOs.VersionCLO, planName: string, width: number, xPos: number, yPos: number, intersectionDateRange: Range<moment.Moment>) {
+    constructor(
+        versionCLO: CLOs.VersionCLO,
+        planName: string,
+        width: number,
+        xPos: number,
+        yPos: number,
+        intersectionDateRange: momentRange.DateRange
+    ) {
 
         this.VersionCLO = versionCLO;
         this.PlanName = planName;

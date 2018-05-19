@@ -59,26 +59,32 @@ export class VersionCLO extends BaseCLO {
     }
 
     // Public methods
-    public GetIntersectionWithDateRange(targetDateRange: Range<moment.Moment>): Range<moment.Moment> {
+    public GetIntersectionWithDateRange(targetDateRange: Range<moment.Moment>): momentRange.DateRange {
 
         // Variables
         var intersectionRange = null;
         var momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
+        var today = moment();
 
-        // If a version has no EndDate, check that its StartDate is WITHIN the targetDateRange
-        if (this.EndDate === null && momentTargetDateRange.contains(moment(this.StartDate))) {
-            intersectionRange = new Range<moment.Moment>(moment(this.StartDate), targetDateRange.RangeEnd.clone());
-        }
-        // If a version has no EndDate, check that its StartDate is BEFORE the targetDateRange
-        else if (this.EndDate === null && moment(this.StartDate) < targetDateRange.RangeStart) {
-            intersectionRange = new Range<moment.Moment>(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
-        }
-        // If the version HAS an end date, use moment-range to get the intersection
-        else if (this.EndDate !== null) {
+        //// Intersect only up until TODAY if it is contained in the targetDateRange
+        //if (momentTargetDateRange.contains(today)) {
+        //    momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), today.endOf('day'));
+        //}
+
+        // Get the intersection
+        if (this.EndDate !== null) {
             var versionDateRange = new momentRange.DateRange(moment(this.StartDate).startOf('day'), moment(this.EndDate).endOf('day'));
-            var intersectResult = momentTargetDateRange.intersect(versionDateRange);
-            if (intersectResult !== null) {
-                intersectionRange = new Range<moment.Moment>(intersectResult.start, intersectResult.end);
+            intersectionRange = momentTargetDateRange.intersect(versionDateRange);
+        }
+        // Handle Version with no EndDate
+        else {
+            // If a version has no EndDate and its StartDate is WITHIN the targetDateRange
+            if (this.EndDate === null && momentTargetDateRange.contains(moment(this.StartDate))) {
+                intersectionRange = new momentRange.DateRange(moment(this.StartDate), momentTargetDateRange.end.clone());
+            }
+            // If a version has no EndDate and its StartDate is BEFORE the targetDateRange
+            else if (this.EndDate === null && moment(this.StartDate) < momentTargetDateRange.start) {
+                intersectionRange = new momentRange.DateRange(momentTargetDateRange.start.clone(), momentTargetDateRange.end.clone());
             }
         }
 
