@@ -41,9 +41,6 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    private convertDateToXPosition(date: moment.Moment) {
-        var startDateIndex = GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
-    }
     private createVersionInfoWrappers(): VersionInfoWrapper[] {
 
         // Variables
@@ -62,9 +59,7 @@ export class PlanElemComponent {
 
                 // Determine the Width
                 let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
-                
-                let width;
-                width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
+                let width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
 
 
                 // Determine the X and Y positions

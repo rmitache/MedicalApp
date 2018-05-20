@@ -15,7 +15,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 // Components
 import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Component({
@@ -33,6 +33,7 @@ export class FactorsViewComponent {
 
         SelectedDateRange: null,
         NavigationLabel: null,
+        TodayXPosition:null,
 
         Blocked: false
     };
@@ -40,14 +41,14 @@ export class FactorsViewComponent {
     private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
-    public getInitialSelectedDateRange(referenceDate: moment.Moment) {
+    private getInitialSelectedDateRange(referenceDate: moment.Moment) {
 
         // Get the whole month of the referenceDate
         let range = new Range<moment.Moment>(referenceDate.clone().startOf('month').startOf('day'),
             referenceDate.clone().endOf('month').endOf('day'));
         return range;
     }
-    public filterPlansByDateRange(planCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
+    private filterPlansByDateRange(planCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
         var filteredPlans: CLOs.PlanCLO[] = [];
 
         planCLOs.forEach((planCLO) => {
@@ -58,6 +59,17 @@ export class FactorsViewComponent {
         });
 
         return filteredPlans;
+    }
+    private computeXPositionFromDate(date: moment.Moment) {
+
+        // Variables
+        var startDateIndex = GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
+        var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
+        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
+
+        // Compute the width
+        let xPosition = (startDateIndex) * widthBetweenDates;
+        return xPosition;
     }
 
     // Constructor
@@ -85,6 +97,7 @@ export class FactorsViewComponent {
 
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
+        this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -98,6 +111,7 @@ interface ViewModel {
 
     SelectedDateRange: Range<moment.Moment>;
     NavigationLabel: string;
+    TodayXPosition: number;
 
     Blocked: boolean;
 }
