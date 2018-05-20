@@ -159,11 +159,12 @@ export class VersionInfoWrapper {
         var versionEndSameAsIntersectionStart = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
 
         if (versionEndSameAsIntersectionStart) {
-            return 'url(#circle-tick-end)';
+            return 'url(#circle-tick-start)';
         }
 
         return 'url(#arrow)';
     }
+
     // Constructor
     constructor(
         versionCLO: CLOs.VersionCLO,

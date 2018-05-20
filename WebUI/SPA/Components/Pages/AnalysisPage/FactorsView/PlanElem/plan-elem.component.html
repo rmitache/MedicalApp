@@ -3,7 +3,8 @@
     <!--<svg:text class="plan-name-label" x="0" y="10">{{viewModel.PlanCLO.Name}}</svg:text>-->
 
     <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem overflow="visible"
-           [VersionInfoWrapper]="versionInfoWrapper"></svg:g>
+           [VersionInfoWrapper]="versionInfoWrapper"
+           [ParentGroupYPos]="yPos"></svg:g>
 
 </svg:svg>
 

@@ -132,125 +132,11 @@ export class IndicatorsViewComponent {
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
-
-        
-        
     }
 
-    //canvas: any;
-    //ctx: any;
 
     ngAfterViewInit() {
-        //this.canvas = document.getElementById('myChart');
-        //this.ctx = this.canvas.getContext('2d');
-        //const testChart = new Chart(this.ctx, {
-        //    type: 'line',
-        //    data: {
-        //        datasets: [{
-        //            label: 'First Dataset',
-        //            data: [{ x: 0, y: 4 }, { x: 1, y: 19 }, { x: 2, y: 4 }, { x: 3, y: 6 }, { x: 4, y: 14 }, { x: 5, y: 10 }, { x: 6, y: 11 }, { x: 7, y: 11 }, { x: 8, y: 15 }, { x: 9, y: 11 }, { x: 10, y: 2 }, { x: 11, y: 18 }, { x: 12, y: 19 }, { x: 13, y: 4 }, { x: 14, y: 17 }, { x: 15, y: 4 }, { x: 16, y: 16 }, { x: 17, y: 1 }],
-        //            backgroundColor: 'rgba(255,99,132,0.2)',
-        //            borderColor: 'rgba(255,99,132,1)',
-        //            borderWidth: 1,
-        //            fill: false
-        //        }, {
-        //            label: 'Second Dataset',
-        //            data: [{ x: 0, y: 15 }, { x: 1, y: 1 }, { x: 2, y: 5 }, { x: 3, y: 9 }, { x: 4, y: 11 }, { x: 5, y: 13 }, { x: 6, y: 12 }, { x: 7, y: 10 }, { x: 8, y: 13 }, { x: 9, y: 20 }, { x: 10, y: 19 }, { x: 11, y: 4 }, { x: 12, y: 14 }, { x: 13, y: 13 }, { x: 14, y: 13 }, { x: 15, y: 19 }, { x: 16, y: 12 }, { x: 17, y: 14 }],
-        //            backgroundColor: 'rgba(54,162,235,0.2)',
-        //            borderColor: 'rgba(54,162,235,1)',
-        //            borderWidth: 1,
-        //            fill: false
-        //        }, {
-        //            label: 'Third Dataset',
-        //            data: [{ x: 0, y: 19 }, { x: 1, y: 7 }, { x: 2, y: 12 }, { x: 3, y: 19 }, { x: 4, y: 11 }, { x: 5, y: 8 }, { x: 6, y: 18 }, { x: 7, y: 7 }, { x: 8, y: 20 }, { x: 9, y: 6 }, { x: 10, y: 2 }, { x: 11, y: 3 }, { x: 12, y: 11 }, { x: 13, y: 1 }, { x: 14, y: 12 }, { x: 15, y: 20 }, { x: 16, y: 16 }, { x: 17, y: 11 }],
-        //            backgroundColor: 'rgba(255,206,86,0.2)',
-        //            borderColor: 'rgba(255,206,86,1)',
-        //            borderWidth: 1,
-        //            fill: false
-        //        }]
-        //    },
-        //    options: {
-        //        responsive: true,
-        //        legend: {
-        //            display: true
-        //        },
-        //        scales: {
-        //            xAxes: [{
-        //                id: 'x-axis-0',
-        //                type: 'linear',
-        //                display: true,
-        //                position: 'bottom',
-        //                scaleLabel: {
-        //                    display: true,
-        //                    beginAtZero: true,
-        //                    labelString: 'Date'
-        //                },
-        //                ticks: {
-        //                    beginAtZero: true
-        //                }
-        //            }],
-        //            yAxes: [{
-        //                id: 'y-axis-0',
-        //                type: 'linear',
-        //                display: true,
-        //                position: 'left',
-        //                scaleLabel: {
-        //                    display: true,
-        //                    labelString: 'Count',
-        //                },
-        //                ticks: {
-        //                    beginAtZero: true
-        //                }
-        //            }]
-        //        },
-        //        annotation: {
-        //            annotations: [{
-        //                type: 'box',
-        //                id: 'target-period-1',
-        //                xScaleID: 'x-axis-0',
-        //                yScaleID: 'y-axis-0',
-        //                xMin: 2,
-        //                xMax: 7,
-        //                yMin: 0,
-        //                yMax: 20,
-        //                borderColor: 'rgba(255,159,64,1)',
-        //                backgroundColor: 'rgba(255,159,64,0.2)',
-        //                borderWidth: 1
-        //            }, {
-        //                type: 'line',
-        //                id: 'call-count-1',
-        //                mode: 'vertical',
-        //                scaleID: 'x-axis-0',
-        //                value: 4.5,
-        //                borderColor: 'transparent',
-        //                label: {
-        //                    backgroundColor: 'rgba(0,0,0,0.8)',
-        //                    fontFamily: 'sans-serif',
-        //                    fontSize: 12,
-        //                    fontStyle: 'bold',
-        //                    fontColor: '#fff',
-        //                    xPadding: 12,
-        //                    yPadding: 6,
-        //                    cornerRadius: 4,
-        //                    position: 'center',
-        //                    yAdjust: -100,
-        //                    enabled: true,
-        //                    content: 'Test Label'
-        //                }
-        //            }],
-        //            drawTime: 'afterDraw'
-        //        }
-        //    }
-        //});
-
-
-        //setTimeout(() => {
-        //    //var canvas = $('.chartjs-render-monitor')[0] as HTMLCanvasElement;
-        //    //var ctx = canvas.getContext('2d');
-
-        //    this.ctx.fillStyle = "#FF0000";
-        //    this.ctx.fillRect(50, 50, 150, 75);
-        //}, 1500);
+        
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -524,6 +410,8 @@ class MonthDisplayMode implements IDisplayMode {
                     borderColor: 'gray',
                     borderWidth: 1,
                     label: {
+                        fontFamily: 'Arial',
+                        fontSize:'10px',
                         enabled: true,
                         position: "top",
                         content: 'TODAY'

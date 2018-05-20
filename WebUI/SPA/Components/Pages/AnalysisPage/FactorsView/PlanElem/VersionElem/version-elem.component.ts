@@ -25,18 +25,21 @@ export class VersionElemComponent {
     // Fields
     @Input('VersionInfoWrapper')
     private versionInfoWrapper: VersionInfoWrapper;
+    @Input('ParentGroupYPos')
+    private parentGroupYPos: number;
     private readonly viewModel: ViewModel = {
         VersionInfoWrapper: null,
-        ShowHoverEffect:null,
-        GetDates: () => {
-            if (this.viewModel.VersionInfoWrapper.VersionCLO.EndDate === null) {
-                return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - No End";
-            } else {
-                return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - " +
-                    moment(this.viewModel.VersionInfoWrapper.VersionCLO.EndDate).format('MM DD YYYY');
-            }
+        ShowHoverEffect: null,
+        ParentGroupYPos: null
+        //GetDates: () => {
+        //    if (this.viewModel.VersionInfoWrapper.VersionCLO.EndDate === null) {
+        //        return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - No End";
+        //    } else {
+        //        return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - " +
+        //            moment(this.viewModel.VersionInfoWrapper.VersionCLO.EndDate).format('MM DD YYYY');
+        //    }
             
-        }
+        //}
     };
 
     // Constructor
@@ -45,7 +48,7 @@ export class VersionElemComponent {
     }
     ngOnInit() {
         this.viewModel.VersionInfoWrapper = this.versionInfoWrapper;
-       
+        this.viewModel.ParentGroupYPos = this.parentGroupYPos;
     }
 
 
@@ -61,5 +64,6 @@ export class VersionElemComponent {
 interface ViewModel {
     VersionInfoWrapper: VersionInfoWrapper;
     ShowHoverEffect: boolean;
-    GetDates();
+    ParentGroupYPos: number;
+    //GetDates();
 }

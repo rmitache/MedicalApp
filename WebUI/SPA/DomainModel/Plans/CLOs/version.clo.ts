@@ -66,10 +66,10 @@ export class VersionCLO extends BaseCLO {
         var momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
         var today = moment();
 
-        //// Intersect only up until TODAY if it is contained in the targetDateRange
-        //if (momentTargetDateRange.contains(today)) {
-        //    momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), today.endOf('day'));
-        //}
+        // Intersect only up until TODAY if it is contained in the targetDateRange
+        if (momentTargetDateRange.contains(today)) {
+            momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), today.endOf('day'));
+        }
 
         // Get the intersection
         if (this.EndDate !== null) {
