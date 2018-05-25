@@ -44,6 +44,7 @@ export class VersionElemComponent {
 
     // Constructor
     constructor(
+        private readonly commandManager: CommandManager,
     ) {
     }
     ngOnInit() {
@@ -54,9 +55,18 @@ export class VersionElemComponent {
 
     // Event handlers
     private OnMouseEnter() {
+
+        var endDate = (!this.viewModel.VersionInfoWrapper.HasNextAdjacentVersion) ? this.viewModel.VersionInfoWrapper.IntersectionDateRange.end
+            : this.viewModel.VersionInfoWrapper.IntersectionDateRange.end.clone().add(1, 'days');
+        var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, endDate);
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
+
+
         this.viewModel.ShowHoverEffect = true;
     }
     private OnMouseLeave() {
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
+
         this.viewModel.ShowHoverEffect = false;
     }
 }
@@ -65,5 +75,4 @@ interface ViewModel {
     VersionInfoWrapper: VersionInfoWrapper;
     ShowHoverEffect: boolean;
     ParentGroupYPos: number;
-    //GetDates();
 }

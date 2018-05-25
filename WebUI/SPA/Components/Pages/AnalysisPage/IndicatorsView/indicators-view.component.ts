@@ -7,7 +7,7 @@ import { ChartModule, UIChart } from 'primeng/primeng';
 //import { } from 'chartjs'
 import * as Chart from 'chart.js';
 import 'chartjs-plugin-annotation';
-//import * as $ from 'jquery';
+import * as $ from 'jquery';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -33,15 +33,18 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
 export class IndicatorsViewComponent {
     // Fields
     private availableWindowPaddingInMonths = 0;
-    @ViewChild('chart')
-    private chartInstance: UIChart;
-    
+    private canvas: any;
+    private ctx: any;
+    private chartInstance: any;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableHealthEntries: null,
 
         SelectedDateRange: null,
         NavigationLabel: null,
+
+        HighlightRangeStartXPosition: null,
+        HighlightRangeEndXPosition: null,
 
         ChartOptions: null,
         ChartData: null,
@@ -52,11 +55,10 @@ export class IndicatorsViewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 
-
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
 
-        
+
 
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
@@ -103,8 +105,18 @@ export class IndicatorsViewComponent {
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(datesToCLOsDictionary,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
-        this.chartInstance.reinit();
 
+    }
+    private computeXPositionFromDate(date: moment.Moment) {
+
+        // Variables
+        var startDateIndex = HelperFunctions.GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
+        var nrOfDaysInSelectedDateRange = HelperFunctions.GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
+        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
+
+        // Compute the width
+        let xPosition = (startDateIndex) * widthBetweenDates;
+        return xPosition;
     }
 
     // Constructor 
@@ -119,7 +131,19 @@ export class IndicatorsViewComponent {
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
 
+        // Subscriptions to AppState
+        this.subscriptions.push(this.appState.HighlightedDateRange.Changed.subscribe((newRange) => {
+            if (newRange !== null) {
+                let start: moment.Moment = newRange.RangeStart;
+                let end: moment.Moment = newRange.RangeEnd;
 
+                this.viewModel.HighlightRangeStartXPosition = this.computeXPositionFromDate(start);
+                this.viewModel.HighlightRangeEndXPosition = this.computeXPositionFromDate(end);
+            } else {
+                this.viewModel.HighlightRangeStartXPosition = null;
+                this.viewModel.HighlightRangeEndXPosition = null;
+            }
+        }));
     }
     ngOnInit() {
         // Get the initial range from the current DisplayMode
@@ -132,11 +156,33 @@ export class IndicatorsViewComponent {
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
+
+
+
     }
-
-
     ngAfterViewInit() {
-        
+        this.canvas = document.getElementById('myChart');
+        this.ctx = this.canvas.getContext('2d');
+
+        var chartInstance = new Chart(this.ctx, {
+            type: 'line',
+            data: this.viewModel.ChartData,
+            options: this.viewModel.ChartOptions,
+
+        });
+
+
+        //$(document).ready(() => {
+
+        //    var canvas = document.getElementById('myChart');
+        //    var ctx = this.canvas.getContext('2d');
+        //    canvas.onmousemove = function (evt) {
+
+        //        var points = chartInstance.getElementsAtXAxis(evt);
+        //        chartInstance.options.annotation.annotations[0].value = moment().subtract(5, 'days');
+        //        chartInstance.update();
+        //    };
+        //});
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -212,6 +258,9 @@ interface ViewModel {
 
     SelectedDateRange: Range<moment.Moment>;
     NavigationLabel: string;
+
+    HighlightRangeStartXPosition: number;
+    HighlightRangeEndXPosition: number;
 
     ChartOptions: any;
     ChartData: any;
@@ -391,8 +440,8 @@ class MonthDisplayMode implements IDisplayMode {
                         max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-                            
-                                return '';
+
+                            return '';
 
                         }
                     }
@@ -411,7 +460,7 @@ class MonthDisplayMode implements IDisplayMode {
                     borderWidth: 1,
                     label: {
                         fontFamily: 'Arial',
-                        fontSize:'10px',
+                        fontSize: '10px',
                         enabled: true,
                         position: "top",
                         content: 'TODAY'
@@ -440,7 +489,7 @@ class MonthDisplayMode implements IDisplayMode {
                 {
                     data: dataPointsInfo.dataPoints,
                     borderColor: 'red',
-                    borderWidth:1.5,
+                    borderWidth: 1.5,
                     fill: false
                 }
             ]

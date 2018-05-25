@@ -14,10 +14,9 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
-import { HeaderBarComponent } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 
-export function InitAndStartPageFlow(
+export function ChangeHighlightDateRangeFlow(
     componentInstanceDictionary: { [componentClassName: string]: Object },
     applicationStateRef: Object,
     extraParams?: Object[]
@@ -25,14 +24,12 @@ export function InitAndStartPageFlow(
    
     // Get strong typed parameters
     const applicationState = applicationStateRef as AnalysisPageApplicationState;
-    const loggedInUserCLO = extraParams[0] as CLOs.UserAccountCLO;
+    const newDateRange = extraParams[0] as Range<moment.Moment>;
 
-    // Get component references
-    const headerBarComponent = componentInstanceDictionary['HeaderBarComponent'] as HeaderBarComponent;
 
     // Main logic --------------------------------------------------------------------------------------------------------------------------
     let promise = new Promise<any>((resolve, reject) => {
-        applicationState.LoggedInUserCLO.Set(loggedInUserCLO);
+        applicationState.HighlightedDateRange.Set(newDateRange);
 
         resolve();
     });

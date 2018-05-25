@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\change-highlight-date-range.flow.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\flow-definitions.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\init-and-start-page.flow.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\FactorsView\factors-view.module.ts" />
@@ -121,6 +122,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\analysis-page-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\CommandFlows\flow-definitions.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\CommandFlows\change-highlight-date-range.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\FactorsView\factors-view.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\IndicatorsView\indicators-view.module.ts" />

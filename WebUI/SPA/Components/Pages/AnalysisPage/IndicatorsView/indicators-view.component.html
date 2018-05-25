@@ -22,9 +22,26 @@
         </div>
         <div class="body">
             <div id="chart-wrapper-div">
-                <p-chart #chart type="line" id="indicators-view-chart" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>
-                <!--<canvas id="myChart" style="border:solid 1px red;" width="700" height="400"></canvas>-->
+                <!--<p-chart #chart type="line" id="indicators-view-chart" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>-->
+                <canvas id="myChart"></canvas>
 
+                <svg xmlns="http://www.w3.org/2000/svg"  overflow="visible">
+
+
+
+                    <svg:line *ngIf="viewModel.HighlightRangeEndXPosition !== null"
+                              [attr.x1]="viewModel.HighlightRangeStartXPosition + '%'"
+                              [attr.x2]="viewModel.HighlightRangeStartXPosition + '%'"
+                              y1="0" y2="90%"
+                              [style.visibility]="(viewModel.HighlightRangeStartXPosition !== null ) ? 'visible' : 'hidden'"
+                              style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
+                    <svg:line *ngIf="viewModel.HighlightRangeEndXPosition !== null"
+                              [attr.x1]="viewModel.HighlightRangeEndXPosition + '%'"
+                              [attr.x2]="viewModel.HighlightRangeEndXPosition + '%'"
+                              y1="0" y2="90%"
+                              [style.visibility]="(viewModel.HighlightRangeEndXPosition !== null ) ? 'visible' : 'hidden'"
+                              style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
+                </svg>
             </div>
         </div>
 

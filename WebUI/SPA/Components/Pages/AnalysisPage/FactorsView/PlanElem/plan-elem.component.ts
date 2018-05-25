@@ -95,6 +95,7 @@ export class PlanElemComponent {
 
                     if (GetNrOfDaysBetweenDatesUsingMoment(nextIntersection.start, currentIntersection.end, true) === 1) {
                         versionInfoWrappers[j].Width += 1 * widthBetweenDates;
+                        versionInfoWrappers[j].HasNextAdjacentVersion = true;
                     }
                    
                 }
@@ -138,6 +139,8 @@ export class VersionInfoWrapper {
     public XPos: number;
     public YPos: number;
     public IntersectionDateRange: momentRange.DateRange;
+    public HasNextAdjacentVersion: boolean;
+
     public ShowPlanName: boolean = false;
 
     // Properties
