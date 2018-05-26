@@ -1,3 +1,4 @@
+
 <div class="frame">
     <div class="left-side">
         <div class="header">
@@ -38,7 +39,8 @@
                            [PlanCLO]="plan"
                            [SelectedDateRange]="viewModel.SelectedDateRange"
                            [XPos]="0"
-                           [YPos]="20 + 40 * i"></svg:g>
+                           [YPos]="20 + 40 * i"
+                           (VersionElemHover)="onVersionElemHover($event)"></svg:g>
 
                     <!--Vertical TODAY indicator-->
                     <svg:g today-indicator overflow="visible"

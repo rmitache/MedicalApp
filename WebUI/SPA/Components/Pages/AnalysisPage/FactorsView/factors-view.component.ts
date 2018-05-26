@@ -16,6 +16,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 
 
 @Component({
@@ -103,6 +104,10 @@ export class FactorsViewComponent {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    // Event handlers
+    private onVersionElemHover(eventInfo: VersionElemHoverEventInfo) {
+        
+    }
 }
 
 interface ViewModel {

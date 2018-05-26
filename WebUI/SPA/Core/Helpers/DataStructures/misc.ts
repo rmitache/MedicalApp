@@ -150,3 +150,9 @@ export class DaysInWeek {
     }
 }
 
+export class CoordinatePair {
+
+    constructor(public readonly X: number, public readonly Y: number) {
+    }
+}
+

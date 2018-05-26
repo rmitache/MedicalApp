@@ -4,7 +4,8 @@
 
     <svg:g *ngFor="let versionInfoWrapper of viewModel.VersionInfoWrappers; let i = index" version-elem overflow="visible"
            [VersionInfoWrapper]="versionInfoWrapper"
-           [ParentGroupYPos]="yPos"></svg:g>
+           [ParentGroupYPos]="yPos"
+           (Hover)="onVersionElemHover($event)"></svg:g>
 
 </svg:svg>
 

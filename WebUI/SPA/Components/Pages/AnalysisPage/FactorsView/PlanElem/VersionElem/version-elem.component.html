@@ -1,4 +1,4 @@
-<svg:svg height="35px" overflow="visible" 
+<svg:svg height="35px" overflow="visible" #svgElem
          [attr.width]="viewModel.VersionInfoWrapper.Width +'%'"
          [attr.x]="viewModel.VersionInfoWrapper.XPos  + '%'"
          [attr.y]="viewModel.VersionInfoWrapper.YPos">
@@ -22,9 +22,8 @@
         {{viewModel.VersionInfoWrapper.PlanName}}
     </svg:text>
 
-
+    
     <!--Hitbox rectangle-->
-    <svg:rect height="100%" width="100%" class="hit-box-rect" (mouseenter)="OnMouseEnter()" (mouseleave)="OnMouseLeave()"></svg:rect>
+    <svg:rect height="100%" width="100%" class="hit-box-rect" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave(evt)"></svg:rect>
 </svg:svg>
 
-<!--[style.visibility]="(viewModel.ShowHoverEffect === true && viewModel.VersionInfoWrapper.EndMarkerName !=='url(#arrow)' ) ? 'visible' : 'hidden'"-->

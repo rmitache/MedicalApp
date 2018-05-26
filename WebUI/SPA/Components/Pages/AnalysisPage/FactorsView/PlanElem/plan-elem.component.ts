@@ -1,11 +1,11 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, Input, EventEmitter, Output } from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
 
 // Project modules
-import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
+import { Time, Range, TimeRange, CoordinatePair} from 'SPA/Core/Helpers/DataStructures/misc';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -14,6 +14,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment, GetDateIndexInTargetRange } from 'SPA/Core/Helpers/Functions/functions';
+import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 
 
 @Component({
@@ -104,7 +105,6 @@ export class PlanElemComponent {
         return versionInfoWrappers;
     }
 
-
     // Constructor
     constructor(
     ) {
@@ -119,7 +119,13 @@ export class PlanElemComponent {
         this.viewModel.VersionInfoWrappers = this.createVersionInfoWrappers();
     }
 
+    // Events
+    @Output() public VersionElemHover: EventEmitter<VersionElemHoverEventInfo> = new EventEmitter();
 
+    // Event handlers
+    private onVersionElemHover(eventInfo: VersionElemHoverEventInfo) {
+        this.VersionElemHover.emit(eventInfo);
+    }
 }
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;

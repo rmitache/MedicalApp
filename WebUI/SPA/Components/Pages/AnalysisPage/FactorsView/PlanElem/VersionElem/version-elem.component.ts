@@ -1,10 +1,10 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, Input, EventEmitter, ViewChild, Output } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
 // Project modules
-import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
+import { Time, Range, TimeRange, CoordinatePair } from 'SPA/Core/Helpers/DataStructures/misc';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -27,6 +27,7 @@ export class VersionElemComponent {
     private versionInfoWrapper: VersionInfoWrapper;
     @Input('ParentGroupYPos')
     private parentGroupYPos: number;
+    @ViewChild("svgElem") svgElem;
     private readonly viewModel: ViewModel = {
         VersionInfoWrapper: null,
         ShowHoverEffect: null,
@@ -38,7 +39,7 @@ export class VersionElemComponent {
         //        return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - " +
         //            moment(this.viewModel.VersionInfoWrapper.VersionCLO.EndDate).format('MM DD YYYY');
         //    }
-            
+
         //}
     };
 
@@ -52,22 +53,34 @@ export class VersionElemComponent {
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
     }
 
+    // Events
+    @Output() public Hover: EventEmitter<VersionElemHoverEventInfo> = new EventEmitter();
 
     // Event handlers
-    private OnMouseEnter() {
+    private onMouseEnter(event: any) {
 
+        // Special logic to handle the end date (so the x position matches that in the FactorsView)
         var endDate = (!this.viewModel.VersionInfoWrapper.HasNextAdjacentVersion) ? this.viewModel.VersionInfoWrapper.IntersectionDateRange.end
             : this.viewModel.VersionInfoWrapper.IntersectionDateRange.end.clone().add(1, 'days');
         var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, endDate);
         this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
-
-
         this.viewModel.ShowHoverEffect = true;
-    }
-    private OnMouseLeave() {
-        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
 
+        // Emit event
+        var bRect = this.svgElem.nativeElement.getBoundingClientRect();
+        var coordinatePair = new CoordinatePair(bRect.left, bRect.top);
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left, bRect.top, this.versionInfoWrapper);
+        this.Hover.emit(eventInfo);
+    }
+    private onMouseLeave() {
+
+        //
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
         this.viewModel.ShowHoverEffect = false;
+
+        // Emit event
+        this.Hover.emit(null);
+
     }
 }
 
@@ -75,4 +88,12 @@ interface ViewModel {
     VersionInfoWrapper: VersionInfoWrapper;
     ShowHoverEffect: boolean;
     ParentGroupYPos: number;
+}
+export class VersionElemHoverEventInfo {
+    constructor(
+        public readonly Left: number,
+        public readonly Top: number,
+        public readonly InfoWrapper: VersionInfoWrapper) {
+
+    }
 }
