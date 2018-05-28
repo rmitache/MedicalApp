@@ -91,4 +91,30 @@ export class VersionCLO extends BaseCLO {
 
         return intersectionRange;
     }
+    public GetUniqueMedicineTypes() {
+        let medTypes: { [medicineTypeName: string]: CLOs.MedicineTypeCLO } = {};
+           
+        for (let i = 0; i < this.Rules.length; i++) {
+            let ruleCLO = this.Rules[i];
+
+            ruleCLO.MedicineRuleItems.forEach((medRuleItem) => {
+                if (medTypes[medRuleItem.MedicineType.Name] === undefined) {
+                    medTypes[medRuleItem.MedicineType.Name] = medRuleItem.MedicineType;
+                }
+            });
+        }
+
+        // Convert to array 
+        let medTypesArray: CLOs.MedicineTypeCLO[] = [];
+        for (var medicineTypeName in medTypes) {
+            var medicineType = medTypes[medicineTypeName];
+            medTypesArray.push(medicineType);
+        }
+        medTypesArray = medTypesArray.sort((a, b) => {
+            if (a.Name < b.Name) return -1;
+            if (a.Name > b.Name) return 1;
+            return 0;
+        })
+        return medTypesArray;
+    }
 }

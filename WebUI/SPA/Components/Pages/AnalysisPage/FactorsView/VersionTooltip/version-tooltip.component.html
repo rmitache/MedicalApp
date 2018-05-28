@@ -13,15 +13,20 @@
             {{viewModel?.PlanName}}
         </div>
         <div class="duration-div">
-            <span class="label">Total duration:</span>
-            <span class="label-text-dark"> {{viewModel?.DurationInVersion}} days</span>
+            <span class="label">Showing</span>
+            <span class="label-text-dark" style="font-weight:bold"> {{viewModel?.DurationInIntersection}} days</span>
+
+            <span *ngIf="viewModel.DurationInVersion !== null" class="label">out of</span>
+            <span *ngIf="viewModel.DurationInVersion !== null" class="label-text-dark" style="font-weight:bold">{{viewModel?.DurationInVersion}} days</span>
+            <span *ngIf="viewModel.DurationInVersion !== null" class="label">in total</span>
         </div>
     </div>
-    <div>
 
-    </div>
-    <div class="differences-div">
-        <!--what changed-->
+    <div class="body">
+        <div class="medicine-type-div" *ngFor="let medicineType of viewModel?.VersionCLO?.GetUniqueMedicineTypes()">
+            <span class="label-text-dark"> {{medicineType.Name}}</span>
+        </div>
+
     </div>
 
 

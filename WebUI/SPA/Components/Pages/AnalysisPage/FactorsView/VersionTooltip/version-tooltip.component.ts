@@ -23,6 +23,7 @@ export class VersionTooltipComponent {
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
         PlanName: null,
+        DurationInIntersection:null,
         DurationInVersion: null,
 
         Visible: false,
@@ -48,6 +49,8 @@ export class VersionTooltipComponent {
         this.viewModel.Visible = true;
         this.viewModel.VersionCLO = versionHoverEventInfo.InfoWrapper.VersionCLO;
         this.viewModel.PlanName = versionHoverEventInfo.InfoWrapper.PlanName;
+        this.viewModel.DurationInIntersection = GetNrOfDaysBetweenDatesUsingMoment(versionHoverEventInfo.InfoWrapper.IntersectionDateRange.start,
+            versionHoverEventInfo.InfoWrapper.IntersectionDateRange.end, true);
         if (versionHoverEventInfo.InfoWrapper.VersionCLO.EndDate !== null) {
             this.viewModel.DurationInVersion = GetNrOfDaysBetweenDates(versionHoverEventInfo.InfoWrapper.VersionCLO.StartDate,
                 versionHoverEventInfo.InfoWrapper.VersionCLO.EndDate, true);
@@ -66,6 +69,7 @@ export class VersionTooltipComponent {
     public HideAndClear() {
         this.viewModel.Visible = false;
         this.viewModel.VersionCLO = null;
+        this.viewModel.DurationInIntersection = null;
         this.viewModel.DurationInVersion = null;
 
         this.viewModel.TopPos = 0;
@@ -77,6 +81,7 @@ export class VersionTooltipComponent {
 interface ViewModel {
     VersionCLO: CLOs.VersionCLO;
     PlanName: string;
+    DurationInIntersection: number;
     DurationInVersion: number;
 
     Visible: boolean;
