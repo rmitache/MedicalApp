@@ -30,7 +30,6 @@ import { GraphTooltipComponent } from 'SPA/Components/Pages/HomePage/HealthGraph
 export class HealthGraphComponent {
     // Fields
     private availableWindowPaddingInMonths = 0;
-
     @ViewChild('chart')
     private chartInstance: UIChart;
     @ViewChild('graphTooltip')
@@ -244,7 +243,6 @@ export class HealthGraphComponent {
     }
 
 }
-
 
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;

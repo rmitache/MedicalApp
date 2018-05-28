@@ -1,8 +1,9 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef, } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef, ViewChild, } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import * as $ from 'jquery';
 
 // Project modules
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
@@ -17,6 +18,7 @@ import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Com
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
+import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 
 
 @Component({
@@ -28,6 +30,8 @@ import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/Fac
 export class FactorsViewComponent {
     // Fields
     private availableWindowPaddingInMonths = 0;
+    @ViewChild('versionTooltip')
+    private versionTooltipInstance: VersionTooltipComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailablePlans: null,
@@ -107,6 +111,11 @@ export class FactorsViewComponent {
     // Event handlers
     private onVersionElemHover(eventInfo: VersionElemHoverEventInfo) {
         
+        if (eventInfo) {
+            this.versionTooltipInstance.SetDataAndPosition(eventInfo);
+        } else {
+            this.versionTooltipInstance.HideAndClear();
+        }
     }
 }
 

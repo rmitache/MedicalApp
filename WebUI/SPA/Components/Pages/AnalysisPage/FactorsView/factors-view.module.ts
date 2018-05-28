@@ -17,6 +17,7 @@ import { VersionElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsV
 import { TimelinePanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
 import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/TickElem/tick-elem.component';
 import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TodayIndicator/today-indicator.component';
+import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/Facto
         VersionElemComponent,
         TimelinePanelComponent,
         TickElemComponent,
-        TodayIndicatorComponent
+        TodayIndicatorComponent,
+        VersionTooltipComponent
     ],
     exports: [
         FactorsViewComponent],

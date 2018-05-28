@@ -67,9 +67,8 @@ export class VersionElemComponent {
         this.viewModel.ShowHoverEffect = true;
 
         // Emit event
-        var bRect = this.svgElem.nativeElement.getBoundingClientRect();
-        var coordinatePair = new CoordinatePair(bRect.left, bRect.top);
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left, bRect.top, this.versionInfoWrapper);
+        var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + bRect.width/2, bRect.top, this.versionInfoWrapper);
         this.Hover.emit(eventInfo);
     }
     private onMouseLeave() {

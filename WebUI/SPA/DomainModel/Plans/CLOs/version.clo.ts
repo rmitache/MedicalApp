@@ -11,7 +11,8 @@ export class VersionCLO extends BaseCLO {
     public ID: number;
     public StartDate: Date;
     public EndDate: Date;
-    public Rules: CLOs.RuleCLO[]
+    public Rules: CLOs.RuleCLO[];
+    public Index: number;
 
     // Properties
     public get Status(): Enums.VersionStatus {

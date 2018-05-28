@@ -1,0 +1,32 @@
+<div #tooltipDiv class="frame"
+     [style.visibility]="viewModel.Visible ? 'visible' : 'hidden'"
+     [style.top.px]="viewModel.TopPos"
+     [style.left.px]="viewModel.LeftPos">
+    <div class="caret-div">
+    </div>
+
+    <div class="header">
+        <div class="version-index-label h3">
+            Version #{{viewModel?.VersionCLO?.Index}}
+        </div>
+        <div class="plan-name-label label-text-dark">
+            {{viewModel?.PlanName}}
+        </div>
+        <div class="duration-div">
+            <span class="label">Total duration:</span>
+            <span class="label-text-dark"> {{viewModel?.DurationInVersion}} days</span>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="differences-div">
+        <!--what changed-->
+    </div>
+
+
+
+
+
+
+</div>
