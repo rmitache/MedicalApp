@@ -63,15 +63,18 @@ export class TimelinePanelComponent {
 
         return tickInfoWrappers;
     }
+    private recreateDisplayRepresentation() {
 
-    // Constructor
-    constructor(
-    ) {
-
-    }
-    ngOnInit() {
         this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();
         this.refreshTickDynamicWidthInPX();
+    }
+
+    // Constructor
+    ngOnInit() {
+        this.recreateDisplayRepresentation();
+    }
+    ngOnChanges() {
+        this.recreateDisplayRepresentation();
     }
 
     // Event handlers
@@ -86,7 +89,6 @@ interface ViewModel {
     DatesInSelectedDateRange: moment.Moment[];
 
 }
-
 export class TickInfoWrapper {
     // Fields
     public Date: moment.Moment;

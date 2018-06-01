@@ -39,15 +39,27 @@ export class AnalysisPageDataService {
     public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
 
-        // Autogenerate code
-        //let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
-        //    moment().endOf('month').startOf('day').toDate());
-        //let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);
-
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
     }
 
+    // HealthStatusEntries
+    public GetHealthStatusEntries(dateRange: Range<Date>): Promise<CLOs.HealthStatusEntryCLO[]> {
+        const apiMethodName: string = 'GetHealthStatusEntries';
+
+        let model = {
+            DateRange: dateRange
+        };
+
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos).ToArray();
+            });
+
+
+        return getDataPromise;
+    }
 
     // Login
     public Logout(): Promise<boolean> {

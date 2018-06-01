@@ -75,8 +75,6 @@ export const goBackwardAnimation = trigger('goBackwardAnimation', [
     ]
 })  
 export class ScheduleComponent {
-
-
     // Fields
     private availableWindowPaddingInMonths = 2;
     private animationVariables = {
@@ -500,8 +498,3 @@ export class TimeGroupRepresentation {
             + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
     }
 }
-
-
-// DisplayRepr
-// PlanRepr
-// VersionRepr

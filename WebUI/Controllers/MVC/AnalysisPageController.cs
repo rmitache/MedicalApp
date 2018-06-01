@@ -93,9 +93,7 @@ namespace WebUI.Controllers
         {
 
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-
-
-            int factorsViewAvailableWindowPaddingInMonths = 2;
+            int factorsViewAvailableWindowPaddingInMonths = 0;
             int indicatorsViewAvailableWindowPaddingInMonths = 0;
             var refDate = DateTime.Now.Date;
             var initialFactorsViewDateRange = this.GetMonthRangeWithPadding(refDate, refDate, factorsViewAvailableWindowPaddingInMonths);
@@ -126,6 +124,19 @@ namespace WebUI.Controllers
             return Json(bundle);
         }
 
+        [Route("AnalysisPage/GetHealthStatusEntries")]
+        [HttpPost]
+        public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, (int)userID, true);
+            return Json(blos);
+        }
+
+        public class DateRangeModel
+        {
+            public Range<DateTime> DateRange;
+        }
 
     }
 }

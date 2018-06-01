@@ -48,7 +48,7 @@ export class IndicatorsViewComponent {
 
         ChartOptions: null,
         ChartData: null,
-        SelectedViewMode: HealthGraphDisplayMode.Month,
+        SelectedViewMode: IndicatorsViewDisplayMode.Month,
         Blocked: false
 
     };
@@ -57,12 +57,9 @@ export class IndicatorsViewComponent {
 
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
-
-
-
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
-        if (this.viewModel.SelectedViewMode === HealthGraphDisplayMode.Month) {
+        if (this.viewModel.SelectedViewMode === IndicatorsViewDisplayMode.Month) {
             currentStrategy = new MonthDisplayMode(this.chartInstance);
         } else {
             // OBS -> Not implemented yet
@@ -71,15 +68,25 @@ export class IndicatorsViewComponent {
         return currentStrategy;
     }
     private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
-        //let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
-        //let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
-        //    .then(clos => {
-        //        this.viewModel.AvailableDateRange = newDateRange;
-        //        this.viewModel.AvailableHealthEntries = clos;
-        //    });
-        //return promise;
+        let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
+        let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
+            .then(clos => {
+                this.viewModel.AvailableDateRange = newDateRange;
+                this.viewModel.AvailableHealthEntries = clos;
+            });
+        return promise;
 
-        return null;
+    }
+    private computeXPositionFromDate(date: moment.Moment) {
+
+        // Variables
+        var startDateIndex = HelperFunctions.GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
+        var nrOfDaysInSelectedDateRange = HelperFunctions.GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
+        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
+
+        // Compute the width
+        let xPosition = (startDateIndex) * widthBetweenDates;
+        return xPosition;
     }
     private recreateDisplayRepresentation() {
 
@@ -106,17 +113,6 @@ export class IndicatorsViewComponent {
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
 
-    }
-    private computeXPositionFromDate(date: moment.Moment) {
-
-        // Variables
-        var startDateIndex = HelperFunctions.GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
-        var nrOfDaysInSelectedDateRange = HelperFunctions.GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
-        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
-
-        // Compute the width
-        let xPosition = (startDateIndex) * widthBetweenDates;
-        return xPosition;
     }
 
     // Constructor 
@@ -156,9 +152,6 @@ export class IndicatorsViewComponent {
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.recreateDisplayRepresentation();
-
-
-
     }
     ngAfterViewInit() {
         this.canvas = document.getElementById('myChart');
@@ -248,7 +241,6 @@ export class IndicatorsViewComponent {
                 });
         }
     }
-
 }
 
 
@@ -264,12 +256,10 @@ interface ViewModel {
 
     ChartOptions: any;
     ChartData: any;
-    SelectedViewMode: HealthGraphDisplayMode;
+    SelectedViewMode: IndicatorsViewDisplayMode;
     Blocked: boolean;
 }
-enum HealthGraphDisplayMode {
-    Day,
-    Week,
+enum IndicatorsViewDisplayMode {
     Month
 }
 
@@ -363,6 +353,15 @@ class MonthDisplayMode implements IDisplayMode {
             currentSelDateRange.RangeEnd.clone().subtract(1, 'months').endOf('month').endOf('day'));
         return range;
     }
+    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
+        // Range must be within same month
+        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month()) {
+            throw new Error('Range must be within same month');
+        }
+
+        return currentSelDateRange.RangeStart.format('MMMM, YYYY');
+    }
+
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
             tooltips: {
@@ -470,14 +469,6 @@ class MonthDisplayMode implements IDisplayMode {
         };
         return chartOptions;
     }
-    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
-        // Range must be within same month
-        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month()) {
-            throw new Error('Range must be within same month');
-        }
-
-        return currentSelDateRange.RangeStart.format('MMMM, YYYY');
-    }
     public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {
 
         // Prepare data
@@ -496,6 +487,5 @@ class MonthDisplayMode implements IDisplayMode {
         }
         return data;
     }
-
 };
 

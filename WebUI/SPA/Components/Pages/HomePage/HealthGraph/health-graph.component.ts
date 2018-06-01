@@ -257,8 +257,6 @@ interface ViewModel {
     Blocked: boolean;
 }
 enum HealthGraphDisplayMode {
-    Day,
-    Week,
     Month
 }
 
