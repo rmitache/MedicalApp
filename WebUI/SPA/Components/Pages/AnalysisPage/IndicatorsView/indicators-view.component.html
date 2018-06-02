@@ -14,7 +14,7 @@
                 <span class="header-label h1">INDICATORS</span>
             </div>
             <div class="center-section">
-                <navigation-panel [Label]="'May 2018'"
+                <navigation-panel [Label]="viewModel.NavigationLabel"
                                   (PreviousClicked)="onNavigateBackwardTriggered()"
                                   (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
             </div>

@@ -113,6 +113,12 @@ export class IndicatorsViewComponent {
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
         this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
 
+        var chartInstance = new Chart(this.ctx, {
+            type: 'line',
+            data: this.viewModel.ChartData,
+            options: this.viewModel.ChartOptions,
+
+        });
     }
 
     // Constructor 
@@ -144,38 +150,21 @@ export class IndicatorsViewComponent {
     ngOnInit() {
         // Get the initial range from the current DisplayMode
         var initialSelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
-
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
             initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // Then init the SelectedDateRange and create the display representation
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        this.recreateDisplayRepresentation();
+        
     }
     ngAfterViewInit() {
         this.canvas = document.getElementById('myChart');
         this.ctx = this.canvas.getContext('2d');
 
-        var chartInstance = new Chart(this.ctx, {
-            type: 'line',
-            data: this.viewModel.ChartData,
-            options: this.viewModel.ChartOptions,
-
-        });
-
-
-        //$(document).ready(() => {
-
-        //    var canvas = document.getElementById('myChart');
-        //    var ctx = this.canvas.getContext('2d');
-        //    canvas.onmousemove = function (evt) {
-
-        //        var points = chartInstance.getElementsAtXAxis(evt);
-        //        chartInstance.options.annotation.annotations[0].value = moment().subtract(5, 'days');
-        //        chartInstance.update();
-        //    };
-        //});
+        
+        this.recreateDisplayRepresentation();
+        
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
