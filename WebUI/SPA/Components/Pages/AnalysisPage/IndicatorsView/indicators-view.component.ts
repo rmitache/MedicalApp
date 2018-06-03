@@ -112,12 +112,17 @@ export class IndicatorsViewComponent {
             healthStatusCLOsInSelDateRangeDictionary[dateKey].push(clo);
         });
 
-        // Refresh VM properties and (re)create the chart
+        // Refresh VM properties 
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(healthStatusCLOsInSelDateRangeDictionary);
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(healthStatusCLOsInSelDateRangeDictionary,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
-        var chartInstance = new Chart(this.chartCanvasContext, {
+
+        // Recreate the chart
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+        }
+        this.chartInstance = new Chart(this.chartCanvasContext, {
             type: 'line',
             data: this.viewModel.ChartData,
             options: this.viewModel.ChartOptions,
@@ -165,7 +170,7 @@ export class IndicatorsViewComponent {
     }
     ngAfterViewInit() {
         // Get references to the chart canvas context
-        let canvas:any = document.getElementById('myChart');
+        let canvas: any = document.getElementById('myChart');
         this.chartCanvasContext = canvas.getContext('2d');
 
         // Refresh the UI
