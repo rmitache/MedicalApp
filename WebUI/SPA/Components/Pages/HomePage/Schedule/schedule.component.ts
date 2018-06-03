@@ -81,7 +81,6 @@ export class ScheduleComponent {
     private availableWindowPaddingInMonths = 2;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
-
     private animationVariables = {
         animateForward: 0,
         animateBackward: 0
@@ -149,7 +148,7 @@ export class ScheduleComponent {
 
     }
     ngOnInit() {
-        // Get the initial range from the current DisplayMode
+        // Get the initial range using the current DisplayMode
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
 
         // Init VM properties
@@ -285,7 +284,7 @@ interface ViewModel {
 
 
 
-// STRATEGIES
+// Supported Display modes
 interface IDisplayMode {
     GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
 }

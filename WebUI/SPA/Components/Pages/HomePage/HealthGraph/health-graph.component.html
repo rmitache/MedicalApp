@@ -16,9 +16,9 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewHealthStatusEntryTriggered()"></icon-button>
         </div>
         <div class="center-section">
-            <navigation-panel 
-                              (PreviousClicked)="onNavigateBackwardTriggered()"
-                              (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
+            <navigation-panel #navPanel
+                              (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
+                              (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
         </div>
         <div class="right-section">
             <!--<select class="view-mode-selector">

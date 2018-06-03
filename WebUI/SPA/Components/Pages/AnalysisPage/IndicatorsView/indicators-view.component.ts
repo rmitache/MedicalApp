@@ -152,7 +152,7 @@ export class IndicatorsViewComponent {
         }));
     }
     ngOnInit() {
-        // Get the initial range from the current DisplayMode
+        // Get the initial range using the current DisplayMode
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
 
         // Init VM properties
@@ -243,7 +243,7 @@ interface ViewModel {
 }
 
 
-// Display modes
+// Supported Display modes
 interface IDisplayMode {
     GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }): any;
     GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>): any;
