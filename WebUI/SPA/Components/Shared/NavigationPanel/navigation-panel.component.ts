@@ -29,6 +29,8 @@ export class NavigationPanelComponent {
         let currentStrategy: IDateRangeSelectionMode = null;
         if (this.dateRangeSelectionMode === DateRangeMode.Month) {
             currentStrategy = new MonthMode();
+        } else if (this.dateRangeSelectionMode === DateRangeMode.Day) {
+            currentStrategy = new DayMode();
         } else {
             // OBS -> Not implemented yet
             throw new Error('Not implemented yet');
@@ -112,4 +114,39 @@ class MonthMode implements IDateRangeSelectionMode {
         return currentSelDateRange.RangeStart.format('MMMM, YYYY');
     }
 
+};
+class DayMode implements IDateRangeSelectionMode {
+
+    // Public methods
+    public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
+        return new Range<moment.Moment>(referenceDate.clone().startOf('day'), referenceDate.clone().endOf('day'));
+    }
+    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
+        // Check if length of range is = 0
+        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
+        if (length !== 0) {
+            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
+        }
+
+        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(1, 'days'), currentSelDateRange.RangeEnd.clone().add(1, 'days'));
+    }
+    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
+        // Check if length of range is = 0
+        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
+        if (length !== 0) {
+            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
+        }
+
+        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(1, 'days'), currentSelDateRange.RangeEnd.clone().subtract(1, 'days'));
+
+    }
+    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
+        // Check if length of range is = 0
+        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
+        if (length !== 0) {
+            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
+        }
+
+        return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
+    }
 };

@@ -16,7 +16,7 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewHealthStatusEntryTriggered()"></icon-button>
         </div>
         <div class="center-section">
-            <navigation-panel [Label]="viewModel.NavigationLabel"
+            <navigation-panel 
                               (PreviousClicked)="onNavigateBackwardTriggered()"
                               (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
         </div>

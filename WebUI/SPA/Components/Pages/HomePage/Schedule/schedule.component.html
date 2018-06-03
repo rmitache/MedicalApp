@@ -2,12 +2,9 @@
     <div class="inner-div">
         <p-progressSpinner strokeWidth="4"></p-progressSpinner>
     </div>
-
 </p-blockUI>
 
 <div class="frame">
-
-
 
     <div class="header">
         <div class="left-section">
@@ -15,9 +12,9 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>
         </div>
         <div class="center-section">
-            <navigation-panel [Label]="viewModel.NavigationLabel"
-                              (PreviousClicked)="onNavigateBackwardTriggered()"
-                              (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
+            <navigation-panel #navPanel
+                              (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
+                              (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
         </div>
         <div class="right-section">
             <!--<select class="view-mode-selector">
@@ -26,8 +23,7 @@
             </select>-->
         </div>
     </div>
-    <div class="body" [@goForwardAnimation]="animationVariables.animateForward"
-                      [@goBackwardAnimation]="animationVariables.animateBackward"  >
+    <div class="body" [@goForwardAnimation]="animationVariables.animateForward" [@goBackwardAnimation]="animationVariables.animateBackward">
         <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
                        [Title]="unitRepr.Title"
                        [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">

@@ -26,7 +26,6 @@ import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 
 
-
 @Component({
     selector: 'indicators-view',
     templateUrl: './indicators-view.component.html',
@@ -43,9 +42,9 @@ export class IndicatorsViewComponent {
     private chartInstance: any;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-        AvailableHealthEntries: null,
 
         SelectedDateRange: null,
+        HealthEntriesInSelectedDateRange: null,
 
         HighlightRangeStartXPosition: null,
         HighlightRangeEndXPosition: null,
@@ -76,7 +75,7 @@ export class IndicatorsViewComponent {
         let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
             .then(clos => {
                 this.viewModel.AvailableDateRange = newDateRange;
-                this.viewModel.AvailableHealthEntries = clos;
+                this.viewModel.HealthEntriesInSelectedDateRange = clos;
             });
         return promise;
 
@@ -100,7 +99,7 @@ export class IndicatorsViewComponent {
     private refreshUI() {
 
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
-        let filteredHealthStatusEntryCLOs = this.viewModel.AvailableHealthEntries.filter(entry => {
+        let filteredHealthStatusEntryCLOs = this.viewModel.HealthEntriesInSelectedDateRange.filter(entry => {
             return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 entry.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
@@ -159,7 +158,7 @@ export class IndicatorsViewComponent {
         // Init VM properties
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
             initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
-        this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
+        this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
 
         // OBS: Refresh the UI -> is done in ngAfterViewInit (in order to reference the chart properly)
@@ -179,7 +178,7 @@ export class IndicatorsViewComponent {
     // Event handlers
     private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
 
-        // Check if prevSelectedDateRange is within the AvailableDateRange
+        // Check if newSelDateRange is within the AvailableDateRange
         if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
             this.viewModel.SelectedDateRange = newSelDateRange;
             this.refreshUI();
@@ -230,7 +229,7 @@ export class IndicatorsViewComponent {
 
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
-    AvailableHealthEntries: CLOs.HealthStatusEntryCLO[];
+    HealthEntriesInSelectedDateRange: CLOs.HealthStatusEntryCLO[];
 
     SelectedDateRange: Range<moment.Moment>;
 

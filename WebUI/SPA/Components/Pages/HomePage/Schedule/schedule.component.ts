@@ -18,6 +18,8 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 // Components
 import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
+import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 
 
 // Animations
@@ -73,23 +75,25 @@ export const goBackwardAnimation = trigger('goBackwardAnimation', [
         goForwardAnimation,
         goBackwardAnimation
     ]
-})  
+})
 export class ScheduleComponent {
     // Fields
     private availableWindowPaddingInMonths = 2;
+    @ViewChild('navPanel')
+    private navPanelInstance: NavigationPanelComponent;
+
     private animationVariables = {
         animateForward: 0,
         animateBackward: 0
     }
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-        AvailableFactorRecords: null,
 
         SelectedDateRange: null,
-        NavigationLabel: null,
+        FactorRecordsInSelectedDateRange: null,
         VisibleDisplayRepresentation: null,
 
-        SelectedViewMode: ScheduleDisplayMode.Day,
+        DateRangeDisplayMode: DateRangeMode.Day,
         Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
@@ -99,9 +103,9 @@ export class ScheduleComponent {
     private getCurrentDisplayModeInstance(): IDisplayMode {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
-        if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Day) {
+        if (this.viewModel.DateRangeDisplayMode === DateRangeMode.Day) {
             currentStrategy = new DayDisplayMode(this.genericCLOFactory);
-        } else if (this.viewModel.SelectedViewMode === ScheduleDisplayMode.Week) {
+        } else {
             // OBS -> Not implemented yet
         }
         return currentStrategy;
@@ -111,20 +115,20 @@ export class ScheduleComponent {
         let promise = this.dataService.GetFactorRecords(jsDateRange)
             .then(factorRecordCLOs => {
                 this.viewModel.AvailableDateRange = newDateRange;
-                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
+                this.viewModel.FactorRecordsInSelectedDateRange = factorRecordCLOs;
             });
         return promise;
     }
-    private recreateDisplayRepresentation() {
+    private refreshUI() {
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
-        let filteredFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
+        let filteredFactorRecords = this.viewModel.FactorRecordsInSelectedDateRange.filter(fRec => {
             return fRec.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 fRec.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
 
+        // Refresh VM properties
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(filteredFactorRecords);
-        this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
 
     }
 
@@ -145,17 +149,16 @@ export class ScheduleComponent {
 
     }
     ngOnInit() {
-
         // Get the initial range from the current DisplayMode
-        var initialSelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
+        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
 
-        // Init Available (super) DataSet
+        // Init VM properties
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
-        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
-
-        // Then init the SelectedDateRange and create the display representation
+        this.viewModel.FactorRecordsInSelectedDateRange = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        this.recreateDisplayRepresentation();
+
+        // Refresh the UI
+        this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -165,7 +168,7 @@ export class ScheduleComponent {
     public RefreshUI() {
         this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
             .then(() => {
-                this.recreateDisplayRepresentation();
+                this.refreshUI();
             });
     }
 
@@ -192,7 +195,7 @@ export class ScheduleComponent {
 
                                     this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
                                         .then(() => {
-                                            this.recreateDisplayRepresentation();
+                                            this.refreshUI();
                                             setTimeout(() => {
                                                 this.viewModel.Blocked = false;
                                                 resolve();
@@ -216,23 +219,22 @@ export class ScheduleComponent {
             ]
         });
     }
-    private onNavigateBackwardTriggered() {
-        // Check if prevSelectedDateRange is within the AvailableDateRange
-        let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
-        if (prevSelectedDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
-            this.viewModel.SelectedDateRange = prevSelectedDateRange;
-            this.recreateDisplayRepresentation();
+    private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
+        // Check if newSelDateRange is within the AvailableDateRange
+        if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
+            this.viewModel.SelectedDateRange = newSelDateRange;
+            this.refreshUI();
         }
         else {
             // If it isn't, load a new "window" of FactorRecords from the server
-            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(prevSelectedDateRange.RangeStart.clone(),
-                prevSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
+                newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
-                    this.viewModel.SelectedDateRange = prevSelectedDateRange;
-                    this.recreateDisplayRepresentation();
+                    this.viewModel.SelectedDateRange = newSelDateRange;
+                    this.refreshUI();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
                     }, 200);
@@ -241,27 +243,24 @@ export class ScheduleComponent {
 
         this.animationVariables.animateBackward++;
     }
-    private onNavigateForwardTriggered() {
+    private onSelectedDateRangeChangedForward(newSelDateRange: Range<moment.Moment>) {
 
-        // Variables
-        let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
-
-        // Check if nextSelectedDateRange is within the AvailableDateRange
-        if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
-            this.viewModel.SelectedDateRange = nextSelectedDateRange;
-            this.recreateDisplayRepresentation();
+        // Check if newSelDateRange is within the AvailableDateRange
+        if (newSelDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
+            this.viewModel.SelectedDateRange = newSelDateRange;
+            this.refreshUI();
         }
         else {
             // If it isn't, load a new "window" of FactorRecords from the server
-            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(nextSelectedDateRange.RangeStart.clone(),
-                nextSelectedDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
+            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
+                newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
             this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
                 .then(() => {
 
-                    this.viewModel.SelectedDateRange = nextSelectedDateRange;
-                    this.recreateDisplayRepresentation();
+                    this.viewModel.SelectedDateRange = newSelDateRange;
+                    this.refreshUI();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
                     }, 200);
@@ -275,28 +274,19 @@ export class ScheduleComponent {
 }
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
-    AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
+    FactorRecordsInSelectedDateRange: CLOs.MedicineFactorRecordCLO[];
 
     SelectedDateRange: Range<moment.Moment>;
-    NavigationLabel: string;
     VisibleDisplayRepresentation: DisplayRepresentation;
 
-    SelectedViewMode: ScheduleDisplayMode;
+    DateRangeDisplayMode: DateRangeMode;
     Blocked: boolean;
 }
-enum ScheduleDisplayMode {
-    Day,
-    Week
-}
+
 
 
 // STRATEGIES
 interface IDisplayMode {
-    GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
-    GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
-    GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
-    GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
-
     GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]): DisplayRepresentation;
 }
 class DayDisplayMode implements IDisplayMode {
@@ -356,37 +346,6 @@ class DayDisplayMode implements IDisplayMode {
     }
 
     // Public methods
-    public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
-        return new Range<moment.Moment>(referenceDate.clone().startOf('day'), referenceDate.clone().endOf('day'));
-    }
-    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
-        // Check if length of range is = 0
-        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
-        if (length !== 0) {
-            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
-        }
-
-        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(1, 'days'), currentSelDateRange.RangeEnd.clone().add(1, 'days'));
-    }
-    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>) {
-        // Check if length of range is = 0
-        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
-        if (length !== 0) {
-            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
-        }
-
-        return new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(1, 'days'), currentSelDateRange.RangeEnd.clone().subtract(1, 'days'));
-
-    }
-    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
-        // Check if length of range is = 0
-        let length = (currentSelDateRange.RangeEnd.diff(currentSelDateRange.RangeStart, 'days'));
-        if (length !== 0) {
-            throw new Error('Range must be 1 single day. Use GetInitialSelectedDateRange first');
-        }
-
-        return currentSelDateRange.RangeStart.format('dddd Do MMM, YYYY');
-    }
     public GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]) {
 
         // Clone filteredFactorRecords
@@ -447,7 +406,6 @@ class DayDisplayMode implements IDisplayMode {
 
         return displayRep;
     }
-
 };
 
 
