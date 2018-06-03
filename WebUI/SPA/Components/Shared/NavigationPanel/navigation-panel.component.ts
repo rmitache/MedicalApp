@@ -48,7 +48,8 @@ export class NavigationPanelComponent {
     }
 
     // Events
-    @Output() public DateRangeChanged: EventEmitter<Range<moment.Moment>> = new EventEmitter();
+    @Output() public DateRangeChangedBackward: EventEmitter<Range<moment.Moment>> = new EventEmitter();
+    @Output() public DateRangeChangedForward: EventEmitter<Range<moment.Moment>> = new EventEmitter();
 
     // Event handlers
     private onPreviousClicked() {
@@ -57,7 +58,7 @@ export class NavigationPanelComponent {
         this.viewModel.SelectedDateRange = prevSelectedDateRange;
         this.viewModel.LabelText = currentMode.GetNavigationLabel(prevSelectedDateRange);
 
-        this.DateRangeChanged.emit(prevSelectedDateRange);
+        this.DateRangeChangedBackward.emit(prevSelectedDateRange);
     }
     private onNextClicked() {
         var currentMode = this.getCurrentMode();
@@ -65,7 +66,7 @@ export class NavigationPanelComponent {
         this.viewModel.SelectedDateRange = nextSelectedDateRange;
         this.viewModel.LabelText = currentMode.GetNavigationLabel(nextSelectedDateRange);
 
-        this.DateRangeChanged.emit(nextSelectedDateRange);
+        this.DateRangeChangedForward.emit(nextSelectedDateRange);
     }
 }
 

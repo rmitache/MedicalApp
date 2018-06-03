@@ -94,7 +94,7 @@ export class IndicatorsViewComponent {
         let xPosition = (startDateIndex) * widthBetweenDates;
         return xPosition;
     }
-    private recreateDisplayRepresentation() {
+    private refreshUI() {
 
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredHealthStatusEntryCLOs = this.viewModel.AvailableHealthEntries.filter(entry => {
@@ -169,7 +169,7 @@ export class IndicatorsViewComponent {
         this.ctx = this.canvas.getContext('2d');
 
         
-        this.recreateDisplayRepresentation();
+        this.refreshUI();
         
     }
     ngOnDestroy() {
@@ -182,7 +182,7 @@ export class IndicatorsViewComponent {
         let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
         if (prevSelectedDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
             this.viewModel.SelectedDateRange = prevSelectedDateRange;
-            this.recreateDisplayRepresentation();
+            this.refreshUI();
         }
         else {
             // If it isn't, load a new "window" of FactorRecords from the server
@@ -193,7 +193,7 @@ export class IndicatorsViewComponent {
             this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
                 .then(() => {
                     this.viewModel.SelectedDateRange = prevSelectedDateRange;
-                    this.recreateDisplayRepresentation();
+                    this.refreshUI();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
                     }, 200);
@@ -208,7 +208,7 @@ export class IndicatorsViewComponent {
         // Check if nextSelectedDateRange is within the AvailableDateRange
         if (nextSelectedDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
             this.viewModel.SelectedDateRange = nextSelectedDateRange;
-            this.recreateDisplayRepresentation();
+            this.refreshUI();
         }
         else {
             // If it isn't, load a new "window" of FactorRecords from the server
@@ -220,7 +220,7 @@ export class IndicatorsViewComponent {
                 .then(() => {
 
                     this.viewModel.SelectedDateRange = nextSelectedDateRange;
-                    this.recreateDisplayRepresentation();
+                    this.refreshUI();
                     setTimeout(() => {
                         this.viewModel.Blocked = false;
                     }, 200);

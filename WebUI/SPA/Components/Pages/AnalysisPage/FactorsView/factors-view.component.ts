@@ -127,7 +127,11 @@ export class FactorsViewComponent {
             this.versionTooltipInstance.HideAndClear();
         }
     }
-    private onSelectedDateRangeChanged(newSelDateRange: Range<moment.Moment>) {
+    private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
+        this.viewModel.SelectedDateRange = newSelDateRange;
+        this.refreshUI();
+    }
+    private onSelectedDateRangeChangedForward(newSelDateRange: Range<moment.Moment>) {
         this.viewModel.SelectedDateRange = newSelDateRange;
         this.refreshUI();
     }
