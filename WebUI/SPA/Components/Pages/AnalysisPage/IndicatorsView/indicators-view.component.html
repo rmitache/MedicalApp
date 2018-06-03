@@ -14,9 +14,9 @@
                 <span class="header-label h1">INDICATORS</span>
             </div>
             <div class="center-section">
-                <navigation-panel 
-                                  (PreviousClicked)="onNavigateBackwardTriggered()"
-                                  (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
+                <navigation-panel #navPanel
+                                  (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
+                                  (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
             </div>
 
         </div>
