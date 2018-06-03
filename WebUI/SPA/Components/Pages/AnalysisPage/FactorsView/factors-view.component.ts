@@ -20,6 +20,9 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
 import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
+import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
+import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { TimelinePanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
 
 
 @Component({
@@ -32,32 +35,24 @@ export class FactorsViewComponent {
     // Fields
     @ViewChild('versionTooltip')
     private versionTooltipInstance: VersionTooltipComponent;
+    @ViewChild('navPanel')
+    private navPanelInstance: NavigationPanelComponent;
+    @ViewChild('timelinePanel')
+    private timelinePanelInstance: TimelinePanelComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-        AvailablePlans: null,
+        PlansInSelectedDateRange: null,
 
         SelectedDateRange: null,
-        NavigationLabel: null,
         TodayXPosition:null,
 
-        SelectedViewMode: FactorsViewDisplayMode.Month,
+        DateRangeDisplayMode: DateRangeMode.Month,
         Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
-    private getCurrentDisplayModeInstance(): IDisplayMode {
-        // Get Current Mode strategy
-        let currentStrategy: IDisplayMode = null;
-        if (this.viewModel.SelectedViewMode === FactorsViewDisplayMode.Month) {
-            currentStrategy = new MonthDisplayMode();
-        } else {
-            // OBS -> Not implemented yet
-            throw new Error('FactorsViewDisplayMode not implemented yet');
-        }
-        return currentStrategy;
-    }
     private filterPlansByDateRange(planCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
         var filteredPlans: CLOs.PlanCLO[] = [];
 
@@ -87,14 +82,15 @@ export class FactorsViewComponent {
         let xPosition = (startDateIndex) * widthBetweenDates;
         return xPosition;
     }
-    private recreateDisplayRepresentation() {
-
-        let currentDisplayMode = this.getCurrentDisplayModeInstance();
-        this.viewModel.NavigationLabel = currentDisplayMode.GetNavigationLabel(this.viewModel.SelectedDateRange);
-        this.viewModel.AvailablePlans = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), this.viewModel.SelectedDateRange);
+    private refreshUI() {
+        
+        // Refresh vm properties
+        this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), this.viewModel.SelectedDateRange);
         this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
-    }
 
+        // Refresh children components
+        this.timelinePanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
+    }
 
     // Constructor
     constructor(
@@ -111,15 +107,12 @@ export class FactorsViewComponent {
         this.commandManager.RegisterComponentInstance(this);
     }
     ngOnInit() {
-
         // Get the initial range from the current DisplayMode
-        var initialSelectedDateRange = this.getCurrentDisplayModeInstance().GetInitialSelectedDateRange(moment());
-
-        // Init Available (super) DataSet
-        this.viewModel.AvailablePlans = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), initialSelectedDateRange);
+        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
 
-        this.recreateDisplayRepresentation();
+        // Refresh the UI
+        this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -134,69 +127,18 @@ export class FactorsViewComponent {
             this.versionTooltipInstance.HideAndClear();
         }
     }
-    private onNavigateBackwardTriggered() {
-        let prevSelectedDateRange = this.getCurrentDisplayModeInstance().GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
-
-        this.viewModel.SelectedDateRange = prevSelectedDateRange;
-        this.recreateDisplayRepresentation();
-    }
-    private onNavigateForwardTriggered() {
-        let nextSelectedDateRange = this.getCurrentDisplayModeInstance().GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
-
-        this.viewModel.SelectedDateRange = nextSelectedDateRange;
-        this.recreateDisplayRepresentation();
+    private onSelectedDateRangeChanged(newSelDateRange: Range<moment.Moment>) {
+        this.viewModel.SelectedDateRange = newSelDateRange;
+        this.refreshUI();
     }
 }
-
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
-    AvailablePlans: CLOs.PlanCLO[];
 
+    PlansInSelectedDateRange: CLOs.PlanCLO[];
     SelectedDateRange: Range<moment.Moment>;
-    NavigationLabel: string;
     TodayXPosition: number;
 
-    SelectedViewMode: FactorsViewDisplayMode;
+    DateRangeDisplayMode: DateRangeMode;
     Blocked: boolean;
 }
-enum FactorsViewDisplayMode {
-    Month
-}
-interface IDisplayMode {
-    GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
-    GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
-    GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
-    GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
-}
-class MonthDisplayMode implements IDisplayMode {
-
-
-    // Public methods
-    public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
-
-        // Get the month of the referenceDate as an initial range
-        let range = new Range<moment.Moment>(referenceDate.clone().startOf('month').startOf('day'),
-            referenceDate.clone().endOf('month').endOf('day'));
-        return range;
-    }
-    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
-        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(1, 'months').startOf('month').startOf('day'),
-            currentSelDateRange.RangeEnd.clone().add(1, 'months').endOf('month').endOf('day'));
-        return range;
-    }
-    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
-
-        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(1, 'months').startOf('month').startOf('day'),
-            currentSelDateRange.RangeEnd.clone().subtract(1, 'months').endOf('month').endOf('day'));
-        return range;
-    }
-    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
-        // Range must be within same month
-        if (currentSelDateRange.RangeStart.month() !== currentSelDateRange.RangeEnd.month()) {
-            throw new Error('Range must be within same month');
-        }
-
-        return currentSelDateRange.RangeStart.format('MMMM, YYYY');
-    }
-
-};

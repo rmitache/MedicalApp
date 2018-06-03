@@ -35,16 +35,11 @@ export class TickElemComponent {
     };
 
     // Constructor
-    constructor(
-    ) {
-    }
     ngOnInit() {
         this.viewModel.TickInfoWrapper = this.tickInfoWrapper;
         this.viewModel.TickWidthInPX = this.tickWidthInPX;
         this.viewModel.DateText = this.tickInfoWrapper.Date.format('MMM D');
-        
     }
-
 }
 
 interface ViewModel {

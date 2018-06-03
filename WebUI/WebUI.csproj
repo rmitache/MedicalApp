@@ -45,6 +45,7 @@
     <None Remove="SPA\Core\Helpers\comparers.ts" />
     <None Remove="SPA\Core\Helpers\DataStructures\data-structures.ts" />
     <None Remove="SPA\Core\Helpers\DataStructures\misc.ts" />
+    <None Remove="SPA\Core\Helpers\Enums\enums.ts" />
     <None Remove="SPA\Core\Helpers\Functions\functions.ts" />
     <None Remove="SPA\Core\Helpers\list.ts" />
     <None Remove="SPA\Core\Helpers\observable-list.ts" />
@@ -143,6 +144,7 @@
     <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\list.ts" />
     <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\observable-list.ts" />
     <TypeScriptCompile Include="SPA\Core\Helpers\DataStructures\observable-property.ts" />
+    <TypeScriptCompile Include="SPA\Core\Helpers\Enums\enums.ts" />
     <TypeScriptCompile Include="SPA\Core\Helpers\Functions\functions.ts" />
     <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\Classes\execution-engine.ts" />
     <TypeScriptCompile Include="SPA\Core\Managers\CommandManager\Classes\command-flow.ts" />

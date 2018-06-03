@@ -27,13 +27,4 @@ export class TodayIndicatorComponent {
     private xPos: number = 0;
     @Input('YPos')
     private yPos: number = 0;
-    // Constructor
-    constructor(
-    ) {
-    }
-    ngOnInit() {
-       
-    }
-
-
 }

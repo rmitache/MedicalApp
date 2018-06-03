@@ -3,6 +3,7 @@ import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
+import * as momentRange from 'moment-range';
 import { ChartModule, UIChart } from 'primeng/primeng';
 //import { } from 'chartjs'
 import * as Chart from 'chart.js';
@@ -78,6 +79,11 @@ export class IndicatorsViewComponent {
 
     }
     private computeXPositionFromDate(date: moment.Moment) {
+        // Check if in range
+        var selDateRange = new momentRange.DateRange(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd);
+        if (!selDateRange.contains(date)) {
+            return null;
+        }
 
         // Variables
         var startDateIndex = HelperFunctions.GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
@@ -170,14 +176,6 @@ export class IndicatorsViewComponent {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
-    // Public methods
-    public RefreshUI() {
-        this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
-            .then(() => {
-                this.recreateDisplayRepresentation();
-            });
-    }
-
     // Event handlers
     private onNavigateBackwardTriggered() {
         // Check if prevSelectedDateRange is within the AvailableDateRange
@@ -252,7 +250,7 @@ enum IndicatorsViewDisplayMode {
     Month
 }
 
-// STRATEGIES
+// Display modes
 interface IDisplayMode {
     GetInitialSelectedDateRange(referenceDate: moment.Moment): Range<moment.Moment>;
     GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;

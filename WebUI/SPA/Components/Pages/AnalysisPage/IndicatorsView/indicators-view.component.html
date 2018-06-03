@@ -14,7 +14,7 @@
                 <span class="header-label h1">INDICATORS</span>
             </div>
             <div class="center-section">
-                <navigation-panel [Label]="viewModel.NavigationLabel"
+                <navigation-panel 
                                   (PreviousClicked)="onNavigateBackwardTriggered()"
                                   (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
             </div>
@@ -28,7 +28,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg"  overflow="visible">
 
 
-
+                    <!--Vertical lines-->
                     <svg:line *ngIf="viewModel.HighlightRangeEndXPosition !== null"
                               [attr.x1]="viewModel.HighlightRangeStartXPosition + '%'"
                               [attr.x2]="viewModel.HighlightRangeStartXPosition + '%'"

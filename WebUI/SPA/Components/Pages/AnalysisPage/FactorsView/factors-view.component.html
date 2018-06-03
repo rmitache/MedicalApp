@@ -6,9 +6,8 @@
                 <span class="header-label h1">FACTORS</span>
             </div>
             <div class="center-section">
-                <navigation-panel [Label]="viewModel.NavigationLabel"
-                                  (PreviousClicked)="onNavigateBackwardTriggered()"
-                                  (NextClicked)="onNavigateForwardTriggered()"></navigation-panel>
+                <navigation-panel #navPanel 
+                                  (DateRangeChanged)="onSelectedDateRangeChanged($event)"></navigation-panel>
             </div>
 
         </div>
@@ -34,7 +33,7 @@
 
 
                     <!--PlanElems-->
-                    <svg:g *ngFor="let plan of viewModel.AvailablePlans; let i = index" plan-elem
+                    <svg:g *ngFor="let plan of viewModel.PlansInSelectedDateRange; let i = index" plan-elem
                            overflow="visible"
                            [PlanCLO]="plan"
                            [SelectedDateRange]="viewModel.SelectedDateRange"
@@ -48,7 +47,7 @@
                            [YPos]="10"></svg:g>
                 </svg>
             </div>
-            <timeline-panel [SelectedDateRange]="viewModel.SelectedDateRange"></timeline-panel>
+            <timeline-panel #timelinePanel></timeline-panel>
         </div>
 
     </div>

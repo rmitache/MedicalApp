@@ -14,6 +14,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 
 
 @Component({
@@ -26,26 +27,27 @@ export class TimelinePanelComponent {
     // Fields
     @ViewChild('frame')
     private frame: ElementRef;
-    @Input('SelectedDateRange')
-    private selectedDateRange: Range<moment.Moment>;
+    private dateRangeSelectionMode: DateRangeMode;
     private readonly viewModel: ViewModel = {
+        SelectedDateRange: null,
         TickInfoWrappers: null,
         TickDynamicWidthInPX: null,
         DatesInSelectedDateRange: null
     };
 
     // Private methods
-    private refreshTickDynamicWidthInPX() {
+    private getTickDynamicWidthInPX() {
         var frameWidth = (this.frame.nativeElement as HTMLElement).offsetWidth;
         var tickWidth = frameWidth / (this.viewModel.DatesInSelectedDateRange.length -1 );
 
-        this.viewModel.TickDynamicWidthInPX = Math.round(tickWidth);
+        let newTickDynamicWidthInPX = Math.round(tickWidth);
+        return newTickDynamicWidthInPX;
     }
     private createTickInfoWrappers(): TickInfoWrapper[] {
 
         // Variables
         var tickInfoWrappers: TickInfoWrapper[] = [];
-        this.viewModel.DatesInSelectedDateRange = EnumerateDaysBetweenDatesUsingMoment(this.selectedDateRange, true);
+        this.viewModel.DatesInSelectedDateRange = EnumerateDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange, true);
 
         // Compute % width per tick 
         var width = 100 / (this.viewModel.DatesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
@@ -63,27 +65,25 @@ export class TimelinePanelComponent {
 
         return tickInfoWrappers;
     }
-    private recreateDisplayRepresentation() {
-
+    private refreshUI() {
         this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();
-        this.refreshTickDynamicWidthInPX();
+        this.viewModel.TickDynamicWidthInPX = this.getTickDynamicWidthInPX();
     }
 
-    // Constructor
-    ngOnInit() {
-        this.recreateDisplayRepresentation();
-    }
-    ngOnChanges() {
-        this.recreateDisplayRepresentation();
+    // Public methods
+    public SetSelectedDateRange(newDateRange: Range<moment.Moment>) {
+        this.viewModel.SelectedDateRange = newDateRange;
+        this.refreshUI();
     }
 
     // Event handlers
     @HostListener('window:resize', ['$event'])
     private onResizeWindow(event) {
-        this.refreshTickDynamicWidthInPX();
+        this.refreshUI();
     }
 }
 interface ViewModel {
+    SelectedDateRange: Range<moment.Moment>;
     TickInfoWrappers: TickInfoWrapper[];
     TickDynamicWidthInPX: number; 
     DatesInSelectedDateRange: moment.Moment[];
