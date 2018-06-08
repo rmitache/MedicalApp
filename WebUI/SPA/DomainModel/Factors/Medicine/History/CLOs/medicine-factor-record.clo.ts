@@ -6,12 +6,12 @@ import * as moment from 'moment';
 import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
 
 
-export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IFactorRecordPropertiesGroup{
+export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IMedicineFactorRecord{
     // Fields
     public ID: number;
     public OccurenceDateTime: Date;
     public Type: Enums.FactorRecordType;
-    public ParentPlanName: string;
+    
 
     public MedicineType: CLOs.MedicineTypeCLO;
     public UnitDoseType: Enums.UnitDoseType;
@@ -21,7 +21,10 @@ export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IFactorReco
     public Instruction: Enums.Instruction;
     public AdministrationMethod: Enums.AdministrationMethod;
 
+    public ParentPlanName: string;
+    public ParentPlanID: number;
     public RecentlyAdded: boolean;
+    public Taken: boolean;
 
     // Constructor
     constructor(init?: Partial<MedicineFactorRecordCLO>) {

@@ -2,7 +2,7 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 
-export class MedicineRuleItemCLO extends BaseCLO implements CLOs.IFactorRecordPropertiesGroup{
+export class MedicineRuleItemCLO extends BaseCLO implements CLOs.IMedicineFactorRecord{
     // Fields
     public ID: number;
 

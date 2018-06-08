@@ -20,10 +20,8 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.ID = blo['ID'];
         newCLO.Type = blo['Type'];
-
         newCLO.OccurenceDateTime = new Date(blo['OccurenceDateTime']);
-        newCLO.ParentPlanName = blo['ParentPlanName'];
-
+        
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.UnitDoseType = blo['UnitDoseType'];
         newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
@@ -32,9 +30,11 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.Instruction = blo['Instruction'];
         newCLO.AdministrationMethod = blo['AdministrationMethod'];
 
+        newCLO.ParentPlanName = blo['ParentPlanName'];
+        newCLO.ParentPlanID = blo['ParentPlanID'];
         newCLO.RecentlyAdded = blo['RecentlyAdded'];
-
-
+        newCLO.Taken = blo['Taken'];
+        
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
@@ -52,7 +52,9 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.Instruction = Enums.Instruction.Unspecified;
         newCLO.AdministrationMethod = Enums.AdministrationMethod.Unspecified;
 
+        newCLO.ParentPlanID = null;
         newCLO.RecentlyAdded = null;
+        newCLO.Taken = false;
 
         return newCLO;
     }

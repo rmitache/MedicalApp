@@ -17,6 +17,7 @@ namespace DataAccessLayer.Entities
         public virtual DbSet<TPlanVersion> TPlanVersion { get; set; }
         public virtual DbSet<TSymptomEntry> TSymptomEntry { get; set; }
         public virtual DbSet<TSymptomType> TSymptomType { get; set; }
+        public virtual DbSet<TTakenMedicineFactorRecord> TTakenMedicineFactorRecord { get; set; }
         public virtual DbSet<TUser> TUser { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -24,10 +25,7 @@ namespace DataAccessLayer.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-
-
                 optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
-                //optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -296,6 +294,31 @@ namespace DataAccessLayer.Entities
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<TTakenMedicineFactorRecord>(entity =>
+            {
+                entity.ToTable("t_taken_medicine_factor_record");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
+
+                entity.Property(e => e.OccurrenceDateTime)
+                    .HasColumnName("occurrence_date_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.PlanId).HasColumnName("plan_id");
+
+                entity.HasOne(d => d.MedicineType)
+                    .WithMany(p => p.TTakenMedicineFactorRecord)
+                    .HasForeignKey(d => d.MedicineTypeId)
+                    .HasConstraintName("FK_t_taken_medicine_factor_record_t_medicine_type");
+
+                entity.HasOne(d => d.Plan)
+                    .WithMany(p => p.TTakenMedicineFactorRecord)
+                    .HasForeignKey(d => d.PlanId)
+                    .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan");
             });
 
             modelBuilder.Entity<TUser>(entity =>

@@ -5,7 +5,7 @@ using BLL.DomainModel.Plans.BLOs;
 
 namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
-    public  class MedicineRuleItem: FactorRecordPropertiesGroup
+    public  class MedicineRuleItem: AbstractMedicineFactorRecord
     {
         public int ID { get; set; }
         

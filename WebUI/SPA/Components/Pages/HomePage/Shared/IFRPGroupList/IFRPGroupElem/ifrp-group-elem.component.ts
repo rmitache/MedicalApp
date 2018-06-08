@@ -19,7 +19,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 export class IFRPGroupElemComponent {
     // Fields
     @Input('IFRPGroupCLO')
-    private readonly iFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
+    private readonly iFRPGroupCLO: CLOs.IMedicineFactorRecord;
     @Input('MedicineTypeSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     private isValid: boolean = false;
@@ -147,7 +147,7 @@ export class IFRPGroupElemComponent {
 }
 
 interface ViewModel {
-    IFRPGroupCLO: CLOs.IFactorRecordPropertiesGroup;
+    IFRPGroupCLO: CLOs.IMedicineFactorRecord;
     MedicineTypeSearchResults: string[];
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;

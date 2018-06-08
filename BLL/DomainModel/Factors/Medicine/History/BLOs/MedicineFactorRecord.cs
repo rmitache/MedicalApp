@@ -5,14 +5,16 @@ using System;
 
 namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
-    public class MedicineFactorRecord : FactorRecordPropertiesGroup
+    public class MedicineFactorRecord : AbstractMedicineFactorRecord
     {
         public int ID { get; set; }
         public DateTime OccurenceDateTime { get; set; }
         public MedicineFactorRecordType Type { get; set; }
-        public string ParentPlanName { get; set; }
-        public bool? RecentlyAdded { get; set; }
 
+        public string ParentPlanName { get; set; }
+        public int? ParentPlanID { get; set; }
+        public bool? RecentlyAdded { get; set; }
+        public bool? Taken { get; set; } = true;
 
 
     }

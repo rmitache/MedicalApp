@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL.DomainModel.Factors.Medicine.History.BLOs
 {
-    public abstract class FactorRecordPropertiesGroup
+    public abstract class AbstractMedicineFactorRecord
     {
         public MedicineType MedicineType;
         public UnitDoseType UnitDoseType;

@@ -65,7 +65,7 @@
     <None Remove="SPA\DomainModel\enum-exports.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-rule-item-clo.factory.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOs\i-factor-record-properties-group.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOs\i-medicine-factor-record.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
@@ -157,7 +157,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\enum-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOFactories\medicine-rule-item-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\i-factor-record-properties-group.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\i-medicine-factor-record.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\Enums\administration-method.enum.ts" />

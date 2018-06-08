@@ -95,7 +95,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             blo.Type = MedicineFactorRecordType.PlanProjection;
             blo.MedicineType = ruleItem.MedicineType;
             blo.OccurenceDateTime = occurrenceDateTime;
-            blo.ParentPlanName = parentPlan.Name;
+            
 
             blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
             blo.UnitDoseType = ruleItem.UnitDoseType;
@@ -103,6 +103,8 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             blo.UnitDoseUoM = ruleItem.UnitDoseUoM;
             blo.Instruction = ruleItem.Instruction;
 
+            blo.ParentPlanName = parentPlan.Name;
+            blo.ParentPlanID = parentPlan.ID;
             blo.RecentlyAdded = recentlyAdded;
 
             return blo;

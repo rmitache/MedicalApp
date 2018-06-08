@@ -55,7 +55,7 @@
 
     .plan-div .factor-record-list-in-plan-grouping {
         background-color: #f6f6f6;
-        padding: 7px;
+       
         padding-top: 0;
         border-radius: 3px;
         width: calc(100% - 14px);
@@ -69,19 +69,29 @@
         color: #8b8b8b;
     }
 
-    .plan-div .factor-record-item {
+    .plan-div .factor-record-list-in-plan-grouping .factor-record-item {
         float: left;
         clear: both;
-        padding-top: 7px;
+        padding: 7px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color:black;
+        color: black;
         font-size: 9pt;
+        border-radius: 3px;
+        width:100%;
     }
 
+        .plan-div .factor-record-list-in-plan-grouping .factor-record-item:hover {
+            border-radius: 3px;
+            background-color: #e4e4e4;
+        }
 
-    .plan-div .factor-record-item-added-recently {
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item {
+        text-decoration:line-through;
+    }
+
+    .plan-div .factor-record-list-in-plan-grouping .factor-record-item .recently-added-span {
         color: green;
         font-weight: bold;
         font-size: 8px;
@@ -89,5 +99,5 @@
         float: right;
         margin-top: -6px;
         z-index: 9999;
-        background-color:aliceblue;
+        background-color: aliceblue;
     }
