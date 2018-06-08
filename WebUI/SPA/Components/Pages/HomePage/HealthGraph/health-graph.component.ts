@@ -40,7 +40,7 @@ export class HealthGraphComponent {
     private navPanelInstance: NavigationPanelComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-        
+
         SelectedDateRange: null,
         AvailableHealthEntries: null,
 
@@ -300,17 +300,40 @@ class MonthDisplayMode implements IDisplayMode {
                 y: avgHealthLevel
             };
             dataPoints.push(dp);
-            if (avgHealthLevel >= 0 && avgHealthLevel <= 1) {
-                dataPointsBgColors.push('#9dc340'); // green
+
+
+            //if (avgHealthLevel >= 0.8) {
+            //    dataPointsBgColors.push('#1abb1a');
+            //}
+            //else if (avgHealthLevel < 0.8 && avgHealthLevel > -0.8) {
+            //    dataPointsBgColors.push('#ffd800');
+            //}
+            //else if (avgHealthLevel < -0.8 ) {
+            //    dataPointsBgColors.push('#ff6767');
+            //}
+            // great
+            if (avgHealthLevel >= 2) {
+                dataPointsBgColors.push('green');
             }
-            else if (avgHealthLevel >1) {
-                dataPointsBgColors.push('green'); // red
+            // good
+            else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
+                dataPointsBgColors.push('#9dc340');
             }
-            else if (avgHealthLevel <= 0 && avgHealthLevel >= -1) {
-                dataPointsBgColors.push('#f35d5d'); // red
+            // ok
+            else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
+                dataPointsBgColors.push('#cfe27e');
             }
-            else if (avgHealthLevel < 0) {
-                dataPointsBgColors.push('red'); // red
+            // notgreat 
+            else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
+                dataPointsBgColors.push('#ffc297');
+            }
+            // bad 
+            else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
+                dataPointsBgColors.push('#fe6060');
+            }
+            // very bad
+            else if (avgHealthLevel < -1) {
+                dataPointsBgColors.push('red');
             }
 
         });
