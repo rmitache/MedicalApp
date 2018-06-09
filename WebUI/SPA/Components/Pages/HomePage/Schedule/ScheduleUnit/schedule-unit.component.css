@@ -82,17 +82,20 @@
     }
 
         .plan-div .factor-record-list-in-plan-grouping .factor-record-item:hover {
-            border-radius: 3px;
+            background-color: #e4e4ed;
         }
+
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item:hover {
+    }
 
     .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item {
         text-decoration: line-through;
-        background-color: #f1f1f1;
+        background-color: #cee9ff;
         color: gray;
     }
 
         .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item .recently-added-span {
-            visibility:hidden !important;
+            visibility: hidden !important;
         }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item .recently-added-span {
