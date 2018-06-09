@@ -25,7 +25,7 @@ export class HomePageDataService {
         datesArray.forEach(date => {
             let newBLO = {
                 ID: 1,
-                OccurenceDateTime: date,
+                OccurrenceDateTime: date,
                 HealthLevel: HelperFunctions.RandomIntFromInterval(-3, 3)
             }
             blos.push(newBLO);

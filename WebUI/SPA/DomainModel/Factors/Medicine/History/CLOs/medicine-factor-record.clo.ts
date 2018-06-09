@@ -9,7 +9,7 @@ import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
 export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IMedicineFactorRecord{
     // Fields
     public ID: number;
-    public OccurenceDateTime: Date;
+    public OccurrenceDateTime: Date;
     public Type: Enums.FactorRecordType;
     
 
@@ -34,7 +34,7 @@ export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IMedicineFa
 
     // Public methods
     public GetTime(): Time {
-        return new Time(this.OccurenceDateTime.getHours(), this.OccurenceDateTime.getMinutes());
+        return new Time(this.OccurrenceDateTime.getHours(), this.OccurrenceDateTime.getMinutes());
     }
 }
 

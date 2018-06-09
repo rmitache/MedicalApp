@@ -8,7 +8,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.BLOs
     {
         // Properties
         public int ID { get; set; }
-        public DateTime OccurenceDateTime { get; set; }
+        public DateTime OccurrenceDateTime { get; set; }
         public HealthLevel HealthLevel { get; set; }
         public List<SymptomEntry> SymptomEntries { get; set; }
 

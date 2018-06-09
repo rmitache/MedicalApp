@@ -93,7 +93,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
     ngOnInit() {
-        this.viewModel.HealthStatusEntryCLO.OccurenceDateTime = this.initialDateTime;
+        this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
         this.reactiveForm = this.fb.group({
             occurrenceDateTime: [null, Validators.compose([
                 (control: AbstractControl) => {

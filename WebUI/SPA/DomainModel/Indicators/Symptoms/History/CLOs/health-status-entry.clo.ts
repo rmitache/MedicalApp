@@ -7,7 +7,7 @@ import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 export class HealthStatusEntryCLO extends BaseCLO {
     // Fields
     public ID: number;
-    public OccurenceDateTime: Date;
+    public OccurrenceDateTime: Date;
     public HealthLevel: Enums.HealthLevel;
     public SymptomEntries: CLOs.SymptomEntryCLO[];
 
@@ -18,6 +18,6 @@ export class HealthStatusEntryCLO extends BaseCLO {
 
     // Public methods
     public GetTime(): Time {
-        return new Time(this.OccurenceDateTime.getHours(), this.OccurenceDateTime.getMinutes());
+        return new Time(this.OccurrenceDateTime.getHours(), this.OccurrenceDateTime.getMinutes());
     }
 }

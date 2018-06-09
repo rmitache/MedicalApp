@@ -99,7 +99,7 @@ namespace WebUI.Controllers
             //              The padding works such that:
             //                  - If padding is set to 0, it will load data for the current month only
             //                  - Any value more than 0 will result in additional months ahead/before being added to the query
-            int scheduleAvailableWindowPaddingInMonths = 2;
+            int scheduleAvailableWindowPaddingInMonths = 0;
             int healthGraphAvailableWindowPaddingInMonths = 0;
             var refDate = DateTime.Now.Date;
             var initialScheduleDateRange = this.GetMonthRangeWithPadding(refDate, refDate, scheduleAvailableWindowPaddingInMonths);

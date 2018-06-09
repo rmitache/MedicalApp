@@ -37,7 +37,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
             THealthStatusEntry dataEntity = new THealthStatusEntry();
             dataEntity.Id = blo.ID;
             dataEntity.UserId = userID;
-            dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
+            dataEntity.OccurrenceDateTime = blo.OccurrenceDateTime;
             dataEntity.HealthLevelId = (int) blo.HealthLevel;
             dataEntity.TSymptomEntry = this.symptomEntryFactory.Convert_ToDataEntitiesList(blo.SymptomEntries);
             return dataEntity;
@@ -52,7 +52,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
         {
             HealthStatusEntry blo = new HealthStatusEntry();
             blo.ID = dataEntity.Id;
-            blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
+            blo.OccurrenceDateTime = dataEntity.OccurrenceDateTime;
             blo.HealthLevel = (HealthLevel)dataEntity.HealthLevelId;
             blo.SymptomEntries = this.symptomEntryFactory.Convert_ToBLOList(dataEntity.TSymptomEntry.ToList());
 

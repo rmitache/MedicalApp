@@ -105,7 +105,6 @@ namespace WebUI.Controllers
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes();
             var plans = planService.GetPlans(loggedInUser.ID, true);
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialFactorsViewDateRange, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialIndicatorsViewRange, loggedInUser.ID, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
@@ -117,7 +116,6 @@ namespace WebUI.Controllers
                 SymptomTypes = symptomTypes,
                 MedicineTypes = medicineTypes,
                 Plans = plans,
-                FactorRecordsForInitialRange = factorRecords,
                 HealthStatusEntriesForInitialRange = healthStatusEntries
             };
 

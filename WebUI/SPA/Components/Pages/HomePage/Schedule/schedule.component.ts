@@ -78,7 +78,7 @@ export const goBackwardAnimation = trigger('goBackwardAnimation', [
 })
 export class ScheduleComponent {
     // Fields
-    private availableWindowPaddingInMonths = 2;
+    private availableWindowPaddingInMonths = 0;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
     private animationVariables = {
@@ -121,8 +121,8 @@ export class ScheduleComponent {
     private refreshUI() {
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let filteredFactorRecords = this.viewModel.FactorRecordsInSelectedDateRange.filter(fRec => {
-            return fRec.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
-                fRec.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
+            return fRec.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
+                fRec.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
 
         // Refresh VM properties

@@ -8,7 +8,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.BLOs
     public class MedicineFactorRecord : AbstractMedicineFactorRecord
     {
         public int ID { get; set; }
-        public DateTime OccurenceDateTime { get; set; }
+        public DateTime OccurrenceDateTime { get; set; }
         public MedicineFactorRecordType Type { get; set; }
 
         public string ParentPlanName { get; set; }

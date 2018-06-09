@@ -21,6 +21,22 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
         private readonly IMedicineTypeFactory medicineTypeFactory;
         private readonly IPlanService planService;
 
+        // Private methods
+        private string GetSpecialKey(MedicineFactorRecord record)
+        {
+            string key;
+            if (record.ParentPlanID != null)
+            {
+                key = record.ParentPlanID + "_" + record.MedicineType.ID + "_" + record.OccurrenceDateTime.ToString();
+            }
+            else
+            {
+                key = record.ID + "";
+            }
+
+            return key;
+        }
+
         // Constructor
         public MedicineFactorRecordService(
             IMedicineFactorRecordRepository medicineFactorRecordRepo,
@@ -63,13 +79,15 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
                 // Create the dataEntity
                 var newDataEntity = new TTakenMedicineFactorRecord();
                 newDataEntity.MedicineTypeId = record.MedicineType.ID;
-                newDataEntity.PlanId = (int)record.ParentPlanID;
-                newDataEntity.OccurrenceDateTime = record.OccurenceDateTime;
+                newDataEntity.PlanId = (record.ParentPlanID != null) ? record.ParentPlanID : null;
+                newDataEntity.MedicineFactorRecordId = (record.Type == MedicineFactorRecordType.UserEntry) ? record.ID as int? : null;
+                newDataEntity.OccurrenceDateTime = record.OccurrenceDateTime;
 
-                if(record.Taken== true)
+                if (record.Taken == true)
                 {
                     dataEntitiesToAdd.Add(newDataEntity);
-                } else if (record.Taken == false)
+                }
+                else if (record.Taken == false)
                 {
                     dataEntitiesToRemove.Add(newDataEntity);
                 }
@@ -90,8 +108,21 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             var plans = this.planService.GetPlans(userID, true);
             var planProjectionFactorRecordBLOs = this.medicineFactorRecordFactory.Create_FromMedicinePlans(plans, dateRange.RangeStart, dateRange.RangeEnd);
 
-            // 
-            var allFactorRecordBLOs = planProjectionFactorRecordBLOs.Concat(userEntryFactorRecordBLOs).OrderBy(rec => rec.OccurenceDateTime).ToList();
+
+
+            // Place all factorRecords together and then set their Taken property
+            var allFactorRecordBLOs = planProjectionFactorRecordBLOs.Concat(userEntryFactorRecordBLOs).OrderBy(rec => rec.OccurrenceDateTime).ToList();
+            var takenDataEntitiesDictionary = this.takenMedFactorRecordRepo.GetTakenMedicineFactorRecords(dateRange, userID);
+            foreach(MedicineFactorRecord record in allFactorRecordBLOs)
+            {
+                var key = this.GetSpecialKey(record);
+                if (takenDataEntitiesDictionary.ContainsKey(key))
+                {
+                    record.Taken = true;
+                }
+
+            }
+
             return allFactorRecordBLOs;
         }
 

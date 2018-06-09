@@ -94,7 +94,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             blo.ID = -1;
             blo.Type = MedicineFactorRecordType.PlanProjection;
             blo.MedicineType = ruleItem.MedicineType;
-            blo.OccurenceDateTime = occurrenceDateTime;
+            blo.OccurrenceDateTime = occurrenceDateTime;
             
 
             blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
@@ -123,7 +123,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             dataEntity.Id = blo.ID;
             dataEntity.UserId = userID;
             dataEntity.MedicineTypeId = blo.MedicineType.ID;
-            dataEntity.OccurrenceDateTime = blo.OccurenceDateTime;
+            dataEntity.OccurrenceDateTime = blo.OccurrenceDateTime;
 
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
             dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
@@ -145,7 +145,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             blo.ID = dataEntity.Id;
             blo.Type = MedicineFactorRecordType.UserEntry;
             blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
-            blo.OccurenceDateTime = dataEntity.OccurrenceDateTime;
+            blo.OccurrenceDateTime = dataEntity.OccurrenceDateTime;
 
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
             blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;

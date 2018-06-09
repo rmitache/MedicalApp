@@ -302,6 +302,8 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.MedicineFactorRecordId).HasColumnName("medicine_factor_record_id");
+
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 
                 entity.Property(e => e.OccurrenceDateTime)
@@ -309,6 +311,11 @@ namespace DataAccessLayer.Entities
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.PlanId).HasColumnName("plan_id");
+
+                entity.HasOne(d => d.MedicineFactorRecord)
+                    .WithMany(p => p.TTakenMedicineFactorRecord)
+                    .HasForeignKey(d => d.MedicineFactorRecordId)
+                    .HasConstraintName("FK_t_taken_medicine_factor_record_t_medicine_factor_record");
 
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.TTakenMedicineFactorRecord)

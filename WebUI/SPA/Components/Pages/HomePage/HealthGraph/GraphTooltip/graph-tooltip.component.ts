@@ -120,7 +120,7 @@ export class GraphTooltipComponent {
 
             // Create datapoints
             var dp = {
-                x: moment(clo.OccurenceDateTime, moment.ISO_8601),
+                x: moment(clo.OccurrenceDateTime, moment.ISO_8601),
                 y: clo.HealthLevel
             };
             dataPoints.push(dp);
@@ -134,14 +134,14 @@ export class GraphTooltipComponent {
         // Add min/max special datapoints
         if (healthEntryCLOs.length > 0) {
             var minDp = {
-                x: moment(healthEntryCLOs[0].OccurenceDateTime).startOf('day'),
+                x: moment(healthEntryCLOs[0].OccurrenceDateTime).startOf('day'),
                 y: null
             }
             dataPoints.splice(0, 0, minDp);
             dataPointsBgColors.splice(0, 0, 'black');
 
             var maxDp = {
-                x: moment(healthEntryCLOs[0].OccurenceDateTime).endOf('day'),
+                x: moment(healthEntryCLOs[0].OccurrenceDateTime).endOf('day'),
                 y: null
             }
             dataPoints.push(maxDp);

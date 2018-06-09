@@ -54,7 +54,8 @@ namespace WebUI
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services
                 .AddMvc(
-                config => {
+                config =>
+                {
                     config.Filters.Add(typeof(CustomExceptionFilter));
                 })
                 .AddJsonOptions(options =>
@@ -70,9 +71,6 @@ namespace WebUI
             // WebUI
             var webUIAssembly = Assembly.GetExecutingAssembly();
             containerBuilder.RegisterAssemblyTypes(webUIAssembly).Where(t => t.Name.EndsWith("Controller")).InstancePerLifetimeScope();
-            //containerBuilder.RegisterType<IHttpContextAccessor>()
-            //    .As<HttpContextAccessor>()
-            //    .SingleInstance();
             containerBuilder.RegisterType<WebSecurityManager>()
                .AsSelf()
                .InstancePerLifetimeScope();
@@ -127,15 +125,15 @@ namespace WebUI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=AnalysisPage}/{action=Index}");
-                //template: "{controller=HomePage}/{action=Index}");
+                //template: "{controller=AnalysisPage}/{action=Index}");
+                template: "{controller=HomePage}/{action=Index}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "HomePage", action = "Index" });
             });
 
-            
+
 
         }
     }

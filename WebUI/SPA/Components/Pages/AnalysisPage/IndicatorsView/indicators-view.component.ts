@@ -100,12 +100,12 @@ export class IndicatorsViewComponent {
 
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.HealthEntriesInSelectedDateRange.filter(entry => {
-            return entry.OccurenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
-                entry.OccurenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
+            return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
+                entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
         var healthStatusCLOsInSelDateRangeDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
-            let dateKey = moment(clo.OccurenceDateTime, moment.ISO_8601).format('DD/MM/YYYY');
+            let dateKey = moment(clo.OccurrenceDateTime, moment.ISO_8601).format('DD/MM/YYYY');
             if (healthStatusCLOsInSelDateRangeDictionary[dateKey] === undefined) {
                 healthStatusCLOsInSelDateRangeDictionary[dateKey] = [];
             };

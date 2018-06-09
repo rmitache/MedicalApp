@@ -42,7 +42,7 @@ export class AddNewEventComponent implements IModalDialog {
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     private readonly viewModel: ViewModel = {
         FactorRecordCLOs: [],
-        OccurenceDateTime: null
+        OccurrenceDateTime: null
     };
 
     // Private methods
@@ -64,7 +64,7 @@ export class AddNewEventComponent implements IModalDialog {
 
         // Loop through all FactorRecords and set OccurrenceDateTime
         this.viewModel.FactorRecordCLOs.forEach(record => {
-            record.OccurenceDateTime = this.viewModel.OccurenceDateTime;
+            record.OccurrenceDateTime = this.viewModel.OccurrenceDateTime;
 
         });
 
@@ -93,14 +93,14 @@ export class AddNewEventComponent implements IModalDialog {
         //this.text = options.data.text;
 
         let dateFromSchedule = options.data as Date;
-        this.viewModel.OccurenceDateTime = dateFromSchedule;
+        this.viewModel.OccurrenceDateTime = dateFromSchedule;
     }
 }
 
 
 interface ViewModel {
     FactorRecordCLOs: CLOs.MedicineFactorRecordCLO[];
-    OccurenceDateTime: Date;
+    OccurrenceDateTime: Date;
 }
 
 export interface IMedicineTypesSearchService {
