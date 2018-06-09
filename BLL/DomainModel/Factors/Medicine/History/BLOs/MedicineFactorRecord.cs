@@ -14,7 +14,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.BLOs
         public string ParentPlanName { get; set; }
         public int? ParentPlanID { get; set; }
         public bool? RecentlyAdded { get; set; }
-        public bool? Taken { get; set; } = true;
+        public bool? Taken { get; set; }
 
 
     }

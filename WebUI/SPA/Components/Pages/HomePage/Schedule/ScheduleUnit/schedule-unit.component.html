@@ -14,13 +14,14 @@
                     <!--FactorRecords in Plan-->
                     <div class="factor-record-list-in-plan-grouping">
                         <div *ngFor="let record of timeGroup.value.GetSortedFactorRecords(dictEntry.key)"
+                             (click)="onFactorRecordItemClicked(record)"
                              [ngClass]="{'taken-factor-record-item': record.Taken === true }"
                              class="factor-record-item label-text-dark"
                              title="{{timeGroup.value.GetStringLabel(record)}}">
 
                             &#9642; {{record.UnitDoseQuantifier}} x <span>{{record.MedicineType.Name}}</span>
                             <span *ngIf="record.RecentlyAdded===true" class="recently-added-span">NEW</span>
-                            {{record.ParentPlanID}}
+                            
                         </div>
                         <div style="clear:both"></div>
                     </div>

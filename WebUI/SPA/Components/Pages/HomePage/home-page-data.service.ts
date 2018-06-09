@@ -97,6 +97,16 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
+    public MarkFactorRecordsAsTaken(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
+        const apiMethodName: string = 'MarkFactorRecordsAsTaken';
+
+        let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
+            .toPromise();
+
+        return postDataPromise;
+    }
+
     public GetFactorRecords(dateRange: Range<Date>): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
