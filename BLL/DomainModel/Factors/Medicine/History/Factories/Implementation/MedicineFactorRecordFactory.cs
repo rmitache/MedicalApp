@@ -59,7 +59,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
             }
 
             //
-            dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurence => occurence.Period.StartTime.Date).ToList();
+            dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurrence => occurrence.Period.StartTime.Date).ToList();
             return dates;
         }
         private Dictionary<string, MedicineType> GetUniqueMedicineTypesInVersion(Plans.BLOs.Version version)

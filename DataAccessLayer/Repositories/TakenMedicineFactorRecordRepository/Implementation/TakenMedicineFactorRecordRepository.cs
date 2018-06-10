@@ -43,10 +43,10 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                         x.OccurrenceDateTime == dataEntity.OccurrenceDateTime
                     ).Delete();
                 }
-                 else
+                else
                 {
                     entitiesContext.TTakenMedicineFactorRecord.Where(x =>
-                        x.MedicineFactorRecordId == dataEntity.MedicineFactorRecordId 
+                        x.MedicineFactorRecordId == dataEntity.MedicineFactorRecordId
                     ).Delete();
                 }
 
@@ -62,7 +62,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                 .AsNoTracking()
                 .Where(
                     record =>
-                        record.Plan.UserId == userID &&
+                        (record.PlanId == null || record.Plan.UserId == userID) &&
                         record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date &&
                         record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.Add(new TimeSpan(23, 59, 59)))
                 .Include(record => record.MedicineType)
