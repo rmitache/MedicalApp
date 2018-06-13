@@ -41,8 +41,8 @@ export class FactorsViewComponent {
     private timelinePanelInstance: TimelinePanelComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-        PlansInSelectedDateRange: null,
 
+        PlansInSelectedDateRange: null,
         SelectedDateRange: null,
         TodayXPosition:null,
 

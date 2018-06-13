@@ -40,12 +40,12 @@ export class HealthGraphComponent {
     private navPanelInstance: NavigationPanelComponent;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
-
-        SelectedDateRange: null,
         AvailableHealthEntries: null,
 
+        SelectedDateRange: null,
         ChartOptions: null,
         ChartData: null,
+
         DateRangeDisplayMode: DateRangeMode.Month,
         Blocked: false
 
@@ -241,9 +241,9 @@ export class HealthGraphComponent {
 
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
+    AvailableHealthEntries: CLOs.HealthStatusEntryCLO[];
 
     SelectedDateRange: Range<moment.Moment>;
-    AvailableHealthEntries: CLOs.HealthStatusEntryCLO[];
 
     ChartOptions: any;
     ChartData: any;

@@ -89,7 +89,7 @@ export class ScheduleComponent {
         AvailableDateRange: null,
 
         SelectedDateRange: null,
-        FactorRecordsInSelectedDateRange: null,
+        AvailableFactorRecords: null,
         VisibleDisplayRepresentation: null,
 
         DateRangeDisplayMode: DateRangeMode.Day,
@@ -114,21 +114,20 @@ export class ScheduleComponent {
         let promise = this.dataService.GetFactorRecords(jsDateRange)
             .then(factorRecordCLOs => {
                 this.viewModel.AvailableDateRange = newDateRange;
-                this.viewModel.FactorRecordsInSelectedDateRange = factorRecordCLOs;
+                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
             });
         return promise;
     }
     private refreshUI() {
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
-        let filteredFactorRecords = this.viewModel.FactorRecordsInSelectedDateRange.filter(fRec => {
+        let visibleFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
             return fRec.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 fRec.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
 
         // Refresh VM properties
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
-        this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(filteredFactorRecords);
-
+        this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(visibleFactorRecords);
     }
 
     // Constructor 
@@ -153,7 +152,7 @@ export class ScheduleComponent {
 
         // Init VM properties
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
-        this.viewModel.FactorRecordsInSelectedDateRange = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
+        this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
 
         // Refresh the UI
@@ -273,7 +272,7 @@ export class ScheduleComponent {
 }
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
-    FactorRecordsInSelectedDateRange: CLOs.MedicineFactorRecordCLO[];
+    AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
 
     SelectedDateRange: Range<moment.Moment>;
     VisibleDisplayRepresentation: DisplayRepresentation;
@@ -345,13 +344,10 @@ class DayDisplayMode implements IDisplayMode {
     }
 
     // Public methods
-    public GenerateDisplayRepresentation(filteredFactorRecords: CLOs.MedicineFactorRecordCLO[]) {
-
-        // Clone filteredFactorRecords
-        filteredFactorRecords = this.genericCLOFactory.CloneCLOArray(filteredFactorRecords);
+    public GenerateDisplayRepresentation(visibleFactorRecords: CLOs.MedicineFactorRecordCLO[]) {
 
         // Sort by time (ascending)
-        filteredFactorRecords = filteredFactorRecords.sort((f1, f2) => {
+        visibleFactorRecords = visibleFactorRecords.sort((f1, f2) => {
             if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
                 return 1;
             }
@@ -374,7 +370,7 @@ class DayDisplayMode implements IDisplayMode {
         });
 
         // Loop through factorRecords and add them to their corresponding Unit representations
-        filteredFactorRecords.forEach((record) => {
+        visibleFactorRecords.forEach((record) => {
 
             // Find which unitRepr it belongs to 
             let unitRepr = displayRep.UnitRepresentations.find(unitRepr => unitRepr.TimeInterval.ContainsTime(record.GetTime()));
