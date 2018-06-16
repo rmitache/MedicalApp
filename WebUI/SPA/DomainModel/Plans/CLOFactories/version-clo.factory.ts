@@ -22,17 +22,12 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
     }
 
     // Public Methods
-    public Convert_ToCLO(blo: any, index?: number): CLOs.VersionCLO {
+    public Convert_ToCLO(blo: any): CLOs.VersionCLO {
         let newCLO = new CLOs.VersionCLO();
         newCLO.ID = blo['ID'];
         newCLO.StartDate = new Date(blo['StartDate']);
         newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
         newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
-        if (index) {
-            newCLO.Index = index;
-        } else {
-            index = 1;
-        }
 
         return newCLO;
     }
@@ -48,7 +43,7 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.VersionCLO> {
         let cloList = new DataStructures.List<CLOs.VersionCLO>();
         bloArray.forEach((blo, index) => {
-            let clo = this.Convert_ToCLO(blo, index + 1);
+            let clo = this.Convert_ToCLO(blo);
             cloList.Add(clo);
         });
 

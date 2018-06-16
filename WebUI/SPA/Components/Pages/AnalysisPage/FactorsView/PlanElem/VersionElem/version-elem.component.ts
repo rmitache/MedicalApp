@@ -12,7 +12,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { VersionInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { VersionRepresentation } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
 
 
 @Component({
@@ -24,7 +24,7 @@ import { VersionInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsVie
 export class VersionElemComponent {
     // Fields
     @Input('VersionInfoWrapper')
-    private versionInfoWrapper: VersionInfoWrapper;
+    private versionInfoWrapper: VersionRepresentation;
     @Input('ParentGroupYPos')
     private parentGroupYPos: number;
     @ViewChild("svgElem") svgElem;
@@ -84,7 +84,7 @@ export class VersionElemComponent {
 }
 
 interface ViewModel {
-    VersionInfoWrapper: VersionInfoWrapper;
+    VersionInfoWrapper: VersionRepresentation;
     ShowHoverEffect: boolean;
     ParentGroupYPos: number;
 }
@@ -92,7 +92,7 @@ export class VersionElemHoverEventInfo {
     constructor(
         public readonly Left: number,
         public readonly Top: number,
-        public readonly InfoWrapper: VersionInfoWrapper) {
+        public readonly InfoWrapper: VersionRepresentation) {
 
     }
 }

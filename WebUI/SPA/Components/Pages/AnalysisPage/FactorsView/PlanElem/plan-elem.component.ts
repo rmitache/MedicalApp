@@ -42,11 +42,11 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    private createVersionInfoWrappers(): VersionInfoWrapper[] {
+    private createVersionInfoWrappers(): VersionRepresentation[] {
 
         // Variables
         var versionCLOs = this.planCLO.Versions;
-        var versionInfoWrappers: VersionInfoWrapper[] = [];
+        var versionInfoWrappers: VersionRepresentation[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
         var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
 
@@ -73,7 +73,7 @@ export class PlanElemComponent {
 
 
 
-                let newWrapper = new VersionInfoWrapper(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
+                let newWrapper = new VersionRepresentation(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
@@ -133,20 +133,23 @@ interface ViewModel {
     XPos: number;
     YPos: number;
 
-    VersionInfoWrappers: VersionInfoWrapper[];
+    VersionInfoWrappers: VersionRepresentation[];
 }
 
 //
-export class VersionInfoWrapper {
+export class VersionRepresentation {
     // Fields
+
+    // Business logic 
     public VersionCLO: CLOs.VersionCLO;
     public PlanName: string;
-    public Width: number;
-    public XPos: number;
-    public YPos: number;
     public IntersectionDateRange: momentRange.DateRange;
     public HasNextAdjacentVersion: boolean;
 
+    // UI logic
+    public Width: number;
+    public XPos: number;
+    public YPos: number;
     public ShowPlanName: boolean = false;
 
     // Properties

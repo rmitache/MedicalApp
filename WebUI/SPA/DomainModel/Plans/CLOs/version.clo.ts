@@ -12,7 +12,6 @@ export class VersionCLO extends BaseCLO {
     public StartDate: Date;
     public EndDate: Date;
     public Rules: CLOs.RuleCLO[];
-    public Index: number;
 
     // Properties
     public get Status(): Enums.VersionStatus {
@@ -117,4 +116,17 @@ export class VersionCLO extends BaseCLO {
         })
         return medTypesArray;
     }
+}
+
+export class VersionChangeCLO {
+
+    // Overall version changes
+    // AverageMonthlyDosage
+    // Fields
+    public TotalAverageMonthlyDosage: number;
+    public MedicineTypesChanges: MedicineTypeChangeCLO[];
+}
+
+export class MedicineTypeChangeCLO {
+
 }
