@@ -4,16 +4,9 @@
     padding: 20px;
 }
 
-.hit-box-rect {
-    fill: transparent;
 
-}
 .horizontal-line {
     stroke-width: 1.5;
     stroke: #8dbae0
 }
 
-.hover-effect-rect {
-    fill: #e8e8ff;
-    border-radius: 10px;
-}

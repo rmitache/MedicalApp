@@ -5,7 +5,7 @@ import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
 
 // Project modules
-import { Time, Range, TimeRange, CoordinatePair} from 'SPA/Core/Helpers/DataStructures/misc';
+import { Time, Range, TimeRange, CoordinatePair } from 'SPA/Core/Helpers/DataStructures/misc';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -62,17 +62,12 @@ export class PlanElemComponent {
                 let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
                 let width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
 
-
                 // Determine the X and Y positions
                 let startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
                 let xPosition = (startDateIndex) * widthBetweenDates;
                 let yPosition = 5;
 
                 // Create the wrapper
-                let nrOfRenderedDaysInVersion = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
-
-
-
                 let newWrapper = new VersionRepresentation(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
@@ -98,7 +93,7 @@ export class PlanElemComponent {
                         versionInfoWrappers[j].Width += 1 * widthBetweenDates;
                         versionInfoWrappers[j].HasNextAdjacentVersion = true;
                     }
-                   
+
                 }
             }
         }
@@ -106,10 +101,6 @@ export class PlanElemComponent {
     }
 
     // Constructor
-    constructor(
-    ) {
-
-    }
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
         this.viewModel.SelectedDateRange = this.selectedDateRange;
@@ -139,37 +130,39 @@ interface ViewModel {
 //
 export class VersionRepresentation {
     // Fields
-
-    // Business logic 
     public VersionCLO: CLOs.VersionCLO;
-    public PlanName: string;
     public IntersectionDateRange: momentRange.DateRange;
     public HasNextAdjacentVersion: boolean;
 
-    // UI logic
     public Width: number;
     public XPos: number;
     public YPos: number;
     public ShowPlanName: boolean = false;
+    public PlanName: string;
 
     // Properties
-    public get StartMarkerName(): string {
+    public get VersionStartsOnIntersectionStart(): boolean {
         var versionStartSameAsIntersectionStart = moment(this.VersionCLO.StartDate).isSame(this.IntersectionDateRange.start, 'day');
+        return versionStartSameAsIntersectionStart;
+    }
+    public get VersionEndsOnIntersectionEnd(): boolean {
+        var versionEndSameAsIntersectionEnd = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
+        return versionEndSameAsIntersectionEnd;
+    }
+    public get StartMarkerName(): string {
 
-        if (versionStartSameAsIntersectionStart) {
+        if (this.VersionStartsOnIntersectionStart === true) {
             return 'url(#circle-tick-start)'
+        } else {
+            return '';
         }
-        return '';
-
     }
     public get EndMarkerName(): string {
-        var versionEndSameAsIntersectionStart = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
-
-        if (versionEndSameAsIntersectionStart) {
+        if (this.VersionEndsOnIntersectionEnd === true) {
             return 'url(#circle-tick-start)';
+        } else {
+            return 'url(#arrow)';
         }
-
-        return 'url(#arrow)';
     }
 
     // Constructor
@@ -179,7 +172,7 @@ export class VersionRepresentation {
         width: number,
         xPos: number,
         yPos: number,
-        intersectionDateRange: momentRange.DateRange
+        intersectionWithVisibleDateRange: momentRange.DateRange
     ) {
 
         this.VersionCLO = versionCLO;
@@ -187,7 +180,7 @@ export class VersionRepresentation {
         this.Width = width;
         this.XPos = xPos;
         this.YPos = yPos;
-        this.IntersectionDateRange = intersectionDateRange;
+        this.IntersectionDateRange = intersectionWithVisibleDateRange;
 
     }
 }

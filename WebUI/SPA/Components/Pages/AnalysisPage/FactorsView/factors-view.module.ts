@@ -18,6 +18,7 @@ import { TimelinePanelComponent } from 'SPA/Components/Pages/AnalysisPage/Factor
 import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/TickElem/tick-elem.component';
 import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TodayIndicator/today-indicator.component';
 import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
+import { HoverableVersionPointComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/HoverableVersionPoint/hoverable-version-point.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/Facto
         TimelinePanelComponent,
         TickElemComponent,
         TodayIndicatorComponent,
-        VersionTooltipComponent
+        VersionTooltipComponent,
+        HoverableVersionPointComponent
     ],
     exports: [
         FactorsViewComponent],

@@ -47,16 +47,16 @@ export class VersionTooltipComponent {
 
         // Set other fields
         this.viewModel.Visible = true;
-        this.viewModel.VersionCLO = versionHoverEventInfo.InfoWrapper.VersionCLO;
-        this.viewModel.PlanName = versionHoverEventInfo.InfoWrapper.PlanName;
-        this.viewModel.DurationInIntersection = GetNrOfDaysBetweenDatesUsingMoment(versionHoverEventInfo.InfoWrapper.IntersectionDateRange.start,
-            versionHoverEventInfo.InfoWrapper.IntersectionDateRange.end, true);
-        if (versionHoverEventInfo.InfoWrapper.VersionCLO.EndDate !== null) {
-            this.viewModel.DurationInVersion = GetNrOfDaysBetweenDates(versionHoverEventInfo.InfoWrapper.VersionCLO.StartDate,
-                versionHoverEventInfo.InfoWrapper.VersionCLO.EndDate, true);
+        this.viewModel.VersionCLO = versionHoverEventInfo.VersionRepr.VersionCLO;
+        this.viewModel.PlanName = versionHoverEventInfo.VersionRepr.PlanName;
+        this.viewModel.DurationInIntersection = GetNrOfDaysBetweenDatesUsingMoment(versionHoverEventInfo.VersionRepr.IntersectionDateRange.start,
+            versionHoverEventInfo.VersionRepr.IntersectionDateRange.end, true);
+        if (versionHoverEventInfo.VersionRepr.VersionCLO.EndDate !== null) {
+            this.viewModel.DurationInVersion = GetNrOfDaysBetweenDates(versionHoverEventInfo.VersionRepr.VersionCLO.StartDate,
+                versionHoverEventInfo.VersionRepr.VersionCLO.EndDate, true);
         } else {
-            this.viewModel.DurationInVersion = GetNrOfDaysBetweenDates(versionHoverEventInfo.InfoWrapper.VersionCLO.StartDate,
-                versionHoverEventInfo.InfoWrapper.IntersectionDateRange.end.toDate(), true);
+            this.viewModel.DurationInVersion = GetNrOfDaysBetweenDates(versionHoverEventInfo.VersionRepr.VersionCLO.StartDate,
+                versionHoverEventInfo.VersionRepr.IntersectionDateRange.end.toDate(), true);
         }
 
         // Calculate position

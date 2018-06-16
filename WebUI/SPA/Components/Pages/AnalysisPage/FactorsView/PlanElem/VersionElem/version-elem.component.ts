@@ -30,17 +30,10 @@ export class VersionElemComponent {
     @ViewChild("svgElem") svgElem;
     private readonly viewModel: ViewModel = {
         VersionInfoWrapper: null,
-        ShowHoverEffect: null,
-        ParentGroupYPos: null
-        //GetDates: () => {
-        //    if (this.viewModel.VersionInfoWrapper.VersionCLO.EndDate === null) {
-        //        return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - No End";
-        //    } else {
-        //        return moment(this.viewModel.VersionInfoWrapper.VersionCLO.StartDate).format('MM DD YYYY') + " - " +
-        //            moment(this.viewModel.VersionInfoWrapper.VersionCLO.EndDate).format('MM DD YYYY');
-        //    }
+        ParentGroupYPos: null,
 
-        //}
+        ShowStartPointHoverEffect: null,
+        StartPointEnabled: false
     };
 
     // Constructor
@@ -57,42 +50,49 @@ export class VersionElemComponent {
     @Output() public Hover: EventEmitter<VersionElemHoverEventInfo> = new EventEmitter();
 
     // Event handlers
-    private onMouseEnter(event: any) {
+    private onMouseEnterStartPoint(event: any) {
 
-        // Special logic to handle the end date (so the x position matches that in the FactorsView)
-        var endDate = (!this.viewModel.VersionInfoWrapper.HasNextAdjacentVersion) ? this.viewModel.VersionInfoWrapper.IntersectionDateRange.end
-            : this.viewModel.VersionInfoWrapper.IntersectionDateRange.end.clone().add(1, 'days');
-        var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, endDate);
-        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
-        this.viewModel.ShowHoverEffect = true;
+        //if (this.viewModel.VersionInfoWrapper.StartMarkerName === '') {
 
-        // Emit event
-        var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left + bRect.width/2, bRect.top, this.versionInfoWrapper);
-        this.Hover.emit(eventInfo);
+        //}
+
+        //// Show basic hover effect
+        //this.viewModel.ShowStartPointHoverEffect = true;
+
+
+        //var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, this.viewModel.VersionInfoWrapper.IntersectionDateRange.start);
+        //this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
+        
+
+        //// Emit hover event (used to show the tooltip)
+        //var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
+        //var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.versionInfoWrapper);
+        //this.Hover.emit(eventInfo);
     }
-    private onMouseLeave() {
+    private onMouseLeaveStartPoint() {
 
-        //
-        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
-        this.viewModel.ShowHoverEffect = false;
+        ////
+        //this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
+        //this.viewModel.ShowStartPointHoverEffect = false;
 
-        // Emit event
-        this.Hover.emit(null);
+        //// Emit event
+        //this.Hover.emit(null);
 
     }
 }
 
 interface ViewModel {
     VersionInfoWrapper: VersionRepresentation;
-    ShowHoverEffect: boolean;
     ParentGroupYPos: number;
+
+    ShowStartPointHoverEffect: boolean;
+    StartPointEnabled: boolean;
 }
 export class VersionElemHoverEventInfo {
     constructor(
         public readonly Left: number,
         public readonly Top: number,
-        public readonly InfoWrapper: VersionRepresentation) {
+        public readonly VersionRepr: VersionRepresentation) {
 
     }
 }

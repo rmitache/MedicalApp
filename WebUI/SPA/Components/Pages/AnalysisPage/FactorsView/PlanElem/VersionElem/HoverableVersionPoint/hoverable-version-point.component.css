@@ -1,0 +1,8 @@
+.hover-effect-rect {
+    fill: #e8e8ff;
+    border-radius: 10px;
+}
+
+.hit-box-rect {
+    fill: transparent;
+}
