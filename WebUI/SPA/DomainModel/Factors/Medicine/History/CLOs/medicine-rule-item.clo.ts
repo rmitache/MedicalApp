@@ -15,8 +15,16 @@ export class MedicineRuleItemCLO extends BaseCLO implements CLOs.IMedicineFactor
     public AdministrationMethod: Enums.AdministrationMethod;
 
 
+    // Properties
+    public get TotalDosagePerTimeInMgOrMl(): number {
+        let totalDosageInMgOrMl = this.UnitDoseQuantifier * this.UnitDoseSize;
+        return totalDosageInMgOrMl;
+    }
+
     // Constructor
     constructor() {
         super();
     }
+
+   
 }

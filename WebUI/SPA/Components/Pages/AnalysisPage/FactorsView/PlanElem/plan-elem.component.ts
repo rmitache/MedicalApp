@@ -184,3 +184,16 @@ export class VersionRepresentation {
 
     }
 }
+export class VersionChangesFromPrevVersionSummary {
+
+    // Overall version changes between two versions
+    // AverageMonthlyDosage
+    // Fields
+    
+    public TotalAverageMonthlyDosage: number;
+    public MedicineTypesChanges: MedicineTypeChangeCLO[];
+}
+
+export class MedicineTypeChangeCLO {
+
+}

@@ -148,6 +148,32 @@ export class DaysInWeek {
         this.Saturday = true;
         this.Sunday = true;
     }
+    public GetNrOfDaysWhichAreTrue() {
+        let nrOfTrueDays = 0;
+        if (this.Monday) {
+            nrOfTrueDays++;
+        }
+        if (this.Tuesday) {
+            nrOfTrueDays++;
+        }
+        if (this.Wednesday) {
+            nrOfTrueDays++;
+        }
+        if (this.Thursday) {
+            nrOfTrueDays++;
+        }
+        if (this.Friday) {
+            nrOfTrueDays++;
+        }
+        if (this.Saturday) {
+            nrOfTrueDays++;
+        }
+        if (this.Sunday) {
+            nrOfTrueDays++;
+        }
+
+        return nrOfTrueDays;
+    }
 }
 
 export class CoordinatePair {

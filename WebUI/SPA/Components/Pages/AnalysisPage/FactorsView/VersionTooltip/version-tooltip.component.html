@@ -20,8 +20,8 @@
     </div>
 
     <div class="body">
-        <div class="medicine-type-div" *ngFor="let medicineType of viewModel?.VersionCLO?.GetUniqueMedicineTypes()">
-            <span class="label-text-dark"> {{medicineType.Name}}</span>
+        <div class="medicine-type-div" *ngFor="let medTypeEntry of viewModel?.VersionCLO?.GetUniqueMedicineTypesWithAvgDosePerMonth()">
+            <span class="label-text-dark"> {{medTypeEntry.MedicineType.Name}} = {{medTypeEntry.AvgMonthlyDosage}}</span>
         </div>
 
     </div>

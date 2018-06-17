@@ -32,7 +32,6 @@ export class VersionElemComponent {
         VersionInfoWrapper: null,
         ParentGroupYPos: null,
 
-        ShowStartPointHoverEffect: null,
         StartPointEnabled: false
     };
 
@@ -44,6 +43,8 @@ export class VersionElemComponent {
     ngOnInit() {
         this.viewModel.VersionInfoWrapper = this.versionInfoWrapper;
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
+
+        this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
     }
 
     // Events
@@ -52,31 +53,22 @@ export class VersionElemComponent {
     // Event handlers
     private onMouseEnterStartPoint(event: any) {
 
-        //if (this.viewModel.VersionInfoWrapper.StartMarkerName === '') {
-
-        //}
-
-        //// Show basic hover effect
-        //this.viewModel.ShowStartPointHoverEffect = true;
-
-
-        //var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, this.viewModel.VersionInfoWrapper.IntersectionDateRange.start);
-        //this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
+        var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, this.viewModel.VersionInfoWrapper.IntersectionDateRange.start);
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
         
 
-        //// Emit hover event (used to show the tooltip)
-        //var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        //var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.versionInfoWrapper);
-        //this.Hover.emit(eventInfo);
+        // Emit hover event (used to show the tooltip)
+        var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.versionInfoWrapper);
+        this.Hover.emit(eventInfo);
     }
     private onMouseLeaveStartPoint() {
 
-        ////
-        //this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
-        //this.viewModel.ShowStartPointHoverEffect = false;
+        //
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
 
-        //// Emit event
-        //this.Hover.emit(null);
+        // Emit event
+        this.Hover.emit(null);
 
     }
 }
@@ -85,7 +77,6 @@ interface ViewModel {
     VersionInfoWrapper: VersionRepresentation;
     ParentGroupYPos: number;
 
-    ShowStartPointHoverEffect: boolean;
     StartPointEnabled: boolean;
 }
 export class VersionElemHoverEventInfo {

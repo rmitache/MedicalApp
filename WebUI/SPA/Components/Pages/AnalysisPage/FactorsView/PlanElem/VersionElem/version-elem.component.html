@@ -5,6 +5,8 @@
 
     <!--HoverableStartPoint-->
     <svg:g hoverable-version-point
+           *ngIf="viewModel.StartPointEnabled===true"
+           [XPos]="0"
            (MouseEnter)="onMouseEnterStartPoint()"
            (MouseLeave)="onMouseLeaveStartPoint()"></svg:g>
 

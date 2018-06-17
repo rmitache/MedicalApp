@@ -90,43 +90,60 @@ export class VersionCLO extends BaseCLO {
 
         return intersectionRange;
     }
-    public GetUniqueMedicineTypes() {
-        let medTypes: { [medicineTypeName: string]: CLOs.MedicineTypeCLO } = {};
-           
+    public GetUniqueMedicineTypesWithAvgDosePerMonth() {
+        let medTypes: { [medicineTypeName: string]: MedicineTypeAndAvgMonthlyDosage } = {};
+
+        // Loop through rules  
         for (let i = 0; i < this.Rules.length; i++) {
             let ruleCLO = this.Rules[i];
 
+            // Loop through medicineRuleItems
             ruleCLO.MedicineRuleItems.forEach((medRuleItem) => {
+
+                // Create an entry for the MedicineType if it doesnt exist
                 if (medTypes[medRuleItem.MedicineType.Name] === undefined) {
-                    medTypes[medRuleItem.MedicineType.Name] = medRuleItem.MedicineType;
+                    medTypes[medRuleItem.MedicineType.Name] = new MedicineTypeAndAvgMonthlyDosage();
+                    medTypes[medRuleItem.MedicineType.Name].MedicineType = medRuleItem.MedicineType;
                 }
+
+                // Add it's dosage calculation to the monthlyTotal for its MedicineType
+                let medTypeEntry = medTypes[medRuleItem.MedicineType.Name];
+                var dosagePerMonth = medRuleItem.TotalDosagePerTimeInMgOrMl * ruleCLO.NrOfTimesPerMonth;
+                medTypeEntry.AddTotalMonthlyDosageFromMedicineRuleItem(dosagePerMonth);
             });
         }
+       
 
-        // Convert to array 
-        let medTypesArray: CLOs.MedicineTypeCLO[] = [];
+        // Convert the dictionary to an array and return it
+        let medTypesArray: MedicineTypeAndAvgMonthlyDosage[] = [];
         for (var medicineTypeName in medTypes) {
             var medicineType = medTypes[medicineTypeName];
             medTypesArray.push(medicineType);
         }
         medTypesArray = medTypesArray.sort((a, b) => {
-            if (a.Name < b.Name) return -1;
-            if (a.Name > b.Name) return 1;
+            if (a.MedicineType.Name < b.MedicineType.Name) return -1;
+            if (a.MedicineType.Name > b.MedicineType.Name) return 1;
             return 0;
         })
         return medTypesArray;
     }
 }
 
-export class VersionChangeCLO {
+export class MedicineTypeAndAvgMonthlyDosage {
 
-    // Overall version changes
-    // AverageMonthlyDosage
     // Fields
-    public TotalAverageMonthlyDosage: number;
-    public MedicineTypesChanges: MedicineTypeChangeCLO[];
-}
+    public MedicineType: CLOs.MedicineTypeCLO;
+    private totalMonthlyDosageInMgOrMl: number = 0; // quantity * unitdosesize 
+    private numberOfRuleItemsToDivideBy: number = 0;
 
-export class MedicineTypeChangeCLO {
+    // Properties
+    public get AvgMonthlyDosage(): number {
+        return this.totalMonthlyDosageInMgOrMl / this.numberOfRuleItemsToDivideBy;
+    }
 
+    // Public methods
+    public AddTotalMonthlyDosageFromMedicineRuleItem(totalDosageInMgOrMl) {
+        this.totalMonthlyDosageInMgOrMl += totalDosageInMgOrMl;
+        this.numberOfRuleItemsToDivideBy++;
+    }
 }
