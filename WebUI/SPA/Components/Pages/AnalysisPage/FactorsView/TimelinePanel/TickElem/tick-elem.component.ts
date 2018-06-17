@@ -12,7 +12,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { VersionRepresentation } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { VersionElemInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
 import { TickInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
 
 

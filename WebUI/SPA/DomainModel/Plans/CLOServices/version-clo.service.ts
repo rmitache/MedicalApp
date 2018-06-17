@@ -12,54 +12,69 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
 
 @Injectable()
-export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
-
-    // Constructor
-    constructor(
-        private readonly ruleCLOFactory: RuleCLOFactory
-    ) {
-
-    }
-
+export class VersionCLOService  {
     // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.VersionCLO {
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = blo['ID'];
-        newCLO.StartDate = new Date(blo['StartDate']);
-        newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
-        newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
+    public GetVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO): MedicineTypeChangeSet[] {
 
-        return newCLO;
-    }
-    public Create_DefaultCLO(): CLOs.VersionCLO {
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = 0;
-        newCLO.StartDate = moment().startOf('day').add(1, 'days').toDate();
-        newCLO.EndDate = null;
-        newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
+        // Variables
+        let medTypeChanges: MedicineTypeChangeSet[] = [];
+        let targetVersionUniqueMedTypes = targetVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
+        let prevVersionUniqueMedTypes = prevVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
 
-        return newCLO;
-    }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.VersionCLO> {
-        let cloList = new DataStructures.List<CLOs.VersionCLO>();
-        bloArray.forEach((blo, index) => {
-            let clo = this.Convert_ToCLO(blo);
-            cloList.Add(clo);
-        });
+        // Loop through entries in the targetVersionMedTypes (find those which are NEW and CHANGED)
+        for (var medicineTypeName in targetVersionUniqueMedTypes) {
+            let medTypeEntry = targetVersionUniqueMedTypes[medicineTypeName];
+            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
 
-        return cloList;
-    }
-    public Clone_CLOAsNewBLO(clo: CLOs.VersionCLO): CLOs.VersionCLO {
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = 0;
-        newCLO.StartDate = clo.StartDate;
-        newCLO.EndDate = clo.EndDate;
-        newCLO.Rules = [];
-        for (var i = 0; i < clo.Rules.length; i++) {
-            var newRule = this.ruleCLOFactory.Clone_CLOAsNewBLO(clo.Rules[i]);
-            newCLO.Rules.push(newRule);
+            // New
+            if (prevVersionUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
+                newMedTypeChangeSet.ChangeType = ChangeType.New;
+            }
+            // Changed
+            else if (prevVersionUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
+                var prevVersionMedTypeChangeSet = prevVersionUniqueMedTypes[medicineTypeName];
+
+                if (prevVersionMedTypeChangeSet.AvgMonthlyDosage < medTypeEntry.AvgMonthlyDosage) {
+                    newMedTypeChangeSet.ChangeType = ChangeType.Increased;
+                } else if (prevVersionMedTypeChangeSet.AvgMonthlyDosage > medTypeEntry.AvgMonthlyDosage) {
+                    newMedTypeChangeSet.ChangeType = ChangeType.Decreased;
+                } else {
+                    newMedTypeChangeSet.ChangeType = ChangeType.Unchanged;
+                }
+            }
+
+            delete prevVersionUniqueMedTypes[medicineTypeName];
+            medTypeChanges.push(newMedTypeChangeSet);
         }
 
-        return newCLO;
+        // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
+        for (var medicineTypeName in prevVersionUniqueMedTypes) {
+            let medTypeEntry = prevVersionUniqueMedTypes[medicineTypeName];
+            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
+
+            // Stopped
+            if (targetVersionUniqueMedTypes[medicineTypeName] === undefined) {
+                newMedTypeChangeSet.ChangeType = ChangeType.Stopped;
+            }
+
+            medTypeChanges.push(newMedTypeChangeSet);
+        }
+
+
+        return medTypeChanges;
     }
+}
+
+export class MedicineTypeChangeSet {
+    public ChangeType: ChangeType;
+
+    constructor(public MedicineType: CLOs.MedicineTypeCLO) {
+    }
+}
+export enum ChangeType {
+    Unchanged = 0,
+    Increased = 1,
+    Decreased = 2,
+    New = 3,
+    Stopped = 4
 }

@@ -12,7 +12,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { VersionRepresentation } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { VersionElemInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
 
 
 @Component({
@@ -24,7 +24,7 @@ import { VersionRepresentation } from 'SPA/Components/Pages/AnalysisPage/Factors
 export class VersionElemComponent {
     // Fields
     @Input('VersionInfoWrapper')
-    private versionInfoWrapper: VersionRepresentation;
+    private versionInfoWrapper: VersionElemInfoWrapper;
     @Input('ParentGroupYPos')
     private parentGroupYPos: number;
     @ViewChild("svgElem") svgElem;
@@ -59,7 +59,7 @@ export class VersionElemComponent {
 
         // Emit hover event (used to show the tooltip)
         var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.versionInfoWrapper);
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO);
         this.Hover.emit(eventInfo);
     }
     private onMouseLeaveStartPoint() {
@@ -72,18 +72,18 @@ export class VersionElemComponent {
 
     }
 }
-
 interface ViewModel {
-    VersionInfoWrapper: VersionRepresentation;
+    VersionInfoWrapper: VersionElemInfoWrapper;
     ParentGroupYPos: number;
 
     StartPointEnabled: boolean;
 }
+
 export class VersionElemHoverEventInfo {
     constructor(
         public readonly Left: number,
         public readonly Top: number,
-        public readonly VersionRepr: VersionRepresentation) {
+        public readonly VersionCLO: CLOs.VersionCLO) {
 
     }
 }

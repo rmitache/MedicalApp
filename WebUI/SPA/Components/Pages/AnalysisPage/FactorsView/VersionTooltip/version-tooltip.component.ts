@@ -7,7 +7,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { GetNrOfDaysBetweenDatesUsingMoment, GetNrOfDaysBetweenDates } from 'SPA/Core/Helpers/Functions/functions';
-import { VersionRepresentation, VersionChangeType } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { VersionCLOService, MedicineTypeChangeSet } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 
 
@@ -22,23 +22,26 @@ export class VersionTooltipComponent {
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
     private readonly viewModel: ViewModel = {
-        VersionRepresentation: null,
-        GetChangeTypeIcon: (versionChangeType: VersionChangeType) => {
-            
-            return VersionChangeType[versionChangeType];
-        },
+        VersionCLO: null,
+        Changes: null,
 
         Visible: false,
         TopPos: 0,
         LeftPos: 0
     };
 
+    // Constructor
+    constructor(private versionCLOService: VersionCLOService) {
+
+    }
+    
     // Public 
-    public SetDataAndPosition(versionHoverEventInfo: VersionElemHoverEventInfo) {
+    public Show(versionHoverEventInfo: VersionElemHoverEventInfo) {
 
         // Set other fields
         this.viewModel.Visible = true;
-        this.viewModel.VersionRepresentation = versionHoverEventInfo.VersionRepr;
+        this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
+        //this.viewModel.Changes = this.versionCLOService.GetVersionChanges();
 
         // Calculate position
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
@@ -57,8 +60,8 @@ export class VersionTooltipComponent {
 
 
 interface ViewModel {
-    VersionRepresentation: VersionRepresentation;
-    GetChangeTypeIcon(versionChangeType: VersionChangeType): string;
+    VersionCLO: CLOs.VersionCLO;
+    Changes: MedicineTypeChangeSet[];
 
     Visible: boolean;
     TopPos: number;

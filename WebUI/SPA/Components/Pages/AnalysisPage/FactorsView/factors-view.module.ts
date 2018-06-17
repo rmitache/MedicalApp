@@ -9,6 +9,7 @@ import { AutoCompleteModule } from 'primeng/primeng';
 
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
+import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 // Components
 import { FactorsViewComponent } from './factors-view.component';
@@ -43,6 +44,9 @@ import { HoverableVersionPointComponent } from 'SPA/Components/Pages/AnalysisPag
     exports: [
         FactorsViewComponent],
     entryComponents: [
+    ],
+    providers: [
+        VersionCLOService
     ]
 })
 export class FactorsViewModule { }

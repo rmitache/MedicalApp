@@ -42,60 +42,11 @@ export class PlanElemComponent {
     };
 
     // Private methods
-    private getVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO): MedicineTypeChangeSet[] {
-
-        // Variables
-        let medTypeChanges: MedicineTypeChangeSet[] = [];
-        let targetVersionUniqueMedTypes = targetVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
-        let prevVersionUniqueMedTypes = prevVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
-
-        // Loop through entries in the targetVersionMedTypes (find those which are NEW and CHANGED)
-        for (var medicineTypeName in targetVersionUniqueMedTypes) {
-            let medTypeEntry = targetVersionUniqueMedTypes[medicineTypeName];
-            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
-
-            // New
-            if (prevVersionUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
-                newMedTypeChangeSet.ChangeType = VersionChangeType.New;
-            }
-            // Changed
-            else if (prevVersionUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
-                var prevVersionMedTypeChangeSet = prevVersionUniqueMedTypes[medicineTypeName];
-
-                if (prevVersionMedTypeChangeSet.AvgMonthlyDosage < medTypeEntry.AvgMonthlyDosage) {
-                    newMedTypeChangeSet.ChangeType = VersionChangeType.Increased;
-                } else if (prevVersionMedTypeChangeSet.AvgMonthlyDosage > medTypeEntry.AvgMonthlyDosage) {
-                    newMedTypeChangeSet.ChangeType = VersionChangeType.Decreased;
-                } else {
-                    newMedTypeChangeSet.ChangeType = VersionChangeType.Unchanged;
-                }
-            }
-
-            delete prevVersionUniqueMedTypes[medicineTypeName];
-            medTypeChanges.push(newMedTypeChangeSet);
-        }
-
-        // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
-        for (var medicineTypeName in prevVersionUniqueMedTypes) {
-            let medTypeEntry = prevVersionUniqueMedTypes[medicineTypeName];
-            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
-
-            // Stopped
-            if (targetVersionUniqueMedTypes[medicineTypeName] === undefined) {
-                newMedTypeChangeSet.ChangeType = VersionChangeType.Stopped;
-            }
-
-            medTypeChanges.push(newMedTypeChangeSet);
-        }
-
-
-        return medTypeChanges;
-    }
-    private createVersionInfoWrappers(): VersionRepresentation[] {
+    private createVersionInfoWrappers(): VersionElemInfoWrapper[] {
 
         // Variables
         var versionCLOs = this.planCLO.Versions;
-        var versionInfoWrappers: VersionRepresentation[] = [];
+        var versionInfoWrappers: VersionElemInfoWrapper[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
         var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
 
@@ -117,21 +68,17 @@ export class PlanElemComponent {
                 let yPosition = 5;
 
                 // Create the wrapper
-                let newWrapper = new VersionRepresentation(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
-                if (i > 0) {
-                    newWrapper.ChangesFromPrevVersion = this.getVersionChanges(versionCLO, versionCLOs[i - 1]);
-                }
+                let newWrapper = new VersionElemInfoWrapper(versionCLO, width, xPosition, yPosition, intersectionRange);
                 versionInfoWrappers.push(newWrapper);
             }
         }
-
 
         // Second iteration through versionInfoWrappers 
         if (versionInfoWrappers.length > 0) {
 
             // Show plan name above first visible versionElem
             let firstVersionInfoWrapper = versionInfoWrappers[0];
-            firstVersionInfoWrapper.ShowPlanName = true;
+            firstVersionInfoWrapper.PlanName = this.viewModel.PlanCLO.Name;
 
             // Handle special width adjustments for adjacent versions
             for (let j = 0; j < versionInfoWrappers.length - 1; j++) {
@@ -179,21 +126,19 @@ interface ViewModel {
     XPos: number;
     YPos: number;
 
-    VersionInfoWrappers: VersionRepresentation[];
+    VersionInfoWrappers: VersionElemInfoWrapper[];
 }
 
 // Representation
-export class VersionRepresentation {
+export class VersionElemInfoWrapper {
     // Fields
     public VersionCLO: CLOs.VersionCLO;
-    public ChangesFromPrevVersion: MedicineTypeChangeSet[];
     public IntersectionDateRange: momentRange.DateRange;
     public HasNextAdjacentVersion: boolean;
 
     public Width: number;
     public XPos: number;
     public YPos: number;
-    public ShowPlanName: boolean = false;
     public PlanName: string;
 
     // Properties
@@ -224,15 +169,12 @@ export class VersionRepresentation {
     // Constructor
     constructor(
         versionCLO: CLOs.VersionCLO,
-        planName: string,
         width: number,
         xPos: number,
         yPos: number,
         intersectionWithVisibleDateRange: momentRange.DateRange
     ) {
-
         this.VersionCLO = versionCLO;
-        this.PlanName = planName;
         this.Width = width;
         this.XPos = xPos;
         this.YPos = yPos;
@@ -241,22 +183,3 @@ export class VersionRepresentation {
     }
 }
 
-// Changes
-export class VersionChangeSet {
-
-    public AverageMonthlyDosageDifference: number;
-    public MedicineTypesChanges: MedicineTypeChangeSet[] = [];
-}
-export class MedicineTypeChangeSet {
-    public ChangeType: VersionChangeType;
-
-    constructor(public MedicineType: CLOs.MedicineTypeCLO) {
-    }
-}
-export enum VersionChangeType {
-    Unchanged = 0,
-    Increased = 1,
-    Decreased = 2,
-    New = 3,
-    Stopped = 4
-}

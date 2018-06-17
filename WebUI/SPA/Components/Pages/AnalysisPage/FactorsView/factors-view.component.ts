@@ -122,7 +122,7 @@ export class FactorsViewComponent {
     private onVersionElemHover(eventInfo: VersionElemHoverEventInfo) {
         
         if (eventInfo) {
-            this.versionTooltipInstance.SetDataAndPosition(eventInfo);
+            this.versionTooltipInstance.Show(eventInfo);
         } else {
             this.versionTooltipInstance.HideAndClear();
         }

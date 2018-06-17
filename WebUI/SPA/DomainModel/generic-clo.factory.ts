@@ -184,31 +184,5 @@ export class GenericCLOFactory {
         return clo;
     }
 
-
     
-
-    /*
-    //public CreateFromParams<T>(type: IType<T>, ...params: any[]): T {
-
-    //    // Obtain the actual factory implementation by type 
-    //    let factory: ICreatable<T> = this.getCreationFactoryByType<T>(type);
-
-    //    let clo: T = factory.Create_FromParams(...params);
-
-    //    return clo;
-    //}
-
-    //public CloneCloList<T extends BaseCLO>(cloArray: T[]): DataStructures.List<T> {
-
-    //    if (cloArray.length === 0) {
-    //        return new DataStructures.List<T>();
-    //    }
-
-    //    let typeName: string = cloArray[0].GetTypeName();
-    //    let factory: ICreatable<T> = this.getCreationFactoryByTypeName<T>(typeName);
-    //    let cloneList: DataStructures.List<T> = factory.Clone_CloList(cloArray);
-
-    //    return cloneList;
-    //}
-    */
 }
