@@ -113,19 +113,7 @@ export class VersionCLO extends BaseCLO {
             });
         }
        
-
-        // Convert the dictionary to an array and return it
-        let medTypesArray: MedicineTypeAndAvgMonthlyDosage[] = [];
-        for (var medicineTypeName in medTypes) {
-            var medicineType = medTypes[medicineTypeName];
-            medTypesArray.push(medicineType);
-        }
-        medTypesArray = medTypesArray.sort((a, b) => {
-            if (a.MedicineType.Name < b.MedicineType.Name) return -1;
-            if (a.MedicineType.Name > b.MedicineType.Name) return 1;
-            return 0;
-        })
-        return medTypesArray;
+        return medTypes;
     }
 }
 

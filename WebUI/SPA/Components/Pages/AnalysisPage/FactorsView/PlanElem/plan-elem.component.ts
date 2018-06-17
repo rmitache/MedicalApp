@@ -42,6 +42,55 @@ export class PlanElemComponent {
     };
 
     // Private methods
+    private getVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO): MedicineTypeChangeSet[] {
+
+        // Variables
+        let medTypeChanges: MedicineTypeChangeSet[] = [];
+        let targetVersionUniqueMedTypes = targetVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
+        let prevVersionUniqueMedTypes = prevVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
+
+        // Loop through entries in the targetVersionMedTypes (find those which are NEW and CHANGED)
+        for (var medicineTypeName in targetVersionUniqueMedTypes) {
+            let medTypeEntry = targetVersionUniqueMedTypes[medicineTypeName];
+            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
+
+            // New
+            if (prevVersionUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
+                newMedTypeChangeSet.ChangeType = VersionChangeType.New;
+            }
+            // Changed
+            else if (prevVersionUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
+                var prevVersionMedTypeChangeSet = prevVersionUniqueMedTypes[medicineTypeName];
+
+                if (prevVersionMedTypeChangeSet.AvgMonthlyDosage < medTypeEntry.AvgMonthlyDosage) {
+                    newMedTypeChangeSet.ChangeType = VersionChangeType.Increased;
+                } else if (prevVersionMedTypeChangeSet.AvgMonthlyDosage > medTypeEntry.AvgMonthlyDosage) {
+                    newMedTypeChangeSet.ChangeType = VersionChangeType.Decreased;
+                } else {
+                    newMedTypeChangeSet.ChangeType = VersionChangeType.Unchanged;
+                }
+            }
+
+            delete prevVersionUniqueMedTypes[medicineTypeName];
+            medTypeChanges.push(newMedTypeChangeSet);
+        }
+
+        // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
+        for (var medicineTypeName in prevVersionUniqueMedTypes) {
+            let medTypeEntry = prevVersionUniqueMedTypes[medicineTypeName];
+            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
+
+            // Stopped
+            if (targetVersionUniqueMedTypes[medicineTypeName] === undefined) {
+                newMedTypeChangeSet.ChangeType = VersionChangeType.Stopped;
+            }
+
+            medTypeChanges.push(newMedTypeChangeSet);
+        }
+
+
+        return medTypeChanges;
+    }
     private createVersionInfoWrappers(): VersionRepresentation[] {
 
         // Variables
@@ -69,6 +118,9 @@ export class PlanElemComponent {
 
                 // Create the wrapper
                 let newWrapper = new VersionRepresentation(versionCLO, this.planCLO.Name, width, xPosition, yPosition, intersectionRange);
+                if (i > 0) {
+                    newWrapper.ChangesFromPrevVersion = this.getVersionChanges(versionCLO, versionCLOs[i - 1]);
+                }
                 versionInfoWrappers.push(newWrapper);
             }
         }
@@ -96,6 +148,9 @@ export class PlanElemComponent {
 
                 }
             }
+
+
+
         }
         return versionInfoWrappers;
     }
@@ -127,10 +182,11 @@ interface ViewModel {
     VersionInfoWrappers: VersionRepresentation[];
 }
 
-//
+// Representation
 export class VersionRepresentation {
     // Fields
     public VersionCLO: CLOs.VersionCLO;
+    public ChangesFromPrevVersion: MedicineTypeChangeSet[];
     public IntersectionDateRange: momentRange.DateRange;
     public HasNextAdjacentVersion: boolean;
 
@@ -184,16 +240,23 @@ export class VersionRepresentation {
 
     }
 }
-export class VersionChangesFromPrevVersionSummary {
 
-    // Overall version changes between two versions
-    // AverageMonthlyDosage
-    // Fields
-    
-    public TotalAverageMonthlyDosage: number;
-    public MedicineTypesChanges: MedicineTypeChangeCLO[];
+// Changes
+export class VersionChangeSet {
+
+    public AverageMonthlyDosageDifference: number;
+    public MedicineTypesChanges: MedicineTypeChangeSet[] = [];
 }
+export class MedicineTypeChangeSet {
+    public ChangeType: VersionChangeType;
 
-export class MedicineTypeChangeCLO {
-
+    constructor(public MedicineType: CLOs.MedicineTypeCLO) {
+    }
+}
+export enum VersionChangeType {
+    Unchanged = 0,
+    Increased = 1,
+    Decreased = 2,
+    New = 3,
+    Stopped = 4
 }

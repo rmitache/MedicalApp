@@ -60,6 +60,7 @@
 
     .body .medicine-type-div {
         float:left;
+        clear:both;
         padding:3px;
         border:solid 1px gray;
         border-radius:3px;

@@ -15,31 +15,26 @@ export class RuleCLO extends BaseCLO {
 
     // Properties
     public get NrOfTimesPerMonth(): number {
+
         // Nr of times per day 
         let nrOfTimesPerDay = this.MomentsInDay.length;
 
-        // Nr of times per week
-        let nrOfTimesPerWeek: number;
-        if (this.FrequencyType = RuleFrequencyType.Week) {
-            nrOfTimesPerWeek = this.DaysInWeek.GetNrOfDaysWhichAreTrue();
-        } else {
-            nrOfTimesPerWeek = 7;
-        }
-
-        // Nr of weeks per month
-        let nrOfWeeksPerMonth: number;
+        // Nr of days in month 
+        let nrOfDaysPerMonth: number;
+        let everyX = this.OrdinalFrequencyType + 1;
         if (this.FrequencyType = RuleFrequencyType.Day) {
-            nrOfWeeksPerMonth = 4;
-        } else if (this.FrequencyType = RuleFrequencyType.Week) {
-            let everyX =  this.OrdinalFrequencyType + 1;
-            nrOfWeeksPerMonth = 4;
-        }
-        
 
+            // Daily frequency 
+            nrOfDaysPerMonth = 30 / everyX;
+        } else if (this.FrequencyType = RuleFrequencyType.Week) {
+
+            // Weekly frequency
+            nrOfDaysPerMonth = (4 / everyX) * this.DaysInWeek.GetNrOfDaysWhichAreTrue();
+        }
 
 
         // Calculate and return 
-        let nrOfTimesPerMonth = nrOfTimesPerDay * nrOfTimesPerWeek * nrOfWeeksPerMonth;
+        let nrOfTimesPerMonth = nrOfTimesPerDay * nrOfDaysPerMonth;
         return nrOfTimesPerMonth;
     }
 

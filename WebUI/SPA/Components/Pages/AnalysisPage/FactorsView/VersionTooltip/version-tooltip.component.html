@@ -5,23 +5,14 @@
     <div class="caret-div">
     </div>
 
-    <div class="header">
-        <div class="plan-name-label label-text-dark">
-            {{viewModel?.PlanName}}
-        </div>
-        <div class="duration-div">
-            <span class="label">Showing</span>
-            <span class="label-text-dark" style="font-weight:bold"> {{viewModel?.DurationInIntersection}} days</span>
 
-            <span *ngIf="viewModel.DurationInVersion !== null" class="label">out of</span>
-            <span *ngIf="viewModel.DurationInVersion !== null" class="label-text-dark" style="font-weight:bold">{{viewModel?.DurationInVersion}} days</span>
-            <span *ngIf="viewModel.DurationInVersion !== null" class="label">in total</span>
-        </div>
-    </div>
 
     <div class="body">
-        <div class="medicine-type-div" *ngFor="let medTypeEntry of viewModel?.VersionCLO?.GetUniqueMedicineTypesWithAvgDosePerMonth()">
-            <span class="label-text-dark"> {{medTypeEntry.MedicineType.Name}} = {{medTypeEntry.AvgMonthlyDosage}}</span>
+
+        <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.VersionRepresentation?.ChangesFromPrevVersion ">
+            <span class="label-text-dark"> {{medTypeChange.MedicineType.Name}} </span>
+
+            {{viewModel.GetChangeTypeIcon(medTypeChange.ChangeType)}}
         </div>
 
     </div>
@@ -32,3 +23,24 @@
 
 
 </div>
+
+<!--<div class="medicine-type-div" *ngFor="let medTypeEntry of viewModel?.VersionCLO?.GetUniqueMedicineTypesWithAvgDosePerMonth() | keys">
+    <span class="label-text-dark"> {{medTypeEntry.value.MedicineType.Name}} = {{medTypeEntry.value.AvgMonthlyDosage}}</span>
+</div>
+
+
+<div class="header">
+    <div class="plan-name-label label-text-dark">
+        {{viewModel?.PlanName}}
+    </div>
+
+</div>
+
+<div class="duration-div">
+    <span class="label">Showing</span>
+    <span class="label-text-dark" style="font-weight:bold"> {{viewModel?.DurationInIntersection}} days</span>
+
+    <span *ngIf="viewModel.DurationInVersion !== null" class="label">out of</span>
+    <span *ngIf="viewModel.DurationInVersion !== null" class="label-text-dark" style="font-weight:bold">{{viewModel?.DurationInVersion}} days</span>
+    <span *ngIf="viewModel.DurationInVersion !== null" class="label">in total</span>
+</div>-->
