@@ -20,7 +20,7 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
         newCLO.ID = blo['ID'];
         newCLO.Name = blo['Name'];
         newCLO.DateCreated = new Date(blo['DateCreated']);
-        newCLO.Versions = this.versionCLOFactory.Convert_ToCloList(blo['Versions']).ToArray();
+        newCLO.Versions.AddArray(this.versionCLOFactory.Convert_ToCloList(blo['Versions']).ToArray());
 
 
         return newCLO;
@@ -30,7 +30,7 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
         newCLO.ID = 0;
         newCLO.Name = 'Untitled Plan';
         newCLO.DateCreated = new Date();
-        newCLO.Versions = [this.versionCLOFactory.Create_DefaultCLO()];
+        newCLO.Versions.AddArray([this.versionCLOFactory.Create_DefaultCLO()]);
 
         return newCLO;
     }

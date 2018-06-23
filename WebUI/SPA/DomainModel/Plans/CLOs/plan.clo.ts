@@ -4,6 +4,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
+import { ObservableList } from 'SPA/Core/Helpers/DataStructures/observable-list';
 
 
 export class PlanCLO extends BaseCLO {
@@ -11,64 +12,65 @@ export class PlanCLO extends BaseCLO {
     public ID: number;
     public Name: string;
     public DateCreated: Date;
-    public Versions: CLOs.VersionCLO[];
-
+    public Versions: ObservableList<CLOs.VersionCLO> = new ObservableList<CLOs.VersionCLO>();
 
     // Properties
     public get Status(): Enums.PlanStatus {
 
+
         // Variables
         let latestVersion = this.GetLatestVersion();
-        let prevVersion = this.GetPreviousLatestVersion();
+        let secondLatestVersion = this.GetSecondLatestVersion();
 
-
-        // Active status-----------------------------------------------------------------------------
+        // Active status
         if (latestVersion.Status === Enums.VersionStatus.Active) {
             return Enums.PlanStatus.Active;
         }
-        if (prevVersion !== null && prevVersion.Status === Enums.VersionStatus.Active && latestVersion.Status === Enums.VersionStatus.Upcoming) {
+        if (secondLatestVersion !== null && secondLatestVersion.Status === Enums.VersionStatus.Active && latestVersion.Status === Enums.VersionStatus.Upcoming) {
             return Enums.PlanStatus.ActiveWithUpcomingAdjustment;
         }
-        //-------------------------------------------------------------------------------------------
-        // Inactive status---------------------------------------------------------------------------
+
+        // Inactive status
         if (latestVersion.Status === Enums.VersionStatus.Inactive) {
             return Enums.PlanStatus.Inactive;
         }
-        //-------------------------------------------------------------------------------------------
-        // Upcoming status---------------------------------------------------------------------------
-        if (latestVersion.Status === Enums.VersionStatus.Upcoming && prevVersion === null) {
+
+        // Upcoming status
+        if (latestVersion.Status === Enums.VersionStatus.Upcoming && secondLatestVersion === null) {
             return Enums.PlanStatus.UpcomingAsNew;
         }
-        if (prevVersion !== null && latestVersion.Status === Enums.VersionStatus.Upcoming && prevVersion.Status === Enums.VersionStatus.Inactive) {
+        if (secondLatestVersion !== null && latestVersion.Status === Enums.VersionStatus.Upcoming && secondLatestVersion.Status === Enums.VersionStatus.Inactive) {
             return Enums.PlanStatus.UpcomingAsRestarted;
         }
-        //-------------------------------------------------------------------------------------------
 
         throw new Error('No Status could be determined for Plan with name "' + this.Name + '"');
     }
 
-
     // Constructor
     constructor() {
         super();
+
+        this.Versions.ItemAdded.subscribe((addedItem) => {
+            this.onVersionAdded(addedItem);
+        });
     }
 
     // Public methods
     public GetLatestVersion(): CLOs.VersionCLO {
-        if (this.Versions && this.Versions.length > 0)
-            return this.Versions[this.Versions.length - 1];
+        if (this.Versions && this.Versions.Length > 0)
+            return this.Versions.GetAt(this.Versions.Length - 1);
         else
             return null;
     }
-    public GetPreviousLatestVersion(): CLOs.VersionCLO {
-        if (this.Versions && this.Versions.length > 1)
-            return this.Versions[this.Versions.length - 2];
+    public GetSecondLatestVersion(): CLOs.VersionCLO {
+        if (this.Versions && this.Versions.Length > 1)
+            return this.Versions.GetAt(this.Versions.Length - 2);
         else
             return null;
     }
     public GetFirstVersion(): CLOs.VersionCLO {
-        if (this.Versions && this.Versions.length > 0)
-            return this.Versions[0];
+        if (this.Versions && this.Versions.Length > 0)
+            return this.Versions.GetAt(0);
         else
             return null;
     }
@@ -77,7 +79,7 @@ export class PlanCLO extends BaseCLO {
         var intersectionsArray: momentRange.DateRange[] = [];
         var allIntersectionsAreNull = true;
 
-        this.Versions.forEach((versionCLO) => {
+        this.Versions.ToArray().forEach((versionCLO) => {
             var intersectionResult = versionCLO.GetIntersectionWithDateRange(targetDateRange);
             intersectionsArray.push(intersectionResult);
             if (intersectionResult !== null) {
@@ -91,5 +93,22 @@ export class PlanCLO extends BaseCLO {
         } else {
             return intersectionsArray;
         }
+    }
+    public GetVersionBeforeTarget(versionCLO): CLOs.VersionCLO {
+        let indexOfTarget = this.Versions.FindIndex(versionCLO);
+        if (indexOfTarget === -1) {
+            throw new Error("VersionCLO couldn't be found");
+        }
+
+        if (indexOfTarget > 0) {
+            return this.Versions.GetAt(indexOfTarget - 1);
+        } else {
+            return null;
+        }
+    }
+
+    // Event handlers 
+    private onVersionAdded(addedItem: CLOs.VersionCLO) {
+        addedItem.ParentPlan = this;
     }
 }

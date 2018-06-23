@@ -13,7 +13,7 @@ export class CommandManager {
 
     // Private methods
     private tryToStartNextFlowInQueue() {
-        if (this.pendingCommandFlowQueue.Length() > 0) {
+        if (this.pendingCommandFlowQueue.Length > 0) {
             let nextFlow = this.pendingCommandFlowQueue.GetAt(0);
 
             if (!this.executionEngine.IsBusy) {

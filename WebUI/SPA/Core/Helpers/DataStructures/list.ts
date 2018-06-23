@@ -5,6 +5,11 @@ export class List<T> {
     // Private fields
     protected innerArray: Array<T>;
 
+    // Properties
+    public get Length(): number {
+        return this.innerArray.length;
+    }
+
     // Constructor
     constructor() {
         this.innerArray = [];
@@ -13,9 +18,6 @@ export class List<T> {
     // Public methods
     public ReplaceInnerArray(innerArray: T[]): void {
         this.innerArray = innerArray;
-    }
-    public Length(): number {
-        return this.innerArray.length;
     }
     public ToArray(): T[] {
         return this.innerArray;
@@ -39,7 +41,7 @@ export class List<T> {
         this.innerArray = [];
     }
     public IsEmpty(): boolean {
-        return this.Length() < 1;
+        return this.Length < 1;
     }
     public Remove(clo: T, comparer?: Comparers.IEqualityComparer<T>): void {
 

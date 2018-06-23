@@ -51,10 +51,10 @@ export class GenericCLOFactory {
             let valueOnCLO = clo[propertyName];
 
             // Value is a List-----------------------------------------------
-            if (valueOnCLO instanceof DataStructures.List) {
+            if (valueOnCLO instanceof DataStructures.List || valueOnCLO instanceof DataStructures.ObservableList) {
                 outputObj[propertyName] = [];
                 let valueItems = valueOnCLO.ToArray();
-
+                
                 valueItems.forEach( function (v) {
                     if (typeof v === "number" || typeof v === "string") {
                         outputObj[propertyName].push(v);

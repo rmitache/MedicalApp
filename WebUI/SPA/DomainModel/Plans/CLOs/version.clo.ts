@@ -12,6 +12,7 @@ export class VersionCLO extends BaseCLO {
     public StartDate: Date;
     public EndDate: Date;
     public Rules: CLOs.RuleCLO[];
+    private parentPlan: CLOs.PlanCLO;
 
     // Properties
     public get Status(): Enums.VersionStatus {
@@ -51,6 +52,9 @@ export class VersionCLO extends BaseCLO {
             return false;
 
         }
+    }
+    public set ParentPlan(planCLO: CLOs.PlanCLO) {
+        this.parentPlan = planCLO;
     }
 
     // Constructor
@@ -114,6 +118,10 @@ export class VersionCLO extends BaseCLO {
         }
        
         return medTypes;
+    }
+    public GetPreviousVersion(): CLOs.VersionCLO {
+        //this.parentPlan.get
+        return null;
     }
 }
 

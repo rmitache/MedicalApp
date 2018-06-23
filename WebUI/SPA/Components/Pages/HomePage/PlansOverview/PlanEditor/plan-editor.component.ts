@@ -219,7 +219,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
         // Create a new version for the planCLO
         let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
         newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
-        planCLO.Versions.push(newVersion);
+        planCLO.Versions.Add(newVersion);
 
 
         // Custom form logic 
@@ -264,7 +264,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
         private globalDataService: HomePageDataService,
         private genericCLOFactory: GenericCLOFactory) {
 
-        this.prevVersion = planCLO.GetPreviousLatestVersion();
+        this.prevVersion = planCLO.GetSecondLatestVersion();
 
 
         // Scenario A: A previous version exists
@@ -345,7 +345,7 @@ class RestartMode implements IPlanEditorModeImplementation {
         let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
         newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default restartdate = tomorrow
         newVersion.EndDate = null;
-        planCLO.Versions.push(newVersion);
+        planCLO.Versions.Add(newVersion);
 
 
         // Custom form logic 

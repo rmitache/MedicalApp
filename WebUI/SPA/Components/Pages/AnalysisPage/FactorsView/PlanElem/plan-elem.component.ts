@@ -45,7 +45,7 @@ export class PlanElemComponent {
     private createVersionInfoWrappers(): VersionElemInfoWrapper[] {
 
         // Variables
-        var versionCLOs = this.planCLO.Versions;
+        var versionCLOs = this.planCLO.Versions.ToArray();
         var versionInfoWrappers: VersionElemInfoWrapper[] = [];
         var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
         var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);

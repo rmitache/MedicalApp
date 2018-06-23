@@ -120,7 +120,7 @@ export class PlanElemComponent {
         switch (this.planCLO.Status) {
             // Active
             case Enums.PlanStatus.Active:
-                if (this.planCLO.Versions.length > 1) {
+                if (this.planCLO.Versions.Length > 1) {
                     this.viewModel.StartDatePrefixString = 'Adjusted/restarted:';
                     this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDate);
                 } else {

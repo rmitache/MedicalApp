@@ -15,6 +15,11 @@ export class ObservableList<T> extends List<T> {
         super.Add(obj);
         this.ItemAdded.emit(obj);
     }
+    public AddArray(array: T[]): void {
+        for (let i = 0; i < array.length; i++) {
+            this.Add(array[i]);
+        }
+    }
     public RemoveAt(index: number): void {
         const obj: T = this.innerArray[index];
         super.RemoveAt(index);
