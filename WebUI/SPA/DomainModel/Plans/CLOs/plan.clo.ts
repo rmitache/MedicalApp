@@ -95,6 +95,7 @@ export class PlanCLO extends BaseCLO {
         }
     }
     public GetVersionBeforeTarget(versionCLO): CLOs.VersionCLO {
+        
         let indexOfTarget = this.Versions.FindIndex(versionCLO);
         if (indexOfTarget === -1) {
             throw new Error("VersionCLO couldn't be found");

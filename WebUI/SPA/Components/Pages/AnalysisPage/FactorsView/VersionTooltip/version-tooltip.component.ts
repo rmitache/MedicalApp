@@ -24,6 +24,9 @@ export class VersionTooltipComponent {
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
         Changes: null,
+        GetChangeTypeIcon: () => {
+            return "hello";
+        },
 
         Visible: false,
         TopPos: 0,
@@ -41,7 +44,7 @@ export class VersionTooltipComponent {
         // Set other fields
         this.viewModel.Visible = true;
         this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
-        //this.viewModel.Changes = this.versionCLOService.GetVersionChanges();
+        this.viewModel.Changes = this.versionCLOService.GetVersionChanges(this.viewModel.VersionCLO, this.viewModel.VersionCLO.GetPreviousVersion());
 
         // Calculate position
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
@@ -62,6 +65,7 @@ export class VersionTooltipComponent {
 interface ViewModel {
     VersionCLO: CLOs.VersionCLO;
     Changes: MedicineTypeChangeSet[];
+    GetChangeTypeIcon();
 
     Visible: boolean;
     TopPos: number;

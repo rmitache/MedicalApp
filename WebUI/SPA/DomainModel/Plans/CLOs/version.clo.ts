@@ -120,8 +120,7 @@ export class VersionCLO extends BaseCLO {
         return medTypes;
     }
     public GetPreviousVersion(): CLOs.VersionCLO {
-        //this.parentPlan.get
-        return null;
+        return this.parentPlan.GetVersionBeforeTarget(this);
     }
 }
 

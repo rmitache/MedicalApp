@@ -12,9 +12,9 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
 
 @Injectable()
-export class VersionCLOService  {
+export class VersionCLOService {
     // Public Methods
-    public GetVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO): MedicineTypeChangeSet[] {
+    public GetVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO, ignoreUnchanged: boolean = true): MedicineTypeChangeSet[] {
 
         // Variables
         let medTypeChanges: MedicineTypeChangeSet[] = [];
@@ -60,6 +60,13 @@ export class VersionCLOService  {
             medTypeChanges.push(newMedTypeChangeSet);
         }
 
+
+        // Filter out Unchanged types 
+        if (ignoreUnchanged) {
+            medTypeChanges = medTypeChanges.filter((medTypeChange) => {
+                return medTypeChange.ChangeType !== ChangeType.Unchanged;
+            });
+        }
 
         return medTypeChanges;
     }

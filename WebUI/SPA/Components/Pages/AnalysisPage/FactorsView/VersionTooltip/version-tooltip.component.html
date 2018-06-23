@@ -9,7 +9,7 @@
 
     <div class="body">
 
-        <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.VersionRepresentation?.ChangesFromPrevVersion ">
+        <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.Changes">
             <span class="label-text-dark"> {{medTypeChange.MedicineType.Name}} </span>
 
             {{viewModel.GetChangeTypeIcon(medTypeChange.ChangeType)}}
