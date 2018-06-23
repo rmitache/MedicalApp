@@ -7,7 +7,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { GetNrOfDaysBetweenDatesUsingMoment, GetNrOfDaysBetweenDates } from 'SPA/Core/Helpers/Functions/functions';
-import { VersionCLOService, MedicineTypeChangeSet } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionCLOService, MedicineTypeChangeSet, ChangeType } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 
 
@@ -24,8 +24,8 @@ export class VersionTooltipComponent {
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
         Changes: null,
-        GetChangeTypeIcon: () => {
-            return "hello";
+        GetChangeTypeIcon: (changeType: ChangeType) => {
+            return ChangeType[changeType];
         },
 
         Visible: false,
@@ -65,7 +65,7 @@ export class VersionTooltipComponent {
 interface ViewModel {
     VersionCLO: CLOs.VersionCLO;
     Changes: MedicineTypeChangeSet[];
-    GetChangeTypeIcon();
+    GetChangeTypeIcon(changeType: ChangeType);
 
     Visible: boolean;
     TopPos: number;
