@@ -25,7 +25,19 @@ export class VersionTooltipComponent {
         VersionCLO: null,
         Changes: null,
         GetChangeTypeIcon: (changeType: ChangeType) => {
-            return ChangeType[changeType];
+            let iconName: string;
+            if (changeType == 1) {
+                iconName = 'graph-increase';
+            } else if (changeType == 2) {
+                iconName = 'graph-decrease';
+            } else if (changeType == 3) {
+                iconName = 'graph-decrease';
+            } else if (changeType == 4) {
+                iconName = 'graph-decrease';
+            }
+
+
+            return '/Images/' + iconName + '.png'
         },
 
         Visible: false,
@@ -37,21 +49,25 @@ export class VersionTooltipComponent {
     constructor(private versionCLOService: VersionCLOService) {
 
     }
-    
+
     // Public 
     public Show(versionHoverEventInfo: VersionElemHoverEventInfo) {
 
         // Set other fields
-        this.viewModel.Visible = true;
         this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
         this.viewModel.Changes = this.versionCLOService.GetVersionChanges(this.viewModel.VersionCLO, this.viewModel.VersionCLO.GetPreviousVersion());
 
         // Calculate position
-        var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-        this.viewModel.LeftPos = versionHoverEventInfo.Left - currentWidth / 2;
-        var verticalMargin = 55;
-        this.viewModel.TopPos =  versionHoverEventInfo.Top + verticalMargin;
+        setTimeout(() => {
+            var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+            var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+            this.viewModel.LeftPos = versionHoverEventInfo.Left - currentWidth / 2;
+            var verticalMargin = 55;
+            this.viewModel.TopPos = versionHoverEventInfo.Top + verticalMargin + 15;
+
+            this.viewModel.Visible = true;
+        }, 0);
+
     }
     public HideAndClear() {
         this.viewModel.Visible = false;

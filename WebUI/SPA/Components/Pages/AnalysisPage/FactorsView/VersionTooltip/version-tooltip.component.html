@@ -6,23 +6,23 @@
     </div>
 
 
-
     <div class="body">
 
         <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.Changes">
             <span class="label-text-dark"> {{medTypeChange.MedicineType.Name}} </span>
 
-            {{viewModel.GetChangeTypeIcon(medTypeChange.ChangeType)}}
+            <img src="{{viewModel.GetChangeTypeIcon(medTypeChange.ChangeType) }}" />
         </div>
 
     </div>
 
-
-
-
-
-
 </div>
+
+
+
+
+
+
 
 <!--<div class="medicine-type-div" *ngFor="let medTypeEntry of viewModel?.VersionCLO?.GetUniqueMedicineTypesWithAvgDosePerMonth() | keys">
     <span class="label-text-dark"> {{medTypeEntry.value.MedicineType.Name}} = {{medTypeEntry.value.AvgMonthlyDosage}}</span>
