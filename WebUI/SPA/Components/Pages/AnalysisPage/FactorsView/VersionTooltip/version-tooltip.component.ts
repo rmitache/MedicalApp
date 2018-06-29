@@ -24,15 +24,16 @@ export class VersionTooltipComponent {
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
         Changes: null,
-        GetChangeTypeIcon: (changeType: ChangeType) => {
+        GetChangeTypeIcon: (changeType: number) => {
+            
             let iconName: string;
-            if (changeType == 1) {
+            if (changeType == ChangeType.Increased) {
                 iconName = 'graph-increase';
-            } else if (changeType == 2) {
+            } else if (changeType == ChangeType.Decreased) {
                 iconName = 'graph-decrease';
-            } else if (changeType == 3) {
-                iconName = 'graph-decrease';
-            } else if (changeType == 4) {
+            } else if (changeType == ChangeType.Stopped) {
+                iconName = 'stop';
+            } else if (changeType == ChangeType.New) {
                 iconName = 'graph-decrease';
             }
 
