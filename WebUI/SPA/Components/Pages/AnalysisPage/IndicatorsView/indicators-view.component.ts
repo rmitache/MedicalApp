@@ -17,7 +17,7 @@ import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
-import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetMonthRangeWithPaddingUsingMoment, IsDateOnFirstOrLastDateInMonth } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
 import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
@@ -400,23 +400,30 @@ class MonthDisplayMode implements IDisplayMode {
             maintainAspectRatio: false,
             annotation: {
 
-                annotations: [{
-                    type: 'line',
-                    mode: 'vertical',
-                    scaleID: 'x-axis-0',
-                    value: moment(),
-                    borderColor: 'gray',
-                    borderWidth: 1,
-                    label: {
-                        fontFamily: 'Arial',
-                        fontSize: '10px',
-                        enabled: true,
-                        position: "top",
-                        content: 'TODAY'
-                    }
-                }]
+                annotations: []
             }
         };
+
+        // Annotations
+        let annotations = [{
+            type: 'line',
+            mode: 'vertical',
+            scaleID: 'x-axis-0',
+            value: moment(),
+            borderColor: 'gray',
+            borderWidth: 1,
+            label: {
+                fontFamily: 'Arial',
+                fontSize: '10px',
+                enabled: true,
+                position: "top",
+                content: 'TODAY'
+            }
+        }];
+        if (!IsDateOnFirstOrLastDateInMonth(moment())) {
+            chartOptions.annotation.annotations = annotations;
+        }
+        
         return chartOptions;
     }
     public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {

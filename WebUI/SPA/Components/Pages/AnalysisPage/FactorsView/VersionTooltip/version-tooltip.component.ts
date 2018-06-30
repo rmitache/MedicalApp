@@ -67,7 +67,7 @@ export class VersionTooltipComponent {
             this.viewModel.TopPos = versionHoverEventInfo.Top + verticalMargin + 15;
 
             this.viewModel.Visible = true;
-        }, 0);
+        }, 1);
 
     }
     public HideAndClear() {

@@ -17,7 +17,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 // Components
 import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment, IsDateOnFirstOrLastDateInMonth } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
@@ -44,7 +44,7 @@ export class FactorsViewComponent {
 
         PlansInSelectedDateRange: null,
         SelectedDateRange: null,
-        TodayXPosition:null,
+        TodayXPosition: null,
 
         DateRangeDisplayMode: DateRangeMode.Month,
         Blocked: false
@@ -67,11 +67,12 @@ export class FactorsViewComponent {
     }
     private computeXPositionFromDate(date: moment.Moment) {
 
-        // Check if in range
+        // Check if TODAY is in SelectedDateRange
         var selDateRange = new momentRange.DateRange(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd);
         if (!selDateRange.contains(date)) {
             return null;
         }
+
 
         // Variables
         var startDateIndex = GetDateIndexInTargetRange(date, this.viewModel.SelectedDateRange);
@@ -83,10 +84,10 @@ export class FactorsViewComponent {
         return xPosition;
     }
     private refreshUI() {
-        
+
         // Refresh vm properties
         this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), this.viewModel.SelectedDateRange);
-        this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
+        this.viewModel.TodayXPosition = (!IsDateOnFirstOrLastDateInMonth(moment())) ? this.computeXPositionFromDate(moment()) : null;
 
         // Refresh children components
         this.timelinePanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
@@ -120,7 +121,7 @@ export class FactorsViewComponent {
 
     // Event handlers
     private onVersionElemHover(eventInfo: VersionElemHoverEventInfo) {
-        
+
         if (eventInfo) {
             this.versionTooltipInstance.Show(eventInfo);
         } else {

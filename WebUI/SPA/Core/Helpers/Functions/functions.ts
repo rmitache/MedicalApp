@@ -136,3 +136,11 @@ export function ValidateAllFields(formGroup: FormGroup) {
         }
     });
 }
+
+export function IsDateOnFirstOrLastDateInMonth(date:moment.Moment) {
+    let isFirstDate = date.isSame(date.startOf('month'), 'day');
+    let isLastDate = date.isSame(date.endOf('month'), 'day');
+
+    return isFirstDate || isLastDate;
+
+}
