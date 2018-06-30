@@ -21,6 +21,7 @@ export class VersionTooltipComponent {
     // Fields
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
+    private changeTypeEnum: ChangeType;
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
         Changes: null,
@@ -28,15 +29,14 @@ export class VersionTooltipComponent {
             
             let iconName: string;
             if (changeType == ChangeType.Increased) {
-                iconName = 'graph-increase';
+                iconName = 'increase';
             } else if (changeType == ChangeType.Decreased) {
-                iconName = 'graph-decrease';
+                iconName = 'decrease';
             } else if (changeType == ChangeType.Stopped) {
                 iconName = 'stop';
             } else if (changeType == ChangeType.New) {
-                iconName = 'graph-decrease';
+                iconName = 'new';
             }
-
 
             return '/Images/' + iconName + '.png'
         },
