@@ -26,7 +26,7 @@ export class VersionTooltipComponent {
         VersionCLO: null,
         Changes: null,
         GetChangeTypeIcon: (changeType: number) => {
-            
+
             let iconName: string;
             if (changeType == ChangeType.Increased) {
                 iconName = 'increase';
@@ -47,8 +47,26 @@ export class VersionTooltipComponent {
     };
 
     // Private methods
-    private getPosition() {
+    private calculateTooltipPosition(hoverPointLeft: number, hoverPointTop: number): PosCoordinates {
 
+        // Variables
+        let leftPos = 0;
+        let topPos = 0;
+        var verticalSpacing = 55;
+        var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+        var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+
+        // Calculate position
+        leftPos = hoverPointLeft - currentWidth / 2;
+        topPos = hoverPointTop + verticalSpacing + 15;
+
+
+        // 
+        let pos = {
+            Left: leftPos,
+            Top: topPos
+        };
+        return pos;
     }
 
     // Constructor
@@ -65,14 +83,13 @@ export class VersionTooltipComponent {
 
         // Calculate position
         setTimeout(() => {
-            var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-            var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-            this.viewModel.LeftPos = versionHoverEventInfo.Left - currentWidth / 2;
-            var verticalMargin = 55;
-            this.viewModel.TopPos = versionHoverEventInfo.Top + verticalMargin + 15;
+            var newPos = this.calculateTooltipPosition(versionHoverEventInfo.Left, versionHoverEventInfo.Top);
+
+            this.viewModel.LeftPos = newPos.Left;
+            this.viewModel.TopPos = newPos.Top;
 
             this.viewModel.Visible = true;
-        }, 1);
+        }, 10);
 
     }
     public HideAndClear() {
@@ -94,7 +111,8 @@ interface ViewModel {
     LeftPos: number;
 }
 interface PosCoordinates {
-    top: number;
-    left: number;
+    Left: number;
+    Top: number;
+
 }
 

@@ -137,9 +137,11 @@ export function ValidateAllFields(formGroup: FormGroup) {
     });
 }
 
-export function IsDateOnFirstOrLastDateInMonth(date:moment.Moment) {
-    let isFirstDate = date.isSame(date.startOf('month'), 'day');
-    let isLastDate = date.isSame(date.endOf('month'), 'day');
+export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
+    let firstDateInMonth = date.clone().startOf('month');
+    let lastDateInMonth = date.clone().endOf('month');
+    let isFirstDate = date.isSame(firstDateInMonth, 'day');
+    let isLastDate = date.isSame(lastDateInMonth, 'day');
 
     return isFirstDate || isLastDate;
 

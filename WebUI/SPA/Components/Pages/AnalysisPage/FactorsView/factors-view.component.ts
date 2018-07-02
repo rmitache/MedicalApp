@@ -87,7 +87,7 @@ export class FactorsViewComponent {
 
         // Refresh vm properties
         this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), this.viewModel.SelectedDateRange);
-        this.viewModel.TodayXPosition = (!IsDateOnFirstOrLastDateInMonth(moment())) ? this.computeXPositionFromDate(moment()) : null;
+        this.viewModel.TodayXPosition = !IsDateOnFirstOrLastDateInMonth(moment()) ? this.computeXPositionFromDate(moment()) : null;
 
         // Refresh children components
         this.timelinePanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
