@@ -301,16 +301,6 @@ class MonthDisplayMode implements IDisplayMode {
             };
             dataPoints.push(dp);
 
-
-            //if (avgHealthLevel >= 0.8) {
-            //    dataPointsBgColors.push('#1abb1a');
-            //}
-            //else if (avgHealthLevel < 0.8 && avgHealthLevel > -0.8) {
-            //    dataPointsBgColors.push('#ffd800');
-            //}
-            //else if (avgHealthLevel < -0.8 ) {
-            //    dataPointsBgColors.push('#ff6767');
-            //}
             // great
             if (avgHealthLevel >= 2) {
                 dataPointsBgColors.push('green');
@@ -454,7 +444,6 @@ class MonthDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    label: 'General state',
                     data: dataPointsInfo.dataPoints,
                     backgroundColor: dataPointsInfo.dataPointsBgColors,
                 }

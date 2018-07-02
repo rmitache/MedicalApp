@@ -11,7 +11,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MedicalApp.DB", "MedicalApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{C1E110C0-4881-4A54-9403-64E569696D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.UnitTests", "BLL.UnitTests\BLL.UnitTests.csproj", "{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

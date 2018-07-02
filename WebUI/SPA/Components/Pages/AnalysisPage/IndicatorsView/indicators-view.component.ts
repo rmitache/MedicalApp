@@ -123,7 +123,7 @@ export class IndicatorsViewComponent {
             this.chartInstance.destroy();
         }
         this.chartInstance = new Chart(this.chartCanvasContext, {
-            type: 'line',
+            type: 'bar',
             data: this.viewModel.ChartData,
             options: this.viewModel.ChartOptions,
 
@@ -231,7 +231,6 @@ export class IndicatorsViewComponent {
     }
 }
 
-
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;
     HealthEntriesInSelectedDateRange: CLOs.HealthStatusEntryCLO[];
@@ -246,7 +245,6 @@ interface ViewModel {
     DateRangeDisplayMode: DateRangeMode;
     Blocked: boolean;
 }
-
 
 // Supported Display modes
 interface IDisplayMode {
@@ -297,6 +295,30 @@ class MonthDisplayMode implements IDisplayMode {
             };
             dataPoints.push(dp);
 
+            // great
+            if (avgHealthLevel >= 2) {
+                dataPointsBgColors.push('green');
+            }
+            // good
+            else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
+                dataPointsBgColors.push('#9dc340');
+            }
+            // ok
+            else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
+                dataPointsBgColors.push('#cfe27e');
+            }
+            // notgreat 
+            else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
+                dataPointsBgColors.push('#ffc297');
+            }
+            // bad 
+            else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
+                dataPointsBgColors.push('#fe6060');
+            }
+            // very bad
+            else if (avgHealthLevel < -1) {
+                dataPointsBgColors.push('red');
+            }
 
         });
 
@@ -305,6 +327,38 @@ class MonthDisplayMode implements IDisplayMode {
             dataPointsBgColors: dataPointsBgColors
         };
     }
+    /*private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, range: Range<moment.Moment>) {
+
+        // Variables
+        var dataPoints = []
+        var dataPointsBgColors = [];
+
+
+        // Loop through dates and create datapoints
+        var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
+        datesInRangeArray.forEach((date, index) => {
+
+            // Prepare data
+            let dateKey = date.format('DD/MM/YYYY');
+            var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
+            var avgHealthLevel = this.getAverageHealthLevel(clos);
+
+
+            // Create datapoint
+            var dp = {
+                x: date,
+                y: avgHealthLevel
+            };
+            dataPoints.push(dp);
+
+
+        });
+
+        return {
+            dataPoints: dataPoints,
+            dataPointsBgColors: dataPointsBgColors
+        };
+    }*/
 
     // Constructor
     constructor(
@@ -337,6 +391,11 @@ class MonthDisplayMode implements IDisplayMode {
             },
             legend: {
                 display: false,
+                position: 'top',
+                labels: {
+                    boxWidth: 15,
+
+                },
             },
             scales: {
                 xAxes: [{
@@ -436,9 +495,7 @@ class MonthDisplayMode implements IDisplayMode {
             datasets: [
                 {
                     data: dataPointsInfo.dataPoints,
-                    borderColor: 'red',
-                    borderWidth: 1.5,
-                    fill: false
+                    backgroundColor: dataPointsInfo.dataPointsBgColors,
                 }
             ]
         }

@@ -46,6 +46,11 @@ export class VersionTooltipComponent {
         LeftPos: 0
     };
 
+    // Private methods
+    private getPosition() {
+
+    }
+
     // Constructor
     constructor(private versionCLOService: VersionCLOService) {
 
@@ -87,5 +92,9 @@ interface ViewModel {
     Visible: boolean;
     TopPos: number;
     LeftPos: number;
+}
+interface PosCoordinates {
+    top: number;
+    left: number;
 }
 
