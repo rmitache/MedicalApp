@@ -42,31 +42,38 @@ export class VersionTooltipComponent {
         },
 
         Visible: false,
-        TopPos: 0,
-        LeftPos: 0
+        TooltipPos: null,
+        CaretPos: null
     };
 
     // Private methods
-    private calculateTooltipPosition(hoverPointLeft: number, hoverPointTop: number): PosCoordinates {
+    private calculateTooltipPosition(hoverPointLeft: number, hoverPointTop: number): PosCoordinates[] {
 
         // Variables
-        let leftPos = 0;
-        let topPos = 0;
-        var verticalSpacing = 55;
+        let tooltipPos = new PosCoordinates();
+        let caretPos = new PosCoordinates();
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
 
-        // Calculate position
-        leftPos = hoverPointLeft - currentWidth / 2;
-        topPos = hoverPointTop + verticalSpacing + 15;
+        // Calculate tooltip and caret position
+        var verticalSpacing = 55;
+        tooltipPos.Left = hoverPointLeft - currentWidth / 2 -1;
+        tooltipPos.Top = hoverPointTop + verticalSpacing + 15;
+        caretPos.Left = currentWidth/2 - 16;
+        caretPos.Top = -18;
 
+         // Handle case when position overflows screen on the left side
+        if (tooltipPos.Left < 0) {
+
+
+            let extraMargin = 10;
+            tooltipPos.Left -= (tooltipPos.Left - extraMargin);
+            caretPos.Left = extraMargin - 4;
+        }
 
         // 
-        let pos = {
-            Left: leftPos,
-            Top: topPos
-        };
-        return pos;
+        let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
+        return returnArray;
     }
 
     // Constructor
@@ -83,20 +90,18 @@ export class VersionTooltipComponent {
 
         // Calculate position
         setTimeout(() => {
-            var newPos = this.calculateTooltipPosition(versionHoverEventInfo.Left, versionHoverEventInfo.Top);
+            var tooltipAndCaretPos = this.calculateTooltipPosition(versionHoverEventInfo.Left, versionHoverEventInfo.Top);
 
-            this.viewModel.LeftPos = newPos.Left;
-            this.viewModel.TopPos = newPos.Top;
-
+            this.viewModel.TooltipPos = tooltipAndCaretPos[0];
+            this.viewModel.CaretPos = tooltipAndCaretPos[1];
             this.viewModel.Visible = true;
         }, 10);
 
     }
     public HideAndClear() {
         this.viewModel.Visible = false;
-
-        this.viewModel.TopPos = 0;
-        this.viewModel.LeftPos = 0;
+        this.viewModel.TooltipPos = null;
+        this.viewModel.TooltipPos = null;
     }
 }
 
@@ -107,12 +112,11 @@ interface ViewModel {
     GetChangeTypeIcon(changeType: ChangeType);
 
     Visible: boolean;
-    TopPos: number;
-    LeftPos: number;
+    TooltipPos: PosCoordinates;
+    CaretPos: PosCoordinates;
 }
-interface PosCoordinates {
-    Left: number;
-    Top: number;
-
+class PosCoordinates {
+    constructor(public Left: number = 0, public Top: number = 0) {
+    }
 }
 
