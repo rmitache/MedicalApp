@@ -101,7 +101,7 @@ export class VersionTooltipComponent {
     public HideAndClear() {
         this.viewModel.Visible = false;
         this.viewModel.TooltipPos = null;
-        this.viewModel.TooltipPos = null;
+        this.viewModel.CaretPos = null;
     }
 }
 

@@ -4,7 +4,7 @@
          [attr.y]="viewModel.VersionInfoWrapper.YPos">
 
     <!--HoverableStartPoint-->
-    <svg:g hoverable-version-point
+    <svg:g hoverable-version-point overflow="visible"
            *ngIf="viewModel.StartPointEnabled===true"
            [XPos]="0"
            (MouseEnter)="onMouseEnterStartPoint()"
@@ -12,6 +12,7 @@
 
     <!--Horizontal line and plan name-->
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" class="horizontal-line"
+              
               [attr.marker-start]="viewModel.VersionInfoWrapper.StartMarkerName"
               [attr.marker-end]="viewModel.VersionInfoWrapper.EndMarkerName" />
     <svg:text *ngIf="viewModel.VersionInfoWrapper.PlanName!==null" x="0" y="5" style="font-family:Arial;font-size:10px;fill:gray;font-weight:bold">
