@@ -10,6 +10,7 @@ import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
+import { GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 @Injectable()
 export class VersionCLOService {
@@ -69,6 +70,14 @@ export class VersionCLOService {
         }
 
         return medTypeChanges;
+    }
+    public AreVersionsAdjacentInTime(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO) {
+
+        if (GetNrOfDaysBetweenDatesUsingMoment(moment(prevVersion.EndDate), moment(targetVersion.StartDate), true) === 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

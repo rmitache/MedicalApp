@@ -122,6 +122,9 @@ export class VersionCLO extends BaseCLO {
     public GetPreviousVersion(): CLOs.VersionCLO {
         return this.parentPlan.GetVersionBeforeTarget(this);
     }
+    public GetNextVersion(): CLOs.VersionCLO {
+        return this.parentPlan.GetVersionAfterTarget(this);
+    }
 }
 
 export class MedicineTypeAndAvgMonthlyDosage {

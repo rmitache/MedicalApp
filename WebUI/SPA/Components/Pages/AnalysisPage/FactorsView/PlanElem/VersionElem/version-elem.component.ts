@@ -13,6 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { VersionElemInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
+import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class VersionElemComponent {
     // Constructor
     constructor(
         private readonly commandManager: CommandManager,
+        private versionCLOService: VersionCLOService
     ) {
     }
     ngOnInit() {
@@ -46,7 +48,19 @@ export class VersionElemComponent {
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
 
         this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
-        this.viewModel.EndPointEnabled = false;// !this.viewModel.VersionInfoWrapper.HasNextAdjacentVersion
+
+
+        // Determine whether the endPoint should be shown 
+        let versionCLO = this.viewModel.VersionInfoWrapper.VersionCLO;
+        let nextVersion = versionCLO.GetNextVersion();
+
+        if (!nextVersion && this.viewModel.VersionInfoWrapper.VersionEndsOnIntersectionEnd) {
+            this.viewModel.EndPointEnabled = true;
+        } else if (nextVersion && !this.versionCLOService.AreVersionsAdjacentInTime(nextVersion, versionCLO)) {
+            this.viewModel.EndPointEnabled = true;
+        } else {
+            this.viewModel.EndPointEnabled = false;
+        }
     }
     
 
@@ -72,13 +86,14 @@ export class VersionElemComponent {
 
         // Emit event
         this.Hover.emit(null);
-
     }
     private onMouseEnterEndPoint(event: any) {
-
+        var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.end, this.viewModel.VersionInfoWrapper.IntersectionDateRange.end);
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
     }
     private onMouseLeaveEndPoint() {
-
+        //
+        this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
     }
 }
 interface ViewModel {

@@ -11,7 +11,11 @@
            (MouseLeave)="onMouseLeaveStartPoint()"></svg:g>
 
     <!--HoverableEndPoint-->
-    
+    <svg:g hoverable-version-point overflow="visible"
+           *ngIf="viewModel.EndPointEnabled===true"
+           [XPos]="100"
+           (MouseEnter)="onMouseEnterEndPoint()"
+           (MouseLeave)="onMouseLeaveEndPoint()"></svg:g>
 
 
     <!--Horizontal line and plan name-->
@@ -27,8 +31,3 @@
 </svg:svg>
 
 
-<!--<svg:g hoverable-version-point overflow="visible"
-       *ngIf="viewModel.EndPointEnabled===true"
-       [XPos]="viewModel.EndPointXPos"
-       (MouseEnter)="onMouseEnterEndPoint()"
-       (MouseLeave)="onMouseLeaveEndPoint()"></svg:g>-->
