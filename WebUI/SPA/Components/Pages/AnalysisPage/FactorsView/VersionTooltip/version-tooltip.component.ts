@@ -57,18 +57,17 @@ export class VersionTooltipComponent {
 
         // Calculate tooltip and caret position
         var verticalSpacing = 55;
-        tooltipPos.Left = hoverPointLeft - currentWidth / 2 -1;
+        tooltipPos.Left = hoverPointLeft - currentWidth / 2 - 1;
         tooltipPos.Top = hoverPointTop + verticalSpacing + 15;
-        caretPos.Left = currentWidth/2 - 16;
+        caretPos.Left = currentWidth / 2 - 16;
         caretPos.Top = -18;
 
-         // Handle case when position overflows screen on the left side
+        // Handle case when position overflows screen on the left side
         if (tooltipPos.Left < 0) {
-
 
             let extraMargin = 10;
             tooltipPos.Left -= (tooltipPos.Left - extraMargin);
-            caretPos.Left = extraMargin - 4;
+            caretPos.Left = hoverPointLeft - 27;
         }
 
         // 

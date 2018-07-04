@@ -10,16 +10,25 @@
            (MouseEnter)="onMouseEnterStartPoint()"
            (MouseLeave)="onMouseLeaveStartPoint()"></svg:g>
 
+    <!--HoverableEndPoint-->
+    
+
+
     <!--Horizontal line and plan name-->
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" class="horizontal-line"
-              
               [attr.marker-start]="viewModel.VersionInfoWrapper.StartMarkerName"
               [attr.marker-end]="viewModel.VersionInfoWrapper.EndMarkerName" />
     <svg:text *ngIf="viewModel.VersionInfoWrapper.PlanName!==null" x="0" y="5" style="font-family:Arial;font-size:10px;fill:gray;font-weight:bold">
-        {{viewModel.VersionInfoWrapper.PlanName}}
+        {{viewModel?.VersionInfoWrapper?.PlanName}}
     </svg:text>
 
 
 
 </svg:svg>
 
+
+<!--<svg:g hoverable-version-point overflow="visible"
+       *ngIf="viewModel.EndPointEnabled===true"
+       [XPos]="viewModel.EndPointXPos"
+       (MouseEnter)="onMouseEnterEndPoint()"
+       (MouseLeave)="onMouseLeaveEndPoint()"></svg:g>-->

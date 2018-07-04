@@ -1,4 +1,5 @@
-<svg:g [attr.transform]="'translate(' + viewModel.XPos +' 0)'" overflow="visible">
+
+<svg:svg [attr.x]="viewModel.XPos + '%'" overflow="visible">
 
     <!--Hover effect - StartPoint -->
     <svg:circle r="25" style="z-index:-9999" cy="15" class="hover-effect-rect" [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"></svg:circle>
@@ -12,5 +13,6 @@
               (mouseenter)="onMouseEnter($event)"
               (mouseleave)="onMouseLeave(evt)"></svg:rect>
 
+    
+</svg:svg>
 
-</svg:g>

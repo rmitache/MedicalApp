@@ -32,7 +32,8 @@ export class VersionElemComponent {
         VersionInfoWrapper: null,
         ParentGroupYPos: null,
 
-        StartPointEnabled: false
+        StartPointEnabled: false,
+        EndPointEnabled: false
     };
 
     // Constructor
@@ -45,7 +46,9 @@ export class VersionElemComponent {
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
 
         this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
+        this.viewModel.EndPointEnabled = false;// !this.viewModel.VersionInfoWrapper.HasNextAdjacentVersion
     }
+    
 
     // Events
     @Output() public Hover: EventEmitter<VersionElemHoverEventInfo> = new EventEmitter();
@@ -71,12 +74,19 @@ export class VersionElemComponent {
         this.Hover.emit(null);
 
     }
+    private onMouseEnterEndPoint(event: any) {
+
+    }
+    private onMouseLeaveEndPoint() {
+
+    }
 }
 interface ViewModel {
     VersionInfoWrapper: VersionElemInfoWrapper;
     ParentGroupYPos: number;
 
     StartPointEnabled: boolean;
+    EndPointEnabled: boolean;
 }
 
 export class VersionElemHoverEventInfo {
