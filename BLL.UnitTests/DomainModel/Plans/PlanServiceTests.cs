@@ -8,6 +8,7 @@ using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using DataAccessLayer.Repositories;
 using Moq;
+using BLL.DomainModel.Plans.Services;
 
 namespace BLL.UnitTests.DomainModel.Plans
 {
@@ -16,41 +17,56 @@ namespace BLL.UnitTests.DomainModel.Plans
         // MethodName_Input_ExpectedOutput
 
 
-        [Fact]
-        public void UpdatePlan_PlanBLOWithMoreThanOneVersionAndLatestVersionHasIDZero_UpdatePreviousLastVersionAndAddTheNewLatestVersion()
-        {
-            // Mock dependencies
-            var planRepositoryMock = new Mock<IPlanRepository>();
-            var planFactoryMock = new Mock<IPlanFactory>();
-            var versionRepositoryMock = new Mock<IVersionRepository>();
-            var versionFactoryMock = new Mock<IVersionFactory>();
-
-        }
-
-        
         //[Fact]
-        //public void ConvertToDataEntity_NormalDataEntity_MatchingFields()
+        //public void UpdatePlan_PlanBLOWithMoreThanOneVersionAndLatestVersionHasIDZero_UpdatePreviousLastVersionAndAddTheNewLatestVersion()
         //{
-        //    // Mock MedicineTypeFactory 
-        //    var medTypeFactoryMock = new Mock<IMedicineTypeFactory>();
-        //    medTypeFactoryMock
-        //        .Setup(factory => factory.Convert_ToBLO(
-        //            It.IsAny<TMedicineType>()))
-        //            .Returns(new Mock<MedicineType>().Object);
-
-        //    // Create the MedicineRuleItemFactory
-        //    var medicineRuleItemFactory = new MedicineRuleItemFactory(medTypeFactoryMock.Object);
+        //    // Mock dependencies
+        //    var versionFactoryMock = new Mock<IVersionFactory>();
+        //    var versionRepositoryMock = new Mock<IVersionRepository>();
+        //    var planRepositoryMock = new Mock<IPlanRepository>();
+        //    var planFactoryMock = new Mock<IPlanFactory>();
 
 
 
-        //    // Test methods 
+        //    // Mock input PlanBLO (versions > 1 and latest version has ID == 0)
+        //    var userId = 1;
+        //    var planBLOMock = new Mock<Plan>();
+
+        //    // Mock PlanBLO.Versions 
+        //    var versionsListMock = new Mock<List<BLL.DomainModel.Plans.BLOs.Version>>();
+        //    versionsListMock
+        //        .Setup(list => list.Count)
+        //        .Returns(It.IsInRange<int>(2, int.MaxValue, Range.Inclusive));
+        //    planBLOMock
+        //        .Setup(plan => plan.Versions)
+        //        .Returns(versionsListMock.Object);
 
 
-        //    //// Mock the MedicineRuleItem BLO 
-        //    //var MedicineRuleItemBLOMock = new Mock<IMedicineTypeFactory>();
+        //    // Mock plan.GetLatestVersion()
+        //    var latestVersionMock = new Mock<BLL.DomainModel.Plans.BLOs.Version>();
+        //    latestVersionMock
+        //        .Setup(version => version.ID)
+        //        .Returns(0);
+        //    planBLOMock
+        //        .Setup(plan => plan.GetLatestVersion())
+        //        .Returns(latestVersionMock.Object);
 
-        //    //var medRuleItemFactory
+
+
+        //    // Create the PlanService
+        //    var planService = new PlanService(
+        //        planRepositoryMock.Object,
+        //        planFactoryMock.Object,
+        //        versionRepositoryMock.Object,
+        //        versionFactoryMock.Object
+        //        );
+
+        //    // 
+        //    planService.UpdatePlan(planBLOMock.Object, userId);
+        //    versionRepositoryMock.Verify(versionRepo => versionRepo.UpdateVersion(It.IsAny<TPlanVersion>(), It.IsAny<int>()), Times.Once);
+           
         //}
+
 
 
 
@@ -65,19 +81,5 @@ namespace BLL.UnitTests.DomainModel.Plans
         //    Assert.Equal(expectedFullName, fullNameResult);
         //}
 
-
-        //public static string GetFullName(string firstName, string lastName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(firstName))
-        //    {
-        //        throw new ArgumentException("First name must be provided.");
-        //    }
-        //    if (string.IsNullOrWhiteSpace(lastName))
-        //    {
-        //        throw new ArgumentException("Last name must be provided.");
-        //    }
-
-        //    return $"{firstName.Trim()} {lastName.Trim()}".Trim();
-        //}
     }
 }

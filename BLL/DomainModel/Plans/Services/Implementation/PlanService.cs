@@ -55,9 +55,11 @@ namespace BLL.DomainModel.Plans.Services
             // Adjust or Restart
             if (planBLO.Versions.Count > 1 && planBLO.GetLatestVersion().ID == 0)
             {
-                // Update previousLastVersion and Add the new latestVersion
+                // Update the previousLastVersion in the Plan
                 var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
                 this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
+
+                // Add/Create the lastVersion 
                 var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
                 this.versionRepository.AddVersion(lastVersionDataEntity, planBLO.ID);
             }

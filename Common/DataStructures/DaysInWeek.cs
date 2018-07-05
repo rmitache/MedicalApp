@@ -16,7 +16,7 @@ namespace Common.Datastructures
         public bool Saturday { get; set; } = true;
         public bool Sunday { get; set; } = true;
 
-        // Constructor
+        // Constructors
         public DaysInWeek()
         {
 
@@ -25,7 +25,7 @@ namespace Common.Datastructures
         {
             if (daysInWeekArray.Length == 0 || daysInWeekArray.Length > 7)
             {
-                throw new System.Exception("Array empty or has more than 7 items");
+                throw new ArgumentException("Array empty or has more than 7 items");
             }
 
 
