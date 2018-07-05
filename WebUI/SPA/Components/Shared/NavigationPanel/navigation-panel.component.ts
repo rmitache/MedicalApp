@@ -22,6 +22,8 @@ export class NavigationPanelComponent {
         LabelText: null,
         SelectedDateRange: null
     };
+    @Input('TriggerOnlyModeOn')
+    private triggerOnlyModeOn = false; 
 
     // Private methods
     private getCurrentMode(): IDateRangeSelectionMode {
@@ -37,38 +39,63 @@ export class NavigationPanelComponent {
         }
         return currentStrategy;
     }
+    private setInnerDateRange(newRange: Range<moment.Moment>) {
+        this.viewModel.SelectedDateRange = newRange;
+
+        var currentMode = this.getCurrentMode();
+        this.viewModel.LabelText = currentMode.GetNavigationLabel(newRange);
+    }
 
     // Public methods
     public InitAndGetSelDateRange(mode: DateRangeMode, refDate: moment.Moment): Range<moment.Moment> {
+
+        // Initialize and compute the initial range based on the given refDate and DateRangeMode
         this.dateRangeSelectionMode = mode;
-        var currentMode = this.getCurrentMode();
-        var initialSelDateRange = currentMode.GetInitialSelectedDateRange(refDate);
-        this.viewModel.SelectedDateRange = initialSelDateRange;
-        this.viewModel.LabelText = currentMode.GetNavigationLabel(initialSelDateRange);
+        var initialSelDateRange = this.getCurrentMode().GetInitialSelectedDateRange(refDate);
+
+        // 
+        this.setInnerDateRange(initialSelDateRange);
 
         return initialSelDateRange;
     }
-
+    public SetDateRangeManually(newRange: Range<moment.Moment>) {
+        this.setInnerDateRange(newRange);
+    }
+    
     // Events
+    @Output() public DateRangeChangeTriggered: EventEmitter<Range<moment.Moment>> = new EventEmitter();
     @Output() public DateRangeChangedBackward: EventEmitter<Range<moment.Moment>> = new EventEmitter();
     @Output() public DateRangeChangedForward: EventEmitter<Range<moment.Moment>> = new EventEmitter();
 
     // Event handlers
     private onPreviousClicked() {
+
+        // Determine the new range 
         var currentMode = this.getCurrentMode();
         let prevSelectedDateRange = currentMode.GetPreviousSelectedDateRange(this.viewModel.SelectedDateRange);
-        this.viewModel.SelectedDateRange = prevSelectedDateRange;
-        this.viewModel.LabelText = currentMode.GetNavigationLabel(prevSelectedDateRange);
 
-        this.DateRangeChangedBackward.emit(prevSelectedDateRange);
+        // 
+        if (!this.triggerOnlyModeOn) {
+            this.setInnerDateRange(prevSelectedDateRange);
+            this.DateRangeChangedBackward.emit(prevSelectedDateRange);
+        } else {
+            this.DateRangeChangeTriggered.emit(prevSelectedDateRange);
+        }
+        
     }
     private onNextClicked() {
+
+        // Determine the new range 
         var currentMode = this.getCurrentMode();
         let nextSelectedDateRange = currentMode.GetNextSelectedDateRange(this.viewModel.SelectedDateRange);
-        this.viewModel.SelectedDateRange = nextSelectedDateRange;
-        this.viewModel.LabelText = currentMode.GetNavigationLabel(nextSelectedDateRange);
 
-        this.DateRangeChangedForward.emit(nextSelectedDateRange);
+        // 
+        if (!this.triggerOnlyModeOn) {
+            this.setInnerDateRange(nextSelectedDateRange);
+            this.DateRangeChangedForward.emit(nextSelectedDateRange);
+        } else {
+            this.DateRangeChangeTriggered.emit(nextSelectedDateRange);
+        }
     }
 }
 

@@ -23,7 +23,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Factories
         public TPlanMedicineRuleItem Convert_ToDataEntity(MedicineRuleItem blo)
         {
             TPlanMedicineRuleItem dataEntity = new TPlanMedicineRuleItem();
-            dataEntity.Id = blo.ID ;
+            dataEntity.Id = blo.ID;
 
             dataEntity.MedicineTypeId = blo.MedicineType.ID;
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;

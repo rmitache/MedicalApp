@@ -7,7 +7,6 @@
 
 
 <div class="frame">
-
     <div class="left-side">
         <div class="header">
             <div class="left-section">
@@ -15,8 +14,8 @@
             </div>
             <div class="center-section">
                 <navigation-panel #navPanel
-                                  (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
-                                  (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
+                                  [TriggerOnlyModeOn]="true"
+                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangeTriggered($event)"></navigation-panel>
             </div>
 
         </div>

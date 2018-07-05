@@ -34,12 +34,13 @@ import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 })
 export class IndicatorsViewComponent {
     // Fields
-    private availableWindowPaddingInMonths = 0;
+    private availableWindowPaddingInMonths = 1;
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.Month;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
     private chartCanvasContext: any;
     private chartInstance: any;
+    
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
 
@@ -155,6 +156,10 @@ export class IndicatorsViewComponent {
                 this.viewModel.HighlightRangeEndXPosition = null;
             }
         }));
+        this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
+            this.onSelectedDateRangeChanged(newValue);
+            this.navPanelInstance.SetDateRangeManually(newValue);
+        }));
     }
     ngOnInit() {
         // Get the initial range using the current DisplayMode
@@ -181,10 +186,12 @@ export class IndicatorsViewComponent {
     }
 
     // Event handlers
-    private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
+    private onSelectedDateRangeChanged(newSelDateRange: Range<moment.Moment>) {
+
 
         // Check if newSelDateRange is within the AvailableDateRange
-        if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
+        if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart &&
+            newSelDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
             this.viewModel.SelectedDateRange = newSelDateRange;
             this.refreshUI();
         }
@@ -204,30 +211,9 @@ export class IndicatorsViewComponent {
                 });
         }
     }
-    private onSelectedDateRangeChangedForward(newSelDateRange: Range<moment.Moment>) {
+    private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
 
-        // Check if nextSelectedDateRange is within the AvailableDateRange
-        if (newSelDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
-            this.viewModel.SelectedDateRange = newSelDateRange;
-            this.refreshUI();
-        }
-        else {
-            // If it isn't, load a new "window" of FactorRecords from the server
-            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
-                newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
-
-            this.viewModel.Blocked = true;
-            this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
-                .then(() => {
-
-                    this.viewModel.SelectedDateRange = newSelDateRange;
-                    this.refreshUI();
-                    setTimeout(() => {
-                        this.viewModel.Blocked = false;
-                    }, 200);
-
-                });
-        }
+        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
 }
 
@@ -482,7 +468,7 @@ class MonthDisplayMode implements IDisplayMode {
         if (!IsDateOnFirstOrLastDateInMonth(moment())) {
             chartOptions.annotation.annotations = annotations;
         }
-        
+
         return chartOptions;
     }
     public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {

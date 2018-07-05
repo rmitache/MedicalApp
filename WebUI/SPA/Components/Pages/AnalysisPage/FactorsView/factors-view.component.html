@@ -7,8 +7,8 @@
             </div>
             <div class="center-section">
                 <navigation-panel #navPanel 
-                                  (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
-                                  (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
+                                  [TriggerOnlyModeOn]="true"
+                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangedTriggered($event)"></navigation-panel>
             </div>
 
         </div>

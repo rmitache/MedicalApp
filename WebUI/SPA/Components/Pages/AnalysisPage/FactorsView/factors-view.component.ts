@@ -104,6 +104,12 @@ export class FactorsViewComponent {
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
+        this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
+            this.viewModel.SelectedDateRange = newValue;
+            this.refreshUI();
+            this.navPanelInstance.SetDateRangeManually(newValue);
+        }));
+
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
     }
@@ -128,14 +134,10 @@ export class FactorsViewComponent {
             this.versionTooltipInstance.HideAndClear();
         }
     }
-    private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
-        this.viewModel.SelectedDateRange = newSelDateRange;
-        this.refreshUI();
+    private onSelectedDateRangeChangedTriggered(newSelDateRange: Range<moment.Moment>) {
+        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
-    private onSelectedDateRangeChangedForward(newSelDateRange: Range<moment.Moment>) {
-        this.viewModel.SelectedDateRange = newSelDateRange;
-        this.refreshUI();
-    }
+    
 }
 interface ViewModel {
     AvailableDateRange: Range<moment.Moment>;

@@ -21,6 +21,10 @@ export class AnalysisPageApplicationState implements IReadOnlyAppStateWithUser, 
         var clonedRange = new Range<moment.Moment>(range.RangeStart.clone(), range.RangeEnd.clone());
         return clonedRange;
     });
+    public readonly SelectedDateRange = new DataStructures.ObservableProperty<Range<moment.Moment>>(null, (range) => {
+        var clonedRange = new Range<moment.Moment>(range.RangeStart.clone(), range.RangeEnd.clone());
+        return clonedRange;
+    });
 
     // Constructor
     constructor(
@@ -32,4 +36,5 @@ export class AnalysisPageApplicationState implements IReadOnlyAppStateWithUser, 
 export class IReadOnlyApplicationState {
     LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.UserAccountCLO>;
     HighlightedDateRange: DataStructures.IReadableProperty<Range<moment.Moment>>;
+    SelectedDateRange: DataStructures.IReadableProperty<Range<moment.Moment>>;
 }
