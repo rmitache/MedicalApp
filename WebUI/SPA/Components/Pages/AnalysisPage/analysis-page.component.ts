@@ -46,6 +46,10 @@ export class AnalysisPageComponent {
         const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
 
+        // Handle change tracking
+        setInterval(() => {
+            this.applicationRef.tick();
+        }, 100);
         this.changeDetectorRef.detectChanges();
     }
 

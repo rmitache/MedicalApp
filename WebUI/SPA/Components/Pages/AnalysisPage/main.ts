@@ -42,6 +42,6 @@ if (module.hot) {
 // builds. Don't change how this line looks, otherwise you may break tree-shaking.
 //const modulePromise = platformBrowserDynamic().bootstrapModule(HomePageModule);
 
-//customChangeDetectionZone.run(() => {
-modulePromise = platformBrowserDynamic().bootstrapModule(AnalysisPageModule);
-//});
+customChangeDetectionZone.run(() => {
+    modulePromise = platformBrowserDynamic().bootstrapModule(AnalysisPageModule);
+});

@@ -82,41 +82,39 @@ export class VersionTooltipComponent {
 
     // Public 
     public Show(versionHoverEventInfo: VersionElemHoverEventInfo) {
-        this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
 
+        //// Variables
+        //this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
+        //let version = this.viewModel.VersionCLO;
+        //let prevVersion = version.GetPreviousVersion();
+        //let nextVersion = version.GetNextVersion();
+        //let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, version) : false;
+        //let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, version) : false;
 
-        // First version, without any previous adjacent version -> show list of all medTypes as NEW  
-        let version = this.viewModel.VersionCLO;
-        let prevVersion = version.GetPreviousVersion();
-        let nextVersion = version.GetNextVersion();
-        let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, version) : false;
-        let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, version) : false;
-
-
-        if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
-            (this.viewModel.VersionCLO.GetPreviousVersion() === null ||
-                !this.versionCLOService.AreAdjacent(this.viewModel.VersionCLO.GetPreviousVersion(), this.viewModel.VersionCLO))) {
-            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
-        }
-
-
+        //// StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
+        //if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
+        //    (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, version))) {
+        //    this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
+        //}
+        //// EndPoint, on version without any next adjacent version -> show list of all medTypes as STOPPED  
         //else if (versionHoverEventInfo.PointType === HoverInfoPointType.EndPoint &&
-        //    (this.viewModel.VersionCLO.GetNextVersion() === null ||
-        //        !this.versionCLOService.AreAdjacent(this.viewModel.VersionCLO.GetNextVersion(), this.viewModel.VersionCLO))) {
+        //    (nextVersion === null || !this.versionCLOService.AreAdjacent(nextVersion, version))) {
         //    this.viewModel.Changes = this.versionCLOService.GetChangesBetween(null, this.viewModel.VersionCLO);
         //}
+        //// Any normal Points
+        //else {
+        //    this.viewModel.Changes = this.versionCLOService.GetChangesBetween(version, prevVersion);
+        //}
 
-        //
-        //this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, this.viewModel.VersionCLO.GetPreviousVersion());
 
-        // Calculate position
-        setTimeout(() => {
-            var tooltipAndCaretPos = this.calculateTooltipPosition(versionHoverEventInfo.Left, versionHoverEventInfo.Top);
+        //// Calculate position
+        //setTimeout(() => {
+        //    var tooltipAndCaretPos = this.calculateTooltipPosition(versionHoverEventInfo.Left, versionHoverEventInfo.Top);
 
-            this.viewModel.TooltipPos = tooltipAndCaretPos[0];
-            this.viewModel.CaretPos = tooltipAndCaretPos[1];
-            this.viewModel.Visible = true;
-        }, 10);
+        //    this.viewModel.TooltipPos = tooltipAndCaretPos[0];
+        //    this.viewModel.CaretPos = tooltipAndCaretPos[1];
+        //    this.viewModel.Visible = true;
+        //}, 10);
 
     }
     public HideAndClear() {

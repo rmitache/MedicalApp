@@ -95,6 +95,9 @@ export class PlanCLO extends BaseCLO {
         }
     }
     public GetVersionBeforeTarget(versionCLO): CLOs.VersionCLO {
+        if (!this.Versions) {
+            throw new Error("Versions is null or undefined");
+        }
 
         let indexOfTarget = this.Versions.FindIndex(versionCLO);
         if (indexOfTarget === -1) {
@@ -108,6 +111,9 @@ export class PlanCLO extends BaseCLO {
         }
     }
     public GetVersionAfterTarget(versionCLO:CLOs.VersionCLO): CLOs.VersionCLO {
+        if (!this.Versions) {
+            throw new Error("Versions is null or undefined");
+        }
 
         let indexOfTarget = this.Versions.FindIndex(versionCLO);
         if (indexOfTarget === -1) {

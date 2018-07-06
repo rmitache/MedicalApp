@@ -87,7 +87,7 @@ export class PlanElemComponent {
                 // If the versionWrapper is adjacent to its next versionWrapper, slightly expand it's width
                 if (j < versionInfoWrappers.length - 1) {
                     var currentVersion = versionInfoWrappers[j].VersionCLO;
-                    var nextVersion = currentVersion.GetNextVersion();
+                    var nextVersion = versionInfoWrappers[j + 1].VersionCLO;
 
                     if (this.versionCLOService.AreAdjacent(currentVersion, nextVersion)) {
                         versionInfoWrappers[j].Width += 1 * widthBetweenDates;
@@ -96,9 +96,8 @@ export class PlanElemComponent {
                 }
             }
 
-
-
         }
+
         return versionInfoWrappers;
     }
 

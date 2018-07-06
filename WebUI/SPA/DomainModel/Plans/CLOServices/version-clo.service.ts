@@ -79,6 +79,10 @@ export class VersionCLOService {
     }
     /** Checks whether two Versions are adjacent. The check is done on both sides  */
     public AreAdjacent(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO) {
+        if (versionA === null || versionB === null) {
+            return false;
+        }
+
         let versionAStartDate = moment(versionA.StartDate);
         let versionAEndDate = moment(versionA.EndDate);
         let versionBStartDate = moment(versionB.StartDate);
@@ -86,10 +90,7 @@ export class VersionCLOService {
 
 
         let nrOfDaysOneSide = GetNrOfDaysBetweenDatesUsingMoment(versionBEndDate, versionAStartDate, false);
-        let nrOfDaysOneSideReverse = GetNrOfDaysBetweenDatesUsingMoment(versionAStartDate, versionBEndDate, false);
-
         let nrOfDaysOtherSide = GetNrOfDaysBetweenDatesUsingMoment(versionBStartDate, versionAEndDate, false);
-        let nrOfDaysOtherSideReverse = GetNrOfDaysBetweenDatesUsingMoment(versionAEndDate, versionBStartDate, false);
 
 
         if (nrOfDaysOneSide === 1 || nrOfDaysOtherSide === 1) {
