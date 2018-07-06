@@ -54,21 +54,31 @@ export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>
     return momentDates;
 };
 
-export function GetNrOfDaysBetweenDates(firstDate: Date, secondDate: Date, includeEdges: boolean) {
-    var first = moment(firstDate).startOf('day');
-    var second = moment(secondDate).endOf('day');
+export function GetNrOfDaysBetweenDates(firstDate: Date, secondDate: Date, includeEdges: boolean = true) {
 
-    
-    return GetNrOfDaysBetweenDatesUsingMoment(first, second,includeEdges);
+    return GetNrOfDaysBetweenDatesUsingMoment(moment(firstDate), moment(secondDate), includeEdges);
 }
-export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges: boolean) {
-    var first = moment(firstDate).clone().startOf('day');
-    var second = moment(secondDate).clone().endOf('day');
 
-    var nrOfDays = Math.abs(first.diff(second, 'days'));
+export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges:boolean = true) {
+
+    var largestDate;
+    var smallestDate;
+    if (firstDate.isSameOrAfter(secondDate)) {
+        largestDate = moment(firstDate).clone().endOf('day');
+        smallestDate = moment(secondDate).clone().startOf('day');
+    } else {
+        largestDate = moment(secondDate).clone().endOf('day');
+        smallestDate = moment(firstDate).clone().startOf('day');
+    }
+
+    var nrOfDays = largestDate.diff(smallestDate, 'days');
+
     if (includeEdges) {
         nrOfDays += 1;
     }
+
+
+    
 
     return nrOfDays;
 }

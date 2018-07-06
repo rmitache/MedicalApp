@@ -56,13 +56,13 @@ export class VersionElemComponent {
 
         if (!nextVersion && this.viewModel.VersionInfoWrapper.VersionEndsOnIntersectionEnd) {
             this.viewModel.EndPointEnabled = true;
-        } else if (nextVersion && !this.versionCLOService.AreVersionsAdjacentInTime(nextVersion, versionCLO)) {
+        } else if (nextVersion && !this.versionCLOService.AreAdjacent(nextVersion, versionCLO)) {
             this.viewModel.EndPointEnabled = true;
         } else {
             this.viewModel.EndPointEnabled = false;
         }
     }
-    
+
 
     // Events
     @Output() public Hover: EventEmitter<VersionElemHoverEventInfo> = new EventEmitter();
@@ -72,11 +72,11 @@ export class VersionElemComponent {
 
         var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.start, this.viewModel.VersionInfoWrapper.IntersectionDateRange.start);
         this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
-        
+
 
         // Emit hover event (used to show the tooltip)
         var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO);
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO, HoverInfoPointType.StartPoint);
         this.Hover.emit(eventInfo);
     }
     private onMouseLeaveStartPoint() {
@@ -90,10 +90,18 @@ export class VersionElemComponent {
     private onMouseEnterEndPoint(event: any) {
         var newDateRange = new Range<moment.Moment>(this.viewModel.VersionInfoWrapper.IntersectionDateRange.end, this.viewModel.VersionInfoWrapper.IntersectionDateRange.end);
         this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [newDateRange]);
+
+        // Emit hover event (used to show the tooltip)
+        var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO, HoverInfoPointType.EndPoint);
+        this.Hover.emit(eventInfo);
     }
     private onMouseLeaveEndPoint() {
         //
         this.commandManager.InvokeCommandFlow('ChangeHighlightDateRangeFlow', [null]);
+
+        // Emit event
+        this.Hover.emit(null);
     }
 }
 interface ViewModel {
@@ -108,7 +116,12 @@ export class VersionElemHoverEventInfo {
     constructor(
         public readonly Left: number,
         public readonly Top: number,
-        public readonly VersionCLO: CLOs.VersionCLO) {
+        public readonly VersionCLO: CLOs.VersionCLO,
+        public readonly PointType: HoverInfoPointType) {
 
     }
+}
+export enum HoverInfoPointType {
+    StartPoint = 0,
+    EndPoint = 1
 }

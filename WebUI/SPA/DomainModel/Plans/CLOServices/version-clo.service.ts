@@ -1,6 +1,7 @@
 ﻿// Angular and 3rd party stuff
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import * as momentRange from 'moment-range';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -15,25 +16,30 @@ import { GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/f
 @Injectable()
 export class VersionCLOService {
     // Public Methods
-    public GetVersionChanges(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO, ignoreUnchanged: boolean = true): MedicineTypeChangeSet[] {
+    /** Returns VersionA - VersionB  */
+    public GetChangesBetween(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO, returnUnchanged: boolean = false): MedicineTypeChangeSet[] {
+        // versionA - versionB -> actual differences between the two versions
+        // null - versionB -> everything in versionB is shown as STOPPED
+        // versionA - null -> everything in versionA is shown as NEW
+
 
         // Variables
         let medTypeChanges: MedicineTypeChangeSet[] = [];
-        let targetVersionUniqueMedTypes = targetVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
-        let prevVersionUniqueMedTypes = prevVersion.GetUniqueMedicineTypesWithAvgDosePerMonth();
+        let versionAUniqueMedTypes = (versionA !== null) ? versionA.GetUniqueMedicineTypesWithAvgDosePerMonth() : {};
+        let versionBUniqueMedTypes = (versionB !== null) ? versionB.GetUniqueMedicineTypesWithAvgDosePerMonth() : {};
 
-        // Loop through entries in the targetVersionMedTypes (find those which are NEW and CHANGED)
-        for (var medicineTypeName in targetVersionUniqueMedTypes) {
-            let medTypeEntry = targetVersionUniqueMedTypes[medicineTypeName];
+        // Loop through entries in the versionAMedTypes (find those which are NEW and CHANGED)
+        for (var medicineTypeName in versionAUniqueMedTypes) {
+            let medTypeEntry = versionAUniqueMedTypes[medicineTypeName];
             let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
 
             // New
-            if (prevVersionUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
+            if (versionBUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
                 newMedTypeChangeSet.ChangeType = ChangeType.New;
             }
             // Changed
-            else if (prevVersionUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
-                var prevVersionMedTypeChangeSet = prevVersionUniqueMedTypes[medicineTypeName];
+            else if (versionBUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
+                var prevVersionMedTypeChangeSet = versionBUniqueMedTypes[medicineTypeName];
 
                 if (prevVersionMedTypeChangeSet.AvgMonthlyDosage < medTypeEntry.AvgMonthlyDosage) {
                     newMedTypeChangeSet.ChangeType = ChangeType.Increased;
@@ -44,17 +50,17 @@ export class VersionCLOService {
                 }
             }
 
-            delete prevVersionUniqueMedTypes[medicineTypeName];
+            delete versionBUniqueMedTypes[medicineTypeName];
             medTypeChanges.push(newMedTypeChangeSet);
         }
 
         // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
-        for (var medicineTypeName in prevVersionUniqueMedTypes) {
-            let medTypeEntry = prevVersionUniqueMedTypes[medicineTypeName];
+        for (var medicineTypeName in versionBUniqueMedTypes) {
+            let medTypeEntry = versionBUniqueMedTypes[medicineTypeName];
             let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
 
             // Stopped
-            if (targetVersionUniqueMedTypes[medicineTypeName] === undefined) {
+            if (versionAUniqueMedTypes[medicineTypeName] === undefined) {
                 newMedTypeChangeSet.ChangeType = ChangeType.Stopped;
             }
 
@@ -63,7 +69,7 @@ export class VersionCLOService {
 
 
         // Filter out Unchanged types 
-        if (ignoreUnchanged) {
+        if (!returnUnchanged) {
             medTypeChanges = medTypeChanges.filter((medTypeChange) => {
                 return medTypeChange.ChangeType !== ChangeType.Unchanged;
             });
@@ -71,9 +77,22 @@ export class VersionCLOService {
 
         return medTypeChanges;
     }
-    public AreVersionsAdjacentInTime(targetVersion: CLOs.VersionCLO, prevVersion: CLOs.VersionCLO) {
+    /** Checks whether two Versions are adjacent. The check is done on both sides  */
+    public AreAdjacent(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO) {
+        let versionAStartDate = moment(versionA.StartDate);
+        let versionAEndDate = moment(versionA.EndDate);
+        let versionBStartDate = moment(versionB.StartDate);
+        let versionBEndDate = moment(versionB.EndDate);
 
-        if (GetNrOfDaysBetweenDatesUsingMoment(moment(prevVersion.EndDate), moment(targetVersion.StartDate), true) === 1) {
+
+        let nrOfDaysOneSide = GetNrOfDaysBetweenDatesUsingMoment(versionBEndDate, versionAStartDate, false);
+        let nrOfDaysOneSideReverse = GetNrOfDaysBetweenDatesUsingMoment(versionAStartDate, versionBEndDate, false);
+
+        let nrOfDaysOtherSide = GetNrOfDaysBetweenDatesUsingMoment(versionBStartDate, versionAEndDate, false);
+        let nrOfDaysOtherSideReverse = GetNrOfDaysBetweenDatesUsingMoment(versionAEndDate, versionBStartDate, false);
+
+
+        if (nrOfDaysOneSide === 1 || nrOfDaysOtherSide === 1) {
             return true;
         } else {
             return false;

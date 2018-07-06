@@ -5,7 +5,7 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
+import { VersionElemHoverEventInfo, HoverInfoPointType } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { GetNrOfDaysBetweenDatesUsingMoment, GetNrOfDaysBetweenDates } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionCLOService, MedicineTypeChangeSet, ChangeType } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
@@ -82,10 +82,32 @@ export class VersionTooltipComponent {
 
     // Public 
     public Show(versionHoverEventInfo: VersionElemHoverEventInfo) {
-
-        // Set other fields
         this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
-        this.viewModel.Changes = this.versionCLOService.GetVersionChanges(this.viewModel.VersionCLO, this.viewModel.VersionCLO.GetPreviousVersion());
+
+
+        // First version, without any previous adjacent version -> show list of all medTypes as NEW  
+        let version = this.viewModel.VersionCLO;
+        let prevVersion = version.GetPreviousVersion();
+        let nextVersion = version.GetNextVersion();
+        let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, version) : false;
+        let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, version) : false;
+
+
+        if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
+            (this.viewModel.VersionCLO.GetPreviousVersion() === null ||
+                !this.versionCLOService.AreAdjacent(this.viewModel.VersionCLO.GetPreviousVersion(), this.viewModel.VersionCLO))) {
+            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
+        }
+
+
+        //else if (versionHoverEventInfo.PointType === HoverInfoPointType.EndPoint &&
+        //    (this.viewModel.VersionCLO.GetNextVersion() === null ||
+        //        !this.versionCLOService.AreAdjacent(this.viewModel.VersionCLO.GetNextVersion(), this.viewModel.VersionCLO))) {
+        //    this.viewModel.Changes = this.versionCLOService.GetChangesBetween(null, this.viewModel.VersionCLO);
+        //}
+
+        //
+        //this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, this.viewModel.VersionCLO.GetPreviousVersion());
 
         // Calculate position
         setTimeout(() => {
@@ -101,6 +123,7 @@ export class VersionTooltipComponent {
         this.viewModel.Visible = false;
         this.viewModel.TooltipPos = null;
         this.viewModel.CaretPos = null;
+        this.viewModel.Changes = null;
     }
 }
 

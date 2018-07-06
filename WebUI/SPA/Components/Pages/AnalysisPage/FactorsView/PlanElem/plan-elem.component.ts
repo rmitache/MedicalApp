@@ -15,6 +15,7 @@ import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment, GetDateIndexInTargetRange } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
+import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class PlanElemComponent {
         // Variables
         var versionCLOs = this.planCLO.Versions.ToArray();
         var versionInfoWrappers: VersionElemInfoWrapper[] = [];
-        var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd, true);
+        var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd);
         var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
 
         // Create versionInfoWrappers
@@ -59,7 +60,7 @@ export class PlanElemComponent {
             if (intersectionRange !== null) {
 
                 // Determine the Width
-                let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end, true);
+                let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end);
                 let width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
 
                 // Determine the X and Y positions
@@ -85,10 +86,10 @@ export class PlanElemComponent {
 
                 // If the versionWrapper is adjacent to its next versionWrapper, slightly expand it's width
                 if (j < versionInfoWrappers.length - 1) {
-                    var currentIntersection = versionInfoWrappers[j].IntersectionDateRange;
-                    var nextIntersection = versionInfoWrappers[j + 1].IntersectionDateRange;
+                    var currentVersion = versionInfoWrappers[j].VersionCLO;
+                    var nextVersion = currentVersion.GetNextVersion();
 
-                    if (GetNrOfDaysBetweenDatesUsingMoment(nextIntersection.start, currentIntersection.end, true) === 1) {
+                    if (this.versionCLOService.AreAdjacent(currentVersion, nextVersion)) {
                         versionInfoWrappers[j].Width += 1 * widthBetweenDates;
                     }
 
@@ -102,6 +103,10 @@ export class PlanElemComponent {
     }
 
     // Constructor
+    constructor(
+        private versionCLOService: VersionCLOService
+    ) {
+    }
     ngOnInit() {
         this.viewModel.PlanCLO = this.planCLO;
         this.viewModel.SelectedDateRange = this.selectedDateRange;
@@ -133,7 +138,6 @@ export class VersionElemInfoWrapper {
     // Fields
     public VersionCLO: CLOs.VersionCLO;
     public IntersectionDateRange: momentRange.DateRange;
-    public HasNextAdjacentVersion: boolean;
 
     public Width: number;
     public XPos: number;
