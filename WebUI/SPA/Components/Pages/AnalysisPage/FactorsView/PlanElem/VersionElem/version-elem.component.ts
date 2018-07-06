@@ -47,13 +47,14 @@ export class VersionElemComponent {
         this.viewModel.VersionInfoWrapper = this.versionInfoWrapper;
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
 
+
+
+
+
+        // Determine whether the startPoint and endPoint should be shown 
         this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
-
-
-        // Determine whether the endPoint should be shown 
         let versionCLO = this.viewModel.VersionInfoWrapper.VersionCLO;
         let nextVersion = versionCLO.GetNextVersion();
-
         if (!nextVersion && this.viewModel.VersionInfoWrapper.VersionEndsOnIntersectionEnd) {
             this.viewModel.EndPointEnabled = true;
         } else if (nextVersion && !this.versionCLOService.AreAdjacent(nextVersion, versionCLO)) {
