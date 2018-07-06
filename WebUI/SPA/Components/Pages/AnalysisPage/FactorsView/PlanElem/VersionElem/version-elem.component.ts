@@ -93,7 +93,7 @@ export class VersionElemComponent {
 
         // Emit hover event (used to show the tooltip)
         var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO, HoverInfoPointType.EndPoint);
+        var eventInfo = new VersionElemHoverEventInfo(bRect.right - 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO, HoverInfoPointType.EndPoint);
         this.Hover.emit(eventInfo);
     }
     private onMouseLeaveEndPoint() {
