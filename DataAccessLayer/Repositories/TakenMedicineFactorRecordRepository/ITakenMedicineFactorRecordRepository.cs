@@ -13,6 +13,6 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
     {
         void AddTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
         void RemoveTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
-        Dictionary<string, TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID);
+        List<TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID);
     }
 }

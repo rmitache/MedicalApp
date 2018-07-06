@@ -55,7 +55,8 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
             entitiesContext.SaveChanges();
 
         }
-        public Dictionary<string, TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID)
+
+        public List<TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID)
         {
             // Get the DataEntities
             var list = entitiesContext.TTakenMedicineFactorRecord
@@ -67,23 +68,9 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                         record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.Add(new TimeSpan(23, 59, 59)))
                 .Include(record => record.MedicineType)
                 .ToList();
+            return list;
 
-            // Convert to dictionary
-            var dictionary = new Dictionary<string, TTakenMedicineFactorRecord>();
-            foreach (TTakenMedicineFactorRecord dataEntity in list) {
-                string key;
-                if (dataEntity.PlanId!= null)
-                {
-                    key = dataEntity.PlanId + "_" + dataEntity.MedicineTypeId + "_" + dataEntity.OccurrenceDateTime.ToString();
-                } else
-                {
-                    key = dataEntity.MedicineFactorRecordId + "";
-                }
-
-                dictionary[key] = dataEntity;
-            }
-
-            return dictionary;
+            
         }
     }
 }

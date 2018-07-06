@@ -9,6 +9,7 @@ import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
 export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IMedicineFactorRecord{
     // Fields
     public ID: number;
+    public CompositeID: string;
     public OccurrenceDateTime: Date;
     public Type: Enums.FactorRecordType;
     

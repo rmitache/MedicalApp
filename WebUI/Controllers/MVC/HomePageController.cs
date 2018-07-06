@@ -142,13 +142,22 @@ namespace WebUI.Controllers
             return Json(factorRecordsUpdatedIDs);
         }
 
+        //[Route("HomePage/MarkFactorRecordsAsTaken")]
+        //[HttpPost]
+        //public JsonResult MarkFactorRecordsAsTaken([FromBody]List<MedicineFactorRecord> factorRecords)
+        //{
+        //    int? userID = this.webSecurityManager.CurrentUserID;
+
+        //    this.medicineFactorRecordService.MarkFactorRecordsAsTaken(factorRecords, (int)userID);
+        //    return Json(true);
+        //}
         [Route("HomePage/MarkFactorRecordsAsTaken")]
         [HttpPost]
-        public JsonResult MarkFactorRecordsAsTaken([FromBody]List<MedicineFactorRecord> factorRecords)
+        public JsonResult MarkFactorRecordsAsTaken([FromBody] MarkFactorRecordsAsTakenModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
 
-            this.medicineFactorRecordService.MarkFactorRecordsAsTaken(factorRecords, (int)userID);
+            this.medicineFactorRecordService.MarkFactorRecordsAsTaken(model.FactorRecordCompositeIDs, model.NewTakenStatuses,(int)userID);
             return Json(true);
         }
 
@@ -216,6 +225,11 @@ namespace WebUI.Controllers
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;
+        }
+        public class MarkFactorRecordsAsTakenModel
+        {
+            public string[] FactorRecordCompositeIDs;
+            public bool[] NewTakenStatuses;
         }
 
     }

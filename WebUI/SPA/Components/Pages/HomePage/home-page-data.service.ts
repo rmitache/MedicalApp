@@ -100,8 +100,18 @@ export class HomePageDataService {
     public MarkFactorRecordsAsTaken(factorRecordCLOs: CLOs.MedicineFactorRecordCLO[]): Promise<List<CLOs.MedicineFactorRecordCLO>> {
         const apiMethodName: string = 'MarkFactorRecordsAsTaken';
 
-        let blos = this.genericCLOFactory.ConvertToBlo(factorRecordCLOs);
-        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blos)
+       
+        let model = {
+            FactorRecordCompositeIDs: [],
+            NewTakenStatuses: []
+        };
+        factorRecordCLOs.forEach((clo) => {
+            model.FactorRecordCompositeIDs.push(clo.CompositeID);
+            model.NewTakenStatuses.push(clo.Taken);
+        });
+        
+
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
             .toPromise();
 
         return postDataPromise;

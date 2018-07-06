@@ -22,19 +22,17 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
         private readonly IPlanService planService;
 
         // Private methods
-        private string GetSpecialKey(MedicineFactorRecord record)
+        private Dictionary<string, TTakenMedicineFactorRecord> ConvertListOfTakenDataEntitiesToDict(List<TTakenMedicineFactorRecord> list)
         {
-            string key;
-            if (record.ParentPlanID != null)
+            var dictionary = new Dictionary<string, TTakenMedicineFactorRecord>();
+            foreach (TTakenMedicineFactorRecord dataEntity in list)
             {
-                key = record.ParentPlanID + "_" + record.MedicineType.ID + "_" + record.OccurrenceDateTime.ToString();
-            }
-            else
-            {
-                key = record.ID + "";
+                string key = MedicineFactorRecord.DetermineCompositeID(dataEntity.PlanId, dataEntity.MedicineFactorRecordId, dataEntity.MedicineTypeId,
+                    dataEntity.OccurrenceDateTime);
+                dictionary[key] = dataEntity;
             }
 
-            return key;
+            return dictionary;
         }
 
         // Constructor
@@ -67,27 +65,31 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
 
             return blos;
         }
-        public void MarkFactorRecordsAsTaken(List<MedicineFactorRecord> blos, int userID)
+        public void MarkFactorRecordsAsTaken(string[] compositeIDs, bool[] newTakenStatuses, int userID)
         {
             // Collections
             var dataEntitiesToAdd = new List<TTakenMedicineFactorRecord>();
             var dataEntitiesToRemove = new List<TTakenMedicineFactorRecord>();
 
-            // Loop through factorRecords and check out their Taken property
-            foreach (MedicineFactorRecord record in blos)
+            // Loop through compositeIDs and check out their Taken property
+            for(int i=0; i< compositeIDs.Length;i++)
             {
-                // Create the dataEntity
-                var newDataEntity = new TTakenMedicineFactorRecord();
-                newDataEntity.MedicineTypeId = record.MedicineType.ID;
-                newDataEntity.PlanId = (record.ParentPlanID != null) ? record.ParentPlanID : null;
-                newDataEntity.MedicineFactorRecordId = (record.Type == MedicineFactorRecordType.UserEntry) ? record.ID as int? : null;
-                newDataEntity.OccurrenceDateTime = record.OccurrenceDateTime;
+                var compositeID = compositeIDs[i];
+                var newTakenStatus = newTakenStatuses[i];
 
-                if (record.Taken == true)
+                // Create the dataEntity
+                var breakdown = MedicineFactorRecord.ExtractFromCompositeID(compositeID);
+                var newDataEntity = new TTakenMedicineFactorRecord();
+                newDataEntity.MedicineTypeId = breakdown.MedicineTypeID;
+                newDataEntity.PlanId = breakdown.ParentPlanID;
+                newDataEntity.MedicineFactorRecordId = breakdown.MedicineFactorRecordID;
+                newDataEntity.OccurrenceDateTime = breakdown.OccurrenceDateTime;
+
+                if (newTakenStatus == true)
                 {
                     dataEntitiesToAdd.Add(newDataEntity);
                 }
-                else if (record.Taken == false)
+                else if (newTakenStatus == false)
                 {
                     dataEntitiesToRemove.Add(newDataEntity);
                 }
@@ -108,19 +110,16 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             var plans = this.planService.GetPlans(userID, true);
             var planProjectionFactorRecordBLOs = this.medicineFactorRecordFactory.Create_FromMedicinePlans(plans, dateRange.RangeStart, dateRange.RangeEnd);
 
-
-
             // Place all factorRecords together and then set their Taken property
             var allFactorRecordBLOs = planProjectionFactorRecordBLOs.Concat(userEntryFactorRecordBLOs).OrderBy(rec => rec.OccurrenceDateTime).ToList();
-            var takenDataEntitiesDictionary = this.takenMedFactorRecordRepo.GetTakenMedicineFactorRecords(dateRange, userID);
-            foreach(MedicineFactorRecord record in allFactorRecordBLOs)
+            var takenDataEntitiesDictionary = this.ConvertListOfTakenDataEntitiesToDict(this.takenMedFactorRecordRepo.GetTakenMedicineFactorRecords(dateRange, userID));
+            foreach(MedicineFactorRecord blo in allFactorRecordBLOs)
             {
-                var key = this.GetSpecialKey(record);
+                var key = MedicineFactorRecord.DetermineCompositeID(blo);
                 if (takenDataEntitiesDictionary.ContainsKey(key))
                 {
-                    record.Taken = true;
+                    blo.Taken = true;
                 }
-
             }
 
             return allFactorRecordBLOs;

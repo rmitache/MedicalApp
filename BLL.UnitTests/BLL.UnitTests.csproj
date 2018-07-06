@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DomainModel\Factors\" />
+    <Folder Include="DomainModel\Plans\" />
   </ItemGroup>
 
 </Project>
