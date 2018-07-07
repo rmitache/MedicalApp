@@ -8,7 +8,7 @@ namespace BLL.UnitTests.Common
 {
     public class DaysInWeekTests
     {
-        #region Constructor
+        #region Constructor Tests
 
         [Theory]
         [InlineData(new bool[] { })]
@@ -58,7 +58,7 @@ namespace BLL.UnitTests.Common
         }
         #endregion
 
-        #region ParseCommaSeparatedString
+        #region ParseCommaSeparatedString Tests
         [Theory]
         [InlineData("true,false,true,false")]
         public void ParseCommaSeparatedString_ValidString_MatchingDaysInWeek(string str)

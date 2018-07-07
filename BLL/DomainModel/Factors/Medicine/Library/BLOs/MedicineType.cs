@@ -7,21 +7,21 @@ namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
     public  class MedicineType
     {
         // Properties
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string ShortName { get; set; }
-        public string ProducerName { get; set; }
-        public BaseForm BaseForm { get; set; }
-        public MedicineCategory[] ParentCategories { get; set; }
+        virtual public int ID { get; set; }
+        virtual public string Name { get; set; }
+        virtual public string ShortName { get; set; }
+        virtual public string ProducerName { get; set; }
+        virtual public BaseForm BaseForm { get; set; }
+        virtual public MedicineCategory[] ParentCategories { get; set; }
 
 
-        public UnitDoseType? PackagedUnitDoseType { get; set; }
-        public int? PackagedUnitDoseSize { get; set; }
-        public UnitOfMeasure? PackagedUnitDoseUoM { get; set; }
+        virtual public UnitDoseType? PackagedUnitDoseType { get; set; }
+        virtual public int? PackagedUnitDoseSize { get; set; }
+        virtual public UnitOfMeasure? PackagedUnitDoseUoM { get; set; }
 
 
         // Constructor
-        internal MedicineType() { }
+        public MedicineType() { }
     }
 
 

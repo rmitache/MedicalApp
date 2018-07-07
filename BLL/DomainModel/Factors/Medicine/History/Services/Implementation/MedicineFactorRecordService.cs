@@ -27,7 +27,8 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             var dictionary = new Dictionary<string, TTakenMedicineFactorRecord>();
             foreach (TTakenMedicineFactorRecord dataEntity in list)
             {
-                string key = MedicineFactorRecord.DetermineCompositeID(dataEntity.PlanId, dataEntity.MedicineFactorRecordId, dataEntity.MedicineTypeId,
+                int medicineFactorRecordID = (dataEntity.MedicineFactorRecordId == null) ? -1 : (int)dataEntity.MedicineFactorRecordId;
+                string key = MedicineFactorRecord.DetermineCompositeID(dataEntity.PlanId, medicineFactorRecordID, dataEntity.MedicineTypeId,
                     dataEntity.OccurrenceDateTime);
                 dictionary[key] = dataEntity;
             }
@@ -72,7 +73,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             var dataEntitiesToRemove = new List<TTakenMedicineFactorRecord>();
 
             // Loop through compositeIDs and check out their Taken property
-            for(int i=0; i< compositeIDs.Length;i++)
+            for (int i = 0; i < compositeIDs.Length; i++)
             {
                 var compositeID = compositeIDs[i];
                 var newTakenStatus = newTakenStatuses[i];
@@ -113,7 +114,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             // Place all factorRecords together and then set their Taken property
             var allFactorRecordBLOs = planProjectionFactorRecordBLOs.Concat(userEntryFactorRecordBLOs).OrderBy(rec => rec.OccurrenceDateTime).ToList();
             var takenDataEntitiesDictionary = this.ConvertListOfTakenDataEntitiesToDict(this.takenMedFactorRecordRepo.GetTakenMedicineFactorRecords(dateRange, userID));
-            foreach(MedicineFactorRecord blo in allFactorRecordBLOs)
+            foreach (MedicineFactorRecord blo in allFactorRecordBLOs)
             {
                 var key = MedicineFactorRecord.DetermineCompositeID(blo);
                 if (takenDataEntitiesDictionary.ContainsKey(key))
