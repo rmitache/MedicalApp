@@ -54,7 +54,9 @@
     </div>
 
     <div class="right-side">
-        <filters-panel #filtersPanel></filters-panel>
+        <filters-panel #filtersPanel
+                       (SelectedPlansChanged)="onSelectedPlansChanged($event)"
+                       ></filters-panel>
         
     </div>
 

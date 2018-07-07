@@ -15,6 +15,7 @@ import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 
 @Component({
@@ -40,6 +41,12 @@ export class FiltersPanelComponent {
         }
     };
 
+    // Constructor
+    constructor(
+        private readonly genericCLOFactory: GenericCLOFactory
+    ) {
+    }
+
     // Public methods
     public InitAndGetSelPlanCLOs(availablePlanCLOs: CLOs.PlanCLO[]) {
         this.viewModel.AvailablePlans = availablePlanCLOs;
@@ -47,16 +54,36 @@ export class FiltersPanelComponent {
         let selectedPlans = Object.assign([], this.viewModel.AvailablePlans);
         this.viewModel.SelectedPlans = selectedPlans;
 
-        return selectedPlans;
+        let clonedSelectedPlans = this.genericCLOFactory.CloneCLOArray(selectedPlans);
+        return clonedSelectedPlans;
     }
 
     // Events
-    @Output() public PlanSelectToggled: EventEmitter<Range<moment.Moment>> = new EventEmitter();
+    @Output() public SelectedPlansChanged: EventEmitter<CLOs.PlanCLO[]> = new EventEmitter();
 
     // Event handlers
-    private onCheckBoxClicked() {
+    private onCheckBoxClicked(planCLO: CLOs.PlanCLO) {
 
+        // OBS - selecting/deselecting should keep the same ORDER in AvailablePlans
+
+        // Toggle
+        var index = this.viewModel.SelectedPlans.findIndex((clo) => {
+            return clo.ID === planCLO.ID;
+        });
+
+        if (index === -1) {
+            // Add to SelectedPlans - "SELECT"
+            this.viewModel.SelectedPlans.push(planCLO);
+        } else {
+            // Remove from SelectedPlans - "DESELECT"
+            this.viewModel.SelectedPlans.splice(index, 1);
+        }
+
+        // Emit
+        let clonedSelectedPlans = this.genericCLOFactory.CloneCLOArray(this.viewModel.SelectedPlans);
+        this.SelectedPlansChanged.emit(clonedSelectedPlans);
     }
+
 }
 interface ViewModel {
     AvailablePlans: CLOs.PlanCLO[];
