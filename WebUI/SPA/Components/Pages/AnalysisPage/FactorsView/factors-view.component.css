@@ -76,12 +76,5 @@
     float: right;
 }
 
-    .right-side .header {
-        width: calc(100% - 36px);
-        height: 30px;
-        padding: 5px 18px 5px 18px;
-        vertical-align: middle;
-        line-height: 30px;
-        border-radius: 5px 5px 0px 0px;
-    }
+    
 

@@ -18,12 +18,12 @@ import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 
 
 @Component({
-    selector: 'timeline-panel',
-    templateUrl: './timeline-panel.component.html',
-    styleUrls: ['./timeline-panel.component.css'],
-    host: { 'class': 'timeline-panel' },
+    selector: 'timeline',
+    templateUrl: './timeline.component.html',
+    styleUrls: ['./timeline.component.css'],
+    host: { 'class': 'timeline' },
 })
-export class TimelinePanelComponent {
+export class TimelineComponent {
     // Fields
     @ViewChild('frame')
     private frame: ElementRef;

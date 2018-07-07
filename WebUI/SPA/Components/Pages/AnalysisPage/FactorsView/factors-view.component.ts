@@ -22,7 +22,8 @@ import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/Fac
 import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { TimelinePanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TimelinePanel/timeline-panel.component';
+import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
+import { FiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FiltersPanel/filters-panel.component';
 
 
 @Component({
@@ -38,11 +39,17 @@ export class FactorsViewComponent {
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
     @ViewChild('timelinePanel')
-    private timelinePanelInstance: TimelinePanelComponent;
+    private timelinePanelInstance: TimelineComponent;
+    @ViewChild('filtersPanel')
+    private filtersPanelInstance: FiltersPanelComponent;
+
+    
+
     private readonly viewModel: ViewModel = {
-        AvailableDateRange: null,
 
         PlansInSelectedDateRange: null,
+
+        SelectedPlans: null,
         SelectedDateRange: null,
         TodayXPosition: null,
 
@@ -91,6 +98,9 @@ export class FactorsViewComponent {
 
         // Refresh children components
         this.timelinePanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
+        this.navPanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
+        //let selectedPlans = Object.assign([], this.viewModel.PlansInSelectedDateRange);
+        //this.filtersPanelInstance.SetAvailablePlanCLOs(this.viewModel.PlansInSelectedDateRange, selectedPlans);
     }
 
     // Constructor
@@ -107,7 +117,6 @@ export class FactorsViewComponent {
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.viewModel.SelectedDateRange = newValue;
             this.refreshUI();
-            this.navPanelInstance.SetDateRangeManually(newValue);
         }));
 
         // Register self to CommandManager
@@ -134,15 +143,15 @@ export class FactorsViewComponent {
             this.versionTooltipInstance.HideAndClear();
         }
     }
-    private onSelectedDateRangeChangedTriggered(newSelDateRange: Range<moment.Moment>) {
+    private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
-    
+
 }
 interface ViewModel {
-    AvailableDateRange: Range<moment.Moment>;
 
     PlansInSelectedDateRange: CLOs.PlanCLO[];
+    SelectedPlans: CLOs.PlanCLO[];
     SelectedDateRange: Range<moment.Moment>;
     TodayXPosition: number;
 

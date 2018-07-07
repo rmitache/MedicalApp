@@ -6,15 +6,15 @@
                 <span class="header-label h1">FACTORS</span>
             </div>
             <div class="center-section">
-                <navigation-panel #navPanel 
+                <navigation-panel #navPanel
                                   [TriggerOnlyModeOn]="true"
-                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangedTriggered($event)"></navigation-panel>
+                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangeTriggered($event)"></navigation-panel>
             </div>
 
         </div>
         <!--Plans rendering area-->
-        <div class="body" >
-            <div class="factors-rendering-area" >
+        <div class="body">
+            <div class="factors-rendering-area">
                 <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" overflow="visible">
 
                     <!--Markers-->
@@ -48,18 +48,14 @@
                            [YPos]="10"></svg:g>
                 </svg>
             </div>
-            <timeline-panel #timelinePanel></timeline-panel>
+            <timeline #timelinePanel></timeline>
         </div>
 
     </div>
 
     <div class="right-side">
-        <div class="header">
-            <div class="left-section">
-                <span class="header-label h2">FILTERS</span>
-            </div>
-
-        </div>
+        <!--<filters-panel #filtersPanel></filters-panel>-->
+        
     </div>
 
 

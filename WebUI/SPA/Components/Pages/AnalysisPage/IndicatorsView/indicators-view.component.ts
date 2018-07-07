@@ -158,7 +158,7 @@ export class IndicatorsViewComponent {
         }));
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.onSelectedDateRangeChanged(newValue);
-            this.navPanelInstance.SetDateRangeManually(newValue);
+            this.navPanelInstance.SetSelectedDateRange(newValue);
         }));
     }
     ngOnInit() {
