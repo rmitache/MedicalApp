@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef, ViewChild, } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, ViewChild, } from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
@@ -11,8 +11,6 @@ import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
-import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
 import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
@@ -24,6 +22,7 @@ import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 import { FiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FiltersPanel/filters-panel.component';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 
 @Component({
@@ -38,21 +37,18 @@ export class FactorsViewComponent {
     private versionTooltipInstance: VersionTooltipComponent;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
-    @ViewChild('timelinePanel')
-    private timelinePanelInstance: TimelineComponent;
+    @ViewChild('timeline')
+    private timelineInstance: TimelineComponent;
     @ViewChild('filtersPanel')
     private filtersPanelInstance: FiltersPanelComponent;
-
-    
-
     private readonly viewModel: ViewModel = {
+        AvailablePlans: null,
 
-        PlansInSelectedDateRange: null,
-
-        SelectedPlans: null,
         SelectedDateRange: null,
-        TodayXPosition: null,
+        PlansInSelectedDateRange: null,
+        SelectedPlans: null,
 
+        TodayXPosition: null,
         DateRangeDisplayMode: DateRangeMode.Month,
         Blocked: false
     };
@@ -60,7 +56,9 @@ export class FactorsViewComponent {
     private readonly appState: IReadOnlyApplicationState;
 
     // Private methods
-    private filterPlansByDateRange(planCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
+    private filterPlansByDateRange(availablePlanCLOs: CLOs.PlanCLO[], targetDateRange: Range<moment.Moment>): CLOs.PlanCLO[] {
+        var planCLOs = this.genericCLOFactory.CloneCLOArray(availablePlanCLOs); // need to clone them, otherwise they get manipulated by PlanElem and VersionElem logic and broken
+
         var filteredPlans: CLOs.PlanCLO[] = [];
 
         planCLOs.forEach((planCLO) => {
@@ -70,7 +68,7 @@ export class FactorsViewComponent {
             }
         });
 
-        return filteredPlans;
+        return planCLOs;
     }
     private computeXPositionFromDate(date: moment.Moment) {
 
@@ -91,16 +89,13 @@ export class FactorsViewComponent {
         return xPosition;
     }
     private refreshUI() {
-
         // Refresh vm properties
-        this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.dataService.GetPlansFromBundle().ToArray(), this.viewModel.SelectedDateRange);
+        this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.viewModel.AvailablePlans, this.viewModel.SelectedDateRange);
         this.viewModel.TodayXPosition = !IsDateOnFirstOrLastDateInMonth(moment()) ? this.computeXPositionFromDate(moment()) : null;
 
         // Refresh children components
-        this.timelinePanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
+        this.timelineInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
         this.navPanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
-        //let selectedPlans = Object.assign([], this.viewModel.PlansInSelectedDateRange);
-        //this.filtersPanelInstance.SetAvailablePlanCLOs(this.viewModel.PlansInSelectedDateRange, selectedPlans);
     }
 
     // Constructor
@@ -108,12 +103,11 @@ export class FactorsViewComponent {
         applicationState: AnalysisPageApplicationState,
         private readonly dataService: AnalysisPageDataService,
         private readonly commandManager: CommandManager,
-        private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef,
-        private readonly genericCLOFactory: GenericCLOFactory,
+        private readonly genericCLOFactory: GenericCLOFactory
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
+        // Subscriptions to AppState
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.viewModel.SelectedDateRange = newValue;
             this.refreshUI();
@@ -123,9 +117,12 @@ export class FactorsViewComponent {
         this.commandManager.RegisterComponentInstance(this);
     }
     ngOnInit() {
-        // Get the initial range from the current DisplayMode
+        // Initialize
+        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
+        var selectedPlans = this.filtersPanelInstance.InitAndGetSelPlanCLOs(this.viewModel.AvailablePlans);
+        this.viewModel.SelectedPlans = selectedPlans;
 
         // Refresh the UI
         this.refreshUI();
@@ -149,12 +146,13 @@ export class FactorsViewComponent {
 
 }
 interface ViewModel {
+    AvailablePlans: CLOs.PlanCLO[];
 
+    SelectedDateRange: Range<moment.Moment>;
     PlansInSelectedDateRange: CLOs.PlanCLO[];
     SelectedPlans: CLOs.PlanCLO[];
-    SelectedDateRange: Range<moment.Moment>;
-    TodayXPosition: number;
 
+    TodayXPosition: number;
     DateRangeDisplayMode: DateRangeMode;
     Blocked: boolean;
 }

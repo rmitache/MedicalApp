@@ -59,7 +59,7 @@ export class TimelineComponent {
             var xPos = width * i;
 
             // Create wrapper
-            var newTickInfoWrapper = new TickInfoWrapper(this.viewModel.DatesInSelectedDateRange[i], width, xPos, 2);
+            var newTickInfoWrapper = new TickInfoWrapper(this.viewModel.DatesInSelectedDateRange[i], width, xPos, 0);
             tickInfoWrappers.push(newTickInfoWrapper);
         }
 

@@ -59,6 +59,7 @@ export class NavigationPanelComponent {
         return initialSelDateRange;
     }
     public SetSelectedDateRange(newRange: Range<moment.Moment>) {
+
         this.setInnerDateRange(newRange);
     }
     

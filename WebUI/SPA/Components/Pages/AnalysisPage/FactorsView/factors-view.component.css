@@ -59,7 +59,7 @@
     float:left;
     margin-top:-20px;
 }
-.timeline-panel {
+.timeline {
     width: calc(100% - 10px);
     padding-left: 5px;
     height: 30px;
@@ -71,8 +71,7 @@
     border-radius: 0 5px 5px 0;
     width: calc(198px);
     height: 100%;
-    background-color: #cae0ff;
-    border-left: solid 1px gray;
+    
     float: right;
 }
 

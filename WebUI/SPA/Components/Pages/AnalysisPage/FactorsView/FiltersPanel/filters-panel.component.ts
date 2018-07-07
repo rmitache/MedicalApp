@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input, ElementRef, ViewChild, HostListener} from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, Input, ElementRef, ViewChild, HostListener, Output, EventEmitter} from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
@@ -29,10 +29,10 @@ export class FiltersPanelComponent {
     private frame: ElementRef;
     private dateRangeSelectionMode: DateRangeMode;
     private readonly viewModel: ViewModel = {
-        AvailablePlanCLOs: null,
-        SelectedPlanCLOs: null,
+        AvailablePlans: null,
+        SelectedPlans: null,
         IsSelected: (planCLO) => {
-            if (this.viewModel.SelectedPlanCLOs !== null && this.viewModel.SelectedPlanCLOs.indexOf(planCLO) !== -1) {
+            if (this.viewModel.SelectedPlans !== null && this.viewModel.SelectedPlans.indexOf(planCLO) !== -1) {
                 return true;
             } else {
                 return false;
@@ -40,20 +40,26 @@ export class FiltersPanelComponent {
         }
     };
 
-    // Private methods
-    private refreshUI() {
-        
-    }
-
     // Public methods
-    public SetAvailablePlanCLOs(newPlanCLOs: CLOs.PlanCLO[], selectedPlanCLOs: CLOs.PlanCLO[]) {
-        this.viewModel.AvailablePlanCLOs = newPlanCLOs;
-        this.viewModel.SelectedPlanCLOs = selectedPlanCLOs;
+    public InitAndGetSelPlanCLOs(availablePlanCLOs: CLOs.PlanCLO[]) {
+        this.viewModel.AvailablePlans = availablePlanCLOs;
+
+        let selectedPlans = Object.assign([], this.viewModel.AvailablePlans);
+        this.viewModel.SelectedPlans = selectedPlans;
+
+        return selectedPlans;
     }
 
+    // Events
+    @Output() public PlanSelectToggled: EventEmitter<Range<moment.Moment>> = new EventEmitter();
+
+    // Event handlers
+    private onCheckBoxClicked() {
+
+    }
 }
 interface ViewModel {
-    AvailablePlanCLOs: CLOs.PlanCLO[];
-    SelectedPlanCLOs: CLOs.PlanCLO[];
+    AvailablePlans: CLOs.PlanCLO[];
+    SelectedPlans: CLOs.PlanCLO[];
     IsSelected(planCLO);
 }
