@@ -83,7 +83,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
                 var newDataEntity = new TTakenMedicineFactorRecord();
                 newDataEntity.MedicineTypeId = breakdown.MedicineTypeID;
                 newDataEntity.PlanId = breakdown.ParentPlanID;
-                newDataEntity.MedicineFactorRecordId = breakdown.MedicineFactorRecordID;
+                newDataEntity.MedicineFactorRecordId = (breakdown.MedicineFactorRecordID == -1) ? (int?)null : breakdown.MedicineFactorRecordID; 
                 newDataEntity.OccurrenceDateTime = breakdown.OccurrenceDateTime;
 
                 if (newTakenStatus == true)
