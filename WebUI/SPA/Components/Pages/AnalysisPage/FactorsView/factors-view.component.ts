@@ -144,7 +144,8 @@ export class FactorsViewComponent {
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
     private onSelectedPlansChanged(newSelectedPlansArray: CLOs.PlanCLO[]) {
-        
+        this.viewModel.SelectedPlans = newSelectedPlansArray;
+        this.refreshUI();
     }
 
 }

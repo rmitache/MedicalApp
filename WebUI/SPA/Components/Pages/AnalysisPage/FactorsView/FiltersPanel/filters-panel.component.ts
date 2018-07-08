@@ -63,25 +63,29 @@ export class FiltersPanelComponent {
 
     // Event handlers
     private onCheckBoxClicked(planCLO: CLOs.PlanCLO) {
-
-        // OBS - selecting/deselecting should keep the same ORDER in AvailablePlans
-
-        // Toggle
-        var index = this.viewModel.SelectedPlans.findIndex((clo) => {
+        var index = this.viewModel.AvailablePlans.findIndex((clo) => {
             return clo.ID === planCLO.ID;
         });
-
         if (index === -1) {
-            // Add to SelectedPlans - "SELECT"
-            this.viewModel.SelectedPlans.push(planCLO);
-        } else {
-            // Remove from SelectedPlans - "DESELECT"
-            this.viewModel.SelectedPlans.splice(index, 1);
+            throw new Error("FiltersPanel - onCheckBoxClicked -> invalid PlanCLO clicked");
         }
 
-        // Emit
+
+        if (this.viewModel.SelectedPlans[index] === null) {
+            // Add to SelectedPlans - "SELECT"
+            this.viewModel.SelectedPlans[index] = planCLO;
+        } else {
+            // Remove from SelectedPlans - "DESELECT"
+            this.viewModel.SelectedPlans[index] = null;
+        }
+
+        // Emit and remove null elems
         let clonedSelectedPlans = this.genericCLOFactory.CloneCLOArray(this.viewModel.SelectedPlans);
-        this.SelectedPlansChanged.emit(clonedSelectedPlans);
+        let filteredClonedSelectedPlans = clonedSelectedPlans.filter((elem) => {
+            return elem !== null;
+        });
+
+        this.SelectedPlansChanged.emit(filteredClonedSelectedPlans);
     }
 
 }

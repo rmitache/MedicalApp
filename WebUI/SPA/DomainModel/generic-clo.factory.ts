@@ -163,9 +163,13 @@ export class GenericCLOFactory {
         }
 
         let clonedCLOs = [];
-        cloArray.forEach(sourceCLO => {
-            let newClone = this.CloneCLO(sourceCLO);
-            clonedCLOs.push(newClone);
+        cloArray.forEach((sourceCLO) => {
+            if (sourceCLO !== undefined && sourceCLO !== null) {
+                let newClone = this.CloneCLO(sourceCLO);
+                clonedCLOs.push(newClone);
+            } else {
+                clonedCLOs.push(sourceCLO);
+            }
         });
         return clonedCLOs;
     }
