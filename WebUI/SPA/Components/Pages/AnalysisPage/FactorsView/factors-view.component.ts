@@ -21,7 +21,7 @@ import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/Facto
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
-import { FiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FiltersPanel/filters-panel.component';
+import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 
@@ -40,7 +40,7 @@ export class FactorsViewComponent {
     @ViewChild('timeline')
     private timelineInstance: TimelineComponent;
     @ViewChild('filtersPanel')
-    private filtersPanelInstance: FiltersPanelComponent;
+    private filtersPanelInstance: FactorsFiltersPanelComponent;
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
 

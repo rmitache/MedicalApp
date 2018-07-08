@@ -12,23 +12,23 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { IndicatorsViewComponent } from './indicators-view.component';
+import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 
 
 
 @NgModule({
     imports: [
-        
         BrowserModule,
         FormsModule,
         CalendarModule,
         AutoCompleteModule,
         ProgressSpinnerModule,
         ReactiveFormsModule,
-    
         SharedModule
     ],
     declarations: [
         IndicatorsViewComponent,
+        IndicatorsFiltersPanelComponent
     ],
     exports: [IndicatorsViewComponent],
     entryComponents: [

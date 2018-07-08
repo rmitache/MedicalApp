@@ -42,6 +42,13 @@ export class AnalysisPageDataService {
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
     }
+    public GetSymptomTypesFromBundle(): DataStructures.List<CLOs.SymptomTypeCLO> {
+
+        let blos = this.startupDataBundleService.GetBundle['SymptomTypes'];
+        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO, blos);
+
+        return cloList;
+    }
 
     // HealthStatusEntries
     public GetHealthStatusEntries(dateRange: Range<Date>): Promise<CLOs.HealthStatusEntryCLO[]> {

@@ -47,10 +47,7 @@
     </div>
 
     <div class="right-side">
-        <div class="header">
-            <div class="left-section">
-                <span class="header-label h2">FILTERS</span>
-            </div>
-        </div>
+        <indicators-filters-panel #filtersPanel
+                               (SelectedPlansChanged)="onSelectedPlansChanged($event)"></indicators-filters-panel>
     </div>
 </div> 

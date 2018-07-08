@@ -24,6 +24,7 @@ import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Com
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 
 
 @Component({
@@ -38,12 +39,16 @@ export class IndicatorsViewComponent {
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.Month;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
+    @ViewChild('filtersPanel')
+    private filtersPanelInstance: IndicatorsFiltersPanelComponent;
     private chartCanvasContext: any;
     private chartInstance: any;
     
     private readonly viewModel: ViewModel = {
-        AvailableDateRange: null,
+        AvailableSymptomTypes: null,
+        SelectedSymptomTypes: null, 
 
+        AvailableDateRange: null,
         SelectedDateRange: null,
         HealthEntriesInSelectedDateRange: null,
 
@@ -162,10 +167,11 @@ export class IndicatorsViewComponent {
         }));
     }
     ngOnInit() {
-        // Get the initial range using the current DisplayMode
-        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
+        // Initialize
+        this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
+        this.viewModel.SelectedSymptomTypes = this.filtersPanelInstance.InitAndGetSelSymptomTypeCLOs(this.viewModel.AvailableSymptomTypes);
 
-        // Init VM properties
+        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
             initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
         this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
@@ -218,10 +224,12 @@ export class IndicatorsViewComponent {
 }
 
 interface ViewModel {
-    AvailableDateRange: Range<moment.Moment>;
-    HealthEntriesInSelectedDateRange: CLOs.HealthStatusEntryCLO[];
+    AvailableSymptomTypes: CLOs.SymptomTypeCLO[];
+    SelectedSymptomTypes: CLOs.SymptomTypeCLO[];
 
+    AvailableDateRange: Range<moment.Moment>;
     SelectedDateRange: Range<moment.Moment>;
+    HealthEntriesInSelectedDateRange: CLOs.HealthStatusEntryCLO[];
 
     HighlightRangeStartXPosition: number;
     HighlightRangeEndXPosition: number;
@@ -313,38 +321,6 @@ class MonthDisplayMode implements IDisplayMode {
             dataPointsBgColors: dataPointsBgColors
         };
     }
-    /*private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, range: Range<moment.Moment>) {
-
-        // Variables
-        var dataPoints = []
-        var dataPointsBgColors = [];
-
-
-        // Loop through dates and create datapoints
-        var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
-        datesInRangeArray.forEach((date, index) => {
-
-            // Prepare data
-            let dateKey = date.format('DD/MM/YYYY');
-            var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
-            var avgHealthLevel = this.getAverageHealthLevel(clos);
-
-
-            // Create datapoint
-            var dp = {
-                x: date,
-                y: avgHealthLevel
-            };
-            dataPoints.push(dp);
-
-
-        });
-
-        return {
-            dataPoints: dataPoints,
-            dataPointsBgColors: dataPointsBgColors
-        };
-    }*/
 
     // Constructor
     constructor(

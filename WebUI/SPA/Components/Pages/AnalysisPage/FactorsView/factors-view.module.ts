@@ -20,7 +20,7 @@ import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView
 import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TodayIndicator/today-indicator.component';
 import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 import { HoverableVersionPointComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/HoverableVersionPoint/hoverable-version-point.component';
-import { FiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FiltersPanel/filters-panel.component';
+import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 
 
 @NgModule({
@@ -41,7 +41,7 @@ import { FiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/Factors
         TodayIndicatorComponent,
         VersionTooltipComponent,
         HoverableVersionPointComponent,
-        FiltersPanelComponent
+        FactorsFiltersPanelComponent
     ],
     exports: [
         FactorsViewComponent],
