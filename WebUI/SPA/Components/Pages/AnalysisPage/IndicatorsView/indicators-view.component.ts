@@ -43,10 +43,10 @@ export class IndicatorsViewComponent {
     private filtersPanelInstance: IndicatorsFiltersPanelComponent;
     private chartCanvasContext: any;
     private chartInstance: any;
-    
+
     private readonly viewModel: ViewModel = {
         AvailableSymptomTypes: null,
-        SelectedSymptomTypes: null, 
+        SelectedSymptomTypes: null,
 
         AvailableDateRange: null,
         SelectedDateRange: null,
@@ -249,29 +249,66 @@ interface IDisplayMode {
 }
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
-    private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+    private getAverageHealthLevelAndColorForSingleDate(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+
+        // Variables
         var sum: number = 0;
-        var result = 0;
+        var avgHealthLevel = 0;
+        var color = 'white';
+
+        //  Calculate the Average Health Level (by adding all HealthLevels and dividing them by their number)
         healthStatusEntryCLOs.forEach(clo => {
             sum += clo.HealthLevel;
         });
-
         if (healthStatusEntryCLOs.length > 0)
-            result = sum / healthStatusEntryCLOs.length;
+            avgHealthLevel = sum / healthStatusEntryCLOs.length;
         else
-            result = null;
-
-
-        if (result === 0) {
-            result = 0.2;
+            avgHealthLevel = null;
+        if (avgHealthLevel === 0) {
+            avgHealthLevel = 0.2;
         }
-        return result;
+
+        // Determine the color
+        if (avgHealthLevel >= 2) {
+            // great
+            color = 'green';
+        }
+        else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
+            // good
+            color = '#9dc340';
+        }
+        else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
+            // ok
+            color = '#cfe27e';
+        }
+        else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
+            // notgreat 
+            color = '#ffc297';
+        }
+        else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
+            // bad 
+            color = '#fe6060';
+        }
+        else if (avgHealthLevel < -1) {
+            // very bad
+            color = 'red';
+        }
+
+
+        //
+        return {
+            avgHealthLevel: avgHealthLevel,
+            color: color
+        };
+    }
+    private generateHealthStatusDataPoint(healthStatusCLO, date) {
+
     }
     private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, range: Range<moment.Moment>) {
 
         // Variables
-        var dataPoints = []
-        var dataPointsBgColors = [];
+        var healthStatusDataPoints = []
+        var healthStatusDataPointsBgColors = [];
 
 
         // Loop through dates and create datapoints
@@ -280,47 +317,27 @@ class MonthDisplayMode implements IDisplayMode {
 
             // Prepare data
             let dateKey = date.format('DD/MM/YYYY');
-            var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
-            var avgHealthLevel = this.getAverageHealthLevel(clos);
+            var healthStatusCLOsInDate = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
 
-
-            // Create datapoint
+            // Create the datapoint for HealthStatusLevel for the current date
+            var avgHealthLevelAndColorInfo = this.getAverageHealthLevelAndColorForSingleDate(healthStatusCLOsInDate);
             var dp = {
                 x: date,
-                y: avgHealthLevel
+                y: avgHealthLevelAndColorInfo.avgHealthLevel
             };
-            dataPoints.push(dp);
+            healthStatusDataPoints.push(dp);
+            healthStatusDataPointsBgColors.push(avgHealthLevelAndColorInfo.color);
 
-            // great
-            if (avgHealthLevel >= 2) {
-                dataPointsBgColors.push('green');
-            }
-            // good
-            else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
-                dataPointsBgColors.push('#9dc340');
-            }
-            // ok
-            else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-                dataPointsBgColors.push('#cfe27e');
-            }
-            // notgreat 
-            else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
-                dataPointsBgColors.push('#ffc297');
-            }
-            // bad 
-            else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
-                dataPointsBgColors.push('#fe6060');
-            }
-            // very bad
-            else if (avgHealthLevel < -1) {
-                dataPointsBgColors.push('red');
-            }
+            // Create datapoint
+            
+
+
 
         });
 
         return {
-            dataPoints: dataPoints,
-            dataPointsBgColors: dataPointsBgColors
+            dataPoints: healthStatusDataPoints,
+            dataPointsBgColors: healthStatusDataPointsBgColors
         };
     }
 
@@ -451,16 +468,41 @@ class MonthDisplayMode implements IDisplayMode {
     }
     public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {
 
-        // Prepare data
-        var dataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange);
+        // Generate HealthStatus data points
+        var healthStatusDataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange);
+        var symptomTypesDataPoints = [];
+
 
         // Set data
         var data = {
             datasets: [
                 {
-                    data: dataPointsInfo.dataPoints,
-                    backgroundColor: dataPointsInfo.dataPointsBgColors,
-                }
+                    borderWidth: '1px',
+                    borderColor: 'red',
+                    backgroundColor: 'transparent',
+                    type: 'line',  // override the default type
+                    data: [
+                        {
+                            x: moment().subtract(3, 'days'),
+                            y: 0
+                        },
+                        {
+                            x: moment().subtract(2, 'days'),
+                            y: 1
+                        },
+                        {
+                            x: moment().subtract(1, 'days'),
+                            y: 2
+                        }, {
+                            x: moment(),
+                            y: 3
+                        }]
+                },
+                {
+                    data: healthStatusDataPointsInfo.dataPoints,
+                    backgroundColor: healthStatusDataPointsInfo.dataPointsBgColors,
+                },
+
             ]
         }
         return data;
