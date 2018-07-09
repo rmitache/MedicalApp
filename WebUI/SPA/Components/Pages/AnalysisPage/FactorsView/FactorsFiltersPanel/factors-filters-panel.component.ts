@@ -43,7 +43,11 @@ export class FactorsFiltersPanelComponent {
 
     // Event handlers
     private onFilterItemToggled(event: FilterItemToggledEvent) {
-        alert((event.CLO as CLOs.PlanCLO).Name);
+        if (event.NewSelectionState === true) {
+            this.PlanSelected.emit(event.CLO as CLOs.PlanCLO);
+        } else {
+            this.PlanDeselected.emit(event.CLO as CLOs.PlanCLO);
+        }
     }
 
 }

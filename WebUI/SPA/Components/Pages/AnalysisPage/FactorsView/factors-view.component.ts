@@ -60,15 +60,17 @@ export class FactorsViewComponent {
         var planCLOs = this.genericCLOFactory.CloneCLOArray(availablePlanCLOs); // need to clone them, otherwise they get manipulated by PlanElem and VersionElem logic and broken
 
         var filteredPlans: CLOs.PlanCLO[] = [];
-
+        
         planCLOs.forEach((planCLO) => {
-            var intersections = planCLO.GetIntersectionsPerVersionWithDateRange(targetDateRange);
-            if (intersections !== null) {
-                filteredPlans.push(planCLO);
+            if (planCLO !== null) {
+                var intersections = planCLO.GetIntersectionsPerVersionWithDateRange(targetDateRange);
+                if (intersections !== null) {
+                    filteredPlans.push(planCLO);
+                }
             }
         });
 
-        return planCLOs;
+        return filteredPlans;
     }
     private computeXPositionFromDate(date: moment.Moment) {
 
@@ -148,12 +150,22 @@ export class FactorsViewComponent {
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
     private onPlanSelected(plan: CLOs.PlanCLO) {
-        alert("plan selected! " + plan.Name);
-        //this.viewModel.SelectedPlans = newSelectedPlansArray;
-        //this.refreshUI();
+        let indexInAvailablePlansArray = this.viewModel.AvailablePlans.findIndex((planCLO) => {
+            return planCLO.ID === plan.ID;
+        });
+        this.viewModel.SelectedPlans[indexInAvailablePlansArray] = plan;
+        this.refreshUI();
     }
     private onPlanDeselected(plan: CLOs.PlanCLO) {
-        alert("plan deselected! " + plan.Name);
+        let indexInSelectedPlansArray = this.viewModel.SelectedPlans.findIndex((planCLO) => {
+            if (planCLO !== null) {
+                return planCLO.ID === plan.ID;
+            } else {
+                return false;
+            }
+        });
+        this.viewModel.SelectedPlans[indexInSelectedPlansArray] = null;
+        this.refreshUI();
     }
 
 }

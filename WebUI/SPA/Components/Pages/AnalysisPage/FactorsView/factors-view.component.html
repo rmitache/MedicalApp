@@ -55,7 +55,8 @@
 
     <div class="right-side">
         <factors-filters-panel #filtersPanel
-                       (SelectedPlansChanged)="onSelectedPlansChanged($event)"
+                       (PlanSelected)="onPlanSelected($event)"
+                       (PlanDeselected)="onPlanDeselected($event)"
                        ></factors-filters-panel>
         
     </div>
