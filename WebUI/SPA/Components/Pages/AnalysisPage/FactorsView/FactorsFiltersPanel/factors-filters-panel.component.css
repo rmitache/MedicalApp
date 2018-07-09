@@ -21,20 +21,3 @@
         overflow-y: auto;
     }
 
-.filter-elem {
-    float: left;
-    clear: both;
-    margin-bottom: 3px;
-    padding: 5px;
-    border-radius: 4px;
-    background-color: #e4efff;
-    width: calc(100% - 10px)
-}
-
-    .filter-elem .check-box {
-        float: left;
-    }
-
-    .filter-elem .item-name {
-        color:black;
-    }

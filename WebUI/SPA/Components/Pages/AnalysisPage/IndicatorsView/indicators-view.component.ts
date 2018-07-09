@@ -167,15 +167,17 @@ export class IndicatorsViewComponent {
         }));
     }
     ngOnInit() {
-        // Initialize
+        // Initialize symptomTypes
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
-        this.viewModel.SelectedSymptomTypes = this.filtersPanelInstance.InitAndGetSelSymptomTypeCLOs(this.viewModel.AvailableSymptomTypes);
+        this.viewModel.SelectedSymptomTypes = []; // everything starts deselected
+        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes);
 
+        // Initialize date ranges
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
             initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
-        this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
+        this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         // OBS: Refresh the UI -> is done in ngAfterViewInit (in order to reference the chart properly)
     }

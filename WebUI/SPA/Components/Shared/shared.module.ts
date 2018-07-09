@@ -20,6 +20,7 @@ import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { HeaderBarComponent } from './HeaderBar/header-bar.component';
+import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         IFRPGroupElemComponent,
         IFRPGroupListComponent,
         NavigationPanelComponent,
-        HeaderBarComponent
+        HeaderBarComponent,
+        FilterListPanelComponent
     ],
     exports: [
         IconButtonComponent,
@@ -57,7 +59,8 @@ import { HeaderBarComponent } from './HeaderBar/header-bar.component';
         BlockUIModule,
         NavigationPanelComponent,
         ProgressSpinnerModule,
-        HeaderBarComponent
+        HeaderBarComponent,
+        FilterListPanelComponent
     ]
 })
 export class SharedModule { }

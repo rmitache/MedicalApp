@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,8 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
 import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import { BaseCLO } from 'SPA/Core/CLO/base.clo';
+import { FilterListPanelComponent, FilterItem } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
 
 
 @Component({
@@ -26,68 +28,34 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 })
 export class IndicatorsFiltersPanelComponent {
     // Fields
+    @ViewChild('filterListPanel')
+    private filterListPanelInstance: FilterListPanelComponent;
     private readonly viewModel: ViewModel = {
-        AvailableSymptomTypes: null,
-        SelectedSymptomTypes: null,
-        IsSelected: (symptomTypeCLO) => {
-            if (this.viewModel.SelectedSymptomTypes !== null && this.viewModel.SelectedSymptomTypes.indexOf(symptomTypeCLO) !== -1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     };
 
-    // Constructor
-    constructor(
-        private readonly genericCLOFactory: GenericCLOFactory
-    ) {
-    }
-
     // Public methods
-    public InitAndGetSelSymptomTypeCLOs(availableSymptomTypeCLOs: CLOs.SymptomTypeCLO[]): CLOs.SymptomTypeCLO[] {
-        this.viewModel.AvailableSymptomTypes = availableSymptomTypeCLOs;
-
-        let selectedSymptomTypes = Object.assign([], this.viewModel.AvailableSymptomTypes);
-        this.viewModel.SelectedSymptomTypes = selectedSymptomTypes;
-
-        let clonedSelectedSymptomTypes = this.genericCLOFactory.CloneCLOArray(selectedSymptomTypes);
-        return clonedSelectedSymptomTypes;
+    public Initialize(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[]) {
+        this.filterListPanelInstance.Initialize(availableSymptomTypes, selectedSymptomTypes);
     }
 
     // Events
-    @Output() public SelectedSymptomTypesChanged: EventEmitter<CLOs.SymptomTypeCLO[]> = new EventEmitter();
+    //@Output() public SelectedSymptomTypeToggled: EventEmitter<SymptomTypeToggledEvent> = new EventEmitter();
 
     // Event handlers
-    private onCheckBoxClicked(symptomTypeCLO: CLOs.SymptomTypeCLO) {
-        //var index = this.viewModel.AvailablePlans.findIndex((clo) => {
-        //    return clo.ID === planCLO.ID;
-        //});
-        //if (index === -1) {
-        //    throw new Error("FiltersPanel - onCheckBoxClicked -> invalid PlanCLO clicked");
-        //}
+    private onSelectedSymptomTypeToggled(filterItem: FilterItem) {
+        //let newSelectionState = !filterItem.Selected;
+        //filterItem.Selected = newSelectionState;
 
 
-        //if (this.viewModel.SelectedPlans[index] === null) {
-        //    // Add to SelectedPlans - "SELECT"
-        //    this.viewModel.SelectedPlans[index] = planCLO;
-        //} else {
-        //    // Remove from SelectedPlans - "DESELECT"
-        //    this.viewModel.SelectedPlans[index] = null;
-        //}
-
-        //// Clone and remove null elems and then emit an Event
-        //let clonedSelectedPlans = this.genericCLOFactory
-        //    .CloneCLOArray(this.viewModel.SelectedPlans)
-        //    .filter((elem) => {
-        //        return elem !== null;
-        //    });
-        //this.SelectedPlansChanged.emit(clonedSelectedPlans);
+        //// Emit the event
+        //let eventInfo: SymptomTypeToggledEvent = {
+        //    CLOID: filterItem.CLO['ID'],
+        //    NewSelectionState: newSelectionState
+        //};
+        //this.SelectedSymptomTypeToggled.emit(eventInfo);
     }
 
 }
+
 interface ViewModel {
-    AvailableSymptomTypes: CLOs.SymptomTypeCLO[];
-    SelectedSymptomTypes: CLOs.SymptomTypeCLO[];
-    IsSelected(symptomTypeCLO);
 }
