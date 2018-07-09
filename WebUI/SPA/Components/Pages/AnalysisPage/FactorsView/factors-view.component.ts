@@ -117,12 +117,16 @@ export class FactorsViewComponent {
         this.commandManager.RegisterComponentInstance(this);
     }
     ngOnInit() {
-        // Initialize
+        // Initialize plans
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+        this.viewModel.SelectedPlans = this.viewModel.AvailablePlans.slice(); // everything starts selected
+        this.filtersPanelInstance.Initialize(this.viewModel.AvailablePlans, this.viewModel.SelectedPlans);
+
+
+        // Initialize date range
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        var selectedPlans = this.filtersPanelInstance.InitAndGetSelPlanCLOs(this.viewModel.AvailablePlans);
-        this.viewModel.SelectedPlans = selectedPlans;
+        
 
         // Refresh the UI
         this.refreshUI();
@@ -143,9 +147,13 @@ export class FactorsViewComponent {
     private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
-    private onSelectedPlansChanged(newSelectedPlansArray: CLOs.PlanCLO[]) {
-        this.viewModel.SelectedPlans = newSelectedPlansArray;
-        this.refreshUI();
+    private onPlanSelected(plan: CLOs.PlanCLO) {
+        alert("plan selected! " + plan.Name);
+        //this.viewModel.SelectedPlans = newSelectedPlansArray;
+        //this.refreshUI();
+    }
+    private onPlanDeselected(plan: CLOs.PlanCLO) {
+        alert("plan deselected! " + plan.Name);
     }
 
 }

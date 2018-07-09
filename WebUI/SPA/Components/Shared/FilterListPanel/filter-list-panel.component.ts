@@ -67,7 +67,7 @@ export class FilterListPanelComponent {
 
         // Emit the event
         let eventInfo: FilterItemToggledEvent = {
-            CLOID: filterItem.CLO['ID'],
+            CLO: filterItem.CLO,
             NewSelectionState: newSelectionState
         };
         this.FilterItemToggled.emit(eventInfo);
@@ -76,7 +76,7 @@ export class FilterListPanelComponent {
 }
 
 export interface FilterItemToggledEvent {
-    CLOID: number;
+    CLO: BaseCLO;
     NewSelectionState: boolean;
 }
 export class FilterItem {

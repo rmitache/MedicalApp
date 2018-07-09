@@ -6,10 +6,8 @@
 
     </div>
     <div class="body">
-        <div class="filter-elem" *ngFor="let planCLO of viewModel.AvailablePlans">
-            <input (click)="onCheckBoxClicked(planCLO)" class="check-box"  [checked]="viewModel.IsSelected(planCLO)" type="checkbox" />
-            <span class="item-name label-text-dark">{{planCLO.Name}}</span>
-            
-        </div>
+        <filter-list-panel #filterListPanel
+                           (FilterItemToggled)="onFilterItemToggled($event)"
+                           ></filter-list-panel>
     </div>
 </div>
