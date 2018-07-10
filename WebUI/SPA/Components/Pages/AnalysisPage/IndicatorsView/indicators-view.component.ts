@@ -170,7 +170,8 @@ export class IndicatorsViewComponent {
     ngOnInit() {
         // Initialize symptomTypes
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
-        this.viewModel.SelectedSymptomTypes = [this.viewModel.AvailableSymptomTypes[13]]; // everything starts deselected
+        this.viewModel.SelectedSymptomTypes = new Array(this.viewModel.AvailableSymptomTypes.length).fill(null);
+
         this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes);
 
         // Initialize date ranges
@@ -223,6 +224,24 @@ export class IndicatorsViewComponent {
     private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
 
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
+    }
+    private onSymptomTypeSelected(symptomType: CLOs.SymptomTypeCLO) {
+        let indexInAvailableSymptomTypesArray = this.viewModel.AvailableSymptomTypes.findIndex((planCLO) => {
+            return planCLO.ID === symptomType.ID;
+        });
+        this.viewModel.SelectedSymptomTypes[indexInAvailableSymptomTypesArray] = symptomType;
+        this.refreshUI();
+    }
+    private onSymptomTypeDeselected(symptomType: CLOs.SymptomTypeCLO) {
+        let indexInSelectedSymptomTypesArray = this.viewModel.SelectedSymptomTypes.findIndex((planCLO) => {
+            if (planCLO !== null) {
+                return planCLO.ID === symptomType.ID;
+            } else {
+                return false;
+            }
+        });
+        this.viewModel.SelectedSymptomTypes[indexInSelectedSymptomTypesArray] = null;
+        this.refreshUI();
     }
 }
 
@@ -329,7 +348,7 @@ class MonthDisplayMode implements IDisplayMode {
         for (var symptomTypeName in selectedSymptomTypeNames) {
             let arrayOfSymptomTypeValues = valuesPerSymptomType[symptomTypeName];
             if (arrayOfSymptomTypeValues === undefined) {
-                avgValuePerSymptomType[symptomTypeName] = 0; // default to 0 if there's nothing
+                avgValuePerSymptomType[symptomTypeName] = null; 
             } else {
                 let sum = arrayOfSymptomTypeValues.reduce((a, b) => a + b, 0);
                 let computedAverage = sum / arrayOfSymptomTypeValues.length;
@@ -340,7 +359,7 @@ class MonthDisplayMode implements IDisplayMode {
         return avgValuePerSymptomType;
     }
     private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] },
-        range: Range<moment.Moment>, selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
+       range: Range<moment.Moment>, selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
 
         // Variables - OBS: each array has every entry corresponding to a given Date in the range
         let healthStatusDataPoints = []
@@ -349,38 +368,64 @@ class MonthDisplayMode implements IDisplayMode {
         // Init a dictionary with all names of SelectedSymptomTypes (each entry will have an array of DataPoints, one for each Date)
         let selectedSymptomTypesDataPointsDict: { [symptomTypeName: string]: DataPoint[] } = {};
         selectedSymptomTypeCLOs.forEach((symptomTypeCLO) => {
-            selectedSymptomTypesDataPointsDict[symptomTypeCLO.Name] = [];
-        });
-
-        // Loop through dates and create datapoints
-        var datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
-        datesInRangeArray.forEach((date, index) => {
-
-            // Prepare data
-            let dateKey = date.format('DD/MM/YYYY');
-            let healthStatusCLOsInDate = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
-
-            // Create the datapoint for HealthStatusLevel for the current date
-            let avgHealthLevelAndColorInfo = this.getAverageHealthLevelAndColorForSingleDate(healthStatusCLOsInDate);
-            let dp: DataPoint = {
-                x: date,
-                y: avgHealthLevelAndColorInfo.avgHealthLevel
-            };
-            healthStatusDataPoints.push(dp);
-            healthStatusDataPointsBgColors.push(avgHealthLevelAndColorInfo.color);
-
-            // Create a datapoint for each selectedSymptomType
-            let avgIntensityValuePerSymptomType = this.getAvgIntensityForEachSymptomTypeForSingleDate(healthStatusCLOsInDate, selectedSymptomTypesDataPointsDict);
-            for (var symptomTypeName in avgIntensityValuePerSymptomType) {
-                let dataPointsForSymptomTypeArray = selectedSymptomTypesDataPointsDict[symptomTypeName];
-                let newSymptomTypeDataPoint: DataPoint = {
-                    x: date,
-                    y: avgIntensityValuePerSymptomType[symptomTypeName]
-                };
-                dataPointsForSymptomTypeArray.push(newSymptomTypeDataPoint);
+            if (symptomTypeCLO !== null) {
+                selectedSymptomTypesDataPointsDict[symptomTypeCLO.Name] = [];
             }
         });
-        
+
+        // Adjust the range to cut it off on today's date (if it intersects with it)
+        let today = moment();
+        let todayIsInRange = today.isSameOrBefore(range.RangeEnd, 'day') && today.isSameOrAfter(range.RangeStart, 'day');
+        let cutOffRangeEnd = (todayIsInRange) ? today.endOf('day') : range.RangeEnd;
+
+        // Loop through dates and create datapoints
+        let datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
+        datesInRangeArray.forEach((date, index) => {
+
+            // Add null values if the date is past the "today cutoff" point
+            if (date.isAfter(cutOffRangeEnd, 'day')) {
+                let nullDataPoint:DataPoint = {
+                    x: date,
+                    y: null
+                };
+                healthStatusDataPoints.push(nullDataPoint);
+                healthStatusDataPointsBgColors.push(null);
+            }
+            else {
+
+                // Prepare data
+                let dateKey = date.format('DD/MM/YYYY');
+                let healthStatusCLOsInDate = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
+
+                // Create the datapoint for HealthStatusLevel for the current date
+                let avgHealthLevelAndColorInfo = this.getAverageHealthLevelAndColorForSingleDate(healthStatusCLOsInDate);
+                let dp: DataPoint = {
+                    x: date,
+                    y: avgHealthLevelAndColorInfo.avgHealthLevel
+                };
+                healthStatusDataPoints.push(dp);
+                healthStatusDataPointsBgColors.push(avgHealthLevelAndColorInfo.color);
+
+                // Create a datapoint for each selectedSymptomType
+                let avgIntensityValuePerSymptomTypeDictionary = this.getAvgIntensityForEachSymptomTypeForSingleDate(healthStatusCLOsInDate, selectedSymptomTypesDataPointsDict);
+                for (var symptomTypeName in avgIntensityValuePerSymptomTypeDictionary) {
+                    let dataPointsForSymptomTypeArray = selectedSymptomTypesDataPointsDict[symptomTypeName];
+
+                    // Default to 0 if it is null 
+                    if (avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] === null) {
+                        avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] = 0;
+                    }
+
+                    let newSymptomTypeDataPoint: DataPoint = {
+                        x: date,
+                        y: avgIntensityValuePerSymptomTypeDictionary[symptomTypeName]
+                    };
+                    dataPointsForSymptomTypeArray.push(newSymptomTypeDataPoint);
+                }
+            }
+            
+        });
+
         return {
             dataPointsForHealthStatusEntries: healthStatusDataPoints,
             colorsForHealthStatusEntryDataPoints: healthStatusDataPointsBgColors,
@@ -519,7 +564,6 @@ class MonthDisplayMode implements IDisplayMode {
         // Generate data points (for healthStatusEntries and for each selected SymptomType)
         var dataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange, selectedSymptomTypeCLOs);
         var symptomTypesDatasets = [];
-        
 
         // Setup for chart
         var data = {
@@ -531,7 +575,7 @@ class MonthDisplayMode implements IDisplayMode {
                 borderWidth: '1px',
                 borderColor: 'red',
                 backgroundColor: 'transparent',
-                type: 'line',  
+                type: 'line',
                 data: symptomTypeDataPoints
             };
             data.datasets.push(symptomTypeDataset);
@@ -541,7 +585,7 @@ class MonthDisplayMode implements IDisplayMode {
             backgroundColor: dataPointsInfo.colorsForHealthStatusEntryDataPoints,
         };
         data.datasets.push(healthStatusEntriesDataset);
-        
+
         return data;
     }
 };

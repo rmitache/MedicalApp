@@ -34,7 +34,11 @@ export class FilterListPanelComponent {
 
             // Check whether it should be Selected or Deselected
             let isSelected = (selectedCLOs.find((clo) => {
-                return clo['ID'] === availableCLO['ID'];
+                if (clo !== null) {
+                    return clo['ID'] === availableCLO['ID'];
+                } else {
+                    return false;
+                }
             }) !== undefined) ? true : false;
 
             // Create the new FilterItem

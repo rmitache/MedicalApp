@@ -48,6 +48,9 @@
 
     <div class="right-side">
         <indicators-filters-panel #filtersPanel
-                               (SelectedPlansChanged)="onSelectedPlansChanged($event)"></indicators-filters-panel>
+                                (SymptomTypeSelected)="onSymptomTypeSelected($event)"
+                                (SymptomTypeDeselected)="onSymptomTypeDeselected($event)"
+                                  
+                                  ></indicators-filters-panel>
     </div>
 </div> 

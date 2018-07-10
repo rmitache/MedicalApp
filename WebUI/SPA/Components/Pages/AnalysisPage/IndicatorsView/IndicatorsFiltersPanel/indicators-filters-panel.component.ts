@@ -17,7 +17,7 @@ import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateD
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
-import { FilterListPanelComponent, FilterItem } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
+import { FilterListPanelComponent, FilterItem, FilterItemToggledEvent } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
 
 
 @Component({
@@ -39,20 +39,16 @@ export class IndicatorsFiltersPanelComponent {
     }
 
     // Events
-    //@Output() public SelectedSymptomTypeToggled: EventEmitter<SymptomTypeToggledEvent> = new EventEmitter();
+    @Output() public SymptomTypeSelected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
+    @Output() public SymptomTypeDeselected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
 
     // Event handlers
-    private onSelectedSymptomTypeToggled(filterItem: FilterItem) {
-        //let newSelectionState = !filterItem.Selected;
-        //filterItem.Selected = newSelectionState;
-
-
-        //// Emit the event
-        //let eventInfo: SymptomTypeToggledEvent = {
-        //    CLOID: filterItem.CLO['ID'],
-        //    NewSelectionState: newSelectionState
-        //};
-        //this.SelectedSymptomTypeToggled.emit(eventInfo);
+    private onFilterItemToggled(event: FilterItemToggledEvent) {
+        if (event.NewSelectionState === true) {
+            this.SymptomTypeSelected.emit(event.CLO as CLOs.PlanCLO);
+        } else {
+            this.SymptomTypeDeselected.emit(event.CLO as CLOs.PlanCLO);
+        }
     }
 
 }
