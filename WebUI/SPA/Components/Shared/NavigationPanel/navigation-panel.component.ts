@@ -48,7 +48,7 @@ export class NavigationPanelComponent {
 
     // Public methods
     public InitAndGetSelDateRange(mode: DateRangeMode, refDate: moment.Moment): Range<moment.Moment> {
-
+        
         // Initialize and compute the initial range based on the given refDate and DateRangeMode
         this.dateRangeSelectionMode = mode;
         var initialSelDateRange = this.getCurrentMode().GetInitialSelectedDateRange(refDate);

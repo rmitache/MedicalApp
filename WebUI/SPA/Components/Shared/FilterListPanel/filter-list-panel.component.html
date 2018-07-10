@@ -1,6 +1,7 @@
 <div class="frame">
-    <div class="filter-elem" [class.active]="filterItem.Selected"
+    <div class="filter-elem" [style.background-color]="filterItem.Selected ? filterItem.ColorCode : ''"
          *ngFor="let filterItem of viewModel.FilterItems">
+
         <input (click)="onCheckBoxClicked(filterItem)" class="check-box" [checked]="filterItem.Selected" type="checkbox" />
         <span class="item-name label-text-dark">{{filterItem.CLO.Name}}</span>
 

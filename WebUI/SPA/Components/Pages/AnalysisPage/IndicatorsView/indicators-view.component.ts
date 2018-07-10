@@ -24,7 +24,7 @@ import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Com
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
+import { IndicatorsFiltersPanelComponent, SymptomTypeToggledEvent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 
 
 @Component({
@@ -225,14 +225,16 @@ export class IndicatorsViewComponent {
 
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
-    private onSymptomTypeSelected(symptomType: CLOs.SymptomTypeCLO) {
+    private onSymptomTypeSelected(event: SymptomTypeToggledEvent) {
+        let symptomType = event.CLO;
         let indexInAvailableSymptomTypesArray = this.viewModel.AvailableSymptomTypes.findIndex((planCLO) => {
             return planCLO.ID === symptomType.ID;
         });
         this.viewModel.SelectedSymptomTypes[indexInAvailableSymptomTypesArray] = symptomType;
         this.refreshUI();
     }
-    private onSymptomTypeDeselected(symptomType: CLOs.SymptomTypeCLO) {
+    private onSymptomTypeDeselected(event: SymptomTypeToggledEvent) {
+        let symptomType = event.CLO;
         let indexInSelectedSymptomTypesArray = this.viewModel.SelectedSymptomTypes.findIndex((planCLO) => {
             if (planCLO !== null) {
                 return planCLO.ID === symptomType.ID;
