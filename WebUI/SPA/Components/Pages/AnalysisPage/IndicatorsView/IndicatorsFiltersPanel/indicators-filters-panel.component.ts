@@ -34,33 +34,25 @@ export class IndicatorsFiltersPanelComponent {
     };
 
     // Public methods
-    public Initialize(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[]) {
-        this.filterListPanelInstance.Initialize(availableSymptomTypes, selectedSymptomTypes, true);
+    public Initialize(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[], customColors: string[] = null) {
+        this.filterListPanelInstance.Initialize(availableSymptomTypes, selectedSymptomTypes, customColors);
     }
 
     // Events
-    @Output() public SymptomTypeSelected: EventEmitter<SymptomTypeToggledEvent> = new EventEmitter();
-    @Output() public SymptomTypeDeselected: EventEmitter<SymptomTypeToggledEvent> = new EventEmitter();
+    @Output() public SymptomTypeSelected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
+    @Output() public SymptomTypeDeselected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
 
     // Event handlers
     private onFilterItemToggled(event: FilterItemToggledEvent) {
-        let specialEvent: SymptomTypeToggledEvent =  {
-            CLO: event.CLO as CLOs.SymptomTypeCLO,
-            ColorCode: event.ColorCode
-        };
-
 
         if (event.NewSelectionState === true) {
-            this.SymptomTypeSelected.emit(specialEvent);
+            this.SymptomTypeSelected.emit(event.CLO as CLOs.PlanCLO);
         } else {
-            this.SymptomTypeDeselected.emit(specialEvent);
+            this.SymptomTypeDeselected.emit(event.CLO as CLOs.PlanCLO);
         }
     }
 
 }
-export interface SymptomTypeToggledEvent {
-    CLO: CLOs.SymptomTypeCLO;
-    ColorCode: string;
-}
+
 interface ViewModel {
 }

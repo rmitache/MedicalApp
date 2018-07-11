@@ -24,7 +24,7 @@ import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Com
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { IndicatorsFiltersPanelComponent, SymptomTypeToggledEvent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
+import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 
 
 @Component({
@@ -64,6 +64,7 @@ export class IndicatorsViewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
 
+
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
         // Get Current Mode strategy
@@ -75,6 +76,47 @@ export class IndicatorsViewComponent {
             throw new Error('HealthGraphDisplayMode not implemented yet');
         }
         return currentStrategy;
+    }
+    private getUniqueColors() {
+        const symptomTypesColors = {
+            beige: "#f5f5dc",
+            blue: "#0000ff",
+            brown: "#a52a2a",
+            cyan: "#00ffff",
+            darkblue: "#00008b",
+            darkcyan: "#008b8b",
+            darkgrey: "#a9a9a9",
+            darkgreen: "#006400",
+            darkkhaki: "#bdb76b",
+            darkmagenta: "#8b008b",
+            darkolivegreen: "#556b2f",
+            darkorange: "#ff8c00",
+            darkorchid: "#9932cc",
+            darkred: "#8b0000",
+            darksalmon: "#e9967a",
+            darkviolet: "#9400d3",
+            fuchsia: "#ff00ff",
+            gold: "#ffd700",
+            green: "#008000",
+            indigo: "#4b0082",
+            khaki: "#f0e68c",
+            lightblue: "#add8e6",
+            lightcyan: "#e0ffff",
+            lightgreen: "#90ee90",
+            lightgrey: "#d3d3d3",
+            lightpink: "#ffb6c1",
+            lightyellow: "#ffffe0",
+            lime: "#00ff00",
+            magenta: "#ff00ff",
+            maroon: "#800000",
+            navy: "#000080",
+            olive: "#808000",
+        };
+        let arr: string[] = [];
+        for (var colorName in symptomTypesColors) {
+            arr.push(symptomTypesColors[colorName]);
+        }
+        return arr;
     }
     private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
         let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
@@ -103,7 +145,6 @@ export class IndicatorsViewComponent {
         return xPosition;
     }
     private refreshUI() {
-
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.HealthEntriesInSelectedDateRange.filter(entry => {
             return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
@@ -168,11 +209,12 @@ export class IndicatorsViewComponent {
         }));
     }
     ngOnInit() {
-        // Initialize symptomTypes
+        
+        // Initialize symptomTypes and filtersPanel
+        let availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.SelectedSymptomTypes = new Array(this.viewModel.AvailableSymptomTypes.length).fill(null);
-
-        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes);
+        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.getUniqueColors());
 
         // Initialize date ranges
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
@@ -225,16 +267,14 @@ export class IndicatorsViewComponent {
 
         this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
-    private onSymptomTypeSelected(event: SymptomTypeToggledEvent) {
-        let symptomType = event.CLO;
+    private onSymptomTypeSelected(symptomType: CLOs.SymptomTypeCLO) {
         let indexInAvailableSymptomTypesArray = this.viewModel.AvailableSymptomTypes.findIndex((planCLO) => {
             return planCLO.ID === symptomType.ID;
         });
         this.viewModel.SelectedSymptomTypes[indexInAvailableSymptomTypesArray] = symptomType;
         this.refreshUI();
     }
-    private onSymptomTypeDeselected(event: SymptomTypeToggledEvent) {
-        let symptomType = event.CLO;
+    private onSymptomTypeDeselected(symptomType: CLOs.SymptomTypeCLO) {
         let indexInSelectedSymptomTypesArray = this.viewModel.SelectedSymptomTypes.findIndex((planCLO) => {
             if (planCLO !== null) {
                 return planCLO.ID === symptomType.ID;
@@ -263,6 +303,8 @@ interface ViewModel {
     DateRangeDisplayMode: DateRangeMode;
     Blocked: boolean;
 }
+
+
 
 // Supported Display modes
 interface IDisplayMode {
@@ -350,7 +392,7 @@ class MonthDisplayMode implements IDisplayMode {
         for (var symptomTypeName in selectedSymptomTypeNames) {
             let arrayOfSymptomTypeValues = valuesPerSymptomType[symptomTypeName];
             if (arrayOfSymptomTypeValues === undefined) {
-                avgValuePerSymptomType[symptomTypeName] = null; 
+                avgValuePerSymptomType[symptomTypeName] = null;
             } else {
                 let sum = arrayOfSymptomTypeValues.reduce((a, b) => a + b, 0);
                 let computedAverage = sum / arrayOfSymptomTypeValues.length;
@@ -361,7 +403,7 @@ class MonthDisplayMode implements IDisplayMode {
         return avgValuePerSymptomType;
     }
     private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] },
-       range: Range<moment.Moment>, selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
+        range: Range<moment.Moment>, selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
 
         // Variables - OBS: each array has every entry corresponding to a given Date in the range
         let healthStatusDataPoints = []
@@ -386,7 +428,7 @@ class MonthDisplayMode implements IDisplayMode {
 
             // Add null values if the date is past the "today cutoff" point
             if (date.isAfter(cutOffRangeEnd, 'day')) {
-                let nullDataPoint:DataPoint = {
+                let nullDataPoint: DataPoint = {
                     x: date,
                     y: null
                 };
@@ -425,7 +467,7 @@ class MonthDisplayMode implements IDisplayMode {
                     dataPointsForSymptomTypeArray.push(newSymptomTypeDataPoint);
                 }
             }
-            
+
         });
 
         return {
@@ -591,6 +633,7 @@ class MonthDisplayMode implements IDisplayMode {
         return data;
     }
 };
+
 
 interface DataPoint {
     x: moment.Moment;
