@@ -26,6 +26,21 @@ export class FilterListPanelComponent {
     private readonly defaultColor = '#e4efff';
 
     // Private methods
+    private isColorDark(colorCode: string) {
+        var colorCode = colorCode.substring(1);      // strip #
+        var rgb = parseInt(colorCode, 16);   // convert rrggbb to decimal
+        var r = (rgb >> 16) & 0xff;  // extract red
+        var g = (rgb >> 8) & 0xff;  // extract green
+        var b = (rgb >> 0) & 0xff;  // extract blue
+
+        var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+        if (luma < 50) {
+            return true; // dark color
+        } else {
+            return false;
+        }
+    }
     private generateFilterItems(availableCLOs: BaseCLO[], selectedCLOs: BaseCLO[], customColorCodes: string[]): FilterItem[] {
 
         // Variables
@@ -45,7 +60,7 @@ export class FilterListPanelComponent {
             }) !== undefined) ? true : false;
 
             // Create the new FilterItem
-            let color = (customColorCodes !== null) ? customColorCodes.shift() : this.defaultColor;
+            let color = (customColorCodes !== null) ? customColorCodes[i] : this.defaultColor;
             let newFilterItem = new FilterItem(availableCLO, isSelected, color);
             filterItems.push(newFilterItem);
 

@@ -3,7 +3,8 @@
          *ngFor="let filterItem of viewModel.FilterItems">
 
         <input (click)="onCheckBoxClicked(filterItem)" class="check-box" [checked]="filterItem.Selected" type="checkbox" />
-        <span class="item-name label-text-dark">{{filterItem.CLO.Name}}</span>
-
+        <span class="item-name label-text-dark"
+              [attr.class]="(isColorDark(filterItem.ColorCode) && filterItem.Selected) ? 'light-item-name' : ''"
+              >{{filterItem.CLO.Name}}</span>
     </div>
 </div>

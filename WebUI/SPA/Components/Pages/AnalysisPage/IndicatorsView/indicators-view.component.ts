@@ -5,10 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { ChartModule, UIChart } from 'primeng/primeng';
-//import { } from 'chartjs'
 import * as Chart from 'chart.js';
 import 'chartjs-plugin-annotation';
-import * as $ from 'jquery';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -63,7 +61,26 @@ export class IndicatorsViewComponent {
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
-
+    private readonly symptomTypesColors = [
+        '#e6194b', //red
+        '#3cb44b', //green
+        '#ffe119', //yellow
+        '#0082c8', //blue
+        '#f58231', //orange
+        '#911eb4', //purple
+        '#f032e6', //magenta
+        '#008080', //teal
+        '#aa6e28', //brown
+        '#800000', //maroon
+        '#aaffc3', //mint
+        '#808000', //olive
+        '#ffd8b1', //coral
+        '#000080', //navy
+        '#808080', //gray
+        '#000000', //black
+        '#46f0f0', //cyan
+        '#d2f53c', //lime
+    ];
 
     // Private methods
     private getCurrentDisplayModeInstance(): IDisplayMode {
@@ -77,46 +94,17 @@ export class IndicatorsViewComponent {
         }
         return currentStrategy;
     }
-    private getUniqueColors() {
-        const symptomTypesColors = {
-            beige: "#f5f5dc",
-            blue: "#0000ff",
-            brown: "#a52a2a",
-            cyan: "#00ffff",
-            darkblue: "#00008b",
-            darkcyan: "#008b8b",
-            darkgrey: "#a9a9a9",
-            darkgreen: "#006400",
-            darkkhaki: "#bdb76b",
-            darkmagenta: "#8b008b",
-            darkolivegreen: "#556b2f",
-            darkorange: "#ff8c00",
-            darkorchid: "#9932cc",
-            darkred: "#8b0000",
-            darksalmon: "#e9967a",
-            darkviolet: "#9400d3",
-            fuchsia: "#ff00ff",
-            gold: "#ffd700",
-            green: "#008000",
-            indigo: "#4b0082",
-            khaki: "#f0e68c",
-            lightblue: "#add8e6",
-            lightcyan: "#e0ffff",
-            lightgreen: "#90ee90",
-            lightgrey: "#d3d3d3",
-            lightpink: "#ffb6c1",
-            lightyellow: "#ffffe0",
-            lime: "#00ff00",
-            magenta: "#ff00ff",
-            maroon: "#800000",
-            navy: "#000080",
-            olive: "#808000",
-        };
-        let arr: string[] = [];
-        for (var colorName in symptomTypesColors) {
-            arr.push(symptomTypesColors[colorName]);
-        }
-        return arr;
+    private getSymptomTypesToColorsDictionary(availableSymptomTypes: CLOs.SymptomTypeCLO[]) {
+
+        // Variables
+        let symptomTypesToColorsDictionary: { [symptomTypeName: string]: string } = {};
+        let colors = this.symptomTypesColors.slice();
+
+        availableSymptomTypes.forEach((clo, index) => {
+            symptomTypesToColorsDictionary[clo.Name] = colors[index];
+        });
+
+        return symptomTypesToColorsDictionary;
     }
     private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
         let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
@@ -160,11 +148,13 @@ export class IndicatorsViewComponent {
         });
 
         // Refresh VM properties 
+        let symptomTypesToColorsDictionary = this.getSymptomTypesToColorsDictionary(this.viewModel.AvailableSymptomTypes);
+        
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(healthStatusCLOsInSelDateRangeDictionary);
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(healthStatusCLOsInSelDateRangeDictionary,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()),
-            this.viewModel.SelectedSymptomTypes);
+            this.viewModel.SelectedSymptomTypes, symptomTypesToColorsDictionary);
 
         // Recreate the chart
         if (this.chartInstance) {
@@ -209,12 +199,12 @@ export class IndicatorsViewComponent {
         }));
     }
     ngOnInit() {
-        
+
         // Initialize symptomTypes and filtersPanel
         let availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.SelectedSymptomTypes = new Array(this.viewModel.AvailableSymptomTypes.length).fill(null);
-        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.getUniqueColors());
+        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.symptomTypesColors.slice());
 
         // Initialize date ranges
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
@@ -310,7 +300,7 @@ interface ViewModel {
 interface IDisplayMode {
     GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }): any;
     GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>,
-        selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]): any;
+        selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }): any;
 }
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
@@ -603,7 +593,7 @@ class MonthDisplayMode implements IDisplayMode {
         return chartOptions;
     }
     public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>,
-        selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
+        selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }) {
 
         // Generate data points (for healthStatusEntries and for each selected SymptomType)
         var dataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange, selectedSymptomTypeCLOs);
@@ -613,11 +603,12 @@ class MonthDisplayMode implements IDisplayMode {
         var data = {
             datasets: []
         };
+        
         for (var symptomTypeName in dataPointsInfo.selectedSymptomTypesDataPointsDict) {
             let symptomTypeDataPoints = dataPointsInfo.selectedSymptomTypesDataPointsDict[symptomTypeName];
             let symptomTypeDataset = {
-                borderWidth: '1px',
-                borderColor: 'red',
+                borderWidth: 2,
+                borderColor: symptomTypesToColorsDictionary[symptomTypeName],
                 backgroundColor: 'transparent',
                 type: 'line',
                 data: symptomTypeDataPoints
