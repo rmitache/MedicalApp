@@ -5,6 +5,7 @@ using BLL.DomainModel.Indicators.Symptoms.Library.Factories;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using DataAccessLayer.Repositories.SymptomTypeRepository;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL.DomainModel.Indicators.Symptoms.Library.Services
 {
@@ -26,8 +27,12 @@ namespace BLL.DomainModel.Indicators.Symptoms.Library.Services
         {
             var dataEntities = this.symptomTypeRepo.GetAllSymptomTypes();
             var blos = this.symptomTypeFactory.Convert_ToBLOList(dataEntities);
-            
-            return blos;
+
+            // Sort alphabetically
+            var sortedBLOs = blos.OrderBy(symptomType => symptomType.Name).ToList();
+
+
+            return sortedBLOs;
         }
     }
 }

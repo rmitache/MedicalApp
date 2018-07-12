@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
@@ -13,6 +13,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 // Components
 import { IndicatorsViewComponent } from './indicators-view.component';
 import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
+import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/dataset-generator';
 
 
 
@@ -32,6 +33,10 @@ import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPa
     ],
     exports: [IndicatorsViewComponent],
     entryComponents: [
+    ],
+    providers: [
+        HealthStatusDatasetGenerator,
+        SymptomTypeDatasetGenerator
     ]
 })
 export class IndicatorsViewModule { }

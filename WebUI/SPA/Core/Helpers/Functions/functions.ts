@@ -156,3 +156,7 @@ export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
     return isFirstDate || isLastDate;
 
 }
+
+//export function <T>ToDictionary(T[], ) {
+
+//}

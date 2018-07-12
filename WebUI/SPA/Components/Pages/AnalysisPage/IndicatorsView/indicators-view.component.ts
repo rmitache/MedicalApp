@@ -23,6 +23,7 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
+import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/dataset-generator';
 
 
 @Component({
@@ -72,8 +73,8 @@ export class IndicatorsViewComponent {
         '#008080', //teal
         '#aa6e28', //brown
         '#800000', //maroon
-        '#aaffc3', //mint
         '#808000', //olive
+        '#aaffc3', //mint
         '#ffd8b1', //coral
         '#000080', //navy
         '#808080', //gray
@@ -87,7 +88,7 @@ export class IndicatorsViewComponent {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.DateRangeDisplayMode === DateRangeMode.Month) {
-            currentStrategy = new MonthDisplayMode(this.chartInstance);
+            currentStrategy = new MonthDisplayMode(this.chartInstance, this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
         } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
@@ -138,21 +139,12 @@ export class IndicatorsViewComponent {
             return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
                 entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
-        var healthStatusCLOsInSelDateRangeDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
-        filteredHealthStatusEntryCLOs.forEach((clo, index) => {
-            let dateKey = moment(clo.OccurrenceDateTime, moment.ISO_8601).format('DD/MM/YYYY');
-            if (healthStatusCLOsInSelDateRangeDictionary[dateKey] === undefined) {
-                healthStatusCLOsInSelDateRangeDictionary[dateKey] = [];
-            };
-            healthStatusCLOsInSelDateRangeDictionary[dateKey].push(clo);
-        });
 
         // Refresh VM properties 
         let symptomTypesToColorsDictionary = this.getSymptomTypesToColorsDictionary(this.viewModel.AvailableSymptomTypes);
-        
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
-        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(healthStatusCLOsInSelDateRangeDictionary);
-        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(healthStatusCLOsInSelDateRangeDictionary,
+        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions();
+        this.viewModel.ChartData = currentDisplayMode.GenerateChartData(this.viewModel.AvailableSymptomTypes, filteredHealthStatusEntryCLOs,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()),
             this.viewModel.SelectedSymptomTypes, symptomTypesToColorsDictionary);
 
@@ -173,7 +165,9 @@ export class IndicatorsViewComponent {
         applicationState: AnalysisPageApplicationState,
         private readonly dataService: AnalysisPageDataService,
         private readonly commandManager: CommandManager,
-        private viewContainerRef: ViewContainerRef
+        private viewContainerRef: ViewContainerRef,
+        private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
+        private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -201,7 +195,6 @@ export class IndicatorsViewComponent {
     ngOnInit() {
 
         // Initialize symptomTypes and filtersPanel
-        let availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.SelectedSymptomTypes = new Array(this.viewModel.AvailableSymptomTypes.length).fill(null);
         this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.symptomTypesColors.slice());
@@ -298,182 +291,97 @@ interface ViewModel {
 
 // Supported Display modes
 interface IDisplayMode {
-    GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }): any;
-    GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>,
+    GenerateChartOptions(): any;
+    GenerateChartData(availableSymptomTypes: CLOs.SymptomTypeCLO[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>,
         selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }): any;
 }
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
-    private getAverageHealthLevelAndColorForSingleDate(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
-
-        // Variables
-        var sum: number = 0;
-        var avgHealthLevel = 0;
-        var color = 'white';
-
-        //  Calculate the Average Health Level (by adding all HealthLevels and dividing them by their number)
-        healthStatusEntryCLOs.forEach(clo => {
-            sum += clo.HealthLevel;
-        });
-        if (healthStatusEntryCLOs.length > 0)
-            avgHealthLevel = sum / healthStatusEntryCLOs.length;
-        else
-            avgHealthLevel = null;
-        if (avgHealthLevel === 0) {
-            avgHealthLevel = 0.2;
-        }
-
-        // Determine the color
-        if (avgHealthLevel >= 2) {
-            // great
-            color = 'green';
-        }
-        else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
-            // good
-            color = '#9dc340';
-        }
-        else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-            // ok
-            color = '#cfe27e';
-        }
-        else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
-            // notgreat 
-            color = '#ffc297';
-        }
-        else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
-            // bad 
-            color = '#fe6060';
-        }
-        else if (avgHealthLevel < -1) {
-            // very bad
-            color = 'red';
-        }
-
-
-        //
-        return {
-            avgHealthLevel: avgHealthLevel,
-            color: color
-        };
-    }
-    private getAvgIntensityForEachSymptomTypeForSingleDate(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[],
-        selectedSymptomTypeNames: { [symptomTypeName: string]: any }) {
-
-        // Variables
-        let valuesPerSymptomType: { [symptomTypeName: string]: number[] } = {};
-        let avgValuePerSymptomType: { [symptomTypeName: string]: number } = {};
-
-        // Loop through healthStatusEntries and their symptomEntries
-        healthStatusEntryCLOs.forEach((healthStatusEntryCLO) => {
-            healthStatusEntryCLO.SymptomEntries.forEach((symptomEntryCLO) => {
-
-                let symptomTypeName = symptomEntryCLO.SymptomType.Name;
-                if (selectedSymptomTypeNames[symptomTypeName] !== undefined) {
-                    if (valuesPerSymptomType[symptomTypeName] === undefined) {
-                        valuesPerSymptomType[symptomTypeName] = [];
-                    }
-
-                    valuesPerSymptomType[symptomTypeName].push(symptomEntryCLO.IntensityLevel as number);
-                }
-            });
-        });
-
-        // Calculate the averages per symptomType
-        for (var symptomTypeName in selectedSymptomTypeNames) {
-            let arrayOfSymptomTypeValues = valuesPerSymptomType[symptomTypeName];
-            if (arrayOfSymptomTypeValues === undefined) {
-                avgValuePerSymptomType[symptomTypeName] = null;
-            } else {
-                let sum = arrayOfSymptomTypeValues.reduce((a, b) => a + b, 0);
-                let computedAverage = sum / arrayOfSymptomTypeValues.length;
-                avgValuePerSymptomType[symptomTypeName] = computedAverage;
-            }
-        }
-
-        return avgValuePerSymptomType;
-    }
     private generateDataPointsForChart(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] },
         range: Range<moment.Moment>, selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[]) {
 
-        // Variables - OBS: each array has every entry corresponding to a given Date in the range
-        let healthStatusDataPoints = []
-        let healthStatusDataPointsBgColors = [];
+        //// Variables - OBS: each array has every entry corresponding to a given Date in the range
+        //let healthStatusDataPoints = []
+        //let healthStatusDataPointsBgColors = [];
 
-        // Init a dictionary with all names of SelectedSymptomTypes (each entry will have an array of DataPoints, one for each Date)
-        let selectedSymptomTypesDataPointsDict: { [symptomTypeName: string]: DataPoint[] } = {};
-        selectedSymptomTypeCLOs.forEach((symptomTypeCLO) => {
-            if (symptomTypeCLO !== null) {
-                selectedSymptomTypesDataPointsDict[symptomTypeCLO.Name] = [];
-            }
-        });
+        //// Init a dictionary with all names of SelectedSymptomTypes (each entry will have an array of DataPoints, one for each Date)
+        //let selectedSymptomTypesDataPointsDict: { [symptomTypeName: string]: DataPoint[] } = {};
+        //selectedSymptomTypeCLOs.forEach((symptomTypeCLO) => {
+        //    if (symptomTypeCLO !== null) {
+        //        selectedSymptomTypesDataPointsDict[symptomTypeCLO.Name] = [];
+        //    }
+        //});
 
-        // Adjust the range to cut it off on today's date (if it intersects with it)
-        let today = moment();
-        let todayIsInRange = today.isSameOrBefore(range.RangeEnd, 'day') && today.isSameOrAfter(range.RangeStart, 'day');
-        let cutOffRangeEnd = (todayIsInRange) ? today.endOf('day') : range.RangeEnd;
+        //// Adjust the range to cut it off on today's date (if it intersects with it)
+        //let today = moment();
+        //let todayIsInRange = today.isSameOrBefore(range.RangeEnd, 'day') && today.isSameOrAfter(range.RangeStart, 'day');
+        //let cutOffRangeEnd = (todayIsInRange) ? today.endOf('day') : range.RangeEnd;
 
-        // Loop through dates and create datapoints
-        let datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
-        datesInRangeArray.forEach((date, index) => {
+        //// Loop through dates and create datapoints
+        //let datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
+        //datesInRangeArray.forEach((date, index) => {
 
-            // Add null values if the date is past the "today cutoff" point
-            if (date.isAfter(cutOffRangeEnd, 'day')) {
-                let nullDataPoint: DataPoint = {
-                    x: date,
-                    y: null
-                };
-                healthStatusDataPoints.push(nullDataPoint);
-                healthStatusDataPointsBgColors.push(null);
-            }
-            else {
+        //    // Add null values if the date is past the "today cutoff" point
+        //    if (date.isAfter(cutOffRangeEnd, 'day')) {
+        //        let nullDataPoint: DataPoint = {
+        //            x: date,
+        //            y: null
+        //        };
+        //        healthStatusDataPoints.push(nullDataPoint);
+        //        healthStatusDataPointsBgColors.push(null);
+        //    }
+        //    else {
 
-                // Prepare data
-                let dateKey = date.format('DD/MM/YYYY');
-                let healthStatusCLOsInDate = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
+        //        // Prepare data
+        //        let dateKey = date.format('DD/MM/YYYY');
+        //        let healthStatusCLOsInDate = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
 
-                // Create the datapoint for HealthStatusLevel for the current date
-                let avgHealthLevelAndColorInfo = this.getAverageHealthLevelAndColorForSingleDate(healthStatusCLOsInDate);
-                let dp: DataPoint = {
-                    x: date,
-                    y: avgHealthLevelAndColorInfo.avgHealthLevel
-                };
-                healthStatusDataPoints.push(dp);
-                healthStatusDataPointsBgColors.push(avgHealthLevelAndColorInfo.color);
+        //        // Create the datapoint for HealthStatusLevel for the current date
+        //        let avgHealthLevelAndColorInfo = this.getAverageHealthLevelAndColorForSingleDate(healthStatusCLOsInDate);
+        //        let dp: DataPoint = {
+        //            x: date,
+        //            y: avgHealthLevelAndColorInfo.avgHealthLevel
+        //        };
+        //        healthStatusDataPoints.push(dp);
+        //        healthStatusDataPointsBgColors.push(avgHealthLevelAndColorInfo.color);
 
-                // Create a datapoint for each selectedSymptomType
-                let avgIntensityValuePerSymptomTypeDictionary = this.getAvgIntensityForEachSymptomTypeForSingleDate(healthStatusCLOsInDate, selectedSymptomTypesDataPointsDict);
-                for (var symptomTypeName in avgIntensityValuePerSymptomTypeDictionary) {
-                    let dataPointsForSymptomTypeArray = selectedSymptomTypesDataPointsDict[symptomTypeName];
+        //        // Create a datapoint for each selectedSymptomType
+        //        let avgIntensityValuePerSymptomTypeDictionary = this.getAvgIntensityForEachSymptomTypeForSingleDate(healthStatusCLOsInDate, selectedSymptomTypesDataPointsDict);
+        //        for (var symptomTypeName in avgIntensityValuePerSymptomTypeDictionary) {
+        //            let dataPointsForSymptomTypeArray = selectedSymptomTypesDataPointsDict[symptomTypeName];
 
-                    // Default to 0 if it is null 
-                    if (avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] === null) {
-                        avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] = 0;
-                    }
+        //            // Default to 0 if it is null 
+        //            if (avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] === null) {
+        //                avgIntensityValuePerSymptomTypeDictionary[symptomTypeName] = 0;
+        //            }
 
-                    let newSymptomTypeDataPoint: DataPoint = {
-                        x: date,
-                        y: avgIntensityValuePerSymptomTypeDictionary[symptomTypeName]
-                    };
-                    dataPointsForSymptomTypeArray.push(newSymptomTypeDataPoint);
-                }
-            }
+        //            let newSymptomTypeDataPoint: DataPoint = {
+        //                x: date,
+        //                y: avgIntensityValuePerSymptomTypeDictionary[symptomTypeName]
+        //            };
+        //            dataPointsForSymptomTypeArray.push(newSymptomTypeDataPoint);
+        //        }
+        //    }
 
-        });
+        //});
 
-        return {
-            dataPointsForHealthStatusEntries: healthStatusDataPoints,
-            colorsForHealthStatusEntryDataPoints: healthStatusDataPointsBgColors,
-            selectedSymptomTypesDataPointsDict: selectedSymptomTypesDataPointsDict
-        };
+        //return {
+        //    dataPointsForHealthStatusEntries: healthStatusDataPoints,
+        //    colorsForHealthStatusEntryDataPoints: healthStatusDataPointsBgColors,
+        //    selectedSymptomTypesDataPointsDict: selectedSymptomTypesDataPointsDict
+        //};
+        return null;
     }
 
     // Constructor
     constructor(
-        private readonly chartInstance: UIChart) {
+        private readonly chartInstance: UIChart,
+        private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
+        private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator) {
     }
 
     // Public methods
-    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+    public GenerateChartOptions() {
         let chartOptions = {
             tooltips: {
                 enabled: false,
@@ -592,41 +500,30 @@ class MonthDisplayMode implements IDisplayMode {
 
         return chartOptions;
     }
-    public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>,
+    public GenerateChartData(availableSymptomTypes: CLOs.SymptomTypeCLO[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>,
         selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }) {
-
-        // Generate data points (for healthStatusEntries and for each selected SymptomType)
-        var dataPointsInfo = this.generateDataPointsForChart(datesToCLOsDictionary, currentSelDateRange, selectedSymptomTypeCLOs);
-        var symptomTypesDatasets = [];
-
-        // Setup for chart
-        var data = {
+        
+        // Variables
+        let data = {
             datasets: []
         };
-        
-        for (var symptomTypeName in dataPointsInfo.selectedSymptomTypesDataPointsDict) {
-            let symptomTypeDataPoints = dataPointsInfo.selectedSymptomTypesDataPointsDict[symptomTypeName];
-            let symptomTypeDataset = {
-                borderWidth: 2,
-                borderColor: symptomTypesToColorsDictionary[symptomTypeName],
-                backgroundColor: 'transparent',
-                type: 'line',
-                data: symptomTypeDataPoints
-            };
-            data.datasets.push(symptomTypeDataset);
-        }
-        let healthStatusEntriesDataset = {
-            data: dataPointsInfo.dataPointsForHealthStatusEntries,
-            backgroundColor: dataPointsInfo.colorsForHealthStatusEntryDataPoints,
-        };
-        data.datasets.push(healthStatusEntriesDataset);
+
+        // Create SymptomType datasets
+        let symptomTypeDataSetsDictionary = this.symptomTypeDatasetGenerator.GenerateDataSets(availableSymptomTypes,
+            preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+        selectedSymptomTypeCLOs.forEach((selectedSymptomType) => {
+            if (selectedSymptomType !== null) {
+                let symptomTypeDataset = symptomTypeDataSetsDictionary[selectedSymptomType.Name];
+                symptomTypeDataset.borderColor = symptomTypesToColorsDictionary[selectedSymptomType.Name];
+                data.datasets.push(symptomTypeDataset);
+            }
+        });
+
+        // Create HealthStatus dataset
+        let healthStatusDataset = this.healthStatusDataSetGenerator.GenerateDataSet(preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+        data.datasets.push(healthStatusDataset);
+
 
         return data;
     }
 };
-
-
-interface DataPoint {
-    x: moment.Moment;
-    y: number;
-}
