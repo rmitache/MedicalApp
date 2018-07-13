@@ -4,7 +4,7 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/Library/CLOFactories/symptom-type-clo.factory';
+import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
 
 @Injectable()
 export class SymptomEntryCLOFactory implements ICLOFactory<CLOs.SymptomEntryCLO> {

@@ -4,10 +4,10 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
+import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
 
 @Injectable()
-export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRuleItemCLO> {
+export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.MedicineFactorRecordCLO> {
 
     // Constructor
     constructor(private readonly medicineTypeCLOFactory: MedicineTypeCLOFactory) {
@@ -15,40 +15,54 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
     }
 
     // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.MedicineRuleItemCLO {
-        
-        let newCLO = new CLOs.MedicineRuleItemCLO();
-        newCLO.ID = blo['ID'];
-        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
+    public Convert_ToCLO(blo: any): CLOs.MedicineFactorRecordCLO {
 
+        let newCLO = new CLOs.MedicineFactorRecordCLO();
+        newCLO.ID = blo['ID'];
+        newCLO.CompositeID = blo['CompositeID'];
+        newCLO.Type = blo['Type'];
+        newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
+        
+        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.UnitDoseType = blo['UnitDoseType'];
         newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
         newCLO.UnitDoseSize = blo['UnitDoseSize'];
         newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
-
         newCLO.Instruction = blo['Instruction'];
         newCLO.AdministrationMethod = blo['AdministrationMethod'];
-        
 
+        newCLO.ParentPlanName = blo['ParentPlanName'];
+        newCLO.ParentPlanID = blo['ParentPlanID'];
+        newCLO.RecentlyAdded = blo['RecentlyAdded'];
+        newCLO.Taken = blo['Taken'];
+        
         return newCLO;
     }
-    public Create_DefaultCLO(): CLOs.MedicineRuleItemCLO {
-        let newCLO = new CLOs.MedicineRuleItemCLO();
+    public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
+        let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.ID = 0;
+        newCLO.CompositeID = null;
+        newCLO.Type = Enums.FactorRecordType.UserEntry;
         newCLO.MedicineType = null;
+        newCLO.OccurrenceDateTime = new Date();
 
         newCLO.UnitDoseType = null;
         newCLO.UnitDoseQuantifier = null;
         newCLO.UnitDoseSize = null;
         newCLO.UnitDoseUoM = null;
-
+        
         newCLO.Instruction = Enums.Instruction.Unspecified;
         newCLO.AdministrationMethod = Enums.AdministrationMethod.Unspecified;
 
+        newCLO.ParentPlanID = null;
+        newCLO.RecentlyAdded = null;
+        newCLO.Taken = false;
+
         return newCLO;
     }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineRuleItemCLO> {
-        let cloList = new DataStructures.List<CLOs.MedicineRuleItemCLO>();
+    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
+        
+        let cloList = new DataStructures.List<CLOs.MedicineFactorRecordCLO>();
         bloArray.forEach(blo => {
             let clo = this.Convert_ToCLO(blo);
             cloList.Add(clo);
@@ -56,19 +70,7 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
 
         return cloList;
     }
-    public Clone_CLOAsNewBLO(clo: CLOs.MedicineRuleItemCLO): CLOs.MedicineRuleItemCLO {
-        let newCLO = new CLOs.MedicineRuleItemCLO();
-        newCLO.ID = 0;
-        newCLO.MedicineType = clo.MedicineType;
-
-        newCLO.UnitDoseType = clo.UnitDoseType;
-        newCLO.UnitDoseQuantifier = clo.UnitDoseQuantifier;
-        newCLO.UnitDoseSize = clo.UnitDoseSize;
-        newCLO.UnitDoseUoM = clo.UnitDoseUoM;
-
-        newCLO.Instruction = clo.Instruction;
-        newCLO.AdministrationMethod = clo.AdministrationMethod;
-
-        return newCLO;
+    public Clone_CLOAsNewBLO(clo: CLOs.MedicineFactorRecordCLO): CLOs.MedicineFactorRecordCLO {
+        throw new Error('Clone_CLO Not implemented');
     }
 }

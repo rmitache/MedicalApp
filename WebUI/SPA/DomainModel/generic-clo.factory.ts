@@ -5,17 +5,17 @@ import { Injectable } from '@angular/core';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { UserAccountCLOFactory } from './Users/CLOFactories/user-account-clo.factory';
-import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-factor-record-clo.factory';
-import { MedicineRuleItemCLOFactory } from './Factors/Medicine/History/CLOFactories/medicine-rule-item-clo.factory';
-import { MedicineTypeCLOFactory } from './Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
+import { MedicineFactorRecordCLOFactory } from './Factors/Medicine/CLOFactories/medicine-factor-record-clo.factory';
+import { MedicineRuleItemCLOFactory } from './Factors/Medicine/CLOFactories/medicine-rule-item-clo.factory';
+import { MedicineTypeCLOFactory } from './Factors/Medicine/CLOFactories/medicine-type-clo.factory';
 import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
 import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
 import { RuleCLOFactory } from './Plans/CLOFactories/rule-clo.factory';
-import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/History/CLOFactories/health-status-entry-clo.factory';
+import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/CLOFactories/health-status-entry-clo.factory';
 
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
-import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/Library/CLOFactories/symptom-type-clo.factory';
-import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/History/CLOFactories/symptom-entry-clo.factory';
+import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
+import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
 
 
 @Injectable()

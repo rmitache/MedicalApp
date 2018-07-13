@@ -4,9 +4,9 @@ import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/Library/CLOFactories/medicine-type-clo.factory';
+import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
 import { DaysInWeek, Time } from 'SPA/Core/Helpers/DataStructures/misc';
-import { MedicineRuleItemCLOFactory } from 'SPA/DomainModel/Factors/Medicine/History/CLOFactories/medicine-rule-item-clo.factory';
+import { MedicineRuleItemCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-rule-item-clo.factory';
 
 
 @Injectable()
