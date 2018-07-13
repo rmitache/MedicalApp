@@ -22,6 +22,9 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { HeaderBarComponent } from './HeaderBar/header-bar.component';
 import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
+import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
+import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
+import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 
 @NgModule({
     imports: [
@@ -37,19 +40,24 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
         ChipsModule,
         ChartModule,
         TabViewModule,
+        TabsModule
     ],
     declarations: [
         IconButtonComponent,
+        SplitButtonComponent,
         KeysPipe,
         EnumKeysPipe,
         IFRPGroupElemComponent,
         IFRPGroupListComponent,
         NavigationPanelComponent,
         HeaderBarComponent,
-        FilterListPanelComponent
+        FilterListPanelComponent,
+        
+         
     ],
     exports: [
         IconButtonComponent,
+        SplitButtonComponent,
         KeysPipe,
         EnumKeysPipe,
         IFRPGroupElemComponent,
@@ -64,6 +72,7 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
         HeaderBarComponent,
         FilterListPanelComponent,
         TabViewModule,
+        TabsModule
     ]
 })
 export class SharedModule { }

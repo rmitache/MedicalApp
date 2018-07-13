@@ -10,7 +10,9 @@
     <div class="body">
         <div id="medicine-type-elems-list">
             <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.AvailableMedicineTypes">
-                {{medicineType.Name}}
+                
+                <span>{{medicineType.Name}}</span>
+                <split-button></split-button>
             </div>
             <!--<plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"
                        [PlanCLO]="plan"

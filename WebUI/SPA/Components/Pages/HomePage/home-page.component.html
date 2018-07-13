@@ -5,16 +5,19 @@
     <schedule></schedule>
     <div class="right-side-panel">
 
-        
-        <p-tabView>
-            <p-tabPanel header="Inventory">
-                <medicine-types-overview></medicine-types-overview>
-            </p-tabPanel>
-            <p-tabPanel header="Plans">
-                <plans-overview></plans-overview>
-            </p-tabPanel>
+        <tabs>
+            <tab-panel [tabTitle]="'Tab 1'">Tab 1 Content</tab-panel>
+            <tab-panel [tabTitle]="'Tab 2'">Tab 2 Content</tab-panel>
+        </tabs>
+        <!--<p-tabView>
+        <p-tabPanel header="Inventory">
+            <medicine-types-overview></medicine-types-overview>
+        </p-tabPanel>
+        <p-tabPanel header="Plans">
+            <plans-overview></plans-overview>
+        </p-tabPanel>
 
-        </p-tabView>
+    </p-tabView>-->
 
     </div>
     <health-graph></health-graph>

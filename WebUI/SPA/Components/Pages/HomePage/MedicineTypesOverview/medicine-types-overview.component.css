@@ -55,8 +55,13 @@
 
 .medicine-type-elem {
     float: left;
-    width: calc(100% - 30px);
-    margin-top:10px;
+    width: calc(100% - 50px);
+    margin-top: 10px;
+    background-color: #eaeaea;
+    padding: 10px;
+    border-radius: 3px;
+    font-size:10px;
+    font-family:Arial;
 }
     .medicine-type-elem:first-of-type {
         margin-top: 0;

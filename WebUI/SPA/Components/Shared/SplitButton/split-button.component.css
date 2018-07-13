@@ -1,0 +1,27 @@
+.frame {
+    width: 16px;
+    height: 16px;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #e8e8ec;
+    cursor: pointer;
+
+    box-sizing:content-box !important;
+    border:solid 1px gray;
+    
+}
+
+    .frame:hover {
+        background-color: #dddddd;
+    }
+
+    .frame img {
+        margin: 0;
+        padding: 0;
+        float: left;
+    }
+
+.menu-div{
+
+}
+
