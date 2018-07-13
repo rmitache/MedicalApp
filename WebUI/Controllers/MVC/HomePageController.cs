@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using BLL.DomainModel.Factors.Medicine.Library.Services;
-using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.Services;
@@ -18,6 +16,7 @@ using BLL.DomainModel.Indicators.Symptoms.Library.Services;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using BLL.DomainModel.Factors.Medicine.BLOs;
 
 namespace WebUI.Controllers
 {

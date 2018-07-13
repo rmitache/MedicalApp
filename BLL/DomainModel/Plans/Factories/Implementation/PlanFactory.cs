@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
 using BLL.DomainModel.Plans.BLOs;
 
 namespace BLL.DomainModel.Plans.Factories

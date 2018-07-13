@@ -1,8 +1,7 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Enums;
+﻿using BLL.DomainModel.Factors.Medicine.Enums;
 using BLL.DomainModel.General.Enums;
 
-namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
+namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
     public  class MedicineType
     {

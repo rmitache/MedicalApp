@@ -1,8 +1,5 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.Library.Factories;
-using DataAccessLayer.Repositories.MedicineTypeRepository;
 using DataAccessLayer.Repositories.SymptomTypeRepository;
 using System.Collections.Generic;
 using System.Linq;

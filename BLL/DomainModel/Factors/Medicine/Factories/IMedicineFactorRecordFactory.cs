@@ -1,4 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
+﻿using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Plans.BLOs;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Factors.Medicine.History.Factories
+namespace BLL.DomainModel.Factors.Medicine.Factories
 {
     public interface IMedicineFactorRecordFactory
     {

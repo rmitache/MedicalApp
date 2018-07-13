@@ -1,8 +1,6 @@
-﻿using BLL.DomainModel.General.Enums;
-using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
 
 namespace BLL.DomainModel.Indicators.Symptoms.Library.Factories

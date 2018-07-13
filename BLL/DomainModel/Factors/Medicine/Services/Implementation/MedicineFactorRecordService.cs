@@ -1,6 +1,5 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.History.Factories;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
+﻿using BLL.DomainModel.Factors.Medicine.BLOs;
+using BLL.DomainModel.Factors.Medicine.Factories;
 using BLL.DomainModel.Plans.Services;
 using Common.Datastructures;
 using DataAccessLayer.Entities;

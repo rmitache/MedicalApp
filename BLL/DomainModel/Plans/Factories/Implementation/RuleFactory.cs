@@ -1,11 +1,10 @@
 ﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
 using BLL.DomainModel.Plans.BLOs;
-using BLL.DomainModel.Factors.Medicine.History.Factories;
 using BLL.DomainModel.Plans.Enums;
 using Common.Datastructures;
+using BLL.DomainModel.Factors.Medicine.Factories;
 
 namespace BLL.DomainModel.Plans.Factories
 {

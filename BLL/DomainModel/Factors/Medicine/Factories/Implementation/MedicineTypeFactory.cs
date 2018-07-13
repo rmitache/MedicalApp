@@ -2,9 +2,9 @@
 using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
+using BLL.DomainModel.Factors.Medicine.BLOs;
 
-namespace BLL.DomainModel.Factors.Medicine.Library.Factories
+namespace BLL.DomainModel.Factors.Medicine.Factories
 {
     public class MedicineTypeFactory : IMedicineTypeFactory
     {

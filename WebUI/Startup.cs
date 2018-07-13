@@ -77,7 +77,7 @@ namespace WebUI
 
 
             // BLL
-            Assembly bllAssembly = typeof(BLL.DomainModel.Factors.Medicine.History.BLOs.MedicineFactorRecord).Assembly;
+            Assembly bllAssembly = typeof(BLL.DomainModel.Factors.Medicine.BLOs.MedicineFactorRecord).Assembly;
             containerBuilder.RegisterAssemblyTypes(bllAssembly)
                 .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Factory"))
                 .AsImplementedInterfaces()

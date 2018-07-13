@@ -1,5 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Plans.BLOs;
+﻿using BLL.DomainModel.Plans.BLOs;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using System;

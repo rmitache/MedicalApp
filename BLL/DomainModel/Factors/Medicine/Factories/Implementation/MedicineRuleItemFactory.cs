@@ -2,11 +2,10 @@
 using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
-using BLL.DomainModel.Factors.Medicine.Library.Enums;
+using BLL.DomainModel.Factors.Medicine.BLOs;
+using BLL.DomainModel.Factors.Medicine.Enums;
 
-namespace BLL.DomainModel.Factors.Medicine.History.Factories
+namespace BLL.DomainModel.Factors.Medicine.Factories
 {
     public class MedicineRuleItemFactory : IMedicineRuleItemFactory
     {

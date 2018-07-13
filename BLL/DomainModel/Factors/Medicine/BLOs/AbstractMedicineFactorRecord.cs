@@ -1,11 +1,10 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Enums;
+﻿using BLL.DomainModel.Factors.Medicine.Enums;
 using BLL.DomainModel.General.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Factors.Medicine.History.BLOs
+namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
     public abstract class AbstractMedicineFactorRecord
     {

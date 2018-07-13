@@ -1,4 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
+﻿using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Plans.Enums;
 using Common.Datastructures;
 using System.Collections.Generic;

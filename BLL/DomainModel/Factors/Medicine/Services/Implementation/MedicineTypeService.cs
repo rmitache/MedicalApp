@@ -1,5 +1,5 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
+﻿using BLL.DomainModel.Factors.Medicine.BLOs;
+using BLL.DomainModel.Factors.Medicine.Factories;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using System.Collections.Generic;
 using System.Linq;

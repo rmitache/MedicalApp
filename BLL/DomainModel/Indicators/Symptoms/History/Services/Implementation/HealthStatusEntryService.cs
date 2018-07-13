@@ -1,12 +1,8 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.History.Factories;
-using BLL.DomainModel.Factors.Medicine.Library.Factories;
+﻿
 using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.History.Factories;
-using BLL.DomainModel.Plans.Services;
 using Common.Datastructures;
 using DataAccessLayer.Repositories.HealthStatusEntryRepository;
-using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Plans.BLOs;
+﻿using BLL.DomainModel.Factors.Medicine.BLOs;
 using Moq;
 using System;
 using System.Collections.Generic;

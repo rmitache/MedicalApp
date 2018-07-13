@@ -1,5 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.History.BLOs;
-using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
 using Common.Datastructures;
 using System;
 using System.Collections.Generic;

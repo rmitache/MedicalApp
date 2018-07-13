@@ -1,5 +1,4 @@
-﻿using BLL.DomainModel.Factors.Medicine.Library.BLOs;
-using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
 using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;

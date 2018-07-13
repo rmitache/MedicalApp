@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Factors.Medicine.Library.Enums
+namespace BLL.DomainModel.Factors.Medicine.Enums
 {
     public enum Instruction
     {
