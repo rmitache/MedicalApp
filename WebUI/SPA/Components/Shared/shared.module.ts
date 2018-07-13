@@ -10,7 +10,6 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
 import { ChipsModule } from 'primeng/primeng';
 import { ChartModule } from 'primeng/primeng';
-import { TabViewModule } from 'primeng/primeng';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -39,7 +38,6 @@ import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
         SplitButtonModule,
         ChipsModule,
         ChartModule,
-        TabViewModule,
         TabsModule
     ],
     declarations: [
@@ -71,7 +69,6 @@ import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
         ProgressSpinnerModule,
         HeaderBarComponent,
         FilterListPanelComponent,
-        TabViewModule,
         TabsModule
     ]
 })
