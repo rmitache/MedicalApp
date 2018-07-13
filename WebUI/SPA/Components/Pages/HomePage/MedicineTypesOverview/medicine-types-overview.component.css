@@ -30,7 +30,7 @@
                 margin-left: 5px;
                 margin-top: 2px;
             }
-        
+
 
         .frame .header .right-section {
             float: right;
@@ -41,7 +41,6 @@
         height: calc(100% - 51px);
         width: calc(100% - 18px);
         padding: 5px 0px 5px 18px;
-
     }
 
 
@@ -55,14 +54,23 @@
 
 .medicine-type-elem {
     float: left;
-    width: calc(100% - 50px);
+    width: calc(100% - 30px);
     margin-top: 10px;
     background-color: #eaeaea;
     padding: 10px;
+    height:40px;
     border-radius: 3px;
-    font-size:10px;
-    font-family:Arial;
+    
 }
+
     .medicine-type-elem:first-of-type {
         margin-top: 0;
+    }
+
+    .medicine-type-elem span {
+        float: left;
+    }
+
+    .medicine-type-elem .split-button {
+        float: right;
     }

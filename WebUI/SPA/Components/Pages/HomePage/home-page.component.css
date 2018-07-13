@@ -45,6 +45,3 @@
 
 
 
-.right-side-panel /deep/ .ui-widget * {
-    box-sizing: content-box !important;
-}

@@ -8,6 +8,4 @@ export interface IMedicineFactorRecord {
     UnitDoseQuantifier: number;
     UnitDoseSize: number;
     UnitDoseUoM: Enums.UnitOfMeasure;
-    Instruction: Enums.Instruction;
-    AdministrationMethod: Enums.AdministrationMethod;
 }

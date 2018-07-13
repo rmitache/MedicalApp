@@ -55,10 +55,6 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.AdministrationMethodId).HasColumnName("administration_method_id");
-
-                entity.Property(e => e.InstructionId).HasColumnName("instruction_id");
-
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 
                 entity.Property(e => e.OccurrenceDateTime)
@@ -145,10 +141,6 @@ namespace DataAccessLayer.Entities
                 entity.ToTable("t_plan_medicine_rule_item");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.AdministrationMethodId).HasColumnName("administration_method_id");
-
-                entity.Property(e => e.InstructionId).HasColumnName("instruction_id");
 
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 

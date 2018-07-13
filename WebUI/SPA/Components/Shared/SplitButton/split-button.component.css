@@ -3,16 +3,12 @@
     height: 16px;
     padding: 5px;
     border-radius: 4px;
-    background-color: #e8e8ec;
+    background-color: #2399e5;
     cursor: pointer;
-
-    box-sizing:content-box !important;
-    border:solid 1px gray;
-    
 }
 
     .frame:hover {
-        background-color: #dddddd;
+        background-color: #73c0f1;
     }
 
     .frame img {

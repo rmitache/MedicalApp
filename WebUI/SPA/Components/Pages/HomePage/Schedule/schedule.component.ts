@@ -313,8 +313,6 @@ class DayDisplayMode implements IDisplayMode {
     private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
         // Verifies whether two FactorRecords are conflatable
         var areEquivalent: boolean =
-            (firstFactorRecord.AdministrationMethod === secondFactorRecord.AdministrationMethod) &&
-            (firstFactorRecord.Instruction === secondFactorRecord.Instruction) &&
             (firstFactorRecord.MedicineType.ID === secondFactorRecord.MedicineType.ID) &&
             (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName) &&
             (firstFactorRecord.UnitDoseSize === secondFactorRecord.UnitDoseSize) &&

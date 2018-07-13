@@ -13,8 +13,6 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         public int UnitDoseQuantifier;
         public int? UnitDoseSize;
         public UnitOfMeasure UnitDoseUoM;
-        public Instruction Instruction;
-        public AdministrationMethod AdministrationMethod;
     }
 }
 

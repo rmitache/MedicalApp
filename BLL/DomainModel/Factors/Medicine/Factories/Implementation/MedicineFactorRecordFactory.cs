@@ -99,7 +99,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.UnitDoseType = ruleItem.UnitDoseType;
             blo.UnitDoseSize = ruleItem.UnitDoseSize;
             blo.UnitDoseUoM = ruleItem.UnitDoseUoM;
-            blo.Instruction = ruleItem.Instruction;
 
             blo.ParentPlanName = parentPlan.Name;
             blo.ParentPlanID = parentPlan.ID;
@@ -128,8 +127,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dataEntity.UnitDoseSize = blo.UnitDoseSize;
             dataEntity.UnitDoseUomId = (int)blo.UnitDoseUoM;
 
-            dataEntity.InstructionId = (int)blo.Instruction;
-            dataEntity.AdministrationMethodId = (int)blo.AdministrationMethod;
             return dataEntity;
         }
         public List<TMedicineFactorRecord> Convert_ToDataEntitiesList(List<MedicineFactorRecord> blos, int userID)
@@ -150,7 +147,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
             blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
 
-            blo.Instruction = (Instruction)dataEntity.InstructionId;
 
 
             return blo;

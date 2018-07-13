@@ -13,14 +13,11 @@ export class MedicineFactorRecordCLO extends BaseCLO implements CLOs.IMedicineFa
     public OccurrenceDateTime: Date;
     public Type: Enums.FactorRecordType;
     
-
     public MedicineType: CLOs.MedicineTypeCLO;
     public UnitDoseType: Enums.UnitDoseType;
     public UnitDoseQuantifier: number;
     public UnitDoseSize: number;
     public UnitDoseUoM: Enums.UnitOfMeasure;
-    public Instruction: Enums.Instruction;
-    public AdministrationMethod: Enums.AdministrationMethod;
 
     public ParentPlanName: string;
     public ParentPlanID: number;

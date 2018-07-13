@@ -12,8 +12,6 @@ namespace DataAccessLayer.Entities
         public int UnitDoseQuantifier { get; set; }
         public int? UnitDoseSize { get; set; }
         public int? UnitDoseUomId { get; set; }
-        public int? InstructionId { get; set; }
-        public int? AdministrationMethodId { get; set; }
 
         public TMedicineType MedicineType { get; set; }
         public TPlanRule PlanRule { get; set; }

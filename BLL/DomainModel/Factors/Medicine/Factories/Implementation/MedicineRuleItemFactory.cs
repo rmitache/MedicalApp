@@ -29,8 +29,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
             dataEntity.UnitDoseSize = blo.UnitDoseSize;
             dataEntity.UnitDoseUomId = (int) blo.UnitDoseUoM;
-            dataEntity.InstructionId = (int)blo.Instruction;
-            dataEntity.AdministrationMethodId = (int)blo.AdministrationMethod;
 
             return dataEntity;
         }
@@ -48,7 +46,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
             blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
             blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
-            blo.Instruction = (Instruction)dataEntity.InstructionId;
 
 
             return blo;

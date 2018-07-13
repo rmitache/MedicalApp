@@ -26,9 +26,6 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         newCLO.UnitDoseSize = blo['UnitDoseSize'];
         newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
 
-        newCLO.Instruction = blo['Instruction'];
-        newCLO.AdministrationMethod = blo['AdministrationMethod'];
-        
 
         return newCLO;
     }
@@ -36,14 +33,11 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         let newCLO = new CLOs.MedicineRuleItemCLO();
         newCLO.ID = 0;
         newCLO.MedicineType = null;
-
         newCLO.UnitDoseType = null;
         newCLO.UnitDoseQuantifier = null;
         newCLO.UnitDoseSize = null;
         newCLO.UnitDoseUoM = null;
 
-        newCLO.Instruction = Enums.Instruction.Unspecified;
-        newCLO.AdministrationMethod = Enums.AdministrationMethod.Unspecified;
 
         return newCLO;
     }
@@ -66,8 +60,6 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         newCLO.UnitDoseSize = clo.UnitDoseSize;
         newCLO.UnitDoseUoM = clo.UnitDoseUoM;
 
-        newCLO.Instruction = clo.Instruction;
-        newCLO.AdministrationMethod = clo.AdministrationMethod;
 
         return newCLO;
     }

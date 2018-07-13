@@ -28,8 +28,6 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
         newCLO.UnitDoseSize = blo['UnitDoseSize'];
         newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
-        newCLO.Instruction = blo['Instruction'];
-        newCLO.AdministrationMethod = blo['AdministrationMethod'];
 
         newCLO.ParentPlanName = blo['ParentPlanName'];
         newCLO.ParentPlanID = blo['ParentPlanID'];
@@ -51,9 +49,6 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.UnitDoseSize = null;
         newCLO.UnitDoseUoM = null;
         
-        newCLO.Instruction = Enums.Instruction.Unspecified;
-        newCLO.AdministrationMethod = Enums.AdministrationMethod.Unspecified;
-
         newCLO.ParentPlanID = null;
         newCLO.RecentlyAdded = null;
         newCLO.Taken = false;

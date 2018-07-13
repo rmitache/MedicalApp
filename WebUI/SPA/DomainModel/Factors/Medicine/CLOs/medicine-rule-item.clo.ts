@@ -11,8 +11,6 @@ export class MedicineRuleItemCLO extends BaseCLO implements CLOs.IMedicineFactor
     public UnitDoseQuantifier: number;
     public UnitDoseSize: number;
     public UnitDoseUoM: Enums.UnitOfMeasure;
-    public Instruction: Enums.Instruction;
-    public AdministrationMethod: Enums.AdministrationMethod;
 
 
     // Properties
