@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,9 +17,12 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         }
 
         // Public methods
-        public List<TMedicineType> GetAllMedicineTypes()
+        public List<TMedicineType> GetAllMedicineTypes(int userID)
         {
-            return entitiesContext.TMedicineType.Select(medicineType => medicineType).ToList();
+            return entitiesContext.TMedicineType
+                .AsNoTracking()
+                .Where(medicineType =>
+                        medicineType.UserId == userID).ToList();
         }
     }
 }

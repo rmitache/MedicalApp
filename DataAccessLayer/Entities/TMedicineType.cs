@@ -13,6 +13,7 @@ namespace DataAccessLayer.Entities
         }
 
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string ProducerName { get; set; }
         public int BaseFormId { get; set; }
@@ -20,6 +21,7 @@ namespace DataAccessLayer.Entities
         public int? PackagedUnitDoseSize { get; set; }
         public int? PackagedUnitDoseUomId { get; set; }
 
+        public TUser User { get; set; }
         public ICollection<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public ICollection<TPlanMedicineRuleItem> TPlanMedicineRuleItem { get; set; }
         public ICollection<TTakenMedicineFactorRecord> TTakenMedicineFactorRecord { get; set; }

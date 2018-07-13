@@ -107,7 +107,7 @@ namespace WebUI.Controllers
             
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
-            var medicineTypes = medicineTypeService.GetAllMedicineTypes();
+            var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID);
             var plans = planService.GetPlans(loggedInUser.ID, true);
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, loggedInUser.ID, true);

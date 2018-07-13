@@ -20,9 +20,9 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
 
         // Public methods
-        public List<MedicineType> GetAllMedicineTypes()
+        public List<MedicineType> GetAllMedicineTypes(int userID)
         {
-            var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes();
+            var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID);
             var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities);
 
             // Sort alphabetically

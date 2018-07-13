@@ -9,6 +9,6 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 {
     public interface IMedicineTypeRepository
     {
-        List<TMedicineType> GetAllMedicineTypes();
+        List<TMedicineType> GetAllMedicineTypes(int userID);
     }
 }

@@ -9,6 +9,7 @@ namespace DataAccessLayer.Entities
         {
             THealthStatusEntry = new HashSet<THealthStatusEntry>();
             TMedicineFactorRecord = new HashSet<TMedicineFactorRecord>();
+            TMedicineType = new HashSet<TMedicineType>();
             TPlan = new HashSet<TPlan>();
         }
 
@@ -21,6 +22,7 @@ namespace DataAccessLayer.Entities
 
         public ICollection<THealthStatusEntry> THealthStatusEntry { get; set; }
         public ICollection<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
+        public ICollection<TMedicineType> TMedicineType { get; set; }
         public ICollection<TPlan> TPlan { get; set; }
     }
 }

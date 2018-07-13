@@ -7,6 +7,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 {
     public interface IMedicineTypeService
     {
-        List<MedicineType> GetAllMedicineTypes();
+        List<MedicineType> GetAllMedicineTypes(int userID);
     }
 }
