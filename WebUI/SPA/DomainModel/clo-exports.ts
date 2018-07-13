@@ -2,7 +2,6 @@
 export * from './Users/CLOs/user-account.clo';
 
 // Factors - Medicine - Library
-export * from './Factors/Medicine/Library/CLOs/medicine-category.clo';
 export * from './Factors/Medicine/Library/CLOs/medicine-type.clo';
 // Factors - Medicine - History
 export * from './Factors/Medicine/History/CLOs/medicine-rule-item.clo';

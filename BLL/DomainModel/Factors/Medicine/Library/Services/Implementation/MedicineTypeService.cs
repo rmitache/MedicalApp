@@ -2,6 +2,7 @@
 using BLL.DomainModel.Factors.Medicine.Library.Factories;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL.DomainModel.Factors.Medicine.Library.Services
 {
@@ -23,8 +24,12 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         {
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes();
             var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities);
-            
-            return blos;
+
+            // Sort alphabetically
+            var sortedBLOs = blos.OrderBy(medicineType => medicineType.Name).ToList();
+
+
+            return sortedBLOs;
         }
     }
 }

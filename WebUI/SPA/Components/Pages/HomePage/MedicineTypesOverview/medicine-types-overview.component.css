@@ -45,7 +45,7 @@
     }
 
 
-#plan-elems-list {
+#medicine-type-elems-list {
     width: calc(100%);
     margin-top: 12px;
     height: calc(100% - 45px);
@@ -53,11 +53,11 @@
 }
 
 
-.plan-elem {
+.medicine-type-elem {
     float: left;
     width: calc(100% - 30px);
     margin-top:10px;
 }
-.plan-elem:first-of-type {
-    margin-top: 0;
-}
+    .medicine-type-elem:first-of-type {
+        margin-top: 0;
+    }

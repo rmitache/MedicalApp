@@ -10,6 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SplitButtonModule } from 'primeng/primeng';
 import { ChipsModule } from 'primeng/primeng';
 import { ChartModule } from 'primeng/primeng';
+import { TabViewModule } from 'primeng/primeng';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -35,6 +36,7 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
         SplitButtonModule,
         ChipsModule,
         ChartModule,
+        TabViewModule,
     ],
     declarations: [
         IconButtonComponent,
@@ -60,7 +62,8 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
         NavigationPanelComponent,
         ProgressSpinnerModule,
         HeaderBarComponent,
-        FilterListPanelComponent
+        FilterListPanelComponent,
+        TabViewModule,
     ]
 })
 export class SharedModule { }

@@ -20,10 +20,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Factories
             MedicineType blo = new MedicineType();
             blo.ID = dataEntity.Id;
             blo.Name = dataEntity.Name;
-            blo.ShortName = dataEntity.ShortName;
             blo.ProducerName = dataEntity.ProducerName;
             blo.BaseForm = (Enums.BaseForm)dataEntity.BaseFormId;
-            blo.ParentCategories = new BLOs.MedicineCategory[] { };
 
             blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.UnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.UnitDoseType?)null;
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;

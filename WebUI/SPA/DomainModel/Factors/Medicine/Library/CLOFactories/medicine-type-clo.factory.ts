@@ -18,7 +18,6 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.Name = blo['Name'];
         newCLO.ProducerName = blo['ProducerName'];
         newCLO.BaseForm = HelperFunctions.GetEnumEntryByIndex(Enums.BaseForm, parseInt(blo['BaseForm']));
-        newCLO.ParentCategories = [];
 
         newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
             HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;

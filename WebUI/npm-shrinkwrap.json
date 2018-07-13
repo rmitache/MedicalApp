@@ -158,7 +158,7 @@
     "@types/chartjs": {
       "version": "0.0.31",
       "resolved": "https://registry.npmjs.org/@types/chartjs/-/chartjs-0.0.31.tgz",
-      "integrity": "sha512-eF1AgrIO0qP9KJYwM2dTKL2pczTjiLa0hfmZdQfKiqFq5WIvFTKPn1gkgADitF5sT4byEyq4EFdMVvuPIk6zeQ==",
+      "integrity": "sha1-sWpofqrT6j5c0+lhruWijke1eUk=",
       "dev": true
     },
     "@types/jasmine": {
@@ -170,13 +170,13 @@
     "@types/jquery": {
       "version": "3.3.1",
       "resolved": "https://registry.npmjs.org/@types/jquery/-/jquery-3.3.1.tgz",
-      "integrity": "sha512-N3h+rzN518yl2xKrW0o6KKdNmWZ+OwG6SoM5TBEQFF0tTv5wXPEsoOuYQ2Kt3/89XbcSZUJLdjiT/2c3BR/ApQ==",
+      "integrity": "sha1-VXWNRNQidW1jKcv1Tm1Bkx17oo8=",
       "dev": true
     },
     "@types/node": {
       "version": "9.6.5",
       "resolved": "https://registry.npmjs.org/@types/node/-/node-9.6.5.tgz",
-      "integrity": "sha512-NOLEgsT6UiDTjnWG5Hd2Mg25LRyz/oe8ql3wbjzgSFeRzRROhPmtlsvIrei4B46UjERF0td9SZ1ZXPLOdcrBHg==",
+      "integrity": "sha1-7nAIEP30msHDmfxZgLdVmz5aOB0=",
       "dev": true
     },
     "@types/webpack-env": {
@@ -275,6 +275,11 @@
       "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz",
       "integrity": "sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=",
       "dev": true
+    },
+    "angular-tabs-component": {
+      "version": "1.0.6",
+      "resolved": "https://registry.npmjs.org/angular-tabs-component/-/angular-tabs-component-1.0.6.tgz",
+      "integrity": "sha1-UQOMKu6YB/ytVVxfoE92XVKin9g="
     },
     "angular2-router-loader": {
       "version": "0.3.5",
@@ -1055,7 +1060,7 @@
     "chart.js": {
       "version": "2.7.2",
       "resolved": "https://registry.npmjs.org/chart.js/-/chart.js-2.7.2.tgz",
-      "integrity": "sha512-90wl3V9xRZ8tnMvMlpcW+0Yg13BelsGS9P9t0ClaDxv/hdypHDr/YAGf+728m11P5ljwyB0ZHfPKCapZFqSqYA==",
+      "integrity": "sha1-PJ/eTcW5VgghG97+2n5dM9/6VxQ=",
       "requires": {
         "chartjs-color": "2.2.0",
         "moment": "2.20.1"
@@ -1080,7 +1085,7 @@
     "chartjs-color-string": {
       "version": "0.5.0",
       "resolved": "https://registry.npmjs.org/chartjs-color-string/-/chartjs-color-string-0.5.0.tgz",
-      "integrity": "sha512-amWNvCOXlOUYxZVDSa0YOab5K/lmEhbFNKI55PWc4mlv28BDzA7zaoQTGxSBgJMHIW+hGX8YUrvw/FH4LyhwSQ==",
+      "integrity": "sha1-jTdS2Fgdhmh8Nb/iy4CsUhPOuME=",
       "requires": {
         "color-name": "1.1.2"
       }
@@ -2037,7 +2042,7 @@
     "es5-ext": {
       "version": "0.10.42",
       "resolved": "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.42.tgz",
-      "integrity": "sha512-AJxO1rmPe1bDEfSR6TJ/FgMFYuTBhR5R57KW58iCkYACMyFbrkqVyzXSurYoScDGvgyMpk7uRF/lPUPPTmsRSA==",
+      "integrity": "sha1-jAfdM68E1dzRMQtc7xO+pjqJuo0=",
       "requires": {
         "es6-iterator": "2.0.3",
         "es6-symbol": "3.1.1",
@@ -3263,7 +3268,7 @@
     "jquery": {
       "version": "3.3.1",
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
-      "integrity": "sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg=="
+      "integrity": "sha1-lYzinoHJeQ8xvneS311NlfxX+8o="
     },
     "js-base64": {
       "version": "2.1.9",
@@ -4222,7 +4227,7 @@
     "parse5": {
       "version": "3.0.3",
       "resolved": "https://registry.npmjs.org/parse5/-/parse5-3.0.3.tgz",
-      "integrity": "sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==",
+      "integrity": "sha1-BC95L/3TaFFVHPTp4Gazh0q0W1w=",
       "dev": true,
       "requires": {
         "@types/node": "9.6.5"
@@ -6098,7 +6103,7 @@
     "tslib": {
       "version": "1.9.0",
       "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.9.0.tgz",
-      "integrity": "sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==",
+      "integrity": "sha1-43qG/ajLuvI6BX9HPJ9Nxk5fwug=",
       "dev": true
     },
     "tty-browserify": {

@@ -9,10 +9,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.BLOs
         // Properties
         virtual public int ID { get; set; }
         virtual public string Name { get; set; }
-        virtual public string ShortName { get; set; }
         virtual public string ProducerName { get; set; }
         virtual public BaseForm BaseForm { get; set; }
-        virtual public MedicineCategory[] ParentCategories { get; set; }
 
 
         virtual public UnitDoseType? PackagedUnitDoseType { get; set; }

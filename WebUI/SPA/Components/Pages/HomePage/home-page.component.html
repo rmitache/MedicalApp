@@ -3,10 +3,23 @@
 
 <div class="body-area">
     <schedule></schedule>
-    <plans-overview></plans-overview>
+    <div class="right-side-panel">
+
+        
+        <p-tabView>
+            <p-tabPanel header="Inventory">
+                <medicine-types-overview></medicine-types-overview>
+            </p-tabPanel>
+            <p-tabPanel header="Plans">
+                <plans-overview></plans-overview>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </div>
     <health-graph></health-graph>
 
-    <div class="test-result-list-placeholder"></div>
+
 </div>
 
 
@@ -16,5 +29,4 @@
     <img src="/Images/plus.png" />
     <img src="/Images/arrow-right.png" />
     <img src="/Images/log-out.png" />
-
 </div>

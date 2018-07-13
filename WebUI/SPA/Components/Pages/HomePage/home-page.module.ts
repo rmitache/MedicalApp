@@ -21,6 +21,7 @@ import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { IReadOnlyAppStateWithUser, IDataServiceWithLogout } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
+import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { IReadOnlyAppStateWithUser, IDataServiceWithLogout } from 'SPA/Component
         // Root components
         ScheduleModule,
         PlansOverviewModule,
+        MedicineTypesOverviewModule,
         HealthGraphModule
     ],
     providers: [

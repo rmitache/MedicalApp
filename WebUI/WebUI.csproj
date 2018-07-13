@@ -39,6 +39,7 @@
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\HealthGraph\health-graph.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\home-page-application-state.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\MedicineTypesOverview\medicine-types-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
@@ -70,7 +71,6 @@
     <None Remove="SPA\DomainModel\Factors\Medicine\History\CLOs\i-medicine-factor-record.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\History\Enums\factor-record-type.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOFactories\medicine-type-clo.factory.ts" />
-    <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-factor-record.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-form.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-instruction.enum.ts" />
@@ -136,6 +136,7 @@
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\home-page-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\MedicineTypesOverview\medicine-types-overview.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\HealthGraph\health-graph.module.ts" />
@@ -172,7 +173,6 @@
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-rule-item.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\History\CLOs\medicine-factor-record.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Library\CLOs\medicine-category.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\General\Enums\unit-of-measure.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\generic-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\clo-exports.ts" />

@@ -64,6 +64,7 @@
         "zone.js": "0.8.12"
     },
     "dependencies": {
+        "angular-tabs-component": "^1.0.6",
         "chart.js": "^2.7.2",
         "chartjs-plugin-annotation": "^0.5.7",
         "jquery": "^3.3.1",

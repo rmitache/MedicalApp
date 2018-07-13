@@ -10,12 +10,10 @@ namespace DataAccessLayer.Entities
             TMedicineFactorRecord = new HashSet<TMedicineFactorRecord>();
             TPlanMedicineRuleItem = new HashSet<TPlanMedicineRuleItem>();
             TTakenMedicineFactorRecord = new HashSet<TTakenMedicineFactorRecord>();
-            TjMedicineTypeToMedicineCategory = new HashSet<TjMedicineTypeToMedicineCategory>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; }
         public string ProducerName { get; set; }
         public int BaseFormId { get; set; }
         public int? PackagedUnitDoseTypeId { get; set; }
@@ -25,6 +23,5 @@ namespace DataAccessLayer.Entities
         public ICollection<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public ICollection<TPlanMedicineRuleItem> TPlanMedicineRuleItem { get; set; }
         public ICollection<TTakenMedicineFactorRecord> TTakenMedicineFactorRecord { get; set; }
-        public ICollection<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
     }
 }

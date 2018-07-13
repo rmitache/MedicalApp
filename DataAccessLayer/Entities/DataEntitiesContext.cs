@@ -7,8 +7,6 @@ namespace DataAccessLayer.Entities
     public partial class DataEntitiesContext : DbContext
     {
         public virtual DbSet<THealthStatusEntry> THealthStatusEntry { get; set; }
-        public virtual DbSet<TjMedicineTypeToMedicineCategory> TjMedicineTypeToMedicineCategory { get; set; }
-        public virtual DbSet<TMedicineCategory> TMedicineCategory { get; set; }
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
         public virtual DbSet<TPlan> TPlan { get; set; }
@@ -27,7 +25,6 @@ namespace DataAccessLayer.Entities
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
                 //optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-
             }
         }
 
@@ -51,42 +48,6 @@ namespace DataAccessLayer.Entities
                     .WithMany(p => p.THealthStatusEntry)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_t_general_health_entry_t_user");
-            });
-
-            modelBuilder.Entity<TjMedicineTypeToMedicineCategory>(entity =>
-            {
-                entity.ToTable("tj_medicine_type_to_medicine_category");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.MedicineCategoryId).HasColumnName("medicine_category_id");
-
-                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
-
-                entity.HasOne(d => d.MedicineCategory)
-                    .WithMany(p => p.TjMedicineTypeToMedicineCategory)
-                    .HasForeignKey(d => d.MedicineCategoryId)
-                    .HasConstraintName("FK_tj_medicine_type_to_medicine_category_t_medicine_category");
-
-                entity.HasOne(d => d.MedicineType)
-                    .WithMany(p => p.TjMedicineTypeToMedicineCategory)
-                    .HasForeignKey(d => d.MedicineTypeId)
-                    .HasConstraintName("FK_tj_medicine_type_to_medicine_category_t_medicine_type");
-            });
-
-            modelBuilder.Entity<TMedicineCategory>(entity =>
-            {
-                entity.ToTable("t_medicine_category");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TMedicineFactorRecord>(entity =>
@@ -148,10 +109,6 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.ProducerName)
                     .HasColumnName("producer_name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ShortName)
-                    .HasColumnName("short_name")
                     .HasMaxLength(50);
             });
 

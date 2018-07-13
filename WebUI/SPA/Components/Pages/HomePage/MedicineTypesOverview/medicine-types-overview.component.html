@@ -1,0 +1,23 @@
+<div class="frame">
+    <div class="header">
+        <div class="left-section">
+            <span class="header-label h1">Medicine Types</span>
+            <icon-button [IconName]="'plus'" (Clicked)="onAddNewPlanTriggered()"></icon-button>
+        </div>
+
+        
+    </div>
+    <div class="body">
+        <div id="medicine-type-elems-list">
+            <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.AvailableMedicineTypes">
+                {{medicineType.Name}}
+            </div>
+            <!--<plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"
+                       [PlanCLO]="plan"
+                       (ActionTriggered)="onPlanActionTriggered($event)"
+                       ></plan-elem>-->
+
+        </div>
+        
+    </div>
+</div> 
