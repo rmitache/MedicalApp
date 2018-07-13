@@ -1,8 +1,8 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.History.Enums;
+﻿using BLL.DomainModel.Indicators.Symptoms.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.BLOs
+namespace BLL.DomainModel.Indicators.Symptoms.BLOs
 {
     public  class HealthStatusEntry
     {

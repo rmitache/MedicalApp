@@ -1,13 +1,13 @@
 ﻿
-using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
-using BLL.DomainModel.Indicators.Symptoms.History.Factories;
+using BLL.DomainModel.Indicators.Symptoms.BLOs;
+using BLL.DomainModel.Indicators.Symptoms.Factories;
 using Common.Datastructures;
 using DataAccessLayer.Repositories.HealthStatusEntryRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.Services
+namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
     public class HealthStatusEntryService : IHealthStatusEntryService
     {

@@ -1,6 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
-using BLL.DomainModel.Indicators.Symptoms.Library.Services;
+using BLL.DomainModel.Indicators.Symptoms.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Infare.FE4.WebUI.Code.WebSecurity.Implementation;

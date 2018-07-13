@@ -1,9 +1,9 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Indicators.Symptoms.Library.Services
+namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
     public interface ISymptomTypeService
     {

@@ -1,10 +1,10 @@
 ﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
-using BLL.DomainModel.Indicators.Symptoms.History.Enums;
+using BLL.DomainModel.Indicators.Symptoms.BLOs;
+using BLL.DomainModel.Indicators.Symptoms.Enums;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
+namespace BLL.DomainModel.Indicators.Symptoms.Factories
 {
     public class HealthStatusEntryFactory : IHealthStatusEntryFactory
     {

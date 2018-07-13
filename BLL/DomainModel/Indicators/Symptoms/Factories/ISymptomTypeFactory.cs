@@ -1,10 +1,10 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Indicators.Symptoms.Library.Factories
+namespace BLL.DomainModel.Indicators.Symptoms.Factories
 {
     public interface ISymptomTypeFactory
     {

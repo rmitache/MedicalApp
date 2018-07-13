@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Indicators.Symptoms.Library.BLOs
+namespace BLL.DomainModel.Indicators.Symptoms.BLOs
 {
     public class SymptomType
     {

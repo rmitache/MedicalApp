@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="DomainModel\General\BLOs\" />
-    <Folder Include="DomainModel\Indicators\Symptoms\Library\Enums\" />
   </ItemGroup>
 
   <ItemGroup>

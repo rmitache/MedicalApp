@@ -1,9 +1,9 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using Common.Datastructures;
 using System;
 using System.Collections.Generic;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.Services
+namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
     public interface IHealthStatusEntryService
     {

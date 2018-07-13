@@ -1,11 +1,11 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.History.BLOs;
+﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using BLL.DomainModel.Plans.BLOs;
 using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.Factories
+namespace BLL.DomainModel.Indicators.Symptoms.Factories
 {
     public interface IHealthStatusEntryFactory
     {

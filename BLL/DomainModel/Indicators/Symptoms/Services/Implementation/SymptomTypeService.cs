@@ -1,10 +1,10 @@
-﻿using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
-using BLL.DomainModel.Indicators.Symptoms.Library.Factories;
+﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
+using BLL.DomainModel.Indicators.Symptoms.Factories;
 using DataAccessLayer.Repositories.SymptomTypeRepository;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL.DomainModel.Indicators.Symptoms.Library.Services
+namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
     public class SymptomTypeService: ISymptomTypeService
     {

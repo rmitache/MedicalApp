@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.DomainModel.Indicators.Symptoms.History.Enums
+namespace BLL.DomainModel.Indicators.Symptoms.Enums
 {
     public enum HealthLevel
     {

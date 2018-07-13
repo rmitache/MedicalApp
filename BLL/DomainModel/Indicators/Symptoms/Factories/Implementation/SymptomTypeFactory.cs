@@ -1,9 +1,9 @@
 ﻿using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
-using BLL.DomainModel.Indicators.Symptoms.Library.BLOs;
+using BLL.DomainModel.Indicators.Symptoms.BLOs;
 
-namespace BLL.DomainModel.Indicators.Symptoms.Library.Factories
+namespace BLL.DomainModel.Indicators.Symptoms.Factories
 {
     public class SymptomTypeFactory : ISymptomTypeFactory
     {
