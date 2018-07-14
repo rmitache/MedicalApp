@@ -2,10 +2,10 @@
 export * from './Users/CLOs/user-account.clo';
 
 // Factors - Medicine 
+export * from './Factors/Medicine/CLOs/i-medicine-factor-record.clo';
 export * from './Factors/Medicine/CLOs/medicine-type.clo';
 export * from './Factors/Medicine/CLOs/medicine-rule-item.clo';
 export * from './Factors/Medicine/CLOs/medicine-factor-record.clo';
-export * from './Factors/Medicine/CLOs/i-medicine-factor-record.clo';
 
 // Indicators - Symptoms 
 export * from './Indicators/Symptoms/CLOs/symptom-type.clo';

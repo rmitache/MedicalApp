@@ -311,13 +311,10 @@ class DayDisplayMode implements IDisplayMode {
 
     // Private methods
     private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
-        // Verifies whether two FactorRecords are conflatable
+        // Verifies whether two FactorRecords are conflatable (all fields except the quantifiers, which are expected to perhaps be different)
         var areEquivalent: boolean =
             (firstFactorRecord.MedicineType.ID === secondFactorRecord.MedicineType.ID) &&
-            (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName) &&
-            (firstFactorRecord.UnitDoseSize === secondFactorRecord.UnitDoseSize) &&
-            (firstFactorRecord.UnitDoseType === secondFactorRecord.UnitDoseType) &&
-            (firstFactorRecord.UnitDoseUoM === secondFactorRecord.UnitDoseUoM);
+            (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName);
 
         return areEquivalent;
     }
@@ -445,7 +442,7 @@ export class TimeGroupRepresentation {
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
 
         let record = factorRecordCLO;
-        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + Enums.UnitDoseType[record.UnitDoseType]
-            + ' (' + record.UnitDoseSize + ' ' + Enums.UnitOfMeasure[record.UnitDoseUoM] + ')';
+        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.ActualUnitDoseTypeName
+            + ' (' + record.ActualUnitDoseSize + ' ' + record.ActualUnitOfMeasureName + ')';
     }
 }

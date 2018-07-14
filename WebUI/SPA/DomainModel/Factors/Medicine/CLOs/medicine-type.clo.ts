@@ -8,11 +8,12 @@ export class MedicineTypeCLO extends BaseCLO {
     public ID: number;
     public Name: string;
     public ProducerName: string;
-    public BaseForm: Enums.BaseForm;
 
-    public PackagedUnitDoseType?: Enums.UnitDoseType;
+
+    public BaseUnitOfMeasure: Enums.UnitOfMeasure;
+    public IsPackagedIntoUnits: boolean;
+    public PackagedUnitDoseType: Enums.PackagedUnitDoseType;
     public PackagedUnitDoseSize: number;
-    public PackagedUnitDoseUoM: Enums.UnitOfMeasure;
 
 
 
@@ -20,13 +21,5 @@ export class MedicineTypeCLO extends BaseCLO {
     constructor(init?: Partial<MedicineTypeCLO>) {
         super();
         Object.assign(this, init);
-    }
-
-    // Public methods
-    public IsPackagedIntoUnitDoses(): boolean {
-        let isPackaged = (this.PackagedUnitDoseType !== null &&
-            this.PackagedUnitDoseSize !== null &&
-            this.PackagedUnitDoseUoM !== null);
-        return isPackaged;
     }
 }

@@ -17,14 +17,18 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.ID = blo['ID'];
         newCLO.Name = blo['Name'];
         newCLO.ProducerName = blo['ProducerName'];
-        newCLO.BaseForm = HelperFunctions.GetEnumEntryByIndex(Enums.BaseForm, parseInt(blo['BaseForm']));
 
-        newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
-            HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;
-        newCLO.PackagedUnitDoseSize = (blo['PackagedUnitDoseSize'] !== null) ?
-            parseInt(blo['PackagedUnitDoseSize']) : null;
-        newCLO.PackagedUnitDoseUoM = (blo['PackagedUnitDoseUoM'] !== null) ?
-            HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM'])) : null;
+        newCLO.BaseUnitOfMeasure = blo['BaseUnitOfMeasure'];
+        newCLO.IsPackagedIntoUnits = blo['IsPackagedIntoUnits'];
+        newCLO.PackagedUnitDoseType = blo['PackagedUnitDoseType'];
+        newCLO.PackagedUnitDoseSize = blo['PackagedUnitDoseSize'];
+
+        //newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
+        //    HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;
+        //newCLO.PackagedUnitDoseSize = (blo['PackagedUnitDoseSize'] !== null) ?
+        //    parseInt(blo['PackagedUnitDoseSize']) : null;
+        //newCLO.PackagedUnitDoseUoM = (blo['PackagedUnitDoseUoM'] !== null) ?
+        //    HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM'])) : null;
 
 
 

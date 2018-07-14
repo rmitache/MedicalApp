@@ -28,7 +28,7 @@ export class IFRPGroupListComponent {
     @Input('AvailableMedicineTypes')
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     @Input('IFRPGroupCLOs')
-    private readonly iFRPGroupCLOs: CLOs.IMedicineFactorRecord[];
+    private readonly iFRPGroupCLOs: CLOs.IMedicineFactorRecordCLO[];
     private readonly searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.ToArray().find(clo => {

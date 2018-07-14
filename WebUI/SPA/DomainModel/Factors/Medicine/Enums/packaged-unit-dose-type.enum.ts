@@ -1,5 +1,5 @@
 ﻿
-export enum UnitDoseType {
+export enum PackagedUnitDoseType {
 
     // Packaged
     Pills = 0,

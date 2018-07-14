@@ -1,8 +1,8 @@
 ﻿
 // Medicine  
 export * from './Factors/Medicine/Enums/factor-record-type.enum';
-export * from './Factors/Medicine/Enums/base-form.enum';
-export * from './Factors/Medicine/Enums/unit-dose-type.enum';
+export * from './Factors/Medicine/Enums/packaged-unit-dose-type.enum';
+export * from './Factors/Medicine/Enums/user-defined-unit-dose-type.enum';
 
 // Symptoms - Library
 export * from './Indicators/Symptoms/Enums/symptom-intensity-level.enum';
