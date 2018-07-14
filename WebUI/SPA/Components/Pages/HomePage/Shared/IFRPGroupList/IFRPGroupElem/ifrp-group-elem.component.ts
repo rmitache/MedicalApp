@@ -29,7 +29,6 @@ export class IFRPGroupElemComponent {
     
     private readonly unitDoseTypesEnum = Enums.UnitDoseType;
     private readonly unitsOfMeasureEnum = Enums.UnitOfMeasure;
-    private readonly medicineInstructionsEnum = Enums.Instruction;
 
     private readonly viewModel: ViewModel = {
         IFRPGroupCLO: null,

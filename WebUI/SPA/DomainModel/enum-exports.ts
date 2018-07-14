@@ -1,8 +1,6 @@
 ﻿
 // Medicine  
 export * from './Factors/Medicine/Enums/factor-record-type.enum';
-export * from './Factors/Medicine/Enums/administration-method.enum';
-export * from './Factors/Medicine/Enums/instruction.enum';
 export * from './Factors/Medicine/Enums/base-form.enum';
 export * from './Factors/Medicine/Enums/unit-dose-type.enum';
 
