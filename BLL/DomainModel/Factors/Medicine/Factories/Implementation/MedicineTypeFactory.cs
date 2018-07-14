@@ -23,7 +23,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.ProducerName = dataEntity.ProducerName;
 
             blo.BaseUnitOfMeasure = (UnitOfMeasure)dataEntity.BaseUnitOfMeasureId;
-
+            blo.IsPackagedIntoUnits = dataEntity.IsPackagedIntoUnits;
             blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.PackagedUnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.PackagedUnitDoseType?)null;
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
             return blo;

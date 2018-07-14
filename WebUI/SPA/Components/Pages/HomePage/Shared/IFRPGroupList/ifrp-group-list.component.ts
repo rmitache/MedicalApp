@@ -117,7 +117,7 @@ export class IFRPGroupListComponent {
         }, 1);
         
     }
-    private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.IMedicineFactorRecord) {
+    private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.IMedicineFactorRecordCLO) {
 
         const index: number = this.viewModel.IFRPGroupCLOs.indexOf(iFRPGroupCLO);
 
@@ -133,7 +133,7 @@ export class IFRPGroupListComponent {
 
 
 interface ViewModel {
-    IFRPGroupCLOs: CLOs.IMedicineFactorRecord[];
+    IFRPGroupCLOs: CLOs.IMedicineFactorRecordCLO[];
 }
 
 export interface IMedicineTypesSearchService {

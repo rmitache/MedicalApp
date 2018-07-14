@@ -9,6 +9,9 @@ import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
 
 
 export interface IMedicineFactorRecordCLO {
+    MedicineType: CLOs.MedicineTypeCLO;
+
+
     UnitDoseQuantifier: number;
     HasUserDefinedUnitDose: boolean;
     UserDefinedUnitDoseType: Enums.UserDefinedUnitDoseType;

@@ -24,7 +24,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
 
         public int UnitDoseQuantifier { get; set; }
         virtual public bool HasUserDefinedUnitDose { get; set; }
-        virtual public UserDefinedUnitDoseType UserDefinedUnitDoseType { get; set; }
+        virtual public UserDefinedUnitDoseType? UserDefinedUnitDoseType { get; set; }
         virtual public int? UserDefinedUnitDoseSize { get; set; }
 
 

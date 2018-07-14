@@ -146,7 +146,7 @@ export class IFRPGroupElemComponent {
 }
 
 interface ViewModel {
-    IFRPGroupCLO: CLOs.IMedicineFactorRecord;
+    IFRPGroupCLO: CLOs.IMedicineFactorRecordCLO;
     MedicineTypeSearchResults: string[];
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;
