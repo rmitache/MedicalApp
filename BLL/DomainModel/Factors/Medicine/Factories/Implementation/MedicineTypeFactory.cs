@@ -21,11 +21,11 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.ID = dataEntity.Id;
             blo.Name = dataEntity.Name;
             blo.ProducerName = dataEntity.ProducerName;
-            blo.BaseForm = (Enums.BaseForm)dataEntity.BaseFormId;
 
-            blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.UnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.UnitDoseType?)null;
+            blo.BaseUnitOfMeasure = (UnitOfMeasure)dataEntity.BaseUnitOfMeasureId;
+
+            blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.PackagedUnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.PackagedUnitDoseType?)null;
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
-            blo.PackagedUnitDoseUoM = (dataEntity.PackagedUnitDoseUomId != null) ? (UnitOfMeasure)dataEntity.PackagedUnitDoseUomId : (UnitOfMeasure?)null;
             return blo;
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities)

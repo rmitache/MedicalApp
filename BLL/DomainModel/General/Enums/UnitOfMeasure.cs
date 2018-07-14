@@ -2,7 +2,7 @@
 {
     public enum UnitOfMeasure
     {
-        Unspecified = 0,
+        Milliliters = 0,
         Milligrams = 1,
         IU = 2,
         Units = 3

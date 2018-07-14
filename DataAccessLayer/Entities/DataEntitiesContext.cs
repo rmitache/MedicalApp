@@ -55,6 +55,8 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.HasUserDefinedUnitDose).HasColumnName("has_user_defined_unit_dose");
+
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 
                 entity.Property(e => e.OccurrenceDateTime)
@@ -63,11 +65,9 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
 
-                entity.Property(e => e.UnitDoseSize).HasColumnName("unit_dose_size");
+                entity.Property(e => e.UserDefinedUnitDoseSize).HasColumnName("user_defined_unit_dose_size");
 
-                entity.Property(e => e.UnitDoseTypeId).HasColumnName("unit_dose_type_id");
-
-                entity.Property(e => e.UnitDoseUomId).HasColumnName("unit_dose_uom_id");
+                entity.Property(e => e.UserDefinedUnitDoseTypeId).HasColumnName("user_defined_unit_dose_type_id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -89,7 +89,9 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.BaseFormId).HasColumnName("base_form_id");
+                entity.Property(e => e.BaseUnitOfMeasureId).HasColumnName("base_unit_of_measure_id");
+
+                entity.Property(e => e.IsPackagedIntoUnits).HasColumnName("is_packaged_into_units");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -99,8 +101,6 @@ namespace DataAccessLayer.Entities
                 entity.Property(e => e.PackagedUnitDoseSize).HasColumnName("packaged_unit_dose_size");
 
                 entity.Property(e => e.PackagedUnitDoseTypeId).HasColumnName("packaged_unit_dose_type_id");
-
-                entity.Property(e => e.PackagedUnitDoseUomId).HasColumnName("packaged_unit_dose_uom_id");
 
                 entity.Property(e => e.ProducerName)
                     .HasColumnName("producer_name")
@@ -142,17 +142,17 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.HasUserDefinedUnitDose).HasColumnName("has_user_defined_unit_dose");
+
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 
                 entity.Property(e => e.PlanRuleId).HasColumnName("plan_rule_id");
 
                 entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
 
-                entity.Property(e => e.UnitDoseSize).HasColumnName("unit_dose_size");
+                entity.Property(e => e.UserDefinedUnitDoseSize).HasColumnName("user_defined_unit_dose_size");
 
-                entity.Property(e => e.UnitDoseTypeId).HasColumnName("unit_dose_type_id");
-
-                entity.Property(e => e.UnitDoseUomId).HasColumnName("unit_dose_uom_id");
+                entity.Property(e => e.UserDefinedUnitDoseTypeId).HasColumnName("user_defined_unit_dose_type_id");
 
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.TPlanMedicineRuleItem)

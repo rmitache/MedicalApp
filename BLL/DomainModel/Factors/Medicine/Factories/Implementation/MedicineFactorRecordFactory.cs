@@ -93,16 +93,17 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.Type = MedicineFactorRecordType.PlanProjection;
             blo.MedicineType = ruleItem.MedicineType;
             blo.OccurrenceDateTime = occurrenceDateTime;
-            
-
-            blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
-            blo.UnitDoseType = ruleItem.UnitDoseType;
-            blo.UnitDoseSize = ruleItem.UnitDoseSize;
-            blo.UnitDoseUoM = ruleItem.UnitDoseUoM;
 
             blo.ParentPlanName = parentPlan.Name;
             blo.ParentPlanID = parentPlan.ID;
             blo.RecentlyAdded = recentlyAdded;
+
+            blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
+            blo.HasUserDefinedUnitDose = ruleItem.HasUserDefinedUnitDose;
+            blo.UserDefinedUnitDoseType = ruleItem.UserDefinedUnitDoseType;
+            blo.UserDefinedUnitDoseSize = ruleItem.UserDefinedUnitDoseSize;
+
+            
 
             return blo;
         }
@@ -123,9 +124,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dataEntity.OccurrenceDateTime = blo.OccurrenceDateTime;
 
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
-            dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
-            dataEntity.UnitDoseSize = blo.UnitDoseSize;
-            dataEntity.UnitDoseUomId = (int)blo.UnitDoseUoM;
+            dataEntity.HasUserDefinedUnitDose = blo.HasUserDefinedUnitDose;
+            dataEntity.UserDefinedUnitDoseTypeId = (int?) blo.UserDefinedUnitDoseType;
+            dataEntity.UserDefinedUnitDoseSize = blo.UserDefinedUnitDoseSize;
 
             return dataEntity;
         }
@@ -143,11 +144,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.OccurrenceDateTime = dataEntity.OccurrenceDateTime;
 
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
-            blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
-            blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
-            blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
-
-
+            blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose;
+            blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType) dataEntity.UserDefinedUnitDoseTypeId;
+            blo.UserDefinedUnitDoseSize = dataEntity.UserDefinedUnitDoseSize;
 
             return blo;
         }

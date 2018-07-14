@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BLL.DomainModel.Factors.Medicine.Enums;
+using System;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
-    public class MedicineFactorRecord : AbstractMedicineFactorRecord
+    public class MedicineFactorRecord
     {
         virtual public int ID { get; set; }
         virtual public string CompositeID
@@ -14,13 +15,17 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         }
         virtual public DateTime OccurrenceDateTime { get; set; }
         virtual public MedicineFactorRecordType Type { get; set; }
-
         virtual public MedicineType MedicineType { get; set; } // this is written here so it can be set as virtual and the class can be mocked (MOQ)
 
         virtual public string ParentPlanName { get; set; }
         virtual public int? ParentPlanID { get; set; }
         virtual public bool? RecentlyAdded { get; set; }
         virtual public bool? Taken { get; set; }
+
+        public int UnitDoseQuantifier { get; set; }
+        virtual public bool HasUserDefinedUnitDose { get; set; }
+        virtual public UserDefinedUnitDoseType UserDefinedUnitDoseType { get; set; }
+        virtual public int? UserDefinedUnitDoseSize { get; set; }
 
 
         // Public methods

@@ -16,10 +16,10 @@ namespace DataAccessLayer.Entities
         public int UserId { get; set; }
         public string Name { get; set; }
         public string ProducerName { get; set; }
-        public int BaseFormId { get; set; }
+        public int BaseUnitOfMeasureId { get; set; }
+        public bool IsPackagedIntoUnits { get; set; }
         public int? PackagedUnitDoseTypeId { get; set; }
         public int? PackagedUnitDoseSize { get; set; }
-        public int? PackagedUnitDoseUomId { get; set; }
 
         public TUser User { get; set; }
         public ICollection<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
