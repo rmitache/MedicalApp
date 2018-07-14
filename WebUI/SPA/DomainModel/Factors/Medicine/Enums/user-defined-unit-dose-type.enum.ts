@@ -1,7 +1,6 @@
 ﻿
 export enum UserDefinedUnitDoseType {
-
-    Pills = 0,
-    Satchel = 1,
-    Dispenser = 2,
+    Teaspoons = 0,
+    Drops = 1,
+    Custom = 2
 }

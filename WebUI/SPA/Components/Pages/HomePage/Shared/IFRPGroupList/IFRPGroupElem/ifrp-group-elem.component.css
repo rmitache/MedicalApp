@@ -1,6 +1,6 @@
 .frame /deep/ .ui-autocomplete input {
     height: 27px;
-    width: 260px;
+    width: 330px;
     font-size: 10pt;
     font-family: Arial;
 }
@@ -52,7 +52,7 @@ input.ng-invalid.ng-touched {
 }
 
     .right-side .medicine-type-input-pair {
-        width: 260px;
+        width: 330px;
         margin-right: 35px;
     }
 
@@ -70,10 +70,11 @@ input.ng-invalid.ng-touched {
     }
 
 
-    .right-side .x-label {
+    .right-side .of-label {
         float: left;
         margin-left: -3px;
         margin-right: 5px;
+        margin-top:5px;
         height: 45px;
         vertical-align: middle;
         line-height: 45px;
@@ -90,7 +91,7 @@ input.ng-invalid.ng-touched {
     }
 
 
-    .right-side .dose-uom-input-pair .drop-down {
+    .right-side .dose-uom-input-pair .ui-inputtext {
         width: 60px;
     }
 

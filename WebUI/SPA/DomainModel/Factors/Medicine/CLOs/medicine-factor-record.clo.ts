@@ -4,9 +4,10 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 import * as moment from 'moment';
 import { RemoveWhitespace } from 'SPA/Core/Helpers/Functions/functions';
-import { IMedicineFactorRecordCLO } from 'SPA/DomainModel/Factors/Medicine/CLOs/i-medicine-factor-record.clo';
+import { AbstractMedicineFactorRecordCLO } from 'SPA/DomainModel/Factors/Medicine/CLOs/i-medicine-factor-record.clo';
 
-export class MedicineFactorRecordCLO extends BaseCLO implements IMedicineFactorRecordCLO {
+export class MedicineFactorRecordCLO extends AbstractMedicineFactorRecordCLO {
+
     // Fields
     public ID: number;
     public CompositeID: string;
@@ -25,30 +26,7 @@ export class MedicineFactorRecordCLO extends BaseCLO implements IMedicineFactorR
     public UserDefinedUnitDoseSize: number;
 
 
-    // Properties
-    public get ActualUnitDoseTypeName() {
-        let name: string;
-        if (this.HasUserDefinedUnitDose) {
-            name = Enums.UserDefinedUnitDoseType[this.UserDefinedUnitDoseType];
-        } else {
-            name = Enums.PackagedUnitDoseType[this.MedicineType.PackagedUnitDoseType];
-        }
-
-        return name;
-    }
-    public get ActualUnitDoseSize() {
-        let doseSize: number;
-        if (this.HasUserDefinedUnitDose) {
-            doseSize = this.UserDefinedUnitDoseSize;
-        } else {
-            doseSize = this.MedicineType.PackagedUnitDoseSize;
-        }
-
-        return doseSize;
-    }
-    public get ActualUnitOfMeasureName() {
-        return Enums.UnitOfMeasure[this.MedicineType.BaseUnitOfMeasure];
-    }
+    
 
     // Constructor
     constructor(init?: Partial<MedicineFactorRecordCLO>) {

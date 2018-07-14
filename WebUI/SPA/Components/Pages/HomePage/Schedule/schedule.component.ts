@@ -442,7 +442,7 @@ export class TimeGroupRepresentation {
     public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
 
         let record = factorRecordCLO;
-        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.ActualUnitDoseTypeName
-            + ' (' + record.ActualUnitDoseSize + ' ' + record.ActualUnitOfMeasureName + ')';
+        return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.UnitDoseTypeName
+            + ' (' + record.UnitDoseSize + ' ' + record.UnitOfMeasureName + ')';
     }
 }

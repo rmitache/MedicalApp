@@ -140,15 +140,6 @@ namespace WebUI.Controllers
             return Json(factorRecordsUpdatedIDs);
         }
 
-        //[Route("HomePage/MarkFactorRecordsAsTaken")]
-        //[HttpPost]
-        //public JsonResult MarkFactorRecordsAsTaken([FromBody]List<MedicineFactorRecord> factorRecords)
-        //{
-        //    int? userID = this.webSecurityManager.CurrentUserID;
-
-        //    this.medicineFactorRecordService.MarkFactorRecordsAsTaken(factorRecords, (int)userID);
-        //    return Json(true);
-        //}
         [Route("HomePage/MarkFactorRecordsAsTaken")]
         [HttpPost]
         public JsonResult MarkFactorRecordsAsTaken([FromBody] MarkFactorRecordsAsTakenModel model)

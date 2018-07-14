@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AutoComplete } from 'primeng/primeng';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -19,20 +19,32 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 export class IFRPGroupElemComponent {
     // Fields
     @Input('IFRPGroupCLO')
-    private readonly iFRPGroupCLO: CLOs.IMedicineFactorRecordCLO;
+    private readonly iFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
     @Input('MedicineTypeSearchService')
     private readonly medicineTypesSearchService: IMedicineTypesSearchService;
     private isValid: boolean = false;
     @ViewChild('autocomplete')
     readonly autoCompleteComponentInstance: AutoComplete;
     private reactiveForm: FormGroup;
-    
-    //private readonly unitDoseTypesEnum = Enums.UnitDoseType;
-    private readonly unitsOfMeasureEnum = Enums.UnitOfMeasure;
 
     private readonly viewModel: ViewModel = {
         IFRPGroupCLO: null,
         MedicineTypeSearchResults: [],
+
+        UnitDoseTypesEnum: {},
+        //GetUnitDoseTypesEnum: () => {
+
+        //    if (this.viewModel.IFRPGroupCLO !== null) {
+        //        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
+        //            return Enums.UserDefinedUnitDoseType;
+        //        } else if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === false){
+        //            debugger;
+        //            return Enums.PackagedUnitDoseType;
+        //        }
+        //    } else {
+        //        return {};
+        //    }
+        //},
         OverlayIsVisible: true,
         UserDefinedControlsAreLocked: true
     };
@@ -41,29 +53,37 @@ export class IFRPGroupElemComponent {
     private loadMedicineTypeByName(selectedMedicineTypeName: string) {
 
         // Get and load the medicineTypeCLO
+        let factorRecordCLO = this.viewModel.IFRPGroupCLO;
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
-        this.viewModel.IFRPGroupCLO.MedicineType = medicineTypeCLO;
+        factorRecordCLO.MedicineType = medicineTypeCLO;
 
-        //// Handle fields
-        //if (medicineTypeCLO.IsPackagedIntoUnitDoses() === true) {
-        //    this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseType = medicineTypeCLO.PackagedUnitDoseType;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseSize = medicineTypeCLO.PackagedUnitDoseSize;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseUoM = medicineTypeCLO.PackagedUnitDoseUoM;
-
-        //    // Make the controls readonly
-        //    this.viewModel.UserDefinedControlsAreLocked = true;
+        //// Load the appropriate Enum
+        //if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
+        //    this.viewModel.UnitDoseTypesEnum= Enums.UserDefinedUnitDoseType;
+        //} else if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === false) {
+        //    this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
         //}
-        //else {
 
-        //    this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseType = Enums.UnitDoseType.Teaspoons;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseSize = 100;
-        //    this.viewModel.IFRPGroupCLO.UnitDoseUoM = Enums.UnitOfMeasure.mg;
+        // Handle fields for factorRecord
+        factorRecordCLO.UnitDoseQuantifier = 1;
+        if (medicineTypeCLO.IsPackagedIntoUnits === true) {
+            factorRecordCLO.HasUserDefinedUnitDose = false;
+            factorRecordCLO.UserDefinedUnitDoseType = null;
+            factorRecordCLO.UserDefinedUnitDoseSize = null;
 
-        //    // Unlock the controls
-        //    this.viewModel.UserDefinedControlsAreLocked = false;
-        //}
+            // Make the controls readonly and load enum values
+            this.viewModel.UserDefinedControlsAreLocked = true;
+            this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
+        }
+        else {
+            factorRecordCLO.HasUserDefinedUnitDose = true;
+            factorRecordCLO.UserDefinedUnitDoseType = 0;
+            factorRecordCLO.UserDefinedUnitDoseSize = 100;
+
+            // Unlock the controls
+            this.viewModel.UserDefinedControlsAreLocked = false;
+            this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
+        }
     }
     private refreshIsValid() {
         let prevIsValid = this.isValid;
@@ -78,7 +98,7 @@ export class IFRPGroupElemComponent {
     constructor(
         private readonly fb: FormBuilder,
         private readonly cdRef: ChangeDetectorRef,
-        
+
     ) {
         this.reactiveForm = this.fb.group({
             medicineTypeName: ['',
@@ -95,8 +115,6 @@ export class IFRPGroupElemComponent {
                     Validators.required,
                     Validators.min(1),
                     Validators.pattern(new RegExp(/^\d+$/))])],
-            unitdoseuom: null,
-            instruction: null
         });
     }
     ngOnInit() {
@@ -106,15 +124,15 @@ export class IFRPGroupElemComponent {
             .statusChanges
             .subscribe((newStatus) => {
                 this.refreshIsValid();
-                
+
             });
-        
-        ////
-        //if (this.iFRPGroupCLO.MedicineType !== null) {
-        //    this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
-        //    this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnitDoses() === true);
-        //    this.viewModel.OverlayIsVisible = false;
-        //}
+
+        //
+        if (this.iFRPGroupCLO.MedicineType !== null) {
+            this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
+            this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true);
+            this.viewModel.OverlayIsVisible = false;
+        }
     }
 
     // Public methods
@@ -143,11 +161,27 @@ export class IFRPGroupElemComponent {
         }, 1);
 
     }
+    private onUnitDoseSizeChanged(value) {
+        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose !== true) {
+            throw new Error('MedicineFactorRecord: Can only change the UnitDoseSize when the HasUserDefinedUnitDose is true');
+        }
+
+        this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = value;
+    }
+    private onUnitDoseTypeChanged(value) {
+        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose !== true) {
+            throw new Error('MedicineFactorRecord: Can only change the UnitDoseType when the HasUserDefinedUnitDose is true');
+        }
+
+        this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = value;
+    }
 }
 
 interface ViewModel {
-    IFRPGroupCLO: CLOs.IMedicineFactorRecordCLO;
+    IFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
     MedicineTypeSearchResults: string[];
+
+    UnitDoseTypesEnum: any;
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;
 }

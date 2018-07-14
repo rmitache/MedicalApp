@@ -28,7 +28,7 @@ export class IFRPGroupListComponent {
     @Input('AvailableMedicineTypes')
     private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
     @Input('IFRPGroupCLOs')
-    private readonly iFRPGroupCLOs: CLOs.IMedicineFactorRecordCLO[];
+    private readonly iFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
     private readonly searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.ToArray().find(clo => {
@@ -117,7 +117,7 @@ export class IFRPGroupListComponent {
         }, 1);
         
     }
-    private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.IMedicineFactorRecordCLO) {
+    private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO) {
 
         const index: number = this.viewModel.IFRPGroupCLOs.indexOf(iFRPGroupCLO);
 
@@ -133,7 +133,7 @@ export class IFRPGroupListComponent {
 
 
 interface ViewModel {
-    IFRPGroupCLOs: CLOs.IMedicineFactorRecordCLO[];
+    IFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
 }
 
 export interface IMedicineTypesSearchService {
