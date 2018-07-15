@@ -15,6 +15,15 @@ export class MedicineTypeCLO extends BaseCLO {
     public PackagedUnitDoseType: Enums.PackagedUnitDoseType;
     public PackagedUnitDoseSize: number;
 
+    // Properties
+    public get UnitOfMeasureName() {
+        if (this.BaseUnitOfMeasure === null || this.BaseUnitOfMeasure === undefined) {
+            return null;
+        }
+
+        return Enums.UnitOfMeasure[this.BaseUnitOfMeasure];
+    }
+
 
 
     // Constructor

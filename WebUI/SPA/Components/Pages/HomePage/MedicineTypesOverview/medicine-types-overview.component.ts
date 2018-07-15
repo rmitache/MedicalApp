@@ -111,7 +111,7 @@ export class MedicineTypesOverviewComponent {
     // Event handlers
     private onAddNewMedicineTypeTriggered() {
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor('Add a new Medicine Type', 'Add', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
     }
 
 }

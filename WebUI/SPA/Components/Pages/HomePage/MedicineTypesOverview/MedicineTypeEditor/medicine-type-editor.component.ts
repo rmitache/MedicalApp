@@ -28,6 +28,8 @@ export class MedicineTypeEditorComponent implements IModalDialog {
     private isValid: boolean = false;
     private currentModeInstance: IMedicineTypeEditorModeImplementation = null;
     private reactiveForm: FormGroup;
+    private unitsOfMeasureEnum = Enums.UnitOfMeasure;
+    private packagedUnitDoseTypesEnum = Enums.PackagedUnitDoseType;
     private readonly dialogInitParameters = {
         medicineTypeCLO: null,
         medicineTypeEditorMode: null
@@ -38,7 +40,7 @@ export class MedicineTypeEditorComponent implements IModalDialog {
 
     // Private methods
     private refreshIsValid() {
-        //this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
+        this.isValid = this.reactiveForm.valid;
     }
 
     // Constructor 
@@ -46,27 +48,23 @@ export class MedicineTypeEditorComponent implements IModalDialog {
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly globalDataService: HomePageDataService,
         private fb: FormBuilder
-
     ) {
     }
     ngOnInit() {
 
         // Define form
         this.reactiveForm = this.fb.group({
-            name: [null]
+            name: ['', Validators.required],
+            producerName: [''],
+            baseUnitOfMeasure: [''],
+            isPackagedIntoUnitsRadioGroup: [null],
+            packagedUnitDoseType: [null],
+            packagedUnitDoseSize: [null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.min(1),
+                    Validators.pattern(new RegExp(/^\d+$/))])]
         });
-
-        //    this.fb.group({
-        //    planName: ['', Validators.required],
-        //    dates: this.fb.group({
-        //        startDate: [null,
-        //            Validators.compose([
-        //                Validators.required
-        //            ])],
-        //        endDate: null
-        //    }, { validator: basicPlanDatesValidator }),
-
-        //});
 
         // Create the currentModeInstance
         let modeImplementationClass = modeImplementationsLookup[this.dialogInitParameters.medicineTypeEditorMode]
@@ -80,10 +78,18 @@ export class MedicineTypeEditorComponent implements IModalDialog {
 
         // Subscriptions
         this.reactiveForm.
-            statusChanges.
-            subscribe(() => {
+            valueChanges.
+            subscribe((value) => {
                 this.refreshIsValid();
             });
+
+        this.reactiveForm.get('isPackagedIntoUnitsRadioGroup').valueChanges.subscribe(val => {
+            if (val === false) {
+                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = 100;
+                setTimeout(() => {
+                }, 1);
+            }
+        });
     }
 
     // Public methods
@@ -93,9 +99,11 @@ export class MedicineTypeEditorComponent implements IModalDialog {
         return saveDataPromise;
     }
     public GetValidState() {
-        return true;
-        //return this.isValid;
+        return this.isValid;
     }
+
+
+    // Event handlers
 
 
     // IModalDialog
@@ -127,13 +135,14 @@ class CreateNewMode implements IMedicineTypeEditorModeImplementation {
 
         // Prepare ViewModel 
         this.vm.MedicineTypeCLO = medicineTypeCLO;
-        
+
     }
 
     // Public methods
     public SaveData() {
         //let saveDataPromise = this.globalDataService.AddPlan(this.vm.MedicineTypeCLO);
         //return saveDataPromise;
+        alert('Save new medicinetype !');
         return null;
     }
 }

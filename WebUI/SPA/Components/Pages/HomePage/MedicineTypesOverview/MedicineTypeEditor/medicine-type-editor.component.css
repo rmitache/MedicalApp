@@ -1,4 +1,76 @@
-.frame {
-    width: 440px;
-    height: 550px;
+.medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
+    border: 1px solid red !important;
 }
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+}
+
+.frame {
+    width: 280px;
+    height: 450px;
+}
+
+.label-input-pair {
+    float: left;
+    margin-bottom: 25px;
+    clear: both;
+}
+
+#name-div .ui-inputtext,
+#producer-div .ui-inputtext {
+    width: 250px;
+}
+
+
+.radio-button-group {
+    float: left;
+}
+
+    .radio-button-group .radio-button-div {
+        padding: 5px;
+        padding-left: 8px;
+        background-color: #efefef;
+        border-radius: 4px;
+        float: left;
+        margin-right: 10px;
+    }
+
+        .radio-button-group .radio-button-div label {
+            vertical-align: middle;
+        }
+
+.active label {
+    color: black !important;
+}
+
+
+#packaged-div {
+    width:100%;
+}
+
+
+    #packaged-div #packagedUnitDoseSize {
+        width: 60px;
+    }
+
+    #packaged-div .header{
+        height:20px;
+    }
+    #packaged-div .body {
+        height:70px;
+    }
+    #packaged-div #packagedUnitDoseType,
+    #packaged-div #packagedUnitDoseSize,
+    #packaged-div .inner-label {
+        float: left;
+        display: block;
+        clear: none;
+        margin-right:8px;
+    }
+    
+    #packaged-div .inner-label {
+        font-family: Arial;
+        font-size: 10pt;
+        margin-top:4px;
+    }
