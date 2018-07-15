@@ -25,10 +25,11 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dataEntity.Id = blo.ID;
 
             dataEntity.MedicineTypeId = blo.MedicineType.ID;
+
             dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
-            dataEntity.UnitDoseTypeId = (int)blo.UnitDoseType;
-            dataEntity.UnitDoseSize = blo.UnitDoseSize;
-            dataEntity.UnitDoseUomId = (int) blo.UnitDoseUoM;
+            dataEntity.HasUserDefinedUnitDose = blo.HasUserDefinedUnitDose;
+            dataEntity.UserDefinedUnitDoseTypeId = (int?)blo.UserDefinedUnitDoseType;
+            dataEntity.UserDefinedUnitDoseSize = blo.UserDefinedUnitDoseSize;
 
             return dataEntity;
         }
@@ -42,10 +43,11 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             MedicineRuleItem blo = new MedicineRuleItem();
             blo.ID = dataEntity.Id;
             blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
+
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
-            blo.UnitDoseType = (UnitDoseType)dataEntity.UnitDoseTypeId;
-            blo.UnitDoseSize = (int)dataEntity.UnitDoseSize;
-            blo.UnitDoseUoM = (UnitOfMeasure)dataEntity.UnitDoseUomId;
+            blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose;
+            blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType?)dataEntity.UserDefinedUnitDoseTypeId;
+            blo.UserDefinedUnitDoseSize = dataEntity.UserDefinedUnitDoseSize;
 
 
             return blo;

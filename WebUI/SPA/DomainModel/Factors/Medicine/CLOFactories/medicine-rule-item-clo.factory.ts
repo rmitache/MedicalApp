@@ -21,10 +21,10 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         newCLO.ID = blo['ID'];
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
 
-        newCLO.UnitDoseType = blo['UnitDoseType'];
         newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
-        newCLO.UnitDoseSize = blo['UnitDoseSize'];
-        newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
+        newCLO.HasUserDefinedUnitDose = blo['HasUserDefinedUnitDose'];
+        newCLO.UserDefinedUnitDoseType = blo['UserDefinedUnitDoseType'];
+        newCLO.UserDefinedUnitDoseSize = blo['UserDefinedUnitDoseSize'];
 
 
         return newCLO;
@@ -33,10 +33,11 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         let newCLO = new CLOs.MedicineRuleItemCLO();
         newCLO.ID = 0;
         newCLO.MedicineType = null;
-        newCLO.UnitDoseType = null;
+
         newCLO.UnitDoseQuantifier = null;
-        newCLO.UnitDoseSize = null;
-        newCLO.UnitDoseUoM = null;
+        newCLO.HasUserDefinedUnitDose = null;
+        newCLO.UserDefinedUnitDoseType = null;
+        newCLO.UserDefinedUnitDoseSize = null;
 
 
         return newCLO;
@@ -55,10 +56,10 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         newCLO.ID = 0;
         newCLO.MedicineType = clo.MedicineType;
 
-        newCLO.UnitDoseType = clo.UnitDoseType;
         newCLO.UnitDoseQuantifier = clo.UnitDoseQuantifier;
-        newCLO.UnitDoseSize = clo.UnitDoseSize;
-        newCLO.UnitDoseUoM = clo.UnitDoseUoM;
+        newCLO.HasUserDefinedUnitDose = clo.HasUserDefinedUnitDose;
+        newCLO.UserDefinedUnitDoseType = clo.UserDefinedUnitDoseType;
+        newCLO.UserDefinedUnitDoseSize = clo.UserDefinedUnitDoseSize;
 
 
         return newCLO;

@@ -71,6 +71,7 @@
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-rule-item-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\i-medicine-factor-record.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Enums\factor-record-type.enum.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\Enums\packaged-unit-dose-type.enum.ts" />
     <None Remove="SPA\DomainModel\General\CLOs\unit-of-measure.enum.ts" />
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOFactories\health-status-entry-clo.factory.ts" />
@@ -96,7 +97,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
@@ -160,8 +160,8 @@
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\i-medicine-factor-record.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\factor-record-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-type-clo.factory.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\unit-dose-type.enum.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\base-form.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\packaged-unit-dose-type.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\user-defined-unit-dose-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-rule-item.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />

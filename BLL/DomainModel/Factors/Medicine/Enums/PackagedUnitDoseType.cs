@@ -4,10 +4,11 @@ using System.Text;
 
 namespace BLL.DomainModel.Factors.Medicine.Enums
 {
-    public enum BaseForm
+    public enum PackagedUnitDoseType
     {
-        Unspecified,
-        Powder,
-        Liquid
+        Pills = 0,
+        Satchels = 1,
+        DispenserDoses = 2,
     }
+
 }

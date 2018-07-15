@@ -22,17 +22,17 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.CompositeID = blo['CompositeID'];
         newCLO.Type = blo['Type'];
         newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
-        
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
-        newCLO.UnitDoseType = blo['UnitDoseType'];
-        newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
-        newCLO.UnitDoseSize = blo['UnitDoseSize'];
-        newCLO.UnitDoseUoM = blo['UnitDoseUoM'];
 
         newCLO.ParentPlanName = blo['ParentPlanName'];
         newCLO.ParentPlanID = blo['ParentPlanID'];
         newCLO.RecentlyAdded = blo['RecentlyAdded'];
         newCLO.Taken = blo['Taken'];
+
+        newCLO.UnitDoseQuantifier = blo['UnitDoseQuantifier'];
+        newCLO.HasUserDefinedUnitDose = blo['HasUserDefinedUnitDose'];
+        newCLO.UserDefinedUnitDoseType = blo['UserDefinedUnitDoseType'];
+        newCLO.UserDefinedUnitDoseSize = blo['UserDefinedUnitDoseSize'];
         
         return newCLO;
     }
@@ -43,15 +43,15 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         newCLO.Type = Enums.FactorRecordType.UserEntry;
         newCLO.MedicineType = null;
         newCLO.OccurrenceDateTime = new Date();
-
-        newCLO.UnitDoseType = null;
-        newCLO.UnitDoseQuantifier = null;
-        newCLO.UnitDoseSize = null;
-        newCLO.UnitDoseUoM = null;
         
         newCLO.ParentPlanID = null;
         newCLO.RecentlyAdded = null;
         newCLO.Taken = false;
+
+        newCLO.UnitDoseQuantifier = null;
+        newCLO.HasUserDefinedUnitDose = null;
+        newCLO.UserDefinedUnitDoseType = null;
+        newCLO.UserDefinedUnitDoseSize = null;
 
         return newCLO;
     }
