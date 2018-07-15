@@ -1,4 +1,5 @@
 ﻿using BLL.DomainModel.Factors.Medicine.Enums;
+using Newtonsoft.Json;
 using System;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs
@@ -15,17 +16,70 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         }
         virtual public DateTime OccurrenceDateTime { get; set; }
         virtual public MedicineFactorRecordType Type { get; set; }
-        virtual public MedicineType MedicineType { get; set; } // this is written here so it can be set as virtual and the class can be mocked (MOQ)
+        virtual public MedicineType MedicineType { get; set; }
 
         virtual public string ParentPlanName { get; set; }
         virtual public int? ParentPlanID { get; set; }
         virtual public bool? RecentlyAdded { get; set; }
         virtual public bool? Taken { get; set; }
 
-        public int UnitDoseQuantifier { get; set; }
+        virtual public int UnitDoseQuantifier { get; set; }
         virtual public bool HasUserDefinedUnitDose { get; set; }
         virtual public UserDefinedUnitDoseType? UserDefinedUnitDoseType { get; set; }
         virtual public int? UserDefinedUnitDoseSize { get; set; }
+
+
+
+        virtual public string UnitDoseTypeName
+        {
+            get
+            {
+                string unitDoseTypeName = "";
+                if (this.HasUserDefinedUnitDose == true)
+                {
+                    unitDoseTypeName = this.UserDefinedUnitDoseType.ToString();
+                }
+                else if (this.MedicineType != null)
+                {
+                    unitDoseTypeName = this.MedicineType.PackagedUnitDoseType.ToString();
+
+                }
+
+                return unitDoseTypeName;
+            }
+        }
+        virtual public string UnitOfMeasureName
+        {
+            get
+            {
+                string unitOfMeasureName = "";
+                 if (this.MedicineType != null)
+                {
+                    unitOfMeasureName = this.MedicineType.BaseUnitOfMeasure.ToString();
+
+                }
+
+                return unitOfMeasureName;
+            }
+        }
+        virtual public int? UnitDoseSize
+        {
+            get
+            {
+                int? unitDoseSize = 0;
+                if (this.HasUserDefinedUnitDose == true)
+                {
+                    unitDoseSize = this.UserDefinedUnitDoseSize;
+                }
+                else if (this.MedicineType != null)
+                {
+                    unitDoseSize = this.MedicineType.PackagedUnitDoseSize;
+
+                }
+
+                return unitDoseSize;
+            }
+        }
 
 
         // Public methods
