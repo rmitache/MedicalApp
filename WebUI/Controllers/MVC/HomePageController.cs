@@ -74,6 +74,12 @@ namespace WebUI.Controllers
         // MVC methods
         public IActionResult Index()
         {
+            if (this.webSecurityManager.GetCurrentUser() == null)
+            {
+                this.webSecurityManager.LogOut();
+
+            }
+
             return View();
         }
         public IActionResult Error()

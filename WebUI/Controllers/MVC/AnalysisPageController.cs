@@ -9,7 +9,6 @@ using BLL.DomainModel.Plans.Services;
 using Common.Datastructures;
 using BLL.DomainModel.Indicators.Symptoms.Services;
 using Common;
-using BLL.DomainModel.Indicators.Symptoms.Services;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
