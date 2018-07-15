@@ -145,7 +145,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
             blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose;
-            blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType) dataEntity.UserDefinedUnitDoseTypeId;
+            blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType?) dataEntity.UserDefinedUnitDoseTypeId;
             blo.UserDefinedUnitDoseSize = dataEntity.UserDefinedUnitDoseSize;
 
             return blo;

@@ -32,19 +32,6 @@ export class IFRPGroupElemComponent {
         MedicineTypeSearchResults: [],
 
         UnitDoseTypesEnum: {},
-        //GetUnitDoseTypesEnum: () => {
-
-        //    if (this.viewModel.IFRPGroupCLO !== null) {
-        //        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
-        //            return Enums.UserDefinedUnitDoseType;
-        //        } else if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === false){
-        //            debugger;
-        //            return Enums.PackagedUnitDoseType;
-        //        }
-        //    } else {
-        //        return {};
-        //    }
-        //},
         OverlayIsVisible: true,
         UserDefinedControlsAreLocked: true
     };
@@ -57,12 +44,6 @@ export class IFRPGroupElemComponent {
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
         factorRecordCLO.MedicineType = medicineTypeCLO;
 
-        //// Load the appropriate Enum
-        //if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
-        //    this.viewModel.UnitDoseTypesEnum= Enums.UserDefinedUnitDoseType;
-        //} else if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === false) {
-        //    this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
-        //}
 
         // Handle fields for factorRecord
         factorRecordCLO.UnitDoseQuantifier = 1;
@@ -162,18 +143,14 @@ export class IFRPGroupElemComponent {
 
     }
     private onUnitDoseSizeChanged(value) {
-        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose !== true) {
-            throw new Error('MedicineFactorRecord: Can only change the UnitDoseSize when the HasUserDefinedUnitDose is true');
+        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = value;
         }
-
-        this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = value;
     }
     private onUnitDoseTypeChanged(value) {
-        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose !== true) {
-            throw new Error('MedicineFactorRecord: Can only change the UnitDoseType when the HasUserDefinedUnitDose is true');
+        if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = value;
         }
-
-        this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = value;
     }
 }
 

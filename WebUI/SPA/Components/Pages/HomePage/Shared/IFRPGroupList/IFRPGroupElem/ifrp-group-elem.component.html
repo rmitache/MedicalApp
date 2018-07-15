@@ -47,7 +47,7 @@
                 <span class="label"></span>
                 <input type="text"
                        formControlName="unitdosesize"
-                       [value]="viewModel.IFRPGroupCLO.UnitDoseSize"
+                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize"
                        (ngModelChange)="onUnitDoseSizeChanged($event)"
                        class="ui-inputtext" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
             </div>

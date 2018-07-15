@@ -97,7 +97,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\API\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
