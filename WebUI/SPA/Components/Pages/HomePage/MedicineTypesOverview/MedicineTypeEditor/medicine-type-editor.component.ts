@@ -93,7 +93,9 @@ export class MedicineTypeEditorComponent implements IModalDialog {
     }
 
     // Public methods
-    public SaveData(): Promise<CLOs.PlanCLO> {
+    public SaveData(): Promise<CLOs.MedicineTypeCLO> {
+        
+
         let saveDataPromise = this.currentModeInstance.SaveData();
 
         return saveDataPromise;
@@ -122,7 +124,7 @@ export enum MedicineTypeEditorMode {
     CreateNew
 }
 interface IMedicineTypeEditorModeImplementation {
-    SaveData(): Promise<CLOs.PlanCLO>;
+    SaveData(): Promise<CLOs.MedicineTypeCLO>;
 }
 class CreateNewMode implements IMedicineTypeEditorModeImplementation {
 
@@ -140,10 +142,9 @@ class CreateNewMode implements IMedicineTypeEditorModeImplementation {
 
     // Public methods
     public SaveData() {
-        //let saveDataPromise = this.globalDataService.AddPlan(this.vm.MedicineTypeCLO);
-        //return saveDataPromise;
-        alert('Save new medicinetype !');
-        return null;
+        debugger;
+        let saveDataPromise = this.globalDataService.AddMedicineType(this.vm.MedicineTypeCLO);
+        return saveDataPromise;
     }
 }
 

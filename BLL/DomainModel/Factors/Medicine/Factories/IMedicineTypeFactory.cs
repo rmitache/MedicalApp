@@ -9,6 +9,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
     public interface IMedicineTypeFactory
     {
         MedicineType Convert_ToBLO(TMedicineType dataEntity);
+        TMedicineType Convert_ToDataEntity(MedicineType blo, int userID);
+
         List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities);
     }
 }

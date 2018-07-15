@@ -20,6 +20,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
 
         // Public methods
+        public MedicineType AddMedicineType(MedicineType blo, int userID)
+        {
+            var dataEntity = this.medicineTypeFactory.Convert_ToDataEntity(blo, userID);
+            this.medicineTypeRepo.AddMedicineType(dataEntity);
+
+            blo.ID = dataEntity.Id;
+
+            return blo;
+        }
         public List<MedicineType> GetAllMedicineTypes(int userID)
         {
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID);

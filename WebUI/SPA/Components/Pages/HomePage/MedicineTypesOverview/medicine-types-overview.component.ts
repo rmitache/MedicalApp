@@ -28,7 +28,9 @@ export class MedicineTypesOverviewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
     private readonly viewModel: ViewModel = {
-        AvailableMedicineTypes: null 
+        AvailableMedicineTypes: null,
+        Blocked: false
+
     };
 
     // Private methods
@@ -48,25 +50,24 @@ export class MedicineTypesOverviewComponent {
                     },
                     text: saveButtonText,
                     onAction: (childComponentInstance: any) => {
-                        //let promiseWrapper = new Promise<void>((resolve) => {
-                        //    this.viewModel.Blocked = true;
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.viewModel.Blocked = true;
 
-                        //    let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
-                        //    planEditorComponentInstance.SaveData()
-                        //        .then((planCLO) => {
+                            let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
+                            debugger;
+                            medicineTypeEditorComponentInstance.SaveData()
+                                .then((planCLO) => {
 
-                        //            this.reloadPlansFromServer();
-                        //            this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                                    this.reloadMedicineTypesFromServer();
+                                    setTimeout(() => {
+                                        this.viewModel.Blocked = false;
+                                        resolve();
+                                    }, 200);
+                                });
 
-                        //            setTimeout(() => {
-                        //                this.viewModel.Blocked = false;
-                        //                resolve();
-                        //            }, 200);
-
-                        //        });
-                        //});
-                        //return promiseWrapper;
-                        return null;
+                            
+                        });
+                        return promiseWrapper;
                     }
                 },
                 {
@@ -83,6 +84,13 @@ export class MedicineTypesOverviewComponent {
 
         });
 
+    }
+    private reloadMedicineTypesFromServer(): Promise<void> {
+        let promise = this.dataService.GetMedicineTypes()
+            .then(clos => {
+                this.viewModel.AvailableMedicineTypes = clos;
+            });
+        return promise;
     }
 
     // Constructor 
@@ -117,6 +125,7 @@ export class MedicineTypesOverviewComponent {
 }
 interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
+    Blocked: boolean;
 }
 
 export enum MedicineTypeActionType {

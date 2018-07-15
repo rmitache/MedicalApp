@@ -76,7 +76,7 @@ namespace WebUI.Controllers
         {
             if (this.webSecurityManager.GetCurrentUser() == null)
             {
-                this.webSecurityManager.LogOut();
+                this.webSecurityManager.LogOut(); // special "hack" when switching between local and azure as authentication cookie gets stuck
 
             }
 
@@ -215,6 +215,27 @@ namespace WebUI.Controllers
         }
         //---------------------------------------------------------------------------------------------------------------------
 
+
+        // MedicineTypes-------------------------------------------------------------------------------------------------------
+
+        [Route("HomePage/AddMedicineType")]
+        [HttpPost]
+        public JsonResult AddMedicineType([FromBody]MedicineType blo)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            return Json(bloWithUpdatedID);
+        }
+
+        [Route("HomePage/GetMedicineTypes")]
+        [HttpPost]
+        public JsonResult GetMedicineTypes()
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID);
+            return Json(blos);
+        }
+        //---------------------------------------------------------------------------------------------------------------------
 
         // Models
         public class DateRangeModel

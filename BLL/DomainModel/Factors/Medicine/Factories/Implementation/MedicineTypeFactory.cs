@@ -28,6 +28,22 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
             return blo;
         }
+        public TMedicineType Convert_ToDataEntity(MedicineType blo, int userID)
+        {
+            TMedicineType dataEntity = new TMedicineType();
+            dataEntity.Id = blo.ID;
+            dataEntity.UserId = userID;
+            dataEntity.Name = blo.Name;
+            dataEntity.ProducerName = blo.Name;
+
+            dataEntity.BaseUnitOfMeasureId = (int)blo.BaseUnitOfMeasure;
+            dataEntity.IsPackagedIntoUnits = blo.IsPackagedIntoUnits;
+            dataEntity.PackagedUnitDoseTypeId = (int?)blo.PackagedUnitDoseType;
+            dataEntity.PackagedUnitDoseSize = blo.PackagedUnitDoseSize;
+
+            return dataEntity;
+
+        }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities)
         {
             var bloList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
