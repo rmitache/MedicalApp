@@ -22,8 +22,8 @@ namespace DataAccessLayer.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 

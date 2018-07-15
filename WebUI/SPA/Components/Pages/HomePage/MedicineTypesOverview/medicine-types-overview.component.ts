@@ -12,6 +12,7 @@ import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-dat
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
+import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 
 // Components
 
@@ -30,6 +31,59 @@ export class MedicineTypesOverviewComponent {
         AvailableMedicineTypes: null 
     };
 
+    // Private methods
+    private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
+            title: title,
+            childComponent: MedicineTypeEditorComponent,
+            data: {
+                medicineTypeCLO: medicineTypeCLO,
+                medicineTypeEditorMode: mode
+            },
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let editorInstance = childComponentInstance as MedicineTypeEditorComponent;
+                        return !editorInstance.GetValidState();
+                    },
+                    text: saveButtonText,
+                    onAction: (childComponentInstance: any) => {
+                        //let promiseWrapper = new Promise<void>((resolve) => {
+                        //    this.viewModel.Blocked = true;
+
+                        //    let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
+                        //    planEditorComponentInstance.SaveData()
+                        //        .then((planCLO) => {
+
+                        //            this.reloadPlansFromServer();
+                        //            this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+
+                        //            setTimeout(() => {
+                        //                this.viewModel.Blocked = false;
+                        //                resolve();
+                        //            }, 200);
+
+                        //        });
+                        //});
+                        //return promiseWrapper;
+                        return null;
+                    }
+                },
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    }
+                }
+            ]
+
+
+        });
+
+    }
 
     // Constructor 
     constructor(
@@ -37,6 +91,8 @@ export class MedicineTypesOverviewComponent {
         private readonly commandManager: CommandManager,
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly dataService: HomePageDataService,
+        private readonly modalDialogService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -53,9 +109,16 @@ export class MedicineTypesOverviewComponent {
     }
 
     // Event handlers
+    private onAddNewMedicineTypeTriggered() {
+        let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
+        this.openMedicineTypeEditor('Add a new Medicine Type', 'Add', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+    }
 
 }
 interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
 }
 
+export enum MedicineTypeActionType {
+    CreateNew
+}

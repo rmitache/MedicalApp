@@ -35,7 +35,17 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.MedicineTypeCLO {
-        throw new Error("Create_DefaultCLO not implemented");
+        let newCLO = new CLOs.MedicineTypeCLO();
+        newCLO.ID = null;
+        newCLO.Name = "Default name";
+        newCLO.ProducerName = "";
+
+        newCLO.BaseUnitOfMeasure = Enums.UnitOfMeasure.mg;
+        newCLO.IsPackagedIntoUnits = true;
+        newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
+        newCLO.PackagedUnitDoseSize = 100;
+
+        return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineTypeCLO> {
         let cloList = new DataStructures.List<CLOs.MedicineTypeCLO>();

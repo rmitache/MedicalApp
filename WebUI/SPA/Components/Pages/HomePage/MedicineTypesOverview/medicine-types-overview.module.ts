@@ -12,6 +12,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { MedicineTypesOverviewComponent } from './medicine-types-overview.component';
+import { MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 
 
 
@@ -26,9 +27,11 @@ import { MedicineTypesOverviewComponent } from './medicine-types-overview.compon
     ],
     declarations: [
         MedicineTypesOverviewComponent,
+        MedicineTypeEditorComponent
     ],
     exports: [MedicineTypesOverviewComponent],
     entryComponents: [
+        MedicineTypeEditorComponent
     ]
 })
 export class MedicineTypesOverviewModule { }
