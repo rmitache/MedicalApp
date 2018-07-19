@@ -142,7 +142,6 @@ class CreateNewMode implements IMedicineTypeEditorModeImplementation {
 
     // Public methods
     public SaveData() {
-        debugger;
         let saveDataPromise = this.globalDataService.AddMedicineType(this.vm.MedicineTypeCLO);
         return saveDataPromise;
     }

@@ -210,7 +210,6 @@ export class HomePageDataService {
         const apiMethodName: string = 'AddMedicineType';
 
         let blo = this.genericCLOFactory.ConvertToBlo(medicineTypeCLO);
-        debugger;
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()
             .then((bloWithUpdatedID) => {

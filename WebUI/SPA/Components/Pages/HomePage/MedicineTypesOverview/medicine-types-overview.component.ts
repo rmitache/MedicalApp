@@ -54,7 +54,6 @@ export class MedicineTypesOverviewComponent {
                             this.viewModel.Blocked = true;
 
                             let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
-                            debugger;
                             medicineTypeEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
 
