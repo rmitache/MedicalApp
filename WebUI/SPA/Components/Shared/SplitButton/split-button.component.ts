@@ -13,7 +13,7 @@ export class SplitButtonComponent {
     // Fields
     //@Input('TooltipText')
     //private tooltipText: string;
-    @ViewChild('frame') frameElement: ElementRef;
+    @ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
     private readonly viewModel: ViewModel = {
         MenuItems: null,
         MenuPanelVisible: false,
@@ -44,17 +44,17 @@ export class SplitButtonComponent {
 
     // Event handlers
     private onSplitButtonClicked($event: Event) {
-        
+        // Hide menu panel 
         if (this.viewModel.MenuPanelVisible === true) {
-            // Hide menu panel 
             this.viewModel.MenuPanelVisible = false;
-
-        } else {
-            // Position and show menu panel
+            this.viewModel.MenuPanelLeftPosition = null;
+        }
+        // Position and show menu panel
+        else {
             this.viewModel.MenuPanelVisible = true;
-
-            // Add global click handler to detect "click outside" actions
-            document.addEventListener('click', this.onClickedOutside, true);
+            var panelWidth = (this.menuItemsBarElement.nativeElement as HTMLElement).clientWidth;
+            this.viewModel.MenuPanelLeftPosition = -panelWidth + 24;
+            document.addEventListener('click', this.onClickedOutside, true); // Add global click handler to detect "click outside" actions
         }
 
         //$event.preventDefault();
