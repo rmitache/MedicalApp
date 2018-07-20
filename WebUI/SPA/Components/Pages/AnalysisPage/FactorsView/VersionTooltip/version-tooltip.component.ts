@@ -91,6 +91,7 @@ export class VersionTooltipComponent {
         let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, version) : false;
         let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, version) : false;
 
+
         // StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
         if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
             (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, version))) {

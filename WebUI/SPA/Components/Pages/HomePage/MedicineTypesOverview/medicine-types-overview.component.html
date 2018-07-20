@@ -1,3 +1,9 @@
+<p-blockUI [blocked]="viewModel.Blocked">
+    <div class="inner-div">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+    </div>
+</p-blockUI>
+
 <div class="frame">
     <div class="header">
         <div class="left-section">
@@ -5,21 +11,19 @@
             <icon-button [IconName]="'plus'" (Clicked)="onAddNewMedicineTypeTriggered()"></icon-button>
         </div>
 
-        
+        <div class="right-section">
+        </div>
     </div>
     <div class="body">
+        <select class="view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
+            <option *ngFor="let medicineTypeStatus of medicineTypeStatusesEnum | enumkeys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
+        </select>
         <div id="medicine-type-elems-list">
-            <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.AvailableMedicineTypes">
-                
+            <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.FilteredMedicineTypes">
                 <span class="h3">{{medicineType.Name}}</span>
                 <split-button></split-button>
             </div>
-            <!--<plan-elem #factorRecords *ngFor="let plan of viewModel.GetFilteredPlans()"
-                       [PlanCLO]="plan"
-                       (ActionTriggered)="onPlanActionTriggered($event)"
-                       ></plan-elem>-->
-
         </div>
-        
+
     </div>
 </div> 

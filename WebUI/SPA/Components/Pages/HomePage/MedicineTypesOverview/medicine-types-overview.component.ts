@@ -13,6 +13,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
+import { MedicineTypeCLOService } from 'SPA/DomainModel/Factors/Medicine/CLOServices/medicine-type-clo.service';
 
 // Components
 
@@ -27,9 +28,14 @@ export class MedicineTypesOverviewComponent {
     // Fields
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
+    private medicineTypeStatusesEnum = Enums.MedicineTypeStatus;
     private readonly viewModel: ViewModel = {
-        AvailableMedicineTypes: null 
+        AvailableMedicineTypes: null,
+        FilteredMedicineTypes: null,
+        SelectedViewMode: Enums.MedicineTypeStatus.CurrentlyInUse,
+        Blocked: false
     };
+
 
     // Private methods
     private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
@@ -48,25 +54,23 @@ export class MedicineTypesOverviewComponent {
                     },
                     text: saveButtonText,
                     onAction: (childComponentInstance: any) => {
-                        //let promiseWrapper = new Promise<void>((resolve) => {
-                        //    this.viewModel.Blocked = true;
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.viewModel.Blocked = true;
 
-                        //    let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
-                        //    planEditorComponentInstance.SaveData()
-                        //        .then((planCLO) => {
+                            let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
+                            medicineTypeEditorComponentInstance.SaveData()
+                                .then((planCLO) => {
 
-                        //            this.reloadPlansFromServer();
-                        //            this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                                    this.reloadMedicineTypesFromServer();
+                                    setTimeout(() => {
+                                        this.viewModel.Blocked = false;
+                                        resolve();
+                                    }, 200);
+                                });
 
-                        //            setTimeout(() => {
-                        //                this.viewModel.Blocked = false;
-                        //                resolve();
-                        //            }, 200);
-
-                        //        });
-                        //});
-                        //return promiseWrapper;
-                        return null;
+                            
+                        });
+                        return promiseWrapper;
                     }
                 },
                 {
@@ -84,6 +88,45 @@ export class MedicineTypesOverviewComponent {
         });
 
     }
+    private reloadMedicineTypesFromServer(): Promise<void> {
+        let getMedTypesPromise = this.dataService.GetMedicineTypes();
+        let getPlansPromise = this.dataService.GetPlans();
+
+        // 
+        var promise= Promise.all([getMedTypesPromise, getPlansPromise])
+            .then((values) => {
+                let medicineTypes = values["0"];
+                let plans = values["1"];
+                this.setMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
+
+                // Set viewModel properties
+                this.viewModel.AvailableMedicineTypes = medicineTypes;
+                this.refreshUI();
+            });
+        return promise;
+    }
+    private setMedicineTypesWithSupplyAndStatus(medicineTypes: CLOs.MedicineTypeCLO[], plans: CLOs.PlanCLO[]) {
+        
+        let isInUseStatusArray = this.medicineTypeCLOService.GetInUsePropertyForMedicineTypes(medicineTypes, plans, moment());
+        
+        for (let i = 0; i < medicineTypes.length; i++) {
+            if (isInUseStatusArray[i] === true) {
+                medicineTypes[i].InUse = Enums.MedicineTypeStatus.CurrentlyInUse;
+            } else {
+                medicineTypes[i].InUse = Enums.MedicineTypeStatus.NotInUse;
+            }
+        }
+
+    }
+    private filterMedicineTypes(medTypesCLOs:CLOs.MedicineTypeCLO[], enumType: Enums.MedicineTypeStatus) {
+        var filteredCLOs = medTypesCLOs.filter(medType => {
+            return medType.InUse === enumType;
+        });
+        return filteredCLOs;
+    }
+    private refreshUI() {
+        this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
+    }
 
     // Constructor 
     constructor(
@@ -92,7 +135,8 @@ export class MedicineTypesOverviewComponent {
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly dataService: HomePageDataService,
         private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
+        private viewContainerRef: ViewContainerRef,
+        private readonly medicineTypeCLOService: MedicineTypeCLOService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -101,8 +145,14 @@ export class MedicineTypesOverviewComponent {
 
     }
     ngOnInit() {
-        // Init ViewModel properties
-        this.viewModel.AvailableMedicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
+        // Get the MedicineTypes with "IsInUse" properties set
+        let medicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
+        let plans = this.dataService.GetPlansFromBundle().ToArray();
+        this.setMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
+
+        // Set viewModel properties
+        this.viewModel.AvailableMedicineTypes = medicineTypes;
+        this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -111,14 +161,22 @@ export class MedicineTypesOverviewComponent {
     // Event handlers
     private onAddNewMedicineTypeTriggered() {
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor('Add a new Medicine Type', 'Add', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+    }
+    private onSelectedViewModeChanged(event) {
+        const newVal = parseInt(event.target.value);
+        this.viewModel.SelectedViewMode = newVal;
+
+        this.refreshUI();
     }
 
 }
 interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
+    FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
+    SelectedViewMode: Enums.MedicineTypeStatus;
+    Blocked: boolean;
 }
-
 export enum MedicineTypeActionType {
     CreateNew
 }

@@ -1,9 +1,15 @@
-<div class="frame" (click)="onClicked()">
-    <img src="/Images/arrow-down.png" />
+<div class="frame" >
+    <div class="icon-button-frame" (click)="onSplitButtonClicked($event)">
+        <img src="/Images/arrow-down.png" />
+    </div>
 
-</div>
-<div class="menu-div"
-     [style.display]="viewModel.ShowItemsDiv ? 'block' : 'none'">
-    I'm a menu
 
+    <div class="menu-div" #menuItemsBar
+         [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'"
+         [style.left.px]="viewModel.MenuPanelLeftPosition ? viewModel.MenuPanelLeftPosition : 0">
+        <div class="menu-item" *ngFor="let menuItem of viewModel.MenuItems" (click)="onMenuItemClicked(menuItem)">
+            <span class="label">{{menuItem.Name}}</span>
+            
+        </div>
+    </div>
 </div>

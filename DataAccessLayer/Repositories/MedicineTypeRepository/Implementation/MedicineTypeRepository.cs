@@ -17,6 +17,13 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         }
 
         // Public methods
+        public TMedicineType AddMedicineType(TMedicineType dataEntity)
+        {
+            entitiesContext.TMedicineType.Add(dataEntity);
+            entitiesContext.SaveChanges();
+
+            return dataEntity;
+        }
         public List<TMedicineType> GetAllMedicineTypes(int userID)
         {
             return entitiesContext.TMedicineType

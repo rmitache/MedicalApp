@@ -116,7 +116,6 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
-
     public GetFactorRecords(dateRange: Range<Date>): Promise<CLOs.MedicineFactorRecordCLO[]> {
         const apiMethodName: string = 'GetFactorRecords';
 
@@ -205,6 +204,35 @@ export class HomePageDataService {
 
         return getDataPromise;
     }
+
+    // MedicineTypes
+    public AddMedicineType(medicineTypeCLO: CLOs.MedicineTypeCLO): Promise<CLOs.MedicineTypeCLO> {
+        const apiMethodName: string = 'AddMedicineType';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(medicineTypeCLO);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
+    public GetMedicineTypes(): Promise<CLOs.MedicineTypeCLO[]> {
+        const apiMethodName: string = 'GetMedicineTypes';
+
+
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO, blos).ToArray();
+            });
+
+
+        return getDataPromise;
+    }
+    
 
     // Login
     public Logout(): Promise<boolean> {

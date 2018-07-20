@@ -1,6 +1,80 @@
 <form [formGroup]="reactiveForm">
 
     <div class="frame">
-        I'm a MedicineType EDITOR
+        <!--Name-->
+        <div class="label-input-pair" id="name-div">
+            <span class="label">Name:</span>
+            <input type="text"
+                   class="ui-inputtext"
+                   formControlName="name"
+                   id="name-input"
+                   [(ngModel)]="viewModel.MedicineTypeCLO.Name" />
+
+        </div>
+
+        <!--Producer-->
+        <div class="label-input-pair" id="producer-div">
+            <span class="label">Producer:</span>
+            <input type="text"
+                   class="ui-inputtext"
+                   formControlName="producerName"
+                   id="name-input"
+                   [(ngModel)]="viewModel.MedicineTypeCLO.ProducerName" />
+        </div>
+
+        <!--BaseUnitOfMeasure-->
+        <div class="label-input-pair">
+            <span class="label">Unit of Measure</span>
+            <select class="drop-down"
+                    [(ngModel)]="viewModel.MedicineTypeCLO.BaseUnitOfMeasure"
+                    formControlName="baseUnitOfMeasure">
+                <option *ngFor="let unitOfMeasure of unitsOfMeasureEnum | enumkeys" [value]="unitOfMeasure.value">{{unitOfMeasure.key}}</option>
+            </select>
+        </div>
+
+        <!--IsPackagedIntoUnits-->
+        <div class="label-input-pair">
+            <span class="label">Is packaged into Unit Doses ?</span>
+            <div class="radio-button-group">
+                <div class="radio-button-div" [ngClass]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
+                    <label class="label-text-dark">
+                        Yes
+                        <input type="radio" formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits">
+                    </label>
+                </div>
+                <div class="radio-button-div" [ngClass]="!viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
+                    <label class="label-text-dark">
+                        No
+                        <input type="radio" formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!--PackagedUnitDoseType-->
+        <div class="label-input-pair" id="packaged-div"
+             [style.visibility]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits === true ? 'visible' : 'hidden'">
+            <div class="header">
+                <span class="label">Packaged as</span>
+            </div>
+            <div class="body">
+                <select class="drop-down"
+                        id="packagedUnitDoseType"
+                        [(ngModel)]="viewModel.MedicineTypeCLO.PackagedUnitDoseType"
+                        formControlName="packagedUnitDoseType">
+                    <option *ngFor="let packagedUnitDoseType of packagedUnitDoseTypesEnum | enumkeys" [value]="packagedUnitDoseType.value">{{packagedUnitDoseType.key}}</option>
+                </select>
+
+                <div class="inner-label">of</div>
+
+                <input type="text"
+                       id="packagedUnitDoseSize"
+                       class="ui-inputtext"
+                       formControlName="packagedUnitDoseSize"
+                       [(ngModel)]="viewModel.MedicineTypeCLO.PackagedUnitDoseSize" />
+                <div class="inner-label">{{viewModel.MedicineTypeCLO.UnitOfMeasureName}} each</div>
+            </div>
+        </div>
+
     </div>
 </form>

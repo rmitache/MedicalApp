@@ -49,6 +49,7 @@
     margin-top: 12px;
     height: calc(100% - 45px);
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 

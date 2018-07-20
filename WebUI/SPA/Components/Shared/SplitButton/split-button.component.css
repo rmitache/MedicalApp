@@ -1,4 +1,9 @@
+
 .frame {
+    overflow: visible;
+    position: relative;
+}
+.icon-button-frame {
     width: 16px;
     height: 16px;
     padding: 5px;
@@ -7,17 +12,42 @@
     cursor: pointer;
 }
 
-    .frame:hover {
+.icon-button-frame {
+
+
+}
+    .icon-button-frame:hover {
         background-color: #73c0f1;
     }
 
-    .frame img {
+    .icon-button-frame img {
         margin: 0;
         padding: 0;
         float: left;
     }
 
 .menu-div{
+    position:absolute;
+    /*left:-120px;*/
+    top:25px;
 
+    border:solid 1px #c6c6c6;
+    min-width:80px;
+    min-height:20px;
+    background-color:white;
+    z-index:99999;
 }
-
+.menu-item {
+    height:10px;
+    line-height:10px;
+    vertical-align:middle;
+    cursor:pointer;
+    padding:5px;
+}
+    .menu-item:hover {
+        background-color: #c6c6c6;
+    }
+.menu-item .label {
+    color:black;
+    display:inline-block;
+}
