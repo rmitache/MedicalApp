@@ -3,6 +3,7 @@
 export * from './Factors/Medicine/Enums/factor-record-type.enum';
 export * from './Factors/Medicine/Enums/packaged-unit-dose-type.enum';
 export * from './Factors/Medicine/Enums/user-defined-unit-dose-type.enum';
+export * from './Factors/Medicine/Enums/medicine-type-status.enum';
 
 // Symptoms - Library
 export * from './Indicators/Symptoms/Enums/symptom-intensity-level.enum';

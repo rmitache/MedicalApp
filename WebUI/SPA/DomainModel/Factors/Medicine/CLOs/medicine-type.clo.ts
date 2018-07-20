@@ -9,11 +9,13 @@ export class MedicineTypeCLO extends BaseCLO {
     public Name: string;
     public ProducerName: string;
 
+    public InUse: Enums.MedicineTypeStatus;
 
     public BaseUnitOfMeasure: Enums.UnitOfMeasure;
     public IsPackagedIntoUnits: boolean;
     public PackagedUnitDoseType: Enums.PackagedUnitDoseType;
     public PackagedUnitDoseSize: number;
+
 
     // Properties
     public get UnitOfMeasureName() {
@@ -23,8 +25,6 @@ export class MedicineTypeCLO extends BaseCLO {
 
         return Enums.UnitOfMeasure[this.BaseUnitOfMeasure];
     }
-
-
 
     // Constructor
     constructor(init?: Partial<MedicineTypeCLO>) {

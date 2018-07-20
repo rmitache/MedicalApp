@@ -232,6 +232,7 @@ export class HomePageDataService {
 
         return getDataPromise;
     }
+    
 
     // Login
     public Logout(): Promise<boolean> {

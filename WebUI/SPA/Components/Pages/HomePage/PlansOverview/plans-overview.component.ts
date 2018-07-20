@@ -35,6 +35,7 @@ export class PlansOverviewComponent {
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
         GetFilteredPlans: () => {
+            
             return this.viewModel.AvailablePlans.filter(plan => {
 
                 if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Active) {

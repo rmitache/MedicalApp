@@ -94,6 +94,26 @@ export class PlanCLO extends BaseCLO {
             return intersectionsArray;
         }
     }
+    public GetVersionsWhichIntersectWithDateRange(targetDateRange: Range<moment.Moment>): CLOs.VersionCLO[] {
+
+        var versionsWhichIntersect: CLOs.VersionCLO[] = [];
+
+        // 
+        this.Versions.ToArray().forEach((versionCLO) => {
+            var intersectionResult = versionCLO.GetIntersectionWithDateRange(targetDateRange);
+            
+            if (intersectionResult !== null) {
+                versionsWhichIntersect.push(versionCLO);
+            }
+        });
+
+        // Returns an array 
+        if (versionsWhichIntersect.length===0) {
+            return null;
+        } else {
+            return versionsWhichIntersect;
+        }
+    }
     public GetVersionBeforeTarget(versionCLO): CLOs.VersionCLO {
         if (!this.Versions) {
             throw new Error("Versions is null or undefined");

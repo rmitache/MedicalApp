@@ -13,6 +13,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 // Components
 import { MedicineTypesOverviewComponent } from './medicine-types-overview.component';
 import { MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
+import { MedicineTypeCLOService } from 'SPA/DomainModel/Factors/Medicine/CLOServices/medicine-type-clo.service';
 
 
 
@@ -30,6 +31,7 @@ import { MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/Medic
         MedicineTypeEditorComponent
     ],
     exports: [MedicineTypesOverviewComponent],
+    providers: [MedicineTypeCLOService],
     entryComponents: [
         MedicineTypeEditorComponent
     ]

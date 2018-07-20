@@ -10,7 +10,6 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public string Name { get; set; }
         virtual public string ProducerName { get; set; }
 
-
         virtual public UnitOfMeasure BaseUnitOfMeasure { get; set; }
         virtual public bool IsPackagedIntoUnits { get; set; }
         virtual public PackagedUnitDoseType? PackagedUnitDoseType { get; set; }
