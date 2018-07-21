@@ -31,36 +31,20 @@ export class HomePageComponent {
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
 
-        // Init momentjs settings
-        //moment.updateLocale('en', {
-        //    calendar: {
-        //        lastDay: '[Yesterday]',
-        //        sameDay: '[Today]',
-        //        nextDay: '[Tomorrow]',
-        //        lastWeek: '[Last] dddd',
-        //        nextWeek: '[Next] dddd',
-        //        sameElse: 'L'
-        //    }
-        //});
+        // Setup momentjs relative thresholds
         moment.relativeTimeThreshold('s', 55);  // 45
         moment.relativeTimeThreshold('m', 59);  // 45
         moment.relativeTimeThreshold('h', 23);  // 22
         moment.relativeTimeThreshold('d', 28);  // 26
         moment.relativeTimeThreshold('M', 11);  // 11
 
-
-
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
-    }
-    ngDoCheck() {
-        //console.log('cd triggered');
     }
     ngAfterViewInit() {
         // Initialize and start the Page
         const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
-
         
 
         //// Handle change tracking

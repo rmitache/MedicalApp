@@ -224,9 +224,9 @@ class AdjustMode implements IPlanEditorModeImplementation {
 
         // Custom form logic 
         this.reactiveForm.get('planName').disable();
-        this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
-            return advancedPlanDatesValidator(group, this.prevVersion);
-        }]);
+        this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
+            return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
+        } ]);
 
         // Prepare ViewModel 
         this.vm.PlanCLO = planCLO;
@@ -272,8 +272,8 @@ class HardEditMode implements IPlanEditorModeImplementation {
 
             // Custom form logic
             this.reactiveForm.get('planName').disable();
-            this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
-                return advancedPlanDatesValidator(group, this.prevVersion);
+            this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
+                return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
             }]);
 
             // Prepare ViewModel 
@@ -350,8 +350,8 @@ class RestartMode implements IPlanEditorModeImplementation {
 
         // Custom form logic 
         this.reactiveForm.get('planName').disable();
-        this.reactiveForm.get('dates').setValidators([(group: FormGroup) => {
-            return advancedPlanDatesValidator(group, this.prevVersion);
+        this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
+            return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
         }]);
 
         // Prepare ViewModel 
@@ -378,7 +378,8 @@ modeImplementationsLookup[PlanEditorMode.HardEdit] = HardEditMode;
 modeImplementationsLookup[PlanEditorMode.Restart] = RestartMode;
 
 // Custom validators
-function basicPlanDatesValidator(group: FormGroup) {
+function basicPlanDatesValidator(control: AbstractControl) {
+    let group = control as FormGroup;
 
     // Variables
     var startDateInput = group.controls['startDate'];
