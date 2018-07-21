@@ -63,8 +63,11 @@ export class PlansOverviewComponent {
                             planEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
 
-                                    this.reloadPlansFromServer();
-                                    this.refreshUI();
+                                    this.reloadPlansFromServer()
+                                        .then(() => {
+                                            this.refreshUI();
+                                        });
+                                    
 
                                     this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 
