@@ -3,6 +3,7 @@ import { Range } from 'SPA/Core/Helpers/DataStructures/misc';
 import { FormGroup, FormControl } from '@angular/forms';
 
 
+// Enums
 export function GetEnumEntryByIndex(enumRef: any, index: number): any {
 
     let count = -1;
@@ -12,12 +13,12 @@ export function GetEnumEntryByIndex(enumRef: any, index: number): any {
         if (count === index) {
             return key;
         }
-
     }
 
     return null;
 }
 
+// Dates
 export function EnumerateDaysBetweenDates(startDate: Date, endDate: Date, includeEdges: boolean): Date[] {
     var dates = [];
 
@@ -35,7 +36,6 @@ export function EnumerateDaysBetweenDates(startDate: Date, endDate: Date, includ
 
     return dates;
 };
-
 export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>, includeEdges: boolean): moment.Moment[] {
     var momentDates = [];
 
@@ -53,13 +53,11 @@ export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>
 
     return momentDates;
 };
-
 export function GetNrOfDaysBetweenDates(firstDate: Date, secondDate: Date, includeEdges: boolean = true) {
 
     return GetNrOfDaysBetweenDatesUsingMoment(moment(firstDate), moment(secondDate), includeEdges);
 }
-
-export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges:boolean = true) {
+export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges: boolean = true) {
 
     var largestDate;
     var smallestDate;
@@ -78,11 +76,10 @@ export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, sec
     }
 
 
-    
+
 
     return nrOfDays;
 }
-
 export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
     var datesInRange = EnumerateDaysBetweenDatesUsingMoment(targetDateRange, true);
     for (var i = 0; i < datesInRange.length; i++) {
@@ -94,25 +91,7 @@ export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: 
 
     return null;
 }
-
-export function RandomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-export function StringToColour(str) {
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    var colour = '#';
-    for (var i = 0; i < 3; i++) {
-        var value = (hash >> (i * 8)) & 0xFF;
-        colour += ('00' + value.toString(16)).substr(-2);
-    }
-    return colour;
-}
-
-// Returns a range of dates starting at the beginning of a month and ending at the end of a month 
+/* Returns a range of dates starting at the beginning of a month and ending at the end of a month */
 export function GetMonthRangeWithPaddingUsingMoment(refStartDate: moment.Moment, refEndDate: moment.Moment, padding: number) {
     if (padding < 0) {
         throw new Error('GetMonthRangeWithPadding - padding must be non-negative');
@@ -131,11 +110,41 @@ export function GetMonthRangeWithPaddingUsingMoment(refStartDate: moment.Moment,
     var range = new Range<moment.Moment>(actualStartDate, actualEndDate);
     return range;
 }
+export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
+    let firstDateInMonth = date.clone().startOf('month');
+    let lastDateInMonth = date.clone().endOf('month');
+    let isFirstDate = date.isSame(firstDateInMonth, 'day');
+    let isLastDate = date.isSame(lastDateInMonth, 'day');
 
+    return isFirstDate || isLastDate;
+
+}
+
+// Numbers
+export function RandomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// Colors
+export function StringToColour(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    var colour = '#';
+    for (var i = 0; i < 3; i++) {
+        var value = (hash >> (i * 8)) & 0xFF;
+        colour += ('00' + value.toString(16)).substr(-2);
+    }
+    return colour;
+}
+
+// Strings
 export function RemoveWhitespace(str: string): string {
     return str.replace(/ /g, '');
 }
 
+// Validation
 export function ValidateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
         const control = formGroup.get(field);
@@ -147,16 +156,20 @@ export function ValidateAllFields(formGroup: FormGroup) {
     });
 }
 
-export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
-    let firstDateInMonth = date.clone().startOf('month');
-    let lastDateInMonth = date.clone().endOf('month');
-    let isFirstDate = date.isSame(firstDateInMonth, 'day');
-    let isLastDate = date.isSame(lastDateInMonth, 'day');
-
-    return isFirstDate || isLastDate;
-
+// Datastructures
+export function ConvertArrayToDictionary<T>(array: Array<T>, indexKey: keyof T) {
+    const normalizedObject: any = {}
+    for (let i = 0; i < array.length; i++) {
+        const key = array[i][indexKey]
+        normalizedObject[key] = array[i]
+    }
+    return normalizedObject as { [key: string]: T }
 }
+export function ConvertDictionaryToArray<T>(dictionary: { [key: string]: T }) {
+    var array: Array<T> = [];
+    for (var key in dictionary) {
+        array.push(dictionary[key]);
+    }
 
-//export function <T>ToDictionary(T[], ) {
-
-//}
+    return array;
+}

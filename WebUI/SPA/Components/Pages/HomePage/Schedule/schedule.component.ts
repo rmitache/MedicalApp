@@ -144,7 +144,7 @@ export class ScheduleComponent {
     }
 
     // Public methods
-    public RefreshUI() {
+    public ReloadData() {
         this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
             .then(() => {
                 this.refreshUI();
