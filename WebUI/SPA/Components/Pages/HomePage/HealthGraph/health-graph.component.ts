@@ -132,14 +132,6 @@ export class HealthGraphComponent {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
-    // Public methods
-    public RefreshUI() {
-        this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
-            .then(() => {
-                this.refreshUI();
-            });
-    }
-
     // Event handlers
     private onAddNewHealthStatusEntryTriggered() {
         this.modalDialogService.OpenDialog(this.viewContainerRef, {
@@ -159,10 +151,7 @@ export class HealthGraphComponent {
 
                             let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
                             componentInstance.SaveData()
-                                .then((cloList) => {
-
-
-
+                                .then((healthStatusCLO) => {
                                     this.reloadAvailableHealthStatusEntriesFromServer(this.viewModel.AvailableDateRange)
                                         .then(() => {
                                             this.refreshUI();
