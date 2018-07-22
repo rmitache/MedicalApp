@@ -107,7 +107,7 @@ export class IndicatorsViewComponent {
 
         return symptomTypesToColorsDictionary;
     }
-    private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+    private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
         let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
         let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
             .then(clos => {
@@ -236,7 +236,7 @@ export class IndicatorsViewComponent {
                 newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
-            this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
+            this.reloadDataFromServer(newAvailableDateRange)
                 .then(() => {
                     this.viewModel.SelectedDateRange = newSelDateRange;
                     this.refreshUI();

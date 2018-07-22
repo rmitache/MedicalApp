@@ -90,7 +90,7 @@ export class ScheduleComponent {
         }
         return currentStrategy;
     }
-    private reloadAvailableFactorRecordsFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+    private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
         let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
         let promise = this.dataService.GetFactorRecords(jsDateRange)
             .then(factorRecordCLOs => {
@@ -145,7 +145,7 @@ export class ScheduleComponent {
 
     // Public methods
     public ReloadData() {
-        this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
+        this.reloadDataFromServer(this.viewModel.AvailableDateRange)
             .then(() => {
                 this.refreshUI();
             });
@@ -172,7 +172,7 @@ export class ScheduleComponent {
                             addNewEventComponentInstance.SaveData()
                                 .then((cloList) => {
 
-                                    this.reloadAvailableFactorRecordsFromServer(this.viewModel.AvailableDateRange)
+                                    this.reloadDataFromServer(this.viewModel.AvailableDateRange)
                                         .then(() => {
                                             this.refreshUI();
                                             setTimeout(() => {
@@ -210,7 +210,7 @@ export class ScheduleComponent {
                 newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
-            this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
+            this.reloadDataFromServer(newAvailableDateRange)
                 .then(() => {
                     this.viewModel.SelectedDateRange = newSelDateRange;
                     this.refreshUI();
@@ -235,7 +235,7 @@ export class ScheduleComponent {
                 newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
-            this.reloadAvailableFactorRecordsFromServer(newAvailableDateRange)
+            this.reloadDataFromServer(newAvailableDateRange)
                 .then(() => {
 
                     this.viewModel.SelectedDateRange = newSelDateRange;

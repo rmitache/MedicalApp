@@ -28,10 +28,11 @@ export class PlansOverviewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
     private readonly planStatusViewModes = {
+        // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         Active: 'Active',
         Inactive: 'Inactive',
         Upcoming: 'Upcoming'
-    };// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
+    };
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
         FilteredPlans: null,
@@ -63,11 +64,11 @@ export class PlansOverviewComponent {
                             planEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
 
-                                    this.reloadPlansFromServer()
+                                    this.reloadDataFromServer()
                                         .then(() => {
                                             this.refreshUI();
                                         });
-                                    
+
 
                                     this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 
@@ -96,7 +97,7 @@ export class PlansOverviewComponent {
         });
 
     }
-    private reloadPlansFromServer(): Promise<void> {
+    private reloadDataFromServer(): Promise<void> {
         let promise = this.dataService.GetPlans()
             .then(planCLOs => {
                 this.viewModel.AvailablePlans = planCLOs;
@@ -144,8 +145,6 @@ export class PlansOverviewComponent {
     ngOnInit() {
         // Init ViewModel properties
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
-
-        //
         this.refreshUI();
     }
     ngOnDestroy() {
@@ -178,7 +177,7 @@ export class PlansOverviewComponent {
     private onSelectedViewModeChanged(event) {
         const newVal = event.target.value;
         this.viewModel.SelectedViewMode = newVal;
-        
+
         this.refreshUI();
     }
 }
