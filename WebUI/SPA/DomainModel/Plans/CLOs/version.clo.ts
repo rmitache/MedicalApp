@@ -75,7 +75,7 @@ export class VersionCLO extends BaseCLO {
             var today = moment();
             if (momentTargetDateRange.contains(today)) {
                 momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), today.endOf('day'));
-            } else if (momentTargetDateRange.start > today || this.EndDate === null) {
+            } else if (momentTargetDateRange.start > today ) {
                 return null;
             }
         }
