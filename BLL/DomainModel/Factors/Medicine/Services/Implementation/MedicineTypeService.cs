@@ -34,11 +34,26 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return blo;
         }
-        public List<MedicineType> GetAllMedicineTypes(int userID)
+        public List<MedicineType> GetAllMedicineTypes(int userID/*, bool retreiveSupplyAndUsageInfo*/)
         {
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID);
             var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities);
+
+
+            // Set IsInUse field --------------------------------------------------------------------------------------------------------------
+
+
+            // Get all Plans for the current user 
+
+            // For each Plan, get 
+
+
+            //---------------------------------------------------------------------------------------------------------------------------------
+
+            // Get all Plans 
+
+            // 
 
             // Sort alphabetically
             var sortedBLOs = blos.OrderBy(medicineType => medicineType.Name).ToList();

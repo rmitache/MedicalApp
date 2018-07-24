@@ -56,7 +56,7 @@ export class PlanElemComponent {
             let versionCLO = versionCLOs[i];
 
             // Only consider Versions which are within the SelectedDateRange
-            let intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange);
+            let intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange, true);
             if (intersectionRange !== null) {
 
                 // Determine the Width

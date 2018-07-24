@@ -99,10 +99,9 @@ export class IndicatorsViewComponent {
 
         // Variables
         let symptomTypesToColorsDictionary: { [symptomTypeName: string]: string } = {};
-        let colors = this.symptomTypesColors.slice();
 
         availableSymptomTypes.forEach((clo, index) => {
-            symptomTypesToColorsDictionary[clo.Name] = colors[index];
+            symptomTypesToColorsDictionary[clo.Name] = this.symptomTypesColors[index];
         });
 
         return symptomTypesToColorsDictionary;
