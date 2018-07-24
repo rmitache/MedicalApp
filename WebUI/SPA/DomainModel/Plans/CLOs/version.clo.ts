@@ -100,31 +100,6 @@ export class VersionCLO extends BaseCLO {
 
         return intersectionRange;
     }
-    public GetUniqueMedicineTypesWithAvgDosePerMonth() {
-        let medTypes: { [medicineTypeName: string]: MedicineTypeAndAvgMonthlyDosage } = {};
-
-        // Loop through rules  
-        for (let i = 0; i < this.Rules.length; i++) {
-            let ruleCLO = this.Rules[i];
-
-            // Loop through medicineRuleItems
-            ruleCLO.MedicineRuleItems.forEach((medRuleItem) => {
-
-                // Create an entry for the MedicineType if it doesnt exist
-                if (medTypes[medRuleItem.MedicineType.Name] === undefined) {
-                    medTypes[medRuleItem.MedicineType.Name] = new MedicineTypeAndAvgMonthlyDosage();
-                    medTypes[medRuleItem.MedicineType.Name].MedicineType = medRuleItem.MedicineType;
-                }
-
-                // Add it's dosage calculation to the monthlyTotal for its MedicineType
-                let medTypeEntry = medTypes[medRuleItem.MedicineType.Name];
-                var dosagePerMonth = medRuleItem.TotalDosagePerTimeInMgOrMl * ruleCLO.NrOfTimesPerMonth;
-                medTypeEntry.AddTotalMonthlyDosageFromMedicineRuleItem(dosagePerMonth);
-            });
-        }
-
-        return medTypes;
-    }
     public GetPreviousVersion(): CLOs.VersionCLO {
         return this.parentPlan.GetVersionBeforeTarget(this);
     }
@@ -133,21 +108,3 @@ export class VersionCLO extends BaseCLO {
     }
 }
 
-export class MedicineTypeAndAvgMonthlyDosage {
-
-    // Fields
-    public MedicineType: CLOs.MedicineTypeCLO;
-    private totalMonthlyDosageInMgOrMl: number = 0; // quantity * unitdosesize 
-    private numberOfRuleItemsToDivideBy: number = 0;
-
-    // Properties
-    public get AvgMonthlyDosage(): number {
-        return this.totalMonthlyDosageInMgOrMl / this.numberOfRuleItemsToDivideBy;
-    }
-
-    // Public methods
-    public AddTotalMonthlyDosageFromMedicineRuleItem(totalDosageInMgOrMl) {
-        this.totalMonthlyDosageInMgOrMl += totalDosageInMgOrMl;
-        this.numberOfRuleItemsToDivideBy++;
-    }
-}

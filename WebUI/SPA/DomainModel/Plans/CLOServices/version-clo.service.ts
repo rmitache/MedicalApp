@@ -16,6 +16,31 @@ import { GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/f
 @Injectable()
 export class VersionCLOService {
     // Public Methods
+    public GetUniqueMedicineTypesWithAvgDosePerMonth(targetVersion:CLOs.VersionCLO) {
+        let medTypes: { [medicineTypeName: string]: MedicineTypeAndAvgMonthlyDosage } = {};
+
+        // Loop through rules  
+        for (let i = 0; i < targetVersion.Rules.length; i++) {
+            let ruleCLO = targetVersion.Rules[i];
+
+            // Loop through medicineRuleItems
+            ruleCLO.MedicineRuleItems.forEach((medRuleItem) => {
+
+                // Create an entry for the MedicineType if it doesnt exist
+                if (medTypes[medRuleItem.MedicineType.Name] === undefined) {
+                    medTypes[medRuleItem.MedicineType.Name] = new MedicineTypeAndAvgMonthlyDosage();
+                    medTypes[medRuleItem.MedicineType.Name].MedicineType = medRuleItem.MedicineType;
+                }
+
+                // Add it's dosage calculation to the monthlyTotal for its MedicineType
+                let medTypeEntry = medTypes[medRuleItem.MedicineType.Name];
+                var dosagePerMonth = medRuleItem.TotalDosagePerTimeInMgOrMl * ruleCLO.NrOfTimesPerMonth;
+                medTypeEntry.AddTotalMonthlyDosageFromMedicineRuleItem(dosagePerMonth);
+            });
+        }
+
+        return medTypes;
+    }
     /** Returns VersionA - VersionB  */
     public GetChangesBetween(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO, returnUnchanged: boolean = false): MedicineTypeChangeSet[] {
         // versionA - versionB -> actual differences between the two versions
@@ -25,8 +50,8 @@ export class VersionCLOService {
 
         // Variables
         let medTypeChanges: MedicineTypeChangeSet[] = [];
-        let versionAUniqueMedTypes = (versionA !== null) ? versionA.GetUniqueMedicineTypesWithAvgDosePerMonth() : {};
-        let versionBUniqueMedTypes = (versionB !== null) ? versionB.GetUniqueMedicineTypesWithAvgDosePerMonth() : {};
+        let versionAUniqueMedTypes = (versionA !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionA) : {};
+        let versionBUniqueMedTypes = (versionB !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionB) : {};
 
         // Loop through entries in the versionAMedTypes (find those which are NEW and CHANGED)
         for (var medicineTypeName in versionAUniqueMedTypes) {
@@ -101,6 +126,7 @@ export class VersionCLOService {
     }
 }
 
+// Special classes 
 export class MedicineTypeChangeSet {
     public ChangeType: ChangeType;
 
@@ -113,4 +139,23 @@ export enum ChangeType {
     Decreased = 2,
     New = 3,
     Stopped = 4
+}
+
+export class MedicineTypeAndAvgMonthlyDosage {
+
+    // Fields
+    public MedicineType: CLOs.MedicineTypeCLO;
+    private totalMonthlyDosageInMgOrMl: number = 0; // quantity * unitdosesize 
+    private numberOfRuleItemsToDivideBy: number = 0;
+
+    // Properties
+    public get AvgMonthlyDosage(): number {
+        return this.totalMonthlyDosageInMgOrMl / this.numberOfRuleItemsToDivideBy;
+    }
+
+    // Public methods
+    public AddTotalMonthlyDosageFromMedicineRuleItem(totalDosageInMgOrMl) {
+        this.totalMonthlyDosageInMgOrMl += totalDosageInMgOrMl;
+        this.numberOfRuleItemsToDivideBy++;
+    }
 }
