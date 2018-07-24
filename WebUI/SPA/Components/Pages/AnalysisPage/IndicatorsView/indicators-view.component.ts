@@ -99,15 +99,14 @@ export class IndicatorsViewComponent {
 
         // Variables
         let symptomTypesToColorsDictionary: { [symptomTypeName: string]: string } = {};
-        let colors = this.symptomTypesColors.slice();
 
         availableSymptomTypes.forEach((clo, index) => {
-            symptomTypesToColorsDictionary[clo.Name] = colors[index];
+            symptomTypesToColorsDictionary[clo.Name] = this.symptomTypesColors[index];
         });
 
         return symptomTypesToColorsDictionary;
     }
-    private reloadAvailableHealthStatusEntriesFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+    private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
         let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
         let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
             .then(clos => {
@@ -236,7 +235,7 @@ export class IndicatorsViewComponent {
                 newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
             this.viewModel.Blocked = true;
-            this.reloadAvailableHealthStatusEntriesFromServer(newAvailableDateRange)
+            this.reloadDataFromServer(newAvailableDateRange)
                 .then(() => {
                     this.viewModel.SelectedDateRange = newSelDateRange;
                     this.refreshUI();

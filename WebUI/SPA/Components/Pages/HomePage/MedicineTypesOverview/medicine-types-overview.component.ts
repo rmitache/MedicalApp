@@ -15,7 +15,6 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { MedicineTypeCLOService } from 'SPA/DomainModel/Factors/Medicine/CLOServices/medicine-type-clo.service';
 
-// Components
 
 
 @Component({
@@ -61,7 +60,8 @@ export class MedicineTypesOverviewComponent {
                             medicineTypeEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
 
-                                    this.reloadMedicineTypesFromServer();
+                                    this.reloadDataFromServer();
+                                    this.refreshUI();
                                     setTimeout(() => {
                                         this.viewModel.Blocked = false;
                                         resolve();
@@ -88,7 +88,7 @@ export class MedicineTypesOverviewComponent {
         });
 
     }
-    private reloadMedicineTypesFromServer(): Promise<void> {
+    private reloadDataFromServer(): Promise<void> {
         let getMedTypesPromise = this.dataService.GetMedicineTypes();
         let getPlansPromise = this.dataService.GetPlans();
 
@@ -97,15 +97,15 @@ export class MedicineTypesOverviewComponent {
             .then((values) => {
                 let medicineTypes = values["0"];
                 let plans = values["1"];
-                this.setMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
+                this.applyMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
 
                 // Set viewModel properties
                 this.viewModel.AvailableMedicineTypes = medicineTypes;
-                this.refreshUI();
+                
             });
         return promise;
     }
-    private setMedicineTypesWithSupplyAndStatus(medicineTypes: CLOs.MedicineTypeCLO[], plans: CLOs.PlanCLO[]) {
+    private applyMedicineTypesWithSupplyAndStatus(medicineTypes: CLOs.MedicineTypeCLO[], plans: CLOs.PlanCLO[]) {
         
         let isInUseStatusArray = this.medicineTypeCLOService.GetInUsePropertyForMedicineTypes(medicineTypes, plans, moment());
         
@@ -148,7 +148,7 @@ export class MedicineTypesOverviewComponent {
         // Get the MedicineTypes with "IsInUse" properties set
         let medicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
         let plans = this.dataService.GetPlansFromBundle().ToArray();
-        this.setMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
+        this.applyMedicineTypesWithSupplyAndStatus(medicineTypes, plans);
 
         // Set viewModel properties
         this.viewModel.AvailableMedicineTypes = medicineTypes;
@@ -156,6 +156,14 @@ export class MedicineTypesOverviewComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public method 
+    public ReloadData() {
+        this.reloadDataFromServer()
+            .then(() => {
+                this.refreshUI();
+            });
     }
 
     // Event handlers

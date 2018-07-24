@@ -28,30 +28,15 @@ export class PlansOverviewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
     private readonly planStatusViewModes = {
+        // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         Active: 'Active',
         Inactive: 'Inactive',
         Upcoming: 'Upcoming'
     };
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
-        GetFilteredPlans: () => {
-            
-            return this.viewModel.AvailablePlans.filter(plan => {
-
-                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Active) {
-                    return plan.Status as number === Enums.PlanStatus.Active || plan.Status as number === Enums.PlanStatus.ActiveWithUpcomingAdjustment;
-                }
-                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Inactive) {
-                    return plan.Status as number === Enums.PlanStatus.Inactive;
-                }
-                if (this.viewModel.SelectedPlanStatusViewMode === this.planStatusViewModes.Upcoming) {
-                    return plan.Status as number === Enums.PlanStatus.UpcomingAsNew || plan.Status as number === Enums.PlanStatus.UpcomingAsRestarted;
-                }
-
-                return null;
-            });
-        },
-        SelectedPlanStatusViewMode: this.planStatusViewModes.Active,
+        FilteredPlans: null,
+        SelectedViewMode: this.planStatusViewModes.Active,
         Blocked: false
     };
 
@@ -79,7 +64,12 @@ export class PlansOverviewComponent {
                             planEditorComponentInstance.SaveData()
                                 .then((planCLO) => {
 
-                                    this.reloadPlansFromServer();
+                                    this.reloadDataFromServer()
+                                        .then(() => {
+                                            this.refreshUI();
+                                        });
+
+
                                     this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 
                                     setTimeout(() => {
@@ -107,12 +97,34 @@ export class PlansOverviewComponent {
         });
 
     }
-    private reloadPlansFromServer(): Promise<void> {
+    private reloadDataFromServer(): Promise<void> {
         let promise = this.dataService.GetPlans()
             .then(planCLOs => {
                 this.viewModel.AvailablePlans = planCLOs;
             });
         return promise;
+    }
+    private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
+
+        let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
+            let numericVal = plan.Status as number;
+            if (planStatusViewMode === this.planStatusViewModes.Active) {
+                return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
+            }
+            if (planStatusViewMode === this.planStatusViewModes.Inactive) {
+                return (numericVal === Enums.PlanStatus.Inactive);
+            }
+            if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
+                return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
+            }
+
+            return null;
+        });
+
+        return filteredPlans;
+    }
+    private refreshUI() {
+        this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
     }
 
     // Constructor 
@@ -133,6 +145,7 @@ export class PlansOverviewComponent {
     ngOnInit() {
         // Init ViewModel properties
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+        this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -161,12 +174,17 @@ export class PlansOverviewComponent {
             throw new Error('Action not recognized');
         }
     }
+    private onSelectedViewModeChanged(event) {
+        const newVal = event.target.value;
+        this.viewModel.SelectedViewMode = newVal;
 
+        this.refreshUI();
+    }
 }
 interface ViewModel {
     AvailablePlans: CLOs.PlanCLO[];
-    GetFilteredPlans();
-    SelectedPlanStatusViewMode: any;
+    FilteredPlans: CLOs.PlanCLO[];
+    SelectedViewMode: any;
     Blocked: boolean;
 }
 

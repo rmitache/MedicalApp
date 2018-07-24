@@ -18,7 +18,7 @@ export function RefreshScheduleFlow(
 
     // Main logic --------------------------------------------------------------------------------------------------------------------------
     let promise = new Promise<any>((resolve, reject) => {
-        scheduleComponent.RefreshUI();
+        scheduleComponent.ReloadData();
 
         resolve();
     });

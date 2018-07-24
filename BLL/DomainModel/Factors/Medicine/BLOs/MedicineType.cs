@@ -3,7 +3,7 @@ using BLL.DomainModel.General.Enums;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
-    public  class MedicineType
+    public class MedicineType
     {
         // Properties
         virtual public int ID { get; set; }
@@ -14,8 +14,8 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public bool IsPackagedIntoUnits { get; set; }
         virtual public PackagedUnitDoseType? PackagedUnitDoseType { get; set; }
         virtual public int? PackagedUnitDoseSize { get; set; }
-        
 
+        virtual public bool IsInUse { get; set; }
 
         // Constructor
         public MedicineType() { }

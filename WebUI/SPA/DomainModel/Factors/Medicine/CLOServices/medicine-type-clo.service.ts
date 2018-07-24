@@ -13,11 +13,16 @@ import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
 import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
 import { GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 @Injectable()
 export class MedicineTypeCLOService {
+    // Fields
 
+    // Constructor
+    constructor(private readonly versionCLOService: VersionCLOService) {
 
+    }
     // Public Methods
     public GetInUsePropertyForMedicineTypes(uniqueMedTypes: CLOs.MedicineTypeCLO[], planCLOs: CLOs.PlanCLO[], targetDate: moment.Moment): boolean[] {
         
@@ -36,7 +41,7 @@ export class MedicineTypeCLOService {
 
                 if (versions !== null) {
                     versions.forEach(version => {
-                        let uniqueMedTypesInVersion = version.GetUniqueMedicineTypesWithAvgDosePerMonth();
+                        let uniqueMedTypesInVersion = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(version);
                         for (var uniqueMedTypeName in uniqueMedTypesInVersion) {
                             medTypesInUseDictionary[uniqueMedTypeName] = true;
                         }
