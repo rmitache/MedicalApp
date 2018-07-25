@@ -1,6 +1,6 @@
 ﻿using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Plans.Factories;
-using Common.Datastructures;
+using Common.DataStructures;
 using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
@@ -76,5 +76,6 @@ namespace BLL.DomainModel.Plans.Services
 
             return planBLO;
         }
+        
     }
 }

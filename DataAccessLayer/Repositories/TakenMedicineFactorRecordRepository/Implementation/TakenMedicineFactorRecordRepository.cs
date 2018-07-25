@@ -1,4 +1,4 @@
-﻿using Common.Datastructures;
+﻿using Common.DataStructures;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;

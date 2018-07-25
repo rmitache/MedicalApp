@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Plans.Enums;
-using Common.Datastructures;
+using Common.DataStructures;
 using BLL.DomainModel.Factors.Medicine.Factories;
 
 namespace BLL.DomainModel.Plans.Factories

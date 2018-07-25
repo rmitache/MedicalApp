@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Common.DataStructures;
+using System;
 using System.Collections.Generic;
 using Common;
+using BLL.DomainModel.Factors.Medicine.BLOs;
 
 namespace BLL.DomainModel.Plans.BLOs
 {
@@ -15,12 +17,12 @@ namespace BLL.DomainModel.Plans.BLOs
         // Constructor
         internal Version() { }
 
-        //
+        // Public methods
         public bool RecentlyStarted()
         {
             var currentDate = DateTime.Now.Date;
-            
-            if(!this.HasEnded() && (currentDate - this.StartDate.Date ).TotalDays  <= 7)
+
+            if (!this.HasEnded() && (currentDate - this.StartDate.Date).TotalDays <= 7)
             {
                 return true;
             }
@@ -38,6 +40,61 @@ namespace BLL.DomainModel.Plans.BLOs
             bool hasEnded = this.EndDate > currentDate;
             return hasEnded;
         }
+        public Range<DateTime> GetIntersectionWithDateRange(Range<DateTime> targetDateRange)
+        {
+            // Variables
+            Range<DateTime> intersectionResult = null;
+
+            // Get the intersection when there is an EndDate
+            if (this.EndDate != null)
+            {
+                intersectionResult = Common.Functions.IntersectDateRanges(new Range<DateTime>(this.StartDate, (DateTime)this.EndDate), targetDateRange);
+            }
+            // Get the intersection when there is no EndDate
+            else if (this.EndDate == null)
+            {
+                // If StartDate is WITHIN the targetDateRange
+                if (Common.Functions.DateRangeContains(targetDateRange, this.StartDate))
+                {
+                    intersectionResult = new Range<DateTime>(this.StartDate, targetDateRange.RangeEnd);
+                }
+                // If StartDate is BEFORE the targetDateRange start
+                else if (this.StartDate < targetDateRange.RangeStart)
+                {
+                    intersectionResult = new Range<DateTime>(targetDateRange.RangeStart, targetDateRange.RangeEnd);
+                }
+            }
+
+
+            return intersectionResult;
+        }
+        public Dictionary<string, MedicineType> GetUniqueMedicineTypes()
+        {
+            // Dictionary
+            var uniqueMedicineTypesDictionary = new Dictionary<string, MedicineType>();
+
+            // Loop through rules
+            foreach (Rule rule in this.Rules)
+            {
+                // Loop through medicine rule items 
+                foreach (MedicineRuleItem medRuleItem in rule.MedicineRuleItems)
+                {
+                    if (medRuleItem.MedicineType == null)
+                    {
+                        throw new Exception("MedicineType must be present on MedicineRuleItem BLOs when performing operations");
+                    }
+
+                    // Add the medicine type to the dictionary if its not there already
+                    if(!uniqueMedicineTypesDictionary.ContainsKey(medRuleItem.MedicineType.Name))
+                    {
+                        uniqueMedicineTypesDictionary[medRuleItem.MedicineType.Name] = medRuleItem.MedicineType;
+                    }
+
+                }
+            }
+
+            return uniqueMedicineTypesDictionary;
+        }
     }
-    
+
 }

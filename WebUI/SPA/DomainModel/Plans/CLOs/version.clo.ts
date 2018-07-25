@@ -89,11 +89,11 @@ export class VersionCLO extends BaseCLO {
         // Get the intersection when there is no EndDate
         else {
             // If StartDate is WITHIN the targetDateRange
-            if (this.EndDate === null && momentTargetDateRange.contains(moment(this.StartDate))) {
+            if (momentTargetDateRange.contains(moment(this.StartDate))) {
                 intersectionRange = new momentRange.DateRange(moment(this.StartDate), momentTargetDateRange.end.clone());
             }
-            // If StartDate is BEFORE the targetDateRange
-            else if (this.EndDate === null && moment(this.StartDate) < momentTargetDateRange.start) {
+            // If StartDate is BEFORE the targetDateRange start
+            else if (moment(this.StartDate) < momentTargetDateRange.start) {
                 intersectionRange = new momentRange.DateRange(momentTargetDateRange.start.clone(), momentTargetDateRange.end.clone());
             }
         }

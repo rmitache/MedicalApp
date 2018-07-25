@@ -6,7 +6,7 @@ using BLL.DomainModel.Factors.Medicine.Library.Services;
 using Microsoft.AspNetCore.Mvc;
 using BLL.DomainModel.Factors.Medicine.History.Services;
 using BLL.DomainModel.Plans.Services;
-using Common.Datastructures;
+using Common.DataStructures;
 using BLL.DomainModel.Indicators.Symptoms.Services;
 using Common;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using Common.Datastructures;
+﻿using Common.DataStructures;
 using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;

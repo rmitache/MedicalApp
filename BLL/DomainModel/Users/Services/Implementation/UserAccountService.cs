@@ -1,6 +1,6 @@
 ﻿using BLL.DomainModel.Users.BLOs;
 using BLL.DomainModel.Users.Factories;
-using Common.Datastructures;
+using Common.DataStructures;
 using DataAccessLayer.Repositories.UserRepository;
 using System;
 using System.Collections.Generic;

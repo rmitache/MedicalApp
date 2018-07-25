@@ -1,5 +1,5 @@
 ﻿using BLL.DomainModel.Users.BLOs;
-using Common.Datastructures;
+using Common.DataStructures;
 using System;
 using System.Collections.Generic;
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.History.Services;
 using BLL.DomainModel.Plans.Services;
 using BLL.DomainModel.Plans.BLOs;
-using Common.Datastructures;
+using Common.DataStructures;
 using BLL.DomainModel.Indicators.Symptoms.Services;
 using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using Common;
@@ -113,7 +113,7 @@ namespace WebUI.Controllers
             
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
-            var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID);
+            var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
             var plans = planService.GetPlans(loggedInUser.ID, true);
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, loggedInUser.ID, true);
@@ -232,7 +232,7 @@ namespace WebUI.Controllers
         public JsonResult GetMedicineTypes()
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID);
+            var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID, true);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
