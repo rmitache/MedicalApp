@@ -253,6 +253,8 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.PlanId).HasColumnName("plan_id");
 
+                entity.Property(e => e.PlanMedicineRuleItemId).HasColumnName("plan_medicine_rule_item_id");
+
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
                     .HasForeignKey(d => d.MedicineTypeId)
@@ -263,6 +265,12 @@ namespace DataAccessLayer.Entities
                     .HasForeignKey(d => d.PlanId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan");
+
+                entity.HasOne(d => d.PlanMedicineRuleItem)
+                    .WithMany(p => p.TTakenMedicineFactorRecord)
+                    .HasForeignKey(d => d.PlanMedicineRuleItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan_medicine_rule_item");
             });
 
             modelBuilder.Entity<TUser>(entity =>

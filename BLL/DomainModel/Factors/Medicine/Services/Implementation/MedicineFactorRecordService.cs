@@ -24,7 +24,8 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
             var dictionary = new Dictionary<string, TTakenMedicineFactorRecord>();
             foreach (TTakenMedicineFactorRecord dataEntity in list)
             {
-                string key = MedicineFactorRecord.DetermineCompositeID(dataEntity.PlanId, dataEntity.MedicineTypeId, dataEntity.OccurrenceDateTime);
+                string key = MedicineFactorRecord.DetermineCompositeID(dataEntity.PlanId, dataEntity.PlanMedicineRuleItemId,
+                    dataEntity.MedicineTypeId, dataEntity.OccurrenceDateTime);
                 dictionary[key] = dataEntity;
             }
 
@@ -59,10 +60,13 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
 
                 // Create the dataEntity
                 var breakdown = MedicineFactorRecord.ExtractFromCompositeID(compositeID);
-                var newDataEntity = new TTakenMedicineFactorRecord();
-                newDataEntity.MedicineTypeId = breakdown.MedicineTypeID;
-                newDataEntity.PlanId = breakdown.ParentPlanID;
-                newDataEntity.OccurrenceDateTime = breakdown.OccurrenceDateTime;
+                var newDataEntity = new TTakenMedicineFactorRecord
+                {
+                    MedicineTypeId = breakdown.MedicineTypeID,
+                    PlanMedicineRuleItemId = breakdown.MedicineRuleItemID,
+                    PlanId = breakdown.ParentPlanID,
+                    OccurrenceDateTime = breakdown.OccurrenceDateTime
+                };
 
                 if (newTakenStatus == true)
                 {

@@ -5,6 +5,11 @@ namespace DataAccessLayer.Entities
 {
     public partial class TPlanMedicineRuleItem
     {
+        public TPlanMedicineRuleItem()
+        {
+            TTakenMedicineFactorRecord = new HashSet<TTakenMedicineFactorRecord>();
+        }
+
         public int Id { get; set; }
         public int PlanRuleId { get; set; }
         public int MedicineTypeId { get; set; }
@@ -15,5 +20,6 @@ namespace DataAccessLayer.Entities
 
         public TMedicineType MedicineType { get; set; }
         public TPlanRule PlanRule { get; set; }
+        public ICollection<TTakenMedicineFactorRecord> TTakenMedicineFactorRecord { get; set; }
     }
 }

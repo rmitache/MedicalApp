@@ -60,28 +60,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurrence => occurrence.Period.StartTime.Date).ToList();
             return dates;
         }
-        private Dictionary<string, MedicineType> GetUniqueMedicineTypesInVersion(Plans.BLOs.Version version)
-        {
-            var dict = new Dictionary<string, MedicineType>();
-
-            // Loop through rules
-            foreach (Rule rule in version.Rules)
-            {
-
-                // Loop through ruleItems
-                foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
-                {
-                    if (!dict.ContainsKey(ruleItem.MedicineType.Name))
-                    {
-                        dict[ruleItem.MedicineType.Name] = ruleItem.MedicineType;
-                    }
-                }
-            }
-
-            return dict;
-        }
-
-
         private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(
             MedicineRuleItem ruleItem,
             DateTime occurrenceDateTime,
@@ -94,6 +72,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             blo.ParentPlanName = parentPlan.Name;
             blo.ParentPlanID = parentPlan.ID;
+            blo.MedicineRuleItemID = ruleItem.ID;
             blo.RecentlyAdded = recentlyAdded;
 
             blo.UnitDoseQuantifier = ruleItem.UnitDoseQuantifier;
@@ -152,7 +131,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                                     if (version.ID == plan.GetLatestVersion().ID)
                                     {
                                         var previousVersion = plan.GetPreviousLatestVersion();
-                                        var medTypesInPrevVersion = (previousVersion != null) ? this.GetUniqueMedicineTypesInVersion(previousVersion) : null;
+                                        var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
                                         recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
                                     }
 

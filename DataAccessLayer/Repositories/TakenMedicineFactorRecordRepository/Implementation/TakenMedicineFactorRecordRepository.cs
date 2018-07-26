@@ -1,4 +1,5 @@
-﻿using Common.DataStructures;
+﻿using Common;
+using Common.DataStructures;
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -52,9 +53,9 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                 .AsNoTracking()
                 .Where(
                     record =>
-                        (record.PlanId == null || record.Plan.UserId == userID) &&
-                        record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date &&
-                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.Add(new TimeSpan(23, 59, 59)))
+                        record.Plan.UserId == userID &&
+                        record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date.StartOfDay() &&
+                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.EndOfDay())
                 .Include(record => record.MedicineType)
                 .ToList();
             return list;

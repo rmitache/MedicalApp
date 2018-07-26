@@ -18,6 +18,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
 
         virtual public string ParentPlanName { get; set; }
         virtual public int ParentPlanID { get; set; }
+        virtual public int MedicineRuleItemID { get; set; }
         virtual public bool? RecentlyAdded { get; set; }
         virtual public bool? Taken { get; set; }
 
@@ -51,7 +52,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
             get
             {
                 string unitOfMeasureName = "";
-                 if (this.MedicineType != null)
+                if (this.MedicineType != null)
                 {
                     unitOfMeasureName = this.MedicineType.BaseUnitOfMeasure.ToString();
 
@@ -83,13 +84,12 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         // Public methods
         public static string DetermineCompositeID(MedicineFactorRecord blo)
         {
-            //
-            return DetermineCompositeID(blo.ParentPlanID, blo.MedicineType.ID, blo.OccurrenceDateTime);
+            return DetermineCompositeID(blo.ParentPlanID, blo.MedicineRuleItemID, blo.MedicineType.ID, blo.OccurrenceDateTime);
         }
-        public static string DetermineCompositeID(int ParentPlanID, int MedicineTypeID, DateTime OccurrenceDateTime)
+        public static string DetermineCompositeID(int ParentPlanID, int MedicineRuleItemID, int MedicineTypeID, DateTime OccurrenceDateTime)
         {
-            
-            if(ParentPlanID== -1 )
+
+            if (ParentPlanID == -1)
             {
                 throw new ArgumentException("ParentPlanID");
             }
@@ -99,12 +99,8 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
             }
 
             // Prepare elements of composite ID 
-            var parentPlanIDString = ParentPlanID.ToString();
-            var medTypeID = MedicineTypeID;
             var occDateTimeString = OccurrenceDateTime.ToString();
-
-            //
-            return parentPlanIDString + "_"  + medTypeID + "_" + occDateTimeString;
+            return ParentPlanID + "_" + MedicineRuleItemID + "_" + MedicineTypeID + "_" + occDateTimeString;
         }
         public static CompositeIDBreakDown ExtractFromCompositeID(string compositeID)
         {
@@ -114,8 +110,9 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
             var newBreakDown = new CompositeIDBreakDown
             {
                 ParentPlanID = int.Parse(pieces[0]),
-                MedicineTypeID = int.Parse(pieces[1]),
-                OccurrenceDateTime = DateTime.Parse(pieces[2])
+                MedicineRuleItemID = int.Parse(pieces[1]),
+                MedicineTypeID = int.Parse(pieces[2]),
+                OccurrenceDateTime = DateTime.Parse(pieces[3])
             };
 
             return newBreakDown;
@@ -126,6 +123,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
     public class CompositeIDBreakDown
     {
         public int ParentPlanID { get; set; }
+        public int MedicineRuleItemID { get; set; }
         public int MedicineTypeID { get; set; }
         public DateTime OccurrenceDateTime { get; set; }
     }
