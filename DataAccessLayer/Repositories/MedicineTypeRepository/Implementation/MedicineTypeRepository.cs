@@ -24,7 +24,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 
             return dataEntity;
         }
-        public List<TMedicineType> GetAllMedicineTypes(int userID)
+        public List<TMedicineType> GetAllMedicineTypes(int userID, bool includeSupplyEntriesAndTakenRecords = false)
         {
             return entitiesContext.TMedicineType
                 .AsNoTracking()

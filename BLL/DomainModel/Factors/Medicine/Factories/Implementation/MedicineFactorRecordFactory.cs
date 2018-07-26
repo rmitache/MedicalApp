@@ -11,6 +11,7 @@ using Ical.Net.DataTypes;
 using Ical.Net;
 using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Factors.Medicine.Enums;
+using Common;
 
 namespace BLL.DomainModel.Factors.Medicine.Factories
 {
@@ -45,7 +46,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             else
             // Weekly
             {
-                var x = rule.DaysInWeek.ToICalWeekDayList();
                 eventObj.RecurrenceRules.Add(new RecurrencePattern()
                 {
                     Frequency = FrequencyType.Weekly,
@@ -110,14 +110,15 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                     }
                     else
                     {
-                        maxDate = (version.EndDate < windowEndDate) ? ((DateTime)version.EndDate).Add(new TimeSpan(0, 23, 59, 59)) : windowEndDate;
+                        maxDate = (version.EndDate < windowEndDate) ? ((DateTime)version.EndDate).EndOfDay() : windowEndDate;
                     }
 
 
                     // Create FactorRecords for each Rule
                     foreach (Rule rule in version.Rules)
                     {
-                        var hitDates = getRuleHitPattern(rule, plan.GetFirstVersion().StartDate, minDate, maxDate);
+                        //var hitDates = getRuleHitPattern(rule, plan.GetFirstVersion().StartDate, minDate, maxDate);
+                        var hitDates = getRuleHitPattern(rule, version.StartDate, minDate, maxDate);
                         foreach (DateTime hitDate in hitDates)
                         {
                             foreach (Time time in rule.MomentsInDay)

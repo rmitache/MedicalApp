@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Common
 {
-    public static class Functions {
+    public static class Functions
+    {
         public static Range<DateTime> IntersectDateRanges(Range<DateTime> firstDateRange, Range<DateTime> secondDateRange)
         {
             // Get the intersection using the TimePeriod library
@@ -25,10 +26,10 @@ namespace Common
 
         public static bool DateRangeContains(Range<DateTime> dateRange, DateTime dateTime)
         {
-            bool isInRange = (dateRange.RangeStart.StartOfDay() >= dateTime) && (dateRange.RangeEnd.EndOfDay() <= dateTime);
+            bool isInRange = (dateTime >= dateRange.RangeStart.StartOfDay()) && (dateTime <= dateRange.RangeEnd.EndOfDay());
 
             return isInRange;
         }
     }
-   
+
 }

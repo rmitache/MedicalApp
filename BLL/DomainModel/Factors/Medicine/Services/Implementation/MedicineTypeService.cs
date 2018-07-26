@@ -74,7 +74,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
         public List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
-            // Get usage info for MedicineTypes
+            // Get usage info 
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
             if (retreiveSupplyAndUsageInfo)
             {
@@ -83,14 +83,13 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 
-            // Get supply info (Goal ? -> Answer: For each MedicineType which is InUse, calculate how many days supply is remaining for
+            // Get supply info 
             if (retreiveSupplyAndUsageInfo)
             {
+                // Get all Taken fields and split them by MedicineType (IDEA: couldn't they be retreived using include when getting AllMedicineTypes ? Same like with SupplyEntries
                 // For each MedicineType
 
-                    // Get the number of Taken FactorRecords pointing to the given  
-
-                    // Loop through supply entries 
+                    // Loop through supply entries and get the total supply
             }
 
 

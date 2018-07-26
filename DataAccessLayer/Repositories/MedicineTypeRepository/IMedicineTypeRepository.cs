@@ -11,6 +11,6 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
     {
         TMedicineType AddMedicineType(TMedicineType dataEntity);
 
-        List<TMedicineType> GetAllMedicineTypes(int userID);
+        List<TMedicineType> GetAllMedicineTypes(int userID, bool includeSupplyEntriesAndTakenRecords = false);
     }
 }

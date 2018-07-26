@@ -48,20 +48,20 @@ namespace BLL.DomainModel.Plans.BLOs
             // Get the intersection when there is an EndDate
             if (this.EndDate != null)
             {
-                intersectionResult = Common.Functions.IntersectDateRanges(new Range<DateTime>(this.StartDate, (DateTime)this.EndDate), targetDateRange);
+                intersectionResult = Common.Functions.IntersectDateRanges(new Range<DateTime>(this.StartDate.StartOfDay(), ((DateTime)this.EndDate).EndOfDay()), targetDateRange);
             }
             // Get the intersection when there is no EndDate
             else if (this.EndDate == null)
             {
                 // If StartDate is WITHIN the targetDateRange
-                if (Common.Functions.DateRangeContains(targetDateRange, this.StartDate))
+                if (Common.Functions.DateRangeContains(targetDateRange, this.StartDate.StartOfDay()))
                 {
-                    intersectionResult = new Range<DateTime>(this.StartDate, targetDateRange.RangeEnd);
+                    intersectionResult = new Range<DateTime>(this.StartDate.StartOfDay(), targetDateRange.RangeEnd.EndOfDay());
                 }
                 // If StartDate is BEFORE the targetDateRange start
-                else if (this.StartDate < targetDateRange.RangeStart)
+                else if (this.StartDate.StartOfDay() < targetDateRange.RangeStart.StartOfDay())
                 {
-                    intersectionResult = new Range<DateTime>(targetDateRange.RangeStart, targetDateRange.RangeEnd);
+                    intersectionResult = new Range<DateTime>(targetDateRange.RangeStart.StartOfDay(), targetDateRange.RangeEnd.EndOfDay());
                 }
             }
 
