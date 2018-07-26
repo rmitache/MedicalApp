@@ -49,8 +49,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday)
         {
-            
-            var bloList = dataEntities.Select(dataEntity => {
+
+            var bloList = dataEntities.Select(dataEntity =>
+            {
 
                 bool? isInUse = null;
                 if (uniqueMedicineTypesInUseToday != null)
@@ -59,7 +60,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                 }
 
                 return Convert_ToBLO(dataEntity, isInUse);
-                }).ToList();
+            }).ToList();
             return bloList;
         }
     }

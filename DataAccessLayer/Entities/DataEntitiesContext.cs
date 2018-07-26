@@ -9,6 +9,7 @@ namespace DataAccessLayer.Entities
         public virtual DbSet<THealthStatusEntry> THealthStatusEntry { get; set; }
         public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
+        public virtual DbSet<TMedicineTypeSupplyEntry> TMedicineTypeSupplyEntry { get; set; }
         public virtual DbSet<TPlan> TPlan { get; set; }
         public virtual DbSet<TPlanMedicineRuleItem> TPlanMedicineRuleItem { get; set; }
         public virtual DbSet<TPlanRule> TPlanRule { get; set; }
@@ -22,8 +23,8 @@ namespace DataAccessLayer.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
-                //optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -112,6 +113,26 @@ namespace DataAccessLayer.Entities
                     .WithMany(p => p.TMedicineType)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_t_medicine_type_t_user");
+            });
+
+            modelBuilder.Entity<TMedicineTypeSupplyEntry>(entity =>
+            {
+                entity.ToTable("t_medicine_type_supply_entry");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.EntryDateTime)
+                    .HasColumnName("entry_date_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
+
+                entity.Property(e => e.SupplyQuantity).HasColumnName("supply_quantity");
+
+                entity.HasOne(d => d.MedicineType)
+                    .WithMany(p => p.TMedicineTypeSupplyEntry)
+                    .HasForeignKey(d => d.MedicineTypeId)
+                    .HasConstraintName("FK_t_medicine_type_supply_entry_t_medicine_type");
             });
 
             modelBuilder.Entity<TPlan>(entity =>

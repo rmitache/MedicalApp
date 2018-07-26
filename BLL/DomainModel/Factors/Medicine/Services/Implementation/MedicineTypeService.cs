@@ -4,6 +4,7 @@ using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Plans.Services;
 using Common;
 using Common.DataStructures;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using System;
 using System.Collections;
@@ -46,6 +47,10 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // 
             return uniqueMedicineTypesInUseAcrossPlans;
         }
+        private int GetRemainingSupplyInDays(TMedicineType medicineTypeDataEntity, List<TTakenMedicineFactorRecord> takenEntities)
+        {
+            return 0;
+        }
 
         // Constructor
         public MedicineTypeService(IMedicineTypeRepository medicineTypeRepo,
@@ -69,7 +74,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
         public List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
-            // Get all medicineTypes currently in use across Active Plans, if requested
+            // Get usage info for MedicineTypes
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
             if (retreiveSupplyAndUsageInfo)
             {
@@ -78,11 +83,20 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 
+            // Get supply info (Goal ? -> Answer: For each MedicineType which is InUse, calculate how many days supply is remaining for
+            if (retreiveSupplyAndUsageInfo)
+            {
+                // For each MedicineType
+
+                    // Get the number of Taken FactorRecords pointing to the given  
+
+                    // Loop through supply entries 
+            }
+
+
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID);
             var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities, uniqueMedicineTypesInUseToday);
-
-            // Sort alphabetically
             var sortedBLOs = blos.OrderBy(medicineType => medicineType.Name).ToList();
 
 
