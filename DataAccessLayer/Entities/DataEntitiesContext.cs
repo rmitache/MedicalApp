@@ -7,7 +7,6 @@ namespace DataAccessLayer.Entities
     public partial class DataEntitiesContext : DbContext
     {
         public virtual DbSet<THealthStatusEntry> THealthStatusEntry { get; set; }
-        public virtual DbSet<TMedicineFactorRecord> TMedicineFactorRecord { get; set; }
         public virtual DbSet<TMedicineType> TMedicineType { get; set; }
         public virtual DbSet<TMedicineTypeSupplyEntry> TMedicineTypeSupplyEntry { get; set; }
         public virtual DbSet<TPlan> TPlan { get; set; }
@@ -48,40 +47,6 @@ namespace DataAccessLayer.Entities
                     .WithMany(p => p.THealthStatusEntry)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_t_general_health_entry_t_user");
-            });
-
-            modelBuilder.Entity<TMedicineFactorRecord>(entity =>
-            {
-                entity.ToTable("t_medicine_factor_record");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.HasUserDefinedUnitDose).HasColumnName("has_user_defined_unit_dose");
-
-                entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
-
-                entity.Property(e => e.OccurrenceDateTime)
-                    .HasColumnName("occurrence_date_time")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
-
-                entity.Property(e => e.UserDefinedUnitDoseSize).HasColumnName("user_defined_unit_dose_size");
-
-                entity.Property(e => e.UserDefinedUnitDoseTypeId).HasColumnName("user_defined_unit_dose_type_id");
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.HasOne(d => d.MedicineType)
-                    .WithMany(p => p.TMedicineFactorRecord)
-                    .HasForeignKey(d => d.MedicineTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_t_medicine_factor_record_t_medicine_type");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TMedicineFactorRecord)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_t_medicine_factor_record_t_user");
             });
 
             modelBuilder.Entity<TMedicineType>(entity =>
@@ -280,8 +245,6 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.MedicineFactorRecordId).HasColumnName("medicine_factor_record_id");
-
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 
                 entity.Property(e => e.OccurrenceDateTime)
@@ -289,11 +252,6 @@ namespace DataAccessLayer.Entities
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.PlanId).HasColumnName("plan_id");
-
-                entity.HasOne(d => d.MedicineFactorRecord)
-                    .WithMany(p => p.TTakenMedicineFactorRecord)
-                    .HasForeignKey(d => d.MedicineFactorRecordId)
-                    .HasConstraintName("FK_t_taken_medicine_factor_record_t_medicine_factor_record");
 
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
@@ -303,6 +261,7 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.Plan)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
                     .HasForeignKey(d => d.PlanId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan");
             });
 

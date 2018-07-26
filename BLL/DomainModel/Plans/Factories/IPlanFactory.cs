@@ -1,6 +1,5 @@
 ﻿using BLL.DomainModel.Plans.BLOs;
 using DataAccessLayer.Entities;
-using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;

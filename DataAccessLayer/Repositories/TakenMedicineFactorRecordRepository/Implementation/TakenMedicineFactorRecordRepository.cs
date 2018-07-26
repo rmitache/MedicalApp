@@ -35,22 +35,11 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
             dataEntities.ForEach(dataEntity =>
             {
                 // Delete where it matches the record
-                if (dataEntity.PlanId != null)
-                {
-                    entitiesContext.TTakenMedicineFactorRecord.Where(x =>
-                        x.MedicineTypeId == dataEntity.MedicineTypeId &&
-                        x.PlanId == dataEntity.PlanId &&
-                        x.OccurrenceDateTime == dataEntity.OccurrenceDateTime
-                    ).Delete();
-                }
-                else
-                {
-                    entitiesContext.TTakenMedicineFactorRecord.Where(x =>
-                        x.MedicineFactorRecordId == dataEntity.MedicineFactorRecordId
-                    ).Delete();
-                }
-
-
+                entitiesContext.TTakenMedicineFactorRecord.Where(x =>
+                    x.MedicineTypeId == dataEntity.MedicineTypeId &&
+                    x.PlanId == dataEntity.PlanId &&
+                    x.OccurrenceDateTime == dataEntity.OccurrenceDateTime
+                ).Delete();
             });
             entitiesContext.SaveChanges();
 
@@ -70,7 +59,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                 .ToList();
             return list;
 
-            
+
         }
     }
 }

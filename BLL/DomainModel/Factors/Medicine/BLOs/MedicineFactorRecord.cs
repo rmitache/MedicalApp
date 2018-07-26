@@ -6,7 +6,6 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
     public class MedicineFactorRecord
     {
-        virtual public int ID { get; set; }
         virtual public string CompositeID
         {
             get
@@ -15,11 +14,10 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
             }
         }
         virtual public DateTime OccurrenceDateTime { get; set; }
-        virtual public MedicineFactorRecordType Type { get; set; }
         virtual public MedicineType MedicineType { get; set; }
 
         virtual public string ParentPlanName { get; set; }
-        virtual public int? ParentPlanID { get; set; }
+        virtual public int ParentPlanID { get; set; }
         virtual public bool? RecentlyAdded { get; set; }
         virtual public bool? Taken { get; set; }
 
@@ -86,38 +84,39 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         public static string DetermineCompositeID(MedicineFactorRecord blo)
         {
             //
-            return DetermineCompositeID(blo.ParentPlanID, blo.ID, blo.MedicineType.ID, blo.OccurrenceDateTime);
+            return DetermineCompositeID(blo.ParentPlanID, blo.MedicineType.ID, blo.OccurrenceDateTime);
         }
-        public static string DetermineCompositeID(int? ParentPlanID, int MedicineFactorRecordID, int MedicineTypeID, DateTime OccurrenceDateTime)
+        public static string DetermineCompositeID(int ParentPlanID, int MedicineTypeID, DateTime OccurrenceDateTime)
         {
-            if (ParentPlanID == null && MedicineFactorRecordID == -1)
+            
+            if(ParentPlanID== -1 )
             {
-                throw new Exception("CompositeID not supported with both ParentPlanID == null and ID == -1");
+                throw new ArgumentException("ParentPlanID");
             }
-            if (ParentPlanID != null && MedicineFactorRecordID != -1)
+            if (MedicineTypeID == -1)
             {
-                throw new Exception("CompositeID supports only one of  ParentPlanID or ID being present in non-null or non-minus one form");
+                throw new ArgumentException("MedicineTypeID");
             }
 
             // Prepare elements of composite ID 
-            var parentPlanIDString = (ParentPlanID == null) ? "NULL" : ParentPlanID.ToString();
-            var medicineFactorRecordIDString = (MedicineFactorRecordID == -1 || MedicineFactorRecordID == null) ? "NULL" : MedicineFactorRecordID.ToString();
+            var parentPlanIDString = ParentPlanID.ToString();
             var medTypeID = MedicineTypeID;
             var occDateTimeString = OccurrenceDateTime.ToString();
 
             //
-            return parentPlanIDString + "_" + medicineFactorRecordIDString + "_" + medTypeID + "_" + occDateTimeString;
+            return parentPlanIDString + "_"  + medTypeID + "_" + occDateTimeString;
         }
         public static CompositeIDBreakDown ExtractFromCompositeID(string compositeID)
         {
             var pieces = compositeID.Split('_');
 
             //
-            var newBreakDown = new CompositeIDBreakDown();
-            newBreakDown.ParentPlanID = (pieces[0] == "NULL") ? null : (int?)int.Parse(pieces[0]);
-            newBreakDown.MedicineFactorRecordID = (pieces[1] == "NULL") ? -1 : int.Parse(pieces[1]);
-            newBreakDown.MedicineTypeID = int.Parse(pieces[2]);
-            newBreakDown.OccurrenceDateTime = DateTime.Parse(pieces[3]);
+            var newBreakDown = new CompositeIDBreakDown
+            {
+                ParentPlanID = int.Parse(pieces[0]),
+                MedicineTypeID = int.Parse(pieces[1]),
+                OccurrenceDateTime = DateTime.Parse(pieces[2])
+            };
 
             return newBreakDown;
         }
@@ -126,8 +125,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
 
     public class CompositeIDBreakDown
     {
-        public int? ParentPlanID { get; set; }
-        public int MedicineFactorRecordID { get; set; }
+        public int ParentPlanID { get; set; }
         public int MedicineTypeID { get; set; }
         public DateTime OccurrenceDateTime { get; set; }
     }

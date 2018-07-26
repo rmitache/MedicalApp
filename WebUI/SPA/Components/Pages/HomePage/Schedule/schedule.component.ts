@@ -152,7 +152,7 @@ export class ScheduleComponent {
     }
 
     // Event handlers
-    private onAddNewEventTriggered() {
+    /*private onAddNewEventTriggered() {
         this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: 'Add new one-off Event',
             childComponent: AddNewEventComponent,
@@ -197,7 +197,7 @@ export class ScheduleComponent {
                 }
             ]
         });
-    }
+    }*/
     private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
         // Check if newSelDateRange is within the AvailableDateRange
         if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {

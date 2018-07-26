@@ -89,8 +89,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             bool recentlyAdded)
         {
             MedicineFactorRecord blo = new MedicineFactorRecord();
-            blo.ID = -1;
-            blo.Type = MedicineFactorRecordType.PlanProjection;
             blo.MedicineType = ruleItem.MedicineType;
             blo.OccurrenceDateTime = occurrenceDateTime;
 
@@ -115,47 +113,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
 
         // Public methods
-        public TMedicineFactorRecord Convert_ToDataEntity(MedicineFactorRecord blo, int userID)
-        {
-            TMedicineFactorRecord dataEntity = new TMedicineFactorRecord();
-            dataEntity.Id = blo.ID;
-            dataEntity.UserId = userID;
-            dataEntity.MedicineTypeId = blo.MedicineType.ID;
-            dataEntity.OccurrenceDateTime = blo.OccurrenceDateTime;
-
-            dataEntity.UnitDoseQuantifier = blo.UnitDoseQuantifier;
-            dataEntity.HasUserDefinedUnitDose = blo.HasUserDefinedUnitDose;
-            dataEntity.UserDefinedUnitDoseTypeId = (int?) blo.UserDefinedUnitDoseType;
-            dataEntity.UserDefinedUnitDoseSize = blo.UserDefinedUnitDoseSize;
-
-            return dataEntity;
-        }
-        public List<TMedicineFactorRecord> Convert_ToDataEntitiesList(List<MedicineFactorRecord> blos, int userID)
-        {
-            var dataEntitiesList = blos.Select(blo => Convert_ToDataEntity(blo, userID)).ToList();
-            return dataEntitiesList;
-        }
-        public MedicineFactorRecord Convert_ToBLO(TMedicineFactorRecord dataEntity)
-        {
-            MedicineFactorRecord blo = new MedicineFactorRecord();
-            blo.ID = dataEntity.Id;
-            blo.Type = MedicineFactorRecordType.UserEntry;
-            blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
-            blo.OccurrenceDateTime = dataEntity.OccurrenceDateTime;
-
-            blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
-            blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose;
-            blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType?) dataEntity.UserDefinedUnitDoseTypeId;
-            blo.UserDefinedUnitDoseSize = dataEntity.UserDefinedUnitDoseSize;
-
-            return blo;
-        }
-        public List<MedicineFactorRecord> Convert_ToBLOList(List<TMedicineFactorRecord> dataEntities)
-        {
-            var blosList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
-            return blosList;
-        }
-
         public List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, DateTime windowEndDate)
         {
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();

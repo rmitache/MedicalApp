@@ -9,10 +9,8 @@ import { AbstractMedicineFactorRecordCLO } from 'SPA/DomainModel/Factors/Medicin
 export class MedicineFactorRecordCLO extends AbstractMedicineFactorRecordCLO {
 
     // Fields
-    public ID: number;
     public CompositeID: string;
     public OccurrenceDateTime: Date;
-    public Type: Enums.FactorRecordType;
     public MedicineType: CLOs.MedicineTypeCLO;
 
     public ParentPlanName: string;
