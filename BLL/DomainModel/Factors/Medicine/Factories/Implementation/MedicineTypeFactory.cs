@@ -15,7 +15,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
 
         // Public methods
-        public MedicineType Convert_ToBLO(TMedicineType dataEntity)
+        public MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null)
         {
             MedicineType blo = new MedicineType();
             blo.ID = dataEntity.Id;
@@ -26,6 +26,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.IsPackagedIntoUnits = dataEntity.IsPackagedIntoUnits;
             blo.PackagedUnitDoseType = (dataEntity.PackagedUnitDoseTypeId != null) ? (Enums.PackagedUnitDoseType)dataEntity.PackagedUnitDoseTypeId : (Enums.PackagedUnitDoseType?)null;
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
+
+            blo.IsInUse = isInUse;
+
             return blo;
         }
         public TMedicineType Convert_ToDataEntity(MedicineType blo, int userID)
@@ -44,9 +47,20 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             return dataEntity;
 
         }
-        public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities)
+        public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday)
         {
-            var bloList = dataEntities.Select(dataEntity => Convert_ToBLO(dataEntity)).ToList();
+
+            var bloList = dataEntities.Select(dataEntity =>
+            {
+
+                bool? isInUse = null;
+                if (uniqueMedicineTypesInUseToday != null)
+                {
+                    isInUse = uniqueMedicineTypesInUseToday.ContainsKey(dataEntity.Name);
+                }
+
+                return Convert_ToBLO(dataEntity, isInUse);
+            }).ToList();
             return bloList;
         }
     }

@@ -1,4 +1,4 @@
 ﻿export enum MedicineTypeStatus {
-    CurrentlyInUse = 0,
+    InUseToday = 0,
     NotInUse = 1
 }

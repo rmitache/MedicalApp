@@ -15,7 +15,8 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public PackagedUnitDoseType? PackagedUnitDoseType { get; set; }
         virtual public int? PackagedUnitDoseSize { get; set; }
 
-        virtual public bool IsInUse { get; set; }
+        virtual public bool? IsInUse { get; set; }
+        virtual public int? RemainingSupplyInDays { get; set; }
 
         // Constructor
         public MedicineType() { }

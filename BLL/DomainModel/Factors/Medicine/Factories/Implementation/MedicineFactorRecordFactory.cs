@@ -3,7 +3,7 @@ using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using BLL.DomainModel.Plans.BLOs;
-using Common.Datastructures;
+using Common.DataStructures;
 using System;
 using BLL.DomainModel.Plans.Enums;
 using Ical.Net.CalendarComponents;

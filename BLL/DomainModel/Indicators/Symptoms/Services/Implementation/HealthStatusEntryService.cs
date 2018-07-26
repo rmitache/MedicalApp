@@ -1,7 +1,7 @@
 ﻿
 using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.Factories;
-using Common.Datastructures;
+using Common.DataStructures;
 using DataAccessLayer.Repositories.HealthStatusEntryRepository;
 using System;
 using System.Collections.Generic;

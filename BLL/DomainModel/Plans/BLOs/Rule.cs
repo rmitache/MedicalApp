@@ -1,6 +1,6 @@
 ﻿using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Plans.Enums;
-using Common.Datastructures;
+using Common.DataStructures;
 using System.Collections.Generic;
 
 namespace BLL.DomainModel.Plans.BLOs

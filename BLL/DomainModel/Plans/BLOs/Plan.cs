@@ -1,4 +1,5 @@
 ﻿using BLL.DomainModel.Plans.Enums;
+using Common.DataStructures;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace BLL.DomainModel.Plans.BLOs
         // Public methods
         public Version GetLatestVersion()
         {
-            if (this.Versions != null && this.Versions.Count>0)
+            if (this.Versions != null && this.Versions.Count > 0)
             {
                 return this.Versions[this.Versions.Count - 1];
 
@@ -47,6 +48,22 @@ namespace BLL.DomainModel.Plans.BLOs
             }
             return null;
 
+        }
+        public List<Version> GetVersionsWhichIntersectWithDateRange(Range<DateTime> targetDateRange)
+        {
+            List<Version> versionsWhichIntersect = new List<Version>();
+
+            // Loop through all version in this plan and add those which intersect with the targetDateRange
+            this.Versions.ForEach(version =>
+            {
+                var intersectionResult = version.GetIntersectionWithDateRange(targetDateRange);
+                if (intersectionResult != null)
+                {
+                    versionsWhichIntersect.Add(version);
+                }
+            });
+
+            return versionsWhichIntersect;
         }
     }
 

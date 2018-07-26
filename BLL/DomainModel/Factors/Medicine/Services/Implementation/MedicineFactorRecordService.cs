@@ -1,7 +1,7 @@
 ﻿using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Factors.Medicine.Factories;
 using BLL.DomainModel.Plans.Services;
-using Common.Datastructures;
+using Common.DataStructures;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineFactorRecordRepository;
 using DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository;

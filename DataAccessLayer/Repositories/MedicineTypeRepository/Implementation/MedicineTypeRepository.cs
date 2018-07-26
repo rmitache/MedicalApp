@@ -29,7 +29,9 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
             return entitiesContext.TMedicineType
                 .AsNoTracking()
                 .Where(medicineType =>
-                        medicineType.UserId == userID).ToList();
+                        medicineType.UserId == userID)
+                        .Include(medicineType => medicineType.TMedicineTypeSupplyEntry)
+                        .ToList();
         }
     }
 }

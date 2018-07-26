@@ -1,5 +1,5 @@
 ﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
-using Common.Datastructures;
+using Common.DataStructures;
 using System;
 using System.Collections.Generic;
 

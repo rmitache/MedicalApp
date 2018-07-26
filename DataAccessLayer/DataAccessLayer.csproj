@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="Repositories\MedicineTypeSupplyEntryRepository\" />
   </ItemGroup>
 
   <ItemGroup>

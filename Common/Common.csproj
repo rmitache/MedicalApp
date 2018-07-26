@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ical.Net" Version="4.0.6" />
+    <PackageReference Include="TimePeriodLibrary.NET" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

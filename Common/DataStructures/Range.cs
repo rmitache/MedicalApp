@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Datastructures
+namespace Common.DataStructures
 {
     public class Range<T>
     {

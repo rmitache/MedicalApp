@@ -23,14 +23,15 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.PackagedUnitDoseType = blo['PackagedUnitDoseType'];
         newCLO.PackagedUnitDoseSize = blo['PackagedUnitDoseSize'];
 
-        //newCLO.PackagedUnitDoseType = (blo['PackagedUnitDoseType'] !== null) ?
-        //    HelperFunctions.GetEnumEntryByIndex(Enums.UnitDoseType, parseInt(blo['PackagedUnitDoseType'])) : null;
-        //newCLO.PackagedUnitDoseSize = (blo['PackagedUnitDoseSize'] !== null) ?
-        //    parseInt(blo['PackagedUnitDoseSize']) : null;
-        //newCLO.PackagedUnitDoseUoM = (blo['PackagedUnitDoseUoM'] !== null) ?
-        //    HelperFunctions.GetEnumEntryByIndex(Enums.UnitOfMeasure, parseInt(blo['PackagedUnitDoseUoM'])) : null;
 
-
+        let isInUse: boolean = blo['IsInUse'];
+        if (isInUse === true) {
+            newCLO.IsInUse = Enums.MedicineTypeStatus.InUseToday;
+        } else if (isInUse === false) {
+            newCLO.IsInUse = Enums.MedicineTypeStatus.NotInUse;
+        } else {
+            newCLO.IsInUse = null;
+        }
 
         return newCLO;
     }
@@ -44,6 +45,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.IsPackagedIntoUnits = true;
         newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
         newCLO.PackagedUnitDoseSize = 100;
+
+        newCLO.IsInUse = null;
 
         return newCLO;
     }
