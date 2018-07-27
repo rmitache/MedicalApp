@@ -65,16 +65,8 @@ export class AddMedicineSupplyComponent implements IModalDialog {
     // Public methods
     public SaveData(): Promise<void> {
 
-        //// Loop through all FactorRecords and set OccurrenceDateTime
-        //this.viewModel.FactorRecordCLOs.forEach(record => {
-        //    record.OccurrenceDateTime = this.viewModel.OccurrenceDateTime;
-
-        //});
-
-
-        //let saveDataPromise = this.globalDataService.AddFactorRecords(this.viewModel.FactorRecordCLOs);
-        //return saveDataPromise;
-        return null;
+        let saveDataPromise = this.globalDataService.AddMedicineTypeSupplyEntry(this.viewModel.MedicineTypeCLO.ID, this.viewModel.NewSupplyAmount);
+        return saveDataPromise;
     }
     public GetValidState() {
         return this.isValid;

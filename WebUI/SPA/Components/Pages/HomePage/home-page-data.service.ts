@@ -219,6 +219,19 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
+    public AddMedicineTypeSupplyEntry(medicineTypeID: number, supplyQuantity:number): Promise<void> {
+        const apiMethodName: string = 'AddMedicineTypeSupplyEntry';
+
+        let model = {
+            MedicineTypeID: medicineTypeID,
+            SupplyQuantity: supplyQuantity
+        };
+
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+            .toPromise();
+
+        return postDataPromise;
+    }
     public GetMedicineTypes(): Promise<CLOs.MedicineTypeCLO[]> {
         const apiMethodName: string = 'GetMedicineTypes';
 

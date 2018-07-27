@@ -217,6 +217,16 @@ namespace WebUI.Controllers
             return Json(bloWithUpdatedID);
         }
 
+        [Route("HomePage/AddMedicineTypeSupplyEntry")]
+        [HttpPost]
+        public JsonResult AddMedicineTypeSupplyEntry([FromBody]AddMedicineTypeSupplyEntryModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            return Json(null);
+        }
+
+
         [Route("HomePage/GetMedicineTypes")]
         [HttpPost]
         public JsonResult GetMedicineTypes()
@@ -228,6 +238,12 @@ namespace WebUI.Controllers
         //---------------------------------------------------------------------------------------------------------------------
 
         // Models
+        public class AddMedicineTypeSupplyEntryModel
+        {
+            public int MedicineTypeID;
+            public int SupplyQuantity;
+        }
+
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;
