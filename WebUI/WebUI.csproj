@@ -70,6 +70,7 @@
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-rule-item-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\i-medicine-factor-record.clo.ts" />
+    <None Remove="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Enums\factor-record-type.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Enums\medicine-type-status.enum.ts" />
     <None Remove="SPA\DomainModel\Factors\Medicine\Enums\packaged-unit-dose-type.enum.ts" />
@@ -160,13 +161,13 @@
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-rule-item-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\i-medicine-factor-record.clo.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\medicine-type-status.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\factor-record-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-type-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\packaged-unit-dose-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\Enums\user-defined-unit-dose-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-rule-item.clo.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOs\medicine-factor-record.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\General\Enums\unit-of-measure.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\generic-clo.factory.ts" />

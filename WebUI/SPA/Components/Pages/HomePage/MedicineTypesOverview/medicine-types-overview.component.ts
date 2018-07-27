@@ -13,6 +13,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
+import { AddMedicineSupplyComponent } from './AddMedicineSupply/add-medicine-supply.component';
 
 
 
@@ -31,28 +32,20 @@ export class MedicineTypesOverviewComponent {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
 
-        GetMenuItems: (medicineTypeCLO:CLOs.MedicineTypeCLO) => {
+        GetMenuItems: (medicineTypeCLO: CLOs.MedicineTypeCLO) => {
             return [
                 {
                     Name: 'Add supply',
                     OnClick: () => {
-                        alert(medicineTypeCLO.Name);
+                        this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
                     }
                 }
             ];
         },
-
         SelectedViewMode: Enums.MedicineTypeStatus.InUseToday,
         Blocked: false
     };
-    private readonly splitButtonMenuItems = [
-        {
-            Name: 'Add supply',
-            OnClick: () => {
-                alert('I was clicked');
-            }
-        }
-    ];
+
 
     // Private methods
     private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
@@ -169,6 +162,54 @@ export class MedicineTypesOverviewComponent {
         this.viewModel.SelectedViewMode = newVal;
 
         this.refreshUI();
+    }
+    private onAddMedicineTypeSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
+            title: 'Add new supply',
+            childComponent: AddMedicineSupplyComponent,
+            data: {
+                medicineTypeCLO: medicineTypeCLO,
+            },
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
+                        return !componentInstance.GetValidState();
+                    },
+                    text: 'Save',
+                    onAction: (childComponentInstance: any) => {
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.viewModel.Blocked = true;
+
+                            let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
+                            componentInstance.SaveData()
+                                .then(() => {
+
+                                    //this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+                                    //    .then(() => {
+                                    //        this.refreshUI();
+                                    //        setTimeout(() => {
+                                    //            this.viewModel.Blocked = false;
+                                    //            resolve();
+                                    //        }, 200);
+                                    //    });
+
+                                });
+                        });
+                        return promiseWrapper;
+                    }
+                },
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    }
+                }
+            ]
+        });
     }
 
 }
