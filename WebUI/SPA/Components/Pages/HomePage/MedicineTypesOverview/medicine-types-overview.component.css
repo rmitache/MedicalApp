@@ -59,7 +59,7 @@
     margin-top: 10px;
     background-color: #eaeaea;
     padding: 10px;
-    height:30px;
+    height:35px;
     border-radius: 3px;
     
 }
@@ -68,10 +68,19 @@
         margin-top: 0;
     }
 
-    .medicine-type-elem span {
+    .medicine-type-elem .h3 {
+        display: block;
         float: left;
+       
+        
     }
-
+    .medicine-type-elem .supply-label {
+        display: block;
+        clear: left;
+        float: left;
+        color: #808080;
+        margin-top:5px;
+    }
     .medicine-type-elem .split-button {
         float: right;
     }
