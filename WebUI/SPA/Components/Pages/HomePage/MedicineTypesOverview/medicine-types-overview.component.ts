@@ -30,10 +30,29 @@ export class MedicineTypesOverviewComponent {
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
+
+        GetMenuItems: (medicineTypeCLO:CLOs.MedicineTypeCLO) => {
+            return [
+                {
+                    Name: 'Add supply',
+                    OnClick: () => {
+                        alert(medicineTypeCLO.Name);
+                    }
+                }
+            ];
+        },
+
         SelectedViewMode: Enums.MedicineTypeStatus.InUseToday,
         Blocked: false
     };
-
+    private readonly splitButtonMenuItems = [
+        {
+            Name: 'Add supply',
+            OnClick: () => {
+                alert('I was clicked');
+            }
+        }
+    ];
 
     // Private methods
     private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
@@ -156,6 +175,8 @@ export class MedicineTypesOverviewComponent {
 interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
     FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
+
+    GetMenuItems(medicineTypeCLO: CLOs.MedicineTypeCLO);
     SelectedViewMode: Enums.MedicineTypeStatus;
     Blocked: boolean;
 }

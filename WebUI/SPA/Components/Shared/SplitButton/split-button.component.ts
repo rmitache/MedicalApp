@@ -11,8 +11,8 @@ import * as $ from 'jquery';
 })
 export class SplitButtonComponent {
     // Fields
-    //@Input('TooltipText')
-    //private tooltipText: string;
+    @Input('MenuItems')
+    private menuItems: MenuItem[];
     @ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
     private readonly viewModel: ViewModel = {
         MenuItems: null,
@@ -23,8 +23,6 @@ export class SplitButtonComponent {
     };
     private globalListenFunction: Function;
 
-
-
     // Constructor 
     constructor(
         private eRef: ElementRef,
@@ -32,11 +30,7 @@ export class SplitButtonComponent {
 
     }
     ngOnInit() {
-        this.viewModel.MenuItems = [
-            {
-                Name: 'Im a test'
-            }
-        ];
+        this.viewModel.MenuItems = this.menuItems;
     }
 
     // Events
@@ -67,7 +61,7 @@ export class SplitButtonComponent {
         document.removeEventListener('click', this.onClickedOutside, true);
     }
     private onMenuItemClicked = (menuItem: MenuItem) => {
-        alert(menuItem.Name);
+        menuItem.OnClick();
     }
 
 
@@ -82,5 +76,5 @@ interface ViewModel {
 }
 export interface MenuItem {
     Name: string;
-
+    OnClick();
 }

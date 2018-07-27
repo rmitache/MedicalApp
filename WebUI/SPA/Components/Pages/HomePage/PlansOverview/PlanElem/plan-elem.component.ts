@@ -183,4 +183,5 @@ interface ViewModel {
 }
 interface MenuItemsToPLanStatusMap {
     [planStatusName: string]: MenuItem[];
+
 }
