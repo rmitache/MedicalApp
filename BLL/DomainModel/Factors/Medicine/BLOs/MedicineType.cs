@@ -16,7 +16,20 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public int? PackagedUnitDoseSize { get; set; }
 
         virtual public bool? IsInUse { get; set; }
-        virtual public int? RemainingSupplyInDays { get; set; }
+        virtual public int? RemainingSupply { get; set; } // Null if nothing has been entered (idea: shouldn't it then be 0 ?)
+        virtual public string RemainingSupplyMeasuredIn
+        {
+            get
+            {
+                if(this.IsPackagedIntoUnits)
+                {
+                    return this.PackagedUnitDoseType.ToString();
+                } else
+                {
+                    return this.BaseUnitOfMeasure.ToString();
+                }
+            }
+        }
 
         // Constructor
         public MedicineType() { }

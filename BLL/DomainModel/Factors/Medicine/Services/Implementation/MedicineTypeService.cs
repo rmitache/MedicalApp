@@ -47,9 +47,41 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // 
             return uniqueMedicineTypesInUseAcrossPlans;
         }
-        private int GetRemainingSupplyInDays(TMedicineType medicineTypeDataEntity, List<TTakenMedicineFactorRecord> takenEntities)
+        private int? DetermineMedicineTypeRemainingSupply(TMedicineType medTypeDataEntity)
         {
-            return 0;
+            // Determine the total supply amount
+            int? totalSupplyAmount = null;
+            if (medTypeDataEntity.TMedicineTypeSupplyEntry.Count > 0)
+            {
+                totalSupplyAmount = medTypeDataEntity.TMedicineTypeSupplyEntry.Select(supplyEntry => supplyEntry.SupplyQuantity).Sum();
+            }
+
+            // Determine how much supply is left
+            int? remainingSupplyAmount = null;
+            if (totalSupplyAmount != null)
+            {
+                remainingSupplyAmount = totalSupplyAmount;
+                var takenRecords = medTypeDataEntity.TTakenMedicineFactorRecord;
+                foreach (TTakenMedicineFactorRecord takenRecord in takenRecords)
+                {
+                    if (medTypeDataEntity.IsPackagedIntoUnits)
+                    {
+                        // If it's packaged into units, subtract 1 unitdose for each Taken record
+                        // Consider the amount to be measured in the UnitDoseSizeType 
+                        remainingSupplyAmount -= 1;
+                    }
+                    else
+                    {
+                        // If it's not packaged into units, each RuleItem will have its own customDoseType
+                        // In which case consider the amount to be measured in BaseUnitOfMeasure 
+                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize;
+
+                    }
+                }
+            }
+
+            return remainingSupplyAmount;
+
         }
 
         // Constructor
@@ -72,9 +104,16 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return blo;
         }
+        public int? DetermineMedicineTypeRemainingSupply()
+        {
+            return null;
+        }
         public List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
-            // Get usage info 
+            // Get all the medicineTypes available for the current user 
+            var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
+
+            // Get usage info for each MedicineType
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
             if (retreiveSupplyAndUsageInfo)
             {
@@ -83,19 +122,21 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 
-            // Get supply info 
+            // Get supply info for each MedicineType
+            Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                // Get all Taken fields and split them by MedicineType (IDEA: couldn't they be retreived using include when getting AllMedicineTypes ? Same like with SupplyEntries
-                // For each MedicineType
-
-                    // Loop through supply entries and get the total supply
+                supplyQuantitiesLeftPerMedicineType = new Dictionary<string, int?>();
+                foreach (TMedicineType medTypeDataEntity in dataEntities)
+                {
+                    var remainingSupplyAmount = this.DetermineMedicineTypeRemainingSupply(medTypeDataEntity);
+                    supplyQuantitiesLeftPerMedicineType[medTypeDataEntity.Name] = remainingSupplyAmount;
+                }
             }
 
 
-            // Get all the medicineTypes available for the current user 
-            var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID);
-            var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities, uniqueMedicineTypesInUseToday);
+            // Construct the BLOs
+            var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities, uniqueMedicineTypesInUseToday, supplyQuantitiesLeftPerMedicineType);
             var sortedBLOs = blos.OrderBy(medicineType => medicineType.Name).ToList();
 
 

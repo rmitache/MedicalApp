@@ -21,6 +21,7 @@
         <div id="medicine-type-elems-list">
             <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.FilteredMedicineTypes">
                 <span class="h3">{{medicineType.Name}}</span>
+                <span *ngIf="medicineType.RemainingSupply !== null" class="supply-label">{{medicineType.RemainingSupply}} {{medicineType.RemainingSupplyMeasuredIn}} left</span>
                 <!--<split-button></split-button>-->
             </div>
         </div>

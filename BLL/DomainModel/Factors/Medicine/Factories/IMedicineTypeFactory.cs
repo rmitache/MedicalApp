@@ -8,8 +8,10 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 {
     public interface IMedicineTypeFactory
     {
-        MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null);
+        MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null, int? remainingSupply = null);
         TMedicineType Convert_ToDataEntity(MedicineType blo, int userID);
-        List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday);
+        List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, 
+            Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
+            Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType);
     }
 }

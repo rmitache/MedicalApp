@@ -26,12 +26,24 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         }
         public List<TMedicineType> GetAllMedicineTypes(int userID, bool includeSupplyEntriesAndTakenRecords = false)
         {
-            return entitiesContext.TMedicineType
+            var baseQuery = entitiesContext.TMedicineType
                 .AsNoTracking()
                 .Where(medicineType =>
                         medicineType.UserId == userID)
-                        .Include(medicineType => medicineType.TMedicineTypeSupplyEntry)
-                        .ToList();
+                .AsQueryable();
+
+
+            if (includeSupplyEntriesAndTakenRecords)
+            {
+                baseQuery = baseQuery.Include(medicineType => medicineType.TMedicineTypeSupplyEntry);
+                baseQuery = baseQuery
+                    .Include(medicineType => medicineType.TTakenMedicineFactorRecord)
+                        .ThenInclude(takenRecord => takenRecord.PlanMedicineRuleItem);
+            }
+
+
+            return baseQuery.ToList();
+
         }
     }
 }

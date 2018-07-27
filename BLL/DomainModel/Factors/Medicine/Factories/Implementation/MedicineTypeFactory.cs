@@ -15,7 +15,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
 
         // Public methods
-        public MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null)
+        public MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null, int? remainingSupply = null)
         {
             MedicineType blo = new MedicineType();
             blo.ID = dataEntity.Id;
@@ -28,6 +28,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
 
             blo.IsInUse = isInUse;
+            blo.RemainingSupply = remainingSupply;
 
             return blo;
         }
@@ -47,7 +48,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             return dataEntity;
 
         }
-        public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday)
+        public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities,
+            Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
+            Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType)
         {
 
             var bloList = dataEntities.Select(dataEntity =>
@@ -58,8 +61,13 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                 {
                     isInUse = uniqueMedicineTypesInUseToday.ContainsKey(dataEntity.Name);
                 }
+                int? remainingSupply = null;
+                if(supplyQuantitiesLeftPerMedicineType!=null)
+                {
+                    remainingSupply = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
+                }
 
-                return Convert_ToBLO(dataEntity, isInUse);
+                return Convert_ToBLO(dataEntity, isInUse, remainingSupply);
             }).ToList();
             return bloList;
         }

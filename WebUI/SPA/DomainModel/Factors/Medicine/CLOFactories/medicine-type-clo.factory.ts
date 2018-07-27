@@ -10,7 +10,6 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 @Injectable()
 export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO> {
 
-
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.MedicineTypeCLO {
         let newCLO = new CLOs.MedicineTypeCLO();
@@ -32,6 +31,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         } else {
             newCLO.IsInUse = null;
         }
+        newCLO.RemainingSupply = blo['RemainingSupply'];
+        newCLO.RemainingSupplyMeasuredIn = blo['RemainingSupplyMeasuredIn'];
 
         return newCLO;
     }
@@ -47,6 +48,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.PackagedUnitDoseSize = 100;
 
         newCLO.IsInUse = null;
+        newCLO.RemainingSupply = null;
+        newCLO.RemainingSupplyMeasuredIn = null;
 
         return newCLO;
     }
