@@ -1,6 +1,7 @@
 ﻿import { BaseCLO } from 'SPA/Core/CLO/base.clo';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import { MedicineFactorRecordCLO } from 'SPA/DomainModel/clo-exports';
 
 
 export class MedicineTypeCLO extends BaseCLO {
@@ -35,9 +36,19 @@ export class MedicineTypeCLO extends BaseCLO {
 
     // Public methods
     public AddToRemainingSupply(supplyToAdd: number) {
-        alert('add ' + supplyToAdd);
+        if (supplyToAdd <= 0) {
+            throw new Error("AddToRemainingSupply: supply must be non-zero and non-negative");
+        }
+        this.RemainingSupply += supplyToAdd;
     }
     public RemoveFromRemainingSupply(supplyToRemove: number) {
-        alert('remove ' + supplyToRemove);
+        if (supplyToRemove <= 0) {
+            throw new Error("RemoveFromRemainingSupply: supply must be non-zero and non-negative");
+        }
+        this.RemainingSupply -= supplyToRemove;
+
+        if (this.RemainingSupply < 0) {
+            this.RemainingSupply = 0;
+        }
     }
 }

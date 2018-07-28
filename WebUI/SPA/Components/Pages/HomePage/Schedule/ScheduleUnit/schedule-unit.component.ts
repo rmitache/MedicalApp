@@ -3,6 +3,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { TimeGroupRepresentation } from 'SPA/Components/Pages/HomePage/Schedule/schedule.component';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
+import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 @Component({
     selector: 'schedule-unit',
@@ -22,10 +23,11 @@ export class ScheduleUnitComponent {
         TimeGroups: null
     };
 
-
     // Constructor 
     constructor(
         private readonly dataService: HomePageDataService,
+        private readonly commandManager: CommandManager,
+
     ) {
 
     }
@@ -36,9 +38,11 @@ export class ScheduleUnitComponent {
 
     // Event handlers
     private onFactorRecordItemClicked(factorRecordCLO: CLOs.MedicineFactorRecordCLO) {
-        factorRecordCLO.Taken = (factorRecordCLO.Taken === true) ? false : true;
+        let takenStatus = (factorRecordCLO.Taken === true) ? false : true;
+        factorRecordCLO.Taken = takenStatus;
 
         this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO]);
+        this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
     }
 }
 

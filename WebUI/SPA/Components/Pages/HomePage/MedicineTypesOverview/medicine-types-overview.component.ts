@@ -14,6 +14,7 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { AddMedicineSupplyComponent } from './AddMedicineSupply/add-medicine-supply.component';
+import { MedicineFactorRecordCLO } from 'SPA/DomainModel/clo-exports';
 
 
 
@@ -151,6 +152,32 @@ export class MedicineTypesOverviewComponent {
                 this.refreshUI();
             });
     }
+    public AddOrRemoveSupplyForMedicineType(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
+
+        // Variables
+        var chosenMedType = this.viewModel.AvailableMedicineTypes.find(medType => {
+            return medType.ID === medicineFactorRecordCLO.MedicineType.ID;
+        });
+        if (chosenMedType.RemainingSupply === null) {
+            return;
+        }
+
+        // Determine which supplyValue to use 
+        let supplyValue: number;
+        if (chosenMedType.IsPackagedIntoUnits === true) {
+            supplyValue = 1;
+        } else {
+            supplyValue = medicineFactorRecordCLO.UserDefinedUnitDoseSize;
+        }
+        
+        // Determine whether to remove or add the supplyValue to the RemainingSupply of the MedicineType
+        if (medicineFactorRecordCLO.Taken === true) {
+            chosenMedType.RemoveFromRemainingSupply(supplyValue);
+        } else {
+            chosenMedType.AddToRemainingSupply(supplyValue);
+        }
+        
+    }
 
     // Event handlers
     private onAddNewMedicineTypeTriggered() {
@@ -208,7 +235,6 @@ export class MedicineTypesOverviewComponent {
             ]
         });
     }
-
 }
 interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
