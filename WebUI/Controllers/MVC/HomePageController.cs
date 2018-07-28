@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         // Private methods
         private Range<DateTime> GetMonthRangeWithPadding(DateTime refStartDate, DateTime refEndDate, int padding)
         {
-            if(padding<0)
+            if (padding < 0)
             {
                 throw new Exception("GetMonthRangeWithPadding - padding must be non-negative");
             }
@@ -62,7 +62,7 @@ namespace WebUI.Controllers
             WebSecurityManager webSecurityManager
             )
         {
-            
+
             this.symptomTypeService = symptomTypeService;
             this.medicineTypeService = medicineTypeService;
             this.medicineFactorRecordService = medicineFactorRecordService;
@@ -110,7 +110,7 @@ namespace WebUI.Controllers
             var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
 
 
-            
+
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
@@ -130,7 +130,7 @@ namespace WebUI.Controllers
                 FactorRecordsForInitialRange = factorRecords,
                 HealthStatusEntriesForInitialRange = healthStatusEntries
             };
-            
+
             return Json(bundle);
         }
 
@@ -142,7 +142,7 @@ namespace WebUI.Controllers
         {
             int? userID = this.webSecurityManager.CurrentUserID;
 
-            this.medicineFactorRecordService.MarkFactorRecordsAsTaken(model.FactorRecordCompositeIDs, model.NewTakenStatuses,(int)userID);
+            this.medicineFactorRecordService.MarkFactorRecordsAsTaken(model.FactorRecordCompositeIDs, model.NewTakenStatuses, (int)userID);
             return Json(true);
         }
 
@@ -222,7 +222,7 @@ namespace WebUI.Controllers
         public JsonResult AddMedicineTypeSupplyEntry([FromBody]AddMedicineTypeSupplyEntryModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            this.medicineTypeService.AddMedicineTypeSupplyEntry((int)userID, model.MedicineTypeID, model.SupplyQuantity);
             return Json(null);
         }
 

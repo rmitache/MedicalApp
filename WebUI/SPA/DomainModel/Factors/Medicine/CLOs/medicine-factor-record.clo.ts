@@ -23,9 +23,7 @@ export class MedicineFactorRecordCLO extends AbstractMedicineFactorRecordCLO {
     public UserDefinedUnitDoseType: Enums.UserDefinedUnitDoseType;
     public UserDefinedUnitDoseSize: number;
 
-
     
-
     // Constructor
     constructor(init?: Partial<MedicineFactorRecordCLO>) {
         super();

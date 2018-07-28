@@ -111,9 +111,19 @@ export class IFRPGroupElemComponent {
         //
         if (this.iFRPGroupCLO.MedicineType !== null) {
             this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
-            this.viewModel.UserDefinedControlsAreLocked = (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true);
             this.viewModel.OverlayIsVisible = false;
+
+            //
+            if (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true) {
+                this.viewModel.UserDefinedControlsAreLocked = true;
+                this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
+            } else {
+                this.viewModel.UserDefinedControlsAreLocked = false;
+                this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
+            }
+            
         }
+
     }
 
     // Public methods

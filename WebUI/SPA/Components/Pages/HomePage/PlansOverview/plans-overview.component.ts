@@ -70,7 +70,7 @@ export class PlansOverviewComponent {
                                         });
 
 
-                                    this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                                    this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
                                     setTimeout(() => {
                                         this.viewModel.Blocked = false;

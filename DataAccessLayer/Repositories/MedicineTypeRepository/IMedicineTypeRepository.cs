@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
     public interface IMedicineTypeRepository
     {
         TMedicineType AddMedicineType(TMedicineType dataEntity);
-
+        TMedicineTypeSupplyEntry AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
         List<TMedicineType> GetAllMedicineTypes(int userID, bool includeSupplyEntriesAndTakenRecords = false);
     }
 }

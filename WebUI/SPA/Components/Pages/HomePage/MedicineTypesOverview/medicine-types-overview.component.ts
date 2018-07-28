@@ -183,16 +183,13 @@ export class MedicineTypesOverviewComponent {
 
                             let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
                             componentInstance.SaveData()
-                                .then(() => {
-
-                                    //this.reloadDataFromServer(this.viewModel.AvailableDateRange)
-                                    //    .then(() => {
-                                    //        this.refreshUI();
-                                    //        setTimeout(() => {
-                                    //            this.viewModel.Blocked = false;
-                                    //            resolve();
-                                    //        }, 200);
-                                    //    });
+                                .then((supplyAdded) => {
+                                    setTimeout(() => {
+                                        medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+                                        this.viewModel.Blocked = false;
+                                        resolve();
+                                    }, 200);
+                                    
 
                                 });
                         });

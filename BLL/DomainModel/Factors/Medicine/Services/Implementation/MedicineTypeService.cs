@@ -142,5 +142,9 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return sortedBLOs;
         }
+        public void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity)
+        {
+            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, MedicineTypeID, SupplyQuantity);
+        }
     }
 }

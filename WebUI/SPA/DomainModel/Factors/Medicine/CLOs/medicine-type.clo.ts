@@ -32,4 +32,12 @@ export class MedicineTypeCLO extends BaseCLO {
         super();
         Object.assign(this, init);
     }
+
+    // Public methods
+    public AddToRemainingSupply(supplyToAdd: number) {
+        alert('add ' + supplyToAdd);
+    }
+    public RemoveFromRemainingSupply(supplyToRemove: number) {
+        alert('remove ' + supplyToRemove);
+    }
 }

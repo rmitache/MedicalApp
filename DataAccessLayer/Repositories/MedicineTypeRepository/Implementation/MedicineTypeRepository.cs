@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,30 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         public TMedicineType AddMedicineType(TMedicineType dataEntity)
         {
             entitiesContext.TMedicineType.Add(dataEntity);
+            entitiesContext.SaveChanges();
+
+            return dataEntity;
+        }
+        public TMedicineTypeSupplyEntry AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity)
+        {
+
+            // Check that the userID matches the MedicineTypeID
+            TMedicineType medicineType = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
+                        medType.Id == MedicineTypeID).SingleOrDefault();
+            if (medicineType.UserId != userID)
+            {
+                throw new ArgumentException("userID");
+            }
+
+
+            // Create the dataentity
+            TMedicineTypeSupplyEntry dataEntity = new TMedicineTypeSupplyEntry();
+            dataEntity.EntryDateTime = DateTime.Now;
+            dataEntity.MedicineTypeId = MedicineTypeID;
+            dataEntity.SupplyQuantity = SupplyQuantity;
+
+
+            entitiesContext.TMedicineTypeSupplyEntry.Add(dataEntity);
             entitiesContext.SaveChanges();
 
             return dataEntity;
