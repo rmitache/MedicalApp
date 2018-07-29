@@ -53,7 +53,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             int? totalSupplyAmount = null;
             if (medTypeDataEntity.TMedicineTypeSupplyEntry.Count > 0)
             {
-                totalSupplyAmount = medTypeDataEntity.TMedicineTypeSupplyEntry.Select(supplyEntry => supplyEntry.SupplyQuantity).Sum();
+                totalSupplyAmount = medTypeDataEntity.TMedicineTypeSupplyEntry
+                    .Select(supplyEntry => supplyEntry.SupplyQuantity).Sum();
             }
 
             // Determine how much supply is left
@@ -103,10 +104,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             blo.ID = dataEntity.Id;
 
             return blo;
-        }
-        public int? DetermineMedicineTypeRemainingSupply()
-        {
-            return null;
         }
         public List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
