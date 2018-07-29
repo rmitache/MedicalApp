@@ -123,12 +123,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                supplyQuantitiesLeftPerMedicineType = new Dictionary<string, int?>();
-                foreach (TMedicineType medTypeDataEntity in dataEntities)
-                {
-                    var remainingSupplyAmount = this.DetermineMedicineTypeRemainingSupply(medTypeDataEntity);
-                    supplyQuantitiesLeftPerMedicineType[medTypeDataEntity.Name] = remainingSupplyAmount;
-                }
+                supplyQuantitiesLeftPerMedicineType = dataEntities.ToDictionary(entry => entry.Name, entry => this.DetermineMedicineTypeRemainingSupply(entry));
             }
 
 

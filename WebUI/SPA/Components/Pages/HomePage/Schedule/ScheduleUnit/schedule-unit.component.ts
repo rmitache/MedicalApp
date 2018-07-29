@@ -4,6 +4,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { TimeGroupRepresentation } from 'SPA/Components/Pages/HomePage/Schedule/schedule.component';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
+import * as moment from 'moment';
 
 @Component({
     selector: 'schedule-unit',
@@ -23,6 +24,12 @@ export class ScheduleUnitComponent {
         TimeGroups: null
     };
 
+    // Private methods
+    private FactorRecordIsMoreThanOneDayInTheFuture(factorRecordCLO: CLOs.MedicineFactorRecordCLO) {
+        var isTrue = moment(factorRecordCLO.OccurrenceDateTime) >= moment().add(1, 'days');
+        return isTrue;
+    }
+
     // Constructor 
     constructor(
         private readonly dataService: HomePageDataService,
@@ -38,11 +45,15 @@ export class ScheduleUnitComponent {
 
     // Event handlers
     private onFactorRecordItemClicked(factorRecordCLO: CLOs.MedicineFactorRecordCLO) {
-        let takenStatus = (factorRecordCLO.Taken === true) ? false : true;
-        factorRecordCLO.Taken = takenStatus;
+        if (!this.FactorRecordIsMoreThanOneDayInTheFuture(factorRecordCLO)) {
+            let takenStatus = (factorRecordCLO.Taken === true) ? false : true;
+            factorRecordCLO.Taken = takenStatus;
 
-        this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO]);
-        this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
+            this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO]);
+            this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
+        } else {
+            alert('You cannot take medicine more than 24 hours in the future');
+        }
     }
 }
 

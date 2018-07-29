@@ -67,7 +67,7 @@ export class AddMedicineSupplyComponent implements IModalDialog {
 
         let saveDataPromise = this.globalDataService.AddMedicineTypeSupplyEntry(this.viewModel.MedicineTypeCLO.ID, this.viewModel.NewSupplyAmount)
             .then(() => {
-                return 50;
+                return parseInt(this.viewModel.NewSupplyAmount.toString());
             });
         return saveDataPromise;
     }
