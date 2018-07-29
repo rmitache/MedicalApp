@@ -180,9 +180,9 @@ export class MedicineTypesOverviewComponent {
         
         // Determine whether to remove or add the supplyValue to the RemainingSupply of the MedicineType
         if (medicineFactorRecordCLO.Taken === true) {
-            chosenMedType.RemoveFromRemainingSupply(supplyValue);
+            chosenMedType.RemoveFromRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
         } else {
-            chosenMedType.AddToRemainingSupply(supplyValue);
+            chosenMedType.AddToRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
         }
         
     }

@@ -22,7 +22,10 @@
             <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.FilteredMedicineTypes">
                 <span class="h3">{{medicineType.Name}}</span>
                 <split-button [MenuItems]="viewModel.GetMenuItems(medicineType)"></split-button>
-                <span *ngIf="medicineType.RemainingSupply !== null" class="supply-label label">{{medicineType.RemainingSupply}} {{medicineType.RemainingSupplyMeasuredIn}} left</span>
+                <span *ngIf="medicineType.RemainingSupply !== null" 
+                      class="supply-label label"
+                      [ngClass]="{'red-label': medicineType.RemainingSupply===0}"
+                      >{{medicineType.RemainingSupply}} {{medicineType.RemainingSupplyMeasuredIn}} left</span>
 
             </div>
         </div>

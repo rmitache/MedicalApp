@@ -73,10 +73,14 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         }
         public TMedicineType GetByID(int userID, int medicineTypeID)
         {
-            TMedicineType medicineType = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
-                        medType.Id == medicineTypeID)
-                        .Include(medType=> medType.TMedicineTypeSupplyEntry)
+            var medicineType = entitiesContext.TMedicineType.AsNoTracking()
+                        .Where(medType => medType.Id == medicineTypeID &&
+                                medType.UserId == userID)
+                        .Include(medType => medType.TMedicineTypeSupplyEntry)
+                        .Include(medType => medType.TTakenMedicineFactorRecord)
+                        .ThenInclude(suppEntry => suppEntry.PlanMedicineRuleItem)
                         .SingleOrDefault();
+
             if (medicineType.UserId != userID)
             {
                 throw new ArgumentException("userID");

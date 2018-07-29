@@ -17,7 +17,6 @@
         .frame .header .left-section {
             display: block;
             float: left;
-            /*border: solid 1px red;*/
         }
 
             .frame .header .left-section .header-label {
@@ -80,6 +79,9 @@
         float: left;
         color: #808080;
         margin-top:5px;
+    }
+    .medicine-type-elem .red-label {
+        color:red;
     }
     .medicine-type-elem .split-button {
         float: right;

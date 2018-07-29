@@ -71,20 +71,21 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                     {
                         // If it's packaged into units, subtract 1 unitdose for each Taken record
                         // Consider the amount to be measured in the UnitDoseSizeType 
-                        remainingSupplyAmount -= 1;
+                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
                     }
                     else
                     {
                         // If it's not packaged into units, each RuleItem will have its own customDoseType
                         // In which case consider the amount to be measured in BaseUnitOfMeasure 
-                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize;
+                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize * takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
 
                     }
 
-                    remainingSupplyAmount = (remainingSupplyAmount < 0) ? 0 : remainingSupplyAmount;
+                    
                 }
             }
 
+            remainingSupplyAmount = (remainingSupplyAmount < 0) ? 0 : remainingSupplyAmount;
             return remainingSupplyAmount;
 
         }
@@ -146,14 +147,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // Get the dataEntity and its supplyEntries
             var medicineTypeDataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
 
+            var b = this.DetermineMedicineTypeRemainingSupply(medicineTypeDataEntity);
 
             // If there are no previous SupplyEntries, delete all taken takenFactorRecords for the given medicineType
             if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Count == 0)
             {
                 this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
             }
-            // Or if the sum of previous SupplyEntries is 0
-            else if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Sum(x => x.SupplyQuantity) == 0)
+            // Or if the sum of previous SupplyEntries is 0 or less
+            else if (this.DetermineMedicineTypeRemainingSupply(medicineTypeDataEntity) <= 0)
             {
                 this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
                 this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
