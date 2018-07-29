@@ -207,7 +207,6 @@ namespace WebUI.Controllers
 
 
         // MedicineTypes-------------------------------------------------------------------------------------------------------
-
         [Route("HomePage/AddMedicineType")]
         [HttpPost]
         public JsonResult AddMedicineType([FromBody]MedicineType blo)
@@ -226,6 +225,14 @@ namespace WebUI.Controllers
             return Json(null);
         }
 
+        [Route("HomePage/ClearSupplyEntries")]
+        [HttpPost]
+        public JsonResult ClearSupplyEntries([FromBody]ClearSupplyEntriesModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.medicineTypeService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
+            return Json(null);
+        }
 
         [Route("HomePage/GetMedicineTypes")]
         [HttpPost]
@@ -243,7 +250,10 @@ namespace WebUI.Controllers
             public int MedicineTypeID;
             public int SupplyQuantity;
         }
-
+        public class ClearSupplyEntriesModel
+        {
+            public int MedicineTypeID;
+        }
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;

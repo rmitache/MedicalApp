@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 
 namespace DataAccessLayer.Repositories.MedicineTypeRepository
 {
@@ -69,6 +70,34 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 
             return baseQuery.ToList();
 
+        }
+        public TMedicineType GetByID(int userID, int medicineTypeID)
+        {
+            TMedicineType medicineType = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
+                        medType.Id == medicineTypeID)
+                        .Include(medType=> medType.TMedicineTypeSupplyEntry)
+                        .SingleOrDefault();
+            if (medicineType.UserId != userID)
+            {
+                throw new ArgumentException("userID");
+            }
+
+            return medicineType;
+        }
+        public void DeleteSupplyEntriesByMedicineTypeID(int userID, int medicineTypeID)
+        {
+            TMedicineType medicineType = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
+                        medType.Id == medicineTypeID).SingleOrDefault();
+            if (medicineType.UserId != userID)
+            {
+                throw new ArgumentException("userID");
+            }
+
+
+            // Delete
+            entitiesContext.TMedicineTypeSupplyEntry.Where(x =>
+                   x.MedicineTypeId == medicineTypeID
+               ).Delete();
         }
     }
 }

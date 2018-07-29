@@ -13,6 +13,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
     {
         void AddTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
         void RemoveTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
+        void DeleteByMedicineTypeID(int userID, int medicineTypeID);
         List<TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID);
     }
 }

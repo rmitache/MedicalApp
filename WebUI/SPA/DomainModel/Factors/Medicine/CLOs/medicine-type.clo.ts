@@ -55,4 +55,7 @@ export class MedicineTypeCLO extends BaseCLO {
             this.RemainingSupply = 0;
         }
     }
+    public ClearSupply() {
+        this.RemainingSupply = null;
+    }
 }

@@ -34,14 +34,22 @@ export class MedicineTypesOverviewComponent {
         FilteredMedicineTypes: null,
 
         GetMenuItems: (medicineTypeCLO: CLOs.MedicineTypeCLO) => {
-            return [
+            var menuItems = [
                 {
                     Name: 'Add supply',
                     OnClick: () => {
                         this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
                     }
+                },
+                {
+                    Name: 'Clear supply',
+                    OnClick: () => {
+                        this.onClearSupplyTriggered(medicineTypeCLO);
+                    }
                 }
-            ];
+            ]
+
+            return menuItems;
         },
         SelectedViewMode: Enums.MedicineTypeStatus.InUseToday,
         Blocked: false
@@ -213,6 +221,7 @@ export class MedicineTypesOverviewComponent {
                                 .then((supplyAdded) => {
                                     setTimeout(() => {
                                         medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+                                        this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
                                         this.viewModel.Blocked = false;
                                         resolve();
                                     }, 200);
@@ -233,6 +242,12 @@ export class MedicineTypesOverviewComponent {
                     }
                 }
             ]
+        });
+    }
+    private onClearSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
+        this.dataService.ClearSupplyEntries(medicineTypeCLO.ID).then(() => {
+            medicineTypeCLO.ClearSupply();
+            this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
         });
     }
 }

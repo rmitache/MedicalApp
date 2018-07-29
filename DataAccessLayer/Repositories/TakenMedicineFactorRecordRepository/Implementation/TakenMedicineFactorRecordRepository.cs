@@ -62,6 +62,14 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
 
 
         }
+
+        public void DeleteByMedicineTypeID(int userID, int medicineTypeID)
+        {
+            entitiesContext.TTakenMedicineFactorRecord.Where(x =>
+                   x.MedicineTypeId == medicineTypeID && 
+                   x.MedicineType.UserId == userID
+               ).Delete();
+        }
     }
 }
 

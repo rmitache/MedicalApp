@@ -6,6 +6,7 @@ using Common;
 using Common.DataStructures;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
+using DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
     public class MedicineTypeService : IMedicineTypeService
     {
         // Fields
+        private readonly ITakenMedicineFactorRecordRepository takenMedFactorRecordRepo;
         private readonly IMedicineTypeRepository medicineTypeRepo;
         private readonly IMedicineTypeFactory medicineTypeFactory;
         private readonly IPlanService planService;
@@ -78,6 +80,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                         remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize;
 
                     }
+
+                    remainingSupplyAmount = (remainingSupplyAmount < 0) ? 0 : remainingSupplyAmount;
                 }
             }
 
@@ -86,10 +90,13 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
 
         // Constructor
-        public MedicineTypeService(IMedicineTypeRepository medicineTypeRepo,
+        public MedicineTypeService(
+            ITakenMedicineFactorRecordRepository takenMedFactorRecordRepo,
+            IMedicineTypeRepository medicineTypeRepo,
             IMedicineTypeFactory medicineTypeFactory,
             IPlanService planService)
         {
+            this.takenMedFactorRecordRepo = takenMedFactorRecordRepo;
             this.medicineTypeRepo = medicineTypeRepo;
             this.medicineTypeFactory = medicineTypeFactory;
             this.planService = planService;
@@ -134,9 +141,32 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return sortedBLOs;
         }
-        public void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity)
+        public void AddMedicineTypeSupplyEntry(int userID, int medicineTypeID, int supplyQuantity)
         {
-            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, MedicineTypeID, SupplyQuantity);
+            // Get the dataEntity and its supplyEntries
+            var medicineTypeDataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
+
+
+            // If there are no previous SupplyEntries, delete all taken takenFactorRecords for the given medicineType
+            if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Count == 0)
+            {
+                this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
+            }
+            // Or if the sum of previous SupplyEntries is 0
+            else if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Sum(x => x.SupplyQuantity) == 0)
+            {
+                this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
+                this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
+            }
+
+
+            // Add the new SupplyEntry
+            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, medicineTypeID, supplyQuantity);
+        }
+        public void ClearSupplyEntries(int userID, int medicineTypeID)
+        {
+            this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
+
         }
     }
 }

@@ -17,23 +17,6 @@ export class HomePageDataService {
     // Fields
     private readonly apiUrl: string = '/HomePage';
 
-    // Private methods
-    private generateRandomHealthStatusEntryBLOs(dateRange: Range<Date>): Object[] {
-        let datesArray: Date[] = HelperFunctions.EnumerateDaysBetweenDates(dateRange.RangeStart, dateRange.RangeEnd, true);
-        let blos = [];
-
-        datesArray.forEach(date => {
-            let newBLO = {
-                ID: 1,
-                OccurrenceDateTime: date,
-                HealthLevel: HelperFunctions.RandomIntFromInterval(-3, 3)
-            }
-            blos.push(newBLO);
-        });
-
-        return blos;
-    }
-
     // Constructor
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
@@ -225,6 +208,18 @@ export class HomePageDataService {
         let model = {
             MedicineTypeID: medicineTypeID,
             SupplyQuantity: supplyQuantity
+        };
+
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+            .toPromise();
+
+        return postDataPromise;
+    }
+    public ClearSupplyEntries(medicineTypeID: number): Promise<void> {
+        const apiMethodName: string = 'ClearSupplyEntries';
+
+        let model = {
+            MedicineTypeID: medicineTypeID
         };
 
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)

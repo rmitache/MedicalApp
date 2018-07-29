@@ -32,17 +32,18 @@
     top:25px;
 
     border:solid 1px #c6c6c6;
-    min-width:80px;
-    min-height:20px;
+    
+    
     background-color:white;
     z-index:99999;
 }
 .menu-item {
-    height:10px;
-    line-height:10px;
-    vertical-align:middle;
-    cursor:pointer;
-    padding:5px;
+    height: 10px;
+    line-height: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 8px;
+    min-width: 80px;
 }
     .menu-item:hover {
         background-color: #c6c6c6;
