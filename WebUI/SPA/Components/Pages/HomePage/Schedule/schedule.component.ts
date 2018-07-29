@@ -291,12 +291,13 @@ class DayDisplayMode implements IDisplayMode {
     ];
 
     // Private methods
+    /* BELOW: commented out conflation logic (needs to be rewritten)
     private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
         // Verifies whether two FactorRecords are conflatable (all fields except the quantifiers, which are expected to perhaps be different)
         var areEquivalent: boolean =
             (firstFactorRecord.MedicineType.ID === secondFactorRecord.MedicineType.ID) &&
             (firstFactorRecord.ParentPlanName === secondFactorRecord.ParentPlanName);
-
+        
         return areEquivalent;
     }
     private tryConflateWithEquivalentInList(factorRecord: CLOs.MedicineFactorRecordCLO, list: CLOs.MedicineFactorRecordCLO[]): boolean {
@@ -313,7 +314,7 @@ class DayDisplayMode implements IDisplayMode {
 
         return wasConflated;
     }
-
+    */
     // Constructor
     constructor(private readonly genericCLOFactory: GenericCLOFactory) {
 
@@ -365,10 +366,13 @@ class DayDisplayMode implements IDisplayMode {
                 }
                 let destArray = timeGroup.FactorRecordsByPlanName[record.ParentPlanName];
 
+                // Add the factorRecord 
+                timeGroup.FactorRecordsByPlanName[record.ParentPlanName].push(record);
+
+                // BELOW: commented out CONFLATION LOGIC (needs to be rewritten)
                 // Then try to conflate with an existing equivalent factorRecord or add it
-                if (!this.tryConflateWithEquivalentInList(record, destArray)) {
-                    timeGroup.FactorRecordsByPlanName[record.ParentPlanName].push(record);
-                }
+                //if (!this.tryConflateWithEquivalentInList(record, destArray)) {
+                //}
             } else {
                 throw new Error("Record with Time =" + record.GetTime().ToString() + " does not match any schedule unit!");
             }
