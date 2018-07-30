@@ -49,7 +49,7 @@ export class HealthStatusDatasetGenerator {
         }
         else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
             // ok
-            color = '#cfe27e';
+            color = '#e2d77e';
         }
         else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
             // notgreat 

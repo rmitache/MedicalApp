@@ -42,27 +42,28 @@ export class VersionCLOService {
         return medTypes;
     }
     /** Returns VersionA - VersionB  */
-    public GetChangesBetween(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO, returnUnchanged: boolean = false): MedicineTypeChangeSet[] {
+    public GetChangesBetween(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO, returnUnchanged: boolean = false): MedicineTypeAndChangeTypePair[] {
         // versionA - versionB -> actual differences between the two versions
         // null - versionB -> everything in versionB is shown as STOPPED
         // versionA - null -> everything in versionA is shown as NEW
 
 
         // Variables
-        let medTypeChanges: MedicineTypeChangeSet[] = [];
-        let versionAUniqueMedTypes = (versionA !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionA) : {};
+        let medTypeChanges: MedicineTypeAndChangeTypePair[] = [];
+        let versionAUniqueMedTypes =  (versionA !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionA) : {};
         let versionBUniqueMedTypes = (versionB !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionB) : {};
+        
 
         // Loop through entries in the versionAMedTypes (find those which are NEW and CHANGED)
         for (var medicineTypeName in versionAUniqueMedTypes) {
             let medTypeEntry = versionAUniqueMedTypes[medicineTypeName];
-            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
+            let newMedTypeChangeSet = new MedicineTypeAndChangeTypePair(medTypeEntry.MedicineType);
 
             // New
             if (versionBUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
                 newMedTypeChangeSet.ChangeType = ChangeType.New;
             }
-            // Changed
+            // UnChanged & Changed
             else if (versionBUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
                 var prevVersionMedTypeChangeSet = versionBUniqueMedTypes[medicineTypeName];
 
@@ -82,7 +83,7 @@ export class VersionCLOService {
         // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
         for (var medicineTypeName in versionBUniqueMedTypes) {
             let medTypeEntry = versionBUniqueMedTypes[medicineTypeName];
-            let newMedTypeChangeSet = new MedicineTypeChangeSet(medTypeEntry.MedicineType);
+            let newMedTypeChangeSet = new MedicineTypeAndChangeTypePair(medTypeEntry.MedicineType);
 
             // Stopped
             if (versionAUniqueMedTypes[medicineTypeName] === undefined) {
@@ -127,7 +128,7 @@ export class VersionCLOService {
 }
 
 // Special classes 
-export class MedicineTypeChangeSet {
+export class MedicineTypeAndChangeTypePair {
     public ChangeType: ChangeType;
 
     constructor(public MedicineType: CLOs.MedicineTypeCLO) {
@@ -140,22 +141,21 @@ export enum ChangeType {
     New = 3,
     Stopped = 4
 }
-
 export class MedicineTypeAndAvgMonthlyDosage {
 
     // Fields
     public MedicineType: CLOs.MedicineTypeCLO;
     private totalMonthlyDosageInMgOrMl: number = 0; // quantity * unitdosesize 
-    private numberOfRuleItemsToDivideBy: number = 0;
+    private numberOfRuleItems: number = 0;
 
     // Properties
     public get AvgMonthlyDosage(): number {
-        return this.totalMonthlyDosageInMgOrMl / this.numberOfRuleItemsToDivideBy;
+        return this.totalMonthlyDosageInMgOrMl;
     }
 
     // Public methods
     public AddTotalMonthlyDosageFromMedicineRuleItem(totalDosageInMgOrMl) {
         this.totalMonthlyDosageInMgOrMl += totalDosageInMgOrMl;
-        this.numberOfRuleItemsToDivideBy++;
+        this.numberOfRuleItems++;
     }
 }
