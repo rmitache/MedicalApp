@@ -300,7 +300,7 @@ class MonthDisplayMode implements IDisplayMode {
             }
             // ok
             else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-                dataPointsBgColors.push('#cfe27e');
+                dataPointsBgColors.push('#e2d77e');
             }
             // notgreat 
             else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
