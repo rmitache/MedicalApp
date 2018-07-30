@@ -7,7 +7,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { VersionElemHoverEventInfo, HoverInfoPointType } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { GetNrOfDaysBetweenDatesUsingMoment, GetNrOfDaysBetweenDates } from 'SPA/Core/Helpers/Functions/functions';
-import { VersionCLOService, MedicineTypeChangeSet, ChangeType } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionCLOService, MedicineTypeAndChangeTypePair, ChangeType } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 
 
@@ -85,26 +85,26 @@ export class VersionTooltipComponent {
 
         // Variables
         this.viewModel.VersionCLO = versionHoverEventInfo.VersionCLO;
-        let version = this.viewModel.VersionCLO;
-        let prevVersion = version.GetPreviousVersion();
-        let nextVersion = version.GetNextVersion();
-        let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, version) : false;
-        let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, version) : false;
+        let currentVersion = this.viewModel.VersionCLO;
+        let prevVersion = currentVersion.GetPreviousVersion();
+        let nextVersion = currentVersion.GetNextVersion();
+        let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, currentVersion) : false;
+        let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, currentVersion) : false;
 
 
         // StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
         if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
-            (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, version))) {
+            (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, currentVersion))) {
             this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
         }
         // EndPoint, on version without any next adjacent version -> show list of all medTypes as STOPPED  
         else if (versionHoverEventInfo.PointType === HoverInfoPointType.EndPoint &&
-            (nextVersion === null || !this.versionCLOService.AreAdjacent(nextVersion, version))) {
+            (nextVersion === null || !this.versionCLOService.AreAdjacent(nextVersion, currentVersion))) {
             this.viewModel.Changes = this.versionCLOService.GetChangesBetween(null, this.viewModel.VersionCLO);
         }
         // Any normal Points
         else {
-            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(version, prevVersion);
+            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(currentVersion, prevVersion);
         }
 
 
@@ -129,7 +129,7 @@ export class VersionTooltipComponent {
 
 interface ViewModel {
     VersionCLO: CLOs.VersionCLO;
-    Changes: MedicineTypeChangeSet[];
+    Changes: MedicineTypeAndChangeTypePair[];
     GetChangeTypeIcon(changeType: ChangeType);
 
     Visible: boolean;

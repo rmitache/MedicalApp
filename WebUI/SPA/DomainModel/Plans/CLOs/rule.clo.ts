@@ -15,7 +15,7 @@ export class RuleCLO extends BaseCLO {
 
     // Properties
     public get NrOfTimesPerMonth(): number {
-
+        
         // Nr of times per day 
         let nrOfTimesPerDay = this.MomentsInDay.length;
 
