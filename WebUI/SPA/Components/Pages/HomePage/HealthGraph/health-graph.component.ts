@@ -282,7 +282,7 @@ class MonthDisplayMode implements IDisplayMode {
             var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
             var avgHealthLevel = this.getAverageHealthLevel(clos);
 
-
+            // Test comment
             // Create datapoint
             var dp = {
                 x: date,
