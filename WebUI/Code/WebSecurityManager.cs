@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
 
-namespace Infare.FE4.WebUI.Code.WebSecurity.Implementation
+namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
 {
     public class WebSecurityManager
     {

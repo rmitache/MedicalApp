@@ -11,7 +11,7 @@ using BLL.DomainModel.Indicators.Symptoms.Services;
 using Common;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 
 namespace WebUI.Controllers
 {

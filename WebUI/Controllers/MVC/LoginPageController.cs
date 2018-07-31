@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BLL.DomainModel.Indicators.Symptoms.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

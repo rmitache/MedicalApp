@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using Infare.FE4.WebUI.Code.WebSecurity.Implementation;
+using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 
