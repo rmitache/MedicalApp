@@ -46,6 +46,7 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.THealthStatusEntry)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_general_health_entry_t_user");
             });
 
@@ -77,6 +78,7 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TMedicineType)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_medicine_type_t_user");
             });
 
@@ -119,6 +121,7 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TPlan)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_plan_t_user");
             });
 
@@ -220,6 +223,7 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.SymptomType)
                     .WithMany(p => p.TSymptomEntry)
                     .HasForeignKey(d => d.SymptomTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_symptom_entry_t_symptom_type");
             });
 
@@ -263,7 +267,6 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.Plan)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
                     .HasForeignKey(d => d.PlanId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan");
 
                 entity.HasOne(d => d.PlanMedicineRuleItem)

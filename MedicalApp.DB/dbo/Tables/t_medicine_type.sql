@@ -8,8 +8,10 @@
     [packaged_unit_dose_type_id] INT           NULL,
     [packaged_unit_dose_size]    INT           NULL,
     CONSTRAINT [PK_t_medicine_type] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_t_medicine_type_t_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[t_user] ([id]) ON DELETE CASCADE
+    CONSTRAINT [FK_t_medicine_type_t_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[t_user] ([id])
 );
+
+
 
 
 

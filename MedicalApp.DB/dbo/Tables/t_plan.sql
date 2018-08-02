@@ -4,6 +4,8 @@
     [name]         NVARCHAR (50) NULL,
     [date_created] DATE          NOT NULL,
     CONSTRAINT [PK_t_plan] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_t_plan_t_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[t_user] ([id]) ON DELETE CASCADE
+    CONSTRAINT [FK_t_plan_t_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[t_user] ([id])
 );
+
+
 
