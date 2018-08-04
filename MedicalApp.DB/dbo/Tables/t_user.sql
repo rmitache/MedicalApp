@@ -8,3 +8,10 @@
     CONSTRAINT [PK_T_User] PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
+
+
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_t_user]
+    ON [dbo].[t_user]([email] ASC);
+

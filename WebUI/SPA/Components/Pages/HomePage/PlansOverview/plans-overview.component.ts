@@ -144,7 +144,10 @@ export class PlansOverviewComponent {
     }
     ngOnInit() {
         // Init ViewModel properties
-        this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+		this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
+		debugger;
+		var x = this.viewModel.AvailablePlans[3].Status;
+		
         this.refreshUI();
     }
     ngOnDestroy() {

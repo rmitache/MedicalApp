@@ -262,11 +262,13 @@ namespace DataAccessLayer.Entities
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
                     .HasForeignKey(d => d.MedicineTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_taken_medicine_factor_record_t_medicine_type");
 
                 entity.HasOne(d => d.Plan)
                     .WithMany(p => p.TTakenMedicineFactorRecord)
                     .HasForeignKey(d => d.PlanId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_t_taken_medicine_factor_record_t_plan");
 
                 entity.HasOne(d => d.PlanMedicineRuleItem)
@@ -279,6 +281,10 @@ namespace DataAccessLayer.Entities
             modelBuilder.Entity<TUser>(entity =>
             {
                 entity.ToTable("t_user");
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("IX_t_user")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
