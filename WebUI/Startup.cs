@@ -61,7 +61,7 @@ namespace WebUI
                 .AddJsonOptions(options =>
                     {
                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                        options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Unspecified;
+                        options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                     });
 
 
