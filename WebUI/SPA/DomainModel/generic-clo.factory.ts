@@ -1,5 +1,6 @@
 ﻿// Angular and 3rd party stuff
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 // Project modules
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
@@ -12,7 +13,6 @@ import { PlanCLOFactory } from './Plans/CLOFactories/plan-clo.factory';
 import { VersionCLOFactory } from './Plans/CLOFactories/version-clo.factory';
 import { RuleCLOFactory } from './Plans/CLOFactories/rule-clo.factory';
 import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/CLOFactories/health-status-entry-clo.factory';
-
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
 import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
@@ -86,7 +86,13 @@ export class GenericCLOFactory {
             }
             // Value is simply a js Date-------------------------------------
             else if (valueOnCLO instanceof Date) {
-                outputObj[propertyName] = valueOnCLO.toJSON();
+				// Commented 
+				//var toString = valueOnCLO.toString();
+				//var toJSON = valueOnCLO.toJSON();
+				//var momentToJson = moment(valueOnCLO).toJSON();
+
+				var momentFormatted = moment(valueOnCLO).format();
+				outputObj[propertyName] = momentFormatted;
             }
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------
