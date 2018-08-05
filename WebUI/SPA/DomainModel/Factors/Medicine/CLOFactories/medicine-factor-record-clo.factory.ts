@@ -16,7 +16,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.MedicineFactorRecordCLO {
-
+		
         let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.CompositeID = blo['CompositeID'];
         newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);

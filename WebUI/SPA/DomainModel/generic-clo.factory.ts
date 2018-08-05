@@ -87,14 +87,13 @@ export class GenericCLOFactory {
             // Value is simply a js Date-------------------------------------
             else if (valueOnCLO instanceof Date) {
 				// Commented 
-				var toString = valueOnCLO.toString();
-				var toJSON = valueOnCLO.toJSON();
-				var momentToJson = moment(valueOnCLO).toJSON();
-
-				var momentFormatted = moment(valueOnCLO).format();
-
+				//var toString = valueOnCLO.toString();
+				//var toJSON = valueOnCLO.toJSON();
+				//var momentToJson = moment(valueOnCLO).toJSON();
+				//var momentFormatted = moment(valueOnCLO).format();
+				
 				//debugger;
-				outputObj[propertyName] = momentFormatted;
+				outputObj[propertyName] = valueOnCLO.toJSON();
             }
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------

@@ -22,7 +22,8 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
     }
 
     // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.VersionCLO {
+	public Convert_ToCLO(blo: any): CLOs.VersionCLO {
+		
         let newCLO = new CLOs.VersionCLO();
         newCLO.ID = blo['ID'];
         newCLO.StartDate = new Date(blo['StartDate']);
