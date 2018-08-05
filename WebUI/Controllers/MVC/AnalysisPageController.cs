@@ -89,7 +89,7 @@ namespace WebUI.Controllers
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
             int factorsViewAvailableWindowPaddingInMonths = 0;
             int indicatorsViewAvailableWindowPaddingInMonths = 1;
-            var refDate = DateTime.Now.Date;
+            var refDate = Common.Functions.GetCurrentDateTimeAsUTCWithoutConversion();
             var initialFactorsViewDateRange = this.GetMonthRangeWithPadding(refDate, refDate, factorsViewAvailableWindowPaddingInMonths);
             var initialIndicatorsViewRange = this.GetMonthRangeWithPadding(refDate, refDate, indicatorsViewAvailableWindowPaddingInMonths);
 

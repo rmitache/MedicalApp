@@ -93,7 +93,7 @@ export class GenericCLOFactory {
 
 				var momentFormatted = moment(valueOnCLO).format();
 
-				debugger;
+				//debugger;
 				outputObj[propertyName] = momentFormatted;
             }
             //---------------------------------------------------------------

@@ -26,7 +26,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 
             return dataEntity;
         }
-        public TMedicineTypeSupplyEntry AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity)
+        public TMedicineTypeSupplyEntry AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity, DateTime EntryDateTime)
         {
 
             // Check that the userID matches the MedicineTypeID
@@ -40,7 +40,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 
             // Create the dataentity
             TMedicineTypeSupplyEntry dataEntity = new TMedicineTypeSupplyEntry();
-            dataEntity.EntryDateTime = DateTime.Now;
+            dataEntity.EntryDateTime = EntryDateTime;
             dataEntity.MedicineTypeId = MedicineTypeID;
             dataEntity.SupplyQuantity = SupplyQuantity;
 

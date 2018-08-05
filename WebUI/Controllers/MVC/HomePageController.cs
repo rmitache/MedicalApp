@@ -105,7 +105,7 @@ namespace WebUI.Controllers
             //                  - Any value more than 0 will result in additional months ahead/before being added to the query
             int scheduleAvailableWindowPaddingInMonths = 0;
             int healthGraphAvailableWindowPaddingInMonths = 0;
-            var refDate = DateTime.Now.Date;
+            var refDate = Common.Functions.GetCurrentDateTimeAsUTCWithoutConversion();
             var initialScheduleDateRange = this.GetMonthRangeWithPadding(refDate, refDate, scheduleAvailableWindowPaddingInMonths);
             var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
 

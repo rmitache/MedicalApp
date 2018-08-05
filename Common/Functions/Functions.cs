@@ -30,6 +30,13 @@ namespace Common
 
             return isInRange;
         }
+
+        public static DateTime GetCurrentDateTimeAsUTCWithoutConversion()
+        {
+            DateTime dt = DateTime.Now;
+            DateTime ut = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+            return ut;
+        }
     }
 
 }
