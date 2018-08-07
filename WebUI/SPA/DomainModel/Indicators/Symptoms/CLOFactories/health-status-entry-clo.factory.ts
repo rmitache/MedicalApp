@@ -5,6 +5,8 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
+import * as moment from 'moment';
+
 
 @Injectable()
 export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatusEntryCLO> {
@@ -19,7 +21,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
 
         let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = blo['ID'];
-        newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
+		newCLO.OccurrenceDateTime = moment.utc(blo['OccurrenceDateTime']);
         newCLO.HealthLevel = blo['HealthLevel'];
         newCLO.SymptomEntries = this.symptomEntryCLOFactory.Convert_ToCloList(blo['SymptomEntries']).ToArray();
 
@@ -28,7 +30,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
     public Create_DefaultCLO(): CLOs.HealthStatusEntryCLO {
         let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = 0;
-        newCLO.OccurrenceDateTime = new Date();
+		newCLO.OccurrenceDateTime = moment.utc();
         newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
         newCLO.SymptomEntries = [this.symptomEntryCLOFactory.Create_DefaultCLO()];
 

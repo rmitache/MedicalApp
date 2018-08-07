@@ -64,7 +64,7 @@ export class AddNewEventComponent implements IModalDialog {
 
         // Loop through all FactorRecords and set OccurrenceDateTime
         this.viewModel.FactorRecordCLOs.forEach(record => {
-            record.OccurrenceDateTime = this.viewModel.OccurrenceDateTime;
+            //record.OccurrenceDateTime = this.viewModel.OccurrenceDateTime;
 
         });
 

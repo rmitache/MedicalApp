@@ -43,11 +43,11 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
 
     private reactiveForm: FormGroup;
-    private initialDateTime: Date = null; // initialized from dialogOnInit
+    private initialDateTime: moment.Moment = null; // initialized from dialogOnInit
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
-        HealthStatusEntryCLO: null,
+		HealthStatusEntryCLO: null,
         ShowSymptomEntriesOverlayDiv: true
     };
 
@@ -92,8 +92,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
-    ngOnInit() {
-        this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
+	ngOnInit() {
+		
+		this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
         this.reactiveForm = this.fb.group({
             occurrenceDateTime: [null, Validators.compose([
                 (control: AbstractControl) => {
@@ -129,7 +130,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // Public methods
     public SaveData(): Promise<CLOs.HealthStatusEntryCLO> {
-
         let saveDataPromise = this.globalDataService.AddHealthStatusEntry(this.viewModel.HealthStatusEntryCLO);
         return saveDataPromise;
     }
@@ -139,7 +139,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        let dateFromParent = options.data as Date;
+        let dateFromParent = options.data as moment.Moment;
         this.initialDateTime = dateFromParent;
     }
 
@@ -174,7 +174,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
 
 interface ViewModel {
-    HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
+	HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
     ShowSymptomEntriesOverlayDiv: boolean;
 }
 export interface ISymptomTypesSearchService {

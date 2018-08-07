@@ -14,53 +14,54 @@ import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.fact
 @Injectable()
 export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 
-    // Constructor
-    constructor(
-        private readonly ruleCLOFactory: RuleCLOFactory
-    ) {
+	// Constructor
+	constructor(
+		private readonly ruleCLOFactory: RuleCLOFactory
+	) {
 
-    }
+	}
 
-    // Public Methods
+	// Public Methods
 	public Convert_ToCLO(blo: any): CLOs.VersionCLO {
-		
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = blo['ID'];
-        newCLO.StartDate = new Date(blo['StartDate']);
-        newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
-        newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
 
-        return newCLO;
-    }
-    public Create_DefaultCLO(): CLOs.VersionCLO {
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = 0;
-        newCLO.StartDate = moment().startOf('day').add(1, 'days').toDate();
-        newCLO.EndDate = null;
-        newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
+		let newCLO = new CLOs.VersionCLO();
+		newCLO.ID = blo['ID'];
 
-        return newCLO;
-    }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.VersionCLO> {
-        let cloList = new DataStructures.List<CLOs.VersionCLO>();
-        bloArray.forEach((blo, index) => {
-            let clo = this.Convert_ToCLO(blo);
-            cloList.Add(clo);
-        });
+		newCLO.StartDate = new Date(blo['StartDate']);
+		newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
+		newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
 
-        return cloList;
-    }
-    public Clone_CLOAsNewBLO(clo: CLOs.VersionCLO): CLOs.VersionCLO {
-        let newCLO = new CLOs.VersionCLO();
-        newCLO.ID = 0;
-        newCLO.StartDate = clo.StartDate;
-        newCLO.EndDate = clo.EndDate;
-        newCLO.Rules = [];
-        for (var i = 0; i < clo.Rules.length; i++) {
-            var newRule = this.ruleCLOFactory.Clone_CLOAsNewBLO(clo.Rules[i]);
-            newCLO.Rules.push(newRule);
-        }
+		return newCLO;
+	}
+	public Create_DefaultCLO(): CLOs.VersionCLO {
+		let newCLO = new CLOs.VersionCLO();
+		newCLO.ID = 0;
+		newCLO.StartDate = moment().startOf('day').add(1, 'days').toDate();
+		newCLO.EndDate = null;
+		newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
 
-        return newCLO;
-    }
+		return newCLO;
+	}
+	public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.VersionCLO> {
+		let cloList = new DataStructures.List<CLOs.VersionCLO>();
+		bloArray.forEach((blo, index) => {
+			let clo = this.Convert_ToCLO(blo);
+			cloList.Add(clo);
+		});
+
+		return cloList;
+	}
+	public Clone_CLOAsNewBLO(clo: CLOs.VersionCLO): CLOs.VersionCLO {
+		let newCLO = new CLOs.VersionCLO();
+		newCLO.ID = 0;
+		newCLO.StartDate = clo.StartDate;
+		newCLO.EndDate = clo.EndDate;
+		newCLO.Rules = [];
+		for (var i = 0; i < clo.Rules.length; i++) {
+			var newRule = this.ruleCLOFactory.Clone_CLOAsNewBLO(clo.Rules[i]);
+			newCLO.Rules.push(newRule);
+		}
+
+		return newCLO;
+	}
 }

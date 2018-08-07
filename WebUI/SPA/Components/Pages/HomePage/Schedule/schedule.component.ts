@@ -102,8 +102,8 @@ export class ScheduleComponent {
     private refreshUI() {
         // Use selectedDateRange to get a subset of data from AvailableFactorRecords
         let visibleFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
-            return fRec.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
-                fRec.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
+            return fRec.OccurrenceDate >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
+				fRec.OccurrenceDate <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
         });
 
         // Refresh VM properties

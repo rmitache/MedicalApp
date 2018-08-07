@@ -5,6 +5,9 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
+import * as moment from 'moment';
+import { GetLocalTimeFromUTCStringWithoutChangingOffset } from 'SPA/Core/Helpers/Functions/functions';
+import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 @Injectable()
 export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.MedicineFactorRecordCLO> {
@@ -16,12 +19,14 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
 
     // Public Methods
     public Convert_ToCLO(blo: any): CLOs.MedicineFactorRecordCLO {
-		
-        let newCLO = new CLOs.MedicineFactorRecordCLO();
-        newCLO.CompositeID = blo['CompositeID'];
-        newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
-        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
 
+        let newCLO = new CLOs.MedicineFactorRecordCLO();
+		newCLO.CompositeID = blo['CompositeID'];
+
+		newCLO.OccurrenceDate = new Date(blo['OccurrenceDate']);
+		newCLO.OccurrenceTime = Time.ParseJSON((blo['OccurrenceTime']));
+
+        newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.ParentPlanName = blo['ParentPlanName'];
         newCLO.ParentPlanID = blo['ParentPlanID'];
         newCLO.RecentlyAdded = blo['RecentlyAdded'];
@@ -37,9 +42,11 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
     public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
         let newCLO = new CLOs.MedicineFactorRecordCLO();
         newCLO.CompositeID = null;
-        newCLO.MedicineType = null;
-        newCLO.OccurrenceDateTime = new Date();
-        
+		newCLO.MedicineType = null;
+
+        newCLO.OccurrenceDate = new Date();
+		newCLO.OccurrenceTime = new Time(0, 0);
+
         newCLO.ParentPlanID = null;
         newCLO.RecentlyAdded = null;
         newCLO.Taken = false;

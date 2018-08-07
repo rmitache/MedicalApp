@@ -25,7 +25,11 @@
         // Create Time instance
         let timeObj: Time = new Time(hours, minutes);
         return timeObj;
-    }
+	}
+	public static ParseJSON(json: string): Time {
+		let time = new Time(parseInt(json['Hours']), parseInt(json['Minutes']));
+		return time;
+	}
     public static FromJSONArray(jsonArray: any[]): Time[] {
         let array:Time[] = [];
         if (jsonArray === null) {

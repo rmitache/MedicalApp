@@ -123,7 +123,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             if (retreiveSupplyAndUsageInfo)
             {
                 var planBLOs = this.planService.GetPlans(userID, true);
-                var currentDateTime = Common.Functions.GetCurrentDateTimeAsUTCWithoutConversion();
+                var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
                 Range<DateTime> today = new Range<DateTime>(currentDateTime.StartOfDay(), currentDateTime.EndOfDay());
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
@@ -164,7 +164,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
 
             // Add the new SupplyEntry
-            var currentDateTime = Common.Functions.GetCurrentDateTimeAsUTCWithoutConversion();
+            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
             this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, medicineTypeID, supplyQuantity, currentDateTime);
         }
         public void ClearSupplyEntries(int userID, int medicineTypeID)

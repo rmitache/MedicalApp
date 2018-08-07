@@ -65,6 +65,7 @@ export class VersionCLO extends BaseCLO {
     // Public methods
     public GetIntersectionWithDateRange(targetDateRange: Range<moment.Moment>, excludeFuture: boolean = false): momentRange.DateRange {
 
+
         // Variables
         var intersectionRange = null;
         var momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));

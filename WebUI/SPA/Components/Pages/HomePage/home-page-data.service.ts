@@ -50,17 +50,13 @@ export class HomePageDataService {
         return cloList;
     }
     public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
-        let blos = this.startupDataBundleService.GetBundle['FactorRecordsForInitialRange'];
-        let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
+		let blos = this.startupDataBundleService.GetBundle['FactorRecordsForInitialRange'];
+		
+		let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
         return cloList;
     }
     public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
         let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
-
-        // OLD - code to autogenerate RANDOM HealthStatusEntries
-        //let dateRange = new Range<Date>(moment().startOf('month').startOf('day').toDate(),
-        //    moment().endOf('month').startOf('day').toDate());
-        //let blos = this.generateRandomHealthStatusEntryBLOs(dateRange);
 
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
         return cloList;
@@ -161,7 +157,8 @@ export class HomePageDataService {
     public AddHealthStatusEntry(healthStatusEntryCLO: CLOs.HealthStatusEntryCLO): Promise<CLOs.HealthStatusEntryCLO> {
         const apiMethodName: string = 'AddHealthStatusEntry';
 
-        let blo = this.genericCLOFactory.ConvertToBlo(healthStatusEntryCLO);
+		let blo = this.genericCLOFactory.ConvertToBlo(healthStatusEntryCLO);
+		debugger;
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()
             .then((bloWithUpdatedID) => {

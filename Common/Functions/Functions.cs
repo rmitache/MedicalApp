@@ -31,11 +31,10 @@ namespace Common
             return isInRange;
         }
 
-        public static DateTime GetCurrentDateTimeAsUTCWithoutConversion()
+        public static DateTime GetCurrentDateTimeInUTC()
         {
-            DateTime dt = DateTime.Now;
-            DateTime ut = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
-            return ut;
+            DateTime dt = DateTime.UtcNow;
+            return dt;
         }
     }
 
