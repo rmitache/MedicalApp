@@ -27,26 +27,6 @@ namespace WebUI.Controllers
         private WebSecurityManager webSecurityManager { get; set; }
 
 
-        // Private methods
-        private Range<DateTime> GetMonthRangeWithPadding(DateTime refStartDate, DateTime refEndDate, int padding)
-        {
-            if (padding < 0)
-            {
-                throw new Exception("GetMonthRangeWithPadding - padding must be non-negative");
-            }
-
-            // Start
-            var startPaddedDate = refStartDate.AddMonths(-padding);
-            var actualStartDate = new DateTime(startPaddedDate.Year, startPaddedDate.Month, 1).StartOfDay();
-
-            // End
-            var endPaddedDate = refEndDate.AddMonths(padding);
-            var actualEndDate = new DateTime(endPaddedDate.Year, endPaddedDate.Month, 1).AddMonths(1).AddDays(-1).EndOfDay();
-
-            //
-            var range = new Range<DateTime>(actualStartDate, actualEndDate);
-            return range;
-        }
 
         // Constructor
         public AnalysisPageController(
@@ -82,24 +62,16 @@ namespace WebUI.Controllers
 
         // Startup
         [Route("AnalysisPage/GetInitialData")]
-        [HttpGet]
-        public JsonResult GetInitialData()
+        [HttpPost]
+        public JsonResult GetInitialData([FromBody] DateRangeModel model)
         {
-
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-            int factorsViewAvailableWindowPaddingInMonths = 0;
-            int indicatorsViewAvailableWindowPaddingInMonths = 1;
-            var refDate = Common.Functions.GetCurrentDateTimeInUTC();
-            var initialFactorsViewDateRange = this.GetMonthRangeWithPadding(refDate, refDate, factorsViewAvailableWindowPaddingInMonths);
-            var initialIndicatorsViewRange = this.GetMonthRangeWithPadding(refDate, refDate, indicatorsViewAvailableWindowPaddingInMonths);
-
-
 
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID);
             var plans = planService.GetPlans(loggedInUser.ID, true);
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialIndicatorsViewRange, loggedInUser.ID, true);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
 

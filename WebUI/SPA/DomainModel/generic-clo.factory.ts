@@ -86,9 +86,7 @@ export class GenericCLOFactory {
             }
             // Value is simply a js Date-------------------------------------
             else if (valueOnCLO instanceof Date) {
-				//var x = GetUTCTimeStringFromLocalWithoutChangingOffset(valueOnCLO);
 				outputObj[propertyName] = valueOnCLO.toJSON();
-				
             }
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------

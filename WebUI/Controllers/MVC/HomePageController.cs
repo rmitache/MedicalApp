@@ -31,27 +31,6 @@ namespace WebUI.Controllers
         private WebSecurityManager webSecurityManager { get; set; }
 
 
-        // Private methods
-        private Range<DateTime> GetMonthRangeWithPadding(DateTime refStartDate, DateTime refEndDate, int padding)
-        {
-            if (padding < 0)
-            {
-                throw new Exception("GetMonthRangeWithPadding - padding must be non-negative");
-            }
-
-            // Start
-            var startPaddedDate = refStartDate.AddMonths(-padding);
-            var actualStartDate = new DateTime(startPaddedDate.Year, startPaddedDate.Month, 1).StartOfDay();
-
-            // End
-            var endPaddedDate = refEndDate.AddMonths(padding);
-            var actualEndDate = new DateTime(endPaddedDate.Year, endPaddedDate.Month, 1).AddMonths(1).AddDays(-1).EndOfDay();
-
-            //
-            var range = new Range<DateTime>(actualStartDate, actualEndDate);
-            return range;
-        }
-
         // Constructor
         public HomePageController(
             ISymptomTypeService symptomTypeService,
@@ -92,31 +71,17 @@ namespace WebUI.Controllers
 
         // Startup
         [Route("HomePage/GetInitialData")]
-        [HttpGet]
-        public JsonResult GetInitialData()
+        [HttpPost]
+        public JsonResult GetInitialData([FromBody] DateRangeModel model)
         {
-
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-
-            // Explanation: for both Schedule (FactorRecords) and HealthGraph (HealthStatusEntries) a window of 'available' data is loaded on the FE 
-            //              so that not every navigation operation results in going back to the server (a form of caching)
-            //              The padding works such that:
-            //                  - If padding is set to 0, it will load data for the current month only
-            //                  - Any value more than 0 will result in additional months ahead/before being added to the query
-            int scheduleAvailableWindowPaddingInMonths = 0;
-            int healthGraphAvailableWindowPaddingInMonths = 0;
-            var refDate = Common.Functions.GetCurrentDateTimeInUTC();
-            var initialScheduleDateRange = this.GetMonthRangeWithPadding(refDate, refDate, scheduleAvailableWindowPaddingInMonths);
-            var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
-
-
             
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
             var plans = planService.GetPlans(loggedInUser.ID, true);
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(initialScheduleDateRange, loggedInUser.ID);
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(initialHealthGraphRange, loggedInUser.ID, true);
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.ID);
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
