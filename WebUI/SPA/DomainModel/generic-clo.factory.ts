@@ -89,6 +89,7 @@ export class GenericCLOFactory {
             else if (valueOnCLO instanceof Date) {
 				//var x = GetUTCTimeStringFromLocalWithoutChangingOffset(valueOnCLO);
 				outputObj[propertyName] = valueOnCLO.toJSON();
+				debugger;
             }
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------
