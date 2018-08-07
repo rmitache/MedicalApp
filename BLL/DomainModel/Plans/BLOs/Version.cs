@@ -20,7 +20,7 @@ namespace BLL.DomainModel.Plans.BLOs
         // Public methods
         public bool RecentlyStarted()
         {
-            var currentDate = DateTime.Now.Date;
+            var currentDate = Common.Functions.GetCurrentDateTimeInUTC();
 
             if (!this.HasEnded() && (currentDate - this.StartDate.Date).TotalDays <= 7)
             {
@@ -30,13 +30,13 @@ namespace BLL.DomainModel.Plans.BLOs
         }
         public bool HasStarted()
         {
-            var currentDate = DateTime.Now.StartOfDay();
+            var currentDate = Common.Functions.GetCurrentDateTimeInUTC().StartOfDay();
             bool hasStarted = this.StartDate > currentDate;
             return hasStarted;
         }
         public bool HasEnded()
         {
-            var currentDate = DateTime.Now.StartOfDay();
+            var currentDate = Common.Functions.GetCurrentDateTimeInUTC().StartOfDay();
             bool hasEnded = this.EndDate > currentDate;
             return hasEnded;
         }

@@ -79,8 +79,8 @@ export class HealthGraphComponent {
 
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.AvailableHealthEntries.filter(entry => {
-            return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
-                entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
+            return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart &&
+                entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd;
         });
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
@@ -137,7 +137,7 @@ export class HealthGraphComponent {
         this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: 'Add new Health Entry ',
             childComponent: AddNewHealthStatusEntryComponent,
-            data: moment().toDate(),
+			data: new Date(),
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {

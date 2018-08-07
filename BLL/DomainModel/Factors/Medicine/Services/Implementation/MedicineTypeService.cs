@@ -123,7 +123,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             if (retreiveSupplyAndUsageInfo)
             {
                 var planBLOs = this.planService.GetPlans(userID, true);
-                Range<DateTime> today = new Range<DateTime>(DateTime.Now.StartOfDay(), DateTime.Now.EndOfDay());
+                var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
+                Range<DateTime> today = new Range<DateTime>(currentDateTime.StartOfDay(), currentDateTime.EndOfDay());
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 
@@ -163,7 +164,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
 
             // Add the new SupplyEntry
-            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, medicineTypeID, supplyQuantity);
+            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
+            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, medicineTypeID, supplyQuantity, currentDateTime);
         }
         public void ClearSupplyEntries(int userID, int medicineTypeID)
         {

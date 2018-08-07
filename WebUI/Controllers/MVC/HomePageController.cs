@@ -105,12 +105,12 @@ namespace WebUI.Controllers
             //                  - Any value more than 0 will result in additional months ahead/before being added to the query
             int scheduleAvailableWindowPaddingInMonths = 0;
             int healthGraphAvailableWindowPaddingInMonths = 0;
-            var refDate = DateTime.Now.Date;
+            var refDate = Common.Functions.GetCurrentDateTimeInUTC();
             var initialScheduleDateRange = this.GetMonthRangeWithPadding(refDate, refDate, scheduleAvailableWindowPaddingInMonths);
             var initialHealthGraphRange = this.GetMonthRangeWithPadding(refDate, refDate, healthGraphAvailableWindowPaddingInMonths);
 
 
-
+            
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);

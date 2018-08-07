@@ -30,6 +30,12 @@ namespace Common
 
             return isInRange;
         }
+
+        public static DateTime GetCurrentDateTimeInUTC()
+        {
+            DateTime dt = DateTime.UtcNow;
+            return dt;
+        }
     }
 
 }

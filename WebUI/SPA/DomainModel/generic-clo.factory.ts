@@ -16,6 +16,7 @@ import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/CLOFactories/
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
 import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
+import { GetUTCTimeStringFromLocalWithoutChangingOffset } from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Injectable()
@@ -86,15 +87,9 @@ export class GenericCLOFactory {
             }
             // Value is simply a js Date-------------------------------------
             else if (valueOnCLO instanceof Date) {
-				// Commented 
-				var toString = valueOnCLO.toString();
-				var toJSON = valueOnCLO.toJSON();
-				var momentToJson = moment(valueOnCLO).toJSON();
-
-				var momentFormatted = moment(valueOnCLO).format();
-
+				//var x = GetUTCTimeStringFromLocalWithoutChangingOffset(valueOnCLO);
+				outputObj[propertyName] = valueOnCLO.toJSON();
 				debugger;
-				outputObj[propertyName] = momentFormatted;
             }
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------

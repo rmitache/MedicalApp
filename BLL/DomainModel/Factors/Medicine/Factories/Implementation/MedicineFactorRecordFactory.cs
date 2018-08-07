@@ -62,13 +62,15 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
         private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(
             MedicineRuleItem ruleItem,
-            DateTime occurrenceDateTime,
+            DateTime occurrenceDate,
+            Time occurrenceTime,
             Plan parentPlan,
             bool recentlyAdded)
         {
             MedicineFactorRecord blo = new MedicineFactorRecord();
             blo.MedicineType = ruleItem.MedicineType;
-            blo.OccurrenceDateTime = occurrenceDateTime;
+            blo.OccurrenceDate = occurrenceDate;
+            blo.OccurrenceTime = occurrenceTime;
 
             blo.ParentPlanName = parentPlan.Name;
             blo.ParentPlanID = parentPlan.ID;
@@ -122,8 +124,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                         {
                             foreach (Time time in rule.MomentsInDay)
                             {
-                                var occurrenceDateTime = new DateTime(hitDate.Year, hitDate.Month, hitDate.Day,
-                                    time.Hours, time.Minutes, 0);
+                                
                                 foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
                                 {
                                     //
@@ -136,7 +137,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                                     }
 
                                     //
-                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, occurrenceDateTime, plan, recentlyAdded);
+                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, hitDate, time, plan, recentlyAdded);
                                     projectedFactorRecordsList.Add(newFactorRecord);
                                 }
                             }

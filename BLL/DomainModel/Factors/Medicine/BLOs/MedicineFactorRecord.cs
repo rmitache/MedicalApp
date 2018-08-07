@@ -1,4 +1,5 @@
 ﻿using BLL.DomainModel.Factors.Medicine.Enums;
+using Common.DataStructures;
 using Newtonsoft.Json;
 using System;
 
@@ -13,7 +14,9 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
                 return DetermineCompositeID(this);
             }
         }
-        virtual public DateTime OccurrenceDateTime { get; set; }
+        virtual public DateTime OccurrenceDate { get; set; }
+        virtual public Time OccurrenceTime { get; set; }
+
         virtual public MedicineType MedicineType { get; set; }
 
         virtual public string ParentPlanName { get; set; }
@@ -28,7 +31,14 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public int? UserDefinedUnitDoseSize { get; set; }
 
 
-
+        virtual public DateTime OccurrenceDateTime
+        {
+            get
+            {
+                var dateTime = this.OccurrenceDate.AddHours(this.OccurrenceTime.Hours).AddMinutes(this.OccurrenceTime.Minutes);
+                return dateTime;
+            }
+        }
         virtual public string UnitDoseTypeName
         {
             get

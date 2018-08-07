@@ -26,7 +26,7 @@ export class ScheduleUnitComponent {
 
     // Private methods
     private FactorRecordIsMoreThanOneDayInTheFuture(factorRecordCLO: CLOs.MedicineFactorRecordCLO) {
-        var isTrue = moment(factorRecordCLO.OccurrenceDateTime) >= moment().add(1, 'days');
+        var isTrue = moment(factorRecordCLO.OccurrenceDate) >= moment().add(1, 'days');
         return isTrue;
     }
 

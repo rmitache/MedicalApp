@@ -7,6 +7,7 @@
             <div class="label-input-pair">
                 <span class="label">Name:</span>
                 <input type="text"
+                       
                        class="ui-inputtext"
                        formControlName="planName"
                        id="plan-name-input"
@@ -18,6 +19,7 @@
                     {{viewModel.StartDateLabel }}
                 </span>
                 <p-calendar 
+                            [utc]="true"
                             formControlName="startDate"
                             dateFormat="dd-mm-yy"
                             id="start-date-picker"
@@ -30,6 +32,7 @@
                     {{viewModel.EndDateLabel }}
                 </span>
                 <p-calendar 
+                            [utc]="true"
                             formControlName="endDate"
                             dateFormat="dd-mm-yy"
                             id="end-date-picker"

@@ -112,7 +112,7 @@ export class PlanEditorComponent implements IModalDialog {
     }
 
     // Public methods
-    public SaveData(): Promise<CLOs.PlanCLO> {
+	public SaveData(): Promise<CLOs.PlanCLO> {
         let saveDataPromise = this.currentModeInstance.SaveData();
 
         return saveDataPromise;
