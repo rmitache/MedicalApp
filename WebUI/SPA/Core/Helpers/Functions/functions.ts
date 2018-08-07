@@ -91,7 +91,9 @@ export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: 
 
 	return null;
 }
-/* Returns a range of dates starting at the beginning of a month and ending at the end of a month */
+/* 
+ * Returns a range of dates starting at the beginning of a month and ending at the end of a month 
+ */
 export function GetMonthRangeWithPaddingUsingMoment(refStartDate: moment.Moment, refEndDate: moment.Moment, padding: number) {
 	if (padding < 0) {
 		throw new Error('GetMonthRangeWithPadding - padding must be non-negative');

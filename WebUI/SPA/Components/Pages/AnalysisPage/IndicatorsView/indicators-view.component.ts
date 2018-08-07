@@ -34,7 +34,7 @@ import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/C
 })
 export class IndicatorsViewComponent {
     // Fields
-    private availableWindowPaddingInMonths = 1;
+    private availableWindowPaddingInMonths = 0;
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.Month;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
