@@ -158,7 +158,6 @@ export class HomePageDataService {
         const apiMethodName: string = 'AddHealthStatusEntry';
 
 		let blo = this.genericCLOFactory.ConvertToBlo(healthStatusEntryCLO);
-		debugger;
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()
             .then((bloWithUpdatedID) => {

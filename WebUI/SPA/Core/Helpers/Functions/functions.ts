@@ -120,32 +120,30 @@ export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
 
 }
 
-/* Creates a string with the same Year, Date, Hours, Minutes, Seconds as the given local datetime and with UTC tz*/
-export function GetUTCTimeStringFromLocalWithoutChangingOffset(date:Date): string {
-	var mom = moment(date);
-	mom.utcOffset('+00:00', true);
+///* Creates a string with the same Year, Date, Hours, Minutes, Seconds as the given local datetime and with UTC tz*/
+//export function GetUTCTimeStringFromLocalWithoutChangingOffset(date:Date): string {
+//	var mom = moment(date);
+//	mom.utcOffset('+00:00', true);
 
-	return mom.format();
-}
-/* Creates a moment with the same Year, Date, Hours, Minutes, Seconds as the given UTC string without performing any conversion */
-export function GetLocalTimeFromUTCStringWithoutChangingOffset(utcString: string): moment.Moment {
-	var clientTZOffsetInMinutes = new Date().getTimezoneOffset();
-	var baseMoment = moment(utcString);
-	baseMoment.add(clientTZOffsetInMinutes, 'minutes');
+//	return mom.format();
+//}
+///* Creates a moment with the same Year, Date, Hours, Minutes, Seconds as the given UTC string without performing any conversion */
+//export function GetLocalTimeFromUTCStringWithoutChangingOffset(utcString: string): moment.Moment {
+//	var clientTZOffsetInMinutes = new Date().getTimezoneOffset();
+//	var baseMoment = moment(utcString);
+//	baseMoment.add(clientTZOffsetInMinutes, 'minutes');
 
-	return baseMoment;
-}
+//	return baseMoment;
+//}
 
-
-
-export function ToLocalDateTime(utcString: string) {
-	var date = new Date(utcString);
-	return date;
-}
-export function ToUTCString(localDateTime: Date) {
-	var utcString = localDateTime.toJSON();
-	return utcString;
-}
+//export function ToLocalDateTime(utcString: string) {
+//	var date = new Date(utcString);
+//	return date;
+//}
+//export function ToUTCString(localDateTime: Date) {
+//	var utcString = localDateTime.toJSON();
+//	return utcString;
+//}
 
 
 

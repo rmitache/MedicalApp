@@ -21,7 +21,6 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
         newCLO.ID = blo['ID'];
         newCLO.Name = blo['Name'];
 		newCLO.DateCreated = new Date(blo['DateCreated']);
-		debugger;
         newCLO.Versions.AddArray(this.versionCLOFactory.Convert_ToCloList(blo['Versions']).ToArray());
 
 

@@ -6,7 +6,6 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
 import * as moment from 'moment';
-import { GetLocalTimeFromUTCStringWithoutChangingOffset } from 'SPA/Core/Helpers/Functions/functions';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 @Injectable()
