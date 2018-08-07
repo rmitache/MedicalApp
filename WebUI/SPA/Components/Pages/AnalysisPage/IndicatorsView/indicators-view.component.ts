@@ -135,8 +135,8 @@ export class IndicatorsViewComponent {
     private refreshUI() {
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.HealthEntriesInSelectedDateRange.filter(entry => {
-            return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart &&
-                entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd;
+            return moment(entry.OccurrenceDateTime) >= this.viewModel.SelectedDateRange.RangeStart &&
+                moment(entry.OccurrenceDateTime) <= this.viewModel.SelectedDateRange.RangeEnd;
         });
 
         // Refresh VM properties 

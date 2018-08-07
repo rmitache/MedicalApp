@@ -79,8 +79,8 @@ export class HealthGraphComponent {
 
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.AvailableHealthEntries.filter(entry => {
-            return entry.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart &&
-                entry.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd;
+            return moment(entry.OccurrenceDateTime) >= this.viewModel.SelectedDateRange.RangeStart &&
+                moment(entry.OccurrenceDateTime) <= this.viewModel.SelectedDateRange.RangeEnd;
         });
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {

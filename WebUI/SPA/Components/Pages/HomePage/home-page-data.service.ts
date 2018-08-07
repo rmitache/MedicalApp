@@ -156,12 +156,13 @@ export class HomePageDataService {
     // HealthStatusEntries
     public AddHealthStatusEntry(healthStatusEntryCLO: CLOs.HealthStatusEntryCLO): Promise<CLOs.HealthStatusEntryCLO> {
         const apiMethodName: string = 'AddHealthStatusEntry';
-
+		debugger;
 		let blo = this.genericCLOFactory.ConvertToBlo(healthStatusEntryCLO);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()
             .then((bloWithUpdatedID) => {
-                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO.name, bloWithUpdatedID);
+				let clo = this.genericCLOFactory.ConvertToCLO<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO.name, bloWithUpdatedID);
+				debugger;
                 return clo;
             });
 

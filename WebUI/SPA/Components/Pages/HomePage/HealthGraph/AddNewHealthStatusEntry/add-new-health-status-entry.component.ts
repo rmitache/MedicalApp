@@ -43,7 +43,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
 
     private reactiveForm: FormGroup;
-    private initialDateTime: moment.Moment = null; // initialized from dialogOnInit
+    private initialDateTime: Date = null; // initialized from dialogOnInit
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
@@ -139,7 +139,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        let dateFromParent = options.data as moment.Moment;
+        let dateFromParent = options.data as Date;
         this.initialDateTime = dateFromParent;
     }
 

@@ -21,7 +21,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
 
         let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = blo['ID'];
-		newCLO.OccurrenceDateTime = moment.utc(blo['OccurrenceDateTime']);
+		newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
         newCLO.HealthLevel = blo['HealthLevel'];
         newCLO.SymptomEntries = this.symptomEntryCLOFactory.Convert_ToCloList(blo['SymptomEntries']).ToArray();
 
@@ -30,7 +30,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
     public Create_DefaultCLO(): CLOs.HealthStatusEntryCLO {
         let newCLO = new CLOs.HealthStatusEntryCLO();
         newCLO.ID = 0;
-		newCLO.OccurrenceDateTime = moment.utc();
+		newCLO.OccurrenceDateTime = new Date();
         newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
         newCLO.SymptomEntries = [this.symptomEntryCLOFactory.Create_DefaultCLO()];
 

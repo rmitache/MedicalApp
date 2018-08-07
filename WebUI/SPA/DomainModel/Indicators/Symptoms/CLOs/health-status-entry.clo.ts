@@ -8,7 +8,7 @@ import * as moment from 'moment';
 export class HealthStatusEntryCLO extends BaseCLO {
     // Fields
     public ID: number;
-	public OccurrenceDateTime: moment.Moment;
+	public OccurrenceDateTime: Date;
     public HealthLevel: Enums.HealthLevel;
     public SymptomEntries: CLOs.SymptomEntryCLO[];
 
@@ -19,6 +19,6 @@ export class HealthStatusEntryCLO extends BaseCLO {
 
     // Public methods
     public GetTime(): Time {
-        return new Time(this.OccurrenceDateTime.hours(), this.OccurrenceDateTime.minutes());
+        return new Time(this.OccurrenceDateTime.getHours(), this.OccurrenceDateTime.getMinutes());
     }
 }
