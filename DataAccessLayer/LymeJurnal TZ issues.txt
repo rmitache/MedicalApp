@@ -1,0 +1,32 @@
+Problems with timezones in LymeJurnal app:
+
+1. Problems:
+	- Although the BE is supposed to be all in UTC, we still have:
+		- Some dates which are not in UTC (Ex: Plan StartDate, User.BirthDate, User.SignupDate, etc)
+		- Rule Times which are supposed to be relative (untouched by TZ conversions) 
+		
+	- The above two cause problems with the range on the client when getting data:
+		- Either missing data +1/-1 day 
+		- Or showing factorRecords more than required (+1/-1 day)
+
+2. Ideal solution:
+	- Keep EVERYTHING in DB and BLL in UTC 
+	- Add a City field to the UserBLO and UserCLO
+		- All datetimes on the client will be shown in relation to that City TZ 
+		- On the BE, Rule Times will be designated to be in the current User.City 
+	- On the FE use something like CustomDateTime (or moment.tz) to:
+		- Use the given timezone for all date variables 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Current state (architecture):
+	1. FE:
+		- Everything works with local js time  (Date() and moment() usage)
+		- When sending data to the BE, Dates are converted to UTC using tJSON()
+		- When receiving data from the BE, new Date() is used 
+
+	2. BE and DB:
+		- EF is setup to set UTC kind for all DateTimes retreived from DB 
+		- Startup.cs sets JSON settings to convert everything to UTC retreived from the client 
+		- MedicineFactorRecordsFactory is an exception as it generates and uses LocalTime datetime variables, using the offsetInMinutes from the client
