@@ -39,7 +39,7 @@ namespace BLL.DomainModel.Plans.Factories
             blo.ID = dataEntity.Id;
             blo.Name = dataEntity.Name;
             blo.DateCreated = dataEntity.DateCreated;
-            blo.Versions = this.versionFactory.Convert_ToBLOList(dataEntity.TPlanVersion.ToList()).OrderBy(x => x.StartDate).ToList();
+            blo.Versions = this.versionFactory.Convert_ToBLOList(dataEntity.TPlanVersion.ToList()).OrderBy(x => x.StartDateTime).ToList();
 
             return blo;
         }

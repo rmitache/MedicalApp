@@ -19,12 +19,12 @@
                     {{viewModel.StartDateLabel }}
                 </span>
                 <p-calendar 
-                            [utc]="true"
+                            
                             formControlName="startDate"
                             dateFormat="dd-mm-yy"
                             id="start-date-picker"
                             readonlyInput="true"
-                            [(ngModel)]="viewModel.CurrentVersionCLO.StartDate"
+                            [(ngModel)]="viewModel.CurrentVersionCLO.StartDateTime"
                             showIcon="true"></p-calendar>
             </div>
             <div class="label-input-pair" formGroupName="dates">
@@ -32,11 +32,11 @@
                     {{viewModel.EndDateLabel }}
                 </span>
                 <p-calendar 
-                            [utc]="true"
+                            
                             formControlName="endDate"
                             dateFormat="dd-mm-yy"
                             id="end-date-picker"
-                            [(ngModel)]="viewModel.CurrentVersionCLO.EndDate"
+                            [(ngModel)]="viewModel.CurrentVersionCLO.EndDateTime"
                             showIcon="true"></p-calendar>
             </div>
         </div>

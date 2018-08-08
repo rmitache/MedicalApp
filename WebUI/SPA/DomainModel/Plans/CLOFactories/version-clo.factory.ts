@@ -27,8 +27,9 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 		let newCLO = new CLOs.VersionCLO();
 		newCLO.ID = blo['ID'];
 
-		newCLO.StartDate = new Date(blo['StartDate']);
-		newCLO.EndDate = (blo['EndDate'] !== null) ? new Date(blo['EndDate']) : null;
+		newCLO.StartDateTime = new Date(blo['StartDateTime']);
+		newCLO.EndDateTime = (blo['EndDateTime'] !== null) ? new Date(blo['EndDateTime']) : null;
+		
 		newCLO.Rules = (blo['Rules'] !== null) ? this.ruleCLOFactory.Convert_ToCloList(blo['Rules']).ToArray() : null;
 
 		return newCLO;
@@ -36,8 +37,8 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 	public Create_DefaultCLO(): CLOs.VersionCLO {
 		let newCLO = new CLOs.VersionCLO();
 		newCLO.ID = 0;
-		newCLO.StartDate = moment().startOf('day').add(1, 'days').toDate();
-		newCLO.EndDate = null;
+		newCLO.StartDateTime = moment().startOf('day').add(1, 'days').toDate();
+		newCLO.EndDateTime = null;
 		newCLO.Rules = [this.ruleCLOFactory.Create_DefaultCLO()];
 
 		return newCLO;
@@ -54,8 +55,8 @@ export class VersionCLOFactory implements ICLOFactory<CLOs.VersionCLO> {
 	public Clone_CLOAsNewBLO(clo: CLOs.VersionCLO): CLOs.VersionCLO {
 		let newCLO = new CLOs.VersionCLO();
 		newCLO.ID = 0;
-		newCLO.StartDate = clo.StartDate;
-		newCLO.EndDate = clo.EndDate;
+		newCLO.StartDateTime = clo.StartDateTime;
+		newCLO.EndDateTime = clo.EndDateTime;
 		newCLO.Rules = [];
 		for (var i = 0; i < clo.Rules.length; i++) {
 			var newRule = this.ruleCLOFactory.Clone_CLOAsNewBLO(clo.Rules[i]);

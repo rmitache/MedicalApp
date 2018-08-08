@@ -211,14 +211,14 @@ class AdjustMode implements IPlanEditorModeImplementation {
         if (this.prevVersion === null) {
             throw new Error('Adjusting a plan only works for plans with at least 1 previous version!');
         }
-        if (moment(this.prevVersion.StartDate).startOf('day') > moment().startOf('day')) {
+        if (moment(this.prevVersion.StartDateTime).startOf('day') > moment().startOf('day')) {
             throw new Error('Adjusting a plan whose last version starts in the future is not yet supported!');
         }
 
 
         // Create a new version for the planCLO
         let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
-        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
+        newVersion.StartDateTime = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
         planCLO.Versions.Add(newVersion);
 
 
@@ -232,10 +232,10 @@ class AdjustMode implements IPlanEditorModeImplementation {
         this.vm.PlanCLO = planCLO;
         this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
         this.vm.InfoMessage = 'You are about to create a new Version for this Plan. ' +
-            'The previous Version started on ' + moment(this.prevVersion.StartDate).format('Do MMM YYYY');
-        this.vm.InfoMessage += (this.prevVersion.EndDate == null) ?
+            'The previous Version started on ' + moment(this.prevVersion.StartDateTime).format('Do MMM YYYY');
+        this.vm.InfoMessage += (this.prevVersion.EndDateTime == null) ?
             ', without any specific end date.' :
-            ' and is/was due to end on ' + moment(this.prevVersion.EndDate).format('Do MMM YYYY') + '.';
+            ' and is/was due to end on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY') + '.';
         this.vm.StartDateLabel = 'Taking effect from:';
         this.vm.EndDateLabel = 'New end date will be:';
     }
@@ -244,7 +244,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
     public SaveData() {
 
         // Automatically end the next last version before starting the new one
-        this.prevVersion.EndDate = moment(this.vm.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate();
+        this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').toDate();
        
         // Save the data
         let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
@@ -280,10 +280,10 @@ class HardEditMode implements IPlanEditorModeImplementation {
             this.vm.PlanCLO = planCLO;
             this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
             this.vm.InfoMessage = 'You are about to hard edit the latest Version for this Plan. ' +
-                'The previous Version started on ' + moment(this.prevVersion.StartDate).format('Do MMM YYYY');
-            this.vm.InfoMessage += (this.prevVersion.EndDate == null) ?
+                'The previous Version started on ' + moment(this.prevVersion.StartDateTime).format('Do MMM YYYY');
+            this.vm.InfoMessage += (this.prevVersion.EndDateTime == null) ?
                 ', without any specific end date.' :
-                ' and is/was due to end on ' + moment(this.prevVersion.EndDate).format('Do MMM YYYY') + '.';
+                ' and is/was due to end on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY') + '.';
             this.vm.StartDateLabel = 'Taking effect from:';
             this.vm.EndDateLabel = 'New end date will be:';
         }
@@ -314,7 +314,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
         // Automatically end the next last version before starting the new one
         if (this.prevVersion !== null) {
 
-            this.prevVersion.EndDate = moment(this.vm.CurrentVersionCLO.StartDate).subtract(1, 'days').toDate();
+            this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').toDate();
         }
 
         // Save the data
@@ -343,8 +343,8 @@ class RestartMode implements IPlanEditorModeImplementation {
 
         // Create a new version for the planCLO
         let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
-        newVersion.StartDate = moment().add(1, 'days').startOf('day').toDate(); // default restartdate = tomorrow
-        newVersion.EndDate = null;
+        newVersion.StartDateTime = moment().add(1, 'days').startOf('day').toDate(); // default restartdate = tomorrow
+        newVersion.EndDateTime = null;
         planCLO.Versions.Add(newVersion);
 
 
@@ -358,7 +358,7 @@ class RestartMode implements IPlanEditorModeImplementation {
         this.vm.PlanCLO = planCLO;
         this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
         this.vm.InfoMessage = 'You are about to restart this Plan by creating a new Version for it. ' +
-            'The previous Version ended on ' + moment(this.prevVersion.EndDate).format('Do MMM YYYY');
+            'The previous Version ended on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY');
         this.vm.StartDateLabel = 'Starting again on:';
         this.vm.EndDateLabel = 'Ending on:';
     }
@@ -410,7 +410,7 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
     var endDateErrorsCount = 0;
 
     // Rule 1. newVersion.StartDate must be > prevVersion.StartDate
-    if (prevVersion!== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDate).startOf('day'))) {
+    if (prevVersion!== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDateTime).startOf('day'))) {
         startDateErrorsCount++;
     }
 

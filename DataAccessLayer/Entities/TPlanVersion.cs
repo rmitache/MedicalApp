@@ -12,8 +12,8 @@ namespace DataAccessLayer.Entities
 
         public int Id { get; set; }
         public int PlanId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; }
 
         public TPlan Plan { get; set; }
         public ICollection<TPlanRule> TPlanRule { get; set; }

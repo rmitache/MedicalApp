@@ -193,15 +193,15 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.EndDate)
-                    .HasColumnName("end_date")
-                    .HasColumnType("date");
+                entity.Property(e => e.EndDateTime)
+                    .HasColumnName("end_date_time")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.PlanId).HasColumnName("plan_id");
 
-                entity.Property(e => e.StartDate)
-                    .HasColumnName("start_date")
-                    .HasColumnType("date");
+                entity.Property(e => e.StartDateTime)
+                    .HasColumnName("start_date_time")
+                    .HasColumnType("datetime");
 
                 entity.HasOne(d => d.Plan)
                     .WithMany(p => p.TPlanVersion)

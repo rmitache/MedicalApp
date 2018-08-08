@@ -64,7 +64,7 @@ export class PlanElemComponent {
                 let width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
 
                 // Determine the X and Y positions
-                let startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDate), this.viewModel.SelectedDateRange);
+                let startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDateTime), this.viewModel.SelectedDateRange);
                 let xPosition = (startDateIndex) * widthBetweenDates;
                 let yPosition = 5;
 
@@ -145,11 +145,11 @@ export class VersionElemInfoWrapper {
 
     // Properties
     public get VersionStartsOnIntersectionStart(): boolean {
-        var versionStartSameAsIntersectionStart = moment(this.VersionCLO.StartDate).isSame(this.IntersectionDateRange.start, 'day');
+        var versionStartSameAsIntersectionStart = moment(this.VersionCLO.StartDateTime).isSame(this.IntersectionDateRange.start, 'day');
         return versionStartSameAsIntersectionStart;
     }
     public get VersionEndsOnIntersectionEnd(): boolean {
-        var versionEndSameAsIntersectionEnd = moment(this.VersionCLO.EndDate).isSame(this.IntersectionDateRange.end, 'day');
+        var versionEndSameAsIntersectionEnd = moment(this.VersionCLO.EndDateTime).isSame(this.IntersectionDateRange.end, 'day');
         return versionEndSameAsIntersectionEnd;
     }
     public get StartMarkerName(): string {

@@ -22,8 +22,8 @@ namespace BLL.DomainModel.Plans.Factories
         {
             TPlanVersion dataEntity = new TPlanVersion();
             dataEntity.Id = blo.ID;
-            dataEntity.StartDate = blo.StartDate;
-            dataEntity.EndDate = blo.EndDate;
+            dataEntity.StartDateTime = blo.StartDateTime;
+            dataEntity.EndDateTime = blo.EndDateTime;
             dataEntity.TPlanRule = this.ruleFactory.Convert_ToDataEntitiesList(blo.Rules);
 
             return dataEntity;
@@ -38,8 +38,8 @@ namespace BLL.DomainModel.Plans.Factories
         {
             Version blo = new Version();
             blo.ID = dataEntity.Id;
-            blo.StartDate = dataEntity.StartDate;
-            blo.EndDate = dataEntity.EndDate;
+            blo.StartDateTime = dataEntity.StartDateTime;
+            blo.EndDateTime = dataEntity.EndDateTime;
             blo.Rules = this.ruleFactory.Convert_ToBLOList(dataEntity.TPlanRule.ToList());
 
             return blo;

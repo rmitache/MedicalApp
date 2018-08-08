@@ -109,10 +109,10 @@ export class VersionCLOService {
             return false;
         }
 
-        let versionAStartDate = moment(versionA.StartDate);
-        let versionAEndDate = moment(versionA.EndDate);
-        let versionBStartDate = moment(versionB.StartDate);
-        let versionBEndDate = moment(versionB.EndDate);
+        let versionAStartDate = moment(versionA.StartDateTime);
+        let versionAEndDate = moment(versionA.EndDateTime);
+        let versionBStartDate = moment(versionB.StartDateTime);
+        let versionBEndDate = moment(versionB.EndDateTime);
 
 
         let nrOfDaysOneSide = GetNrOfDaysBetweenDatesUsingMoment(versionBEndDate, versionAStartDate, false);

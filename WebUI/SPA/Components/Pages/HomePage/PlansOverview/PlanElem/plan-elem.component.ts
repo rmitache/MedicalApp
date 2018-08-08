@@ -122,45 +122,45 @@ export class PlanElemComponent {
             case Enums.PlanStatus.Active:
                 if (this.planCLO.Versions.Length > 1) {
                     this.viewModel.StartDatePrefixString = 'Adjusted/restarted:';
-                    this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDate);
+                    this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 } else {
                     this.viewModel.StartDatePrefixString = 'Started:';
-                    this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(firstVersion.StartDate);
+                    this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(firstVersion.StartDateTime);
                 }
 
-                let endDate = moment(latestVersion.EndDate).startOf('day');
-                if (this.planCLO.GetLatestVersion().EndDate !== null) {
+                let endDate = moment(latestVersion.EndDateTime).startOf('day');
+                if (this.planCLO.GetLatestVersion().EndDateTime !== null) {
                     this.viewModel.EndDatePrefixString = 'Ending:';
-                    this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDate);
+                    this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDateTime);
                 }
                 break;
 
             // ActiveWithUpcomingAdjustment
             case Enums.PlanStatus.ActiveWithUpcomingAdjustment:
                 this.viewModel.StartDatePrefixString = 'Will change:';
-                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDate);
-                if (this.planCLO.GetLatestVersion().EndDate !== null) {
+                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
+                if (this.planCLO.GetLatestVersion().EndDateTime !== null) {
                     this.viewModel.EndDatePrefixString = 'Will end:';
-                    this.viewModel.RelativeEndDateString = moment(latestVersion.EndDate).format('MMM DD, YYYY');
+                    this.viewModel.RelativeEndDateString = moment(latestVersion.EndDateTime).format('MMM DD, YYYY');
                 }
                 break;
 
             // Inactive
             case Enums.PlanStatus.Inactive:
                 this.viewModel.EndDatePrefixString = 'Ended:';
-                this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDate);
+                this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDateTime);
                 break;
 
             // UpcomingAsNew
             case Enums.PlanStatus.UpcomingAsNew:
                 this.viewModel.StartDatePrefixString = 'Will start:';
-                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDate);
+                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
 
             // UpcomingAsRestarted
             case Enums.PlanStatus.UpcomingAsRestarted:
                 this.viewModel.StartDatePrefixString = 'Will restart:';
-                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDate);
+                this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
         }
 

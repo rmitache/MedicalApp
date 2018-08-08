@@ -9,8 +9,8 @@ import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 export class VersionCLO extends BaseCLO {
     // Fields
     public ID: number;
-    public StartDate: Date;
-    public EndDate: Date;
+    public StartDateTime: Date;
+    public EndDateTime: Date;
     public Rules: CLOs.RuleCLO[];
     private parentPlan: CLOs.PlanCLO;
 
@@ -32,7 +32,7 @@ export class VersionCLO extends BaseCLO {
         }
     }
     public get HasStarted(): boolean {
-        if (moment(this.StartDate).startOf('day') <= moment()) {
+        if (moment(this.StartDateTime).startOf('day') <= moment()) {
             return true;
         } else {
             return false;
@@ -42,11 +42,11 @@ export class VersionCLO extends BaseCLO {
     public get HasEnded(): boolean {
 
         // Neverending
-        if (this.EndDate === null) {
+        if (this.EndDateTime === null) {
             return false;
         }
 
-        if (moment(this.EndDate).endOf('day') <= moment()) {
+        if (moment(this.EndDateTime).endOf('day') <= moment()) {
             return true;
         } else {
             return false;
@@ -83,18 +83,18 @@ export class VersionCLO extends BaseCLO {
 
 
         // Get the intersection when there is an EndDate
-        if (this.EndDate !== null) {
-            var versionDateRange = new momentRange.DateRange(moment(this.StartDate).startOf('day'), moment(this.EndDate).endOf('day'));
+        if (this.EndDateTime !== null) {
+            var versionDateRange = new momentRange.DateRange(moment(this.StartDateTime).startOf('day'), moment(this.EndDateTime).endOf('day'));
             intersectionRange = momentTargetDateRange.intersect(versionDateRange);
         }
         // Get the intersection when there is no EndDate
         else {
             // If StartDate is WITHIN the targetDateRange
-            if (momentTargetDateRange.contains(moment(this.StartDate))) {
-                intersectionRange = new momentRange.DateRange(moment(this.StartDate), momentTargetDateRange.end.clone());
+            if (momentTargetDateRange.contains(moment(this.StartDateTime))) {
+                intersectionRange = new momentRange.DateRange(moment(this.StartDateTime), momentTargetDateRange.end.clone());
             }
             // If StartDate is BEFORE the targetDateRange start
-            else if (moment(this.StartDate) < momentTargetDateRange.start) {
+            else if (moment(this.StartDateTime) < momentTargetDateRange.start) {
                 intersectionRange = new momentRange.DateRange(momentTargetDateRange.start.clone(), momentTargetDateRange.end.clone());
             }
         }

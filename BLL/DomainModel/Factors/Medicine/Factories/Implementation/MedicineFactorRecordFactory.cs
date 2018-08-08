@@ -104,22 +104,22 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                     var version = plan.Versions[i];
 
                     // Prepare range dates
-                    DateTime minDate = (version.StartDate > windowStartDate) ? version.StartDate : windowStartDate;
+                    DateTime minDate = (version.StartDateTime > windowStartDate) ? version.StartDateTime : windowStartDate;
                     DateTime maxDate;
-                    if (version.EndDate == null)
+                    if (version.EndDateTime == null)
                     {
                         maxDate = windowEndDate;
                     }
                     else
                     {
-                        maxDate = (version.EndDate < windowEndDate) ? ((DateTime)version.EndDate).EndOfDay() : windowEndDate;
+                        maxDate = (version.EndDateTime < windowEndDate) ? ((DateTime)version.EndDateTime).EndOfDay() : windowEndDate;
                     }
 
 
                     // Create FactorRecords for each Rule
                     foreach (Rule rule in version.Rules)
                     {
-                        var hitDates = getRuleHitPattern(rule, version.StartDate, minDate, maxDate);
+                        var hitDates = getRuleHitPattern(rule, version.StartDateTime, minDate, maxDate);
                         foreach (DateTime hitDate in hitDates)
                         {
                             foreach (Time time in rule.MomentsInDay)

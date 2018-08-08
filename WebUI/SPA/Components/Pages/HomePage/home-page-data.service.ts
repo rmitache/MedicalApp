@@ -117,10 +117,12 @@ export class HomePageDataService {
 		const apiMethodName: string = 'AddPlan';
 
 		let blo = this.genericCLOFactory.ConvertToBlo(planCLO);
+		debugger;
 		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
 			.toPromise()
 			.then((bloWithUpdatedID) => {
 				let clo = this.genericCLOFactory.ConvertToCLO<CLOs.PlanCLO>(CLOs.PlanCLO.name, bloWithUpdatedID);
+				debugger;
 				return clo;
 			});
 

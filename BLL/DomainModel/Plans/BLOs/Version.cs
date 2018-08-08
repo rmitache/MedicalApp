@@ -10,8 +10,8 @@ namespace BLL.DomainModel.Plans.BLOs
     {
         // Properties
         public int ID { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; }
         public List<Rule> Rules { get; set; }
 
         // Constructor
@@ -22,7 +22,7 @@ namespace BLL.DomainModel.Plans.BLOs
         {
             var currentDate = Common.Functions.GetCurrentDateTimeInUTC();
 
-            if (!this.HasEnded() && (currentDate - this.StartDate.Date).TotalDays <= 7)
+            if (!this.HasEnded() && (currentDate - this.StartDateTime.Date).TotalDays <= 7)
             {
                 return true;
             }
@@ -31,13 +31,13 @@ namespace BLL.DomainModel.Plans.BLOs
         public bool HasStarted()
         {
             var currentDate = Common.Functions.GetCurrentDateTimeInUTC().StartOfDay();
-            bool hasStarted = this.StartDate > currentDate;
+            bool hasStarted = this.StartDateTime > currentDate;
             return hasStarted;
         }
         public bool HasEnded()
         {
             var currentDate = Common.Functions.GetCurrentDateTimeInUTC().StartOfDay();
-            bool hasEnded = this.EndDate > currentDate;
+            bool hasEnded = this.EndDateTime > currentDate;
             return hasEnded;
         }
         public Range<DateTime> GetIntersectionWithDateRange(Range<DateTime> targetDateRange)
@@ -46,20 +46,20 @@ namespace BLL.DomainModel.Plans.BLOs
             Range<DateTime> intersectionResult = null;
 
             // Get the intersection when there is an EndDate
-            if (this.EndDate != null)
+            if (this.EndDateTime != null)
             {
-                intersectionResult = Common.Functions.IntersectDateRanges(new Range<DateTime>(this.StartDate.StartOfDay(), ((DateTime)this.EndDate).EndOfDay()), targetDateRange);
+                intersectionResult = Common.Functions.IntersectDateRanges(new Range<DateTime>(this.StartDateTime.StartOfDay(), ((DateTime)this.EndDateTime).EndOfDay()), targetDateRange);
             }
             // Get the intersection when there is no EndDate
-            else if (this.EndDate == null)
+            else if (this.EndDateTime == null)
             {
                 // If StartDate is WITHIN the targetDateRange
-                if (Common.Functions.DateRangeContains(targetDateRange, this.StartDate.StartOfDay()))
+                if (Common.Functions.DateRangeContains(targetDateRange, this.StartDateTime.StartOfDay()))
                 {
-                    intersectionResult = new Range<DateTime>(this.StartDate.StartOfDay(), targetDateRange.RangeEnd.EndOfDay());
+                    intersectionResult = new Range<DateTime>(this.StartDateTime.StartOfDay(), targetDateRange.RangeEnd.EndOfDay());
                 }
                 // If StartDate is BEFORE the targetDateRange start
-                else if (this.StartDate.StartOfDay() < targetDateRange.RangeStart.StartOfDay())
+                else if (this.StartDateTime.StartOfDay() < targetDateRange.RangeStart.StartOfDay())
                 {
                     intersectionResult = new Range<DateTime>(targetDateRange.RangeStart.StartOfDay(), targetDateRange.RangeEnd.EndOfDay());
                 }
