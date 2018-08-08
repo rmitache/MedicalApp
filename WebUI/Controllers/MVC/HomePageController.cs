@@ -72,15 +72,14 @@ namespace WebUI.Controllers
         // Startup
         [Route("HomePage/GetInitialData")]
         [HttpPost]
-        public JsonResult GetInitialData([FromBody] DateRangeModel model)
+        public JsonResult GetInitialData([FromBody] DateRangeWithTZOffsetModel model)
         {
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
-            
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
             var plans = planService.GetPlans(loggedInUser.ID, true);
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.ID);
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, model.TZOffsetInMinutes, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);
             //----------------------------------------------------------------------------------------------------------------------------
 
@@ -113,10 +112,10 @@ namespace WebUI.Controllers
 
         [Route("HomePage/GetFactorRecords")]
         [HttpPost]
-        public JsonResult GetFactorRecords([FromBody] DateRangeModel model)
+        public JsonResult GetFactorRecords([FromBody] DateRangeWithTZOffsetModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, (int)userID);
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, model.TZOffsetInMinutes,(int)userID);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
@@ -222,6 +221,11 @@ namespace WebUI.Controllers
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;
+        }
+        public class DateRangeWithTZOffsetModel
+        {
+            public Range<DateTime> DateRange;
+            public int TZOffsetInMinutes;
         }
         public class MarkFactorRecordsAsTakenModel
         {

@@ -29,7 +29,7 @@ namespace DataAccessLayer.Entities
                 optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
             }
 
-            // Replace default materializer source to custom, to consider DateTimes using UTC kind
+            // Replace default materializer source to custom, to consider DateTimes using
             optionsBuilder.ReplaceService<IEntityMaterializerSource, DateTimeKindEntityMaterializerSource>();
         }
 

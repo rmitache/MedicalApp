@@ -9,6 +9,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 {
     public interface IMedicineFactorRecordFactory
     {
-        List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, DateTime windowEndDate);
+        List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, 
+            DateTime windowStartDate, DateTime windowEndDate, int utcOffsetInMins);
     }
 }

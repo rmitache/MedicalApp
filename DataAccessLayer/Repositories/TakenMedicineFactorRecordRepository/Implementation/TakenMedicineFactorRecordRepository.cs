@@ -54,8 +54,8 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
                 .Where(
                     record =>
                         record.Plan.UserId == userID &&
-                        record.OccurrenceDateTime.Date >= dateRange.RangeStart.Date.StartOfDay() &&
-                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd.Date.EndOfDay())
+                        record.OccurrenceDateTime >= dateRange.RangeStart &&
+                        record.OccurrenceDateTime <= dateRange.RangeEnd)
                 .Include(record => record.MedicineType)
                 .ToList();
             return list;

@@ -124,7 +124,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             {
                 var planBLOs = this.planService.GetPlans(userID, true);
                 var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
-                Range<DateTime> today = new Range<DateTime>(currentDateTime.StartOfDay(), currentDateTime.EndOfDay());
+                Range<DateTime> today = new Range<DateTime>(currentDateTime, currentDateTime);
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 

@@ -26,7 +26,7 @@ namespace Common
 
         public static bool DateRangeContains(Range<DateTime> dateRange, DateTime dateTime)
         {
-            bool isInRange = (dateTime >= dateRange.RangeStart.StartOfDay()) && (dateTime <= dateRange.RangeEnd.EndOfDay());
+            bool isInRange = (dateTime >= dateRange.RangeStart) && (dateTime <= dateRange.RangeEnd);
 
             return isInRange;
         }
