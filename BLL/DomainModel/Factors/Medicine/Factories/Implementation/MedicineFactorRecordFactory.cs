@@ -102,6 +102,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             return localDateTime;
         }
+
         // Constructor
         public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory)
         {

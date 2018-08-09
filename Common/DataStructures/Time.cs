@@ -14,11 +14,26 @@ namespace Common.DataStructures
         // Constructors
         public Time(int hours, int minutes)
         {
+            if (hours < 0 || minutes < 0)
+            {
+                throw new ArgumentException("Hours and minutes must both be 0 or positive integers");
+            }
+            if (hours > 23 || minutes > 59)
+            {
+                throw new ArgumentException("Hours and minutes must be within normal clock bounds");
+            }
+
             this.Hours = hours;
             this.Minutes = minutes;
         }
         public static Time ParseString(string str)
         {
+            if (str == null)
+            {
+                throw new ArgumentNullException("str");
+
+            }
+
             // Check for colon
             var strArray = str.Split(':');
             if (strArray.Length != 2)
@@ -49,14 +64,28 @@ namespace Common.DataStructures
         }
         public static List<Time> ParseCommaSeparatedString(string str)
         {
+            if (str == null)
+            {
+                throw new ArgumentNullException("str");
+            }
+
             string[] strArray = str.Split(",");
 
-            Time[] array = strArray.Select(substr =>
-            {
-                return Time.ParseString(substr);
-            }).ToArray();
 
-            return new List<Time>(array);
+            // Loop through the substrings and create Time instances
+            List<Time> resultList = new List<Time>();
+            foreach (string timeSubString in strArray)
+            {
+                var newTime = Time.ParseString(timeSubString);
+                if (newTime != null)
+                {
+                    resultList.Add(newTime);
+                }
+            }
+
+
+
+            return resultList;
         }
         public static string ToCommaSeparatedString(List<Time> timeList)
         {

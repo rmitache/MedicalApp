@@ -24,7 +24,7 @@ namespace BLL.UnitTests.Common
         [InlineData(new bool[] { false, true, false, true, false, true })]
         [InlineData(new bool[] { false, false, false, false, false, false, false })]
         [InlineData(new bool[] { true, true, true, false })]
-        public void Constructor_ValidArray_VerifyDaysOfWeek(bool[] daysInWeekArray)
+        public void Constructor_ValidArray_CreatesMatchingDaysOfWeek(bool[] daysInWeekArray)
         {
             // Prepare inputs
             var newInstance = new DaysInWeek(daysInWeekArray);
