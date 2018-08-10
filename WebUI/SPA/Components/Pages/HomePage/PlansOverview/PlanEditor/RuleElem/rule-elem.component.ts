@@ -6,7 +6,6 @@ import { NgForm } from '@angular/forms';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
@@ -25,11 +24,9 @@ import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 export class RuleElemComponent {
     // Fields
     @Input('RuleCLO')
-    private readonly ruleCLO: CLOs.RuleCLO;
-    @Input('MedicineSearchService')
-    private readonly medicineTypesSearchService: IMedicineTypesSearchService;
-    private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
-    
+	private readonly ruleCLO: CLOs.RuleCLO;
+	@Input('AvailableMedicineTypes')
+	private readonly availableMedicineTypes: CLOs.MedicineTypeCLO[];
     private isValid: boolean = false;
 
     @ViewChild(NgForm)
@@ -64,10 +61,7 @@ export class RuleElemComponent {
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly globalDataService: HomePageDataService
-
     ) {
-        this.availableMedicineTypes = this.globalDataService.GetMedicineTypesFromBundle();
 
     }
     ngOnInit() {

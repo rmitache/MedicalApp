@@ -30,10 +30,12 @@ export class PlanEditorComponent implements IModalDialog {
 	private ruleElems: QueryList<RuleElemComponent>;
 	private isValid: boolean = false;
 	private currentModeInstance: IPlanEditorModeImplementation = null;
+	private availableMedicineTypes: CLOs.MedicineTypeCLO[];
 	private reactiveForm: FormGroup;
 	private readonly dialogInitParameters = {
 		planCLO: null,
-		editorMode: null
+		editorMode: null,
+		availableMedicineTypes: null
 	};
 	private readonly viewModel: ViewModel = {
 		PlanCLO: null,
@@ -94,6 +96,7 @@ export class PlanEditorComponent implements IModalDialog {
 		});
 
 		// Create the currentModeInstance
+		this.availableMedicineTypes = this.dialogInitParameters.availableMedicineTypes;
 		let modeImplementationClass = modeImplementationsLookup[this.dialogInitParameters.editorMode]
 		this.currentModeInstance = new modeImplementationClass(
 			this.reactiveForm,
@@ -151,6 +154,7 @@ export class PlanEditorComponent implements IModalDialog {
 	dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
 		this.dialogInitParameters.planCLO = options.data.planCLO as CLOs.PlanCLO;
 		this.dialogInitParameters.editorMode = options.data.planEditorMode as PlanEditorMode;
+		this.dialogInitParameters.availableMedicineTypes = options.data.availableMedicineTypes as CLOs.MedicineTypeCLO[];
 	}
 }
 

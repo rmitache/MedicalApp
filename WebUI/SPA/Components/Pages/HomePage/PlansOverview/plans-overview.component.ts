@@ -18,180 +18,188 @@ import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.co
 
 
 @Component({
-    selector: 'plans-overview',
-    templateUrl: './plans-overview.component.html',
-    styleUrls: ['./plans-overview.component.css'],
-    host: { 'class': 'plans-overview' }
+	selector: 'plans-overview',
+	templateUrl: './plans-overview.component.html',
+	styleUrls: ['./plans-overview.component.css'],
+	host: { 'class': 'plans-overview' }
 })
 export class PlansOverviewComponent {
-    // Fields
-    private readonly subscriptions: Subscription[] = [];
-    private readonly appState: IReadOnlyApplicationState;
-    private readonly planStatusViewModes = {
-        // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
-        Active: 'Active',
-        Inactive: 'Inactive',
-        Upcoming: 'Upcoming'
-    };
-    private readonly viewModel: ViewModel = {
-        AvailablePlans: null,
-        FilteredPlans: null,
-        SelectedViewMode: this.planStatusViewModes.Active,
-        Blocked: false
-    };
+	// Fields
+	private readonly subscriptions: Subscription[] = [];
+	private readonly appState: IReadOnlyApplicationState;
+	private readonly planStatusViewModes = {
+		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
+		Active: 'Active',
+		Inactive: 'Inactive',
+		Upcoming: 'Upcoming'
+	};
+	private readonly viewModel: ViewModel = {
+		AvailablePlans: null,
+		FilteredPlans: null,
+		SelectedViewMode: this.planStatusViewModes.Active,
+		Blocked: false
+	};
 
-    // Private methods
-    private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: title,
-            childComponent: PlanEditorComponent,
-            data: {
-                planCLO: planCLO,
-                planEditorMode: mode
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let planEditorInstance = childComponentInstance as PlanEditorComponent;
-                        return !planEditorInstance.GetValidState();
-                    },
-                    text: saveButtonText,
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.viewModel.Blocked = true;
+	// Private methods
+	private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
 
-                            let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
-                            planEditorComponentInstance.SaveData()
-                                .then((planCLO) => {
+		this.viewModel.Blocked = true;
+		this.dataService.GetMedicineTypes().then(medicineTypeCLOs => {
 
-                                    this.reloadDataFromServer()
-                                        .then(() => {
-                                            this.refreshUI();
-                                        });
+			this.viewModel.Blocked = false;
+			this.modalDialogService.OpenDialog(this.viewContainerRef, {
+				title: title,
+				childComponent: PlanEditorComponent,
+				data: {
+					planCLO: planCLO,
+					planEditorMode: mode,
+					availableMedicineTypes: medicineTypeCLOs
+				},
+				actionButtons: [
+					{
+						isDisabledFunction: (childComponentInstance: any) => {
+							let planEditorInstance = childComponentInstance as PlanEditorComponent;
+							return !planEditorInstance.GetValidState();
+						},
+						text: saveButtonText,
+						onAction: (childComponentInstance: any) => {
+							let promiseWrapper = new Promise<void>((resolve) => {
+								this.viewModel.Blocked = true;
 
+								let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
+								planEditorComponentInstance.SaveData()
+									.then((planCLO) => {
 
-                                    this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
-
-                                    setTimeout(() => {
-                                        this.viewModel.Blocked = false;
-                                        resolve();
-                                    }, 200);
-
-                                });
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    }
-                }
-            ]
+										this.reloadDataFromServer()
+											.then(() => {
+												this.refreshUI();
+											});
 
 
-        });
+										this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
-    }
-    private reloadDataFromServer(): Promise<void> {
-        let promise = this.dataService.GetPlans()
-            .then(planCLOs => {
-                this.viewModel.AvailablePlans = planCLOs;
-            });
-        return promise;
-    }
-    private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
+										setTimeout(() => {
+											this.viewModel.Blocked = false;
+											resolve();
+										}, 200);
 
-        let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
-            let numericVal = plan.Status as number;
-            if (planStatusViewMode === this.planStatusViewModes.Active) {
-                return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
-            }
-            if (planStatusViewMode === this.planStatusViewModes.Inactive) {
-                return (numericVal === Enums.PlanStatus.Inactive);
-            }
-            if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
-                return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
-            }
+									});
+							});
+							return promiseWrapper;
+						}
+					},
+					{
+						isDisabledFunction: (childComponentInstance: any) => {
+							return false;
+						},
+						text: 'Cancel',
+						onAction: () => {
+							return true;
+						}
+					}
+				]
 
-            return null;
-        });
 
-        return filteredPlans;
-    }
-    private refreshUI() {
-        this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
-    }
+			});
+		});
 
-    // Constructor 
-    constructor(
-        applicationState: HomePageApplicationState,
-        private readonly commandManager: CommandManager,
-        private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly dataService: HomePageDataService,
-        private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
-    ) {
-        this.appState = applicationState as IReadOnlyApplicationState;
 
-        // Register self to CommandManager
-        this.commandManager.RegisterComponentInstance(this);
+	}
+	private reloadDataFromServer(): Promise<void> {
+		let promise = this.dataService.GetPlans()
+			.then(planCLOs => {
+				this.viewModel.AvailablePlans = planCLOs;
+			});
+		return promise;
+	}
+	private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
 
-    }
-    ngOnInit() {
-        // Init ViewModel properties
+		let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
+			let numericVal = plan.Status as number;
+			if (planStatusViewMode === this.planStatusViewModes.Active) {
+				return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
+			}
+			if (planStatusViewMode === this.planStatusViewModes.Inactive) {
+				return (numericVal === Enums.PlanStatus.Inactive);
+			}
+			if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
+				return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
+			}
+
+			return null;
+		});
+
+		return filteredPlans;
+	}
+	private refreshUI() {
+		this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
+	}
+
+	// Constructor 
+	constructor(
+		applicationState: HomePageApplicationState,
+		private readonly commandManager: CommandManager,
+		private readonly genericCLOFactory: GenericCLOFactory,
+		private readonly dataService: HomePageDataService,
+		private readonly modalDialogService: ModalDialogService,
+		private viewContainerRef: ViewContainerRef
+	) {
+		this.appState = applicationState as IReadOnlyApplicationState;
+
+		// Register self to CommandManager
+		this.commandManager.RegisterComponentInstance(this);
+
+	}
+	ngOnInit() {
+		// Init ViewModel properties
 		this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
-		
-        this.refreshUI();
-    }
-    ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
-    }
 
-    // Event handlers
-    private onAddNewPlanTriggered() {
-        let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
-        this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
-    }
-    private onPlanActionTriggered(arr: any[]) {
-        let planCLO: CLOs.PlanCLO = arr[0];
-        let actionTypeID: PlanActionType = arr[1];
-        let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
+		this.refreshUI();
+	}
+	ngOnDestroy() {
+		this.subscriptions.forEach(s => s.unsubscribe());
+	}
 
-        if (actionTypeID === PlanActionType.Adjust) {
-            // Adjust
-            this.openPlanEditor('Adjust Plan', 'Confirm adjustment', cloneOfPlanCLO, PlanEditorMode.Adjust);
-        } else if (actionTypeID === PlanActionType.HardEdit) {
-            // HardEdit
-            this.openPlanEditor('Hard modify version', 'Save changes', cloneOfPlanCLO, PlanEditorMode.HardEdit);
-        } else if (actionTypeID === PlanActionType.Restart) {
-            // Restart
-            this.openPlanEditor('Restart plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
-        } else {
-            throw new Error('Action not recognized');
-        }
-    }
-    private onSelectedViewModeChanged(event) {
-        const newVal = event.target.value;
-        this.viewModel.SelectedViewMode = newVal;
+	// Event handlers
+	private onAddNewPlanTriggered() {
+		let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
+		this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
+	}
+	private onPlanActionTriggered(arr: any[]) {
+		let planCLO: CLOs.PlanCLO = arr[0];
+		let actionTypeID: PlanActionType = arr[1];
+		let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
 
-        this.refreshUI();
-    }
+		if (actionTypeID === PlanActionType.Adjust) {
+			// Adjust
+			this.openPlanEditor('Adjust Plan', 'Confirm adjustment', cloneOfPlanCLO, PlanEditorMode.Adjust);
+		} else if (actionTypeID === PlanActionType.HardEdit) {
+			// HardEdit
+			this.openPlanEditor('Hard modify version', 'Save changes', cloneOfPlanCLO, PlanEditorMode.HardEdit);
+		} else if (actionTypeID === PlanActionType.Restart) {
+			// Restart
+			this.openPlanEditor('Restart plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
+		} else {
+			throw new Error('Action not recognized');
+		}
+	}
+	private onSelectedViewModeChanged(event) {
+		const newVal = event.target.value;
+		this.viewModel.SelectedViewMode = newVal;
+
+		this.refreshUI();
+	}
 }
 interface ViewModel {
-    AvailablePlans: CLOs.PlanCLO[];
-    FilteredPlans: CLOs.PlanCLO[];
-    SelectedViewMode: any;
-    Blocked: boolean;
+	AvailablePlans: CLOs.PlanCLO[];
+	FilteredPlans: CLOs.PlanCLO[];
+	SelectedViewMode: any;
+	Blocked: boolean;
 }
 
 export enum PlanActionType {
-    CreateNew,
-    Adjust,
-    HardEdit,
-    Restart
+	CreateNew,
+	Adjust,
+	HardEdit,
+	Restart
 }

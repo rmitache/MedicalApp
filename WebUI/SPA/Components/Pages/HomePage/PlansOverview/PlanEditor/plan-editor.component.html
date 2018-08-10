@@ -48,6 +48,7 @@
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
                            (ValidStateChanged)="onChildRuleElemValidStateChanged()"
                            (RemoveClicked)="onRemoveRuleTriggered($event)"
+                           [AvailableMedicineTypes]="availableMedicineTypes"
                            [RuleCLO]="rule">
                 </rule-elem>
             </div>

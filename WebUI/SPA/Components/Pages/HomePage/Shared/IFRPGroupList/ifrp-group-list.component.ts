@@ -25,18 +25,18 @@ import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFR
 })
 export class IFRPGroupListComponent {
     // Fields
-    @Input('AvailableMedicineTypes')
-    private readonly availableMedicineTypes: DataStructures.List<CLOs.MedicineTypeCLO>;
+	@Input('AvailableMedicineTypes')
+	private readonly availableMedicineTypes: CLOs.MedicineTypeCLO[];
     @Input('IFRPGroupCLOs')
     private readonly iFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
     private readonly searchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
-            return this.availableMedicineTypes.ToArray().find(clo => {
+            return this.availableMedicineTypes.find(clo => {
                 return clo.Name === name;
             });
         },
         Search: (searchString) => {
-            return this.availableMedicineTypes.ToArray().map(clo => {
+            return this.availableMedicineTypes.map(clo => {
                 return clo.Name;
             });
         }

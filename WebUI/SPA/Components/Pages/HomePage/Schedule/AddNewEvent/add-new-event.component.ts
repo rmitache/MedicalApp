@@ -15,6 +15,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 // Components
 import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
+import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Shared/i-medicine-types-search-service';
 
 @Component({
     selector: 'add-new-event',
@@ -103,7 +104,3 @@ interface ViewModel {
     OccurrenceDateTime: Date;
 }
 
-export interface IMedicineTypesSearchService {
-    GetMedicineTypeByName(name: string): CLOs.MedicineTypeCLO;
-    Search(searchString: string): string[];
-}

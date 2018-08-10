@@ -6,9 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Schedule/AddNewEvent/add-new-event.component';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-
+import { IMedicineTypesSearchService } from 'SPA/Components/Pages/HomePage/Shared/i-medicine-types-search-service';
 
 @Component({
     selector: 'ifrp-group-elem',
