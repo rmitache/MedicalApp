@@ -6,12 +6,16 @@ namespace Common.DataStructures
 {
     public class Time
     {
-        public int Hours { get; set; }
-        public int Minutes { get; set; }
+        public virtual int Hours { get; set; }
+        public virtual int Minutes { get; set; }
 
 
 
         // Constructors
+        public Time()
+        {
+
+        }
         public Time(int hours, int minutes)
         {
             if (hours < 0 || minutes < 0)
@@ -89,13 +93,18 @@ namespace Common.DataStructures
         }
         public static string ToCommaSeparatedString(List<Time> timeList)
         {
+            if(timeList==null)
+            {
+                throw new ArgumentNullException("timeList");
+            }
+
             string str = "";
             for (int i = 0; i < timeList.Count; i++)
             {
                 str += timeList[i].ToString() + ",";
             }
 
-            //
+            // Remove the last comma
             if (timeList.Count > 0)
                 str = str.Remove(str.Length - 1);
 
