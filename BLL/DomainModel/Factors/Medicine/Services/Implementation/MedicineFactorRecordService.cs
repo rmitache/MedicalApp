@@ -92,7 +92,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
                 dateRange.RangeStart, dateRange.RangeEnd, utcOffsetInMins);
 
             // Sort factorRecords by their date and then set their Taken property
-            var allFactorRecordBLOs = planProjectionFactorRecordBLOs.OrderBy(rec => rec.OccurrenceDate).ToList();
+            var allFactorRecordBLOs = planProjectionFactorRecordBLOs.OrderBy(rec => rec.OccurrenceDateTime).ToList();
             var takenDataEntitiesDictionary = this.ConvertListOfTakenDataEntitiesToDict(this.takenMedFactorRecordRepo.GetTakenMedicineFactorRecords(dateRange, userID));
             foreach (MedicineFactorRecord blo in allFactorRecordBLOs)
             {

@@ -22,8 +22,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         let newCLO = new CLOs.MedicineFactorRecordCLO();
 		newCLO.CompositeID = blo['CompositeID'];
 
-		newCLO.OccurrenceDate = new Date(blo['OccurrenceDate']);
-		newCLO.OccurrenceTime = Time.ParseJSON((blo['OccurrenceTime']));
+		newCLO.OccurrenceDateTime = new Date(blo['OccurrenceDateTime']);
 
         newCLO.MedicineType = this.medicineTypeCLOFactory.Convert_ToCLO(blo['MedicineType']);
         newCLO.ParentPlanName = blo['ParentPlanName'];
@@ -39,23 +38,7 @@ export class MedicineFactorRecordCLOFactory implements ICLOFactory<CLOs.Medicine
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.MedicineFactorRecordCLO {
-        let newCLO = new CLOs.MedicineFactorRecordCLO();
-        newCLO.CompositeID = null;
-		newCLO.MedicineType = null;
-
-        newCLO.OccurrenceDate = new Date();
-		newCLO.OccurrenceTime = new Time(0, 0);
-
-        newCLO.ParentPlanID = null;
-        newCLO.RecentlyAdded = null;
-        newCLO.Taken = false;
-
-        newCLO.UnitDoseQuantifier = null;
-        newCLO.HasUserDefinedUnitDose = null;
-        newCLO.UserDefinedUnitDoseType = null;
-        newCLO.UserDefinedUnitDoseSize = null;
-
-        return newCLO;
+		throw new Error('Create_DefaultCLO Not implemented for MedicineFactorRecordCLO');
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineFactorRecordCLO> {
         

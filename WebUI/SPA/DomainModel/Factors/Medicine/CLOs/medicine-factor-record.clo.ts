@@ -10,8 +10,7 @@ export class MedicineFactorRecordCLO extends AbstractMedicineFactorRecordCLO {
 
     // Fields
     public CompositeID: string;
-	public OccurrenceDate: Date;
-	public OccurrenceTime: Time;
+	public OccurrenceDateTime: Date;
     public MedicineType: CLOs.MedicineTypeCLO;
 
     public ParentPlanName: string;
@@ -32,8 +31,12 @@ export class MedicineFactorRecordCLO extends AbstractMedicineFactorRecordCLO {
     }
 
     // Public methods
-    public GetTime(): Time {
-		return this.OccurrenceTime;
+	public GetTime(): Time {
+		var mom = moment(this.OccurrenceDateTime);
+		var hours = mom.hours();
+		var mins = mom.minutes();
+
+		return new Time(hours, mins);
     }
 }
 

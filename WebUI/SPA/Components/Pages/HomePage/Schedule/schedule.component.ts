@@ -103,8 +103,8 @@ export class ScheduleComponent {
 		// Use selectedDateRange to get a subset of data from AvailableFactorRecords
 		let visibleFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
 
-			return fRec.OccurrenceDate >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
-				fRec.OccurrenceDate <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
+			return fRec.OccurrenceDateTime >= this.viewModel.SelectedDateRange.RangeStart.toDate() &&
+				fRec.OccurrenceDateTime <= this.viewModel.SelectedDateRange.RangeEnd.toDate();
 		});
 		
 		// Refresh VM properties
@@ -136,7 +136,7 @@ export class ScheduleComponent {
 		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
 		this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
 		this.viewModel.SelectedDateRange = initialSelectedDateRange;
-
+		
 		// Refresh the UI
 		this.refreshUI();
 	}

@@ -23,13 +23,17 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         private readonly IRuleHitPatternService ruleHitPatternService;
 
         // Private methods
-        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime localOccurrenceDate,
-            Time occurrenceTime, Plan parentPlan, bool recentlyAdded)
+        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime utcOccurrenceDateTime,
+             Plan parentPlan, bool recentlyAdded)
         {
+            if(utcOccurrenceDateTime.Kind!=DateTimeKind.Utc)
+            {
+                throw new ArgumentException("utcOccurrenceDateTime must be of UTC kind");
+            }
+
             MedicineFactorRecord blo = new MedicineFactorRecord();
             blo.MedicineType = ruleItem.MedicineType;
-            blo.OccurrenceDate = localOccurrenceDate;
-            blo.OccurrenceTime = occurrenceTime;
+            blo.OccurrenceDateTime = utcOccurrenceDateTime;
 
             blo.ParentPlanName = parentPlan.Name;
             blo.ParentPlanID = parentPlan.ID;
@@ -45,7 +49,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             return blo;
         }
-        private DateTime convertDateTimeUsingOffset(DateTime utcDateTime, int utcOffsetInMins)
+        private DateTime convertToLocalDateTime(DateTime utcDateTime, int utcOffsetInMins)
         {
             if (utcDateTime.Kind != DateTimeKind.Utc)
             {
@@ -65,7 +69,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             return localDateTime;
         }
-
+        
         // Constructor
         public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory,
             IRuleHitPatternService ruleHitPatternService)
@@ -89,9 +93,9 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             foreach (Plans.BLOs.Version version in plan.Versions)
             {
                 // Get version start/end dates in local time 
-                DateTime localVersionStartDateTime = this.convertDateTimeUsingOffset(version.StartDateTime, utcOffsetInMins);
+                DateTime localVersionStartDateTime = this.convertToLocalDateTime(version.StartDateTime, utcOffsetInMins);
                 DateTime? localVersionEndDateTime = (version.EndDateTime == null) ? null :
-                    (DateTime?)this.convertDateTimeUsingOffset((DateTime)version.EndDateTime, utcOffsetInMins);
+                    (DateTime?)this.convertToLocalDateTime((DateTime)version.EndDateTime, utcOffsetInMins);
 
                 // Determine the min and max dates to be used for the projection (in local time)
                 DateTime localMinDate = (localVersionStartDateTime > localWindowStartDateTime) ? localVersionStartDateTime : localWindowStartDateTime;
@@ -124,8 +128,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                                 }
 
                                 //
-                                var localOccurrenceDateTime = localHitDate.StartOfDay().AddHours(localTime.Hours).AddMinutes(localTime.Minutes);
-                                var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, localHitDate, localTime, plan, recentlyAdded);
+                                var localOccurrenceDateTime = localHitDate.AddHours(localTime.Hours).AddMinutes(localTime.Minutes);
+                                var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, localOccurrenceDateTime.ToUniversalTime(), plan, recentlyAdded);
                                 projectedFactorRecordsList.Add(newFactorRecord);
                             }
                         }
@@ -148,8 +152,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             }
 
             // Convert window to local time
-            var localWindowStartDateTime = this.convertDateTimeUsingOffset(utcWindowStartDate, utcOffsetInMins);
-            var localWindowEndDateTime = this.convertDateTimeUsingOffset(utcWindowEndDate, utcOffsetInMins);
+            var localWindowStartDateTime = this.convertToLocalDateTime(utcWindowStartDate, utcOffsetInMins);
+            var localWindowEndDateTime = this.convertToLocalDateTime(utcWindowEndDate, utcOffsetInMins);
 
 
             // Loop through all versions and create FactorRecords
