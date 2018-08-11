@@ -1,5 +1,5 @@
 ﻿import * as moment from 'moment';
-import { Range } from 'SPA/Core/Helpers/DataStructures/misc';
+import { Range, Time } from 'SPA/Core/Helpers/DataStructures/misc';
 import { FormGroup, FormControl } from '@angular/forms';
 
 
@@ -122,6 +122,14 @@ export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
 
 }
 
+//export function GetLocalTime(utcTime: Time) {
+//	var clientTZOffsetInMinutes = new Date().getTimezoneOffset();
+//	//let utcMoment = moment(utcTime.ToString(), 'HH:mm').format("HH:mm");
+//	var testTime = new Time(23, 30);
+//	let localMoment = moment.utc(testTime.ToString(), 'HH:mm').local().format("hh:mm");
+	
+
+//}
 ///* Creates a string with the same Year, Date, Hours, Minutes, Seconds as the given local datetime and with UTC tz*/
 //export function GetUTCTimeStringFromLocalWithoutChangingOffset(date:Date): string {
 //	var mom = moment(date);

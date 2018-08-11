@@ -1,9 +1,17 @@
-﻿export class Time {
+﻿import * as moment from 'moment';
+
+
+export class Time {
+
+
 
     // Constructors
-    constructor(public readonly Hours: number, public readonly Minutes: number) {
-    }
-    public static ParseString(str: string): Time {
+	constructor(public readonly Hours: number, public readonly Minutes: number) {
+	}
+
+	// Static creation methods
+	public static ParseString(str: string): Time {
+
         // Check for colon
         let strArray = str.split(':');
         if (strArray.length !== 2) {
@@ -27,10 +35,11 @@
         return timeObj;
 	}
 	public static ParseJSON(json: string): Time {
+
 		let time = new Time(parseInt(json['Hours']), parseInt(json['Minutes']));
 		return time;
 	}
-    public static FromJSONArray(jsonArray: any[]): Time[] {
+	public static ParseJSONArray(jsonArray: any[]): Time[] {
         let array:Time[] = [];
         if (jsonArray === null) {
             return array;
@@ -54,8 +63,10 @@
         strHours = (this.Hours < 10) ? ('' + this.Hours) : this.Hours + '';
         strMins = (this.Minutes < 10) ? ('0' + this.Minutes) : this.Minutes + '';
         return strHours + ":" + strMins;
-    }
+	}
+
 }
+
 
 export class Range<T> {
     constructor(public readonly RangeStart: T, public readonly RangeEnd: T) {

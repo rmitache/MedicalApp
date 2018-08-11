@@ -12,6 +12,7 @@ using Ical.Net;
 using BLL.DomainModel.Factors.Medicine.BLOs;
 using BLL.DomainModel.Factors.Medicine.Enums;
 using Common;
+using BLL.DomainModel.Factors.Medicine.Factories.Implementation;
 
 namespace BLL.DomainModel.Factors.Medicine.Factories
 {
@@ -19,53 +20,15 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
     {
         // Fields
         private readonly IMedicineTypeFactory medicineTypeFactory;
+        private readonly IRuleHitPatternService ruleHitPatternService;
 
         // Private methods
-        private List<DateTime> getRuleHitPattern(Rule rule, DateTime versionStartDate, DateTime minDate, DateTime maxDate)
-        {
-            // Variables
-            List<DateTime> dates = null;
-            CalendarEvent eventObj = new CalendarEvent
-            {
-                Start = new CalDateTime(versionStartDate),
-                Duration = new TimeSpan(0, 10, 0),
-                RecurrenceRules = new List<RecurrencePattern>()
-            };
-            int everyX = (int)rule.OrdinalFrequencyType + 1;
-
-            // Daily frequency
-            if (rule.FrequencyType == RuleFrequencyType.Daily)
-            {
-                eventObj.RecurrenceRules.Add(new RecurrencePattern()
-                {
-                    Frequency = FrequencyType.Daily,
-                    Interval = everyX,
-                    FirstDayOfWeek = DayOfWeek.Monday
-                });
-            }
-            else
-            // Weekly
-            {
-                eventObj.RecurrenceRules.Add(new RecurrencePattern()
-                {
-                    Frequency = FrequencyType.Weekly,
-                    Interval = everyX,
-                    FirstDayOfWeek = DayOfWeek.Monday,
-                    ByDay = rule.DaysInWeek.ToICalWeekDayList()
-
-                });
-            }
-
-            //
-            dates = eventObj.GetOccurrences(minDate, maxDate).Select(occurrence => occurrence.Period.StartTime.Date).ToList();
-            return dates;
-        }
-        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime occurrenceDate,
+        private MedicineFactorRecord createFactorRecordFromMedicineRuleItem(MedicineRuleItem ruleItem, DateTime localOccurrenceDate,
             Time occurrenceTime, Plan parentPlan, bool recentlyAdded)
         {
             MedicineFactorRecord blo = new MedicineFactorRecord();
             blo.MedicineType = ruleItem.MedicineType;
-            blo.OccurrenceDate = occurrenceDate;
+            blo.OccurrenceDate = localOccurrenceDate;
             blo.OccurrenceTime = occurrenceTime;
 
             blo.ParentPlanName = parentPlan.Name;
@@ -82,13 +45,13 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             return blo;
         }
-        private DateTime ConvertDateTimeUsingOffset(DateTime utcDateTime, int utcOffsetInMins)
+        private DateTime convertDateTimeUsingOffset(DateTime utcDateTime, int utcOffsetInMins)
         {
             if (utcDateTime.Kind != DateTimeKind.Utc)
             {
                 throw new ArgumentException("utcDateTime");
             }
-            if(utcDateTime==null)
+            if (utcDateTime == null)
             {
                 throw new ArgumentNullException("utcDateTime");
             }
@@ -104,79 +67,97 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
 
         // Constructor
-        public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory)
+        public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory,
+            IRuleHitPatternService ruleHitPatternService)
         {
             this.medicineTypeFactory = medicineTypeFactory;
+            this.ruleHitPatternService = ruleHitPatternService;
         }
 
         // Public methods
-        public List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime windowStartDate, 
-            DateTime windowEndDate, int utcOffsetInMins)
+        public List<MedicineFactorRecord> Create_FromSinglePlan(Plan plan, DateTime localWindowStartDateTime, DateTime localWindowEndDateTime, int utcOffsetInMins)
         {
-            if (windowStartDate.Kind != DateTimeKind.Utc ||
-               windowEndDate.Kind != DateTimeKind.Utc)
+            if (localWindowStartDateTime.Kind != DateTimeKind.Local || localWindowEndDateTime.Kind != DateTimeKind.Local)
             {
-                throw new ArgumentException("Window startDates but be given in UTC");
+                throw new ArgumentException("Window startDates must be given in UTC");
             }
 
-            // Convert range to local datetime
-            windowStartDate = this.ConvertDateTimeUsingOffset(windowStartDate, utcOffsetInMins);
-            windowEndDate = this.ConvertDateTimeUsingOffset(windowEndDate, utcOffsetInMins);
+           
 
-
+            // Loop through Versions and generate MedicineFactorRecords
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
-            foreach (Plan plan in planBLOs)
+            foreach (Plans.BLOs.Version version in plan.Versions)
             {
-                for (int i = 0; i < plan.Versions.Count; i++)
+                // Get version start/end dates in local time 
+                DateTime localVersionStartDateTime = this.convertDateTimeUsingOffset(version.StartDateTime, utcOffsetInMins);
+                DateTime? localVersionEndDateTime = (version.EndDateTime == null) ? null :
+                    (DateTime?)this.convertDateTimeUsingOffset((DateTime)version.EndDateTime, utcOffsetInMins);
+
+                // Determine the min and max dates to be used for the projection (in local time)
+                DateTime localMinDate = (localVersionStartDateTime > localWindowStartDateTime) ? localVersionStartDateTime : localWindowStartDateTime;
+                DateTime localMaxDate;
+                if (version.EndDateTime == null)
+                    localMaxDate = localWindowEndDateTime;
+                else
+                    localMaxDate = (localVersionEndDateTime < localWindowEndDateTime) ? (DateTime)localVersionEndDateTime : localWindowEndDateTime;
+
+
+                // Create FactorRecords for each Rule
+                foreach (Rule rule in version.Rules)
                 {
-                    var version = plan.Versions[i];
+                    var localHitDates = this.ruleHitPatternService.GetRuleHitPattern(rule, localVersionStartDateTime, localMinDate, localMaxDate);
 
-                    // Prepare range dates
-                    var versionStartDateInClientTime = this.ConvertDateTimeUsingOffset(version.StartDateTime, utcOffsetInMins);
-                    DateTime minDate = (versionStartDateInClientTime > windowStartDate) ? versionStartDateInClientTime : windowStartDate;
-                    DateTime maxDate;
-                    if (version.EndDateTime == null)
+                    // For each hitdate, create FactorRecords
+                    foreach (DateTime localHitDate in localHitDates)
                     {
-                        maxDate = windowEndDate;
-                    }
-                    else
-                    {
-                        var versionEndDateInClientTime = this.ConvertDateTimeUsingOffset((DateTime)version.EndDateTime, utcOffsetInMins);
-                        maxDate = (versionEndDateInClientTime < windowEndDate) ? (versionEndDateInClientTime) : windowEndDate;
-                    }
-
-
-                    // Create FactorRecords for each Rule
-                    foreach (Rule rule in version.Rules)
-                    {
-                        var hitDates = getRuleHitPattern(rule, version.StartDateTime, minDate, maxDate);
-                        foreach (DateTime hitDate in hitDates)
+                        foreach (Time localTime in rule.MomentsInDay)
                         {
-                            foreach (Time time in rule.MomentsInDay)
+                            foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
                             {
-                                foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
+                                //
+                                bool recentlyAdded = false;
+                                if (version.ID == plan.GetLatestVersion().ID) // if it is the latest version, try to highlight recently added FactorRecords
                                 {
-                                    //
-                                    bool recentlyAdded = false;
-                                    if (version.ID == plan.GetLatestVersion().ID)
-                                    {
-                                        var previousVersion = plan.GetPreviousLatestVersion();
-                                        var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
-                                        recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
-                                    }
-
-                                    //
-                                    var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, hitDate, time, plan, recentlyAdded);
-                                    projectedFactorRecordsList.Add(newFactorRecord);
+                                    var previousVersion = plan.GetPreviousLatestVersion();
+                                    var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
+                                    recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
                                 }
+
+                                //
+                                var localOccurrenceDateTime = localHitDate.StartOfDay().AddHours(localTime.Hours).AddMinutes(localTime.Minutes);
+                                var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, localHitDate, localTime, plan, recentlyAdded);
+                                projectedFactorRecordsList.Add(newFactorRecord);
                             }
                         }
-
                     }
-
 
                 }
 
+
+            }
+
+
+            return projectedFactorRecordsList;
+        }
+        public List<MedicineFactorRecord> Create_FromMedicinePlans(List<Plan> planBLOs, DateTime utcWindowStartDate,
+            DateTime utcWindowEndDate, int utcOffsetInMins)
+        {
+            if (utcWindowStartDate.Kind != DateTimeKind.Utc || utcWindowEndDate.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException("Window startDates must be given in UTC");
+            }
+
+            // Convert window to local time
+            var localWindowStartDateTime = this.convertDateTimeUsingOffset(utcWindowStartDate, utcOffsetInMins);
+            var localWindowEndDateTime = this.convertDateTimeUsingOffset(utcWindowEndDate, utcOffsetInMins);
+
+
+            // Loop through all versions and create FactorRecords
+            var projectedFactorRecordsList = new List<MedicineFactorRecord>();
+            foreach (Plan plan in planBLOs)
+            {
+                var factorRecordsFromPlan = this.Create_FromSinglePlan(plan, localWindowStartDateTime, localWindowEndDateTime, utcOffsetInMins);
+                projectedFactorRecordsList.AddRange(factorRecordsFromPlan);
             }
 
 

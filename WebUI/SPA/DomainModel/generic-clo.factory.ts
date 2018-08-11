@@ -16,6 +16,7 @@ import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/CLOFactories/
 import { ICLOFactory, IType } from 'SPA/Core/CLO/i-clo.factory';
 import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
 import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
+import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 
 
 @Injectable()
@@ -44,7 +45,7 @@ export class GenericCLOFactory {
                 relevantPropertyNames.push(propertyName);
             }
         }
-        
+		
         // Go through the extracted properties and convert their values 
         for (let i = 0; i < relevantPropertyNames.length; i++) {
             let propertyName = relevantPropertyNames[i];
@@ -87,10 +88,10 @@ export class GenericCLOFactory {
             // Value is simply a js Date-------------------------------------
             else if (valueOnCLO instanceof Date) {
 				outputObj[propertyName] = valueOnCLO.toJSON();
-            }
+			}
             //---------------------------------------------------------------
             // Value is simply a js Object-----------------------------------
-            else if (valueOnCLO instanceof Object) {
+			else if (valueOnCLO instanceof Object) {
                 outputObj[propertyName] = self.ConvertToBlo(valueOnCLO);
             }
             //---------------------------------------------------------------

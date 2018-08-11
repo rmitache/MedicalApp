@@ -23,8 +23,8 @@ Problems with timezones in LymeJurnal app:
 Current state (architecture):
 	1. FE:
 		- Everything works with local js time  (Date() and moment() usage)
-		- When sending data to the BE, Dates are converted to UTC using tJSON()
-		- When receiving data from the BE, new Date() is used 
+		- When sending data to the BE, Dates are converted to UTC using toJSON()
+		- When receiving data from the BE, new Date() is used (the strings from the BE are in UTC and they are converted to local time by js Date)
 
 	2. BE and DB:
 		- EF is setup to set UTC kind for all DateTimes retreived from DB 

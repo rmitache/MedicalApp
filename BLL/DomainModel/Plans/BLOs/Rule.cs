@@ -8,16 +8,16 @@ namespace BLL.DomainModel.Plans.BLOs
     public class Rule
     {
         // Properties
-        public int ID { get; set; }
-        public OrdinalFrequencyType OrdinalFrequencyType { get; set; }
-        public RuleFrequencyType FrequencyType { get; set; }
-        public DaysInWeek DaysInWeek { get; set; }
-        public List<Time> MomentsInDay { get; set; }
-        public List<MedicineRuleItem> MedicineRuleItems { get; set; }
+        public virtual int ID { get; set; }
+        public virtual OrdinalFrequencyType OrdinalFrequencyType { get; set; }
+        public virtual RuleFrequencyType FrequencyType { get; set; }
+        public virtual DaysInWeek DaysInWeek { get; set; }
+        public virtual List<Time> MomentsInDay { get; set; }
+        public virtual List<MedicineRuleItem> MedicineRuleItems { get; set; }
 
 
         // Constructor
-        internal Rule() { }
+        public Rule() { }
     }
 
 
