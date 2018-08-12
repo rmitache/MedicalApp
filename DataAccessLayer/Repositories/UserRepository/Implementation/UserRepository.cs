@@ -19,7 +19,9 @@ namespace DataAccessLayer.Repositories.UserRepository
         public TUser GetUser(string email, string password)
         {
             return entitiesContext.TUser
-                .SingleOrDefault(user => user.Email== email && user.Password==password);
+                .SingleOrDefault(user => user.Email == email && user.Password == password);
+
+            
         }
         public TUser GetUser(string email)
         {

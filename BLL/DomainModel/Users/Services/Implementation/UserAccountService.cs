@@ -30,7 +30,7 @@ namespace BLL.DomainModel.Users.Services
         {
             UserAccount userAccount = null;
             var userDataEntity = this.userRepo.GetUser(email, password);
-            if (userDataEntity != null)
+            if (userDataEntity != null && String.Equals(userDataEntity.Password, password , StringComparison.CurrentCulture))
             {
                 userAccount = this.userAccountFactory.Convert_ToBLO(userDataEntity);
 
