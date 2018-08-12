@@ -55,9 +55,9 @@ namespace BLL.UnitTests.DomainModel.Factors
         #region GetRuleHitPattern Tests
 
         [Theory]
-        //[InlineData("2018-12-20 22:00", null, "2018-12-01 22:00", "2018-12-31 21:59", "22:30")]
-        [InlineData("2018-08-05 22:00", "2018-08-20 22:00", "2018-07-30 22:00","2018-08-31 21:59", "22:30")]
-        //[InlineData("2018-12-20 22:00", "2018-12-25 21:59", "2018-12-01 22:00", "2018-12-31 21:59", "22:30")]
+        [InlineData("2018-12-20 22:00", null, "2018-12-01 22:00", "2018-12-31 21:59", "22:30")]
+        [InlineData("2018-08-05 22:00", "2018-08-20 22:00", "2018-07-30 22:00", "2018-08-31 21:59", "22:30")]
+        [InlineData("2018-12-20 22:00", "2018-12-25 21:59", "2018-12-01 22:00", "2018-12-31 21:59", "22:30")]
         public void GetRuleHitPattern_DailyFrequency_ReturnsCorrectHitDateTimes(string localVersionStartDateStr, string localVersionEndDateStr,
             string localMinDateStr, string localMaxDateStr, string momentsInDayStr)
         {
@@ -88,33 +88,38 @@ namespace BLL.UnitTests.DomainModel.Factors
             Assert.Equal(expectedNrOfHitDates, localHitDateTimesForAllMomentsInRule.Count);
         }
 
-        //[Theory]
-        //[InlineData("2018-12-07 22:00", "2018-12-10 22:00", "2018-12-30 21:59", "22:30", 1)]
-        //public void GetRuleHitPattern_WellFormedDateTimesWeeklyFrequency_ReturnsCorrectHitDateTimes(string localVersionStartDateStr,
-        //    string localMinDateStr, string localMaxDateStr, string momentsInDayStr, int expectedNrOfHitDates)
-        //{
+        [Theory]
+        [InlineData("2018-08-05 22:00", "2018-08-20 21:59", "2018-07-30 22:00", "2018-08-31 21:59", "22:30", 3)]
+        public void GetRuleHitPattern_WellFormedDateTimesWeeklyFrequency_ReturnsCorrectHitDateTimes(string localVersionStartDateStr, string localVersionEndDateStr,
+            string localMinDateStr, string localMaxDateStr, string momentsInDayStr, int expectedNrOfHitDates)
+        {
 
-        //    // Arrange - create RuleBLO
-        //    OrdinalFrequencyType ordinalFrequencyType = OrdinalFrequencyType.Every2nd;
-        //    RuleFrequencyType frequencyType = RuleFrequencyType.Weekly;
-        //    DaysInWeek daysInWeek = new DaysInWeek(new bool[] { true, false, false, false, false, false , false  });
-        //    List<Time> momentsInDay = Time.ParseCommaSeparatedString(momentsInDayStr);
-        //    var ruleMock = this.CreateRuleBLOMock(ordinalFrequencyType, frequencyType, daysInWeek, momentsInDay);
+            // Arrange - prepare  parameters
+            DateTime localVersionStartDateTime = ParseDateTimeStringAsLocal(localVersionStartDateStr);
+            DateTime? localVersionEndDateTime = ParseNullableDateTimeStringAsLocal(localVersionEndDateStr);
+            Range<DateTime> localWindowRange = new Range<DateTime>(ParseDateTimeStringAsLocal(localMinDateStr), ParseDateTimeStringAsLocal(localMaxDateStr));
 
-        //    // Arrange - prepare other parameters
-        //    DateTime localVersionStartDateTime = this.ParseDateTimeStringAsLocal(localVersionStartDateStr);
-        //    DateTime localMinDateTime = this.ParseDateTimeStringAsLocal(localMinDateStr);
-        //    DateTime localMaxDateTime = this.ParseDateTimeStringAsLocal(localMaxDateStr);
-        //    IRuleHitPatternService service = new RuleHitPatternService();
+            // Arrange - create RuleBLO
+            IRuleHitPatternService service = new RuleHitPatternService();
+            List<Time> momentsInDay = Time.ParseCommaSeparatedString(momentsInDayStr);
+            var ruleMock = this.CreateRuleBLOMock(OrdinalFrequencyType.Every, RuleFrequencyType.Weekly, new DaysInWeek(new bool[] { true, false, false, false,
+                false, false, false }), momentsInDay);
 
-
-        //    // Act
-        //    var localHitDateTimesForAllMomentsInRule = service.GetRuleDateTimeHitsPattern(ruleMock.Object, localVersionStartDateTime, localMinDateTime, localMaxDateTime);
+            // Act
+            var localHitDateTimesForAllMomentsInRule = service.GetRuleDateTimeHitsPattern(ruleMock.Object, localVersionStartDateTime, localVersionEndDateTime,
+                localWindowRange);
 
 
-        //    // Assert 
-        //    Assert.Equal(expectedNrOfHitDates, localHitDateTimesForAllMomentsInRule.Count);
-        //}
+            // Assert 
+            DateTime minDateToUse = (localVersionStartDateTime > localWindowRange.RangeStart) ? localVersionStartDateTime : localWindowRange.RangeStart;
+            DateTime maxDateToUse = localWindowRange.RangeEnd;
+            if (localVersionEndDateTime != null)
+            {
+                maxDateToUse = (localVersionEndDateTime < localWindowRange.RangeEnd) ? (DateTime)localVersionEndDateTime : localWindowRange.RangeEnd;
+            }
+            Assert.Equal(DateTimeKind.Local, localHitDateTimesForAllMomentsInRule[0].Kind);
+            Assert.Equal(expectedNrOfHitDates, localHitDateTimesForAllMomentsInRule.Count);
+        }
 
         //[Theory]
         //[InlineData("2018-03-01 00:00", "2018-03-01 00:00", "2018-03-31 23:59")]
