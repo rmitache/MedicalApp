@@ -29,8 +29,7 @@ export class StartupDataBundleService {
 		var now = moment();
 		var dateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
 		let model = {
-			DateRange: dateRange,
-			TZOffsetInMinutes: new Date().getTimezoneOffset()
+			DateRange: dateRange
 		};
 		
 		// Call the API

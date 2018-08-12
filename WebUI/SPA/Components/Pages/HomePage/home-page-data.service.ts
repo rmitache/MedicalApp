@@ -99,8 +99,7 @@ export class HomePageDataService {
 		const apiMethodName: string = 'GetFactorRecords';
 
 		let model = {
-			DateRange: dateRange,
-			TZOffsetInMinutes: new Date().getTimezoneOffset()
+			DateRange: dateRange
 		};
 
 		let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
