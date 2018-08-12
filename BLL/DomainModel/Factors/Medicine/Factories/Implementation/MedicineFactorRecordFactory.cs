@@ -95,12 +95,12 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                         {
                             //
                             bool recentlyAdded = false;
-                            //if (version.ID == plan.GetLatestVersion().ID) // if it is the latest version, try to highlight recently added FactorRecords
-                            //{
-                            //    var previousVersion = plan.GetPreviousLatestVersion();
-                            //    var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
-                            //    recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
-                            //}
+                            if (version.ID == plan.GetLatestVersion().ID) // if it is the latest version, try to highlight recently added FactorRecords
+                            {
+                                var previousVersion = plan.GetPreviousLatestVersion();
+                                var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
+                                recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
+                            }
 
                             //
                             var utcOccurrenceDateTime = Functions.ConvertToUTCDateTime(localHitDateTime, utcOffsetInMins);
