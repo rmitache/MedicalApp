@@ -49,8 +49,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             return blo;
         }
-        
-        
+
+
 
         // Constructor
         public MedicineFactorRecordFactory(IMedicineTypeFactory medicineTypeFactory,
@@ -69,22 +69,26 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             }
 
             // Convert window to local time
-            var localWindowStartDateTime = Functions.ConvertToLocalDateTime(utcWindowStartDateTime, utcOffsetInMins);
-            var localWindowEndDateTime = Functions.ConvertToLocalDateTime(utcWindowEndDateTime, utcOffsetInMins);
-
+            Range<DateTime> localWindowRange = new Range<DateTime>(Functions.ConvertToLocalDateTime(utcWindowStartDateTime, utcOffsetInMins),
+                Functions.ConvertToLocalDateTime(utcWindowEndDateTime, utcOffsetInMins));
 
             // Loop through Versions and generate MedicineFactorRecords
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
             foreach (Plans.BLOs.Version version in plan.Versions)
             {
-                // Get the version startDate as local
+                // Get the version startDate and endDate as Local time
                 DateTime localVersionStartDateTime = Functions.ConvertToLocalDateTime(version.StartDateTime, utcOffsetInMins);
+                DateTime? localVersionEndDateTime = null;
+                if (version.EndDateTime != null)
+                    localVersionEndDateTime = Functions.ConvertToLocalDateTime((DateTime)version.EndDateTime, utcOffsetInMins);
 
                 // Create FactorRecords for each Rule
                 foreach (Rule rule in version.Rules)
                 {
-                    var localHitDatesTimesForRule = this.ruleHitPatternService.GetRuleDateTimeHitsPattern(rule, localVersionStartDateTime, 
-                        localWindowStartDateTime, localWindowEndDateTime);
+                    var localHitDatesTimesForRule = this.ruleHitPatternService.GetRuleDateTimeHitsPattern(rule, localVersionStartDateTime,localVersionEndDateTime,
+                        localWindowRange);
+
+
                     foreach (DateTime localHitDateTime in localHitDatesTimesForRule)
                     {
                         foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
@@ -121,7 +125,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                 throw new ArgumentException("Window startDates must be given in UTC");
             }
 
-            
+
             // Loop through all versions and create FactorRecords
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
             foreach (Plan plan in planBLOs)

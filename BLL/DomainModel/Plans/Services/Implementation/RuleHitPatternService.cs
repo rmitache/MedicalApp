@@ -15,7 +15,8 @@ namespace BLL.DomainModel.Plans.Services
     public class RuleHitPatternService : IRuleHitPatternService
     {
         // Private methods
-        private List<DateTime> GetDateTimeHitsForMomentInDay(Time momentInDay, DateTime localVersionStartDate, DateTime localMinDate, DateTime localMaxDate,
+        private List<DateTime> GetDateTimeHitsForMomentInDay(Time momentInDay, DateTime localVersionStartDate, DateTime? localVersionEndDate,
+            DateTime localWindowStartDate, DateTime localWindowEndDate,
             OrdinalFrequencyType ordinalFrequencyType, RuleFrequencyType frequencyType, DaysInWeek daysInWeek)
         {
             // Create the Event
@@ -51,6 +52,15 @@ namespace BLL.DomainModel.Plans.Services
                 });
             }
 
+            // Determine projection bounds
+            DateTime localMinDate = (localVersionStartDate > localWindowStartDate) ? localVersionStartDate : localWindowStartDate;
+            DateTime localMaxDate = localWindowEndDate;
+            if (localVersionEndDate != null)
+            {
+                localMaxDate = (localVersionEndDate < localWindowEndDate) ? (DateTime)localVersionEndDate : localWindowEndDate;
+            }
+
+
             //
             var localDateTimeHits = eventObj.GetOccurrences(localMinDate, localMaxDate).Select(occurrence => occurrence.Period.StartTime.Value).ToList();
             localDateTimeHits = localDateTimeHits.Select(date => date = DateTime.SpecifyKind(date, DateTimeKind.Local)).ToList();
@@ -65,14 +75,15 @@ namespace BLL.DomainModel.Plans.Services
         }
 
         // Public methods
-        public List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime localVersionStartDate, DateTime localMinDate, DateTime localMaxDate)
+        public List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime localVersionStartDateTime, DateTime? localVersionEndDateTime,
+            Range<DateTime> localWindowRange)
         {
-            if (localVersionStartDate.Kind != DateTimeKind.Local || localMinDate.Kind != DateTimeKind.Local
-                || localMaxDate.Kind != DateTimeKind.Local)
+            if (localVersionStartDateTime.Kind != DateTimeKind.Local || (localVersionEndDateTime != null && ((DateTime)localVersionEndDateTime).Kind != DateTimeKind.Local)
+                || localWindowRange.RangeStart.Kind != DateTimeKind.Local || localWindowRange.RangeEnd.Kind != DateTimeKind.Local)
             {
                 throw new ArgumentException("DateTime parameters must be of Local kind");
             }
-            if (localMinDate > localMaxDate)
+            if (localWindowRange.RangeStart > localWindowRange.RangeEnd)
             {
                 throw new ArgumentException("MinDate cannot be greater than MaxDate");
             }
@@ -82,7 +93,8 @@ namespace BLL.DomainModel.Plans.Services
             List<DateTime> localDateTimeHits = new List<DateTime>();
             foreach (Time time in rule.MomentsInDay)
             {
-                var localHitsForMoment = this.GetDateTimeHitsForMomentInDay(time, localVersionStartDate, localMinDate, localMaxDate,
+                var localHitsForMoment = this.GetDateTimeHitsForMomentInDay(time, localVersionStartDateTime, localVersionEndDateTime,
+                    localWindowRange.RangeStart, localWindowRange.RangeEnd,
                     rule.OrdinalFrequencyType, rule.FrequencyType, rule.DaysInWeek);
                 localDateTimeHits.AddRange(localHitsForMoment);
             }
