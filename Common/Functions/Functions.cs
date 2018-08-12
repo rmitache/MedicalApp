@@ -36,6 +36,47 @@ namespace Common
             DateTime dt = DateTime.UtcNow;
             return dt;
         }
+
+        public static DateTime ConvertToLocalDateTime(DateTime utcDateTime, int utcOffsetInMins)
+        {
+            if (utcDateTime.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException("utcDateTime");
+            }
+            if (utcDateTime == null)
+            {
+                throw new ArgumentNullException("utcDateTime");
+            }
+
+
+
+            // Convert date
+            var localDateTime = utcDateTime.AddMinutes(-utcOffsetInMins);
+            localDateTime = DateTime.SpecifyKind(localDateTime, DateTimeKind.Local);
+
+
+            return localDateTime;
+        }
+
+        public static DateTime ConvertToUTCDateTime(DateTime localDateTime, int utcOffsetInMins)
+        {
+            if (localDateTime.Kind != DateTimeKind.Local)
+            {
+                throw new ArgumentException("localDateTime");
+            }
+            if (localDateTime == null)
+            {
+                throw new ArgumentNullException("localDateTime");
+            }
+
+
+
+            // Convert start date
+            var utcDateTime = localDateTime.AddMinutes(utcOffsetInMins);
+            utcDateTime = DateTime.SpecifyKind(utcDateTime, DateTimeKind.Utc);
+
+            return utcDateTime;
+        }
     }
 
 }

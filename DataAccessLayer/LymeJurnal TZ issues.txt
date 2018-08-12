@@ -30,8 +30,12 @@ Current state (architecture):
 		- EF is setup to set UTC kind for all DateTimes retreived from DB 
 		- Startup.cs sets JSON settings to convert everything to UTC retreived from the client 
 		- MedicineFactorRecordsFactory is an exception as it generates and uses LocalTime datetime variables, using the offsetInMinutes from the client
+	3. Why do we have to send UTFOffsets to the server ?
+		- Answer: this is only necessary for getting FactorRecords. This is because they are generated on the fly, based on a Version's Start/End dates, as well as 
+		the recurrence parameters in a Rule (ex: frequency, daysInWeek, MomentsInDay). These parameters are expressed in the Local time, else they wouldn't make sense 
+		(ex: try converting mondays and thursdays to UTC right ?)
 
-	3. Issues today:
+	3. Remaining issues to be answered:
 		- What happens when the user has a Plan between two dates, and then proceeds to change timezone (eg. by travelling) ?
 			- Wouldnt he have problems with the TakenFactorRecords somehow ? (why ? -> because they are in relative time)
 

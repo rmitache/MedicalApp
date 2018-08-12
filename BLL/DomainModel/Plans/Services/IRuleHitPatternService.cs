@@ -8,6 +8,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories.Implementation
     public interface IRuleHitPatternService
     {
 
-        List<DateTime> GetRuleHitPattern(Rule rule, DateTime localVersionStartDate, DateTime localMinDate, DateTime localMaxDate);
+        List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime localVersionStartDate, DateTime localMinDate, DateTime localMaxDate);
     }
 }

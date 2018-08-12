@@ -23,7 +23,7 @@ namespace Common.DataStructures
         }
         public DaysInWeek(bool[] daysInWeekArray)
         {
-            if (daysInWeekArray.Length == 0 || daysInWeekArray.Length > 7)
+            if (daysInWeekArray == null || daysInWeekArray.Length == 0 || daysInWeekArray.Length > 7)
             {
                 throw new ArgumentException("Array empty or has more than 7 items");
             }
