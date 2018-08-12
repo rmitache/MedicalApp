@@ -207,7 +207,19 @@ namespace WebUI.Controllers
             var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID, true);
             return Json(blos);
         }
+
+        [Route("HomePage/IsMedicineTypeNameTaken")]
+        [HttpPost]
+        public JsonResult IsMedicineTypeNameTaken([FromBody] IsMedicineTypeNameTakenModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            bool isTaken = this.medicineTypeService.MedicineTypeNameExists((int)userID, model.Name, model.IgnoreName);
+            return Json(isTaken);
+        }
         //---------------------------------------------------------------------------------------------------------------------
+
+
+
 
         // Models
         public class AddMedicineTypeSupplyEntryModel
@@ -223,12 +235,15 @@ namespace WebUI.Controllers
         {
             public Range<DateTime> DateRange;
         }
-    
         public class MarkFactorRecordsAsTakenModel
         {
             public string[] FactorRecordCompositeIDs;
             public bool[] NewTakenStatuses;
         }
-
+        public class IsMedicineTypeNameTakenModel
+        {
+            public string Name { get; set; }
+            public string IgnoreName { get; set; }
+        }
     }
 }

@@ -172,5 +172,13 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
 
         }
+        public bool MedicineTypeNameExists(int userID, string name, string ignoreName)
+        {
+            var medTypes = this.GetAllMedicineTypes(userID, false);
+            bool exists = medTypes.Any(medType => String.Equals(medType.Name, name, StringComparison.OrdinalIgnoreCase) && 
+            !String.Equals(medType.Name, ignoreName, StringComparison.OrdinalIgnoreCase));
+
+            return exists;
+        }
     }
 }

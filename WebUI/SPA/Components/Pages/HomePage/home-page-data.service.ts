@@ -237,6 +237,20 @@ export class HomePageDataService {
 
 		return getDataPromise;
 	}
+	public IsMedicineTypeNameTaken(name: string, ignoreName: string): Promise<any> {
+		const apiMethodName: string = 'IsMedicineTypeNameTaken';
+
+		var model = {
+			Name: name,
+			IgnoreName: ignoreName
+		};
+
+		let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+
+		return getDataPromise;
+	}
 
 
 	// Login
