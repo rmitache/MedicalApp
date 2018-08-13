@@ -54,12 +54,12 @@ export class SymptomTypeAndAvgIntensity {
 	}
 	public get Color(): string {
 		var colorCode = "";
-		if (this.AvgIntensity < 3 && this.AvgIntensity >= 2) {
+		if (this.AvgIntensity <= 3 && this.AvgIntensity > 2) {
 			colorCode = "red";
-		} else if (this.AvgIntensity < 2 && this.AvgIntensity >= 1) {
+		} else if (this.AvgIntensity <= 2 && this.AvgIntensity > 1) {
 			colorCode = "orange";
-		} else if (this.AvgIntensity < 1 && this.AvgIntensity > 0) {
-			colorCode = "yellow";
+		} else if (this.AvgIntensity <= 1 && this.AvgIntensity > 0) {
+			colorCode = "#fbfba5";
 		}
 
 		return colorCode;
