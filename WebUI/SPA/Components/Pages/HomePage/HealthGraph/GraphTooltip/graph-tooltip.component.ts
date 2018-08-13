@@ -5,6 +5,7 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
+import { HealthStatusEntryCLOService, SymptomTypeAndAvgIntensity } from 'SPA/DomainModel/Indicators/Symptoms/CLOServices/health-status-entry-clo.service';
 
 
 
@@ -23,11 +24,11 @@ export class GraphTooltipComponent {
 		ChartData: null,
 		SymptomTypes: null,
 
+		HideSymptomsDiv: false,
 		Visible: false,
-		TopPos: 0,
-		LeftPos: 0
+		TooltipPos: null,
+		CaretPos: null
 	};
-
 	private options =
 		{
 			tooltips: {
@@ -118,7 +119,7 @@ export class GraphTooltipComponent {
 
 			// Create datapoints
 			var dp = {
-				x: moment(clo.OccurrenceDateTime, moment.ISO_8601),
+				x: moment(clo.OccurrenceDateTime),
 				y: clo.HealthLevel
 			};
 			dataPoints.push(dp);
@@ -154,74 +155,82 @@ export class GraphTooltipComponent {
 			dataPointsBgColors: dataPointsBgColors
 		};
 	}
-	private getUniqueSymptomTypes(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+	private calculateTooltipPosition(parentPosition: any, hoverPointLeft: number, hoverPointTop: number): PosCoordinates[] {
+
+		// Variables
+		let tooltipPos = new PosCoordinates();
+		let caretPos = new PosCoordinates();
+		var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+
+		// Set position
+		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+		var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+		tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
+		tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 5;
+		caretPos.Left = currentWidth / 2 - 20;
+		caretPos.Top =  46;
 
 
-		var symptomTypesDict: { [symptomName: string]: CLOs.SymptomTypeCLO } = {};
-		var symptomTypesList = [];
-
-		healthEntryCLOs.forEach((healthEntryCLO, index) => {
-			healthEntryCLO.SymptomEntries.forEach((symptomEntryCLO, index) => {
-
-				if (symptomTypesDict[symptomEntryCLO.SymptomType.Name] === undefined) {
-					symptomTypesDict[symptomEntryCLO.SymptomType.Name] = symptomEntryCLO.SymptomType;
-					symptomTypesList.push(symptomEntryCLO.SymptomType);
-				}
-			});
-		});
-		return symptomTypesList;
+		// 
+		let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
+		return returnArray;
 	}
 
 	// Constructor 
 	constructor(
+		private readonly healthStatusEntryCLOService: HealthStatusEntryCLOService
 	) {
-
 
 	}
 	ngOnInit() {
+
 	}
 
 	// Public 
 	public SetDataAndPosition(dateString: string, healthEntryCLOs: CLOs.HealthStatusEntryCLO[], parentPosition: any, caretX: number, caretY: number) {
 
-		this.viewModel.Visible = true;
 		this.viewModel.Title = dateString;
-
-		// Set position
-		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-		var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-		this.viewModel.TopPos = parentPosition.top + caretY - 360 - 20;
-		this.viewModel.LeftPos = parentPosition.left + caretX - currentWidth / 2 - 5;
 
 		// Generate dataPoints for chart
 		var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
-		    if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
-		        return 1;
-		    }
+			if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
+				return 1;
+			}
 
-		    if (f1.GetTime().ToSeconds() < f2.GetTime().ToSeconds()) {
-		        return -1;
-		    }
+			if (f1.GetTime().ToSeconds() < f2.GetTime().ToSeconds()) {
+				return -1;
+			}
 
-		    return 0;
+			return 0;
 		});
 		var dataPointsInfo = this.generateDataPointsForChart(sortedCLOs);
 		var data = {
-		    datasets: [
-		        {
-		            pointRadius: 5,
-		            pointStyle: 'circle',
-		            showLine: true,
-		            data: dataPointsInfo.dataPoints,
-		            pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
-		        }
-		    ]
+			datasets: [
+				{
+					pointRadius: 5,
+					pointStyle: 'circle',
+					showLine: true,
+					data: dataPointsInfo.dataPoints,
+					pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
+				}
+			]
 		}
 		this.viewModel.ChartData = data;
 
 		// Get symptom entries
-		var symptomTypes = this.getUniqueSymptomTypes(healthEntryCLOs);
-		this.viewModel.SymptomTypes = symptomTypes;
+		this.viewModel.SymptomTypes = this.healthStatusEntryCLOService.GetUniqueSymptomTypesWithAvgDose(healthEntryCLOs);
+		this.viewModel.HideSymptomsDiv = (this.viewModel.SymptomTypes.length === 0);
+
+		// Calculate position
+		setTimeout(() => {
+			var tooltipAndCaretPos = this.calculateTooltipPosition(parentPosition, caretX, caretY);
+
+			this.viewModel.TooltipPos = tooltipAndCaretPos[0];
+			this.viewModel.CaretPos = tooltipAndCaretPos[1];
+			this.viewModel.Visible = true;
+
+		}, 10);
 	}
 	public HideAndClear() {
 		this.viewModel.Visible = false;
@@ -229,8 +238,8 @@ export class GraphTooltipComponent {
 		this.viewModel.ChartData = null;
 		this.viewModel.SymptomTypes = null;
 
-		this.viewModel.TopPos = 0;
-		this.viewModel.LeftPos = 0;
+		this.viewModel.TooltipPos = null;
+		this.viewModel.CaretPos = null;
 	}
 }
 
@@ -238,11 +247,15 @@ export class GraphTooltipComponent {
 interface ViewModel {
 	Title: string;
 	ChartData: any;
-	SymptomTypes: CLOs.SymptomTypeCLO[];
+	SymptomTypes: SymptomTypeAndAvgIntensity[];
 
+	HideSymptomsDiv: boolean;
 	Visible: boolean;
-	TopPos: number;
-	LeftPos: number;
+	TooltipPos: PosCoordinates;
+	CaretPos: PosCoordinates;
 
 }
-
+class PosCoordinates {
+	constructor(public Left: number = 0, public Top: number = 0) {
+	}
+}

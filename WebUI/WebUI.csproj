@@ -81,6 +81,7 @@
     <None Remove="SPA\DomainModel\generic-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOFactories\health-status-entry-clo.factory.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOFactories\symptom-entry-clo.factory.ts" />
+    <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOServices\health-status-entry-clo.service.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOs\health-status-entry.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOs\symptom-entry.clo.ts" />
     <None Remove="SPA\DomainModel\Indicators\Symptoms\CLOFactories\symptom-type-clo.factory.ts" />
@@ -181,6 +182,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\domain-model.module.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOFactories\health-status-entry-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOFactories\symptom-entry-clo.factory.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOServices\health-status-entry-clo.service.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOs\health-status-entry.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOs\symptom-entry.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOFactories\symptom-type-clo.factory.ts" />

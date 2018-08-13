@@ -2,14 +2,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
 import { BlockUIModule } from 'primeng/primeng';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
 
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
-import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 
 // Components
 import { FactorsViewComponent } from './factors-view.component';
@@ -48,7 +46,7 @@ import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/
     entryComponents: [
     ],
     providers: [
-        VersionCLOService
+        
     ]
 })
 export class FactorsViewModule { }

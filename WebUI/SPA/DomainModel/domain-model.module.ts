@@ -10,6 +10,8 @@ import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.fact
 import { HealthStatusEntryCLOFactory } from './Indicators/Symptoms/CLOFactories/health-status-entry-clo.factory';
 import { SymptomTypeCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-type-clo.factory';
 import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOFactories/symptom-entry-clo.factory';
+import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
+import { HealthStatusEntryCLOService } from 'SPA/DomainModel/Indicators/Symptoms/CLOServices/health-status-entry-clo.service';
 
 
 @NgModule({
@@ -27,7 +29,11 @@ import { SymptomEntryCLOFactory } from 'SPA/DomainModel/Indicators/Symptoms/CLOF
         RuleCLOFactory,
         HealthStatusEntryCLOFactory,
         SymptomEntryCLOFactory,
-        SymptomTypeCLOFactory
+		SymptomTypeCLOFactory,
+
+		// All Services
+		VersionCLOService,
+		HealthStatusEntryCLOService
     ]
 })
 

@@ -115,7 +115,6 @@ export class VersionElemHoverEventInfo {
         public readonly Top: number,
         public readonly VersionCLO: CLOs.VersionCLO,
         public readonly PointType: HoverInfoPointType) {
-
     }
 }
 export enum HoverInfoPointType {
