@@ -14,6 +14,12 @@ namespace Common
             {
                 throw new ArgumentNullException();
             }
+            if(firstDateRange.RangeStart.Kind != firstDateRange.RangeEnd.Kind  || 
+                secondDateRange.RangeStart.Kind != secondDateRange.RangeEnd.Kind ||
+                firstDateRange.RangeStart.Kind != secondDateRange.RangeEnd.Kind)
+            {
+                throw new ArgumentException("DateRange parameters must have the same DateTimeKind");
+            }
 
             // Get the intersection using the TimePeriod library
             TimeRange firstTimeRange = new TimeRange(firstDateRange.RangeStart, firstDateRange.RangeEnd);
@@ -31,6 +37,11 @@ namespace Common
 
         public static bool DateRangeContains(Range<DateTime> dateRange, DateTime dateTime)
         {
+            if(dateRange==null)
+            {
+                throw new ArgumentNullException("dateRange");
+            }
+
             bool isInRange = (dateTime >= dateRange.RangeStart) && (dateTime <= dateRange.RangeEnd);
 
             return isInRange;
@@ -52,7 +63,7 @@ namespace Common
             {
                 throw new ArgumentNullException("utcDateTime");
             }
-
+            
 
 
             // Convert date
