@@ -10,6 +10,11 @@ namespace Common
     {
         public static Range<DateTime> IntersectDateRanges(Range<DateTime> firstDateRange, Range<DateTime> secondDateRange)
         {
+            if(firstDateRange== null ||secondDateRange== null)
+            {
+                throw new ArgumentNullException();
+            }
+
             // Get the intersection using the TimePeriod library
             TimeRange firstTimeRange = new TimeRange(firstDateRange.RangeStart, firstDateRange.RangeEnd);
             TimeRange secondTimeRange = new TimeRange(secondDateRange.RangeStart, secondDateRange.RangeEnd);
