@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{CAA66527-B902-4F7A-A4FB-CCA5B0BD0CFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.UnitTests", "BLL.UnitTests\BLL.UnitTests.csproj", "{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.UnitTests", "BLL.UnitTests\BLL.UnitTests.csproj", "{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.UnitTests", "Common.UnitTests\Common.UnitTests.csproj", "{4CF0D6B6-FB64-4318-B713-912C6801628C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5140DEA4-80B7-44AE-97C0-1A60FA40AD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF0D6B6-FB64-4318-B713-912C6801628C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF0D6B6-FB64-4318-B713-912C6801628C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF0D6B6-FB64-4318-B713-912C6801628C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF0D6B6-FB64-4318-B713-912C6801628C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
