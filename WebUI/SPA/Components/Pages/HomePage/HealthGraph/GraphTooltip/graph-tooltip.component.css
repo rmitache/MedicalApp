@@ -28,9 +28,10 @@
         .symptoms-div .symptoms-list .symptom-elem-div {
             float: left;
             background-color: #d5d5d5;
-            padding: 3px;
+            padding: 3px 3px 3px 3px;
+           
             border-radius: 4px;
-            margin-right: 4px;
+            margin-right: 6px;
             margin-top: 4px;
         }
 
