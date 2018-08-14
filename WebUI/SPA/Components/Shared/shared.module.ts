@@ -24,6 +24,7 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
 import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
+import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 
 @NgModule({
     imports: [
@@ -50,7 +51,7 @@ import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
         NavigationPanelComponent,
         HeaderBarComponent,
         FilterListPanelComponent,
-        
+		GraphTooltipComponent
          
     ],
     exports: [
@@ -69,7 +70,8 @@ import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
         ProgressSpinnerModule,
         HeaderBarComponent,
         FilterListPanelComponent,
-        TabsModule
+		TabsModule,
+		GraphTooltipComponent
     ]
 })
 export class SharedModule { }

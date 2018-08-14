@@ -162,6 +162,8 @@ export class GraphTooltipComponent {
 		let caretPos = new PosCoordinates();
 		var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
 		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+		
+
 
 		// Set position
 		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;

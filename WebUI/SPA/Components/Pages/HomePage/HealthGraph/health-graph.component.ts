@@ -18,9 +18,9 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 
 // Components
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
-import { GraphTooltipComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/GraphTooltip/graph-tooltip.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 
 
 @Component({
@@ -84,7 +84,7 @@ export class HealthGraphComponent {
         });
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
-            let dateKey = moment(clo.OccurrenceDateTime, moment.ISO_8601).format('DD/MM/YYYY');
+            let dateKey = moment(clo.OccurrenceDateTime).format('DD/MM/YYYY');
             if (datesToCLOsDictionary[dateKey] === undefined) {
                 datesToCLOsDictionary[dateKey] = [];
             };
@@ -336,16 +336,24 @@ class MonthDisplayMode implements IDisplayMode {
             tooltips: {
                 enabled: false,
                 custom: (tooltipModel) => {
-
                     if (tooltipModel.opacity === 0) {
                         this.graphTooltipInstance.HideAndClear()
                         return;
-                    }
+					}
 
+					// Variables
                     var dateString = tooltipModel.title[0];
                     var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
                     var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
-                    var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
+					var parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
+
+					// Hack for positioning of tooltip on negative bar chart values
+					var value = tooltipModel.dataPoints[0].yLabel;
+					if (value < 0) {
+						tooltipModel.caretY = (parentPosition.height / 2);
+					}
+
+					//
                     this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
                 }
             },
