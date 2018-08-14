@@ -164,7 +164,6 @@ export class GraphTooltipComponent {
 		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
 		
 
-
 		// Set position
 		var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
 		var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
@@ -173,13 +172,13 @@ export class GraphTooltipComponent {
 		caretPos.Left = currentWidth / 2 - 21;
 		caretPos.Top =  46;
 
+		
 		// Handle case when position overflows screen on the left side
 		if (tooltipPos.Left < 0) {
-
-			let extraMargin = 10;
-			tooltipPos.Left -= (tooltipPos.Left - extraMargin);
-			caretPos.Left = hoverPointLeft -1;
+			tooltipPos.Left = 10;
+			caretPos.Left = parentPosition.left + hoverPointLeft - 35;
 		}
+
 
 		// 
 		let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
