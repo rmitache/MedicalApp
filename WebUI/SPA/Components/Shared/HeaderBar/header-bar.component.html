@@ -4,8 +4,8 @@
         <a class="navigation-menu-item" href="/AnalysisPage" [ngClass]="{'active': activePageName === 'AnalysisPage' }">Analysis</a>
     </div>
     <div class="user-status-panel">
-        <div class="user-name-label">
-            {{viewModel.loggedInUser?.Email }}
+        <div (click)="onUserEmailClicked()" class="user-name-item">
+            {{viewModel.LoggedInUser?.Email }}
         </div>
         <div (click)="onLogoutTriggered()" class="logout-item">
             <img src="/Images/log-out.png"/>

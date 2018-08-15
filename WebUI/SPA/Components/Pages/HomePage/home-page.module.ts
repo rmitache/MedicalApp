@@ -48,7 +48,8 @@ import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/Medic
         // Root components
         ScheduleModule,
         PlansOverviewModule,
-        MedicineTypesOverviewModule,
+		MedicineTypesOverviewModule,
+		SharedModule,
         HealthGraphModule
     ],
     providers: [

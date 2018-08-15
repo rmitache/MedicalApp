@@ -25,6 +25,7 @@ import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-bu
 import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
+import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip
         SplitButtonModule,
         ChipsModule,
         ChartModule,
-        TabsModule
+		TabsModule,
+		HeaderBarModule
     ],
     declarations: [
         IconButtonComponent,
@@ -49,7 +51,6 @@ import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip
         IFRPGroupElemComponent,
         IFRPGroupListComponent,
         NavigationPanelComponent,
-        HeaderBarComponent,
         FilterListPanelComponent,
 		GraphTooltipComponent
          

@@ -1,4 +1,4 @@
-import { Component, Input, Injectable, Inject } from '@angular/core';
+import { Component, Input, Injectable, Inject, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,6 +7,8 @@ import { UserAccountCLO } from 'SPA/DomainModel/Users/CLOs/user-account.clo';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { UserAccountEditorComponent, UserAccountEditorMode } from 'SPA/Components/Shared/HeaderBar/UserAccountEditor/user-account-editor.component';
+import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 
 
 @Component({
@@ -19,18 +21,60 @@ export class HeaderBarComponent {
     @Input('ActivePageName')
     private activePageName;
     private readonly viewModel: ViewModel = {
-        loggedInUser: null
+		LoggedInUser: null,
     };
     private readonly subscriptions: Subscription[] = [];
+
+	// Private methods
+	private openUserAccountEditor(title: string, saveButtonText: string, userAccountCLO: CLOs.UserAccountCLO, mode: UserAccountEditorMode) {
+		this.modalDialogService.OpenDialog(this.viewContainerRef, {
+			title: title,
+			childComponent: UserAccountEditorComponent,
+			data: {
+				userAccountCLO: userAccountCLO,
+				userAccountEditorMode: mode
+			},
+			actionButtons: [
+				{
+					isDisabledFunction: (childComponentInstance: any) => {
+						let editorInstance = childComponentInstance as UserAccountEditorComponent;
+						return !editorInstance.GetValidState();
+					},
+					text: saveButtonText,
+					onAction: (childComponentInstance: any) => {
+						let promiseWrapper = new Promise<void>((resolve) => {
+							resolve();
+
+						});
+						return promiseWrapper;
+					}
+				},
+				{
+					isDisabledFunction: (childComponentInstance: any) => {
+						return false;
+					},
+					text: 'Cancel',
+					onAction: () => {
+						return true;
+					}
+				}
+			]
+
+
+		});
+
+	}
 
     // Constructor 
     constructor(
         @Inject('IReadOnlyAppStateWithUser') private readonly appState: IReadOnlyAppStateWithUser,
-        @Inject('IDataServiceWithLogout') private readonly globalDataService: IDataServiceWithLogout,
+		@Inject('IDataServiceWithLogout') private readonly globalDataService: IDataServiceWithLogout,
+		private readonly modalDialogService: ModalDialogService,
+		private viewContainerRef: ViewContainerRef
     ) {
 
         this.subscriptions.push(this.appState.LoggedInUserCLO.Changed.subscribe((newValue) => {
-            this.viewModel.loggedInUser = newValue;
+            this.viewModel.LoggedInUser = newValue;
         }));
     }
     ngOnDestroy() {
@@ -43,10 +87,15 @@ export class HeaderBarComponent {
         logoutPromise.then(() => {
             window.location.href = '/LoginPage';
         });
-    }
+	}
+	private onUserEmailClicked() {
+		var userCLO = this.viewModel.LoggedInUser;
+
+		this.openUserAccountEditor('Manage your settings', 'Save', userCLO, UserAccountEditorMode.EditCurrent);
+	}
 }
 interface ViewModel {
-    loggedInUser: UserAccountCLO | null;
+	LoggedInUser: UserAccountCLO | null;
 }
 @Injectable()
 export abstract class IReadOnlyAppStateWithUser {
