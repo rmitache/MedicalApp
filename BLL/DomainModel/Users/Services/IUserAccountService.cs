@@ -9,6 +9,8 @@ namespace BLL.DomainModel.Users.Services
     {
         UserAccount FindUserAccount(string email, string password);
         UserAccount FindUserAccount(string email);
+
+        void UpdatePassword(int userId, string newPassword);
     }
 
 

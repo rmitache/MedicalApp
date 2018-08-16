@@ -50,5 +50,9 @@ namespace BLL.DomainModel.Users.Services
 
             return userAccount;
         }
+        public void UpdatePassword(int userId, string newPassword)
+        {
+            this.userRepo.UpdatePassword(userId, newPassword);
+        }
     }
 }

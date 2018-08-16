@@ -116,7 +116,7 @@ namespace WebUI.Controllers
         {
             var currentUser = this.webSecurityManager.GetCurrentUser();
             int? userID = currentUser.ID;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, currentUser.UTCOffsetInMinutes,(int)userID);
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, currentUser.UTCOffsetInMinutes, (int)userID);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
@@ -225,7 +225,7 @@ namespace WebUI.Controllers
         public JsonResult UpdatePassword([FromBody]UpdatePasswordModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            this.webSecurityManager.UpdatePassword(model.NewPassword);
             return Json(null);
         }
         //---------------------------------------------------------------------------------------------------------------------

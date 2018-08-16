@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +28,15 @@ namespace DataAccessLayer.Repositories.UserRepository
         {
             return entitiesContext.TUser
                 .SingleOrDefault(user => user.Email == email);
+        }
+        public void UpdatePassword(int userId, string newPassword)
+        {
+            TUser userAcc = entitiesContext.TUser.AsNoTracking().Where(user =>
+                        user.Id == userId).SingleOrDefault();
+            userAcc.Password = newPassword;
+
+            entitiesContext.Entry(userAcc).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
         }
     }
 }

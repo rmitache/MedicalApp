@@ -33,7 +33,6 @@ namespace DataAccessLayer.Repositories
         {
             //
             modifiedVersion.PlanId = planID;
-            //entitiesContext.Attach(modifiedVersion);
             entitiesContext.Entry(modifiedVersion).State = EntityState.Modified;
 
             // Mark the version and all children as Modified or Added

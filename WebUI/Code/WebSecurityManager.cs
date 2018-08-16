@@ -107,5 +107,9 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
         {
             await httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
+        public void UpdatePassword(string newPassword)
+        {
+            this.userAccountService.UpdatePassword((int)this.CurrentUserID, newPassword);
+        }
     }
 }
