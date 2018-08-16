@@ -20,7 +20,7 @@ import { HomePageDataService } from './home-page-data.service';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
-import { IReadOnlyAppStateWithUser, IDataServiceWithLogout } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
+import { IReadOnlyAppStateWithUser, IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.module';
 
 
@@ -63,7 +63,7 @@ import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/Medic
         HomePageApplicationState,
         HomePageDataService,
         { provide: 'IReadOnlyAppStateWithUser', useExisting: HomePageApplicationState },
-        { provide: 'IDataServiceWithLogout', useExisting: HomePageDataService },
+        { provide: 'IDataServiceWithUser', useExisting: HomePageDataService },
     ]
 })
 export class HomePageModule {

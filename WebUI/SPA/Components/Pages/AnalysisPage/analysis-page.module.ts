@@ -55,7 +55,7 @@ import { IndicatorsViewModule } from 'SPA/Components/Pages/AnalysisPage/Indicato
         AnalysisPageApplicationState,
         AnalysisPageDataService,
         { provide: 'IReadOnlyAppStateWithUser', useExisting: AnalysisPageApplicationState },
-        { provide: 'IDataServiceWithLogout', useExisting: AnalysisPageDataService },
+		{ provide: 'IDataServiceWithUser', useExisting: AnalysisPageDataService },
     ]
 })
 export class AnalysisPageModule {

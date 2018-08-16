@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild, Inject } from '@angular/core';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Calendar } from 'primeng/primeng';
@@ -13,6 +13,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+import { IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 // Components
 
@@ -33,7 +34,9 @@ export class UserAccountEditorComponent implements IModalDialog {
 		userAccountEditorMode: null
 	};
 	private readonly viewModel: ViewModel = {
-		MedicineTypeCLO: null
+		UserAccountCLO: null,
+		NewPassword: null,
+		ConfirmPassword: null
 	};
 
 	// Private methods
@@ -44,7 +47,7 @@ export class UserAccountEditorComponent implements IModalDialog {
 	// Constructor 
 	constructor(
 		private readonly genericCLOFactory: GenericCLOFactory,
-		private readonly globalDataService: HomePageDataService,
+		@Inject('IDataServiceWithUser') private readonly globalDataService: IDataServiceWithUser,
 		private fb: FormBuilder
 	) {
 	}
@@ -52,11 +55,13 @@ export class UserAccountEditorComponent implements IModalDialog {
 
 		// Define form
 		this.reactiveForm = this.fb.group({
-			name: ['',
+			newPassword: ['',
 				Validators.required
 			],
-			
-		});
+			confirmPassword: ['',
+				Validators.required
+			]
+		}, { validator: basicPlanDatesValidator });
 
 		// Create the currentModeInstance
 		let modeImplementationClass = modeImplementationsLookup[this.dialogInitParameters.userAccountEditorMode]
@@ -78,9 +83,7 @@ export class UserAccountEditorComponent implements IModalDialog {
 	}
 
 	// Public methods
-	public SaveData(): Promise<CLOs.MedicineTypeCLO> {
-
-
+	public SaveData(): Promise<void> {
 		let saveDataPromise = this.currentModeInstance.SaveData();
 
 		return saveDataPromise;
@@ -98,7 +101,9 @@ export class UserAccountEditorComponent implements IModalDialog {
 }
 
 interface ViewModel {
-	MedicineTypeCLO: CLOs.MedicineTypeCLO;
+	UserAccountCLO: CLOs.UserAccountCLO;
+	NewPassword: string;
+	ConfirmPassword: string;
 }
 
 // PlanMode logic and classes
@@ -115,32 +120,42 @@ class EditCurrentMode implements IUserAccountEditorModeImplementation {
 		private reactiveForm: FormGroup,
 		private userAccountCLO: CLOs.UserAccountCLO,
 		private vm: ViewModel,
-		private globalDataService: HomePageDataService) {
+		private globalDataService: IDataServiceWithUser,
+		private genericCLOFactory: GenericCLOFactory) {
 
 		// Prepare ViewModel 
-		//this.vm.MedicineTypeCLO = medicineTypeCLO;
+		this.vm.UserAccountCLO = this.genericCLOFactory.CloneCLO(this.userAccountCLO);
+		this.vm.NewPassword = '';
+		this.vm.ConfirmPassword = '';
 
 	}
 
 	// Public methods
 	public SaveData() {
-		//let saveDataPromise = this.globalDataService.AddMedicineType(this.vm.MedicineTypeCLO);
-		//return saveDataPromise;
+		let saveDataPromise = this.globalDataService.UpdatePassword(this.vm.NewPassword);
+		return saveDataPromise;
 
-		return null;
 	}
 }
 
 var modeImplementationsLookup = {};
 modeImplementationsLookup[UserAccountEditorMode.EditCurrent] = EditCurrentMode;
 
-//// Async validator for MedicineType Name
-//export class ValidateMedicineTypeNameNotTaken {
-//	static createValidator(homePageDataService: HomePageDataService, nameToIgnore: string = null) {
-//		return (control: AbstractControl) => {
-//			return homePageDataService.IsMedicineTypeNameTaken(control.value, nameToIgnore).then(isTaken => {
-//				return (isTaken === false) ? null : { nameTaken: true };
-//			});
-//		}
-//	}
-//}
+function basicPlanDatesValidator(control: AbstractControl) {
+	let group = control as FormGroup;
+
+	// Variables
+	var newPasswordInput = group.controls['newPassword'];
+	var confirmPasswordInput = group.controls['confirmPassword'];
+
+	// Validation logic
+	if (newPasswordInput.value !== '' && newPasswordInput.value !== null && newPasswordInput.value !== confirmPasswordInput.value) {
+		confirmPasswordInput.setErrors({ passwordConfirmWrong: true });
+	} else {
+		confirmPasswordInput.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+	}
+
+
+
+	return null;
+}

@@ -68,6 +68,20 @@ export class AnalysisPageDataService {
         return getDataPromise;
     }
 
+	// UserAccount
+	public UpdatePassword(newPassword: string): Promise<void> {
+		const apiMethodName: string = 'UpdatePassword';
+
+		let model = {
+			NewPassword: newPassword
+		};
+
+		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return postDataPromise;
+	}
+
     // Login
     public Logout(): Promise<boolean> {
         let apiMethodName: string = 'Logout';

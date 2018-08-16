@@ -219,6 +219,16 @@ namespace WebUI.Controllers
         //---------------------------------------------------------------------------------------------------------------------
 
 
+        // UserAccount---------------------------------------------------------------------------------------------------------
+        [Route("HomePage/UpdatePassword")]
+        [HttpPost]
+        public JsonResult UpdatePassword([FromBody]UpdatePasswordModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            return Json(null);
+        }
+        //---------------------------------------------------------------------------------------------------------------------
 
 
         // Models
@@ -244,6 +254,10 @@ namespace WebUI.Controllers
         {
             public string Name { get; set; }
             public string IgnoreName { get; set; }
+        }
+        public class UpdatePasswordModel
+        {
+            public string NewPassword;
         }
     }
 }

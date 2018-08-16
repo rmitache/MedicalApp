@@ -8,7 +8,7 @@ input.ng-invalid.ng-touched {
 
 .frame {
     width: 280px;
-    height: 450px;
+    height: 250px;
 }
 
 .label-input-pair {
@@ -17,60 +17,15 @@ input.ng-invalid.ng-touched {
     clear: both;
 }
 
-#name-div .ui-inputtext,
-#producer-div .ui-inputtext {
+#new-password-div {
+    margin-bottom:10px;
+}
+
+#email-div .ui-inputtext {
+    border: none !important;
+}
+
+
+.ui-inputtext {
     width: 250px;
 }
-
-
-.radio-button-group {
-    float: left;
-}
-
-    .radio-button-group .radio-button-div {
-        padding: 5px;
-        padding-left: 8px;
-        background-color: #efefef;
-        border-radius: 4px;
-        float: left;
-        margin-right: 10px;
-    }
-
-        .radio-button-group .radio-button-div label {
-            vertical-align: middle;
-        }
-
-.active label {
-    color: black !important;
-}
-
-
-#packaged-div {
-    width:100%;
-}
-
-
-    #packaged-div #packagedUnitDoseSize {
-        width: 60px;
-    }
-
-    #packaged-div .header{
-        height:20px;
-    }
-    #packaged-div .body {
-        height:70px;
-    }
-    #packaged-div #packagedUnitDoseType,
-    #packaged-div #packagedUnitDoseSize,
-    #packaged-div .inner-label {
-        float: left;
-        display: block;
-        clear: none;
-        margin-right:8px;
-    }
-    
-    #packaged-div .inner-label {
-        font-family: Arial;
-        font-size: 10pt;
-        margin-top:4px;
-    }

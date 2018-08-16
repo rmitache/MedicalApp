@@ -97,9 +97,26 @@ namespace WebUI.Controllers
             return Json(blos);
         }
 
+
+        // UserAccount---------------------------------------------------------------------------------------------------------
+        [Route("AnalysisPage/UpdatePassword")]
+        [HttpPost]
+        public JsonResult UpdatePassword([FromBody]UpdatePasswordModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            return Json(null);
+        }
+        //---------------------------------------------------------------------------------------------------------------------
+
+
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;
+        }
+        public class UpdatePasswordModel
+        {
+            public string NewPassword;
         }
 
     }

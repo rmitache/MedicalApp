@@ -72,7 +72,8 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
         HeaderBarComponent,
         FilterListPanelComponent,
 		TabsModule,
-		GraphTooltipComponent
+		GraphTooltipComponent,
+		HeaderBarModule
     ]
 })
 export class SharedModule { }

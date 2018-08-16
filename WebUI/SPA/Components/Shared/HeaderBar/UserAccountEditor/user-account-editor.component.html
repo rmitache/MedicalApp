@@ -1,30 +1,53 @@
 <form [formGroup]="reactiveForm">
-   
-    <div class="frame">
-        
-        UserAccount Settings
 
+    <div class="frame">
+
+        <div class="label-input-pair" id="email-div">
+            <span class="label">Email:</span>
+            <input type="text"
+                   class="ui-inputtext"
+                   readonly="readonly"
+                   [value]="viewModel.UserAccountCLO.Email" />
+
+        </div>
+        <div class="label-input-pair" id="new-password-div">
+            <span class="label">New Password:</span>
+            <input type="password"
+                   class="ui-inputtext"
+                   formControlName="newPassword"
+                   [(ngModel)]="viewModel.NewPassword" />
+
+        </div>
+
+
+        <div class="label-input-pair" id="confirm-password-div">
+            <span class="label">Confirm Password:</span>
+            <input type="password"
+                   class="ui-inputtext"
+                   formControlName="confirmPassword"
+                   [(ngModel)]="viewModel.ConfirmPassword" />
+        </div>
     </div>
 </form>
 
 
 
-        <!--<div class="label-input-pair" id="name-div">
-            <span class="label">Name:</span>
-            <input type="text"
-                   class="ui-inputtext"
-                   formControlName="name"
-                   id="name-input"
-                   [(ngModel)]="viewModel.MedicineTypeCLO.Name" />
+<!--<div class="label-input-pair" id="name-div">
+    <span class="label">Name:</span>
+    <input type="text"
+           class="ui-inputtext"
+           formControlName="name"
+           id="name-input"
+           [(ngModel)]="viewModel.MedicineTypeCLO.Name" />
 
-        </div>
+</div>
 
-        
-        <div class="label-input-pair" id="producer-div">
-            <span class="label">Producer:</span>
-            <input type="text"
-                   class="ui-inputtext"
-                   formControlName="producerName"
-                   id="name-input"
-                   [(ngModel)]="viewModel.MedicineTypeCLO.ProducerName" />
-        </div>-->
+
+<div class="label-input-pair" id="producer-div">
+    <span class="label">Producer:</span>
+    <input type="text"
+           class="ui-inputtext"
+           formControlName="producerName"
+           id="name-input"
+           [(ngModel)]="viewModel.MedicineTypeCLO.ProducerName" />
+</div>-->

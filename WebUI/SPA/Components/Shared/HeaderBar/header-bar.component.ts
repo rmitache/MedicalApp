@@ -43,8 +43,11 @@ export class HeaderBarComponent {
 					text: saveButtonText,
 					onAction: (childComponentInstance: any) => {
 						let promiseWrapper = new Promise<void>((resolve) => {
-							resolve();
-
+							let editorComponentInstance = childComponentInstance as UserAccountEditorComponent;
+							editorComponentInstance.SaveData()
+								.then(() => {
+									resolve();
+								});
 						});
 						return promiseWrapper;
 					}
@@ -68,7 +71,7 @@ export class HeaderBarComponent {
     // Constructor 
     constructor(
         @Inject('IReadOnlyAppStateWithUser') private readonly appState: IReadOnlyAppStateWithUser,
-		@Inject('IDataServiceWithLogout') private readonly globalDataService: IDataServiceWithLogout,
+		@Inject('IDataServiceWithUser') private readonly globalDataService: IDataServiceWithUser,
 		private readonly modalDialogService: ModalDialogService,
 		private viewContainerRef: ViewContainerRef
     ) {
@@ -91,7 +94,7 @@ export class HeaderBarComponent {
 	private onUserEmailClicked() {
 		var userCLO = this.viewModel.LoggedInUser;
 
-		this.openUserAccountEditor('Manage your settings', 'Save', userCLO, UserAccountEditorMode.EditCurrent);
+		this.openUserAccountEditor('Change password', 'Save', userCLO, UserAccountEditorMode.EditCurrent);
 	}
 }
 interface ViewModel {
@@ -102,7 +105,8 @@ export abstract class IReadOnlyAppStateWithUser {
     LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.UserAccountCLO>;
 }
 @Injectable()
-export abstract class IDataServiceWithLogout {
-    abstract GetLoggedInUserFromBundle(): CLOs.UserAccountCLO;
+export abstract class IDataServiceWithUser {
+	abstract GetLoggedInUserFromBundle(): CLOs.UserAccountCLO;
+	abstract UpdatePassword(newPassword:string): Promise<void>;
     abstract Logout(): Promise<boolean>;
 }

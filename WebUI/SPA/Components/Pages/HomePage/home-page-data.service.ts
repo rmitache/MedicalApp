@@ -252,6 +252,19 @@ export class HomePageDataService {
 		return getDataPromise;
 	}
 
+	// UserAccount
+	public UpdatePassword(newPassword: string): Promise<void> {
+		const apiMethodName: string = 'UpdatePassword';
+		debugger;
+		let model = {
+			NewPassword: newPassword
+		};
+
+		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return postDataPromise;
+	}
 
 	// Login
 	public Logout(): Promise<boolean> {
