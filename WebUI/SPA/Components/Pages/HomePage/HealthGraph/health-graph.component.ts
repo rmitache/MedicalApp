@@ -21,6 +21,7 @@ import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -106,7 +107,8 @@ export class HealthGraphComponent {
         private readonly dataService: HomePageDataService,
         private readonly commandManager: CommandManager,
         private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
+		private viewContainerRef: ViewContainerRef,
+		private readonly spinnerService: SpinnerService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -133,50 +135,51 @@ export class HealthGraphComponent {
     }
 
     // Event handlers
-    private onAddNewHealthStatusEntryTriggered() {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: 'Add new Health Entry ',
-            childComponent: AddNewHealthStatusEntryComponent,
-			data: new Date(),
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                        return !componentInstance.GetValidState();
-                    },
-                    text: 'Save',
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.viewModel.Blocked = true;
+	private onAddNewHealthStatusEntryTriggered() {
+		this.spinnerService.Show();
+   //     this.modalDialogService.OpenDialog(this.viewContainerRef, {
+   //         title: 'Add new Health Entry ',
+   //         childComponent: AddNewHealthStatusEntryComponent,
+			//data: new Date(),
+   //         actionButtons: [
+   //             {
+   //                 isDisabledFunction: (childComponentInstance: any) => {
+   //                     let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+   //                     return !componentInstance.GetValidState();
+   //                 },
+   //                 text: 'Save',
+   //                 onAction: (childComponentInstance: any) => {
+   //                     let promiseWrapper = new Promise<void>((resolve) => {
+   //                         this.viewModel.Blocked = true;
 
-                            let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                            componentInstance.SaveData()
-                                .then((healthStatusCLO) => {
-                                    this.reloadDataFromServer(this.viewModel.AvailableDateRange)
-                                        .then(() => {
-                                            this.refreshUI();
-                                            setTimeout(() => {
-                                                this.viewModel.Blocked = false;
-                                                resolve();
-                                            }, 200);
-                                        });
+   //                         let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
+   //                         componentInstance.SaveData()
+   //                             .then((healthStatusCLO) => {
+   //                                 this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+   //                                     .then(() => {
+   //                                         this.refreshUI();
+   //                                         setTimeout(() => {
+   //                                             this.viewModel.Blocked = false;
+   //                                             resolve();
+   //                                         }, 200);
+   //                                     });
 
-                                });
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    }
-                }
-            ]
-        });
+   //                             });
+   //                     });
+   //                     return promiseWrapper;
+   //                 }
+   //             },
+   //             {
+   //                 isDisabledFunction: (childComponentInstance: any) => {
+   //                     return false;
+   //                 },
+   //                 text: 'Cancel',
+   //                 onAction: () => {
+   //                     return true;
+   //                 }
+   //             }
+   //         ]
+   //     });
     }
     private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
         // Check if newSelDateRange is within the AvailableDateRange        

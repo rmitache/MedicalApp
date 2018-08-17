@@ -7,26 +7,30 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { ExecutionEngine } from 'SPA/Core/Managers/CommandManager/Classes/execution-engine';
 
 import { ModalDialogComponent } from 'SPA/Core/Services/ModalDialogService/Components/modal-dialog.component';
+import { SpinnerServiceModule } from 'SPA/Core/Services/SpinnerService/spinner-service.module';
+
 
 @NgModule({
     imports: [
-        BrowserModule
-    ],
+		BrowserModule,
+		SpinnerServiceModule
+	],
+	exports: [],
     declarations: [
-        ModalDialogComponent
+		ModalDialogComponent,
     ],
     providers: [
         // Services
         HttpHandlerService,
         ModalDialogService,
-        ModalDialogInstanceService,
+		ModalDialogInstanceService,
 
         // Managers
         CommandManager,
         ExecutionEngine
     ],
     entryComponents: [
-        ModalDialogComponent
+		ModalDialogComponent,
     ]
 })
 export class CoreModule { }

@@ -68,6 +68,8 @@
     <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
     <None Remove="SPA\Core\Services\ModalDialogService\modal-dialog.service.ts" />
     <None Remove="SPA\Core\Services\ModalDialogService\simple-modal.component.ts" />
+    <None Remove="SPA\Core\Services\SpinnerService\spinner-service.module.ts" />
+    <None Remove="SPA\Core\Services\SpinnerService\spinner.service.ts" />
     <None Remove="SPA\DomainModel\clo-exports.ts" />
     <None Remove="SPA\DomainModel\domain-model.module.ts" />
     <None Remove="SPA\DomainModel\enum-exports.ts" />
@@ -166,6 +168,8 @@
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog.interface.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\Components\modal-dialog.component.ts" />
     <TypeScriptCompile Include="SPA\Core\Services\ModalDialogService\modal-dialog-instance.service.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\SpinnerService\spinner-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Core\Services\SpinnerService\spinner.service.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\enum-exports.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-factor-record-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Factors\Medicine\CLOFactories\medicine-rule-item-clo.factory.ts" />
