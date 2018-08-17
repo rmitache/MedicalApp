@@ -15,6 +15,7 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { AddMedicineSupplyComponent } from './AddMedicineSupply/add-medicine-supply.component';
 import { MedicineFactorRecordCLO } from 'SPA/DomainModel/clo-exports';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 
@@ -52,7 +53,6 @@ export class MedicineTypesOverviewComponent {
             return menuItems;
         },
         SelectedViewMode: Enums.MedicineTypeStatus.InUseToday,
-        Blocked: false
     };
 
 
@@ -74,7 +74,7 @@ export class MedicineTypesOverviewComponent {
                     text: saveButtonText,
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
-                            this.viewModel.Blocked = true;
+							this.spinnerService.Show();
 
                             let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
                             medicineTypeEditorComponentInstance.SaveData()
@@ -86,7 +86,7 @@ export class MedicineTypesOverviewComponent {
                                         });
 
                                     setTimeout(() => {
-                                        this.viewModel.Blocked = false;
+										this.spinnerService.Hide();
                                         resolve();
                                     }, 200);
                                 });
@@ -136,7 +136,8 @@ export class MedicineTypesOverviewComponent {
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly dataService: HomePageDataService,
         private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef
+		private viewContainerRef: ViewContainerRef,
+		private readonly spinnerService: SpinnerService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -214,7 +215,7 @@ export class MedicineTypesOverviewComponent {
                     text: 'Save',
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
-                            this.viewModel.Blocked = true;
+							this.spinnerService.Show();
 
                             let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
                             componentInstance.SaveData()
@@ -222,7 +223,7 @@ export class MedicineTypesOverviewComponent {
                                     setTimeout(() => {
                                         medicineTypeCLO.AddToRemainingSupply(supplyAdded);
                                         this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
-                                        this.viewModel.Blocked = false;
+										this.spinnerService.Hide();
                                         resolve();
                                     }, 200);
                                     
@@ -257,7 +258,6 @@ interface ViewModel {
 
     GetMenuItems(medicineTypeCLO: CLOs.MedicineTypeCLO);
     SelectedViewMode: Enums.MedicineTypeStatus;
-    Blocked: boolean;
 }
 export enum MedicineTypeActionType {
     CreateNew

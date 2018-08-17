@@ -23,6 +23,7 @@ import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -50,7 +51,6 @@ export class FactorsViewComponent {
 
         TodayXPosition: null,
         DateRangeDisplayMode: DateRangeMode.Month,
-        Blocked: false
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -105,7 +105,9 @@ export class FactorsViewComponent {
         applicationState: AnalysisPageApplicationState,
         private readonly dataService: AnalysisPageDataService,
         private readonly commandManager: CommandManager,
-        private readonly genericCLOFactory: GenericCLOFactory
+		private readonly genericCLOFactory: GenericCLOFactory,
+		private readonly spinnerService: SpinnerService
+
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -178,5 +180,4 @@ interface ViewModel {
 
     TodayXPosition: number;
     DateRangeDisplayMode: DateRangeMode;
-    Blocked: boolean;
 }

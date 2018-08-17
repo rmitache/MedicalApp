@@ -1,0 +1,22 @@
+/*Block-UI*/
+/deep/ .ui-blockui {
+    position: absolute;
+    opacity: 0.4;
+    z-index: 999999 !important;
+}
+
+    /deep/ .ui-blockui .inner-div {
+        opacity: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        /*background-color: white;*/
+        border-radius: 10px;
+    }
+
+        /deep/ .ui-blockui .inner-div .span {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }

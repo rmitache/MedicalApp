@@ -15,6 +15,7 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 
 // Components
 import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -37,16 +38,15 @@ export class PlansOverviewComponent {
 		AvailablePlans: null,
 		FilteredPlans: null,
 		SelectedViewMode: this.planStatusViewModes.Active,
-		Blocked: false
 	};
 
 	// Private methods
 	private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
 
-		this.viewModel.Blocked = true;
+		this.spinnerService.Show();
 		this.dataService.GetMedicineTypes().then(medicineTypeCLOs => {
 
-			this.viewModel.Blocked = false;
+			this.spinnerService.Hide();
 			this.modalDialogService.OpenDialog(this.viewContainerRef, {
 				title: title,
 				childComponent: PlanEditorComponent,
@@ -64,7 +64,7 @@ export class PlansOverviewComponent {
 						text: saveButtonText,
 						onAction: (childComponentInstance: any) => {
 							let promiseWrapper = new Promise<void>((resolve) => {
-								this.viewModel.Blocked = true;
+								this.spinnerService.Show();
 
 								let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
 								planEditorComponentInstance.SaveData()
@@ -79,7 +79,7 @@ export class PlansOverviewComponent {
 										this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
 										setTimeout(() => {
-											this.viewModel.Blocked = false;
+											this.spinnerService.Hide();
 											resolve();
 										}, 200);
 
@@ -142,7 +142,9 @@ export class PlansOverviewComponent {
 		private readonly genericCLOFactory: GenericCLOFactory,
 		private readonly dataService: HomePageDataService,
 		private readonly modalDialogService: ModalDialogService,
-		private viewContainerRef: ViewContainerRef
+		private viewContainerRef: ViewContainerRef,
+		private readonly spinnerService: SpinnerService
+
 	) {
 		this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -194,7 +196,6 @@ interface ViewModel {
 	AvailablePlans: CLOs.PlanCLO[];
 	FilteredPlans: CLOs.PlanCLO[];
 	SelectedViewMode: any;
-	Blocked: boolean;
 }
 
 export enum PlanActionType {

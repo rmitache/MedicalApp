@@ -20,6 +20,7 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 // Animations
@@ -73,8 +74,7 @@ export class ScheduleComponent {
 		AvailableFactorRecords: null,
 		VisibleDisplayRepresentation: null,
 
-		DateRangeDisplayMode: DateRangeMode.Day,
-		Blocked: false
+		DateRangeDisplayMode: DateRangeMode.Day
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -120,6 +120,7 @@ export class ScheduleComponent {
 		private readonly modalDialogService: ModalDialogService,
 		private viewContainerRef: ViewContainerRef,
 		private readonly genericCLOFactory: GenericCLOFactory,
+		private readonly spinnerService: SpinnerService
 
 	) {
 		this.appState = applicationState as IReadOnlyApplicationState;
@@ -210,13 +211,13 @@ export class ScheduleComponent {
 			var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
 				newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
-			this.viewModel.Blocked = true;
+			this.spinnerService.Show();
 			this.reloadDataFromServer(newAvailableDateRange)
 				.then(() => {
 					this.viewModel.SelectedDateRange = newSelDateRange;
 					this.refreshUI();
 					setTimeout(() => {
-						this.viewModel.Blocked = false;
+						this.spinnerService.Hide();
 					}, 200);
 				});
 		}
@@ -235,14 +236,14 @@ export class ScheduleComponent {
 			var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
 				newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
-			this.viewModel.Blocked = true;
+			this.spinnerService.Show();
 			this.reloadDataFromServer(newAvailableDateRange)
 				.then(() => {
 
 					this.viewModel.SelectedDateRange = newSelDateRange;
 					this.refreshUI();
 					setTimeout(() => {
-						this.viewModel.Blocked = false;
+						this.spinnerService.Hide();
 					}, 200);
 
 				});
@@ -260,7 +261,6 @@ interface ViewModel {
 	VisibleDisplayRepresentation: DisplayRepresentation;
 
 	DateRangeDisplayMode: DateRangeMode;
-	Blocked: boolean;
 }
 
 

@@ -40,21 +40,15 @@ export class SpinnerService {
 		private appRef: ApplicationRef,
 		private injector: Injector
 	) {
-		//this.blockUIInstance = this.appendComponentToBody(BlockUI).instance as BlockUI;
 		this.wrapperInstance = this.appendComponentToBody(BlockUIWrapperComponent).instance as BlockUIWrapperComponent;
 	}
 
 	// Public methods
 	public Show() {
-
-		
-		// 
-		//let componentTypeFactory = this.factoryResolver.resolveComponentFactory(componentTypeToInjectIntoDialog);
-		//this.blockUIInstance.block();//.instance(componentTypeFactory, dialogOptions);
-		
+		this.wrapperInstance.IsBlocked = true;
 	}
 	public Hide() {
-
+		this.wrapperInstance.IsBlocked = false;
 	}
 
 }

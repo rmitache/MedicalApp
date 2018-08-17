@@ -25,6 +25,7 @@ import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/dataset-generator';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -61,8 +62,6 @@ export class IndicatorsViewComponent {
 		ChartOptions: null,
 		ChartData: null,
 		DateRangeDisplayMode: DateRangeMode.Month,
-		Blocked: false
-
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -187,7 +186,9 @@ export class IndicatorsViewComponent {
 		private readonly commandManager: CommandManager,
 		private viewContainerRef: ViewContainerRef,
 		private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
-		private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator
+		private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator,
+		private readonly spinnerService: SpinnerService
+
 	) {
 		this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -255,13 +256,13 @@ export class IndicatorsViewComponent {
 			var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
 				newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
 
-			this.viewModel.Blocked = true;
+			this.spinnerService.Show();
 			this.reloadDataFromServer(newAvailableDateRange)
 				.then(() => {
 					this.viewModel.SelectedDateRange = newSelDateRange;
 					this.refreshUI();
 					setTimeout(() => {
-						this.viewModel.Blocked = false;
+						this.spinnerService.Hide();
 					}, 200);
 				});
 		}
@@ -304,7 +305,6 @@ interface ViewModel {
 	ChartOptions: any;
 	ChartData: any;
 	DateRangeDisplayMode: DateRangeMode;
-	Blocked: boolean;
 }
 
 

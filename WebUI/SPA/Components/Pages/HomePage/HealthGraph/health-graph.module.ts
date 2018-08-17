@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
-import { ProgressSpinnerModule } from 'primeng/primeng';
 
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
@@ -24,7 +23,6 @@ import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthG
         FormsModule,
         CalendarModule,
         AutoCompleteModule,
-        ProgressSpinnerModule,
         ReactiveFormsModule,
     
         SharedModule

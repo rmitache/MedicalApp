@@ -9,6 +9,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 
 // Components
 import { LoginPageDataService } from 'SPA/Components/Pages/LoginPage/login-page-data.service';
+import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -25,8 +26,6 @@ export class LoginPanelComponent {
         Email: null,
         Password: null,
         KeepLoggedIn: false,
-        Blocked: false
-
     };
 
     // Constructor 
@@ -35,6 +34,7 @@ export class LoginPanelComponent {
         private readonly loginPageDataService: LoginPageDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
+		private readonly spinnerService: SpinnerService
 
     ) {
         this.reactiveForm = this.fb.group({
@@ -60,7 +60,7 @@ export class LoginPanelComponent {
             };
 
             var loginPromise = this.loginPageDataService.Login(loginModel);
-            this.viewModel.Blocked = true;
+			this.spinnerService.Show();
             loginPromise.then((loginSuccessful) => {
                 if (loginSuccessful === true) {
                     window.location.href = '/HomePage';
@@ -68,7 +68,7 @@ export class LoginPanelComponent {
 
                 else {
 
-                    this.viewModel.Blocked = false;
+					this.spinnerService.Hide();
                     this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Login failed", "Wrong password or email doesn't exist");
                 }
             });
@@ -83,5 +83,4 @@ interface ViewModel {
     Email: string;
     Password: string;
     KeepLoggedIn: boolean;
-    Blocked: boolean;
 }
