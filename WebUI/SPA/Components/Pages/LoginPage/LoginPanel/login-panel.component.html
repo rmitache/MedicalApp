@@ -1,4 +1,4 @@
-<form [formGroup]="reactiveForm">
+<form [formGroup]="reactiveForm" (keyup.enter)="onLoginClicked()">
     <div class="frame">
         <div class="header">
             <span class="h1">Login</span>
@@ -26,11 +26,9 @@
             </div>
         </div>
         <div class="footer">
-            <button class="button"
-                    (click)="onLoginClicked()">
-                Login
-            </button>
-
+            <button pButton type="button" label="Login" icon="fa fa-sign-in" iconPos="left" 
+                    
+                    (click)="onLoginClicked()"></button>
         </div>
     </div>
 </form>
