@@ -29,31 +29,7 @@ import { Subject } from 'rxjs/Subject';
 @Component({
     selector: 'modal-dialog',
     styleUrls: ['./modal-dialog.component.css'],
-    template: `
-    <div [ngClass]="settings.overlayClass" (click)="(!actionButtons || !actionButtons.length) && close()"></div>
-    <div [ngClass]="settings.modalClass">
-      <div [ngClass]="[ showAlert ? settings.alertClass : '', settings.contentClass]">
-        <div [ngClass]="settings.headerClass">
-          <span [ngClass]="settings.headerTitleClass" class="h1">{{title}}</span>
-          <div (click)="close()" 
-            [title]="settings.closeButtonTitle"
-            [ngClass]="settings.closeButtonClass">
-            X
-          </div>
-        </div>
-        <div [ngClass]="settings.bodyClass">
-          <div #modalDialogBody></div>
-        </div>
-        <div [ngClass]="settings.footerClass" *ngIf="actionButtons && actionButtons.length">
-          <div class="buttons-right-area">
-            <button *ngFor="let button of actionButtons" [attr.disabled]="button.isDisabledFunction(_childInstance)?'true':null" (click)="doAction(button.onAction)"
-              [ngClass]="button.buttonClass || settings.buttonClass">{{button.text}}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    `
+	templateUrl: './modal-dialog.component.html',
 })
 export class ModalDialogComponent implements IModalDialog, OnDestroy {
     @ViewChild('modalDialogBody', { read: ViewContainerRef })
