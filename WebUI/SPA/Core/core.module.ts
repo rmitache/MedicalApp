@@ -8,12 +8,15 @@ import { ExecutionEngine } from 'SPA/Core/Managers/CommandManager/Classes/execut
 
 import { ModalDialogComponent } from 'SPA/Core/Services/ModalDialogService/Components/modal-dialog.component';
 import { SpinnerServiceModule } from 'SPA/Core/Services/SpinnerService/spinner-service.module';
+import { ButtonModule } from 'primeng/primeng';
 
 
 @NgModule({
     imports: [
 		BrowserModule,
-		SpinnerServiceModule
+		SpinnerServiceModule,
+		ButtonModule
+
 	],
 	exports: [],
     declarations: [

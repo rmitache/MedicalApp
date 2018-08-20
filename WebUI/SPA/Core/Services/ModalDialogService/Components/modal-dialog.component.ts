@@ -50,7 +50,7 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
         alertClass: 'shake',
         alertDuration: 250,
         notifyWithAlert: true,
-        buttonClass: 'btn btn-primary'
+        buttonClass: ''
     };
     public actionButtons: IModalDialogButton[];
     public title: string;

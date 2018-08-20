@@ -95,7 +95,8 @@ export class PlansOverviewComponent {
 						text: 'Cancel',
 						onAction: () => {
 							return true;
-						}
+						},
+						buttonClass: '.ui-button-secondary'
 					}
 				]
 
