@@ -58,7 +58,7 @@ export class LoginPanelComponent {
                 Password: this.viewModel.Password,
                 KeepLoggedIn: this.viewModel.KeepLoggedIn
             };
-
+			
             var loginPromise = this.loginPageDataService.Login(loginModel);
 			this.spinnerService.Show();
             loginPromise.then((loginSuccessful) => {

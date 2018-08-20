@@ -21,8 +21,8 @@
                        id="password-input" />
             </div>
             <div class="check-box-label-pair">
-                <input formControlName="keepLoggedIn" [(ngModel)]="viewModel.KeepLoggedIn" type="checkbox" />
-                <span class="label">Keep me logged in</span>
+
+                <p-checkbox binary="true" formControlName="keepLoggedIn" label="Keep me logged in" [(ngModel)]="viewModel.KeepLoggedIn"></p-checkbox>
             </div>
         </div>
         <div class="footer">
