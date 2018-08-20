@@ -96,7 +96,7 @@ export class PlansOverviewComponent {
 						onAction: () => {
 							return true;
 						},
-						buttonClass: '.ui-button-secondary'
+						buttonClass: 'ui-button-secondary'
 					}
 				]
 

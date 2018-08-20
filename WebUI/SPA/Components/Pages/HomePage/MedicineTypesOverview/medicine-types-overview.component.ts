@@ -103,7 +103,8 @@ export class MedicineTypesOverviewComponent {
                     text: 'Cancel',
                     onAction: () => {
                         return true;
-                    }
+					},
+					buttonClass: 'ui-button-secondary'
                 }
             ]
 
@@ -240,7 +241,8 @@ export class MedicineTypesOverviewComponent {
                     text: 'Cancel',
                     onAction: () => {
                         return true;
-                    }
+					},
+					buttonClass: 'ui-button-secondary'
                 }
             ]
         });

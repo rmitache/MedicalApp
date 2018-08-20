@@ -174,7 +174,8 @@ export class HealthGraphComponent {
 					text: 'Cancel',
 					onAction: () => {
 						return true;
-					}
+					},
+					buttonClass: 'ui-button-secondary'
 				}
 			]
 		});
