@@ -1,7 +1,7 @@
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1"   >
     <div class="top-part">
         <span class="h2 plan-name">{{viewModel.PlanCLO.Name}}</span>
-        <p-splitButton label="View" [model]="viewModel.GetMenuItems()"></p-splitButton>
+        <p-splitButton label="View" [model]="viewModel.GetMenuItems()" styleClass="ui-button-secondary"></p-splitButton>
     </div>
     <div class="bottom-part">
         <div class="label-input-pair started-date-label-input-pair">
