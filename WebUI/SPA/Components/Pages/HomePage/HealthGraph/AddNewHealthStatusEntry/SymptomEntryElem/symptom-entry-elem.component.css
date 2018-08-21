@@ -40,7 +40,6 @@ input.ng-invalid.ng-touched {
     float: left;
     width: 20px;
     height: 100%;
-    cursor: move;
 }
 
 .right-side {
@@ -52,7 +51,7 @@ input.ng-invalid.ng-touched {
 }
 
     .right-side .symptom-type-input-pair {
-        width:510px;
+        width: 510px;
         margin-right: 35px;
     }
 
@@ -65,17 +64,16 @@ input.ng-invalid.ng-touched {
 
 
 
-    .right-side .close {
+    .right-side .remove-button {
         float: right;
-        width: 16px;
-        height: 16px;
+        margin-top:-8px;
         cursor: pointer;
-        font-family: Arial;
-        font-weight: bold;
-        text-align: right;
         color: gray;
     }
 
+        .right-side .remove-button:hover {
+            color: blue;
+        }
 
 .hide-controls-overlay {
     width: calc(100% - 320px);
@@ -84,5 +82,5 @@ input.ng-invalid.ng-touched {
     background-color: #f7f7f7;
     float: right;
     margin-top: -70px;
-    display:none;
+    display: none;
 }

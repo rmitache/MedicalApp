@@ -48,6 +48,7 @@
 .symptoms-section {
     height: calc(100% - 180px);
     margin-top: 20px;
+    
 }
 
     .symptoms-section .h2 {
@@ -71,6 +72,7 @@
         .symptoms-section .symptom-entry-elems-list .symptom-entry-elem {
             margin-top: 10px;
             float: left;
+            width:calc(100% - 5px)
         }
 
             .symptoms-section .symptom-entry-elems-list .symptom-entry-elem:first-of-type {
