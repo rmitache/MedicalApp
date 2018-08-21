@@ -1,4 +1,10 @@
 
+/deep/ .ui-button-icon-only {
+    padding: 0 !important;
+}
+
+
+
 .body-area {
     width: calc(100% - 30px);
     height: calc(100% - 40px - 20px);
