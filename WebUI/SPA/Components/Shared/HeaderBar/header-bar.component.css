@@ -38,35 +38,42 @@
     height: 30px;
 }
 
-    .user-status-panel .user-name-item {
-        float: left;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-right: 10px;
+.user-status-item {
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 30px;
+    cursor: pointer;
+}
+    .user-status-item:hover {
+        background-color: #6c6c6c;
+
+    }
+    .user-status-item i {
         color: white;
-        height: 30px;
         line-height: 30px;
         vertical-align: middle;
+    }
+    .user-status-item span {
+        display:inline-block;
+        padding-left:3px;
+        color: white;
+        line-height: 30px;
         font-family: Arial;
         font-size: 11px;
-        margin-top: 0 !important;
+        vertical-align: middle;
         cursor: pointer;
     }
 
-    .user-status-panel .logout-item {
-        float: left;
-        height: 16px;
-        width: 16px;
-        padding: 7px;
-        cursor: pointer;
-    }
 
-        .user-status-panel .logout-item img {
-            margin: 0;
-            padding: 0;
-        }
+.user-status-panel .user-name-item {
+    
+    
+    
+}
 
-        .user-status-panel .user-name-item:hover,
-        .user-status-panel .logout-item:hover {
-            background-color: #6c6c6c;
-        }
+.user-status-panel .logout-item {
+
+}
+
+
