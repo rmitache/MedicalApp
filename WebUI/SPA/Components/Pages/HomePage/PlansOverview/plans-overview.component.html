@@ -2,7 +2,8 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">PLANS</span>
-            <icon-button [IconName]="'plus'" (Clicked)="onAddNewPlanTriggered()"></icon-button>
+            <button pButton type="button" icon="fa fa-plus"
+                    (click)="onAddNewPlanTriggered()"></button>
         </div>
 
         <div class="right-section">

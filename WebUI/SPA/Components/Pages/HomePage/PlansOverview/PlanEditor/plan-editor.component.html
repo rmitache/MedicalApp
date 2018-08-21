@@ -37,7 +37,8 @@
         </div>
         <div class="rules-section">
             <span class="h2">RULES:</span>
-            <icon-button [IconName]="'plus'" id="add-new-rule-button" (click)="onAddNewRuleTriggered()"></icon-button>
+            <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button"
+                    (click)="onAddNewRuleTriggered()"></button>
             <br />
             <div class="rules-list">
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"

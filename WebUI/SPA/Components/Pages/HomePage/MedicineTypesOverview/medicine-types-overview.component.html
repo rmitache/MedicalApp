@@ -2,7 +2,8 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">Medicine Types</span>
-            <icon-button [IconName]="'plus'" (Clicked)="onAddNewMedicineTypeTriggered()"></icon-button>
+            <button pButton type="button" icon="fa fa-plus"
+                    (click)="onAddNewMedicineTypeTriggered()"></button>
         </div>
 
         <div class="right-section">

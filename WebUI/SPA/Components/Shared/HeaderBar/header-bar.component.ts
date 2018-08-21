@@ -59,7 +59,8 @@ export class HeaderBarComponent {
 					text: 'Cancel',
 					onAction: () => {
 						return true;
-					}
+					},
+					buttonClass: 'ui-button-secondary'
 				}
 			]
 

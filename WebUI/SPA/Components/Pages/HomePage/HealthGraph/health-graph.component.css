@@ -27,10 +27,9 @@
                 float: left;
             }
 
-            .frame .header .left-section .icon-button {
+            .frame .header .left-section button {
                 float: left;
                 margin-left: 10px;
-                margin-top: 2px;
             }
 
         .frame .header .center-section {
@@ -56,3 +55,4 @@
     float: left;
     padding: 0;
 }
+

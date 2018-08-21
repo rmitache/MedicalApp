@@ -5,6 +5,7 @@
     </div>
     <div class="user-status-panel">
         <div (click)="onUserEmailClicked()" class="user-name-item">
+            <i class="fa fa-user"></i>
             {{viewModel.LoggedInUser?.Email }}
         </div>
         <div (click)="onLogoutTriggered()" class="logout-item">

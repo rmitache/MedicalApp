@@ -1,7 +1,8 @@
 <form #form="ngForm">
     <div class="what-section">
         <span class="h2">WHAT</span>
-        <icon-button [IconName]="'plus'" id="add-new-button" (click)="onAddNewIFRPGroupTriggered()"></icon-button>
+        <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" id="add-new-button"
+                (click)="onAddNewIFRPGroupTriggered()"></button>
         <br />
         <div id="elems-list">
             <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.IFRPGroupCLOs"
