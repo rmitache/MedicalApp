@@ -19,7 +19,9 @@ const treeShakableModules = [
 ];
 const nonTreeShakableModules = [
     'primeng/primeng',
-    'primeng/resources/themes/omega/theme.css',
+    //'primeng/resources/themes/omega/theme.css',
+	//'primeng/resources/themes/flick/theme.css',
+	'primeng/resources/themes/cupertino/theme.css',
     'font-awesome/css/font-awesome.min.css',
     'primeng/resources/primeng.min.css',
     'es6-promise',
