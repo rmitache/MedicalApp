@@ -34,7 +34,8 @@
     border: solid 1px #f2f2f2;
     border-radius: 5px;
 }
-
+    .right-side-panel .tabs {
+    }
     .right-side-panel /deep/ .ui-tabview {
         height: calc(100%);
         padding: 0;

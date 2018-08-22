@@ -25,7 +25,7 @@ export class NavigationPanelComponent {
     @Input('TriggerOnlyModeOn')
 	private triggerOnlyModeOn = false; 
 	@Input('Width')
-	private width = 240; 
+	private width = 220; 
 
     // Private methods
     private getCurrentMode(): IDateRangeSelectionMode {

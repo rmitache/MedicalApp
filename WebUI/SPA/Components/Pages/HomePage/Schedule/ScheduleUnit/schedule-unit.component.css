@@ -27,6 +27,7 @@
         font-family: Tahoma;
         font-size: 14px;
         font-weight: bold;
+        color: #2399e5;
         display: block;
         float: left;
         width: 100%;
@@ -54,7 +55,7 @@
 
 
     .plan-div .factor-record-list-in-plan-grouping {
-        background-color: #f5f5ff;
+        /*background-color: #dbdbdb;*/
         padding-top: 0;
         border-radius: 3px;
         width: calc(100% - 2px);
@@ -65,7 +66,15 @@
         position: absolute;
         top: 7px;
         right: 7px;
-        color: #8b8b8b;
+        color: #dbdbdb;
+    }
+
+    .plan-div .factor-record-list-in-plan-grouping .factor-record-item:first-of-type {
+        /*border-radius:6px 6px 0 0;*/
+    }
+
+    .plan-div .factor-record-list-in-plan-grouping .factor-record-item:last-of-type {
+        border-radius: 0 0 6px 6px;
     }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item {
@@ -75,14 +84,16 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
-        font-size: 9pt;
-        border-radius: 3px;
-        width: calc(100% - 14px);
+        font-size: 12px;
+        width: calc(100% - 40px);
         cursor: pointer;
+        font-family: Arial;
+        border-left: solid 12px #2399e5;
+        background-color: #eeeeee;
     }
 
         .plan-div .factor-record-list-in-plan-grouping .factor-record-item:hover {
-            background-color: #e4e4ed;
+            background-color: #dbdbdb;
         }
 
     .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item:hover {
@@ -90,13 +101,34 @@
 
     .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item {
         text-decoration: line-through;
-        background-color: #d0d0d0;
-        color: gray;
+        background-color: #f8f8f8;
+        color: #dbdbdb;
+        border-left: solid 12px #f8f8f8;
     }
 
-        .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item .recently-added-span {
-            visibility: hidden !important;
-        }
+    .plan-div .factor-record-list-in-plan-grouping .factor-record-item .fa {
+        /*color: gray;
+        font-size: 1.5em;
+        float: right;*/
+        visibility: hidden;
+    }
+
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item .fa {
+        visibility: visible;
+        color: gray;
+        font-size: 1.3em;
+        float: right;
+    }
+
+
+
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item:hover {
+        background-color: #b2b2b2;
+    }
+
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item .recently-added-span {
+        visibility: hidden !important;
+    }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item .recently-added-span {
         color: black;

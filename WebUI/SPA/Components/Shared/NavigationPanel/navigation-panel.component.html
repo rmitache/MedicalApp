@@ -1,11 +1,11 @@
 <div class="frame" [style.width.px]="width">
-    <button pButton type="button" icon="fa fa-caret-left fa-2x" class="previous-button"
+    <button pButton type="button" icon="fa fa-caret-left fa-2x" class="previous-button ui-button-secondary"
             (click)="onPreviousClicked()"></button>
     <span class="current-date-label h2">
         {{viewModel.LabelText}}
     </span>
 
-    <button pButton type="button" icon="fa fa-caret-right fa-2x" class="next-button"
+    <button pButton type="button" icon="fa fa-caret-right fa-2x" class="next-button ui-button-secondary"
             (click)="onNextClicked()"></button>
 </div>
 
