@@ -3,6 +3,7 @@
     width: 330px;
     font-size: 10pt;
     font-family: Arial;
+    
 }
 
 .frame /deep/ .ui-autocomplete .ui-button {
@@ -22,6 +23,8 @@ input.ng-invalid.ng-touched {
 .frame {
     height: 70px;
     width: calc(100% - 5px);
+    border-radius: 6px 0 0 6px;
+    border: solid 1px #dbdbdb;
 }
 
 .label-input-pair {
@@ -37,7 +40,7 @@ input.ng-invalid.ng-touched {
     }
 
 .draggable-area {
-    background-color: #dedede;
+    background-color: white;
     border-radius: 6px 0 0 6px;
     float: left;
     width: 20px;
@@ -45,7 +48,7 @@ input.ng-invalid.ng-touched {
 }
 
 .right-side {
-    background-color: #dedede;
+    background-color: white;
     float: right;
     padding: 15px 10px 15px 10px;
     width: calc(100% - 40px);
@@ -120,7 +123,7 @@ input.ng-invalid.ng-touched {
     width: calc(100% - 390px);
     margin-right: 25px;
     height: 70px;
-    background-color: #dedede;
+    background-color: white;
     float: right;
     margin-top: -70px;
 }

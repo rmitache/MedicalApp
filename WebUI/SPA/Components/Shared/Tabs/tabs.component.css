@@ -9,26 +9,34 @@
     height: 40px;
     width: 100%;
     float: left;
-    border-bottom: solid 1px gray;
+    border-bottom: solid 2px #2399e5;
 }
 
     .nav-tabs li {
         margin-top: 2px;
         list-style-type: none;
-        padding: 10px;
+        padding: 10px 15px 10px 15px;
         float: left;
         cursor: pointer;
-       
-        
         border-radius: 4px 4px 0 0;
-        background-color: #d3d3d3;
-        color: #414141;
+        background-color: #f3f3f3;
+        color: black;
     }
+
+        .nav-tabs li:hover {
+            background-color: #bad8eb;
+            color:white;
+        }
+
+        .nav-tabs li.active:hover {
+            background-color: #2399e5;
+        }
+
         .nav-tabs li.active {
-            border: solid 1px gray;
+            border: solid 1px #2399e5;
             border-bottom: none;
-            background-color: white;
-            color: #000000;
+            background-color: #2399e5;
+            color: white;
         }
 
 .panels-div {
