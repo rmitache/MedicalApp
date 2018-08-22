@@ -4,26 +4,27 @@
     margin-left: auto;
     margin-right: auto;
     height: 29px;
+    background-color: #d6ecfa;
 }
 
 
 
     .frame .current-date-label {
         display: inline-block;
-        line-height: 27px;
         vertical-align: middle;
         display: inline-block;
         margin-top: 0;
-        font-size: 15pt;
-        font-weight: bold;
-        color: #2399e5;
+        font-size: 14pt;
+        color: black;
     }
     .frame .previous-button {
         float: left;
+        margin-left:-5px;
     }
 
     .frame .next-button {
         float: right;
+        margin-right: -5px;
     }
 
 
