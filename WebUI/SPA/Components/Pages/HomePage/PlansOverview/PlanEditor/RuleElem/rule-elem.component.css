@@ -7,23 +7,21 @@
     min-height: 190px;
     width: calc(100% - 20px);
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
-.close {
+.remove-button {
     float: right;
-    width: 16px;
-    height: 16px;
+    margin-top: -4px;
     cursor: pointer;
-    font-family: Arial;
-    font-weight: bold;
-    text-align: right;
-    color: gray;
+    color: black;
+    font-size: 1.4em;
+}
+.remove-button:hover {
+    color: blue;
 }
 
 .what-section /deep/ .ifrp-group-elem .frame {
-    border: solid 1px #b7b7b7 !important;
-    border-radius: 6px 0 0 6px;
 }
 
 .when-section {
@@ -60,9 +58,9 @@
     .when-section .moments-in-day-div {
         float: left;
         height: 50px;
-        width: 300px;
+        width: 350px;
     }
-
+    
         .when-section .moments-in-day-div .at-label {
             display: block;
             margin-right: 10px;
@@ -73,16 +71,19 @@
 
         .when-section .moments-in-day-div #moments-in-day-input {
             float: left;
-            width: 250px;
+            width: 310px;
+            
             height: 20px;
             margin-top: -1px;
         }
 
-/deep/ .when-section .moments-in-day-div #moments-in-day-input .ui-inputtext {
+.when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-inputtext {
+    width: 310px;
 }
 
-/deep/ .when-section .moments-in-day-div #moments-in-day-input .ui-chips-input-token {
+.when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-chips-input-token input {
     margin-top: -5px;
+    width: 250px;
 }
 
 .what-section {

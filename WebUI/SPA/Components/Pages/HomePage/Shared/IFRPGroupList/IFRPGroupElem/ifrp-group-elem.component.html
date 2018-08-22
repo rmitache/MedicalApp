@@ -8,7 +8,6 @@
                 <span class="label">Medicine Type</span>
                 <p-autoComplete #autocomplete
                                 formControlName="medicineTypeName"
-                                
                                 lazy="true"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
                                 [emptyMessage]="'No medicine types could be found. Please try a different name'"
@@ -59,7 +58,8 @@
                        [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />
             </div>
             <div class="of-label">each</div>
-            <div class="close" (click)="onRemoveClicked()">X</div>
+            <!--<div class="close" (click)="onRemoveClicked()">X</div>-->
+            <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 
         </div>
         <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible"></div>

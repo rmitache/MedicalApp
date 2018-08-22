@@ -20,7 +20,6 @@ input.ng-invalid.ng-touched {
 }
 
 .frame {
-    background-color: white;
     height: 70px;
     width: calc(100% - 5px);
 }
@@ -29,22 +28,24 @@ input.ng-invalid.ng-touched {
     float: left;
     margin-right: 10px;
 }
+.label-input-pair .label{
+    color:black;
 
+}
     .label-input-pair:last-of-type {
         margin-right: 0;
     }
 
 .draggable-area {
-    background-color: #efefef;
+    background-color: #dedede;
     border-radius: 6px 0 0 6px;
     float: left;
     width: 20px;
     height: 100%;
-    cursor: move;
 }
 
 .right-side {
-    background-color: #f7f7f7;
+    background-color: #dedede;
     float: right;
     padding: 15px 10px 15px 10px;
     width: calc(100% - 40px);
@@ -103,23 +104,23 @@ input.ng-invalid.ng-touched {
         .right-side .instructions-input-pair .drop-down {
         }
 
-    .right-side .close {
-        float: right;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-        font-family: Arial;
-        font-weight: bold;
-        text-align: right;
-        color: gray;
+.remove-button {
+    float: right;
+    margin-top: -4px;
+    cursor: pointer;
+    color: gray;
+}
+
+    .remove-button:hover {
+        color: blue;
     }
 
 
 .hide-controls-overlay {
-    width: calc(100% - 320px);
+    width: calc(100% - 390px);
     margin-right: 25px;
     height: 70px;
-    background-color: #f7f7f7;
+    background-color: #dedede;
     float: right;
     margin-top: -70px;
 }
