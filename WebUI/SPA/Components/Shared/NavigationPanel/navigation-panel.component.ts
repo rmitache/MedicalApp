@@ -23,7 +23,9 @@ export class NavigationPanelComponent {
         SelectedDateRange: null
     };
     @Input('TriggerOnlyModeOn')
-    private triggerOnlyModeOn = false; 
+	private triggerOnlyModeOn = false; 
+	@Input('Width')
+	private width = 240; 
 
     // Private methods
     private getCurrentMode(): IDateRangeSelectionMode {

@@ -1,7 +1,12 @@
-<div class="frame">
-    <icon-button [IconName]="'arrow-left'" class="previous-button" (Clicked)="onPreviousClicked()"></icon-button>
+<div class="frame" [style.width.px]="width">
+    <button pButton type="button" icon="fa fa-caret-left fa-2x" class="previous-button"
+            (click)="onPreviousClicked()"></button>
     <span class="current-date-label h2">
         {{viewModel.LabelText}}
     </span>
-    <icon-button [IconName]="'arrow-right'" class="next-button" (Clicked)="onNextClicked()"></icon-button>
-</div> 
+
+    <button pButton type="button" icon="fa fa-caret-right fa-2x" class="next-button"
+            (click)="onNextClicked()"></button>
+</div>
+
+<!--ui-button-secondary--> 

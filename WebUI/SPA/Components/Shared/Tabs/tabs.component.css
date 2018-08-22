@@ -25,7 +25,7 @@
 
         .nav-tabs li:hover {
             background-color: #bad8eb;
-            color:white;
+            color:black;
         }
 
         .nav-tabs li.active:hover {

@@ -7,7 +7,8 @@
             <!--<icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>-->
         </div>
         <div class="center-section">
-            <navigation-panel #navPanel
+            <navigation-panel #navPanel 
+                              [Width]="360"
                               (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
                               (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
         </div>
