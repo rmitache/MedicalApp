@@ -4,7 +4,7 @@
     margin-left: auto;
     margin-right: auto;
     height: 29px;
-    background-color: #d6ecfa;
+    background-color: #555555;
 }
 
 
@@ -15,7 +15,7 @@
         display: inline-block;
         margin-top: 0;
         font-size: 14pt;
-        color: black;
+        color: white;
     }
     .frame .previous-button {
         float: left;
