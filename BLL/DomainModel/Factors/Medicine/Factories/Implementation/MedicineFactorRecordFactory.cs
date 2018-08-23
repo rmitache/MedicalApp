@@ -94,14 +94,14 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                         foreach (MedicineRuleItem ruleItem in rule.MedicineRuleItems)
                         {
                             //
-                            bool recentlyAdded = false;
-                            if (version.ID == plan.GetLatestVersion().ID) // if it is the latest version, try to highlight recently added FactorRecords
-                            {
-                                var previousVersion = plan.GetPreviousLatestVersion();
-                                var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
-                                recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
-                            }
-
+                            //bool recentlyAdded = false;
+                            //if (version.ID == plan.GetLatestVersion().ID) // if it is the latest version, try to highlight recently added FactorRecords
+                            //{
+                            //    var previousVersion = plan.GetPreviousLatestVersion();
+                            //    var medTypesInPrevVersion = (previousVersion != null) ? previousVersion.GetUniqueMedicineTypes() : null;
+                            //    recentlyAdded = (previousVersion == null || !medTypesInPrevVersion.ContainsKey(ruleItem.MedicineType.Name)) && version.RecentlyStarted();
+                            //}
+                            bool recentlyAdded = true;
                             //
                             var utcOccurrenceDateTime = Functions.ConvertToUTCDateTime(localHitDateTime, utcOffsetInMins);
                             var newFactorRecord = createFactorRecordFromMedicineRuleItem(ruleItem, utcOccurrenceDateTime, plan, recentlyAdded);
