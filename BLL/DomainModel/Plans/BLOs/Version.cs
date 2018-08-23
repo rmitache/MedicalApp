@@ -20,9 +20,9 @@ namespace BLL.DomainModel.Plans.BLOs
         // Public methods
         public bool RecentlyStarted()
         {
-            var currentDate = Common.Functions.GetCurrentDateTimeInUTC();
+            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
 
-            if (!this.HasEnded() && (currentDate - this.StartDateTime.Date).TotalDays <= 7)
+            if (!this.HasEnded() && (currentDateTime - this.StartDateTime).TotalDays <= 7)
             {
                 return true;
             }
@@ -30,14 +30,14 @@ namespace BLL.DomainModel.Plans.BLOs
         }
         public bool HasStarted()
         {
-            var currentDate = Common.Functions.GetCurrentDateTimeInUTC();
-            bool hasStarted = this.StartDateTime > currentDate;
+            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
+            bool hasStarted = this.StartDateTime > currentDateTime;
             return hasStarted;
         }
         public bool HasEnded()
         {
-            var currentDate = Common.Functions.GetCurrentDateTimeInUTC();
-            bool hasEnded = this.EndDateTime > currentDate;
+            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
+            bool hasEnded = currentDateTime > this.EndDateTime ;
             return hasEnded;
         }
         public Range<DateTime> GetIntersectionWithDateRange(Range<DateTime> targetDateRange)
