@@ -6,7 +6,6 @@
 .nav-tabs {
     padding: 0;
     margin: 0;
-    height: 40px;
     width: 100%;
     float: left;
     border-bottom: solid 2px #2399e5;
@@ -14,7 +13,7 @@
 }
 
     .nav-tabs li {
-        margin-top: 2px;
+        
         list-style-type: none;
         padding: 10px 15px 10px 15px;
         float: left;
@@ -34,8 +33,6 @@
         }
 
         .nav-tabs li.active {
-            border: solid 1px #2399e5;
-            border-bottom: none;
             background-color: #2399e5;
             color: white;
         }
