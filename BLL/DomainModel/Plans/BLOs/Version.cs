@@ -22,7 +22,7 @@ namespace BLL.DomainModel.Plans.BLOs
         {
             var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
 
-            if (!this.HasEnded() && (currentDateTime - this.StartDateTime).TotalDays <= 7)
+            if (this.HasStarted() && !this.HasEnded() && (currentDateTime - this.StartDateTime).TotalDays <= 7)
             {
                 return true;
             }
