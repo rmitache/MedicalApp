@@ -333,7 +333,7 @@ class MonthDisplayMode implements IDisplayMode {
 				enabled:false,
 				custom: (tooltipModel) => {
 					if (tooltipModel.opacity === 0) {
-						this.graphTooltipInstance.HideAndClear()
+						this.graphTooltipInstance.HideAndClear();
 						return;
 					}
 					

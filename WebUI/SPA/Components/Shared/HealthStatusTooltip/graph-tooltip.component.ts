@@ -238,16 +238,18 @@ export class GraphTooltipComponent {
 			this.viewModel.CaretPos = tooltipAndCaretPos[1];
 			this.viewModel.Visible = true;
 
-		}, 10);
+		}, 0);
 	}
 	public HideAndClear() {
+		setTimeout(() => {
 		this.viewModel.Visible = false;
 		this.viewModel.Title = '';
 		this.viewModel.ChartData = null;
 		this.viewModel.SymptomTypes = null;
 
 		this.viewModel.TooltipPos = null;
-		this.viewModel.CaretPos = null;
+			this.viewModel.CaretPos = null;
+		}, 0);
 	}
 }
 
