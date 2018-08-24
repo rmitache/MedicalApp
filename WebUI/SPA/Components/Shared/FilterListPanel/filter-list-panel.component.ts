@@ -23,7 +23,7 @@ export class FilterListPanelComponent {
     private readonly viewModel: ViewModel = {
         FilterItems: null
     };
-    private readonly defaultColor = '#e4efff';
+	private readonly defaultBgColor = '#2399e5';
 
     // Private methods
     private isColorDark(colorCode: string) {
@@ -35,7 +35,7 @@ export class FilterListPanelComponent {
 
         var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
-        if (luma < 50) {
+        if (luma < 140) {
             return true; // dark color
         } else {
             return false;
@@ -60,7 +60,7 @@ export class FilterListPanelComponent {
             }) !== undefined) ? true : false;
 
             // Create the new FilterItem
-            let color = (customColorCodes !== null) ? customColorCodes[i] : this.defaultColor;
+            let color = (customColorCodes !== null) ? customColorCodes[i] : this.defaultBgColor;
             let newFilterItem = new FilterItem(availableCLO, isSelected, color);
             filterItems.push(newFilterItem);
 

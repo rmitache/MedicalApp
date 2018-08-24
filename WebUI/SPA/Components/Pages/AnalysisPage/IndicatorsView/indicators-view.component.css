@@ -1,14 +1,13 @@
 
 .frame {
     background-color: white;
-    border: solid 1px #f2f2f2;
     width: 100%;
     height: 100%;
     border-radius: 5px;
 }
 
 .left-side {
-    width: calc(100% - 200px);
+    width: calc(100% - 240px);
     height: 100%;
     float: left;
 }
@@ -66,7 +65,7 @@
 
 .right-side {
     border-radius: 0 5px 5px 0;
-    width: calc(198px);
+    width: calc(238px);
     height: 100%;
     float: right;
 }

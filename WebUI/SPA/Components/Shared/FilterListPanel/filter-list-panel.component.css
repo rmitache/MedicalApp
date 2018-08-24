@@ -1,5 +1,6 @@
 .frame {
-    width: 100%;
+    width: calc(100% - 10px);
+    padding:5px;
     height: 100%;
 }
 
@@ -8,15 +9,23 @@
     float: left;
     clear: both;
     margin-bottom: 3px;
-    padding: 5px;
+    padding: 2px 5px 2px 5px;
     border-radius: 4px;
-    width: calc(100% - 10px)
+    width: calc(100% - 10px);
+    cursor: pointer;
+    border: solid 1px #acc8ef;
 }
 
+    .filter-elem:hover {
+        
+        background-color: #acc8ef;
+    }
 
-
-    .filter-elem .check-box {
-        float: left;
+    .filter-elem i {
+        float: right;
+        margin-right: 5px;
+        color: black;
+        
     }
 
     .filter-elem .item-name {
@@ -28,5 +37,6 @@
     }
 
 .active {
-    background-color: #e4efff;
+    /*filter: brightness(95%);*/
+    border: solid 1px transparent;
 }
