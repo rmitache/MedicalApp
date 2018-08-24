@@ -36,17 +36,13 @@
         <div class="label-input-pair">
             <span class="label">Is packaged into Unit Doses ?</span>
             <div class="radio-button-group">
+
+
                 <div class="radio-button-div" [ngClass]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                    <label class="label-text-dark">
-                        Yes
-                        <input type="radio" formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits">
-                    </label>
+                    <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" label="Yes" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                 </div>
                 <div class="radio-button-div" [ngClass]="!viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                    <label class="label-text-dark">
-                        No
-                        <input type="radio" formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits">
-                    </label>
+                    <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" label="No" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                 </div>
             </div>
         </div>

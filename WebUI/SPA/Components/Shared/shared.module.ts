@@ -12,6 +12,7 @@ import { ChipsModule } from 'primeng/primeng';
 import { ChartModule } from 'primeng/primeng';
 import { ButtonModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
+import {RadioButtonModule} from 'primeng/primeng';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -45,6 +46,7 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
 		TabsModule,
 		ButtonModule,
 		CheckboxModule,
+		RadioButtonModule,
 		HeaderBarModule
     ],
     declarations: [
@@ -79,6 +81,7 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
 		GraphTooltipComponent,
 		ButtonModule,
 		CheckboxModule,
+		RadioButtonModule,
 		HeaderBarModule
     ]
 })

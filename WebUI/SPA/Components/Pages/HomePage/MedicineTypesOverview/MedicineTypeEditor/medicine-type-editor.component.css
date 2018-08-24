@@ -19,7 +19,7 @@ input.ng-invalid.ng-touched {
 
 #name-div .ui-inputtext,
 #producer-div .ui-inputtext {
-    width: 250px;
+    width: 267px;
 }
 
 
@@ -30,6 +30,7 @@ input.ng-invalid.ng-touched {
     .radio-button-group .radio-button-div {
         padding: 5px;
         padding-left: 8px;
+        padding-right:8px;
         background-color: #efefef;
         border-radius: 4px;
         float: left;
@@ -74,3 +75,10 @@ input.ng-invalid.ng-touched {
         font-size: 10pt;
         margin-top:4px;
     }
+
+.frame /deep/ .ui-state-active .fa-circle:before {
+    content: none;
+}
+.frame /deep/ .ui-radio-button-label {
+    cursor:pointer;
+}
