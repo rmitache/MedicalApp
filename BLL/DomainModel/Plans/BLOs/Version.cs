@@ -9,16 +9,16 @@ namespace BLL.DomainModel.Plans.BLOs
     public class Version
     {
         // Properties
-        public int ID { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime? EndDateTime { get; set; }
-        public List<Rule> Rules { get; set; }
+        public virtual int ID { get; set; }
+        public virtual DateTime StartDateTime { get; set; }
+        public virtual DateTime? EndDateTime { get; set; }
+        public virtual List<Rule> Rules { get; set; }
 
         // Constructor
-        internal Version() { }
+        public Version() { }
 
         // Public methods
-        public bool RecentlyStarted()
+        public virtual bool RecentlyStarted()
         {
             var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
 
@@ -28,19 +28,19 @@ namespace BLL.DomainModel.Plans.BLOs
             }
             return false;
         }
-        public bool HasStarted()
+        public virtual bool HasStarted()
         {
             var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
-            bool hasStarted = this.StartDateTime > currentDateTime;
+            bool hasStarted = this.StartDateTime < currentDateTime;
             return hasStarted;
         }
-        public bool HasEnded()
+        public virtual bool HasEnded()
         {
             var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
             bool hasEnded = currentDateTime > this.EndDateTime ;
             return hasEnded;
         }
-        public Range<DateTime> GetIntersectionWithDateRange(Range<DateTime> targetDateRange)
+        public virtual Range<DateTime> GetIntersectionWithDateRange(Range<DateTime> targetDateRange)
         {
             // Variables
             Range<DateTime> intersectionResult = null;
@@ -68,7 +68,7 @@ namespace BLL.DomainModel.Plans.BLOs
 
             return intersectionResult;
         }
-        public Dictionary<string, MedicineType> GetUniqueMedicineTypes()
+        public virtual Dictionary<string, MedicineType> GetUniqueMedicineTypes()
         {
             // Dictionary
             var uniqueMedicineTypesDictionary = new Dictionary<string, MedicineType>();
