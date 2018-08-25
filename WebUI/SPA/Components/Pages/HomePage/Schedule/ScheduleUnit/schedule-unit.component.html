@@ -19,7 +19,7 @@
                              class="factor-record-item label-text-dark"
                              title="{{timeGroup.value.GetStringLabel(record)}}">
 
-                            &#9642; {{record.UnitDoseQuantifier}} x <span>{{record.MedicineType.Name}}</span>
+                            {{record.UnitDoseQuantifier}} x <span>{{record.MedicineType.Name}}</span>
                             <span *ngIf="record.RecentlyAdded===true" class="recently-added-span">NEW</span>
                             <i class="fa fa-check"></i>
                         </div>

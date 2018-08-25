@@ -63,7 +63,12 @@ export class TimelineComponent {
             tickInfoWrappers.push(newTickInfoWrapper);
         }
 
-        return tickInfoWrappers;
+		// Return nth
+		var filteredTickInfoWrappers = tickInfoWrappers.filter((wrapper,index) => {
+			return index % 5 === 0;
+		});
+
+		return filteredTickInfoWrappers;
     }
     private refreshUI() {
         this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();

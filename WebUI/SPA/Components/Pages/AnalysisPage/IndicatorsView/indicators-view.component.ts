@@ -36,8 +36,8 @@ import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service
 })
 export class IndicatorsViewComponent {
 	// Fields
-	private availableWindowPaddingInMonths = 0;
-	private dateRangeDisplayMode: DateRangeMode = DateRangeMode.Month;
+	private availableWindowPaddingInMonths = 3;
+	private dateRangeDisplayMode: DateRangeMode = DateRangeMode.SingleMonth;
 	@ViewChild('navPanel')
 	private navPanelInstance: NavigationPanelComponent;
 	@ViewChild('graphTooltip')
@@ -61,7 +61,7 @@ export class IndicatorsViewComponent {
 
 		ChartOptions: null,
 		ChartData: null,
-		DateRangeDisplayMode: DateRangeMode.Month,
+		DateRangeDisplayMode: DateRangeMode.ThreeMonths,
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -95,8 +95,11 @@ export class IndicatorsViewComponent {
 
 		// Get Current Mode strategy
 		let currentStrategy: IDisplayMode = null;
-		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.Month) {
+		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleMonth) {
 			currentStrategy = new MonthDisplayMode(getChartInstanceFunction, this.graphTooltipInstance,
+				this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
+		} else if (this.viewModel.DateRangeDisplayMode === DateRangeMode.ThreeMonths) {
+			currentStrategy = new ThreeMonthsDisplayMode(getChartInstanceFunction, this.graphTooltipInstance,
 				this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
 		} else {
 			// OBS -> Not implemented yet
@@ -222,6 +225,8 @@ export class IndicatorsViewComponent {
 
 		// Initialize date ranges
 		var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
+
+
 		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
 			initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
 		this.viewModel.SelectedDateRange = initialSelectedDateRange;
@@ -330,13 +335,13 @@ class MonthDisplayMode implements IDisplayMode {
 	public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
 		let chartOptions = {
 			tooltips: {
-				enabled:false,
+				enabled: false,
 				custom: (tooltipModel) => {
 					if (tooltipModel.opacity === 0) {
 						this.graphTooltipInstance.HideAndClear();
 						return;
 					}
-					
+
 					// Variables
 					var canvas = this.getChartCanvas();
 					var dateString = tooltipModel.title[0];
@@ -408,6 +413,177 @@ class MonthDisplayMode implements IDisplayMode {
 						tickMarkLength: 5,
 						drawBorder: true,
 						zeroLineColor: 'black'
+					},
+
+					ticks: {
+						fontColor: 'gray',
+						padding: 5,
+						beginAtZero: true,
+						min: -3,
+						max: 3,
+						stepSize: 1,
+						callback: function (label, index, labels) {
+
+							return '';
+
+						}
+					}
+				}]
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+			annotation: {
+
+				annotations: []
+			}
+		};
+
+		// Annotations
+		let annotations = [{
+			type: 'line',
+			mode: 'vertical',
+			scaleID: 'x-axis-0',
+			value: moment(),
+			borderColor: 'gray',
+			borderWidth: 1,
+			label: {
+				fontFamily: 'Arial',
+				fontSize: '10px',
+				enabled: true,
+				position: "top",
+				content: 'TODAY'
+			}
+		}];
+		if (!IsDateOnFirstOrLastDateInMonth(moment())) {
+			chartOptions.annotation.annotations = annotations;
+		}
+
+		return chartOptions;
+	}
+	public GenerateChartData(availableSymptomTypes: CLOs.SymptomTypeCLO[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>,
+		selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }) {
+
+		// Variables
+		let data = {
+			datasets: []
+		};
+
+		// Create SymptomType datasets
+		let symptomTypeDataSetsDictionary = this.symptomTypeDatasetGenerator.GenerateDataSets(availableSymptomTypes,
+			preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+		selectedSymptomTypeCLOs.forEach((selectedSymptomType) => {
+			if (selectedSymptomType !== null) {
+				let symptomTypeDataset = symptomTypeDataSetsDictionary[selectedSymptomType.Name];
+				symptomTypeDataset.borderColor = symptomTypesToColorsDictionary[selectedSymptomType.Name];
+				data.datasets.push(symptomTypeDataset);
+			}
+		});
+
+		// Create HealthStatus dataset
+		let healthStatusDataset = this.healthStatusDataSetGenerator.GenerateDataSet(preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+		data.datasets.push(healthStatusDataset);
+
+
+		return data;
+	}
+};
+class ThreeMonthsDisplayMode implements IDisplayMode {
+
+	// Constructor
+	constructor(
+		private readonly getChartCanvas: GetChartCanvasFunc,
+		private readonly graphTooltipInstance: GraphTooltipComponent,
+		private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
+		private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator) {
+	}
+
+	// Public methods
+	public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+		let chartOptions = {
+			animation: false,
+			tooltips: {
+				enabled: false,
+				custom: (tooltipModel) => {
+					if (tooltipModel.opacity === 0) {
+						this.graphTooltipInstance.HideAndClear();
+						return;
+					}
+
+					// Variables
+					var canvas = this.getChartCanvas();
+					var dateString = tooltipModel.title[0];
+					var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
+					var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
+					var parentPosition = canvas.getBoundingClientRect();
+
+					// Hack for positioning of tooltip on negative bar chart values
+					var value = tooltipModel.dataPoints[0].yLabel;
+					if (value < 0) {
+						tooltipModel.caretY = (parentPosition.height / 2);
+					}
+
+					//
+					this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
+				}
+			},
+			elements: {
+				line: {
+					tension: 0, // disables bezier curves
+				}
+			},
+			legend: {
+				display: false,
+				position: 'top',
+				labels: {
+					boxWidth: 15,
+
+				},
+			},
+			scales: {
+				xAxes: [{
+					id: 'x-axis-0',
+					type: "time",
+					time: {
+						unit: 'day',
+						round: 'day',
+						//unitStepSize: 1,
+						tooltipFormat: "dddd MMM D, YYYY",
+						displayFormats: {
+							hour: 'MMM D'
+						}
+					},
+					gridLines: {
+						color: '#cacaca',
+						display: true,
+						drawOnChartArea: false,
+					},
+					ticks: {
+						maxRotation: 0,
+						minRotation: 0,
+						fontColor: 'gray',
+						fontFamily: 'Arial',
+						fontSize: 10,
+						//beginAtZero: true,
+						autoSkip: false,
+						callback: function (value, index, values) {
+							return value;
+							//if (!(index % 2)) return value;
+						},
+						major: {
+							//fontStyle: 'bold',
+							//fontColor: 'black'
+						}
+					}
+				}],
+				yAxes: [{
+					id: 'y-axis-0',
+					gridLines: {
+						display: true,
+						drawTicks: true,
+						drawOnChartArea: true,
+						tickMarkLength: 5,
+						drawBorder: true,
+						zeroLineColor: 'gray'
 					},
 
 					ticks: {

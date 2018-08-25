@@ -74,7 +74,7 @@ export class ScheduleComponent {
 		AvailableFactorRecords: null,
 		VisibleDisplayRepresentation: null,
 
-		DateRangeDisplayMode: DateRangeMode.Day
+		DateRangeDisplayMode: DateRangeMode.SingleDay
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -83,7 +83,7 @@ export class ScheduleComponent {
 	private getCurrentDisplayModeInstance(): IDisplayMode {
 		// Get Current Mode strategy
 		let currentStrategy: IDisplayMode = null;
-		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.Day) {
+		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleDay) {
 			currentStrategy = new DayDisplayMode(this.genericCLOFactory);
 		} else {
 			// OBS -> Not implemented yet

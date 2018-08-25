@@ -31,10 +31,12 @@ export class NavigationPanelComponent {
     private getCurrentMode(): IDateRangeSelectionMode {
         // Get Current Mode strategy
         let currentStrategy: IDateRangeSelectionMode = null;
-        if (this.dateRangeSelectionMode === DateRangeMode.Month) {
+        if (this.dateRangeSelectionMode === DateRangeMode.SingleMonth) {
             currentStrategy = new MonthMode();
-        } else if (this.dateRangeSelectionMode === DateRangeMode.Day) {
-            currentStrategy = new DayMode();
+        } else if (this.dateRangeSelectionMode === DateRangeMode.SingleDay) {
+			currentStrategy = new DayMode();
+		} else if (this.dateRangeSelectionMode === DateRangeMode.ThreeMonths) {
+			currentStrategy = new ThreeMonthsMode();
         } else {
             // OBS -> Not implemented yet
             throw new Error('Not implemented yet');
@@ -113,6 +115,35 @@ interface IDateRangeSelectionMode {
     GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment>;
     GetNavigationLabel(currentSelDateRange: Range<moment.Moment>): string;
 }
+class ThreeMonthsMode implements IDateRangeSelectionMode {
+
+
+	// Public methods
+	public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
+
+		// Get 2 previous months and the current month as the range
+		let range = new Range<moment.Moment>(referenceDate.clone().subtract(2, 'months').startOf('month').startOf('day'),
+			referenceDate.clone().endOf('month').endOf('day'));
+		return range;
+	}
+	public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+		let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(3, 'months').startOf('month').startOf('day'),
+			currentSelDateRange.RangeEnd.clone().add(3, 'months').endOf('month').endOf('day'));
+		return range;
+	}
+	public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+
+		let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(3, 'months').startOf('month').startOf('day'),
+			currentSelDateRange.RangeEnd.clone().subtract(3, 'months').endOf('month').endOf('day'));
+		return range;
+	}
+	public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
+		
+		var labelText = currentSelDateRange.RangeStart.format('MMM, YYYY') + " - " + currentSelDateRange.RangeEnd.format('MMM, YYYY');
+		return labelText;
+	}
+
+};
 class MonthMode implements IDateRangeSelectionMode {
 
 

@@ -50,7 +50,7 @@ export class FactorsViewComponent {
         SelectedPlans: null,
 
         TodayXPosition: null,
-        DateRangeDisplayMode: DateRangeMode.Month,
+        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;

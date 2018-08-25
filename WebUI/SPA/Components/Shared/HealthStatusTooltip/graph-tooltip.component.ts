@@ -31,6 +31,7 @@ export class GraphTooltipComponent {
 	};
 	private options =
 		{
+			animation: false,
 			tooltips: {
 				enabled: false
 			},

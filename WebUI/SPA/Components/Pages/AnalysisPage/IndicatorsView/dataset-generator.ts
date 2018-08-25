@@ -197,7 +197,7 @@ export class SymptomTypeDatasetGenerator {
         let newDataSetsDictionary: { [symptomTypeName: string]: SymptomTypeDataset } = {};
         availableSymptomTypes.forEach(symptomTypeCLO => {
             newDataSetsDictionary[symptomTypeCLO.Name] = {
-                borderWidth: 2,
+                borderWidth: 1,
                 borderColor: 'red',
                 backgroundColor: 'transparent',
                 type: 'line',

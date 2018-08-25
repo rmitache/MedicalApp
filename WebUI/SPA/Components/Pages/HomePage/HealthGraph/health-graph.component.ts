@@ -47,7 +47,7 @@ export class HealthGraphComponent {
 		ChartOptions: null,
 		ChartData: null,
 
-		DateRangeDisplayMode: DateRangeMode.Month,
+		DateRangeDisplayMode: DateRangeMode.SingleMonth,
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -57,7 +57,7 @@ export class HealthGraphComponent {
 	private getCurrentDisplayModeInstance(): IDisplayMode {
 		// Get Current Mode strategy
 		let currentStrategy: IDisplayMode = null;
-		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.Month) {
+		if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleMonth) {
 			currentStrategy = new MonthDisplayMode(this.chartInstance, this.graphTooltipInstance);
 		} else {
 			// OBS -> Not implemented yet
