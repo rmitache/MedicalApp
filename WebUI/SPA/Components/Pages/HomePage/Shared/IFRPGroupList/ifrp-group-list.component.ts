@@ -35,10 +35,17 @@ export class IFRPGroupListComponent {
                 return clo.Name === name;
             });
         },
-        Search: (searchString) => {
-            return this.availableMedicineTypes.map(clo => {
-                return clo.Name;
-            });
+		Search: (searchString) => {
+			searchString = searchString.toLowerCase();
+
+			let matchingMedTypes = this.availableMedicineTypes.filter(clo => {
+				return clo.Name.toLowerCase().startsWith(searchString);
+			});
+			let results = matchingMedTypes.map(clo => {
+				return clo.Name;
+			});
+			
+			return results;
         }
     };
     private isValid: boolean = false;

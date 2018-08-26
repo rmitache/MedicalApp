@@ -33,10 +33,17 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
                 return clo.Name === name;
             });
         },
-        Search: (searchString) => {
-            return this.availableSymptomTypes.ToArray().map(clo => {
-                return clo.Name;
-            });
+		Search: (searchString) => {
+			searchString = searchString.toLowerCase();
+
+			let matchingMedTypes = this.availableSymptomTypes.ToArray().filter(clo => {
+				return clo.Name.toLowerCase().startsWith(searchString);
+			});
+			let results = matchingMedTypes.map(clo => {
+				return clo.Name;
+			});
+
+			return results;
         }
     };
     @ViewChildren('symptomEntryElems')
