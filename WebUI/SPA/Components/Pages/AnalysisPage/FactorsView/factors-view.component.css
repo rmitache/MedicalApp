@@ -47,7 +47,7 @@
 
 
 .factors-rendering-area {
-    height: calc(100% - 20px);
+    height: calc(100% - 10px);
     width: calc(100% - 34px);
     padding-right: 17px;
     padding-left: 17px;
