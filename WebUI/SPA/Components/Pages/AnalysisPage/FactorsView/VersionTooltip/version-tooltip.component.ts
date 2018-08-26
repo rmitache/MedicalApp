@@ -58,7 +58,7 @@ export class VersionTooltipComponent {
         // Calculate tooltip and caret position
         var verticalSpacing = 55;
         tooltipPos.Left = hoverPointLeft - currentWidth / 2 - 1;
-        tooltipPos.Top = hoverPointTop + verticalSpacing + 15;
+        tooltipPos.Top = hoverPointTop + verticalSpacing + 6;
         caretPos.Left = currentWidth / 2 - 16;
         caretPos.Top = -18;
 
