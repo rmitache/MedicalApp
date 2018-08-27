@@ -13,72 +13,63 @@ body {
     height: 100%;
 }
 
+
 /*Fonts*/
 .h1 {
     font-family: Arial;
     font-size: 16pt;
     font-weight: bold;
     letter-spacing: 1.7px;
+    color: black;
 }
 
 .h2 {
     font-family: Arial;
-    font-size: 11pt;
+    font-size: 12pt;
     font-weight: bold;
+    color: black;
 }
 
 .h3 {
     font-family: Arial;
     font-size: 10pt;
     font-weight: bold;
+    color: black;
 }
 
-.label,
-.label-text-gray {
+
+
+.label {
+    font-size: 9pt;
+    font-family: Arial;
+    color: #464646;
+}
+.label-discrete {
     font-size: 9pt;
     font-family: Arial;
     color: #989797;
 }
 
-.label-text-dark {
+
+
+
+.ui-chkbox-label {
     font-size: 9pt;
-    font-family: Verdana;
-    color: #585858;
+    font-family: Arial;
+    color: #464646;
+    cursor:pointer;
 }
 
 
+/*.secondary-color {
+    color: #2399e5;
+}*/
 
-@keyframes ui-progress-spinner-color {
-    100%, 0% {
-        stroke: white;
-    }
 
-    50% {
-        stroke: blue;
-    }
+.ui-inputtext:disabled {
+    background-color: #f1f1f1;
+    color: gray;
 }
-
-
-/*.ui-inputtext {
-    border: solid 5px #dbdbdb !important;
-    font-size: 10pt !important;
-    font-family: Arial !important;
-    padding: 5px !important;
-    border-radius: 0px !important;
-}
-
-    .ui-inputtext:disabled {
-        background-color: #f1f1f1;
-        border: solid 1px #f1f1f1;
-    }
-
-    .ui-inputtext:invalid {
-        border: solid 1px red !important;
-    }
-
-    .ui-inputtext:focus {
-        border: solid 1px gray !important;
-    }*/
 
 .drop-down {
     border: solid 1px #dbdbdb;
@@ -86,13 +77,13 @@ body {
     font-family: Arial;
     padding: 5px;
     padding-top: 3px;
-    height: 27px;
-    border-radius: 0px;
+    height: 29px;
+
 }
 
     .drop-down:disabled {
-        background-color: #f1f1f1;
-        border: solid 1px #f1f1f1;
+        background-color: #f1f1f1 !important;
+        border: solid 1px #dbdbdb;
         -webkit-appearance: none;
         -moz-appearance: none;
         text-indent: 1px;
@@ -115,3 +106,13 @@ body {
         float: left;
         clear: left;
     }
+
+@keyframes ui-progress-spinner-color {
+    100%, 0% {
+        stroke: white;
+    }
+
+    50% {
+        stroke: blue;
+    }
+}

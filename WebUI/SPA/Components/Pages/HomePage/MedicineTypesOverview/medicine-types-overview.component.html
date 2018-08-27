@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="body">
-        <select class="view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
+        <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
             <option *ngFor="let medicineTypeStatus of medicineTypeStatusesEnum | enumkeys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
         </select>
         <div id="medicine-type-elems-list">

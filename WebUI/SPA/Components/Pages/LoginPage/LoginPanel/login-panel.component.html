@@ -5,16 +5,17 @@
         </div>
         <div class="body">
             <div class="label-input-pair">
-                <span class="label">Email:</span>
+                <span class="label-discrete">Email:</span>
                 <input formControlName="email" type="text" pInputText [(ngModel)]="viewModel.Email" />
             </div>
             <div class="label-input-pair">
-                <span class="label">Password:</span>
+                <span class="label-discrete">Password:</span>
                 <input formControlName="password" type="text" pInputText [(ngModel)]="viewModel.Password" />
             </div>
             <div class="check-box-label-pair">
 
-                <p-checkbox binary="true" formControlName="keepLoggedIn" label="Keep me logged in" [(ngModel)]="viewModel.KeepLoggedIn"></p-checkbox>
+                <p-checkbox binary="true" formControlName="keepLoggedIn" label="Keep me logged in" [(ngModel)]="viewModel.KeepLoggedIn"
+                            ></p-checkbox>
             </div>
         </div>
         <div class="footer">
