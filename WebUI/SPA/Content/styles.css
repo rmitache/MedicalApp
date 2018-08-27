@@ -1,11 +1,8 @@
-﻿
-
-/*General*/
+﻿/*General*/
 html {
     width: 100%;
     height: 100%;
 }
-
 body {
     padding: 0;
     margin: 0;
@@ -43,7 +40,12 @@ h3,
     font-weight: bold;
     color: black;
 }
-
+.h3-alt {
+    font-family: Arial;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #2399e5;
+}
 h4,
 .h4 {
     font-family: Arial;
@@ -51,7 +53,12 @@ h4,
     font-weight: bold;
     color: black;
 }
-
+.h4-alt {
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #2399e5;
+}
 
 
 
@@ -83,7 +90,17 @@ h4,
     letter-spacing: 1.5px;
     color:white;
 }
-
+.label-medium {
+    font-family: Arial;
+    font-size: 14px;
+    color: black;
+}
+.label-small-inv {
+    color: white;
+    font-weight: bold;
+    font-size: 8px;
+    font-family:Arial;
+}
 .ui-chkbox-label {
     font-size: 9pt;
     font-family: Arial;
@@ -97,9 +114,6 @@ h4,
     cursor: pointer;
 }
 
-/*.secondary-color {
-    color: #2399e5;
-}*/
 
 /*Controls*/
 .ui-menuitem-link {

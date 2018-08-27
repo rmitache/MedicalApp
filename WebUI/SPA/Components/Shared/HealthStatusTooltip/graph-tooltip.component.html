@@ -5,7 +5,7 @@
 
 
     <div class="health-chart-div">
-        <span class="label">HEALTH OVER DAY:</span>
+        <span class="label-discrete">Health over day:</span>
         <div class="chart-wrapper-div">
             <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="options"></p-chart>
         </div>
@@ -13,7 +13,7 @@
 
     <div class="symptoms-div"
          [style.display]="viewModel.HideSymptomsDiv ? 'none' : 'block'">
-        <span class="label">SYMPTOMS:</span>
+        <span class="label-discrete">Symptoms:</span>
         <div class="symptoms-list">
             <div class="symptom-elem-div" *ngFor="let symptomTypeObj of viewModel.SymptomTypes"
                  [style.background]="symptomTypeObj.Color">
@@ -27,7 +27,7 @@
          [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
     </div>
     <div class="title-div">
-        <span class="h3">{{viewModel.Title}}</span>
+        <span class="h4">{{viewModel.Title}}</span>
     </div>
 
 

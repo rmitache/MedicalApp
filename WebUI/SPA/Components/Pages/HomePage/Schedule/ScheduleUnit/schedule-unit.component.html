@@ -1,10 +1,10 @@
 <!--ScheduleUnit representation-->
 <div class="frame">
-    <div class="unit-header h2">{{viewModel.Title}}</div>
+    <div class="unit-header h3">{{viewModel.Title}}</div>
     <div class="unit-content">
 
         <div *ngFor="let timeGroup of viewModel.TimeGroups | keys" class="time-group">
-            <span class="hours-and-minutes-label">{{timeGroup.key}}</span>
+            <span class="hours-and-minutes-label h3-alt">{{timeGroup.key}}</span>
             <div class="plan-divs-list">
                 <div *ngFor="let dictEntry of timeGroup.value.FactorRecordsByPlanName | keys"
                      [class.user-entry]="dictEntry.key==='null'"
@@ -16,11 +16,11 @@
                         <div *ngFor="let record of timeGroup.value.GetSortedFactorRecords(dictEntry.key)"
                              (click)="onFactorRecordItemClicked(record)"
                              [ngClass]="{'taken-factor-record-item': record.Taken === true }"
-                             class="factor-record-item label-text-dark"
+                             class="factor-record-item label-medium"
                              title="{{timeGroup.value.GetStringLabel(record)}}">
 
                             {{record.UnitDoseQuantifier}} x <span>{{record.MedicineType.Name}}</span>
-                            <span *ngIf="record.RecentlyAdded===true" class="recently-added-span">NEW</span>
+                            <span *ngIf="record.RecentlyAdded===true" class="recently-added-span label-small-inv">NEW</span>
                             <i class="fa fa-check"></i>
                         </div>
                     </div>

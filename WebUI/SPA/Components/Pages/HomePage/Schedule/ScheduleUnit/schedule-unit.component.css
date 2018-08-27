@@ -24,10 +24,6 @@
     }
 
     .time-group .hours-and-minutes-label {
-        font-family: Tahoma;
-        font-size: 14px;
-        font-weight: bold;
-        color: #2399e5;
         display: block;
         float: left;
         width: 100%;
@@ -89,10 +85,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
-        font-size: 14px;
         width: calc(100% - 40px);
         cursor: pointer;
-        font-family: Arial;
         border-left: solid 8px #2399e5;
         background-color: #f6f6f6;
     }
@@ -115,9 +109,6 @@
         }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item .fa {
-        /*color: gray;
-        font-size: 1.5em;
-        float: right;*/
         visibility: hidden;
     }
 
@@ -135,12 +126,11 @@
     }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item .recently-added-span {
-        color: white;
-        font-weight: bold;
+        
         padding: 3px;
         border-radius:15px;
         background-color: #4fc642;
-        font-size: 8px;
+        
         display: inline-block;
         position:relative;
         top:-2px;
