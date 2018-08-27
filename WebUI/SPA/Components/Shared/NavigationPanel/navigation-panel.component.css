@@ -1,12 +1,9 @@
 .frame {
-    /*width: 240px;*/
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     height: 29px;
-    /*background-color: #555555;*/
 }
-
 
 
     .frame .current-date-label {
@@ -14,8 +11,6 @@
         vertical-align: middle;
         display: inline-block;
         margin-top: 0;
-        font-size: 14pt;
-        color: #2399e5;
     }
     .frame .previous-button {
         float: left;
@@ -27,8 +22,3 @@
         margin-right: -5px;
     }
 
-
-.h2 {
-    color: black;
-
-}
