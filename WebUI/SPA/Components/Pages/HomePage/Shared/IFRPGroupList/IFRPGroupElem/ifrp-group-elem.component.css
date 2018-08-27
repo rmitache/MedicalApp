@@ -1,15 +1,8 @@
 .frame /deep/ .ui-autocomplete input {
-    /*height: 27px;
-    font-size: 10pt;
-    font-family: Arial;*/
+
     width: 300px;
 }
 
-.frame /deep/ .ui-autocomplete .ui-button {
-    /*float: right;
-    margin-top: -26px;
-    height: 25px;*/
-}
 
 .medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
     border: 1px solid red !important;

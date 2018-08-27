@@ -29,5 +29,5 @@ input.ng-invalid.ng-touched {
     }
     .input-row .inner-label {
         color: black;
-        display:inline-block;
+        display: inline-block;
     }

@@ -8,15 +8,15 @@
         <div class="input-row">
 
             <div class="inner-label label">Add</div>
-            <input type="text" id="supplyAmount" class="ui-inputtext"
-                   formControlName="newSupplyAmount"
-                   [(ngModel)]="viewModel.NewSupplyAmount"
-                   />
-
+             
+            <input type="text" id="supplyAmount"
+                   formControlName="newSupplyAmount" pInputText 
+                   [(ngModel)]="viewModel.NewSupplyAmount" />
+             
             <div class="inner-label label">{{viewModel.MedicineTypeCLO?.RemainingSupplyMeasuredIn}}</div>
+             
             <div *ngIf="viewModel.MedicineTypeCLO?.IsPackagedIntoUnits===true"
-                 class="inner-label label"
-                 >of {{viewModel.MedicineTypeCLO?.PackagedUnitDoseSize}} {{viewModel.MedicineTypeCLO?.UnitOfMeasureName}} each</div>
+                 class="inner-label label">of {{viewModel.MedicineTypeCLO?.PackagedUnitDoseSize}} {{viewModel.MedicineTypeCLO?.UnitOfMeasureName}} each</div>
 
         </div>
     </div>

@@ -1,15 +1,9 @@
 .frame /deep/ .ui-autocomplete input {
-    height: 27px;
     width: 430px;
-    font-size: 10pt;
-    font-family: Arial;
     float:left;
 }
 
-.frame /deep/ .ui-autocomplete .ui-button {
-    float: right;
-    height: 27px;
-}
+
 
 .symptom-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
     border: 1px solid red !important;

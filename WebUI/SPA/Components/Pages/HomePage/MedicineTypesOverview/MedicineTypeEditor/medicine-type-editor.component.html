@@ -5,10 +5,11 @@
         <div class="label-input-pair" id="name-div">
             <span class="label">Name:</span>
             <input type="text"
-                   class="ui-inputtext"
+                   pInputText
                    formControlName="name"
                    id="name-input"
                    [(ngModel)]="viewModel.MedicineTypeCLO.Name" />
+
 
         </div>
 
@@ -16,7 +17,7 @@
         <div class="label-input-pair" id="producer-div">
             <span class="label">Producer:</span>
             <input type="text"
-                   class="ui-inputtext"
+                   pInputText
                    formControlName="producerName"
                    id="name-input"
                    [(ngModel)]="viewModel.MedicineTypeCLO.ProducerName" />
@@ -65,7 +66,7 @@
 
                 <input type="text"
                        id="packagedUnitDoseSize"
-                       class="ui-inputtext"
+                       pInputText
                        formControlName="packagedUnitDoseSize"
                        [(ngModel)]="viewModel.MedicineTypeCLO.PackagedUnitDoseSize" />
                 <div class="inner-label">{{viewModel.MedicineTypeCLO.UnitOfMeasureName}} each</div>

@@ -15,11 +15,12 @@ input.ng-invalid.ng-touched {
     float: left;
     margin-bottom: 25px;
     clear: both;
+    width:100%;
 }
 
 #name-div .ui-inputtext,
 #producer-div .ui-inputtext {
-    width: 267px;
+    width: 100%;
 }
 
 
