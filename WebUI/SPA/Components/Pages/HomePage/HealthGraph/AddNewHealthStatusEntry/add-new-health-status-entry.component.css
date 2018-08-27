@@ -80,9 +80,9 @@
             }
 
 .hide-symptoms-overlay-div {
-    height: calc(100% - 180px);
+    height: calc(100% - 250px);
     width: 100%;
-    top: -630px;
+    top: -430px;
     background-color: #f7f7f7;
     border-radius: 6px;
     text-align: center;
@@ -93,12 +93,13 @@
 
     .hide-symptoms-overlay-div .center-div {
         border-radius: 2px;
-        margin-top: 140px;
+        top:30%;
         width:50%;
         margin-left:auto;
         margin-right:auto;
         cursor: pointer;
         padding:25px;
+        position:relative;
     }
 
         .hide-symptoms-overlay-div .center-div:hover {

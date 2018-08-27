@@ -15,6 +15,7 @@ body {
 
 
 /*Headers*/
+h1,
 .h1 {
     font-family: Arial;
     font-size: 16pt;
@@ -22,7 +23,7 @@ body {
     letter-spacing: 1.7px;
     color: black;
 }
-
+h2,
 .h2 {
     font-family: Arial;
     font-size: 12pt;
@@ -30,6 +31,7 @@ body {
     color: black;
 }
 
+h3,
 .h3 {
     font-family: Arial;
     font-size: 10pt;
@@ -56,6 +58,12 @@ body {
     font-size: 9pt;
     font-family: Arial;
     color: white;
+}
+.label-large {
+    font-family: Arial;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    color: black;
 }
 .label-large-inv {
     font-family: Arial;
@@ -105,15 +113,14 @@ body {
     float: left;
 }
 
-    .label-input-pair .label {
+    .label-input-pair > span {
         float: left;
         padding-bottom: 3px;
         height: 15px;
     }
 
-    .label-input-pair .ui-inputtext,
-    .label-input-pair .drop-down,
-    .label-input-pair .input-label {
+    .label-input-pair > input,
+    .label-input-pair > .drop-down {
         float: left;
         clear: left;
     }

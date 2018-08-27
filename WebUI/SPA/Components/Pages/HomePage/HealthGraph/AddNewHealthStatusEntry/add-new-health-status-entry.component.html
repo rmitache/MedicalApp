@@ -1,33 +1,23 @@
 <form [formGroup]="reactiveForm">
     <div class="frame">
         <div class="when-section">
-            <span class="h2">WHEN</span>
-            <br />
-            <div class="label-input-pair">
-                <span class="label">Date and time:</span>
-                <p-calendar id="occurrence-date-time-picker"
-                            formControlName="occurrenceDateTime"
-                            dateFormat="dd-mm-yy"
-                            
-                            showIcon="true"
-                            readonlyInput="true"
-                            [(ngModel)]="viewModel.HealthStatusEntryCLO.OccurrenceDateTime"
-                            [showTime]="true"></p-calendar>
-            </div>
+            <h2>WHEN</h2>
+            <p-calendar id="occurrence-date-time-picker"
+                        formControlName="occurrenceDateTime"
+                        dateFormat="dd-mm-yy"
+                        showIcon="true"
+                        readonlyInput="true"
+                        [(ngModel)]="viewModel.HealthStatusEntryCLO.OccurrenceDateTime"
+                        [showTime]="true"></p-calendar>
         </div>
 
         <div class="health-level-section">
-            <span class="h2">HOW ARE YOU FEELING ?</span>
-            <br />
+            <h2>HOW ARE YOU FEELING ?</h2>
 
-            <div class="label-input-pair">
-                <span class="label">Health status:</span>
-                <select class="drop-down" formControlName="healthLevel"
-                        [(ngModel)]="viewModel.HealthStatusEntryCLO.HealthLevel">
-                    <option *ngFor="let healthLevel of healthLevelsEnum | enumkeys" [value]="healthLevel.value">{{healthLevel.key}}</option>
-                </select>
-            </div>
-
+            <select class="drop-down" formControlName="healthLevel"
+                    [(ngModel)]="viewModel.HealthStatusEntryCLO.HealthLevel">
+                <option *ngFor="let healthLevel of healthLevelsEnum | enumkeys" [value]="healthLevel.value">{{healthLevel.key}}</option>
+            </select>
         </div>
 
         <div class="symptoms-section">
@@ -50,7 +40,7 @@
         <div class="hide-symptoms-overlay-div" *ngIf="viewModel.ShowSymptomEntriesOverlayDiv">
             <div class="center-div" (click)="onRegisterSymptomsTriggered()">
                 <h2>SYMPTOMS</h2>
-                <span>
+                <span class="label-large">
                     Click if you want to enter your Symptoms
                 </span>
             </div>

@@ -5,7 +5,7 @@
 
 
             <div class="label-input-pair symptom-type-input-pair">
-                <span class="label">Symptom</span>
+                <span class="label-discrete">Symptom</span>
 
 
                 <p-autoComplete #autocomplete
@@ -22,7 +22,7 @@
             </div>
 
             <div class="label-input-pair intensity-level-input-pair">
-                <span class="label">Intensity:</span>
+                <span class="label-discrete">Intensity:</span>
                 <select class="drop-down"
                         formControlName="symptomIntensityLevelInput"
                         [(ngModel)]="viewModel.SymptomEntryCLO.IntensityLevel">

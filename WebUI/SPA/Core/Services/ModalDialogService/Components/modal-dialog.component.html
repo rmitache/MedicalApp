@@ -3,7 +3,7 @@
     <div [ngClass]="[ showAlert ? settings.alertClass : '', settings.contentClass]">
         <div [ngClass]="settings.headerClass">
             <span [ngClass]="settings.headerTitleClass" class="h1">{{title}}</span>
-            <i class="fa fa-times fa-2x close-button" (click)="close()"></i>
+            <i class="fa fa-times close-button" (click)="close()"></i>
             
         </div>
         <div [ngClass]="settings.bodyClass">
