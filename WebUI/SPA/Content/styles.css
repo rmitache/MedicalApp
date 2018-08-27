@@ -14,7 +14,7 @@ body {
 }
 
 
-/*Fonts*/
+/*Headers*/
 .h1 {
     font-family: Arial;
     font-size: 16pt;
@@ -39,6 +39,9 @@ body {
 
 
 
+
+/*Labels*/
+
 .label {
     font-size: 9pt;
     font-family: Arial;
@@ -49,9 +52,17 @@ body {
     font-family: Arial;
     color: #989797;
 }
-
-
-
+.label-inv {
+    font-size: 9pt;
+    font-family: Arial;
+    color: white;
+}
+.label-large-inv {
+    font-family: Arial;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    color:white;
+}
 
 .ui-chkbox-label {
     font-size: 9pt;

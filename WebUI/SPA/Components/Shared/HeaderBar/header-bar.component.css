@@ -10,12 +10,9 @@
 }
 
 .navigation-menu-item {
-    color: white;
     height: 30px;
     line-height: 30px;
-    font-family: Arial;
-    font-size: 15px;
-    letter-spacing: 1.5px;
+    
     padding-left: 20px;
     padding-right: 20px;
     text-decoration: none;
@@ -57,10 +54,7 @@
     .user-status-item span {
         display:inline-block;
         padding-left:3px;
-        color: white;
         line-height: 30px;
-        font-family: Arial;
-        font-size: 11px;
         vertical-align: middle;
         cursor: pointer;
     }

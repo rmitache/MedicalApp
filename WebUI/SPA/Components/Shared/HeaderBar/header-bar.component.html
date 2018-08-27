@@ -1,17 +1,17 @@
 <div class="frame">
     <div class="navigation-menu">
-        <a class="navigation-menu-item" href="/HomePage" [ngClass]="{'active': activePageName === 'HomePage' }">Dashboard</a>
-        <a class="navigation-menu-item" href="/AnalysisPage" [ngClass]="{'active': activePageName === 'AnalysisPage' }">Analysis</a>
+        <a class="navigation-menu-item label-large-inv" href="/HomePage" [ngClass]="{'active': activePageName === 'HomePage' }">Dashboard</a>
+        <a class="navigation-menu-item label-large-inv" href="/AnalysisPage" [ngClass]="{'active': activePageName === 'AnalysisPage' }">Analysis</a>
     </div>
     <div class="user-status-panel">
         <div (click)="onUserEmailClicked()" class="user-status-item user-name-item">
             <i class="fa fa-user"></i>
-            <span>{{viewModel.LoggedInUser?.Email }}</span>
+            <span class="label-inv">{{viewModel.LoggedInUser?.Email }}</span>
             
         </div>
         <div (click)="onLogoutTriggered()" class="user-status-item logout-item">
             <i class="fa fa-sign-out"></i>
-            <span>Logout</span>
+            <span class="label-inv">Logout</span>
         </div>
     </div>
 </div> 
