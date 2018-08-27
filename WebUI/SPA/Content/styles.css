@@ -57,40 +57,10 @@ body {
         stroke: blue;
     }
 }
-/*Controls*/
-.button,
-.btn {
-    color: #3d57bf;
-    padding: 8px 15px 8px 15px;
-    border-radius: 4px;
-    background-color: #e8e8ec;
-    cursor: pointer;
-    font-family: Arial;
-    font-size: 10pt;
-    text-transform: uppercase;
-    font-weight: bold;
-    border: 0;
-    box-shadow: none;
-}
-
-    .button:hover,
-    .btn:hover {
-        background-color: #dddddd;
-    }
 
 
-    .btn[disabled] {
-        background-color: #f3f3f3;
-        color: #bfbfbf;
-        cursor: default;
-    }
-
-        .btn[disabled]:hover {
-            background-color: #f3f3f3;
-        }
-
-.ui-inputtext {
-    border: solid 1px #dbdbdb !important;
+/*.ui-inputtext {
+    border: solid 5px #dbdbdb !important;
     font-size: 10pt !important;
     font-family: Arial !important;
     padding: 5px !important;
@@ -108,7 +78,7 @@ body {
 
     .ui-inputtext:focus {
         border: solid 1px gray !important;
-    }
+    }*/
 
 .drop-down {
     border: solid 1px #dbdbdb;

@@ -15,6 +15,7 @@ input.ng-invalid.ng-touched {
     float: left;
     margin-bottom: 25px;
     clear: both;
+    width:100%;
 }
 
 #new-password-div {
@@ -27,5 +28,5 @@ input.ng-invalid.ng-touched {
 
 
 .ui-inputtext {
-    width: 268px;
+    width: 100%;
 }

@@ -32,9 +32,6 @@ form {
             width: calc(100%);
         }
 
-            .frame .body .label-input-pair .ui-inputtext {
-                width: calc(100% - 10px);
-            }
 
 
 

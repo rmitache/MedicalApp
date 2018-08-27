@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { HeaderBarComponent } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 import { UserAccountEditorComponent } from 'SPA/Components/Shared/HeaderBar/UserAccountEditor/user-account-editor.component';
+import { InputTextModule } from 'primeng/primeng';
 
 // Components
 
@@ -17,7 +18,8 @@ import { UserAccountEditorComponent } from 'SPA/Components/Shared/HeaderBar/User
     imports: [
         BrowserModule,
         FormsModule,
-        ReactiveFormsModule,
+		ReactiveFormsModule,
+		InputTextModule
     ],
 	declarations: [
 		UserAccountEditorComponent,

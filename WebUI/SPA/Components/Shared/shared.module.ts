@@ -13,6 +13,7 @@ import { ChartModule } from 'primeng/primeng';
 import { ButtonModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
 import {RadioButtonModule} from 'primeng/primeng';
+import { InputTextModule } from 'primeng/primeng';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -29,6 +30,7 @@ import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
+
 
 @NgModule({
     imports: [
@@ -47,6 +49,7 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
 		ButtonModule,
 		CheckboxModule,
 		RadioButtonModule,
+		InputTextModule,
 		HeaderBarModule
     ],
     declarations: [
@@ -82,6 +85,7 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
 		ButtonModule,
 		CheckboxModule,
 		RadioButtonModule,
+		InputTextModule,
 		HeaderBarModule
     ]
 })
