@@ -19,8 +19,6 @@
         border-right: solid 15px transparent;
         border-top: none;
         position: relative;
-        /*left: calc(50% - 15px);
-        top: -18px;*/
     }
 
 
@@ -52,6 +50,3 @@
             vertical-align:middle
         }
 
-.h3 {
-    color: black;
-}

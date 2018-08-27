@@ -126,14 +126,23 @@ h4,
     color: gray;
 }
 
+.ui-inputtext {
+    /*font*/
+    /*font-family: Arial;
+    font-size: 16px;
+    color: black;*/
+}
+
 .drop-down {
     border: solid 1px #dbdbdb;
-    font-size: 10pt;
-    font-family: Arial;
     padding: 5px;
     padding-top: 3px;
     height: 29px;
 
+    /*font*/
+    /*font-family: Arial;
+    font-size: 14px;
+    color: black;*/
 }
 
     .drop-down:disabled {

@@ -22,7 +22,7 @@
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" class="horizontal-line"
               [attr.marker-start]="viewModel.VersionInfoWrapper.StartMarkerName"
               [attr.marker-end]="viewModel.VersionInfoWrapper.EndMarkerName" />
-    <svg:text *ngIf="viewModel.VersionInfoWrapper.PlanName!==null" x="0" y="5" style="font-family:Arial;font-size:10px;fill:gray;font-weight:bold">
+    <svg:text *ngIf="viewModel.VersionInfoWrapper.PlanName!==null" x="0" y="5" class="label-discrete" >
         {{viewModel?.VersionInfoWrapper?.PlanName}}
     </svg:text>
 
