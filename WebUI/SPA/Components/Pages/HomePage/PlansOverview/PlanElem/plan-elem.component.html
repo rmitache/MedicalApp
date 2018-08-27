@@ -1,16 +1,16 @@
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1"   >
     <div class="top-part">
-        <span class="h2 plan-name">{{viewModel.PlanCLO.Name}}</span>
+        <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
         <p-splitButton label="View" [model]="viewModel.GetMenuItems()" styleClass="ui-button-secondary"></p-splitButton>
     </div>
     <div class="bottom-part">
-        <div class="label-input-pair started-date-label-input-pair">
-            <span class="label">{{viewModel.StartDatePrefixString}}</span>
-            <span class="input-label label-text-dark">{{viewModel.RelativeStartDateString}}</span>
+        <div class="started-date-label-input-pair">
+            <span class="label-discrete">{{viewModel.StartDatePrefixString}}</span>
+            <span class="label">{{viewModel.RelativeStartDateString}}</span>
         </div>
-        <div class="label-input-pair ends-date-label-input-pair">
-            <span class="label">{{viewModel.EndDatePrefixString}}</span>
-            <span class="input-label label-text-dark" >{{viewModel.RelativeEndDateString}}</span>
+        <div class="ends-date-label-input-pair">
+            <span class="label-discrete">{{viewModel.EndDatePrefixString}}</span>
+            <span class="label" >{{viewModel.RelativeEndDateString}}</span>
         </div>
     </div>
 </div> 

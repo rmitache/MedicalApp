@@ -1,7 +1,7 @@
 <form [formGroup]="reactiveForm">
     <div class="frame">
         <div class="when-section">
-            <h2>WHEN</h2>
+            <h3>WHEN</h3>
             <p-calendar id="occurrence-date-time-picker"
                         formControlName="occurrenceDateTime"
                         dateFormat="dd-mm-yy"
@@ -12,7 +12,7 @@
         </div>
 
         <div class="health-level-section">
-            <h2>HOW ARE YOU FEELING ?</h2>
+            <h3>HOW ARE YOU FEELING ?</h3>
 
             <select class="drop-down" formControlName="healthLevel"
                     [(ngModel)]="viewModel.HealthStatusEntryCLO.HealthLevel">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="symptoms-section">
-            <span class="h2">WHAT ARE YOUR SYMPTOMS ?</span>
+            <span class="h3">WHAT ARE YOUR SYMPTOMS ?</span>
             <button pButton type="button" icon="fa fa-plus" label="Add Symptom"
                     (click)="onAddNewSymptomEntryTriggered()"></button>
             <br />

@@ -1,11 +1,7 @@
 .top-part /deep/ .ui-menu {
     width: 120px;
 }
-.top-part /deep/ .ui-menu .ui-menuitem-link {
-    font-family:Arial;
-    font-size:11px;
-    font-weight:bold;
-}
+
 .top-part /deep/ .ui-splitbutton {
     float: right;
 }
@@ -52,17 +48,24 @@
         float: left;
     }
 
+        .bottom-part .started-date-label-input-pair .label-discrete {
+            float: left;
+        }
+
+        .bottom-part .started-date-label-input-pair .label {
+            float: left;
+            clear: left;
+        }
+
     .bottom-part .ends-date-label-input-pair {
         float: right;
-        height:40px;
-        width:45%;
     }
 
-        .bottom-part .ends-date-label-input-pair .label {
-            float:right;
-            clear:both;
+        .bottom-part .ends-date-label-input-pair .label-discrete {
+            float: left;
         }
-        .bottom-part .ends-date-label-input-pair .input-label {
-            float: right;
-            clear: both;
+
+        .bottom-part .ends-date-label-input-pair .label {
+            float: left;
+            clear: left;
         }

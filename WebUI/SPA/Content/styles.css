@@ -26,7 +26,7 @@ h1,
 h2,
 .h2 {
     font-family: Arial;
-    font-size: 12pt;
+    font-size: 14pt;
     font-weight: bold;
     color: black;
 }
@@ -36,9 +36,16 @@ h2,
     font-weight: bold;
     color: #2399e5;
 }
-
 h3,
 .h3 {
+    font-family: Arial;
+    font-size: 12pt;
+    font-weight: bold;
+    color: black;
+}
+
+h4,
+.h4 {
     font-family: Arial;
     font-size: 10pt;
     font-weight: bold;
@@ -88,7 +95,12 @@ h3,
     color: #2399e5;
 }*/
 
-
+/*ontrols*/
+.ui-menuitem-link {
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+}
 .ui-inputtext:disabled {
     background-color: #f1f1f1;
     color: gray;
@@ -117,14 +129,15 @@ h3,
     float: left;
 }
 
-    .label-input-pair > span {
+    .label-input-pair > span:first-of-type {
         float: left;
         padding-bottom: 3px;
         height: 15px;
     }
 
-    .label-input-pair > input,
-    .label-input-pair > .drop-down {
+    .label-input-pair input,
+    .label-input-pair .drop-down,
+    .label-input-pair .input-label {
         float: left;
         clear: left;
     }
