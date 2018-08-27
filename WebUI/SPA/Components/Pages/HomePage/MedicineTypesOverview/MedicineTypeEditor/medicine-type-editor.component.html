@@ -3,7 +3,7 @@
     <div class="frame">
         <!--Name-->
         <div class="label-input-pair" id="name-div">
-            <span class="label">Name:</span>
+            <span class="label-discrete">Name:</span>
             <input type="text"
                    pInputText
                    formControlName="name"
@@ -15,7 +15,7 @@
 
         <!--Producer-->
         <div class="label-input-pair" id="producer-div">
-            <span class="label">Producer:</span>
+            <span class="label-discrete">Producer:</span>
             <input type="text"
                    pInputText
                    formControlName="producerName"
@@ -25,7 +25,7 @@
 
         <!--BaseUnitOfMeasure-->
         <div class="label-input-pair">
-            <span class="label">Unit of Measure</span>
+            <span class="label-discrete">Unit of Measure</span>
             <select class="drop-down"
                     [(ngModel)]="viewModel.MedicineTypeCLO.BaseUnitOfMeasure"
                     formControlName="baseUnitOfMeasure">
@@ -52,7 +52,7 @@
         <div class="label-input-pair" id="packaged-div"
              [style.visibility]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits === true ? 'visible' : 'hidden'">
             <div class="header">
-                <span class="label">Packaged as</span>
+                <span class="label-discrete">Packaged as</span>
             </div>
             <div class="body">
                 <select class="drop-down"
@@ -62,14 +62,14 @@
                     <option *ngFor="let packagedUnitDoseType of packagedUnitDoseTypesEnum | enumkeys" [value]="packagedUnitDoseType.value">{{packagedUnitDoseType.key}}</option>
                 </select>
 
-                <div class="inner-label">of</div>
+                <div class="inner-label label">of</div>
 
                 <input type="text"
                        id="packagedUnitDoseSize"
                        pInputText
                        formControlName="packagedUnitDoseSize"
                        [(ngModel)]="viewModel.MedicineTypeCLO.PackagedUnitDoseSize" />
-                <div class="inner-label">{{viewModel.MedicineTypeCLO.UnitOfMeasureName}} each</div>
+                <div class="inner-label label">{{viewModel.MedicineTypeCLO.UnitOfMeasureName}} each</div>
             </div>
         </div>
 

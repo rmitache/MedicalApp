@@ -30,12 +30,8 @@
 
 .menu-div{
     position:absolute;
-    /*left:-120px;*/
     top:25px;
-
     border:solid 1px #c6c6c6;
-    
-    
     background-color:white;
     z-index:99999;
 }
@@ -51,6 +47,5 @@
         background-color: #c6c6c6;
     }
 .menu-item .label {
-    color:black;
     display:inline-block;
 }

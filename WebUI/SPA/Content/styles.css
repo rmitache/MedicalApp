@@ -83,19 +83,25 @@ h4,
     letter-spacing: 1.5px;
     color:white;
 }
+
 .ui-chkbox-label {
     font-size: 9pt;
     font-family: Arial;
     color: #464646;
     cursor:pointer;
 }
-
+.ui-radiobutton-label {
+    font-size: 9pt;
+    font-family: Arial;
+    color: #464646;
+    cursor: pointer;
+}
 
 /*.secondary-color {
     color: #2399e5;
 }*/
 
-/*ontrols*/
+/*Controls*/
 .ui-menuitem-link {
     font-family: Arial;
     font-size: 12px;

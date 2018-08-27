@@ -5,7 +5,7 @@
 
             <!--Medicine picker-->
             <div class="label-input-pair medicine-type-input-pair">
-                <span class="label">Medicine Type</span>
+                <span class="label-discrete">Medicine Type</span>
                 <p-autoComplete #autocomplete
                                 formControlName="medicineTypeName"
                                 lazy="true"
@@ -19,14 +19,14 @@
 
             <!--Quantifier-->
             <div class="label-input-pair quantifier-input-pair">
-                <span class="label">Dosage</span>
+                <span class="label-discrete">Dosage</span>
 
                 <input pInputText type="text"  formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
             </div>
 
             <!--UnitDoseType-->
             <div class="label-input-pair dose-type-input-pair">
-                <span class="label"></span>
+                <span class="label-discrete"></span>
                 <select class="drop-down"
                         [value]="viewModel.IFRPGroupCLO.UnitDoseType"
                         (ngModelChange)="onUnitDoseTypeChanged($event)"
@@ -37,7 +37,7 @@
                 </select>
             </div>
 
-            <div class="of-label">of</div>
+            <div class="label of-label">of</div>
 
             <!--UnitDoseSize-->
             <div class="label-input-pair dose-size-input-pair">
@@ -52,15 +52,12 @@
             <!--Unit of Measure-->
             <div class="label-input-pair dose-uom-input-pair">
                 <span class="label"></span>
-                <!--<input type="text" class="ui-inputtext" disabled="disabled"
-                       [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />-->
-
                 <input pInputText type="text" disabled="disabled"
                        [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />
 
                 
             </div>
-            <div class="of-label">each</div>
+            <div class="label of-label">each</div>
             
             <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 

@@ -1,6 +1,6 @@
 <div class="frame">
     <ul class="nav-tabs">
-        <li *ngFor="let tabPanel of tabPanels" (click)="selectTab(tabPanel)" [class.active]="tabPanel.active">
+        <li class="label-large" *ngFor="let tabPanel of tabPanels" (click)="selectTab(tabPanel)" [class.active]="tabPanel.active">
             {{tabPanel.title}}
         </li>
     </ul>
