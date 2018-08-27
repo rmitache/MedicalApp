@@ -1,3 +1,4 @@
+
 <form [formGroup]="reactiveForm">
     
     <div class="frame">
@@ -6,12 +7,9 @@
         <div class="top-section">
             <div class="label-input-pair">
                 <span class="label">Name:</span>
-                <input type="text"
-                       class="ui-inputtext"
-                       formControlName="planName"
-                       id="plan-name-input"
-                       [(ngModel)]="viewModel.PlanCLO.Name" />
 
+                <input pInputText type="text" id="plan-name-input" formControlName="planName"  [(ngModel)]="viewModel.PlanCLO.Name" />
+                
             </div>
             <div class="label-input-pair start" formGroupName="dates">
                 <span class="label">

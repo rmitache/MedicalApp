@@ -1,15 +1,14 @@
 .frame /deep/ .ui-autocomplete input {
-    height: 27px;
-    width: 330px;
+    /*height: 27px;
     font-size: 10pt;
-    font-family: Arial;
-    
+    font-family: Arial;*/
+    width: 300px;
 }
 
 .frame /deep/ .ui-autocomplete .ui-button {
-    float: right;
+    /*float: right;
     margin-top: -26px;
-    height: 25px;
+    height: 25px;*/
 }
 
 .medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
@@ -56,7 +55,7 @@ input.ng-invalid.ng-touched {
 }
 
     .right-side .medicine-type-input-pair {
-        width: 330px;
+        width: 370px;
         margin-right: 35px;
     }
 
@@ -65,7 +64,7 @@ input.ng-invalid.ng-touched {
     }
 
         .right-side .quantifier-input-pair .ui-inputtext {
-            width: 20px;
+            width: 35px;
             text-align: right;
         }
 
@@ -126,4 +125,5 @@ input.ng-invalid.ng-touched {
     background-color: white;
     float: right;
     margin-top: -70px;
+    position:relative;
 }

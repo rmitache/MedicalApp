@@ -10,8 +10,8 @@
                                 formControlName="medicineTypeName"
                                 lazy="true"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
-                                [emptyMessage]="'No medicine types could be found. Please try a different name'"
-                                [placeholder]="'Type to choose a Medicine Type'"
+                                [emptyMessage]="'No matches found'"
+                                [placeholder]="'Choose a Medicine Type'"
                                 [dropdown]="true"
                                 (completeMethod)="onMedicineTypeTextBoxChanged($event)"
                                 (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>
@@ -21,9 +21,7 @@
             <div class="label-input-pair quantifier-input-pair">
                 <span class="label">Dosage</span>
 
-                <input type="text" class="ui-inputtext"
-                       formControlName="unitDoseQuantifierInput"
-                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
+                <input pInputText type="text"  formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
             </div>
 
             <!--UnitDoseType-->
@@ -44,21 +42,26 @@
             <!--UnitDoseSize-->
             <div class="label-input-pair dose-size-input-pair">
                 <span class="label"></span>
-                <input type="text"
-                       formControlName="unitdosesize"
-                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize"
+                <input pInputText type="text" formControlName="unitdosesize" 
                        (ngModelChange)="onUnitDoseSizeChanged($event)"
-                       class="ui-inputtext" [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null" />
+                       [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
+                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
+
             </div>
 
             <!--Unit of Measure-->
             <div class="label-input-pair dose-uom-input-pair">
                 <span class="label"></span>
-                <input type="text" class="ui-inputtext" disabled="disabled"
+                <!--<input type="text" class="ui-inputtext" disabled="disabled"
+                       [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />-->
+
+                <input pInputText type="text" disabled="disabled"
                        [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />
+
+                
             </div>
             <div class="of-label">each</div>
-            <!--<div class="close" (click)="onRemoveClicked()">X</div>-->
+            
             <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 
         </div>
