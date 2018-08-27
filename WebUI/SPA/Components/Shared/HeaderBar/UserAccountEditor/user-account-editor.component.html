@@ -3,18 +3,18 @@
     <div class="frame">
 
         <div class="label-input-pair" id="email-div">
-            <span class="label">Email:</span>
+            <span class="label-discrete">Email:</span>
             <input readonly="readonly" type="text" pInputText [value]="viewModel.UserAccountCLO.Email" />
 
         </div>
         <div class="label-input-pair" id="new-password-div">
-            <span class="label">New Password:</span>
+            <span class="label-discrete">New Password:</span>
             <input type="password" formControlName="newPassword" pInputText [value]="viewModel.NewPassword" />
         </div>
 
 
         <div class="label-input-pair" id="confirm-password-div">
-            <span class="label">Confirm Password:</span>
+            <span class="label-discrete">Confirm Password:</span>
             <input type="password" formControlName="confirmPassword" pInputText [value]="viewModel.ConfirmPassword" />
         </div>
     </div>
