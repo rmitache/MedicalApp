@@ -252,7 +252,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
 	public SaveData() {
 
 		// Automatically end the next last version before starting the new one
-		this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').toDate();
+		this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').endOf('day').toDate();
 
 		// Save the data
 		let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
@@ -319,10 +319,9 @@ class HardEditMode implements IPlanEditorModeImplementation {
 	// Public methods
 	public SaveData() {
 
-		// Automatically end the next last version before starting the new one
+		// Automatically adjust the previous version's endDate
 		if (this.prevVersion !== null) {
-
-			this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').toDate();
+			this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').endOf('day').toDate();
 		}
 
 		// Save the data

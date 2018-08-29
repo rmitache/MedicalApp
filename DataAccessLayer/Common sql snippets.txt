@@ -1,0 +1,5 @@
+﻿I. Manipulate timestamps (for versions for example)
+
+  update t_plan_version
+  set end_date_time = DATEADD(HOUR,23,DATEADD(MINUTE, 59, end_date_time)) 
+  where end_date_time is not null

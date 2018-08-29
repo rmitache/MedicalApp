@@ -76,6 +76,11 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             var projectedFactorRecordsList = new List<MedicineFactorRecord>();
             foreach (Plans.BLOs.Version version in plan.Versions)
             {
+                if (version.ID == 178 || version.ID == 181)
+                {
+
+                }
+
                 // Get the version startDate and endDate as Local time
                 DateTime localVersionStartDateTime = Functions.ConvertToLocalDateTime(version.StartDateTime, utcOffsetInMins);
                 DateTime? localVersionEndDateTime = null;
@@ -85,7 +90,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
                 // Create FactorRecords for each Rule
                 foreach (Rule rule in version.Rules)
                 {
-                    var localHitDatesTimesForRule = this.ruleHitPatternService.GetRuleDateTimeHitsPattern(rule, localVersionStartDateTime,localVersionEndDateTime,
+                    var localHitDatesTimesForRule = this.ruleHitPatternService.GetRuleDateTimeHitsPattern(rule, localVersionStartDateTime, localVersionEndDateTime,
                         localWindowRange);
 
 

@@ -126,6 +126,10 @@ h4,
     color: gray;
 }
 
+.ui-widget {
+    /*font-size: 16px !important;*/
+    /*font-family: Arial !important;*/
+}
 .ui-inputtext {
     /*font*/
     /*font-family: Arial;
@@ -138,6 +142,7 @@ h4,
     padding: 5px;
     padding-top: 3px;
     height: 29px;
+
 
     /*font*/
     /*font-family: Arial;
