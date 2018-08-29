@@ -44,14 +44,13 @@
 }
 
 .plan-div {
-    margin-top: 3px;
+    margin-bottom: 3px;
     position: relative;
 }
 
 
 
     .plan-div .factor-record-list-in-plan-grouping {
-        /*background-color: #dbdbdb;*/
         padding-top: 0;
         border-radius: 3px;
         width: calc(100% - 2px);
@@ -60,14 +59,15 @@
     .plan-div .plan-name-label {
         display: block;
         position: absolute;
-        top: -15px;
-        right: 0;
+        top: -7px;
+        right: 20px;
         color: #d8d8d8;
         text-overflow:ellipsis;
         overflow:hidden;
         width:100px;
         height:20px;
         white-space:nowrap;
+        text-align:right;
     }
 
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item:first-of-type {
