@@ -51,7 +51,16 @@ namespace DataAccessLayer.Repositories.PlanRepository
 
             return plan;
         }
-       
+        public void RenamePlan(int userID, string newName)
+        {
+            TPlan planEntity = entitiesContext.TPlan.AsNoTracking().Where(plan =>
+                       plan.UserId == userID).SingleOrDefault();
+            planEntity.Name = newName;
+
+            entitiesContext.Entry(planEntity).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
+        }
+
     }
 }
 

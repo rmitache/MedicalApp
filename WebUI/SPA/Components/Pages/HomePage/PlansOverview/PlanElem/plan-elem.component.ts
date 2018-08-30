@@ -32,13 +32,13 @@ export class PlanElemComponent {
 				}
 			},
 
-			{
-				Label: 'Rename',
-				OnClick: () => {
-					this.ActionTriggered.emit([this.planCLO, PlanActionType.Rename]);
+			//{
+			//	Label: 'Rename',
+			//	OnClick: () => {
+			//		this.ActionTriggered.emit([this.planCLO, PlanActionType.Rename]);
 
-				}
-			},
+			//	}
+			//},
 			{
 				Label: 'Made a mistake ?',
 				OnClick: () => {
@@ -83,7 +83,7 @@ export class PlanElemComponent {
 	private mainActionToPlanStatusMap: MainActionsToPLanStatusMap = {
 		Active: {
 			TooltipText: 'New changes for Plan',
-			Icon: 'fa fa-pencil',
+			Icon: 'fa fa-arrow-right',
 			ButtonClass: '',
 			OnClick: () => {
 				this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
