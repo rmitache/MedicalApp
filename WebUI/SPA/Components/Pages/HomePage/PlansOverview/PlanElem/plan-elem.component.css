@@ -35,7 +35,7 @@
 
     .top-part .plan-name {
         display: inline-block;
-        width: 60%;
+        width: 68%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space:nowrap;
@@ -44,7 +44,7 @@
 
     .top-part .buttons-div {
         float: right;
-        width: 38%;
+        width: 30%;
         height: 30px;
     }
 

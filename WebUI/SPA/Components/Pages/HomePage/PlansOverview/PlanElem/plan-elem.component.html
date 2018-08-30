@@ -5,13 +5,14 @@
 
 
         <div class="buttons-div">
-            <button pButton type="button" icon="fa fa-play"
-                    (click)="onSplitButtonClicked($event)"></button>
-            <!--<button pButton type="button" icon="fa fa-stop" class="ui-button-danger"
-                    (click)="onSplitButtonClicked($event)"></button>-->
-
+            <button *ngIf="viewModel.MainAction"
+                    pButton 
+                    type="button" 
+                    
+                    [icon]="viewModel.MainAction.Icon" 
+                    [attr.class]="viewModel.MainAction.ButtonClass"
+                    (click)="viewModel.MainAction.OnClick()"></button>
             <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
-            <!--<p-splitButton label="Change" [model]="viewModel.GetMenuItems()" styleClass="ui-button-secondary"></p-splitButton>-->
         </div>
     </div>
     <div class="bottom-part">

@@ -34,6 +34,7 @@
     border: solid 1px #c6c6c6;
     background-color: white;
     z-index: 99999;
+    left:-150px;
 }
 
 .menu-item {
@@ -42,7 +43,7 @@
     vertical-align: middle;
     cursor: pointer;
     padding: 8px;
-    min-width: 80px;
+    width: 140px;
 }
 
     .menu-item:hover {

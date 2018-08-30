@@ -8,7 +8,6 @@
          [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'">
         <div class="menu-item" *ngFor="let menuItem of viewModel.MenuItems" (click)="onMenuItemClicked(menuItem)">
             <span class="label">{{menuItem.Name}}</span>
-
         </div>
     </div>
 </div>
