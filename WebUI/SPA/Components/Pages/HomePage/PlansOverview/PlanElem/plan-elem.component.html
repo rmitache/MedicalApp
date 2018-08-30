@@ -1,12 +1,23 @@
-<div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1"   >
+<div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
     <div class="top-part">
         <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
-        <p-splitButton label="View" [model]="viewModel.GetMenuItems()" styleClass="ui-button-secondary"></p-splitButton>
+        
+
+
+        <div class="buttons-div">
+            <button pButton type="button" icon="fa fa-play"
+                    (click)="onSplitButtonClicked($event)"></button>
+            <!--<button pButton type="button" icon="fa fa-stop" class="ui-button-danger"
+                    (click)="onSplitButtonClicked($event)"></button>-->
+
+            <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
+            <!--<p-splitButton label="Change" [model]="viewModel.GetMenuItems()" styleClass="ui-button-secondary"></p-splitButton>-->
+        </div>
     </div>
     <div class="bottom-part">
         <div class="started-date-label-input-pair">
-            <span class="label-discrete">{{viewModel.StartDatePrefixString}}</span>
-            <span class="label">{{viewModel.RelativeStartDateString}}</span>
+                <span class="label-discrete">{{viewModel.StartDatePrefixString}}</span>
+                <span class="label">{{viewModel.RelativeStartDateString}}</span>
         </div>
         <div class="ends-date-label-input-pair">
             <span class="label-discrete">{{viewModel.EndDatePrefixString}}</span>

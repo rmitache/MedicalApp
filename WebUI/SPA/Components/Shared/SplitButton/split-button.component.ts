@@ -12,8 +12,9 @@ import * as $ from 'jquery';
 export class SplitButtonComponent {
     // Fields
     @Input('MenuItems')
-    private menuItems: MenuItem[];
-    @ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
+	private menuItems: MenuItem[];
+	@ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
+	@ViewChild('button') buttonElement: ElementRef;
     private readonly viewModel: ViewModel = {
         MenuItems: null,
         MenuPanelVisible: false,
@@ -32,6 +33,7 @@ export class SplitButtonComponent {
     ngOnInit() {
         this.viewModel.MenuItems = this.menuItems;
     }
+	buttonRight: number;
 
     // Events
     @Output() public ItemClicked: EventEmitter<MenuItem> = new EventEmitter();
@@ -46,13 +48,13 @@ export class SplitButtonComponent {
         // Position and show menu panel
         else {
             this.viewModel.MenuPanelVisible = true;
-            var panelWidth = (this.menuItemsBarElement.nativeElement as HTMLElement).clientWidth;
-            this.viewModel.MenuPanelLeftPosition = -panelWidth + 24;
+			var panelWidth = (this.menuItemsBarElement.nativeElement as HTMLElement).clientWidth;
+			var buttonWidth = (this.buttonElement.nativeElement as HTMLElement).clientWidth;
+
+			let buttonLeftOffset = (this.buttonElement.nativeElement as HTMLElement).offsetLeft;
+			this.viewModel.MenuPanelLeftPosition = -panelWidth + buttonWidth + buttonLeftOffset;
             document.addEventListener('click', this.onClickedOutside, true); // Add global click handler to detect "click outside" actions
         }
-
-        //$event.preventDefault();
-        //$event.stopPropagation()
     }
     private onClickedOutside = ($event: Event) => {
         this.viewModel.MenuPanelVisible = false;

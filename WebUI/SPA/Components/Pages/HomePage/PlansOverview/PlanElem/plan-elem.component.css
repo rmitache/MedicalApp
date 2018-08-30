@@ -1,22 +1,19 @@
 .top-part /deep/ .ui-menu {
-    width: 120px;
+    /*width: 120px;*/
+    background-color:white !important;
 }
 
-.top-part /deep/ .ui-splitbutton {
-    float: right;
+.top-part /deep/ .ui-shadow {
+    -webkit-box-shadow: none;
+    box-shadow:none;
 }
 
-    .top-part /deep/ .ui-splitbutton .ui-button-text-only .ui-button-text {
-        display: none;
-    }
-
-    .top-part /deep/ .ui-splitbutton .ui-button-text-only {
-        visibility: hidden;
-    }
-
-.top-part /deep/ .ui-splitbutton-menubutton {
-    border-radius: 4px;
+.top-part /deep/ .ui-button-text {
+    padding:.25em .5em;
 }
+
+
+
 
 
 .frame {
@@ -38,7 +35,27 @@
 
     .top-part .plan-name {
         display: inline-block;
+        width: 60%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space:nowrap;
     }
+
+
+    .top-part .buttons-div {
+        float: right;
+        width: 38%;
+        height: 30px;
+    }
+
+        .top-part .buttons-div /deep/ .ui-buttonset,
+        .top-part .buttons-div /deep/ button {
+            font-size: 14px;
+            float: right;
+        }
+        .top-part .buttons-div /deep/ .ui-buttonset .fa {
+            color: black;
+        }
 
 .bottom-part {
     width: 100%;

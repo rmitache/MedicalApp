@@ -1,14 +1,15 @@
 <div class="frame">
 
-    <button pButton type="button" icon="fa fa-caret-down" class="ui-button-secondary"
+    <button pButton type="button" icon="fa fa-caret-down" class="ui-button-secondary" #button
             (click)="onSplitButtonClicked($event)"></button>
 
     <div class="menu-div" #menuItemsBar
-         [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'"
-         [style.left.px]="viewModel.MenuPanelLeftPosition ? viewModel.MenuPanelLeftPosition : 0">
+         [style.left.px]="viewModel.MenuPanelLeftPosition ? viewModel.MenuPanelLeftPosition : ''"
+         [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'">
         <div class="menu-item" *ngFor="let menuItem of viewModel.MenuItems" (click)="onMenuItemClicked(menuItem)">
             <span class="label">{{menuItem.Name}}</span>
 
         </div>
     </div>
 </div>
+

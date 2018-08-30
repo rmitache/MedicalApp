@@ -3,6 +3,7 @@
     overflow: visible;
     position: relative;
 }
+
 .icon-button-frame {
     width: 16px;
     height: 16px;
@@ -13,9 +14,8 @@
 }
 
 .icon-button-frame {
-
-
 }
+
     .icon-button-frame:hover {
         background-color: #73c0f1;
     }
@@ -28,13 +28,14 @@
 
 
 
-.menu-div{
-    position:absolute;
-    top:25px;
-    border:solid 1px #c6c6c6;
-    background-color:white;
-    z-index:99999;
+.menu-div {
+    position: absolute;
+    top: 25px;
+    border: solid 1px #c6c6c6;
+    background-color: white;
+    z-index: 99999;
 }
+
 .menu-item {
     height: 10px;
     line-height: 10px;
@@ -43,9 +44,11 @@
     padding: 8px;
     min-width: 80px;
 }
+
     .menu-item:hover {
         background-color: #c6c6c6;
     }
-.menu-item .label {
-    display:inline-block;
-}
+
+    .menu-item .label {
+        display: inline-block;
+    }
