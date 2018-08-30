@@ -63,7 +63,7 @@ export class StopPlanDialogComponent implements IModalDialog {
 	// Public methods
 	public SaveData(): Promise<CLOs.PlanCLO> {
 		let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
-		latestVersion.EndDateTime = this.viewModel.StopDate;
+		latestVersion.EndDateTime = moment(this.viewModel.StopDate).endOf('day').toDate();
 
 		// Save the data
 		let saveDataPromise = this.globalDataService.UpdatePlan(this.viewModel.PlanCLO);

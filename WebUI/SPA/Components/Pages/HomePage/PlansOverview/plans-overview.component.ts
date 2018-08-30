@@ -133,13 +133,12 @@ export class PlansOverviewComponent {
 								compInstance.SaveData()
 									.then(() => {
 
-										//this.reloadDataFromServer()
-										//	.then(() => {
-										//		this.refreshUI();
-										//	});
+										this.reloadDataFromServer()
+											.then(() => {
+												this.refreshUI();
+											});
 
-
-										//this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+										this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
 										setTimeout(() => {
 											this.spinnerService.Hide();
