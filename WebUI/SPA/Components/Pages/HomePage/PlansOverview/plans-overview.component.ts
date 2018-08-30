@@ -16,6 +16,7 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 // Components
 import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
+import { StopPlanDialogComponent } from 'SPA/Components/Pages/HomePage/PlansOverview/StopPlanDialog/stop-plan-dialog.component';
 
 
 @Component({
@@ -106,6 +107,67 @@ export class PlansOverviewComponent {
 
 
 	}
+	private openStopPlanDialog(planCLO: CLOs.PlanCLO) {
+
+		
+			this.modalDialogService.OpenDialog(this.viewContainerRef, {
+				title: 'Stop Plan',
+				childComponent: StopPlanDialogComponent,
+				data: {
+					stopDate: moment().endOf('day').toDate(),
+					planCLO: planCLO
+				},
+				actionButtons: [
+					{
+						isDisabledFunction: (childComponentInstance: any) => {
+							let compInstance = childComponentInstance as StopPlanDialogComponent;
+							return !compInstance.GetValidState();
+						},
+						text: 'Stop',
+						buttonClass: 'ui-button-danger',
+						onAction: (childComponentInstance: any) => {
+							let promiseWrapper = new Promise<void>((resolve) => {
+								this.spinnerService.Show();
+
+								let compInstance = childComponentInstance as StopPlanDialogComponent;
+								compInstance.SaveData()
+									.then(() => {
+
+										//this.reloadDataFromServer()
+										//	.then(() => {
+										//		this.refreshUI();
+										//	});
+
+
+										//this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+
+										setTimeout(() => {
+											this.spinnerService.Hide();
+											resolve();
+										}, 200);
+
+									});
+							});
+							return promiseWrapper;
+						}
+					},
+					{
+						isDisabledFunction: (childComponentInstance: any) => {
+							return false;
+						},
+						text: 'Cancel',
+						onAction: () => {
+							return true;
+						},
+						buttonClass: 'ui-button-secondary'
+					}
+				]
+
+
+			});
+
+
+	}
 	private reloadDataFromServer(): Promise<void> {
 		let promise = this.dataService.GetPlans()
 			.then(planCLOs => {
@@ -173,17 +235,30 @@ export class PlansOverviewComponent {
 		let actionTypeID: PlanActionType = arr[1];
 		let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
 
-		if (actionTypeID === PlanActionType.Adjust) {
-			// Adjust
-			this.openPlanEditor('Adjust Plan', 'Confirm adjustment', cloneOfPlanCLO, PlanEditorMode.Adjust);
-		} else if (actionTypeID === PlanActionType.HardEdit) {
-			// HardEdit
-			this.openPlanEditor('Hard modify version', 'Save changes', cloneOfPlanCLO, PlanEditorMode.HardEdit);
-		} else if (actionTypeID === PlanActionType.Restart) {
-			// Restart
-			this.openPlanEditor('Restart plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
-		} else {
-			throw new Error('Action not recognized');
+		switch (actionTypeID) {
+			case PlanActionType.Adjust:
+				this.openPlanEditor('Make changes to Plan', 'Confirm changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
+				break;
+
+			case PlanActionType.HardEdit:
+				this.openPlanEditor('Correct latest version', 'Save', cloneOfPlanCLO, PlanEditorMode.HardEdit);
+				break;
+
+			case PlanActionType.Restart:
+				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
+				break;
+
+			case PlanActionType.Rename:
+				alert('rename plan');
+				break;
+			case PlanActionType.Stop:
+				this.openStopPlanDialog(planCLO);
+				break;
+
+			case PlanActionType.CreateNew:
+				throw new Error('CreateNew is handled separately');
+			default:
+				throw new Error('Action not recognized');
 		}
 	}
 	private onSelectedViewModeChanged(event) {
@@ -203,5 +278,7 @@ export enum PlanActionType {
 	CreateNew,
 	Adjust,
 	HardEdit,
-	Restart
+	Restart,
+	Stop,
+	Rename
 }

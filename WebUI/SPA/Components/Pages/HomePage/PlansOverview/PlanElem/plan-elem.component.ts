@@ -9,7 +9,7 @@ import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
 import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
-import { MenuItem } from 'SPA/Components/Shared/SplitButton/split-button.component';
+import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-button.component';
 
 @Component({
 	selector: 'plan-elem',
@@ -24,15 +24,23 @@ export class PlanElemComponent {
 	private readonly planStatusesEnum = Enums.PlanStatus;
 	private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
 		Active: [
-			//{
-			//	Name: 'Adjust',
-			//	OnClick: () => {
-			//		this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
-
-			//	}
-			//},
 			{
-				Name: 'Hard edit latest version',
+				Label: 'Stop',
+				OnClick: () => {
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.Stop]);
+
+				}
+			},
+
+			{
+				Label: 'Rename',
+				OnClick: () => {
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.Rename]);
+
+				}
+			},
+			{
+				Label: 'Made a mistake ?',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
 
@@ -41,7 +49,7 @@ export class PlanElemComponent {
 		],
 		ActiveWithUpcomingAdjustment: [
 			{
-				Name: 'Hard edit',
+				Label: 'Hard edit',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
 				}
@@ -49,7 +57,7 @@ export class PlanElemComponent {
 		],
 		Inactive: [
 			{
-				Name: 'Re-start',
+				Label: 'Re-start',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.Restart]);
 				}
@@ -57,7 +65,7 @@ export class PlanElemComponent {
 		],
 		UpcomingAsNew: [
 			{
-				Name: 'Hard modify',
+				Label: 'Hard modify',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
 				}
@@ -65,7 +73,7 @@ export class PlanElemComponent {
 		],
 		UpcomingAsRestarted: [
 			{
-				Name: 'Hard modify',
+				Label: 'Hard modify',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
 				}
@@ -74,6 +82,7 @@ export class PlanElemComponent {
 	};
 	private mainActionToPlanStatusMap: MainActionsToPLanStatusMap = {
 		Active: {
+			TooltipText: 'New changes for Plan',
 			Icon: 'fa fa-pencil',
 			ButtonClass: '',
 			OnClick: () => {
@@ -205,7 +214,7 @@ interface ViewModel {
 
 }
 interface MenuItemsToPLanStatusMap {
-	[planStatusName: string]: MenuItem[];
+	[planStatusName: string]: SplitButtonMenuItem[];
 
 }
 
@@ -214,6 +223,7 @@ interface MainActionsToPLanStatusMap {
 
 }
 interface MainActionButton {
+	TooltipText?: string;
 	Icon: string;
 	ButtonClass: string;
 	OnClick();

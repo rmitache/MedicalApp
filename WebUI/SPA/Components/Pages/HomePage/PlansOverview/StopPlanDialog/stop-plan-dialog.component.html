@@ -1,0 +1,14 @@
+<form [formGroup]="reactiveForm">
+
+    <div class="frame">
+
+        <span class="h4">{{viewModel.PlanCLO.Name}}</span><br />
+        <span class="label-discrete">Stop at the end of:</span>
+
+        <p-calendar formControlName="stopDate"
+                    dateFormat="dd-mm-yy"
+                    id="stop-date-picker"
+                    [(ngModel)]="viewModel.StopDate"
+                    showIcon="true"></p-calendar>
+    </div>
+</form>

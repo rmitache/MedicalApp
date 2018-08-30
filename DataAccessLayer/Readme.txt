@@ -2,6 +2,7 @@
 
 dotnet ef dbcontext scaffold "Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --context DataEntitiesContext --output-dir Entities -v -f
 
+OBS -> when u run the above, the DataEntitiesContext.cs file gets overriden and you need to manually apply point VI again !!!!!
 
 II. FUTURE (optional) - Wait for version 2.1 of EF Core to be able to preserve database table/column names
 https://stackoverflow.com/questions/46934893/how-to-prevent-entity-framework-core-2-0-from-renaming-tables-and-columns-in-gen
@@ -32,4 +33,4 @@ VI. Code which should be inside  protected override void OnConfiguring(DbContext
 	- Code is used for setting timezoneKind on all datetimes taken from the DB to UTC 
 
 	// Replace default materializer source to custom, to convert DateTimes
-        options.ReplaceService<IEntityMaterializerSource, DateTimeKindEntityMaterializerSource>();
+    optionsBuilder.ReplaceService<IEntityMaterializerSource, DateTimeKindEntityMaterializerSource>();

@@ -37,13 +37,13 @@ export class MedicineTypesOverviewComponent {
         GetMenuItems: (medicineTypeCLO: CLOs.MedicineTypeCLO) => {
             var menuItems = [
                 {
-                    Name: 'Add supply',
+                    Label: 'Add supply',
                     OnClick: () => {
                         this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
                     }
                 },
                 {
-                    Name: 'Clear supply',
+					Label: 'Clear supply',
                     OnClick: () => {
                         this.onClearSupplyTriggered(medicineTypeCLO);
                     }

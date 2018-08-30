@@ -12,7 +12,7 @@ import * as $ from 'jquery';
 export class SplitButtonComponent {
 	// Fields
 	@Input('MenuItems')
-	private menuItems: MenuItem[];
+	private menuItems: SplitButtonMenuItem[];
 	@ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
 	@ViewChild('button') buttonElement: ElementRef;
 	private readonly viewModel: ViewModel = {
@@ -36,7 +36,7 @@ export class SplitButtonComponent {
 	buttonRight: number;
 
 	// Events
-	@Output() public ItemClicked: EventEmitter<MenuItem> = new EventEmitter();
+	@Output() public ItemClicked: EventEmitter<SplitButtonMenuItem> = new EventEmitter();
 
 	// Event handlers
 	private onSplitButtonClicked($event: Event) {
@@ -64,7 +64,7 @@ export class SplitButtonComponent {
 		// Remove handler 
 		document.removeEventListener('click', this.onClickedOutside, true);
 	}
-	private onMenuItemClicked = (menuItem: MenuItem) => {
+	private onMenuItemClicked = (menuItem: SplitButtonMenuItem) => {
 		menuItem.OnClick();
 	}
 
@@ -73,13 +73,13 @@ export class SplitButtonComponent {
 
 
 interface ViewModel {
-	MenuItems: MenuItem[];
+	MenuItems: SplitButtonMenuItem[];
 	MenuPanelVisible: boolean;
 	MenuPanelLeftPosition: number;
 	MenuPanelTopPosition: number;
 }
-export interface MenuItem {
-	Name: string;
+export interface SplitButtonMenuItem {
+	Label: string;
 	OnClick();
 	Icon?: string;
 }
