@@ -86,7 +86,8 @@ export class GenericCLOFactory {
                 });
             }
             // Value is simply a js Date-------------------------------------
-            else if (valueOnCLO instanceof Date) {
+			else if (valueOnCLO instanceof Date) {
+				valueOnCLO.setMilliseconds(0);
 				outputObj[propertyName] = valueOnCLO.toJSON();
 			}
             //---------------------------------------------------------------

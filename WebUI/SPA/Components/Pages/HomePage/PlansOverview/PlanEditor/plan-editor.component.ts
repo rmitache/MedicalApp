@@ -116,9 +116,17 @@ export class PlanEditorComponent implements IModalDialog {
 
 	// Public methods
 	public SaveData(): Promise<CLOs.PlanCLO> {
+
+		// Set dates to startOf/endOf day 
+		this.viewModel.CurrentVersionCLO.StartDateTime = moment(this.viewModel.CurrentVersionCLO.StartDateTime).startOf('day').toDate();
 		if (this.viewModel.CurrentVersionCLO.EndDateTime !== null) {
 			this.viewModel.CurrentVersionCLO.EndDateTime = moment(this.viewModel.CurrentVersionCLO.EndDateTime).endOf('day').toDate();
 		}
+		let prevVersion = this.viewModel.PlanCLO.GetSecondLatestVersion();
+		if (prevVersion !== null) {
+			prevVersion.EndDateTime = moment(prevVersion.EndDateTime).endOf('day').toDate();
+		}
+
 
 		let saveDataPromise = this.currentModeInstance.SaveData();
 
@@ -197,9 +205,6 @@ class CreateNewMode implements IPlanEditorModeImplementation {
 
 	// Public methods
 	public SaveData() {
-		let latestVersion = this.planCLO.GetLatestVersion();
-		latestVersion.StartDateTime
-
 
 		let saveDataPromise = this.globalDataService.AddPlan(this.vm.PlanCLO);
 		return saveDataPromise;
@@ -324,7 +329,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
 		if (this.prevVersion !== null) {
 			this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').endOf('day').toDate();
 		}
-		
+
 
 		// Save the data
 		let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);

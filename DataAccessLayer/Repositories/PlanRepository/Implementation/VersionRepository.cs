@@ -26,8 +26,6 @@ namespace DataAccessLayer.Repositories
         public TPlanVersion AddVersion(TPlanVersion version, int planID)
         {
             version.PlanId = planID;
-            version.StartDateTime = version.StartDateTime.ZeroMilliseconds();
-            version.EndDateTime = (version.EndDateTime != null) ? ((DateTime)version.EndDateTime).ZeroMilliseconds() : version.EndDateTime;
 
             entitiesContext.TPlanVersion.Add(version);
             entitiesContext.SaveChanges();
@@ -38,9 +36,6 @@ namespace DataAccessLayer.Repositories
         {
             //
             modifiedVersion.PlanId = planID;
-            modifiedVersion.StartDateTime = modifiedVersion.StartDateTime.ZeroMilliseconds();
-            modifiedVersion.EndDateTime = (modifiedVersion.EndDateTime != null) ? ((DateTime)modifiedVersion.EndDateTime).ZeroMilliseconds() 
-                : modifiedVersion.EndDateTime;
             entitiesContext.Entry(modifiedVersion).State = EntityState.Modified;
 
             // Mark the version and all children as Modified or Added
