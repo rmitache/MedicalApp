@@ -365,7 +365,7 @@ class RestartMode implements IPlanEditorModeImplementation {
 		// Custom form logic 
 		this.reactiveForm.get('planName').disable();
 		this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
-			return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
+			return advancedPlanDatesValidator(control as FormGroup, this.prevVersion, false);
 		}]);
 
 		// Prepare ViewModel 
@@ -415,7 +415,7 @@ function basicPlanDatesValidator(control: AbstractControl) {
 
 	return null;
 }
-function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionCLO) {
+function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionCLO, newStartDateCanBeBeforePrevVersionEndDate: boolean = true) {
 
 	// Variables
 	var startDateInput = group.controls['startDate'];
@@ -433,6 +433,13 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
 		(moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
 		startDateErrorsCount++;
 		endDateErrorsCount++;
+	}
+
+	// Rule 3. Conditional: newversion.StartDate must be > prevVersion.EndDate 
+	if (newStartDateCanBeBeforePrevVersionEndDate === false) {
+		if (prevVersion !== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.EndDateTime).endOf('day'))) {
+			startDateErrorsCount++;
+		}
 	}
 
 	// Apply logic
