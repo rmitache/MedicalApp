@@ -1,4 +1,3 @@
-<!--{{planStatusesEnum[planCLO.Status]}}-->
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
     <div class="top-part">
         <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
@@ -16,9 +15,9 @@
         </div>
     </div>
     <div class="bottom-part">
-        <i class="fa fa-question-circle"></i>
+        <i [ngClass]="viewModel.StatusIcon"
+           [style.color]="viewModel.StatusIconColor"></i>
         <div class="left-side-text-div">
-
             <span class="label-discrete">{{viewModel.DateInfoLabel}}</span>
             <span class="label">{{viewModel.DateInfoValue}}</span>
 

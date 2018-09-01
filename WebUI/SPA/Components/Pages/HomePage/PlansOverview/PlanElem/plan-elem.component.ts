@@ -92,14 +92,15 @@ export class PlanElemComponent {
 	};
 	private readonly viewModel: ViewModel = {
 		PlanCLO: null,
-		Color: null,
 		GetMenuItems: () => {
 			let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
 			return this.menuItemsToPlanStatusMap[planStatusName];
 		},
 		MainAction: null,
 
-		StatusString: null,
+		StatusIcon: null,
+		StatusIconColor: null,
+
 		DateInfoLabel: null,
 		DateInfoValue: null,
 
@@ -121,7 +122,35 @@ export class PlanElemComponent {
 
 
 	}
+	private getStatusIconAndColor(status: Enums.PlanStatus) {
+		var iconName: string ;
+		var colorName: string;
+		switch (status) {
+			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
+			case Enums.PlanStatus.ActiveWITHUpcomingStop:
+				iconName = 'fa fa-check';
+				colorName = '#2399e5';
+				break;
 
+			case Enums.PlanStatus.UpcomingAsNew:
+			case Enums.PlanStatus.UpcomingAsRestarted:
+				iconName = 'fa fa-clock-o';
+				colorName = '#94e1f6';
+				break;
+
+			case Enums.PlanStatus.Stopped:
+				iconName = 'fa fa-stop-circle';
+				colorName = 'red';
+				break;
+
+		}
+
+		return {
+			iconName: iconName,
+			color: colorName
+		};
+	}
 
 	// Constructor 
 	constructor(
@@ -129,8 +158,9 @@ export class PlanElemComponent {
 	}
 	ngOnInit() {
 		this.viewModel.PlanCLO = this.planCLO;
-		this.viewModel.StatusString = Enums.PlanStatus[this.planCLO.Status];
-		this.viewModel.Color = StringToColour(this.viewModel.PlanCLO.Name);
+		var statusIconInfo = this.getStatusIconAndColor(this.planCLO.Status);
+		this.viewModel.StatusIcon = statusIconInfo.iconName;
+		this.viewModel.StatusIconColor = statusIconInfo.color;
 
 		// StartDate and EndDate labels according to Plan.Status
 		let latestVersion = this.planCLO.GetLatestVersion();
@@ -199,8 +229,10 @@ interface ViewModel {
 	GetMenuItems();
 	MainAction: MainActionButton;
 
-	Color: string;
-	StatusString: string;
+
+	StatusIcon: string;
+	StatusIconColor: string;
+
 	DateInfoLabel: string;
 	DateInfoValue: string;
 }
