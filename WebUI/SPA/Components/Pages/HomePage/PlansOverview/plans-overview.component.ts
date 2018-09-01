@@ -109,61 +109,61 @@ export class PlansOverviewComponent {
 	}
 	private openStopPlanDialog(planCLO: CLOs.PlanCLO) {
 
-		
-			this.modalDialogService.OpenDialog(this.viewContainerRef, {
-				title: 'Stop Plan',
-				childComponent: StopPlanDialogComponent,
-				data: {
-					stopDate: moment().endOf('day').toDate(),
-					planCLO: planCLO
-				},
-				actionButtons: [
-					{
-						isDisabledFunction: (childComponentInstance: any) => {
-							let compInstance = childComponentInstance as StopPlanDialogComponent;
-							return !compInstance.GetValidState();
-						},
-						text: 'Stop',
-						buttonClass: 'ui-button-danger',
-						onAction: (childComponentInstance: any) => {
-							let promiseWrapper = new Promise<void>((resolve) => {
-								this.spinnerService.Show();
 
-								let compInstance = childComponentInstance as StopPlanDialogComponent;
-								compInstance.SaveData()
-									.then(() => {
-
-										this.reloadDataFromServer()
-											.then(() => {
-												this.refreshUI();
-											});
-
-										this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
-
-										setTimeout(() => {
-											this.spinnerService.Hide();
-											resolve();
-										}, 200);
-
-									});
-							});
-							return promiseWrapper;
-						}
+		this.modalDialogService.OpenDialog(this.viewContainerRef, {
+			title: 'Stop Plan',
+			childComponent: StopPlanDialogComponent,
+			data: {
+				stopDate: moment().endOf('day').toDate(),
+				planCLO: planCLO
+			},
+			actionButtons: [
+				{
+					isDisabledFunction: (childComponentInstance: any) => {
+						let compInstance = childComponentInstance as StopPlanDialogComponent;
+						return !compInstance.GetValidState();
 					},
-					{
-						isDisabledFunction: (childComponentInstance: any) => {
-							return false;
-						},
-						text: 'Cancel',
-						onAction: () => {
-							return true;
-						},
-						buttonClass: 'ui-button-secondary'
+					text: 'Stop',
+					buttonClass: 'ui-button-danger',
+					onAction: (childComponentInstance: any) => {
+						let promiseWrapper = new Promise<void>((resolve) => {
+							this.spinnerService.Show();
+
+							let compInstance = childComponentInstance as StopPlanDialogComponent;
+							compInstance.SaveData()
+								.then(() => {
+
+									this.reloadDataFromServer()
+										.then(() => {
+											this.refreshUI();
+										});
+
+									this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+
+									setTimeout(() => {
+										this.spinnerService.Hide();
+										resolve();
+									}, 200);
+
+								});
+						});
+						return promiseWrapper;
 					}
-				]
+				},
+				{
+					isDisabledFunction: (childComponentInstance: any) => {
+						return false;
+					},
+					text: 'Cancel',
+					onAction: () => {
+						return true;
+					},
+					buttonClass: 'ui-button-secondary'
+				}
+			]
 
 
-			});
+		});
 
 
 	}
@@ -176,22 +176,85 @@ export class PlansOverviewComponent {
 	}
 	private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
 
-		let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
-			let numericVal = plan.Status as number;
-			if (planStatusViewMode === this.planStatusViewModes.Active) {
-				return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
-			}
-			if (planStatusViewMode === this.planStatusViewModes.Inactive) {
-				return (numericVal === Enums.PlanStatus.Inactive);
-			}
-			if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
-				return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
-			}
+		//let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
+		//	let numericVal = plan.Status as number;
 
-			return null;
-		});
+		//	// Active and ActiveWithUpcomingAdjustment
+		//	if (planStatusViewMode === this.planStatusViewModes.Active) {
+		//		return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
+		//	}
 
+		//	// Inactive
+		//	if (planStatusViewMode === this.planStatusViewModes.Inactive) {
+		//		return (numericVal === Enums.PlanStatus.Inactive);
+		//	}
+
+		//	// UpcomingAsNew and UpcomingAsRestarted
+		//	if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
+		//		return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
+		//	}
+
+		//	return null;
+		//});
+		let filteredPlans = this.viewModel.AvailablePlans;
 		return filteredPlans;
+	}
+	private triggerPlanAction(existingPlanCLO: CLOs.PlanCLO, actionType: PlanActionType) {
+
+
+
+		switch (actionType) {
+			// CreateNew
+			case PlanActionType.CreateNew:
+				let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
+				this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
+				break;
+
+			// Change
+			case PlanActionType.Change:
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(existingPlanCLO);
+				this.openPlanEditor('Make changes to Plan', 'Confirm changes', cloneOfPlanCLO, PlanEditorMode.Change);
+				break;
+
+			// CancelUpcomingChanges
+			case PlanActionType.CancelUpcomingChanges:
+				alert('Cancel upcoming changes');
+				break;
+
+			// EditUpcomingChanges
+			case PlanActionType.EditUpcomingChanges:
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(existingPlanCLO);
+				this.openPlanEditor('Correct latest version', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
+				break;
+
+			// Restart
+			case PlanActionType.Restart:
+				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
+				break;
+
+			// CancelRestart
+			case PlanActionType.CancelRestart:
+				alert('Cancel restart');
+				break;
+
+			// Stop 
+			case PlanActionType.Stop:
+				this.openStopPlanDialog(existingPlanCLO);
+				break;
+
+			// Stop 
+			case PlanActionType.CancelStop:
+				alert('Cancel stop');
+				break;
+
+			// Rename
+			case PlanActionType.Rename:
+				alert('rename plan');
+				break;
+
+			default:
+				throw new Error('Action not recognized');
+		}
 	}
 	private refreshUI() {
 		this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
@@ -226,39 +289,15 @@ export class PlansOverviewComponent {
 
 	// Event handlers
 	private onAddNewPlanTriggered() {
-		let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
-		this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
+
+		this.triggerPlanAction(null, PlanActionType.CreateNew);
+
 	}
 	private onPlanActionTriggered(arr: any[]) {
 		let planCLO: CLOs.PlanCLO = arr[0];
 		let actionTypeID: PlanActionType = arr[1];
-		let cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(planCLO);
 
-		switch (actionTypeID) {
-			case PlanActionType.Adjust:
-				this.openPlanEditor('Make changes to Plan', 'Confirm changes', cloneOfPlanCLO, PlanEditorMode.Adjust);
-				break;
-
-			case PlanActionType.HardEdit:
-				this.openPlanEditor('Correct latest version', 'Save', cloneOfPlanCLO, PlanEditorMode.HardEdit);
-				break;
-
-			case PlanActionType.Restart:
-				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
-				break;
-
-			case PlanActionType.Rename:
-				alert('rename plan');
-				break;
-			case PlanActionType.Stop:
-				this.openStopPlanDialog(planCLO);
-				break;
-
-			case PlanActionType.CreateNew:
-				throw new Error('CreateNew is handled separately');
-			default:
-				throw new Error('Action not recognized');
-		}
+		this.triggerPlanAction(planCLO, actionTypeID);
 	}
 	private onSelectedViewModeChanged(event) {
 		const newVal = event.target.value;
@@ -274,10 +313,13 @@ interface ViewModel {
 }
 
 export enum PlanActionType {
-	CreateNew,
-	Adjust,
-	HardEdit,
-	Restart,
-	Stop,
-	Rename
+	CreateNew = 0,
+	Change = 1,
+	CancelUpcomingChanges = 2,
+	EditUpcomingChanges = 3,
+	Restart = 4,
+	CancelRestart = 5,
+	Stop = 6,
+	CancelStop = 7,
+	Rename = 8
 }

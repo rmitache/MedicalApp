@@ -35,7 +35,7 @@
 
     .top-part .plan-name {
         display: inline-block;
-        width: 68%;
+        width: 58%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space:nowrap;
@@ -44,13 +44,13 @@
 
     .top-part .buttons-div {
         float: right;
-        width: 30%;
+        width: 40%;
         height: 30px;
     }
 
         .top-part .buttons-div /deep/ .ui-buttonset,
         .top-part .buttons-div /deep/ button {
-            font-size: 14px;
+            font-size: 12px;
             float: right;
         }
         .top-part .buttons-div /deep/ .ui-buttonset .fa {

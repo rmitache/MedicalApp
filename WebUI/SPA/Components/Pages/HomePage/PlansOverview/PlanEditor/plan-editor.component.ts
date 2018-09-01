@@ -84,15 +84,13 @@ export class PlanEditorComponent implements IModalDialog {
 
 		// Define form
 		this.reactiveForm = this.fb.group({
-			planName: ['', Validators.required],
+			planName: ['',
+				Validators.compose([Validators.required])
+			],
 			dates: this.fb.group({
-				startDate: [null,
-					Validators.compose([
-						Validators.required
-					])],
+				startDate: [null, Validators.compose([Validators.required/*, startDateMustNotBeforeTodayValidator*/])],
 				endDate: null
-			}, { validator: basicPlanDatesValidator }),
-
+			}, { validator: startDateMustBeBeforeOrSameAsEndDateValidator }),
 		});
 
 		// Create the currentModeInstance
@@ -178,10 +176,10 @@ interface ViewModel {
 
 // PlanMode logic and classes
 export enum PlanEditorMode {
-	CreateNew,
-	Adjust,
-	HardEdit,
-	Restart
+	CreateNew = 0,
+	Change = 1,
+	EditUpcomingChanges = 3, // Aka hard edit
+	Restart = 4
 }
 interface IPlanEditorModeImplementation {
 	SaveData(): Promise<CLOs.PlanCLO>;
@@ -198,9 +196,9 @@ class CreateNewMode implements IPlanEditorModeImplementation {
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
 		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-		this.vm.InfoMessage = 'This will create a new Plan from scratch, with a first Version which you can edit below.';
+		this.vm.InfoMessage = 'This will create a new Plan from scratch. You can leave the end date empty for a neverending Plan';
 		this.vm.StartDateLabel = 'Start date:';
-		this.vm.EndDateLabel = 'End date:';
+		this.vm.EndDateLabel = 'Ends on:';
 	}
 
 	// Public methods
@@ -210,7 +208,7 @@ class CreateNewMode implements IPlanEditorModeImplementation {
 		return saveDataPromise;
 	}
 }
-class AdjustMode implements IPlanEditorModeImplementation {
+class ChangeMode implements IPlanEditorModeImplementation {
 
 	// Fields
 	private prevVersion: CLOs.VersionCLO = null;
@@ -222,6 +220,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
 		private vm: ViewModel,
 		private globalDataService: HomePageDataService,
 		private genericCLOFactory: GenericCLOFactory) {
+
 		this.prevVersion = planCLO.GetLatestVersion();
 
 		// If prevVersion starts in the future - throw exception -> this should have different logic as in HardEdit instead of creating a new version
@@ -235,7 +234,12 @@ class AdjustMode implements IPlanEditorModeImplementation {
 
 		// Create a new version for the planCLO
 		let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
-		newVersion.StartDateTime = moment().add(1, 'days').startOf('day').toDate(); // default startdate = tomorrow
+		let defaultStartDate = moment().add(1, 'days').startOf('day'); // default startdate = tomorrow
+		if (moment(this.prevVersion.EndDateTime).isSame(defaultStartDate, 'date')) {
+			defaultStartDate.add(1, 'days');
+		}
+		newVersion.StartDateTime = defaultStartDate.toDate();
+
 		planCLO.Versions.Add(newVersion);
 
 
@@ -244,6 +248,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
 		this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
 			return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
 		}]);
+
 
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
@@ -268,7 +273,7 @@ class AdjustMode implements IPlanEditorModeImplementation {
 		return saveDataPromise;
 	}
 }
-class HardEditMode implements IPlanEditorModeImplementation {
+class EditUpcomingChangesMode implements IPlanEditorModeImplementation {
 
 	// Fields
 	private prevVersion: CLOs.VersionCLO = null;
@@ -309,7 +314,7 @@ class HardEditMode implements IPlanEditorModeImplementation {
 
 			// Custom form logic
 			this.reactiveForm.get('planName').disable();
-			this.reactiveForm.get('dates').setValidators([basicPlanDatesValidator]);
+			this.reactiveForm.get('dates').setValidators([startDateMustBeBeforeOrSameAsEndDateValidator]);
 
 			// Prepare ViewModel 
 			this.vm.PlanCLO = planCLO;
@@ -387,12 +392,23 @@ class RestartMode implements IPlanEditorModeImplementation {
 }
 var modeImplementationsLookup = {};
 modeImplementationsLookup[PlanEditorMode.CreateNew] = CreateNewMode;
-modeImplementationsLookup[PlanEditorMode.Adjust] = AdjustMode;
-modeImplementationsLookup[PlanEditorMode.HardEdit] = HardEditMode;
+modeImplementationsLookup[PlanEditorMode.Change] = ChangeMode;
+modeImplementationsLookup[PlanEditorMode.EditUpcomingChanges] = EditUpcomingChangesMode;
 modeImplementationsLookup[PlanEditorMode.Restart] = RestartMode;
 
 // Custom validators
-function basicPlanDatesValidator(control: AbstractControl) {
+function startDateMustNotBeforeTodayValidator(control: AbstractControl) {
+	// Variables
+	var startDate = moment(control.value).startOf('day');
+	var todayDate = moment().startOf('day');
+
+	if (startDate < todayDate) {
+		return { incorrect: true };
+	} else {
+		return null;
+	}
+}
+function startDateMustBeBeforeOrSameAsEndDateValidator(control: AbstractControl) {
 	let group = control as FormGroup;
 
 	// Variables
@@ -401,7 +417,7 @@ function basicPlanDatesValidator(control: AbstractControl) {
 
 	// Validation logic
 	if ((endDateInput.value !== '' && endDateInput.value !== null) &&
-		(moment(startDateInput.value).startOf('day') >= moment(endDateInput.value).startOf('day'))) {
+		(moment(startDateInput.value).startOf('day') > moment(endDateInput.value).startOf('day'))) {
 
 		startDateInput.setErrors({ startDateAfterEndDate: true });
 		endDateInput.setErrors({ startDateAfterEndDate: true });

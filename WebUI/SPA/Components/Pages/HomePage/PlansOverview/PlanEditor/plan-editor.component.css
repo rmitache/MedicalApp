@@ -48,12 +48,12 @@
     }
 
     .top-section #start-date-picker /deep/ .ui-inputtext {
-        width: 90px !important;
+        width: 100px !important;
     }
-    
+
 
     .top-section #end-date-picker /deep/ .ui-inputtext {
-        width: 90px !important;
+        width: 100px !important;
     }
     
 

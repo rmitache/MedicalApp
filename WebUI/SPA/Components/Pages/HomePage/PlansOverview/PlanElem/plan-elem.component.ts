@@ -23,41 +23,38 @@ export class PlanElemComponent {
 	private readonly planCLO: CLOs.PlanCLO;
 	private readonly planStatusesEnum = Enums.PlanStatus;
 	private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
-		Active: [
+		ActiveWITHOUTAnyUpcomingChanges: [
 			{
 				Label: 'Stop',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.Stop]);
 
 				}
+			}
+		],
+		ActiveWITHUpcomingChanges: [
+			{
+				Label: 'Edit upcoming changes',
+				OnClick: () => {
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.EditUpcomingChanges]);
+				}
 			},
-
-			//{
-			//	Label: 'Rename',
-			//	OnClick: () => {
-			//		this.ActionTriggered.emit([this.planCLO, PlanActionType.Rename]);
-
-			//	}
-			//},
 			{
-				Label: 'Made a mistake ?',
+				Label: 'Cancel changes',
 				OnClick: () => {
-					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
-
+					//this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+				}
+			},
+			{
+				Label: 'Stop plan',
+				OnClick: () => {
+					//this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
 				}
 			}
 		],
-		ActiveWithUpcomingAdjustment: [
+		Stopped: [
 			{
-				Label: 'Hard edit',
-				OnClick: () => {
-					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
-				}
-			}
-		],
-		Inactive: [
-			{
-				Label: 'Re-start',
+				Label: 'Restart',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.Restart]);
 				}
@@ -67,7 +64,7 @@ export class PlanElemComponent {
 			{
 				Label: 'Hard modify',
 				OnClick: () => {
-					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.EditUpcomingChanges]);
 				}
 			}
 		],
@@ -75,21 +72,30 @@ export class PlanElemComponent {
 			{
 				Label: 'Hard modify',
 				OnClick: () => {
-					this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.EditUpcomingChanges]);
 				}
 			}
 		]
 	};
 	private mainActionToPlanStatusMap: MainActionsToPLanStatusMap = {
-		Active: {
-			TooltipText: 'New changes for Plan',
-			Icon: 'fa fa-arrow-right',
+		ActiveWITHOUTAnyUpcomingChanges: {
+			Icon: 'fa fa-edit',
 			ButtonClass: '',
+			ButtonText: 'Change',
 			OnClick: () => {
-				this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
+				this.ActionTriggered.emit([this.planCLO, PlanActionType.Change]);
 
 			}
-		}
+		},
+		//ActiveWithUpcomingAdjustment: {
+		//	Icon: 'fa fa-edit',
+		//	ButtonClass: '',
+		//	ButtonText:'Change xxx',
+		//	OnClick: () => {
+		//		this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
+
+		//	}
+		//}
 	};
 	private readonly viewModel: ViewModel = {
 		PlanCLO: null,
@@ -139,7 +145,7 @@ export class PlanElemComponent {
 		let firstVersion = this.planCLO.GetFirstVersion();
 		switch (this.planCLO.Status) {
 			// Active
-			case Enums.PlanStatus.Active:
+			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 				if (this.planCLO.Versions.Length > 1) {
 					this.viewModel.StartDatePrefixString = 'Adjusted/restarted:';
 					this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
@@ -156,7 +162,7 @@ export class PlanElemComponent {
 				break;
 
 			// ActiveWithUpcomingAdjustment
-			case Enums.PlanStatus.ActiveWithUpcomingAdjustment:
+			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
 				this.viewModel.StartDatePrefixString = 'Will change:';
 				this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				if (this.planCLO.GetLatestVersion().EndDateTime !== null) {
@@ -166,7 +172,7 @@ export class PlanElemComponent {
 				break;
 
 			// Inactive
-			case Enums.PlanStatus.Inactive:
+			case Enums.PlanStatus.Stopped:
 				this.viewModel.EndDatePrefixString = 'Ended:';
 				this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDateTime);
 				break;
@@ -191,7 +197,7 @@ export class PlanElemComponent {
 
 	// Event handlers
 	private onAdjustTriggered() {
-		this.ActionTriggered.emit([this.planCLO, PlanActionType.Adjust]);
+		this.ActionTriggered.emit([this.planCLO, PlanActionType.Change]);
 
 	}
 
@@ -226,5 +232,6 @@ interface MainActionButton {
 	TooltipText?: string;
 	Icon: string;
 	ButtonClass: string;
+	ButtonText: string;
 	OnClick();
 }

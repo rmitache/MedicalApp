@@ -96,8 +96,9 @@ function stopDateValidator(control: AbstractControl, latestVersion: CLOs.Version
 	if (stopDateInput.value !== '' && stopDateInput.value !== null) {
 		var stopDate = moment(stopDateInput.value).endOf('day');
 		var startDateOfLatestVersion = moment(latestVersion.StartDateTime).startOf('day');
+		var endOfToday = moment().endOf('day');
 
-		if (stopDate <= startDateOfLatestVersion) {
+		if (stopDate <= startDateOfLatestVersion || stopDate < endOfToday) {
 			return { incorrect: true };
 		}
 	}

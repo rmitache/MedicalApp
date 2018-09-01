@@ -1,7 +1,8 @@
 ﻿export enum PlanStatus {
-    Active = 0,
-    ActiveWithUpcomingAdjustment = 1,
-    Inactive = 2,
-    UpcomingAsNew = 3,
-    UpcomingAsRestarted = 4
+    ActiveWITHOUTAnyUpcomingChanges = 0,
+	ActiveWITHUpcomingChanges = 1,
+	ActiveWITHUpcomingStop = 2,
+    Stopped = 3,
+    UpcomingAsNew = 4,
+    UpcomingAsRestarted = 5
 }
