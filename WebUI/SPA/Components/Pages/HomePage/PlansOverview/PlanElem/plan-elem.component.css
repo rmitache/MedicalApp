@@ -1,15 +1,15 @@
 .top-part /deep/ .ui-menu {
     /*width: 120px;*/
-    background-color:white !important;
+    background-color: white !important;
 }
 
 .top-part /deep/ .ui-shadow {
     -webkit-box-shadow: none;
-    box-shadow:none;
+    box-shadow: none;
 }
 
 .top-part /deep/ .ui-button-text {
-    padding:.25em .5em;
+    padding: .25em .5em;
 }
 
 
@@ -20,7 +20,7 @@
     background-color: #eaeaea;
     width: calc(100% - 10px);
     padding: 10px;
-    height: 75px;
+    height: 65px;
     border-radius: 3px;
 }
 
@@ -30,59 +30,53 @@
 
 .top-part {
     width: 100%;
-    height: 48px;
+    height: 42px;
 }
 
     .top-part .plan-name {
         display: inline-block;
-        width: 58%;
+        width: 68%;
         text-overflow: ellipsis;
         overflow: hidden;
-        white-space:nowrap;
+        white-space: nowrap;
     }
 
 
     .top-part .buttons-div {
         float: right;
-        width: 40%;
+        width: 30%;
         height: 30px;
     }
 
         .top-part .buttons-div /deep/ .ui-buttonset,
         .top-part .buttons-div /deep/ button {
-            font-size: 12px;
             float: right;
         }
-        .top-part .buttons-div /deep/ .ui-buttonset .fa {
-            color: black;
-        }
+
+
+.frame /deep/ .ui-buttonset,
+.frame /deep/ button {
+    font-size: 14px;
+}
 
 .bottom-part {
     width: 100%;
+    height: 25px;
 }
 
-    .bottom-part .started-date-label-input-pair {
+    .bottom-part > i {
+        color: #d8d8d8;
+        font-size: 1.7em;
         float: left;
+        margin-right: 5px;
     }
 
-        .bottom-part .started-date-label-input-pair .label-discrete {
-            float: left;
-        }
+    .bottom-part .left-side-text-div {
+        float: left;
+        vertical-align: middle;
+        line-height: 25px;
+    }
 
-        .bottom-part .started-date-label-input-pair .label {
-            float: left;
-            clear: left;
-        }
-
-    .bottom-part .ends-date-label-input-pair {
+    .bottom-part > .split-button {
         float: right;
     }
-
-        .bottom-part .ends-date-label-input-pair .label-discrete {
-            float: left;
-        }
-
-        .bottom-part .ends-date-label-input-pair .label {
-            float: left;
-            clear: left;
-        }

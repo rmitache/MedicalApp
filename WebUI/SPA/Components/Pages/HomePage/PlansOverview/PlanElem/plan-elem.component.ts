@@ -100,10 +100,9 @@ export class PlanElemComponent {
 		MainAction: null,
 
 		StatusString: null,
-		StartDatePrefixString: null,
-		RelativeStartDateString: null,
-		EndDatePrefixString: null,
-		RelativeEndDateString: null
+		DateInfoLabel: null,
+		DateInfoValue: null,
+
 	};
 
 	// Private methods
@@ -141,43 +140,42 @@ export class PlanElemComponent {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 				if (this.planCLO.Versions.Length > 1) {
 
-					//var daysBetweenLatestAndSecondLatestVersions = moment(this.planCLO.GetLatestVersion().StartDateTime).diff(moment(this.planCLO.GetSecondLatestVersion().EndDateTime), 'days');
-					this.viewModel.StartDatePrefixString = 'Changed/restarted:';
-					this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
+					this.viewModel.DateInfoLabel = 'Changed/restarted:';
+					this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				} else {
-					this.viewModel.StartDatePrefixString = 'Started:';
-					this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(firstVersion.StartDateTime);
+					this.viewModel.DateInfoLabel = 'Started:';
+					this.viewModel.DateInfoValue = this.getRelativeDateAsString(firstVersion.StartDateTime);
 				}
 				break;
 
 			// ActiveWITHUpcomingChanges
 			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
-				this.viewModel.StartDatePrefixString = 'Will change:';
-				this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
+				this.viewModel.DateInfoLabel = 'Will change:';
+				this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				break;
 
 			// ActiveWITHUpcomingStop
 			case Enums.PlanStatus.ActiveWITHUpcomingStop:
-				this.viewModel.EndDatePrefixString = 'Will stop:';
-				this.viewModel.RelativeEndDateString = moment(latestVersion.EndDateTime).format('MMM DD, YYYY');
+				this.viewModel.DateInfoLabel = 'Will stop:';
+				this.viewModel.DateInfoValue = moment(latestVersion.EndDateTime).format('MMM DD, YYYY');
 				break;
 
 			// Stopped
 			case Enums.PlanStatus.Stopped:
-				this.viewModel.EndDatePrefixString = 'Stopped:';
-				this.viewModel.RelativeEndDateString = this.getRelativeDateAsString(latestVersion.EndDateTime);
+				this.viewModel.DateInfoLabel = 'Stopped:';
+				this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.EndDateTime);
 				break;
 
 			// UpcomingAsNew
 			case Enums.PlanStatus.UpcomingAsNew:
-				this.viewModel.StartDatePrefixString = 'Will start:';
-				this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
+				this.viewModel.DateInfoLabel = 'Will start:';
+				this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				break;
 
 			// UpcomingAsRestarted
 			case Enums.PlanStatus.UpcomingAsRestarted:
-				this.viewModel.StartDatePrefixString = 'Will restart:';
-				this.viewModel.RelativeStartDateString = this.getRelativeDateAsString(latestVersion.StartDateTime);
+				this.viewModel.DateInfoLabel = 'Will restart:';
+				this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				break;
 		}
 
@@ -203,12 +201,8 @@ interface ViewModel {
 
 	Color: string;
 	StatusString: string;
-	StartDatePrefixString: string;
-	RelativeStartDateString: string;
-	EndDatePrefixString: string;
-	RelativeEndDateString: string;
-
-
+	DateInfoLabel: string;
+	DateInfoValue: string;
 }
 interface MenuItemsToPLanStatusMap {
 	[planStatusName: string]: SplitButtonMenuItem[];

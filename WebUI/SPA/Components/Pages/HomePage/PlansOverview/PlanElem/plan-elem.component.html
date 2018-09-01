@@ -1,4 +1,4 @@
-{{planStatusesEnum[planCLO.Status]}}
+<!--{{planStatusesEnum[planCLO.Status]}}-->
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
     <div class="top-part">
         <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
@@ -12,18 +12,19 @@
                     [label]="viewModel.MainAction.ButtonText"
                     [attr.class]="viewModel.MainAction.ButtonClass"
                     (click)="viewModel.MainAction.OnClick()"></button>
-            <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
+           
         </div>
     </div>
     <div class="bottom-part">
-        <div class="started-date-label-input-pair">
-            <span class="label-discrete">{{viewModel.StartDatePrefixString}}</span>
-            <span class="label">{{viewModel.RelativeStartDateString}}</span>
+        <i class="fa fa-question-circle"></i>
+        <div class="left-side-text-div">
+
+            <span class="label-discrete">{{viewModel.DateInfoLabel}}</span>
+            <span class="label">{{viewModel.DateInfoValue}}</span>
+
         </div>
-        <div class="ends-date-label-input-pair">
-            <span class="label-discrete">{{viewModel.EndDatePrefixString}}</span>
-            <span class="label">{{viewModel.RelativeEndDateString}}</span>
-        </div>
+        <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
+
     </div>
 </div>
 

@@ -31,9 +31,9 @@ export class PlansOverviewComponent {
 	private readonly appState: IReadOnlyApplicationState;
 	private readonly planStatusViewModes = {
 		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
+		All: 'All',
 		Active: 'Active',
-		Inactive: 'Inactive',
-		Upcoming: 'Upcoming'
+		Inactive: 'Inactive'
 	};
 	private readonly viewModel: ViewModel = {
 		AvailablePlans: null,
@@ -176,27 +176,30 @@ export class PlansOverviewComponent {
 	}
 	private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
 
-		//let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
-		//	let numericVal = plan.Status as number;
+		let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
+			let numericVal = plan.Status as number;
 
-		//	// Active and ActiveWithUpcomingAdjustment
-		//	if (planStatusViewMode === this.planStatusViewModes.Active) {
-		//		return (numericVal === Enums.PlanStatus.Active) || (numericVal === Enums.PlanStatus.ActiveWithUpcomingAdjustment);
-		//	}
+			// All
+			if (planStatusViewMode === this.planStatusViewModes.All) {
+				return true;
+			}
 
-		//	// Inactive
-		//	if (planStatusViewMode === this.planStatusViewModes.Inactive) {
-		//		return (numericVal === Enums.PlanStatus.Inactive);
-		//	}
+			// Active 
+			if (planStatusViewMode === this.planStatusViewModes.Active) {
+				return (numericVal === Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges)
+					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingChanges)
+					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingStop)
+					|| (numericVal === Enums.PlanStatus.UpcomingAsNew)
+					|| (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
+			}
 
-		//	// UpcomingAsNew and UpcomingAsRestarted
-		//	if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
-		//		return (numericVal === Enums.PlanStatus.UpcomingAsNew) || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
-		//	}
+			// Inactive
+			if (planStatusViewMode === this.planStatusViewModes.Inactive) {
+				return (numericVal === Enums.PlanStatus.Stopped);
+			}
 
-		//	return null;
-		//});
-		let filteredPlans = this.viewModel.AvailablePlans;
+			return null;
+		});
 		return filteredPlans;
 	}
 	private updatePlan(planCLO: CLOs.PlanCLO, refreshFromServer: boolean = true) {
