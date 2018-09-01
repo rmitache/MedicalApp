@@ -47,9 +47,9 @@ export class StopPlanDialogComponent implements IModalDialog {
 			stopDate: [null, Validators.required]
 
 		});
-		this.reactiveForm.get('stopDate').setValidators([(control: AbstractControl) => {
-			return stopDateValidator(control as FormGroup, this.viewModel.PlanCLO.GetLatestVersion(), this.viewModel.PlanCLO.GetSecondLatestVersion());
-		}]);
+		//this.reactiveForm.get('stopDate').setValidators([(control: AbstractControl) => {
+		//	return stopDateValidator(control as FormGroup, this.viewModel.PlanCLO.GetLatestVersion(), this.viewModel.PlanCLO.GetSecondLatestVersion());
+		//}]);
 
 
 		// Subscriptions

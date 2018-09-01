@@ -199,8 +199,30 @@ export class PlansOverviewComponent {
 		let filteredPlans = this.viewModel.AvailablePlans;
 		return filteredPlans;
 	}
-	private triggerPlanAction(targetExistingPlanCLO: CLOs.PlanCLO, actionType: PlanActionType) {
+	private updatePlan(planCLO: CLOs.PlanCLO, refreshFromServer: boolean = true) {
+		if (refreshFromServer) {
+			this.spinnerService.Show();
+		}
 
+
+		this.dataService.UpdatePlan(planCLO)
+			.then(() => {
+				if (refreshFromServer) {
+					this.reloadDataFromServer()
+						.then(() => {
+							this.refreshUI();
+						});
+
+					this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+
+					setTimeout(() => {
+						this.spinnerService.Hide();
+					}, 200);
+				}
+
+			});
+	}
+	private triggerPlanAction(targetExistingPlanCLO: CLOs.PlanCLO, actionType: PlanActionType) {
 
 
 		switch (actionType) {
@@ -224,41 +246,26 @@ export class PlansOverviewComponent {
 
 			// CancelUpcomingChanges
 			case PlanActionType.CancelUpcomingChanges:
-				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
 
-				//
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
 				cloneOfPlanCLO.GetLatestVersion().ToBeDeleted = true; // mark for deletion
 				cloneOfPlanCLO.GetSecondLatestVersion().EndDateTime = null;
 
-				let saveDataPromise = this.dataService.UpdatePlan(cloneOfPlanCLO);
-				saveDataPromise.then(() => {
-
-					this.reloadDataFromServer()
-						.then(() => {
-							this.refreshUI();
-						});
-
-					this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
-
-					setTimeout(() => {
-						this.spinnerService.Hide();
-					}, 200);
-
-				});
-
-
+				this.updatePlan(cloneOfPlanCLO);
 				break;
 
 			// Restart
 			case PlanActionType.Restart:
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
 				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
 				break;
 
-
-
 			// CancelRestart
 			case PlanActionType.CancelRestart:
-				alert('Cancel restart');
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
+				cloneOfPlanCLO.GetLatestVersion().ToBeDeleted = true; // mark for deletion
+
+				this.updatePlan(cloneOfPlanCLO);
 				break;
 
 			// Stop 
@@ -266,9 +273,12 @@ export class PlansOverviewComponent {
 				this.openStopPlanDialog(targetExistingPlanCLO);
 				break;
 
-			// Stop 
+			// CancelStop 
 			case PlanActionType.CancelStop:
-				alert('Cancel stop');
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
+				cloneOfPlanCLO.GetLatestVersion().EndDateTime = null;
+
+				this.updatePlan(cloneOfPlanCLO);
 				break;
 
 			// Rename
@@ -283,6 +293,7 @@ export class PlansOverviewComponent {
 	private refreshUI() {
 		this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
 	}
+
 
 	// Constructor 
 	constructor(
@@ -340,7 +351,7 @@ export enum PlanActionType {
 	CreateNew = 0,
 	Change = 1,
 	CancelUpcomingChanges = 2,
-	EditUpcomingChanges = 3,
+	EditUpcomingChanges = 3, // hard edit
 	Restart = 4,
 	CancelRestart = 5,
 	Stop = 6,
