@@ -65,7 +65,7 @@
 }
 
     .bottom-part > i {
-        color:gray !important;
+        /*color:gray !important;*/
         font-size: 1.7em;
         float: left;
         margin-right: 5px;
