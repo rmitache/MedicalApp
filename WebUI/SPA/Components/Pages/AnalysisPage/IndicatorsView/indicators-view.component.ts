@@ -454,9 +454,7 @@ class MonthDisplayMode implements IDisplayMode {
 				content: 'TODAY'
 			}
 		}];
-		if (!IsDateOnFirstOrLastDateInMonth(moment())) {
-			chartOptions.annotation.annotations = annotations;
-		}
+		chartOptions.annotation.annotations = annotations;
 
 		return chartOptions;
 	}
@@ -625,9 +623,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
 				content: 'TODAY'
 			}
 		}];
-		if (!IsDateOnFirstOrLastDateInMonth(moment())) {
-			chartOptions.annotation.annotations = annotations;
-		}
+		chartOptions.annotation.annotations = annotations;
 
 		return chartOptions;
 	}

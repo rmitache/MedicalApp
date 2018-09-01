@@ -93,7 +93,7 @@ export class FactorsViewComponent {
     private refreshUI() {
         // Refresh vm properties
         this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.viewModel.SelectedPlans, this.viewModel.SelectedDateRange);
-		this.viewModel.TodayXPosition = !IsDateOnFirstOrLastDateInMonth(moment()) ? this.computeXPositionFromDate(moment()) : null;
+		this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
 
         // Refresh children components
         this.timelineInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
