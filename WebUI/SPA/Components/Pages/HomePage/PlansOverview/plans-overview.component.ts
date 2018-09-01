@@ -199,7 +199,7 @@ export class PlansOverviewComponent {
 		let filteredPlans = this.viewModel.AvailablePlans;
 		return filteredPlans;
 	}
-	private triggerPlanAction(existingPlanCLO: CLOs.PlanCLO, actionType: PlanActionType) {
+	private triggerPlanAction(targetExistingPlanCLO: CLOs.PlanCLO, actionType: PlanActionType) {
 
 
 
@@ -212,25 +212,49 @@ export class PlansOverviewComponent {
 
 			// Change
 			case PlanActionType.Change:
-				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(existingPlanCLO);
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
 				this.openPlanEditor('Make changes to Plan', 'Confirm changes', cloneOfPlanCLO, PlanEditorMode.Change);
-				break;
-
-			// CancelUpcomingChanges
-			case PlanActionType.CancelUpcomingChanges:
-				alert('Cancel upcoming changes');
 				break;
 
 			// EditUpcomingChanges
 			case PlanActionType.EditUpcomingChanges:
-				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(existingPlanCLO);
-				this.openPlanEditor('Correct latest version', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
+				this.openPlanEditor('Edit changes made before', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
+				break;
+
+			// CancelUpcomingChanges
+			case PlanActionType.CancelUpcomingChanges:
+				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
+
+				//
+				cloneOfPlanCLO.GetLatestVersion().ToBeDeleted = true; // mark for deletion
+				cloneOfPlanCLO.GetSecondLatestVersion().EndDateTime = null;
+
+				let saveDataPromise = this.dataService.UpdatePlan(cloneOfPlanCLO);
+				saveDataPromise.then(() => {
+
+					this.reloadDataFromServer()
+						.then(() => {
+							this.refreshUI();
+						});
+
+					this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+
+					setTimeout(() => {
+						this.spinnerService.Hide();
+					}, 200);
+
+				});
+
+
 				break;
 
 			// Restart
 			case PlanActionType.Restart:
 				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
 				break;
+
+
 
 			// CancelRestart
 			case PlanActionType.CancelRestart:
@@ -239,7 +263,7 @@ export class PlansOverviewComponent {
 
 			// Stop 
 			case PlanActionType.Stop:
-				this.openStopPlanDialog(existingPlanCLO);
+				this.openStopPlanDialog(targetExistingPlanCLO);
 				break;
 
 			// Stop 

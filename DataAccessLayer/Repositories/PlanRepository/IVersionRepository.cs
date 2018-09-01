@@ -11,5 +11,6 @@ namespace DataAccessLayer.Repositories
     {
         TPlanVersion AddVersion(TPlanVersion version, int planID);
         TPlanVersion UpdateVersion(TPlanVersion version, int planID);
+        void DeleteVersion(int versionID, int planID);
     }
 }

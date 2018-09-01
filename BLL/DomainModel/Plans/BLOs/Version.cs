@@ -14,6 +14,8 @@ namespace BLL.DomainModel.Plans.BLOs
         public virtual DateTime? EndDateTime { get; set; }
         public virtual List<Rule> Rules { get; set; }
 
+        public virtual bool ToBeDeleted { get; set; }
+
         // Constructor
         public Version() { }
 

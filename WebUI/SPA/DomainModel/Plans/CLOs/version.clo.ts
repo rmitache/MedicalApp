@@ -11,7 +11,8 @@ export class VersionCLO extends BaseCLO {
     public ID: number;
     public StartDateTime: Date;
     public EndDateTime: Date;
-    public Rules: CLOs.RuleCLO[];
+	public Rules: CLOs.RuleCLO[];
+	public ToBeDeleted: boolean;
     private parentPlan: CLOs.PlanCLO;
 
     // Properties

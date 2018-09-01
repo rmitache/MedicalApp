@@ -196,7 +196,7 @@ class CreateNewMode implements IPlanEditorModeImplementation {
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
 		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-		this.vm.InfoMessage = 'This will create a new Plan from scratch. You can leave the end date empty for a neverending Plan';
+		this.vm.InfoMessage = 'This will create a new Plan from scratch. As default Plans dont have an end date, but you can Stop them manually';
 		this.vm.StartDateLabel = 'Start date:';
 		this.vm.EndDateLabel = 'Ends on:';
 	}

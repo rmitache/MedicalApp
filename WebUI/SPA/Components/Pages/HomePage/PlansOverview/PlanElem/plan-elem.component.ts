@@ -42,13 +42,7 @@ export class PlanElemComponent {
 			{
 				Label: 'Cancel changes',
 				OnClick: () => {
-					//this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
-				}
-			},
-			{
-				Label: 'Stop plan',
-				OnClick: () => {
-					//this.ActionTriggered.emit([this.planCLO, PlanActionType.HardEdit]);
+					this.ActionTriggered.emit([this.planCLO, PlanActionType.CancelUpcomingChanges]);
 				}
 			}
 		],

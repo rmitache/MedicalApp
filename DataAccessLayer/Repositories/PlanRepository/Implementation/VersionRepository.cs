@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Common;
 using System;
+using Z.EntityFramework.Plus;
 
 namespace DataAccessLayer.Repositories
 {
@@ -58,7 +59,8 @@ namespace DataAccessLayer.Repositories
                 {
                     entitiesContext.Entry(originalRule).State = EntityState.Deleted;
                     modifiedVersion.TPlanRule.Add(originalRule);
-                } else
+                }
+                else
                 {
                     // Handle deleted ruleItems in it
                     entitiesContext.Entry(matchingModifiedRule).State = EntityState.Modified;
@@ -70,7 +72,7 @@ namespace DataAccessLayer.Repositories
                         {
                             entitiesContext.Entry(originalRuleItem).State = EntityState.Deleted;
                             matchingModifiedRule.TPlanMedicineRuleItem.Add(originalRuleItem);
-                        } 
+                        }
                     }
 
                 }
@@ -79,6 +81,14 @@ namespace DataAccessLayer.Repositories
             // Save and return
             entitiesContext.SaveChanges();
             return modifiedVersion;
+        }
+        public void DeleteVersion(int versionID, int planID)
+        {
+            // Delete where it matches the record
+            entitiesContext.TPlanVersion.Where(x =>
+                x.Id == versionID
+            ).Delete();
+            entitiesContext.SaveChanges();
         }
     }
 }
