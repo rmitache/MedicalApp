@@ -129,7 +129,7 @@ export class PlanElemComponent {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingStop:
-				iconName = 'fa fa-check';
+				iconName = 'fa fa-play-circle';
 				colorName = '#2399e5';
 				break;
 
