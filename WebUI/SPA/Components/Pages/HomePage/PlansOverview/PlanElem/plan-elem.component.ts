@@ -129,8 +129,8 @@ export class PlanElemComponent {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingStop:
-				iconName = 'fa fa-play-circle';
-				colorName = '#2399e5';
+				iconName = 'fa fa-arrow-circle-right';
+				colorName = '#afe036';
 				break;
 
 			case Enums.PlanStatus.UpcomingAsNew:
@@ -140,8 +140,8 @@ export class PlanElemComponent {
 				break;
 
 			case Enums.PlanStatus.Stopped:
-				iconName = 'fa fa-stop-circle';
-				colorName = 'red';
+				iconName = 'fa fa-hand-paper';
+				colorName = '#e05d5d';
 				break;
 
 		}

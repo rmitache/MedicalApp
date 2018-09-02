@@ -1,5 +1,7 @@
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
     <div class="top-part">
+        <i [ngClass]="viewModel.StatusIcon"
+           [style.color]="viewModel.StatusIconColor"></i>
         <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
 
 
@@ -11,12 +13,11 @@
                     [label]="viewModel.MainAction.ButtonText"
                     [attr.class]="viewModel.MainAction.ButtonClass"
                     (click)="viewModel.MainAction.OnClick()"></button>
-           
+
         </div>
     </div>
     <div class="bottom-part">
-        <i [ngClass]="viewModel.StatusIcon"
-           [style.color]="viewModel.StatusIconColor"></i>
+       
         <div class="left-side-text-div">
             <span class="label-discrete">{{viewModel.DateInfoLabel}}</span>
             <span class="label">{{viewModel.DateInfoValue}}</span>
