@@ -182,18 +182,6 @@ export class IndicatorsViewComponent {
 		});
 	}
 
-	getAvailableDateRangeString() {
-		var startDateStr = moment(this.viewModel.AvailableDateRange.RangeStart).format('DD MMM');
-		var endDateStr = moment(this.viewModel.AvailableDateRange.RangeEnd).format('DD MMM');
-
-		return startDateStr + " - " + endDateStr;
-	}
-	getSelectedDateRangeString() {
-		var startDateStr = moment(this.viewModel.SelectedDateRange.RangeStart).format('DD MMM');
-		var endDateStr = moment(this.viewModel.SelectedDateRange.RangeEnd).format('DD MMM');
-
-		return startDateStr + " - " + endDateStr;
-	}
 
 	// Constructor 
 	constructor(
