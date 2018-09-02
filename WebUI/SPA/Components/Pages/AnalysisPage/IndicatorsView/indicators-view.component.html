@@ -1,5 +1,12 @@
 
 <graph-tooltip #graphTooltip></graph-tooltip>
+{{
+getAvailableDateRangeString()
+}}
+
+{{
+getSelectedDateRangeString()
+}}
 
 <div class="frame">
     <div class="left-side">
@@ -20,7 +27,7 @@
                 <!--<p-chart #chart type="line" id="indicators-view-chart" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>-->
                 <canvas id="myChart"></canvas>
 
-                <svg xmlns="http://www.w3.org/2000/svg"  overflow="visible">
+                <svg xmlns="http://www.w3.org/2000/svg" overflow="visible">
 
 
                     <!--Vertical lines-->
@@ -44,9 +51,7 @@
 
     <div class="right-side">
         <indicators-filters-panel #filtersPanel
-                                (SymptomTypeSelected)="onSymptomTypeSelected($event)"
-                                (SymptomTypeDeselected)="onSymptomTypeDeselected($event)"
-                                  
-                                  ></indicators-filters-panel>
+                                  (SymptomTypeSelected)="onSymptomTypeSelected($event)"
+                                  (SymptomTypeDeselected)="onSymptomTypeDeselected($event)"></indicators-filters-panel>
     </div>
 </div> 

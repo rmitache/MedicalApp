@@ -182,6 +182,19 @@ export class IndicatorsViewComponent {
 		});
 	}
 
+	getAvailableDateRangeString() {
+		var startDateStr = moment(this.viewModel.AvailableDateRange.RangeStart).format('DD MMM');
+		var endDateStr = moment(this.viewModel.AvailableDateRange.RangeEnd).format('DD MMM');
+
+		return startDateStr + " - " + endDateStr;
+	}
+	getSelectedDateRangeString() {
+		var startDateStr = moment(this.viewModel.SelectedDateRange.RangeStart).format('DD MMM');
+		var endDateStr = moment(this.viewModel.SelectedDateRange.RangeEnd).format('DD MMM');
+
+		return startDateStr + " - " + endDateStr;
+	}
+
 	// Constructor 
 	constructor(
 		applicationState: AnalysisPageApplicationState,
@@ -224,11 +237,10 @@ export class IndicatorsViewComponent {
 		this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.symptomTypesColors.slice());
 
 		// Initialize date ranges
-		var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
+		let now = moment();
+		var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
+		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
 
-
-		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
-			initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
 		this.viewModel.SelectedDateRange = initialSelectedDateRange;
 		this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 

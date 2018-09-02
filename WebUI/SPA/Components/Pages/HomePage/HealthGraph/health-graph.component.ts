@@ -117,11 +117,11 @@ export class HealthGraphComponent {
 	}
 	ngOnInit() {
 		// Get the initial range using the current DisplayMode
-		var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
+		let now = moment();
+		var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
 
 		// Init VM properties
-		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart,
-			initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
+		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now,now, this.availableWindowPaddingInMonths);
 		this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 		this.viewModel.SelectedDateRange = initialSelectedDateRange;
 
