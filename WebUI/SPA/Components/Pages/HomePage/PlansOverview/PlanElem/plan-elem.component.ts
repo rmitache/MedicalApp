@@ -170,7 +170,7 @@ export class PlanElemComponent {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 				if (this.planCLO.Versions.Length > 1) {
 
-					this.viewModel.DateInfoLabel = 'Changed/restarted:';
+					this.viewModel.DateInfoLabel = 'Changed:';
 					this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				} else {
 					this.viewModel.DateInfoLabel = 'Started:';

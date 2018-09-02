@@ -256,7 +256,7 @@ export class HomePageDataService {
 	// UserAccount
 	public UpdatePassword(newPassword: string): Promise<void> {
 		const apiMethodName: string = 'UpdatePassword';
-		debugger;
+		
 		let model = {
 			NewPassword: newPassword
 		};

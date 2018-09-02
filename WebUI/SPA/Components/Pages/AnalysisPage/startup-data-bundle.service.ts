@@ -31,7 +31,7 @@ export class StartupDataBundleService {
 		let model = {
 			DateRange: dateRange
 		};
-
+		
 		// Call the API
         const apiMethodName: string = 'GetInitialData';
 		let getDataPromise = this.httpHandlerService.Post(this.initialDataApiUrl + '/' + apiMethodName, model)
