@@ -1,32 +1,32 @@
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
     <div class="top-part">
-        <i [ngClass]="viewModel.StatusIcon"
-           [style.color]="viewModel.StatusIconColor"></i>
-        <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
-
-
-
-        <div class="buttons-div">
-            <button *ngIf="viewModel.MainAction"
-                    pButton
-                    type="button"
-                    [label]="viewModel.MainAction.ButtonText"
-                    [attr.class]="viewModel.MainAction.ButtonClass"
-                    (click)="viewModel.MainAction.OnClick()"></button>
-
+        <div class="left-side-div">
+            <i [ngClass]="viewModel.StatusIcon"
+               [style.color]="viewModel.StatusIconColor"
+               [pTooltip]="viewModel.StatusIconTooltipText"
+               tooltipPosition="top"></i>
+            <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
         </div>
+
     </div>
     <div class="bottom-part">
-       
+
         <div class="left-side-text-div">
             <span class="label-discrete">{{viewModel.DateInfoLabel}}</span>
             <span class="label">{{viewModel.DateInfoValue}}</span>
 
         </div>
+        <button *ngIf="viewModel.MainAction"
+                pButton
+                type="button"
+                [icon]="viewModel.MainAction.Icon"
+                [pTooltip]="viewModel.MainAction.TooltipText"
+                [attr.class]="viewModel.MainAction.ButtonClass"
+                (click)="viewModel.MainAction.OnClick()"></button>
         <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
 
     </div>
 </div>
 
-<!--[icon]="viewModel.MainAction.Icon"-->
-<!--[pTooltip]="viewModel.MainAction.TooltipText"-->
+<!--[label]="viewModel.MainAction.ButtonText"-->
+

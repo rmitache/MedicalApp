@@ -32,13 +32,13 @@ export class PlansOverviewComponent {
 	private readonly planStatusViewModes = {
 		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
 		All: 'All',
-		Active: 'Active',
+		Current: 'Current',
 		Inactive: 'Inactive'
 	};
 	private readonly viewModel: ViewModel = {
 		AvailablePlans: null,
 		FilteredPlans: null,
-		SelectedViewMode: this.planStatusViewModes.Active,
+		SelectedViewMode: this.planStatusViewModes.All,
 	};
 
 	// Private methods
@@ -185,13 +185,14 @@ export class PlansOverviewComponent {
 			}
 
 			// Active 
-			if (planStatusViewMode === this.planStatusViewModes.Active) {
+			if (planStatusViewMode === this.planStatusViewModes.Current) {
 				return (numericVal === Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges)
 					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingChanges)
 					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingStop)
 					|| (numericVal === Enums.PlanStatus.UpcomingAsNew)
 					|| (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
 			}
+
 
 			// Inactive
 			if (planStatusViewMode === this.planStatusViewModes.Inactive) {

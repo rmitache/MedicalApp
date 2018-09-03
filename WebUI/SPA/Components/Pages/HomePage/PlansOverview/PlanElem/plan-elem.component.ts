@@ -25,7 +25,7 @@ export class PlanElemComponent {
 	private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
 		ActiveWITHOUTAnyUpcomingChanges: [
 			{
-				Label: 'Stop',
+				Label: 'Stop plan',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.Stop]);
 
@@ -56,7 +56,7 @@ export class PlanElemComponent {
 		],
 		Stopped: [
 			{
-				Label: 'Restart',
+				Label: 'Restart plan',
 				OnClick: () => {
 					this.ActionTriggered.emit([this.planCLO, PlanActionType.Restart]);
 				}
@@ -81,7 +81,8 @@ export class PlanElemComponent {
 	};
 	private mainActionToPlanStatusMap: MainActionsToPLanStatusMap = {
 		ActiveWITHOUTAnyUpcomingChanges: {
-			Icon: 'fa fa-edit',
+			TooltipText: 'Change plan',
+			Icon: 'fa fa-angle-double-right',
 			ButtonClass: '',
 			ButtonText: 'Change',
 			OnClick: () => {
@@ -98,6 +99,7 @@ export class PlanElemComponent {
 		},
 		MainAction: null,
 
+		StatusIconTooltipText: null,
 		StatusIcon: null,
 		StatusIconColor: null,
 
@@ -122,31 +124,39 @@ export class PlanElemComponent {
 
 
 	}
-	private getStatusIconAndColor(status: Enums.PlanStatus) {
-		var iconName: string ;
+	private getStatusIconInfo(status: Enums.PlanStatus) {
+		// Variables
+		var iconName: string;
 		var colorName: string;
+		var tooltipText: string;
+
+		// Handle different types of Statuses
 		switch (status) {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingStop:
-				iconName = 'fa fa-arrow-circle-right';
+				iconName = 'fa fa-arrow-alt-circle-right';
 				colorName = '#afe036';
+				tooltipText = 'Active';
 				break;
 
 			case Enums.PlanStatus.UpcomingAsNew:
 			case Enums.PlanStatus.UpcomingAsRestarted:
 				iconName = 'fa fa-clock-o';
 				colorName = '#94e1f6';
+				tooltipText = 'Upcoming';
 				break;
 
 			case Enums.PlanStatus.Stopped:
-				iconName = 'fa fa-hand-paper';
+				iconName = 'fa fa-stop-circle';
 				colorName = '#e05d5d';
+				tooltipText = 'Stopped';
 				break;
 
 		}
 
 		return {
+			tooltipText:tooltipText,
 			iconName: iconName,
 			color: colorName
 		};
@@ -158,7 +168,8 @@ export class PlanElemComponent {
 	}
 	ngOnInit() {
 		this.viewModel.PlanCLO = this.planCLO;
-		var statusIconInfo = this.getStatusIconAndColor(this.planCLO.Status);
+		var statusIconInfo = this.getStatusIconInfo(this.planCLO.Status);
+		this.viewModel.StatusIconTooltipText = statusIconInfo.tooltipText;
 		this.viewModel.StatusIcon = statusIconInfo.iconName;
 		this.viewModel.StatusIconColor = statusIconInfo.color;
 
@@ -170,7 +181,7 @@ export class PlanElemComponent {
 			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
 				if (this.planCLO.Versions.Length > 1) {
 
-					this.viewModel.DateInfoLabel = 'Changed:';
+					this.viewModel.DateInfoLabel = 'Last changed:';
 					this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
 				} else {
 					this.viewModel.DateInfoLabel = 'Started:';
@@ -229,7 +240,7 @@ interface ViewModel {
 	GetMenuItems();
 	MainAction: MainActionButton;
 
-
+	StatusIconTooltipText: string;
 	StatusIcon: string;
 	StatusIconColor: string;
 

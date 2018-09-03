@@ -32,31 +32,32 @@
     width: 100%;
     height: 52px;
 }
-.top-part > i {
-    color: #c6c6c6 !important;
-    font-size: 1.7em;
-    float: left;
-    margin-right: 5px;
-}
-    .top-part .plan-name {
-        display: inline-block;
-        width: 68%;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+
+    .top-part .left-side-div {
     }
 
-
-    .top-part .buttons-div {
-        float: right;
-        width: 30%;
-        height: 30px;
-    }
-
-        .top-part .buttons-div /deep/ .ui-buttonset,
-        .top-part .buttons-div /deep/ button {
-            float: right;
+        .top-part .left-side-div > i {
+            color: #c6c6c6 !important;
+            font-size: 1.7em;
+            float: left;
+            margin-right: 5px;
         }
+
+        .top-part .left-side-div .plan-name {
+            display: inline-block;
+            width: calc(100% - 35px);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            height:25px;
+            line-height:25px;
+            vertical-align:middle;
+        }
+
+
+    
+
+        
 
 
 .frame /deep/ .ui-buttonset,
@@ -69,12 +70,7 @@
     height: 25px;
 }
 
-    .bottom-part > i {
-        color:#dbdbdb !important;
-        font-size: 1.7em;
-        float: left;
-        margin-right: 5px;
-    }
+    
 
     .bottom-part .left-side-text-div {
         float: left;
@@ -83,5 +79,8 @@
     }
 
     .bottom-part > .split-button {
+        float: right;
+    }
+    .bottom-part > button {
         float: right;
     }
