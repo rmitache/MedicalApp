@@ -1,11 +1,26 @@
 <div class="frame" [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
+
+
+
+
     <div class="top-part">
-        <div class="left-side-div">
-            <i [ngClass]="viewModel.StatusIcon"
-               [style.color]="viewModel.StatusIconColor"
-               [pTooltip]="viewModel.StatusIconTooltipText"
-               tooltipPosition="top"></i>
-            <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
+
+        <i [ngClass]="viewModel.StatusIcon"
+           [style.color]="viewModel.StatusIconColor"
+           [pTooltip]="viewModel.StatusIconTooltipText"
+           tooltipPosition="top"></i>
+        <div class="right-side-div">
+            <p-inplace #inplace>
+                <span pInplaceDisplay>
+                    <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
+                </span>
+                <span pInplaceContent>
+                    <input #inplaceTextbox class="plan-name-input" type="text" [value]="viewModel.PlanCLO.Name" pInputText>
+                    <i class="fa fa-check-square" (click)="onInplaceEditOKTriggered()"></i>
+                    <i class="fa fa-times-circle" (click)="onInplaceEditCancelTriggered()"></i>
+                </span>
+            </p-inplace>
+
         </div>
 
     </div>
@@ -29,4 +44,3 @@
 </div>
 
 <!--[label]="viewModel.MainAction.ButtonText"-->
-

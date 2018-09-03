@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  
-
-import { AutoCompleteModule } from 'primeng/primeng';
+import { AutoCompleteModule, InplaceModule } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
 
 // Project modules
@@ -25,7 +24,8 @@ import { StopPlanDialogComponent } from 'SPA/Components/Pages/HomePage/PlansOver
         ReactiveFormsModule,
         AutoCompleteModule,
         ProgressSpinnerModule,
-        SharedModule
+		SharedModule,
+		InplaceModule
     ],
     declarations: [
         PlansOverviewComponent,

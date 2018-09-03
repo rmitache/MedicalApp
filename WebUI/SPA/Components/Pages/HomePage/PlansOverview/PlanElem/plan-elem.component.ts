@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 
 // Project modules
@@ -10,6 +10,7 @@ import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
 // Components
 import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
 import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-button.component';
+import { Inplace } from 'primeng/primeng';
 
 @Component({
 	selector: 'plan-elem',
@@ -91,6 +92,10 @@ export class PlanElemComponent {
 			}
 		}
 	};
+	@ViewChild('inplace')
+	private inplaceInstance: Inplace;
+	@ViewChild('inplaceTextbox')
+	private inplaceTextbox: ElementRef;
 	private readonly viewModel: ViewModel = {
 		PlanCLO: null,
 		GetMenuItems: () => {
@@ -229,6 +234,15 @@ export class PlanElemComponent {
 	private onAdjustTriggered() {
 		this.ActionTriggered.emit([this.planCLO, PlanActionType.Change]);
 
+	}
+	private onInplaceEditOKTriggered() {
+		alert(this.inplaceTextbox.nativeElement.value);
+		this.inplaceInstance.deactivate(null);
+
+	}
+	private onInplaceEditCancelTriggered() {
+		
+		this.inplaceInstance.deactivate(null);
 	}
 
 	// Events

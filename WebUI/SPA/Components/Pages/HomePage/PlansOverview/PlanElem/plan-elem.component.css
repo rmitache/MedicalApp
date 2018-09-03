@@ -33,31 +33,43 @@
     height: 52px;
 }
 
-    .top-part .left-side-div {
+.top-part > i {
+    color: #c6c6c6 !important;
+    font-size: 1.7em;
+    float: left;
+    margin-right: 5px;
+}
+
+.top-part .right-side-div {
+}
+
+
+    .top-part .right-side-div .plan-name {
+        display: inline-block;
+        
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        height: 25px;
+        line-height: 25px;
+        vertical-align: middle;
     }
 
-        .top-part .left-side-div > i {
-            color: #c6c6c6 !important;
-            font-size: 1.7em;
-            float: left;
-            margin-right: 5px;
-        }
 
-        .top-part .left-side-div .plan-name {
-            display: inline-block;
-            width: calc(100% - 35px);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            height:25px;
-            line-height:25px;
-            vertical-align:middle;
-        }
-
-
-    
-
+    .top-part .right-side-div .plan-name-input {
+        width: 160px;
+    }
+    .top-part .right-side-div i {
         
+        font-size: 18px;
+        color: #2399e5;
+        display:inline-block;
+        cursor:pointer;
+    }
+    .top-part .right-side-div i:hover {
+        color:blue;
+    }
+
 
 
 .frame /deep/ .ui-buttonset,
@@ -70,7 +82,7 @@
     height: 25px;
 }
 
-    
+
 
     .bottom-part .left-side-text-div {
         float: left;
@@ -81,6 +93,7 @@
     .bottom-part > .split-button {
         float: right;
     }
+
     .bottom-part > button {
         float: right;
     }
