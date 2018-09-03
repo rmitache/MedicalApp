@@ -88,7 +88,7 @@ export class PlanEditorComponent implements IModalDialog {
 				Validators.compose([Validators.required])
 			],
 			dates: this.fb.group({
-				startDate: [null, Validators.compose([Validators.required/*, startDateMustNotBeforeTodayValidator*/])],
+				startDate: [null, Validators.compose([Validators.required, startDateMustNotBeforeTodayValidator])],
 				endDate: null
 			}, { validator: startDateMustBeBeforeOrSameAsEndDateValidator }),
 		});

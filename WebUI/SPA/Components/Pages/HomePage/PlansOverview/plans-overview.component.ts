@@ -38,7 +38,7 @@ export class PlansOverviewComponent {
 	private readonly viewModel: ViewModel = {
 		AvailablePlans: null,
 		FilteredPlans: null,
-		SelectedViewMode: this.planStatusViewModes.All,
+		SelectedViewMode: this.planStatusViewModes.Current,
 	};
 
 	// Private methods
