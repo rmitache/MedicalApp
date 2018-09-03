@@ -54,5 +54,9 @@ namespace BLL.DomainModel.Users.Services
         {
             this.userRepo.UpdatePassword(userId, newPassword);
         }
+        public void UpdateLastLoginDate(int userId, DateTime loginDate)
+        {
+            this.userRepo.UpdateLastLoginDate(userId, loginDate);
+        }
     }
 }

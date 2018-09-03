@@ -11,6 +11,7 @@ namespace BLL.DomainModel.Users.Services
         UserAccount FindUserAccount(string email);
 
         void UpdatePassword(int userId, string newPassword);
+        void UpdateLastLoginDate(int userId, DateTime loginDate);
     }
 
 

@@ -57,6 +57,10 @@ namespace WebUI.Controllers
             {
                 this.webSecurityManager.LogOut(); // special "hack" when switching between local and azure as authentication cookie gets stuck
 
+            } else
+            {
+                // Update the LastLogInDate for the user account 
+                this.webSecurityManager.RefreshLastLoginDate();
             }
 
             return View();

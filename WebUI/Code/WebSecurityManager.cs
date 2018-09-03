@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using Common;
 
 namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
 {
@@ -99,6 +100,8 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
                     });
 
                 userLoginResult = true;
+
+                
             }
 
             return userLoginResult;
@@ -110,6 +113,15 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
         public void UpdatePassword(string newPassword)
         {
             this.userAccountService.UpdatePassword((int)this.CurrentUserID, newPassword);
+        }
+        public void RefreshLastLoginDate()
+        {
+            if(this.CurrentUserID==null)
+            {
+                return;
+            }
+
+            this.userAccountService.UpdateLastLoginDate((int)this.CurrentUserID, Functions.GetCurrentDateTimeInUTC());
         }
     }
 }

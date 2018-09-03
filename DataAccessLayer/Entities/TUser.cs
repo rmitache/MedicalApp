@@ -18,6 +18,7 @@ namespace DataAccessLayer.Entities
         public DateTime? SignupDate { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Language { get; set; }
+        public DateTime? LastLoginDate { get; set; }
 
         public ICollection<THealthStatusEntry> THealthStatusEntry { get; set; }
         public ICollection<TMedicineType> TMedicineType { get; set; }
