@@ -253,11 +253,9 @@ class ChangeMode implements IPlanEditorModeImplementation {
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
 		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-		this.vm.InfoMessage = 'You are about to create a new Version for this Plan. ' +
-			'The previous Version started on ' + moment(this.prevVersion.StartDateTime).format('Do MMM YYYY');
-		this.vm.InfoMessage += (this.prevVersion.EndDateTime == null) ?
-			', without any specific end date.' :
-			' and is/was due to end on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY') + '.';
+		this.vm.InfoMessage = 'You are about to make changes to this Plan. ' +
+			'The previous period of the Plan started on ' + moment(this.prevVersion.StartDateTime).format('Do MMM YYYY');
+		this.vm.InfoMessage += ' and will end on the day before the new changes will take effect';
 		this.vm.StartDateLabel = 'Taking effect from:';
 		this.vm.EndDateLabel = 'New end date will be:';
 	}
@@ -289,42 +287,18 @@ class EditUpcomingChangesMode implements IPlanEditorModeImplementation {
 		this.prevVersion = planCLO.GetSecondLatestVersion();
 
 
-		// Scenario A: A previous version exists
-		if (this.prevVersion !== null) {
+		// Custom form logic
+		this.reactiveForm.get('planName').disable();
+		this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
+			return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
+		}]);
 
-			// Custom form logic
-			this.reactiveForm.get('planName').disable();
-			this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
-				return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
-			}]);
-
-			// Prepare ViewModel 
-			this.vm.PlanCLO = planCLO;
-			this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-			this.vm.InfoMessage = 'You are about to hard edit the latest Version for this Plan. ' +
-				'The previous Version started on ' + moment(this.prevVersion.StartDateTime).format('Do MMM YYYY');
-			this.vm.InfoMessage += (this.prevVersion.EndDateTime == null) ?
-				', without any specific end date.' :
-				' and is/was due to end on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY') + '.';
-			this.vm.StartDateLabel = 'Taking effect from:';
-			this.vm.EndDateLabel = 'New end date will be:';
-		}
-		// Scenario B: Only a single version exists (no previous version)
-		else if (this.prevVersion === null) {
-
-			// Custom form logic
-			this.reactiveForm.get('planName').disable();
-			this.reactiveForm.get('dates').setValidators([startDateMustBeBeforeOrSameAsEndDateValidator]);
-
-			// Prepare ViewModel 
-			this.vm.PlanCLO = planCLO;
-			this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-			this.vm.InfoMessage = 'You are about to hard edit the only Version for this Plan';
-			this.vm.StartDateLabel = 'New start date will be:';
-			this.vm.EndDateLabel = 'New end date will be:';
-		}
-
-
+		// Prepare ViewModel 
+		this.vm.PlanCLO = planCLO;
+		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+		this.vm.InfoMessage = 'You are about to edit the upcoming changes for this Plan. ';
+		this.vm.StartDateLabel = 'Taking effect from:';
+		this.vm.EndDateLabel = 'New end date will be:';
 	}
 
 	// Public methods
@@ -376,8 +350,8 @@ class RestartMode implements IPlanEditorModeImplementation {
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
 		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-		this.vm.InfoMessage = 'You are about to restart this Plan by creating a new Version for it. ' +
-			'The previous Version ended on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY');
+		this.vm.InfoMessage = 'You are about to restart this Plan. ' +
+			'Previously the Plan ended on ' + moment(this.prevVersion.EndDateTime).format('Do MMM YYYY');
 		this.vm.StartDateLabel = 'Starting again on:';
 		this.vm.EndDateLabel = 'Ending on:';
 	}

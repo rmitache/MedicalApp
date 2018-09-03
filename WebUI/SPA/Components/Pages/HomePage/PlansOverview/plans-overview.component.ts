@@ -245,7 +245,7 @@ export class PlansOverviewComponent {
 			// EditUpcomingChanges
 			case PlanActionType.EditUpcomingChanges:
 				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-				this.openPlanEditor('Edit changes made before', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
+				this.openPlanEditor('Edit upcoming changes', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
 				break;
 
 			// CancelUpcomingChanges
@@ -261,7 +261,7 @@ export class PlansOverviewComponent {
 			// Restart
 			case PlanActionType.Restart:
 				var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-				this.openPlanEditor('Restart Plan', 'Re-start', cloneOfPlanCLO, PlanEditorMode.Restart);
+				this.openPlanEditor('Restart Plan', 'Restart', cloneOfPlanCLO, PlanEditorMode.Restart);
 				break;
 
 			// CancelRestart
