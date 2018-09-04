@@ -78,41 +78,11 @@ namespace BLL.DomainModel.Plans.Services
                 this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
             }
 
-            //// Update the previousLastVersion in the Plan
-            //var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
-            //this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
-            // 
-
-
-
-            //// Adjust or Restart (if the last version is newly added)
-            //if (planBLO.Versions.Count > 1 && planBLO.GetLatestVersion().ID == 0)
-            //{
-            //    // Update the previousLastVersion in the Plan
-            //    var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
-            //    this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
-
-            //    // Add/Create the lastVersion 
-            //    var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
-            //    this.versionRepository.AddVersion(lastVersionDataEntity, planBLO.ID);
-            //}
-            //// HardEdit
-            //else
-            //{
-            //    // Try and update both the previousLastVersion and the latestVersion
-            //    if (planBLO.Versions.Count > 1)
-            //    {
-            //        var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
-            //        this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
-            //    }
-            //    var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
-            //    this.versionRepository.UpdateVersion(lastVersionDataEntity, planBLO.ID);
-            //}
-
-
-
             return planBLO;
         }
-
+        public void RenamePlan (int planID,  string newName, int userID)
+        {
+            this.planRepository.RenamePlan(planID, newName, userID);
+        }
     }
 }

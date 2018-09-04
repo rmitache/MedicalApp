@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Z.EntityFramework.Plus;
 
 namespace DataAccessLayer.Repositories.PlanRepository
 {
@@ -51,14 +52,22 @@ namespace DataAccessLayer.Repositories.PlanRepository
 
             return plan;
         }
-        public void RenamePlan(int userID, string newName)
+        public void RenamePlan(int planID, string newName, int userID)
         {
-            TPlan planEntity = entitiesContext.TPlan.AsNoTracking().Where(plan =>
-                       plan.UserId == userID).SingleOrDefault();
-            planEntity.Name = newName;
 
-            entitiesContext.Entry(planEntity).State = EntityState.Modified;
-            entitiesContext.SaveChanges();
+            TPlan planEntity = entitiesContext.TPlan.AsNoTracking().Where(plan =>
+                       plan.Id == planID && plan.UserId == userID).SingleOrDefault();
+            if(planEntity== null)
+            {
+                throw new System.Exception("Plan with ID and userID cannot be found");
+            }
+
+
+            entitiesContext.TPlan.AsNoTracking().Where(plan =>
+                       plan.Id == planID)
+                       .Update(x => new TPlan() { Name = newName} );
+            
+            // OBS: it seems saveChanges is not needed, as the special Update method is carried out instantly
         }
 
     }

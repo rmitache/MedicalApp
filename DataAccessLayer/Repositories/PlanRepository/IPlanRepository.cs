@@ -11,5 +11,6 @@ namespace DataAccessLayer.Repositories
     {
         List<TPlan> GetPlans(int userID, bool includeRules );
         TPlan AddPlan(TPlan plan);
+        void RenamePlan(int planID, string newName, int userID);
     }
 }

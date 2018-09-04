@@ -375,9 +375,9 @@ function startDateMustNotBeforeTodayValidator(control: AbstractControl) {
 	// Variables
 	var startDate = moment(control.value).startOf('day');
 	var todayDate = moment().startOf('day');
-
+	
 	if (startDate < todayDate) {
-		return { incorrect: true };
+		return { startBeforeToday: true };
 	} else {
 		return null;
 	}
@@ -436,7 +436,7 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
 	if (startDateErrorsCount > 0) {
 		startDateInput.setErrors({ incorrect: true });
 	} else {
-		startDateInput.setErrors(null);
+		startDateInput.setErrors({ incorrect: null });
 	}
 	if (endDateErrorsCount > 0) {
 		endDateInput.setErrors({ incorrect: true });

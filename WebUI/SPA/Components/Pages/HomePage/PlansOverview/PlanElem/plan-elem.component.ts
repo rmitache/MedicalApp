@@ -11,6 +11,7 @@ import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
 import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
 import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { Inplace } from 'primeng/primeng';
+import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 
 @Component({
 	selector: 'plan-elem',
@@ -161,7 +162,7 @@ export class PlanElemComponent {
 		}
 
 		return {
-			tooltipText:tooltipText,
+			tooltipText: tooltipText,
 			iconName: iconName,
 			color: colorName
 		};
@@ -169,9 +170,12 @@ export class PlanElemComponent {
 
 	// Constructor 
 	constructor(
+		private readonly dataService: HomePageDataService
 	) {
 	}
 	ngOnInit() {
+
+		// Setup VM fields
 		this.viewModel.PlanCLO = this.planCLO;
 		var statusIconInfo = this.getStatusIconInfo(this.planCLO.Status);
 		this.viewModel.StatusIconTooltipText = statusIconInfo.tooltipText;
@@ -228,6 +232,11 @@ export class PlanElemComponent {
 		let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
 		this.viewModel.MainAction = this.mainActionToPlanStatusMap[planStatusName];
 
+
+		// Special handlers
+		this.inplaceInstance.onActivate.subscribe(() => {
+			this.onInplaceEditStarted();
+		});
 	}
 
 	// Event handlers
@@ -235,13 +244,27 @@ export class PlanElemComponent {
 		this.ActionTriggered.emit([this.planCLO, PlanActionType.Change]);
 
 	}
-	private onInplaceEditOKTriggered() {
-		alert(this.inplaceTextbox.nativeElement.value);
-		this.inplaceInstance.deactivate(null);
+	private onInplaceEditStarted() {
+		this.inplaceTextbox.nativeElement.value = this.viewModel.PlanCLO.Name;
+		setTimeout(() => {
+			this.inplaceTextbox.nativeElement.focus();
 
+		}, 10);
 	}
-	private onInplaceEditCancelTriggered() {
+	private onInplaceAcceptChangesTriggered() {
+		var currentValueTrimmed = (this.inplaceTextbox.nativeElement.value as string).trim();
+		if (currentValueTrimmed !== "" && currentValueTrimmed!== this.viewModel.PlanCLO.Name) {
+			this.inplaceTextbox.nativeElement.value;
+			this.viewModel.PlanCLO.Name = currentValueTrimmed;
+			this.dataService.RenamePlan(this.viewModel.PlanCLO.ID, currentValueTrimmed);
+		} else {
+
+		}
 		
+		this.inplaceInstance.deactivate(null);
+	}
+	private onInplaceCancelChangesTriggered() {
+
 		this.inplaceInstance.deactivate(null);
 	}
 

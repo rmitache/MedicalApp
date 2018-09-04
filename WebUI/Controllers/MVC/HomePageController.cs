@@ -144,6 +144,15 @@ namespace WebUI.Controllers
             return Json(adjustedPlanWithUpdatedVersionIDs);
         }
 
+        [Route("HomePage/RenamePlan")]
+        [HttpPost]
+        public JsonResult RenamePlan([FromBody]RenamePlanModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.planService.RenamePlan(model.PlanID, model.NewName, (int)userID);
+            return Json(null);
+        }
+
         [Route("HomePage/GetPlans")]
         [HttpGet]
         public JsonResult GetPlans()
@@ -262,6 +271,11 @@ namespace WebUI.Controllers
         public class UpdatePasswordModel
         {
             public string NewPassword;
+        }
+        public class RenamePlanModel
+        {
+            public int PlanID;
+            public string NewName;
         }
     }
 }

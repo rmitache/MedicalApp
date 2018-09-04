@@ -57,15 +57,19 @@
 
 
     .top-part .right-side-div .plan-name-input {
-        width: 160px;
+        width: 200px;
     }
-    .top-part .right-side-div i {
+    .top-part .right-side-div .label {
+        color: #2399e5;
+        display: inline-block;
+    }
+    /*.top-part .right-side-div i {
         
         font-size: 18px;
         color: #2399e5;
         display:inline-block;
         cursor:pointer;
-    }
+    }*/
     .top-part .right-side-div i:hover {
         color:blue;
     }

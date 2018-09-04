@@ -140,6 +140,20 @@ export class HomePageDataService {
 
 		return postDataPromise;
 	}
+	public RenamePlan(planID:number, newName:string): Promise<void> {
+		const apiMethodName: string = 'RenamePlan';
+
+		let model = {
+			PlanID: planID,
+			NewName: newName
+		};
+
+		let promise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return promise;
+	}
+
 	public GetPlans(): Promise<CLOs.PlanCLO[]> {
 		const apiMethodName: string = 'GetPlans';
 

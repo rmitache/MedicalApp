@@ -9,6 +9,7 @@ namespace BLL.DomainModel.Plans.Services
         List<Plan> GetPlans(int userID, bool includeRules);
         Plan AddPlan(Plan blo, int userID);
         Plan UpdatePlan(Plan blo, int userID);
+        void RenamePlan(int planID, string newName, int userID);
     }
 
 
