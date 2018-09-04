@@ -436,7 +436,8 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
 	if (startDateErrorsCount > 0) {
 		startDateInput.setErrors({ incorrect: true });
 	} else {
-		startDateInput.setErrors({ incorrect: null });
+		//startDateInput.setErrors({ incorrect: null });
+		startDateInput.updateValueAndValidity({ onlySelf: true, emitEvent: false });
 	}
 	if (endDateErrorsCount > 0) {
 		endDateInput.setErrors({ incorrect: true });
