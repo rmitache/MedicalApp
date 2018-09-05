@@ -29,7 +29,13 @@ export class MedicineTypesOverviewComponent {
     // Fields
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
-    private medicineTypeStatusesEnum = Enums.MedicineTypeStatus;
+	private medicineTypeStatusesEnum = Enums.MedicineTypeStatus;
+	private readonly medicineTypeStatusViewModes = {
+		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
+		All: 'All',
+		Active: 'Active',
+		Inactive: 'Inactive'
+	};
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
@@ -52,7 +58,7 @@ export class MedicineTypesOverviewComponent {
 
             return menuItems;
         },
-        SelectedViewMode: Enums.MedicineTypeStatus.InUseToday,
+		SelectedViewMode: this.medicineTypeStatusViewModes.All,
     };
 
 
@@ -120,13 +126,29 @@ export class MedicineTypesOverviewComponent {
 
         return promise;
     }
-    private filterMedicineTypes(medTypesCLOs: CLOs.MedicineTypeCLO[], enumType: Enums.MedicineTypeStatus) {
-        var filteredCLOs = medTypesCLOs.filter(medType => {
-            return medType.IsInUse === enumType;
+    private filterMedicineTypes(medTypesCLOs: CLOs.MedicineTypeCLO[], medTypeViewMode: any) {
+        var filteredCLOs = this.viewModel.AvailableMedicineTypes.filter(medType => {
+
+			// All
+			if (medTypeViewMode === this.medicineTypeStatusViewModes.All) {
+				return true;
+			}
+
+			// InUse
+			if (medTypeViewMode === this.medicineTypeStatusViewModes.Active) {
+				return (medType.IsInUse === Enums.MedicineTypeStatus.InUseToday);
+			}
+
+			// Inactive
+			if (medTypeViewMode === this.medicineTypeStatusViewModes.Inactive) {
+				return (medType.IsInUse === Enums.MedicineTypeStatus.NotInUse);
+			}
+
+			return null;
         });
         return filteredCLOs;
     }
-    private refreshUI() {
+	private refreshUI() {
         this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
     }
 
@@ -195,7 +217,7 @@ export class MedicineTypesOverviewComponent {
         this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
     }
     private onSelectedViewModeChanged(event) {
-        const newVal = parseInt(event.target.value);
+		const newVal = event.target.value;
         this.viewModel.SelectedViewMode = newVal;
 
         this.refreshUI();
@@ -259,7 +281,7 @@ interface ViewModel {
     FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
 
     GetMenuItems(medicineTypeCLO: CLOs.MedicineTypeCLO);
-    SelectedViewMode: Enums.MedicineTypeStatus;
+    SelectedViewMode: any;
 }
 export enum MedicineTypeActionType {
     CreateNew

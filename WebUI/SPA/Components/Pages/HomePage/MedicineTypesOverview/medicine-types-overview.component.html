@@ -1,18 +1,19 @@
 <div class="frame">
     <div class="header">
         <div class="left-section">
-            <span class="header-label h1">Medicine Types</span>
+            <span class="header-label h1">Medicines</span>
             <button pButton type="button" icon="fa fa-plus"
                     (click)="onAddNewMedicineTypeTriggered()"></button>
         </div>
 
         <div class="right-section">
+            <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
+                <option *ngFor="let medicineTypeStatus of medicineTypeStatusViewModes | keys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
+            </select>
         </div>
     </div>
     <div class="body">
-        <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
-            <option *ngFor="let medicineTypeStatus of medicineTypeStatusesEnum | enumkeys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
-        </select>
+        
         <div id="medicine-type-elems-list">
             <div class="medicine-type-elem" *ngFor="let medicineType of viewModel.FilteredMedicineTypes">
                 <span class="h3">{{medicineType.Name}}</span>
