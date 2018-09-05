@@ -32,7 +32,9 @@
         .frame .header .right-section {
             float: right;
         }
-
+            .frame .header .right-section > .drop-down {
+                float: right;
+            }
 
     .frame .body {
         height: calc(100% - 60px);

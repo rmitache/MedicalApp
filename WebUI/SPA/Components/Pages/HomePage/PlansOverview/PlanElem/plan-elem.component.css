@@ -18,13 +18,16 @@
     border-radius:4px;
 
 }
-
+.frame /deep/ .ui-buttonset,
+.frame /deep/ button {
+    font-size: 14px;
+}
 
 
 .frame {
     background-color: #eaeaea;
-    width: calc(100% - 16px);
-    padding: 8px;
+    width: calc(100% - 20px);
+    padding: 10px;
     height: 79px;
     border-radius: 3px;
 }
@@ -78,10 +81,7 @@
 
 
 
-.frame /deep/ .ui-buttonset,
-.frame /deep/ button {
-    font-size: 14px;
-}
+
 
 .bottom-part {
     width: 100%;
