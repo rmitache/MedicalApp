@@ -37,6 +37,7 @@
             <span class="h2">RULES:</span>
             <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="Add Rule"
                     (click)="onAddNewRuleTriggered()"></button>
+            
             <br />
             <div class="rules-list">
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
@@ -50,3 +51,6 @@
 
     </div>
 </form>
+
+<!--<button pButton type="button" icon="fa fa-plus" label="New MedicineType"
+        (click)="onNewMedTypeTriggered()"></button>-->

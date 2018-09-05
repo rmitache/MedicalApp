@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChildren, QueryList, ViewChild, ViewContainerRef } from '@angular/core';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Calendar } from 'primeng/primeng';
@@ -16,6 +16,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
+import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 
 
 @Component({
@@ -72,12 +73,18 @@ export class PlanEditorComponent implements IModalDialog {
 		this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
 	}
 
+	private onNewMedTypeTriggered() {
+		
+		this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Hello", "This is a message");
+	}
+
 	// Constructor 
 	constructor(
 		private readonly genericCLOFactory: GenericCLOFactory,
 		private readonly globalDataService: HomePageDataService,
-		private fb: FormBuilder
-
+		private fb: FormBuilder,
+		private readonly modalDialogService: ModalDialogService,
+		private viewContainerRef: ViewContainerRef,
 	) {
 	}
 	ngOnInit() {
