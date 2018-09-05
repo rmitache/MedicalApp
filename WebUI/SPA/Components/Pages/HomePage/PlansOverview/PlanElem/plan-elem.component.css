@@ -23,9 +23,9 @@
 
 .frame {
     background-color: #eaeaea;
-    width: calc(100% - 10px);
-    padding: 10px;
-    height: 75px;
+    width: calc(100% - 16px);
+    padding: 8px;
+    height: 79px;
     border-radius: 3px;
 }
 
@@ -35,7 +35,7 @@
 
 .top-part {
     width: 100%;
-    height: 52px;
+    height: 45px;
 }
 
 .top-part > i {
@@ -68,13 +68,7 @@
         color: #2399e5;
         display: inline-block;
     }
-    /*.top-part .right-side-div i {
-        
-        font-size: 18px;
-        color: #2399e5;
-        display:inline-block;
-        cursor:pointer;
-    }*/
+
     .top-part .right-side-div i:hover {
         color:blue;
     }
@@ -96,13 +90,28 @@
     .bottom-part .left-side-text-div {
         float: left;
         vertical-align: middle;
-        line-height: 25px;
     }
+        
+        .bottom-part .left-side-text-div .label-discrete {
+            float: left;
+            display:block;
+            clear: both;
+        }
+        .bottom-part .left-side-text-div .label {
+            float: left;
+            clear: both;
+            margin-top: 4px;
+            display: block;
+        }
+    .bottom-part .buttons-div 
+    {
+        float:right;
+        padding-top:7px;
+    }
+        .bottom-part .buttons-div > .split-button {
+            float: right;
+        }
 
-    .bottom-part > .split-button {
-        float: right;
-    }
-
-    .bottom-part > button {
-        float: right;
-    }
+        .bottom-part .buttons-div > button {
+            float: right;
+        }

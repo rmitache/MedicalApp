@@ -7,13 +7,13 @@
         </div>
 
         <div class="right-section">
-            
+            <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
+                <option *ngFor="let planStatusItem of planStatusViewModes | keys" [value]="planStatusItem.value">{{planStatusItem.key}}</option>
+            </select>
         </div>
     </div>
     <div class="body">
-        <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
-            <option *ngFor="let planStatusItem of planStatusViewModes | keys" [value]="planStatusItem.value">{{planStatusItem.key}}</option>
-        </select>
+       
         <div id="plan-elems-list">
             <plan-elem #factorRecords *ngFor="let plan of viewModel.FilteredPlans"
                        [PlanCLO]="plan"
