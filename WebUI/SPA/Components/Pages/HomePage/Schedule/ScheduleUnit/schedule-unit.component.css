@@ -85,9 +85,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
-        width: calc(100% - 19px);
+        width: calc(100% - 20px);
         cursor: pointer;
-        border-left: solid 5px #2399e5;
+        border-left: solid 6px #2399e5;
         background-color: #f6f6f6;
     }
 
@@ -101,7 +101,7 @@
         text-decoration: line-through;
         background-color: #fbfbfb;
         color: #bebebe;
-        width: calc(100% - 32px);
+        width: calc(100% - 14px);
         border-left: none;
     }
         .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item:hover {

@@ -50,8 +50,14 @@
         width: calc(100% - 10px);
         padding: 5px 0 5px 10px;
         overflow-y: auto;
+        
     }
 
+        .frame .body .outer {
+            margin: 0 auto;
+            max-width:1300px;
+            height:100%;
+        }
 
 .schedule-unit {
     width: calc(33% - 15px);

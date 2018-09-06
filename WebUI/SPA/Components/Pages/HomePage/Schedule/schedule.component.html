@@ -20,12 +20,13 @@
         </div>
     </div>
     <div class="body" [@goForwardAnimation]="animationVariables.animateForward" [@goBackwardAnimation]="animationVariables.animateBackward">
-        <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
-                       [Title]="unitRepr.Title"
-                       [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
+        <div class="outer">
+                <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
+                               [Title]="unitRepr.Title"
+                               [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
 
-        </schedule-unit>
-
+                </schedule-unit>
+        </div>
 
 
     </div>
