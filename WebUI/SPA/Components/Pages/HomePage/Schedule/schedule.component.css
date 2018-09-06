@@ -9,12 +9,11 @@
 }
 
     .frame .header {
-        width: calc(100% - 36px);
+        width: calc(100% - 20px);
         height: 30px;
-        padding: 5px 18px 5px 18px;
+        padding: 5px 10px 5px 10px;
         vertical-align: middle;
         line-height: 30px;
-        border-radius: 5px 5px 0px 0px;
     }
 
         .frame .header .left-section {
@@ -47,10 +46,11 @@
 
 
     .frame .body {
-        height: calc(100% - 61px);
-        width: calc(100% - 36px);
-        padding: 5px 18px 5px 18px;
-        overflow-y:auto;
+        height: calc(100% - 50px);
+        width: calc(100% - 20px);
+        padding: 5px 10px 5px 10px;
+        overflow-y: auto;
+        border: solid 1px red;
     }
 
 

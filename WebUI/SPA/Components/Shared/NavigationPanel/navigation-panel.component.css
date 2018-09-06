@@ -11,6 +11,7 @@
         vertical-align: middle;
         display: inline-block;
         margin-top: 0;
+        text-transform:uppercase;
     }
     .frame .previous-button {
         float: left;

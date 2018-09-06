@@ -6,7 +6,8 @@
                     (click)="onAddNewMedicineTypeTriggered()"></button>
         </div>
 
-        <div class="right-section">
+        <div class="filters-section">
+            <span class="label-discrete">Show:</span>
             <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
                 <option *ngFor="let medicineTypeStatus of medicineTypeStatusViewModes | keys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
             </select>

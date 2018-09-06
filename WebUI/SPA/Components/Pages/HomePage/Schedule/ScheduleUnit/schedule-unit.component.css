@@ -1,6 +1,7 @@
 .frame {
     height: 100%;
     width: 100%;
+    border:solid 1px blue;
 }
 
     .frame .unit-header {
@@ -85,9 +86,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: black;
-        width: calc(100% - 40px);
+        width: calc(100% - 19px);
         cursor: pointer;
-        border-left: solid 8px #2399e5;
+        border-left: solid 5px #2399e5;
         background-color: #f6f6f6;
     }
 

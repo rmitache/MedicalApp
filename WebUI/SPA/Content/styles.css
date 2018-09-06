@@ -20,6 +20,14 @@ h1,
     letter-spacing: 1.7px;
     color: black;
 }
+
+.h1-alt {
+    font-family: Arial;
+    font-size: 15pt;
+    font-weight: bold;
+    letter-spacing: 1.7px;
+    color: #2399e5;
+}
 h2,
 .h2 {
     font-family: Arial;
@@ -139,7 +147,7 @@ h4,
 
 .drop-down {
     border: solid 1px #dbdbdb;
-    padding: 5px;
+    /*padding: 5px;*/
     height: 29px;
 
 

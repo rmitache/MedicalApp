@@ -11,7 +11,7 @@
 
     .frame .header {
         width: calc(100% - 20px);
-        height: 30px;
+        height: 75px;
         padding: 10px;
         vertical-align: middle;
         line-height: 30px;
@@ -34,18 +34,18 @@
             }
 
 
-        .frame .header .right-section {
-            float: right;
+        .frame .header .filters-section {
+            float: left;
+            clear: both;
+            margin-top: 15px;
         }
 
-            .frame .header .right-section > .drop-down {
-                float: right;
-            }
+            
 
 
 
     .frame .body {
-        height: calc(100% - 60px);
+        height: calc(100% - 105px);
         width: calc(100% - 20px);
         padding: 5px 10px 5px 10px;
     }
