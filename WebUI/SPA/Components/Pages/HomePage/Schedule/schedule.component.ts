@@ -272,13 +272,13 @@ interface IDisplayMode {
 class DayDisplayMode implements IDisplayMode {
 	// Fields
 	private unitsConfiguration = [
+		//{
+		//	Title: 'Night',
+		//	TimeInterval: new TimeRange(new Time(0, 0), new Time(5, 59))
+		//},
 		{
-			Title: 'Night',
-			TimeInterval: new TimeRange(new Time(0, 0), new Time(5, 59))
-		},
-		{
-			Title: 'Morning',
-			TimeInterval: new TimeRange(new Time(6, 0), new Time(9, 59))
+			Title: 'Night / Morning',
+			TimeInterval: new TimeRange(new Time(0, 0), new Time(9, 59))
 		},
 		{
 			Title: 'Mid-Day',
