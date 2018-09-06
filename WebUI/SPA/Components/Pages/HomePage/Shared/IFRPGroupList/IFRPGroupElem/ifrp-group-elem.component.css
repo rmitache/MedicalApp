@@ -1,6 +1,6 @@
 .frame /deep/ .ui-autocomplete input {
 
-    width: 300px;
+    width: 265px;
 }
 
 
@@ -31,25 +31,20 @@ input.ng-invalid.ng-touched {
         margin-right: 0;
     }
 
-.draggable-area {
-    background-color: white;
-    border-radius: 6px 0 0 6px;
-    float: left;
-    width: 20px;
-    height: 100%;
-}
+
 
 .right-side {
+    border-radius: 6px;
     background-color: white;
     float: right;
     padding: 15px 10px 15px 10px;
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     height: calc(100% - 30px);
 }
 
     .right-side .medicine-type-input-pair {
-        width: 370px;
-        margin-right: 35px;
+        width: 300px;
+        margin-right: 10px;
     }
 
     .right-side .quantifier-input-pair {
@@ -110,7 +105,7 @@ input.ng-invalid.ng-touched {
 
 
 .hide-controls-overlay {
-    width: calc(100% - 390px);
+    width: calc(100% - 340px);
     margin-right: 25px;
     height: 70px;
     background-color: white;

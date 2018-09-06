@@ -40,7 +40,7 @@
     }
 
     .when-section .non-daily-controls-div {
-        width: 340px;
+        width: 310px;
         float: left;
     }
 
@@ -58,7 +58,8 @@
     .when-section .moments-in-day-div {
         float: left;
         height: 50px;
-        width: 350px;
+        width: 245px;
+        
     }
     
         .when-section .moments-in-day-div .at-label {
@@ -71,19 +72,18 @@
 
         .when-section .moments-in-day-div #moments-in-day-input {
             float: left;
-            width: 310px;
             
+            width: calc(100% - 25px);
             height: 20px;
-            margin-top: -1px;
         }
 
 .when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-inputtext {
-    width: 310px;
+    
 }
 
 .when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-chips-input-token input {
     margin-top: -5px;
-    width: 250px;
+    /*width: 210px;*/
 }
 
 .what-section {
@@ -107,7 +107,7 @@
 .check-box-label-pair {
     background-color: white;
     border: solid 1px #dbdbdb;
-    padding: 5px;
+    padding: 3px;
     float: left;
     margin-right: 2px;
     width: 30px;
