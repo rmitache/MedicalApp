@@ -8,8 +8,8 @@
 
 
 .frame {
-    width: 750px;
-    height: 650px;
+    width: 740px;
+    height: 550px;
 }
 
 .h3 {
@@ -80,9 +80,9 @@
             }
 
 .hide-symptoms-overlay-div {
-    height: calc(100% - 250px);
+    height: calc(100% - 200px);
     width: 100%;
-    top: -430px;
+    top: -400px;
     background-color: #f7f7f7;
     border-radius: 6px;
     text-align: center;
