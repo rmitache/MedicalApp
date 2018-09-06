@@ -38,13 +38,13 @@ export class HealthStatusDatasetGenerator {
             avgHealthLevel = 0.2;
         }
 
-		if (avgHealthLevel >= 0) {
-			color = '#9dc340';
-		} else if (avgHealthLevel < 0) {
-			color = '#fe6060'
-		} 
+		//if (avgHealthLevel >= 0) {
+		//	color = '#9dc340';
+		//} else if (avgHealthLevel < 0) {
+		//	color = '#fe6060'
+		//} 
 
-		/*
+		
         // Determine the color
         if (avgHealthLevel >= 2) {
             // great
@@ -69,7 +69,7 @@ export class HealthStatusDatasetGenerator {
         else if (avgHealthLevel < -1) {
             // very bad
             color = 'red';
-        }*/
+        }
 
 
         //

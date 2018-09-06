@@ -293,13 +293,13 @@ class MonthDisplayMode implements IDisplayMode {
 			dataPoints.push(dp);
 
 
-			if (avgHealthLevel >= 0) {
-				dataPointsBgColors.push('#9dc340');
-			} else if (avgHealthLevel < 0) {
-				dataPointsBgColors.push('#fe6060');
-			} 
+			//if (avgHealthLevel >= 0) {
+			//	dataPointsBgColors.push('#9dc340');
+			//} else if (avgHealthLevel < 0) {
+			//	dataPointsBgColors.push('#fe6060');
+			//} 
 
-			/*
+			
 			// great
 			if (avgHealthLevel >= 2) {
 				dataPointsBgColors.push('green');
@@ -310,11 +310,11 @@ class MonthDisplayMode implements IDisplayMode {
 			}
 			// ok
 			else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-				dataPointsBgColors.push('#e2d77e');
+				dataPointsBgColors.push('#d8e27e');
 			}
 			// notgreat 
 			else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
-				dataPointsBgColors.push('#ffc297');
+				dataPointsBgColors.push('#f3a590');
 			}
 			// bad 
 			else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
@@ -324,7 +324,7 @@ class MonthDisplayMode implements IDisplayMode {
 			else if (avgHealthLevel < -1) {
 				dataPointsBgColors.push('red');
 			}
-			*/
+			
 		});
 
 		return {
@@ -398,34 +398,33 @@ class MonthDisplayMode implements IDisplayMode {
 						drawOnChartArea: false,
 					},
 					ticks: {
+						maxRotation: 0,
+						minRotation: 0,
 						fontColor: 'gray',
 						fontFamily: 'Arial',
 						fontSize: 10,
 						beginAtZero: true,
 						autoSkip: false,
 						callback: function (value, index, values) {
-							return value;
-							//if (!(index % 2)) return value;
+							if (!(index % 3)) return value;
 						}
 					}
 				}],
 				yAxes: [{
-
 					gridLines: {
 						display: true,
 						drawTicks: true,
 						drawOnChartArea: true,
 						tickMarkLength: 5,
 						drawBorder: true,
-						zeroLineColor: 'black'
+						zeroLineColor: 'gray'
 					},
 
 					ticks: {
 						fontColor: 'gray',
-						padding: 5,
 						beginAtZero: true,
-						min: -3,
-						max: 3,
+						min: -2,
+						max: 2,
 						stepSize: 1,
 						callback: function (label, index, labels) {
 							if (label !== 0)

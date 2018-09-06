@@ -544,7 +544,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
 					time: {
 						unit: 'day',
 						round: 'day',
-						//unitStepSize: 1,
+						unitStepSize: 8,
 						tooltipFormat: "dddd MMM D, YYYY",
 						displayFormats: {
 							hour: 'MMM D'
@@ -588,8 +588,8 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
 						fontColor: 'gray',
 						padding: 5,
 						beginAtZero: true,
-						min: -3,
-						max: 3,
+						min: -2,
+						max: 2,
 						stepSize: 1,
 						callback: function (label, index, labels) {
 
