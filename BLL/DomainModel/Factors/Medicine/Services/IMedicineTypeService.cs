@@ -9,8 +9,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
     {
         MedicineType AddMedicineType(MedicineType blo, int userID);
         List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false);
-        void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
-        void ClearSupplyEntries(int userID, int medicineTypeID);
         bool MedicineTypeNameExists(int userID, string name, string ignoreName);
     }
 }

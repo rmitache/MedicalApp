@@ -82,7 +82,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
 
             // Add and remove appropriately
             this.takenMedFactorRecordRepo.AddTakenMedicineFactorRecords(dataEntitiesToAdd);
-            this.takenMedFactorRecordRepo.RemoveTakenMedicineFactorRecords(dataEntitiesToRemove);
+            this.takenMedFactorRecordRepo.DeleteTakenMedicineFactorRecords(dataEntitiesToRemove);
         }
         public List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int utcOffsetInMins, int userID)
         {

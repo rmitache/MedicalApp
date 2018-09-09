@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
             entitiesContext.SaveChanges();
 
         }
-        public void RemoveTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> dataEntities)
+        public void DeleteTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> dataEntities)
         {
             dataEntities.ForEach(dataEntity =>
             {
@@ -63,13 +63,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
 
         }
 
-        public void DeleteByMedicineTypeID(int userID, int medicineTypeID)
-        {
-            entitiesContext.TTakenMedicineFactorRecord.Where(x =>
-                   x.MedicineTypeId == medicineTypeID && 
-                   x.MedicineType.UserId == userID
-               ).Delete();
-        }
+        
     }
 }
 

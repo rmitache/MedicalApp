@@ -12,8 +12,7 @@ namespace DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository
     public interface ITakenMedicineFactorRecordRepository
     {
         void AddTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
-        void RemoveTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
-        void DeleteByMedicineTypeID(int userID, int medicineTypeID);
+        void DeleteTakenMedicineFactorRecords(List<TTakenMedicineFactorRecord> factorRecords);
         List<TTakenMedicineFactorRecord> GetTakenMedicineFactorRecords(Range<DateTime> dateRange, int userID);
     }
 }

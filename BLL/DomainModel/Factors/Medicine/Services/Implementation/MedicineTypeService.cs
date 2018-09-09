@@ -21,6 +21,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly IMedicineTypeRepository medicineTypeRepo;
         private readonly IMedicineTypeFactory medicineTypeFactory;
         private readonly IPlanService planService;
+        private readonly IMedicineTypeSupplyService medicineTypeSupplyService;
 
         // Private methods
         private Dictionary<string, MedicineType> GetUniqueMedicineTypesInUseByPlans(List<Plan> planBLOs, Range<DateTime> targetDateRange)
@@ -49,62 +50,25 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // 
             return uniqueMedicineTypesInUseAcrossPlans;
         }
-        private int? DetermineMedicineTypeRemainingSupply(TMedicineType medTypeDataEntity)
-        {
-            // Determine the total supply amount
-            int? totalSupplyAmount = null;
-            if (medTypeDataEntity.TMedicineTypeSupplyEntry.Count > 0)
-            {
-                totalSupplyAmount = medTypeDataEntity.TMedicineTypeSupplyEntry
-                    .Select(supplyEntry => supplyEntry.SupplyQuantity).Sum();
-            }
 
-            // Determine how much supply is left
-            int? remainingSupplyAmount = null;
-            if (totalSupplyAmount != null)
-            {
-                remainingSupplyAmount = totalSupplyAmount;
-                var takenRecords = medTypeDataEntity.TTakenMedicineFactorRecord;
-                foreach (TTakenMedicineFactorRecord takenRecord in takenRecords)
-                {
-                    if (medTypeDataEntity.IsPackagedIntoUnits)
-                    {
-                        // If it's packaged into units, subtract 1 unitdose for each Taken record
-                        // Consider the amount to be measured in the UnitDoseSizeType 
-                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
-                    }
-                    else
-                    {
-                        // If it's not packaged into units, each RuleItem will have its own customDoseType
-                        // In which case consider the amount to be measured in BaseUnitOfMeasure 
-                        remainingSupplyAmount -= takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize * takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
-
-                    }
-
-                    
-                }
-            }
-
-            remainingSupplyAmount = (remainingSupplyAmount < 0) ? 0 : remainingSupplyAmount;
-            return remainingSupplyAmount;
-
-        }
 
         // Constructor
         public MedicineTypeService(
             ITakenMedicineFactorRecordRepository takenMedFactorRecordRepo,
             IMedicineTypeRepository medicineTypeRepo,
             IMedicineTypeFactory medicineTypeFactory,
-            IPlanService planService)
+            IPlanService planService,
+            IMedicineTypeSupplyService medicineTypeSupplyService)
         {
             this.takenMedFactorRecordRepo = takenMedFactorRecordRepo;
             this.medicineTypeRepo = medicineTypeRepo;
             this.medicineTypeFactory = medicineTypeFactory;
             this.planService = planService;
+            this.medicineTypeSupplyService = medicineTypeSupplyService;
         }
 
         // Public methods
-        public MedicineType AddMedicineType(MedicineType blo, int userID)
+        public virtual MedicineType AddMedicineType(MedicineType blo, int userID)
         {
             var dataEntity = this.medicineTypeFactory.Convert_ToDataEntity(blo, userID);
             this.medicineTypeRepo.AddMedicineType(dataEntity);
@@ -113,7 +77,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return blo;
         }
-        public List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
+        public virtual List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
@@ -132,7 +96,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                supplyQuantitiesLeftPerMedicineType = dataEntities.ToDictionary(entry => entry.Name, entry => this.DetermineMedicineTypeRemainingSupply(entry));
+                supplyQuantitiesLeftPerMedicineType = dataEntities.ToDictionary(entry => entry.Name,
+                    entry => this.medicineTypeSupplyService.DetermineRemainingSupplyAmount(entry));
             }
 
 
@@ -143,39 +108,10 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return sortedBLOs;
         }
-        public void AddMedicineTypeSupplyEntry(int userID, int medicineTypeID, int supplyQuantity)
-        {
-            // Get the dataEntity and its supplyEntries
-            var medicineTypeDataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
-
-            var b = this.DetermineMedicineTypeRemainingSupply(medicineTypeDataEntity);
-
-            // If there are no previous SupplyEntries, delete all taken takenFactorRecords for the given medicineType
-            if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Count == 0)
-            {
-                this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
-            }
-            // Or if the sum of previous SupplyEntries is 0 or less
-            else if (this.DetermineMedicineTypeRemainingSupply(medicineTypeDataEntity) <= 0)
-            {
-                this.takenMedFactorRecordRepo.DeleteByMedicineTypeID(userID, medicineTypeID);
-                this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
-            }
-
-
-            // Add the new SupplyEntry
-            var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
-            this.medicineTypeRepo.AddMedicineTypeSupplyEntry(userID, medicineTypeID, supplyQuantity, currentDateTime);
-        }
-        public void ClearSupplyEntries(int userID, int medicineTypeID)
-        {
-            this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
-
-        }
-        public bool MedicineTypeNameExists(int userID, string name, string ignoreName)
+        public virtual bool MedicineTypeNameExists(int userID, string name, string ignoreName)
         {
             var medTypes = this.GetAllMedicineTypes(userID, false);
-            bool exists = medTypes.Any(medType => String.Equals(medType.Name, name, StringComparison.OrdinalIgnoreCase) && 
+            bool exists = medTypes.Any(medType => String.Equals(medType.Name, name, StringComparison.OrdinalIgnoreCase) &&
             !String.Equals(medType.Name, ignoreName, StringComparison.OrdinalIgnoreCase));
 
             return exists;

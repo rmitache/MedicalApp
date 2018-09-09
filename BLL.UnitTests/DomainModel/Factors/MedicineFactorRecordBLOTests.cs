@@ -7,7 +7,7 @@ using Xunit;
 
 namespace BLL.UnitTests.DomainModel.Factors
 {
-    public class MedicineFactorRecordTests
+    public class MedicineFactorRecordBLOTests
     {
         // Private methods
         private Mock<MedicineFactorRecord> CreateMedicineFactorRecordBLOMock(int parentPlanID, int medicinePlanRuleItemID,

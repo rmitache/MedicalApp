@@ -25,6 +25,7 @@ namespace WebUI.Controllers
         // Fields 
         private ISymptomTypeService symptomTypeService { get; set; }
         private IMedicineTypeService medicineTypeService { get; set; }
+        private IMedicineTypeSupplyService medicineTypeSupplyService { get; set; }
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
         private IPlanService planService { get; set; }
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
@@ -35,6 +36,7 @@ namespace WebUI.Controllers
         public HomePageController(
             ISymptomTypeService symptomTypeService,
             IMedicineTypeService medicineTypeService,
+            IMedicineTypeSupplyService medicineTypeSupplyService,
             IMedicineFactorRecordService medicineFactorRecordService,
             IPlanService planService,
             IHealthStatusEntryService healthStatusEntryService,
@@ -44,6 +46,7 @@ namespace WebUI.Controllers
 
             this.symptomTypeService = symptomTypeService;
             this.medicineTypeService = medicineTypeService;
+            this.medicineTypeSupplyService = medicineTypeSupplyService;
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.planService = planService;
             this.healthStatusEntryService = healthStatusEntryService;
@@ -199,7 +202,7 @@ namespace WebUI.Controllers
         public JsonResult AddMedicineTypeSupplyEntry([FromBody]AddMedicineTypeSupplyEntryModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            this.medicineTypeService.AddMedicineTypeSupplyEntry((int)userID, model.MedicineTypeID, model.SupplyQuantity);
+            this.medicineTypeSupplyService.AddMedicineTypeSupplyEntry((int)userID, model.MedicineTypeID, model.SupplyQuantity);
             return Json(null);
         }
 
@@ -208,7 +211,7 @@ namespace WebUI.Controllers
         public JsonResult ClearSupplyEntries([FromBody]ClearSupplyEntriesModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            this.medicineTypeService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
+            this.medicineTypeSupplyService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
             return Json(null);
         }
 
