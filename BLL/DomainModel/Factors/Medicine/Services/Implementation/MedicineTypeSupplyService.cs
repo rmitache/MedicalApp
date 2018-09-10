@@ -101,5 +101,14 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return remainingSupplyAmount;
         }
+        public virtual int? DetermineRemainingSupplyAmount(int userID, int medicineTypeID)
+        {
+            // Get the MedicineType dataEntity
+            var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
+
+            // Calculate remaining supply
+            var remainingSupplyAmount = this.DetermineRemainingSupplyAmount(dataEntity);
+            return remainingSupplyAmount;
+        }
     }
 }

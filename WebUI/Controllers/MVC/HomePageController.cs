@@ -73,7 +73,7 @@ namespace WebUI.Controllers
             {
                 this.webSecurityManager.LogOut();
             }
-           
+
 
             return View();
         }
@@ -206,24 +206,6 @@ namespace WebUI.Controllers
             return Json(bloWithUpdatedID);
         }
 
-        [Route("HomePage/AddMedicineTypeSupplyEntry")]
-        [HttpPost]
-        public JsonResult AddMedicineTypeSupplyEntry([FromBody]AddMedicineTypeSupplyEntryModel model)
-        {
-            int? userID = this.webSecurityManager.CurrentUserID;
-            this.medicineTypeSupplyService.AddMedicineTypeSupplyEntry((int)userID, model.MedicineTypeID, model.SupplyQuantity);
-            return Json(null);
-        }
-
-        [Route("HomePage/ClearSupplyEntries")]
-        [HttpPost]
-        public JsonResult ClearSupplyEntries([FromBody]ClearSupplyEntriesModel model)
-        {
-            int? userID = this.webSecurityManager.CurrentUserID;
-            this.medicineTypeSupplyService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
-            return Json(null);
-        }
-
         [Route("HomePage/GetMedicineTypes")]
         [HttpPost]
         public JsonResult GetMedicineTypes()
@@ -240,6 +222,39 @@ namespace WebUI.Controllers
             int? userID = this.webSecurityManager.CurrentUserID;
             bool isTaken = this.medicineTypeService.MedicineTypeNameExists((int)userID, model.Name, model.IgnoreName);
             return Json(isTaken);
+        }
+        //---------------------------------------------------------------------------------------------------------------------
+
+
+        // MedicineTypes Supply -----------------------------------------------------------------------------------------------
+        [Route("HomePage/AddMedicineTypeSupplyEntry")]
+        [HttpPost]
+        public JsonResult AddMedicineTypeSupplyEntry([FromBody]AddMedicineTypeSupplyEntryModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.medicineTypeSupplyService.AddMedicineTypeSupplyEntry((int)userID, model.MedicineTypeID, model.SupplyQuantity);
+
+
+            return Json(null);
+        }
+
+        [Route("HomePage/ClearSupplyEntries")]
+        [HttpPost]
+        public JsonResult ClearSupplyEntries([FromBody]MedicineTypeIDModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.medicineTypeSupplyService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
+            return Json(null);
+        }
+
+        [Route("HomePage/RecalculateRemainingSupplyAmount")]
+        [HttpPost]
+        public JsonResult RecalculateRemainingSupplyAmount(int medicineTypeID)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineRemainingSupplyAmount((int)userID, medicineTypeID);
+
+            return Json(remainingSupplyAmount);
         }
         //---------------------------------------------------------------------------------------------------------------------
 
@@ -262,7 +277,7 @@ namespace WebUI.Controllers
             public int MedicineTypeID;
             public int SupplyQuantity;
         }
-        public class ClearSupplyEntriesModel
+        public class MedicineTypeIDModel
         {
             public int MedicineTypeID;
         }

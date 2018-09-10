@@ -214,31 +214,6 @@ export class HomePageDataService {
 
 		return postDataPromise;
 	}
-	public AddMedicineTypeSupplyEntry(medicineTypeID: number, supplyQuantity: number): Promise<void> {
-		const apiMethodName: string = 'AddMedicineTypeSupplyEntry';
-
-		let model = {
-			MedicineTypeID: medicineTypeID,
-			SupplyQuantity: supplyQuantity
-		};
-
-		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
-			.toPromise();
-
-		return postDataPromise;
-	}
-	public ClearSupplyEntries(medicineTypeID: number): Promise<void> {
-		const apiMethodName: string = 'ClearSupplyEntries';
-
-		let model = {
-			MedicineTypeID: medicineTypeID
-		};
-
-		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
-			.toPromise();
-
-		return postDataPromise;
-	}
 	public GetMedicineTypes(): Promise<CLOs.MedicineTypeCLO[]> {
 		const apiMethodName: string = 'GetMedicineTypes';
 
@@ -266,6 +241,47 @@ export class HomePageDataService {
 
 		return getDataPromise;
 	}
+
+	// MedicineType Supply
+	public AddMedicineTypeSupplyEntry(medicineTypeID: number, supplyQuantity: number): Promise<void> {
+		const apiMethodName: string = 'AddMedicineTypeSupplyEntry';
+
+		let model = {
+			MedicineTypeID: medicineTypeID,
+			SupplyQuantity: supplyQuantity
+		};
+
+		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return postDataPromise;
+	}
+	public ClearSupplyEntries(medicineTypeID: number): Promise<void> {
+		const apiMethodName: string = 'ClearSupplyEntries';
+
+		let model = {
+			MedicineTypeID: medicineTypeID
+		};
+
+		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return postDataPromise;
+	}
+	public RecalculateRemainingSupplyAmount(medicineTypeID: number): Promise<void> {
+		const apiMethodName: string = 'RecalculateRemainingSupplyAmount';
+
+		let model = {
+			MedicineTypeID: medicineTypeID
+		};
+
+		let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return postDataPromise;
+	}
+
+	// 
 
 	// UserAccount
 	public UpdatePassword(newPassword: string): Promise<void> {
