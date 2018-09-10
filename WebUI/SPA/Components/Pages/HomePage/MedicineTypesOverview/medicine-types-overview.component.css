@@ -55,7 +55,9 @@
     overflow-x: hidden;
 }
 
-
+    #medicine-type-elems-list .medicine-type-elem:first-of-type {
+        margin-top: 0;
+    }
     #medicine-type-elems-list .medicine-type-elem {
         float: left;
         margin-top: 10px;

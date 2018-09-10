@@ -1,6 +1,6 @@
 <div class="frame">
     <span class="h3">{{viewModel.MedicineTypeCLO.Name}}</span>
-    <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
+    <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
 
     <span *ngIf="viewModel.MedicineTypeCLO.RemainingSupply !== null"
           class="supply-label label"

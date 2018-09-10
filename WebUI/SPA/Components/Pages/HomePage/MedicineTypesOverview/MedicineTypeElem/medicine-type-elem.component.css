@@ -13,9 +13,7 @@
     width: calc(100% - 20px);
 }
 
-    .frame:first-of-type {
-        margin-top: 0;
-    }
+    
 
     .frame .h3 {
         display: block;

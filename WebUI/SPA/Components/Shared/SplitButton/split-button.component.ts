@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ElementRef, HostListener, ViewChild, Renderer } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ElementRef, HostListener, ViewChild, Renderer, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as $ from 'jquery';
 
@@ -33,13 +33,20 @@ export class SplitButtonComponent {
 	ngOnInit() {
 		this.viewModel.MenuItems = this.menuItems;
 	}
-	buttonRight: number;
+
+	// Public methods
+	public UpdateMenuItems(newMenuItems: SplitButtonMenuItem[]) {
+		this.viewModel.MenuItems = newMenuItems;
+		this.menuItems = newMenuItems;
+	}
+
 
 	// Events
 	@Output() public ItemClicked: EventEmitter<SplitButtonMenuItem> = new EventEmitter();
 
 	// Event handlers
 	private onSplitButtonClicked($event: Event) {
+		
 		// Hide menu panel 
 		if (this.viewModel.MenuPanelVisible === true) {
 			this.viewModel.MenuPanelVisible = false;
@@ -65,6 +72,7 @@ export class SplitButtonComponent {
 		document.removeEventListener('click', this.onClickedOutside, true);
 	}
 	private onMenuItemClicked = (menuItem: SplitButtonMenuItem) => {
+		
 		menuItem.OnClick();
 	}
 
