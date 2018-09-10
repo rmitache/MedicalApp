@@ -41,22 +41,36 @@ export class MedicineTypesOverviewComponent {
         FilteredMedicineTypes: null,
 
         GetMenuItems: (medicineTypeCLO: CLOs.MedicineTypeCLO) => {
-            var menuItems = [
-                {
-                    Label: 'Add supply',
-                    OnClick: () => {
-                        this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
-                    }
-                },
-                {
-					Label: 'Clear supply',
-                    OnClick: () => {
-                        this.onClearSupplyTriggered(medicineTypeCLO);
-                    }
-                }
-            ]
+			var menuItemsA = [
+				{
+					Label: 'Add supply',
+					OnClick: () => {
+						this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
+					}
+				}
+			];
 
-            return menuItems;
+			var menuItemsB = [
+				{
+					Label: 'Add supply',
+					OnClick: () => {
+						this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
+					}
+				},
+				{
+					Label: 'Clear supply',
+					OnClick: () => {
+						this.onClearSupplyTriggered(medicineTypeCLO);
+					}
+				}
+			];
+
+			if (medicineTypeCLO.RemainingSupply === null) {
+				return menuItemsA;
+			} else {
+				return menuItemsB;
+			}
+            
         },
 		SelectedViewMode: this.medicineTypeStatusViewModes.All,
     };
@@ -136,12 +150,12 @@ export class MedicineTypesOverviewComponent {
 
 			// InUse
 			if (medTypeViewMode === this.medicineTypeStatusViewModes.Active) {
-				return (medType.IsInUse === Enums.MedicineTypeStatus.InUseToday);
+				return (medType.UsageStatus === Enums.MedicineTypeStatus.InUseToday);
 			}
 
 			// Inactive
 			if (medTypeViewMode === this.medicineTypeStatusViewModes.Inactive) {
-				return (medType.IsInUse === Enums.MedicineTypeStatus.NotInUse);
+				return (medType.UsageStatus === Enums.MedicineTypeStatus.NotInUse);
 			}
 
 			return null;

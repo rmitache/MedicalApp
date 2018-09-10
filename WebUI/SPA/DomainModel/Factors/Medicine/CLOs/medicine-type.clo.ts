@@ -15,7 +15,7 @@ export class MedicineTypeCLO extends BaseCLO {
     public PackagedUnitDoseType: Enums.PackagedUnitDoseType;
     public PackagedUnitDoseSize: number;
 
-    public IsInUse: Enums.MedicineTypeStatus;
+    public UsageStatus: Enums.MedicineTypeStatus;
     public RemainingSupply: number;
     public RemainingSupplyMeasuredIn: string;
 

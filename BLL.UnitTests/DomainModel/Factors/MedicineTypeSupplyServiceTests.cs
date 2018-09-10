@@ -171,7 +171,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         }
 
         [Fact]
-        public void DetermineRemainingSupplyAmount_DataEntityNotPackedIntoUnitsWithSuppliesAndTakenRecordsOnlySomeAfterFirstSupplyEntry_ReturnsZero()
+        public void DetermineRemainingSupplyAmount_DataEntityNotPackedIntoUnitsWithSuppliesAndMoreTakenRecordsThanSupply_ReturnsZero()
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
@@ -202,6 +202,43 @@ namespace BLL.UnitTests.DomainModel.Factors
 
             // Assert
             result.Should().Be(0);
+
+
+        }
+
+
+        [Fact]
+        public void DetermineRemainingSupplyAmount_DataEntityNotPackedIntoUnitsWithSuppliesAndSomeTakenRecordsAfterFirstSupplyEntry_ReturnsCorrectNumber()
+        {
+            // Arrange - setup service
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+                .CallBase();
+
+            // Arrange - setup dataEntity 
+            var medicineTypeMock = new TMedicineType();
+            medicineTypeMock.IsPackagedIntoUnits = false;
+            // medicineTypeMock.BaseUnitOfMeasureId = (int)UnitOfMeasure.Milligrams; // OBS: just for info purposes, none of the code should actually depend on this
+            medicineTypeMock.TMedicineTypeSupplyEntry = new List<TMedicineTypeSupplyEntry>()
+            {
+                this.CreateSupplyEntryMock(500, DateTime.UtcNow.Subtract(new TimeSpan(2,0,0,0))), // 500 mg
+                this.CreateSupplyEntryMock(200, DateTime.UtcNow.Subtract(new TimeSpan(1,0,0,0))), // 200 mg
+                this.CreateSupplyEntryMock(200, DateTime.UtcNow), // 200 mg
+
+            };
+            medicineTypeMock.TTakenMedicineFactorRecord = new List<TTakenMedicineFactorRecord>()
+            {
+                this.CreateTakenFactorRecordMock(false, DateTime.UtcNow.Subtract(new TimeSpan(5,0,0,0)), 1, 100), // 1 x 100mg
+                this.CreateTakenFactorRecordMock(false,DateTime.UtcNow.Subtract(new TimeSpan(5,0,0,0)), 1, 100), // 1 x 100 mg
+                this.CreateTakenFactorRecordMock(false,DateTime.UtcNow.Subtract(new TimeSpan(1,0,0,0)), 1, 100), // 1 x 100 mg
+                this.CreateTakenFactorRecordMock(false,DateTime.UtcNow.Subtract(new TimeSpan(1,0,0,0)), 1, 100), // 1 x 100 mg
+            };
+
+            // Act 
+            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+
+            // Assert
+            result.Should().Be(700);
 
 
         }

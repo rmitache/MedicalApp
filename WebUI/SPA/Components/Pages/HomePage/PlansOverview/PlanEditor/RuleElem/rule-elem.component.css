@@ -58,7 +58,7 @@
     .when-section .moments-in-day-div {
         float: left;
         height: 50px;
-        width: 245px;
+        width: 225px;
         
     }
     
@@ -83,7 +83,6 @@
 
 .when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-chips-input-token input {
     margin-top: -5px;
-    /*width: 210px;*/
 }
 
 .what-section {

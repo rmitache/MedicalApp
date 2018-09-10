@@ -56,15 +56,24 @@ namespace WebUI.Controllers
         // MVC methods
         public IActionResult Index()
         {
-            if (this.webSecurityManager.GetCurrentUser() == null)
+            try
             {
-                this.webSecurityManager.LogOut(); // special "hack" when switching between local and azure as authentication cookie gets stuck
-
-            } else
-            {
-                // Update the LastLogInDate for the user account 
-                this.webSecurityManager.RefreshLastLoginDate();
+                if (this.webSecurityManager.GetCurrentUser() == null)
+                {
+                    // special "hack" when switching between local and azure as authentication cookie gets stuck
+                    this.webSecurityManager.LogOut();
+                }
+                else
+                {
+                    // Update the LastLogInDate for the user account 
+                    this.webSecurityManager.RefreshLastLoginDate();
+                }
             }
+            catch
+            {
+                this.webSecurityManager.LogOut();
+            }
+           
 
             return View();
         }

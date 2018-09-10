@@ -292,7 +292,7 @@ class DayDisplayMode implements IDisplayMode {
 	];
 
 	// Private methods
-    /* BELOW: commented out conflation logic (needs to be rewritten)
+    /* BELOW: commented out conflation logic (needs to be rewritten again if one wants to use it again)
     private areEquivalent(firstFactorRecord: CLOs.MedicineFactorRecordCLO, secondFactorRecord: CLOs.MedicineFactorRecordCLO) {
         // Verifies whether two FactorRecords are conflatable (all fields except the quantifiers, which are expected to perhaps be different)
         var areEquivalent: boolean =

@@ -25,11 +25,11 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 
         let isInUse: boolean = blo['IsInUse'];
         if (isInUse === true) {
-            newCLO.IsInUse = Enums.MedicineTypeStatus.InUseToday;
+            newCLO.UsageStatus = Enums.MedicineTypeStatus.InUseToday;
         } else if (isInUse === false) {
-            newCLO.IsInUse = Enums.MedicineTypeStatus.NotInUse;
+            newCLO.UsageStatus = Enums.MedicineTypeStatus.NotInUse;
         } else {
-            newCLO.IsInUse = null;
+            newCLO.UsageStatus = null;
         }
         newCLO.RemainingSupply = blo['RemainingSupply'];
         newCLO.RemainingSupplyMeasuredIn = blo['RemainingSupplyMeasuredIn'];
@@ -47,7 +47,7 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
         newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
         newCLO.PackagedUnitDoseSize = 100;
 
-        newCLO.IsInUse = null;
+        newCLO.UsageStatus = null;
         newCLO.RemainingSupply = null;
         newCLO.RemainingSupplyMeasuredIn = null;
 
