@@ -1,0 +1,13 @@
+<div class="frame">
+    <span class="h3">{{viewModel.MedicineTypeCLO.Name}}</span>
+    <split-button [MenuItems]="viewModel.GetMenuItems()"></split-button>
+
+    <span *ngIf="viewModel.MedicineTypeCLO.RemainingSupply !== null"
+          class="supply-label label"
+          [ngClass]="{'red-label': viewModel.MedicineTypeCLO.RemainingSupply===0}">
+        {{viewModel.MedicineTypeCLO.RemainingSupply}} {{viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn}} left
+    </span>
+
+</div>
+
+

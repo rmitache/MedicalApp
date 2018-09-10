@@ -1,8 +1,5 @@
 
-.frame /deep/ .medicine-type-elem .ui-buttonset,
-.frame /deep/ .medicine-type-elem button {
-    font-size: 14px;
-}
+
 
 .frame {
     width: 100%;
@@ -59,41 +56,8 @@
 }
 
 
-.medicine-type-elem {
-    float: left;
-    width: calc(100% - 20px);
-    margin-top: 10px;
-    background-color: #eaeaea;
-    padding: 10px;
-    height: 32px;
-    border-radius: 3px;
-}
-
-    .medicine-type-elem:first-of-type {
-        margin-top: 0;
-    }
-
-    .medicine-type-elem .h3 {
-        display: block;
+    #medicine-type-elems-list .medicine-type-elem {
         float: left;
-        width: calc(100% - 32px);
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .medicine-type-elem .supply-label {
-        display: block;
-        clear: left;
-        float: left;
-        color: #808080;
-        margin-top: 2px;
-    }
-
-    .medicine-type-elem .red-label {
-        color: red;
-    }
-
-    .medicine-type-elem .split-button {
-        float: right;
+        margin-top: 10px;
+        width:100%;
     }

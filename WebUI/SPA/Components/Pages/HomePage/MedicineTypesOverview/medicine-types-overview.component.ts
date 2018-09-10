@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, Input, ViewContainerRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
@@ -33,46 +33,13 @@ export class MedicineTypesOverviewComponent {
 	private readonly medicineTypeStatusViewModes = {
 		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
 		All: 'All',
-		Active: 'Active',
-		Inactive: 'Inactive'
+		InUse: 'In use',
+		NotUsed: 'Not used'
 	};
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
-
-        GetMenuItems: (medicineTypeCLO: CLOs.MedicineTypeCLO) => {
-			var menuItemsA = [
-				{
-					Label: 'Add supply',
-					OnClick: () => {
-						this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
-					}
-				}
-			];
-
-			var menuItemsB = [
-				{
-					Label: 'Add supply',
-					OnClick: () => {
-						this.onAddMedicineTypeSupplyTriggered(medicineTypeCLO);
-					}
-				},
-				{
-					Label: 'Clear supply',
-					OnClick: () => {
-						this.onClearSupplyTriggered(medicineTypeCLO);
-					}
-				}
-			];
-
-			if (medicineTypeCLO.RemainingSupply === null) {
-				return menuItemsA;
-			} else {
-				return menuItemsB;
-			}
-            
-        },
-		SelectedViewMode: this.medicineTypeStatusViewModes.All,
+		SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
     };
 
 
@@ -149,12 +116,12 @@ export class MedicineTypesOverviewComponent {
 			}
 
 			// InUse
-			if (medTypeViewMode === this.medicineTypeStatusViewModes.Active) {
+			if (medTypeViewMode === this.medicineTypeStatusViewModes.InUse) {
 				return (medType.UsageStatus === Enums.MedicineTypeStatus.InUseToday);
 			}
 
 			// Inactive
-			if (medTypeViewMode === this.medicineTypeStatusViewModes.Inactive) {
+			if (medTypeViewMode === this.medicineTypeStatusViewModes.NotUsed) {
 				return (medType.UsageStatus === Enums.MedicineTypeStatus.NotInUse);
 			}
 
@@ -174,7 +141,8 @@ export class MedicineTypesOverviewComponent {
         private readonly dataService: HomePageDataService,
         private readonly modalDialogService: ModalDialogService,
 		private viewContainerRef: ViewContainerRef,
-		private readonly spinnerService: SpinnerService
+		private readonly spinnerService: SpinnerService,
+		private readonly changeDetectorRef: ChangeDetectorRef
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -228,7 +196,8 @@ export class MedicineTypesOverviewComponent {
     // Event handlers
     private onAddNewMedicineTypeTriggered() {
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+		this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+		
     }
     private onSelectedViewModeChanged(event) {
 		const newVal = event.target.value;
@@ -256,15 +225,15 @@ export class MedicineTypesOverviewComponent {
 
                             let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
                             componentInstance.SaveData()
-                                .then((supplyAdded) => {
-                                    setTimeout(() => {
-                                        medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+								.then((supplyAdded) => {
+									medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+										
+										
+										//alert(medicineTypeCLO.ID);
+
                                         this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 										this.spinnerService.Hide();
                                         resolve();
-                                    }, 200);
-                                    
-
                                 });
                         });
                         return promiseWrapper;
@@ -294,7 +263,6 @@ interface ViewModel {
     AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
     FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
 
-    GetMenuItems(medicineTypeCLO: CLOs.MedicineTypeCLO);
     SelectedViewMode: any;
 }
 export enum MedicineTypeActionType {

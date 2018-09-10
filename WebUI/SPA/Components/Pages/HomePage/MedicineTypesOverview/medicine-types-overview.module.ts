@@ -15,6 +15,7 @@ import { MedicineTypesOverviewComponent } from './medicine-types-overview.compon
 import { MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 import { AddMedicineSupplyComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/AddMedicineSupply/add-medicine-supply.component';
+import { MedicineTypeElemComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeElem/medicine-type-elem.component';
 
 
 
@@ -30,7 +31,8 @@ import { AddMedicineSupplyComponent } from 'SPA/Components/Pages/HomePage/Medici
     declarations: [
         MedicineTypesOverviewComponent,
         MedicineTypeEditorComponent,
-        AddMedicineSupplyComponent
+		AddMedicineSupplyComponent,
+		MedicineTypeElemComponent
     ],
     exports: [MedicineTypesOverviewComponent],
     providers: [ VersionCLOService],
