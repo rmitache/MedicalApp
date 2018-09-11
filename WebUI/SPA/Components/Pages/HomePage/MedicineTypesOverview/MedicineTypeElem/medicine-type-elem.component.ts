@@ -40,6 +40,9 @@ export class MedicineTypeElemComponent {
 			return null;
 		}
 	}
+	public get MedicineTypeCLO() {
+		return this.medicineTypeCLO;
+	}
 
 	// Private methods
 	private getMenuItems() {

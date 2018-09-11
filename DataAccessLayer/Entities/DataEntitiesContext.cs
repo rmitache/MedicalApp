@@ -34,7 +34,6 @@ namespace DataAccessLayer.Entities
             optionsBuilder.ReplaceService<IEntityMaterializerSource, DateTimeKindEntityMaterializerSource>();
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<THealthStatusEntry>(entity =>
@@ -256,6 +255,10 @@ namespace DataAccessLayer.Entities
                 entity.ToTable("t_taken_medicine_factor_record");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ActualTakenDateTime)
+                    .HasColumnName("actual_taken_date_time")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.MedicineTypeId).HasColumnName("medicine_type_id");
 

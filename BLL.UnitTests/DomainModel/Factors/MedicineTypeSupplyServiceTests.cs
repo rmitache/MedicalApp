@@ -28,6 +28,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             var mock = new TTakenMedicineFactorRecord();
             mock.OccurrenceDateTime = occurrenceDateTime;
+            mock.ActualTakenDateTime = occurrenceDateTime;
 
             // Mock ruleItem
             var ruleItemMock = new TPlanMedicineRuleItem();

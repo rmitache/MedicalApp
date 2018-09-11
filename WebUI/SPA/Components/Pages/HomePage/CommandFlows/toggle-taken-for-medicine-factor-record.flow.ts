@@ -16,9 +16,8 @@ export function ToggleTakenForMedicineFactorRecordFlow(
 
     // Main logic --------------------------------------------------------------------------------------------------------------------------
     let promise = new Promise<any>((resolve, reject) => {
-
-
-        medicineTypesOverviewComponent.AddOrRemoveSupplyForMedicineType(medicineFactorRecordCLO);
+		
+        medicineTypesOverviewComponent.ReloadRemainingSupplyForMedicineTypeFromServer(medicineFactorRecordCLO.MedicineType.ID);
 
         resolve();
     });

@@ -173,30 +173,39 @@ export class MedicineTypesOverviewComponent {
 				this.refreshUI();
 			});
 	}
-	public AddOrRemoveSupplyForMedicineType(medicineFactorRecordCLO: CLOs.MedicineFactorRecordCLO) {
+	public ReloadRemainingSupplyForMedicineTypeFromServer(medicineTypeID: number) {
+		var matchingElem = this.getMedicineTypeElemByCloID(medicineTypeID);
 
-		// Variables
-		var chosenMedType = this.viewModel.AvailableMedicineTypes.find(medType => {
-			return medType.ID === medicineFactorRecordCLO.MedicineType.ID;
-		});
-		if (chosenMedType.RemainingSupply === null) {
-			return;
-		}
+		this.dataService.RecalculateRemainingSupplyAmount(medicineTypeID)
+			.then((newTotalSupplyAmount) => {
+				matchingElem.MedicineTypeCLO.RemainingSupply = newTotalSupplyAmount;
+				matchingElem.RefreshMenuItems(); // refresh the menuItems
 
-		// Determine which supplyValue to use 
-		let supplyValue: number;
-		if (chosenMedType.IsPackagedIntoUnits === true) {
-			supplyValue = 1;
-		} else {
-			supplyValue = medicineFactorRecordCLO.UserDefinedUnitDoseSize;
-		}
+				
+			});
+		
+		//// Variables
+		//var chosenMedType = this.viewModel.AvailableMedicineTypes.find(medType => {
+		//	return medType.ID === medicineFactorRecordCLO.MedicineType.ID;
+		//});
+		//if (chosenMedType.RemainingSupply === null) {
+		//	return;
+		//}
 
-		// Determine whether to remove or add the supplyValue to the RemainingSupply of the MedicineType
-		if (medicineFactorRecordCLO.Taken === true) {
-			chosenMedType.RemoveFromRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
-		} else {
-			chosenMedType.AddToRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
-		}
+		//// Determine which supplyValue to use 
+		//let supplyValue: number;
+		//if (chosenMedType.IsPackagedIntoUnits === true) {
+		//	supplyValue = 1;
+		//} else {
+		//	supplyValue = medicineFactorRecordCLO.UserDefinedUnitDoseSize;
+		//}
+
+		//// Determine whether to remove or add the supplyValue to the RemainingSupply of the MedicineType
+		//if (medicineFactorRecordCLO.Taken === true) {
+		//	chosenMedType.RemoveFromRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
+		//} else {
+		//	chosenMedType.AddToRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
+		//}
 
 	}
 
@@ -235,9 +244,8 @@ export class MedicineTypesOverviewComponent {
 								.then(() => {
 									return this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
 								})
-								.then((supplyAmount) => {
-									//medicineTypeCLO.AddToRemainingSupply(supplyAdded);
-									medicineTypeCLO.RemainingSupply = supplyAmount;
+								.then((newTotalSupplyAmount) => {
+									medicineTypeCLO.RemainingSupply = newTotalSupplyAmount;
 									this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 									// 
@@ -245,7 +253,7 @@ export class MedicineTypesOverviewComponent {
 									this.spinnerService.Hide();
 
 									resolve();
-								});									
+								});
 						});
 						return promiseWrapper;
 					}
@@ -265,7 +273,7 @@ export class MedicineTypesOverviewComponent {
 	}
 	private onClearSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 		this.dataService.ClearSupplyEntries(medicineTypeCLO.ID).then(() => {
-			medicineTypeCLO.ClearSupply();
+			medicineTypeCLO.RemainingSupply = null;
 			this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 			this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');

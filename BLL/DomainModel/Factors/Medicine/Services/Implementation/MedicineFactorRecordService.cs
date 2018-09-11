@@ -66,7 +66,8 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
                     MedicineTypeId = breakdown.MedicineTypeID,
                     PlanMedicineRuleItemId = breakdown.MedicineRuleItemID,
                     PlanId = breakdown.ParentPlanID,
-                    OccurrenceDateTime = breakdown.OccurrenceDateTime
+                    OccurrenceDateTime = breakdown.OccurrenceDateTime,
+                    ActualTakenDateTime = Common.Functions.GetCurrentDateTimeInUTC()
                 };
 
                 if (newTakenStatus == true)

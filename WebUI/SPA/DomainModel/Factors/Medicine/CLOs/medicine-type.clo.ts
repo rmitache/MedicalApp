@@ -34,28 +34,5 @@ export class MedicineTypeCLO extends BaseCLO {
         Object.assign(this, init);
     }
 
-    // Public methods
-    public AddToRemainingSupply(supplyToAdd: number) {
-        if (supplyToAdd <= 0) {
-            throw new Error("AddToRemainingSupply: supply must be non-zero and non-negative");
-        }
-        if (this.RemainingSupply === null) {
-            this.RemainingSupply = 0;
-        }
-
-        this.RemainingSupply += supplyToAdd;
-    }
-    public RemoveFromRemainingSupply(supplyToRemove: number) {
-        if (supplyToRemove <= 0) {
-            throw new Error("RemoveFromRemainingSupply: supply must be non-zero and non-negative");
-        }
-        this.RemainingSupply -= supplyToRemove;
-
-        if (this.RemainingSupply < 0) {
-            this.RemainingSupply = 0;
-        }
-    }
-    public ClearSupply() {
-        this.RemainingSupply = null;
-    }
+    
 }

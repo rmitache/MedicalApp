@@ -48,8 +48,11 @@ export class ScheduleUnitComponent {
             let takenStatus = (factorRecordCLO.Taken === true) ? false : true;
             factorRecordCLO.Taken = takenStatus;
 
-            this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO]);
-            this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
+			this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO])
+				.then(() => {
+					this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
+
+				});
         } else {
             alert('You cannot take medicine more than 24 hours in the future');
         }

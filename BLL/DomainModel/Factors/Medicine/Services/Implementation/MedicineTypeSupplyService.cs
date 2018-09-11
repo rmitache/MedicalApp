@@ -75,7 +75,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             var takenRecords = medTypeDataEntity.TTakenMedicineFactorRecord;
             foreach (TTakenMedicineFactorRecord takenRecord in takenRecords)
             {
-                if (takenRecord.OccurrenceDateTime >= firstSupplyEntryDate) // only consider taken records which occurred after the first supplyEntry
+                if (takenRecord.ActualTakenDateTime >= firstSupplyEntryDate) // only consider taken records which occurred after the first supplyEntry
                 {
                     if (medTypeDataEntity.IsPackagedIntoUnits)
                     {

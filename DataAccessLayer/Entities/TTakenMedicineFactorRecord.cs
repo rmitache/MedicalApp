@@ -10,6 +10,7 @@ namespace DataAccessLayer.Entities
         public int PlanMedicineRuleItemId { get; set; }
         public int MedicineTypeId { get; set; }
         public DateTime OccurrenceDateTime { get; set; }
+        public DateTime ActualTakenDateTime { get; set; }
 
         public TMedicineType MedicineType { get; set; }
         public TPlan Plan { get; set; }
