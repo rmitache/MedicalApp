@@ -232,17 +232,20 @@ export class MedicineTypesOverviewComponent {
 
 							let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
 							componentInstance.SaveData()
-								.then((supplyAdded) => {
-								
-									medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+								.then(() => {
+									return this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
+								})
+								.then((supplyAmount) => {
+									//medicineTypeCLO.AddToRemainingSupply(supplyAdded);
+									medicineTypeCLO.RemainingSupply = supplyAmount;
 									this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 									// 
 									this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
 									this.spinnerService.Hide();
-									
+
 									resolve();
-								});
+								});									
 						});
 						return promiseWrapper;
 					}

@@ -249,10 +249,10 @@ namespace WebUI.Controllers
 
         [Route("HomePage/RecalculateRemainingSupplyAmount")]
         [HttpPost]
-        public JsonResult RecalculateRemainingSupplyAmount(int medicineTypeID)
+        public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineRemainingSupplyAmount((int)userID, medicineTypeID);
+            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineRemainingSupplyAmount((int)userID, model.MedicineTypeID);
 
             return Json(remainingSupplyAmount);
         }

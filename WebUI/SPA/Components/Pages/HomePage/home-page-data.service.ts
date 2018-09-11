@@ -268,7 +268,7 @@ export class HomePageDataService {
 
 		return postDataPromise;
 	}
-	public RecalculateRemainingSupplyAmount(medicineTypeID: number): Promise<void> {
+	public RecalculateRemainingSupplyAmount(medicineTypeID: number): Promise<number> {
 		const apiMethodName: string = 'RecalculateRemainingSupplyAmount';
 
 		let model = {

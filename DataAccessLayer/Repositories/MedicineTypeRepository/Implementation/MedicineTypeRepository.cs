@@ -81,10 +81,6 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
                         .ThenInclude(suppEntry => suppEntry.PlanMedicineRuleItem)
                         .SingleOrDefault();
 
-            if (medicineType.UserId != userID)
-            {
-                throw new ArgumentException("userID");
-            }
 
             return medicineType;
         }
