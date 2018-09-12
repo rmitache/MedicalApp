@@ -20,7 +20,7 @@ import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-dat
 	host: { 'class': 'plan-elem' }
 })
 export class PlanElemComponent {
-	// Fields
+	// Fields //ActiveWITHChangesTakingEffectToday
 	@Input('PlanCLO')
 	private readonly planCLO: CLOs.PlanCLO;
 	private readonly planStatusesEnum = Enums.PlanStatus;
@@ -56,6 +56,7 @@ export class PlanElemComponent {
 				}
 			}
 		],
+
 		Stopped: [
 			{
 				Label: 'Restart plan',

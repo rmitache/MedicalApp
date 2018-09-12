@@ -72,7 +72,6 @@ export class PlanEditorComponent implements IModalDialog {
 	private refreshIsValid() {
 		this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
 	}
-
 	private onNewMedTypeTriggered() {
 		
 		this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Hello", "This is a message");
@@ -95,7 +94,7 @@ export class PlanEditorComponent implements IModalDialog {
 				Validators.compose([Validators.required])
 			],
 			dates: this.fb.group({
-				startDate: [null, Validators.compose([Validators.required, startDateMustNotBeforeTodayValidator])],
+				startDate: [null, Validators.compose([Validators.required, startDateMustNotBeBeforeTomorrowValidator])],
 				endDate: null
 			}, { validator: startDateMustBeBeforeOrSameAsEndDateValidator }),
 		});
@@ -378,13 +377,24 @@ modeImplementationsLookup[PlanEditorMode.EditUpcomingChanges] = EditUpcomingChan
 modeImplementationsLookup[PlanEditorMode.Restart] = RestartMode;
 
 // Custom validators
-function startDateMustNotBeforeTodayValidator(control: AbstractControl) {
+//function startDateMustNotBeBeforeTodayValidator(control: AbstractControl) {
+//	// Variables
+//	var startDate = moment(control.value).startOf('day');
+//	var todayDate = moment().startOf('day');
+	
+//	if (startDate < todayDate) {
+//		return { startBeforeToday: true };
+//	} else {
+//		return null;
+//	}
+//}
+function startDateMustNotBeBeforeTomorrowValidator(control: AbstractControl) {
 	// Variables
 	var startDate = moment(control.value).startOf('day');
-	var todayDate = moment().startOf('day');
-	
-	if (startDate < todayDate) {
-		return { startBeforeToday: true };
+	var tomorrow = moment().add(1,'days').startOf('day');
+
+	if (startDate < tomorrow) {
+		return { startBeforeTomorrow: true };
 	} else {
 		return null;
 	}

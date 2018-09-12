@@ -1,7 +1,5 @@
-<div class="frame" 
-     
+<div class="frame"
      [class.active]="viewModel.PlanCLO.Status === 0 || viewModel.PlanCLO.Status === 1">
-
 
 
 
@@ -17,7 +15,7 @@
                     <span class="h3 plan-name">{{viewModel.PlanCLO.Name}}</span>
                 </span>
                 <span pInplaceContent>
-                    <input #inplaceTextbox class="plan-name-input" type="text" 
+                    <input #inplaceTextbox class="plan-name-input" type="text"
                            (keyup.enter)="onInplaceAcceptChangesTriggered()"
                            (keyup.esc)="onInplaceCancelChangesTriggered()"
                            (blur)="onInplaceCancelChangesTriggered()"

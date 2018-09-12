@@ -183,12 +183,13 @@ export class PlansOverviewComponent {
 			if (planStatusViewMode === this.planStatusViewModes.All) {
 				return true;
 			}
-
+			
 			// Active 
 			if (planStatusViewMode === this.planStatusViewModes.Active) {
 				return (numericVal === Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges)
 					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingChanges)
 					|| (numericVal === Enums.PlanStatus.ActiveWITHUpcomingStop)
+					//|| (numericVal === Enums.PlanStatus.ActiveWITHChangesTakingEffectToday)
 					|| (numericVal === Enums.PlanStatus.UpcomingAsNew)
 					|| (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
 			}
