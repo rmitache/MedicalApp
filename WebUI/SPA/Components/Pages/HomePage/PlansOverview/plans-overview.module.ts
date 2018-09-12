@@ -25,7 +25,7 @@ import { StopPlanDialogComponent } from 'SPA/Components/Pages/HomePage/PlansOver
         AutoCompleteModule,
         ProgressSpinnerModule,
 		SharedModule,
-		InplaceModule
+		
     ],
     declarations: [
         PlansOverviewComponent,

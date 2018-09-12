@@ -1,13 +1,32 @@
 <div class="frame">
-    <span class="h3">{{viewModel.MedicineTypeCLO.Name}}</span>
-    <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
+    <div class="top-part">
+        <div class="left-side">
+            <p-inplace #inplace>
+                <span pInplaceDisplay>
+                    <span class="h3 medicine-type-name">{{viewModel.MedicineTypeCLO.Name}}</span>
+                </span>
+                <span pInplaceContent>
+                    <input #inplaceTextbox class="medicine-type-name-input" type="text"
+                           (keyup.enter)="onInplaceAcceptChangesTriggered()"
+                           (keyup.esc)="onInplaceCancelChangesTriggered()"
+                           (blur)="onInplaceCancelChangesTriggered()"
+                           [value]="viewModel.MedicineTypeCLO.Name" pInputText><br />
+                    <span class="label">Enter to accept. Esc to cancel</span>
+                </span>
 
+            </p-inplace>
+
+        </div>
+        <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
+    </div>
     <span *ngIf="viewModel.MedicineTypeCLO.RemainingSupply !== null"
           class="supply-label label"
           [ngClass]="{'red-label': viewModel.MedicineTypeCLO.RemainingSupply===0}">
         {{viewModel.MedicineTypeCLO.RemainingSupply}} {{viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn}} left
     </span>
-
 </div>
+
+
+
 
 

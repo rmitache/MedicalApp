@@ -24,7 +24,10 @@ export class MedicineTypeElemComponent {
 	// Fields
 	@Input('MedicineTypeCLO')
 	private readonly medicineTypeCLO: CLOs.MedicineTypeCLO;
-
+	@ViewChild('inplace')
+	private inplaceInstance: Inplace;
+	@ViewChild('inplaceTextbox')
+	private inplaceTextbox: ElementRef;
 	@ViewChild('splitButton')
 	private readonly splitButton: SplitButtonComponent;
 	private readonly viewModel: ViewModel = {
@@ -91,6 +94,11 @@ export class MedicineTypeElemComponent {
 		// Setup VM fields
 		this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
 		this.viewModel.MenuItems = this.getMenuItems();
+
+		// Special handlers
+		this.inplaceInstance.onActivate.subscribe(() => {
+			this.onInplaceEditStarted();
+		});
 	}
 
 	// Public methods
@@ -102,6 +110,17 @@ export class MedicineTypeElemComponent {
 	// Events
 	@Output() public AddSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
 	@Output() public ClearSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
+
+	// Event handlers
+	private onInplaceEditStarted() {
+		
+	}
+	private onInplaceAcceptChangesTriggered() {
+		this.inplaceInstance.deactivate(null);
+	}
+	private onInplaceCancelChangesTriggered() {
+		this.inplaceInstance.deactivate(null);
+	}
 }
 interface ViewModel {
 	MedicineTypeCLO: CLOs.MedicineTypeCLO;

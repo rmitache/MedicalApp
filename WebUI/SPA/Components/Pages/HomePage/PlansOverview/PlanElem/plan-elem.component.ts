@@ -12,6 +12,7 @@ import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plan
 import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { Inplace } from 'primeng/primeng';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
+import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 @Component({
 	selector: 'plan-elem',
@@ -20,7 +21,7 @@ import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-dat
 	host: { 'class': 'plan-elem' }
 })
 export class PlanElemComponent {
-	// Fields //ActiveWITHChangesTakingEffectToday
+	// Fields 
 	@Input('PlanCLO')
 	private readonly planCLO: CLOs.PlanCLO;
 	private readonly planStatusesEnum = Enums.PlanStatus;
@@ -171,7 +172,9 @@ export class PlanElemComponent {
 
 	// Constructor 
 	constructor(
-		private readonly dataService: HomePageDataService
+		private readonly dataService: HomePageDataService,
+		private readonly commandManager: CommandManager,
+
 	) {
 	}
 	ngOnInit() {
@@ -257,9 +260,12 @@ export class PlanElemComponent {
 		if (currentValueTrimmed !== "" && currentValueTrimmed!== this.viewModel.PlanCLO.Name) {
 			this.inplaceTextbox.nativeElement.value;
 			this.viewModel.PlanCLO.Name = currentValueTrimmed;
-			this.dataService.RenamePlan(this.viewModel.PlanCLO.ID, currentValueTrimmed);
+			this.dataService.RenamePlan(this.viewModel.PlanCLO.ID, currentValueTrimmed)
+				.then(() => {
+					this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+				});
 		} else {
-
+			// do nothing if the name hasnt changed
 		}
 		
 		this.inplaceInstance.deactivate(null);

@@ -1,28 +1,23 @@
-.frame /deep/ .medicine-type-elem .ui-buttonset,
-.frame /deep/ .medicine-type-elem button {
+.frame /deep/ .ui-buttonset,
+.frame /deep/ button {
     font-size: 14px;
 }
 
+.frame /deep/ .ui-inplace-display:hover {
+    background-color: #f8f8f8;
+    border-radius: 4px;
+}
 
 .frame {
-    float: left;
     background-color: #eaeaea;
     padding: 10px;
-    height: 32px;
+    height: 42px;
     border-radius: 3px;
     width: calc(100% - 20px);
 }
 
-    
 
-    .frame .h3 {
-        display: block;
-        float: left;
-        width: calc(100% - 36px);
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
+
 
     .frame .supply-label {
         display: block;
@@ -36,6 +31,39 @@
         color: red;
     }
 
-    .frame .split-button {
+
+
+.top-part {
+    width: 100%;
+    height: 48px;
+}
+
+    .top-part .left-side {
+        width: calc(100% - 35px);
+        float:left;
+    }
+
+        .top-part .left-side .medicine-type-name {
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            height: 25px;
+            line-height: 25px;
+            vertical-align: middle;
+            width: 100%;
+        }
+
+
+        .top-part .left-side .medicine-type-name-input {
+            width: 100%;
+        }
+
+        .top-part .left-side .label {
+            color: #2399e5;
+            display: inline-block;
+        }
+
+    .top-part .split-button {
         float: right;
     }

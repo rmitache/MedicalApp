@@ -1,17 +1,3 @@
-.top-part /deep/ .ui-menu {
-    /*width: 120px;*/
-    background-color: white !important;
-}
-
-.top-part /deep/ .ui-shadow {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.top-part /deep/ .ui-button-text {
-    padding: .25em .5em;
-}
-
 
 .top-part /deep/ .ui-inplace-display:hover {
     background-color:#f8f8f8;
@@ -38,6 +24,7 @@
 
 .top-part {
     width: 100%;
+    
     height: 48px;
 }
 
