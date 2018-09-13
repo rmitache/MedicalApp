@@ -3,6 +3,9 @@
     font-size: 14px;
 }
 
+.frame /deep/ .ui-inplace-display {
+    padding-left:0;
+}
 .frame /deep/ .ui-inplace-display:hover {
     background-color: #f8f8f8;
     border-radius: 4px;
@@ -11,7 +14,7 @@
 .frame {
     background-color: #eaeaea;
     padding: 10px;
-    height: 42px;
+    
     border-radius: 3px;
     width: calc(100% - 20px);
 }
@@ -35,7 +38,7 @@
 
 .top-part {
     width: 100%;
-    height: 48px;
+    height: 25px;
 }
 
     .top-part .left-side {
@@ -62,6 +65,7 @@
         .top-part .left-side .label {
             color: #2399e5;
             display: inline-block;
+            padding-bottom:10px;
         }
 
     .top-part .split-button {
