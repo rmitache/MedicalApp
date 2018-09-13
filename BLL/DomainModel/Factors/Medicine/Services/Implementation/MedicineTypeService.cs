@@ -116,6 +116,11 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return exists;
         }
-        
+        public void RenameMedicineType(int medicineTypeID, string newName, int userID)
+        {
+            this.medicineTypeRepo.RenameMedicineType(medicineTypeID, newName, userID);
+        }
+
+
     }
 }

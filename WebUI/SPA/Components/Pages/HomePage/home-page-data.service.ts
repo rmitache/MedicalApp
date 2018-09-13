@@ -153,7 +153,6 @@ export class HomePageDataService {
 
 		return promise;
 	}
-
 	public GetPlans(): Promise<CLOs.PlanCLO[]> {
 		const apiMethodName: string = 'GetPlans';
 
@@ -241,6 +240,20 @@ export class HomePageDataService {
 
 		return getDataPromise;
 	}
+	public RenameMedicineType(medicineTypeID: number, newName: string): Promise<void> {
+		const apiMethodName: string = 'RenameMedicineType';
+
+		let model = {
+			MedicineTypeID: medicineTypeID,
+			NewName: newName
+		};
+
+		let promise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+			.toPromise();
+
+		return promise;
+	}
+
 
 	// MedicineType Supply
 	public AddMedicineTypeSupplyEntry(medicineTypeID: number, supplyQuantity: number): Promise<void> {
@@ -280,8 +293,6 @@ export class HomePageDataService {
 
 		return postDataPromise;
 	}
-
-	// 
 
 	// UserAccount
 	public UpdatePassword(newPassword: string): Promise<void> {

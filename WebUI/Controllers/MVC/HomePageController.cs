@@ -223,6 +223,16 @@ namespace WebUI.Controllers
             bool isTaken = this.medicineTypeService.MedicineTypeNameExists((int)userID, model.Name, model.IgnoreName);
             return Json(isTaken);
         }
+
+        [Route("HomePage/RenameMedicineType")]
+        [HttpPost]
+        public JsonResult RenameMedicineType([FromBody]RenameMedicineTypeModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.medicineTypeService.RenameMedicineType(model.MedicineTypeID, model.NewName, (int)userID);
+            return Json(null);
+        }
+
         //---------------------------------------------------------------------------------------------------------------------
 
 
@@ -302,6 +312,11 @@ namespace WebUI.Controllers
         public class RenamePlanModel
         {
             public int PlanID;
+            public string NewName;
+        }
+        public class RenameMedicineTypeModel
+        {
+            public int MedicineTypeID;
             public string NewName;
         }
     }

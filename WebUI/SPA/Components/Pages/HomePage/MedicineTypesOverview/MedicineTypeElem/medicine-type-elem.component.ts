@@ -13,6 +13,7 @@ import { SplitButtonMenuItem, SplitButtonComponent } from 'SPA/Components/Shared
 import { Inplace } from 'primeng/primeng';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { MedicineTypeActionType } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.component';
+import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 @Component({
 	selector: 'medicine-type-elem',
@@ -86,7 +87,9 @@ export class MedicineTypeElemComponent {
 
 	// Constructor 
 	constructor(
-		private readonly dataService: HomePageDataService
+		private readonly dataService: HomePageDataService,
+		private readonly commandManager: CommandManager,
+
 	) {
 	}
 	ngOnInit() {
@@ -113,9 +116,25 @@ export class MedicineTypeElemComponent {
 
 	// Event handlers
 	private onInplaceEditStarted() {
-		
+		this.inplaceTextbox.nativeElement.value = this.viewModel.MedicineTypeCLO.Name;
+		setTimeout(() => {
+			this.inplaceTextbox.nativeElement.focus();
+
+		}, 10);
 	}
 	private onInplaceAcceptChangesTriggered() {
+		var currentValueTrimmed = (this.inplaceTextbox.nativeElement.value as string).trim();
+		if (currentValueTrimmed !== "" && currentValueTrimmed !== this.viewModel.MedicineTypeCLO.Name) {
+			this.inplaceTextbox.nativeElement.value;
+			this.viewModel.MedicineTypeCLO.Name = currentValueTrimmed;
+			this.dataService.RenameMedicineType(this.viewModel.MedicineTypeCLO.ID, currentValueTrimmed)
+				.then(() => {
+					this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+				});
+		} else {
+			// do nothing if the name hasnt changed
+		}
+
 		this.inplaceInstance.deactivate(null);
 	}
 	private onInplaceCancelChangesTriggered() {

@@ -14,5 +14,6 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         List<TMedicineType> GetAllMedicineTypes(int userID, bool includeSupplyEntriesAndTakenRecords = false);
         TMedicineType GetByID(int userID, int medicineTypeID);
         void DeleteSupplyEntriesByMedicineTypeID(int userID, int medicineTypeID);
+        void RenameMedicineType(int medicineTypeID, string newName, int userID);
     }
 }

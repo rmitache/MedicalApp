@@ -99,6 +99,22 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
                    x.MedicineTypeId == medicineTypeID
                ).Delete();
         }
+        public void RenameMedicineType(int medicineTypeID, string newName, int userID)
+        {
+            TMedicineType entity = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
+            medType.Id == medicineTypeID && medType.UserId == userID).SingleOrDefault();
+            if (entity == null)
+            {
+                throw new System.Exception("MedicineType with ID and userID cannot be found");
+            }
+
+
+            entitiesContext.TMedicineType.AsNoTracking().Where(x =>
+                       x.Id == medicineTypeID)
+                       .Update(x => new TMedicineType() { Name = newName });
+
+            // OBS: it seems saveChanges is not needed, as the special Update method is carried out instantly
+        }
     }
 }
 
