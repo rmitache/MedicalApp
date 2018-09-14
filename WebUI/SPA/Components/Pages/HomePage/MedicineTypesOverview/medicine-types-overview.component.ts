@@ -43,6 +43,12 @@ export class MedicineTypesOverviewComponent {
 		AvailableMedicineTypes: null,
 		FilteredMedicineTypes: null,
 		SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
+
+
+		NoDataInfo: {
+			ShowNoData: false,
+			Message:null
+		}
 	};
 
 
@@ -138,6 +144,13 @@ export class MedicineTypesOverviewComponent {
 	}
 	private refreshUI() {
 		this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
+
+		// No data logic
+		if (this.viewModel.AvailableMedicineTypes.length === 0) {
+			
+			this.viewModel.NoDataInfo.ShowNoData = true;
+			this.viewModel.NoDataInfo.Message = "You haven't created any Medicine Types yet. Press the plus in the top left corner of this panel";
+		}
 	}
 
 	// Constructor 
@@ -159,7 +172,7 @@ export class MedicineTypesOverviewComponent {
 	}
 	ngOnInit() {
 		// Set viewModel properties
-		this.viewModel.AvailableMedicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
+		this.viewModel.AvailableMedicineTypes = [];// this.dataService.GetMedicineTypesFromBundle().ToArray();
 		this.refreshUI();
 	}
 	ngOnDestroy() {
@@ -181,9 +194,9 @@ export class MedicineTypesOverviewComponent {
 				matchingElem.MedicineTypeCLO.RemainingSupply = newTotalSupplyAmount;
 				matchingElem.RefreshMenuItems(); // refresh the menuItems
 
-				
+
 			});
-		
+
 		//// Variables
 		//var chosenMedType = this.viewModel.AvailableMedicineTypes.find(medType => {
 		//	return medType.ID === medicineFactorRecordCLO.MedicineType.ID;
@@ -285,7 +298,13 @@ interface ViewModel {
 	FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
 
 	SelectedViewMode: any;
+	NoDataInfo: NoDataInfo;
 }
 export enum MedicineTypeActionType {
 	CreateNew
+}
+
+interface NoDataInfo {
+	ShowNoData: boolean;
+	Message: string;
 }

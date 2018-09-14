@@ -32,7 +32,7 @@ import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
-import { NoDataPanelComponent } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.component';
+import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
 
 
 @NgModule({
@@ -55,8 +55,8 @@ import { NoDataPanelComponent } from 'SPA/Components/Shared/NoDataPanel/no-data-
 		InputTextModule,
 		TooltipModule,
 		InplaceModule,
-
-		HeaderBarModule
+		HeaderBarModule,
+		NoDataPanelModule
     ],
     declarations: [
         IconButtonComponent,
@@ -68,7 +68,6 @@ import { NoDataPanelComponent } from 'SPA/Components/Shared/NoDataPanel/no-data-
         NavigationPanelComponent,
         FilterListPanelComponent,
 		GraphTooltipComponent,
-		NoDataPanelComponent
          
     ],
     exports: [
@@ -96,7 +95,7 @@ import { NoDataPanelComponent } from 'SPA/Components/Shared/NoDataPanel/no-data-
 		TooltipModule,
 		InplaceModule,
 		HeaderBarModule,
-		NoDataPanelComponent
+		NoDataPanelModule
     ]
 })
 export class SharedModule { }

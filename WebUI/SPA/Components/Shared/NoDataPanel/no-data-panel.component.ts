@@ -11,8 +11,9 @@ import * as $ from 'jquery';
 })
 export class NoDataPanelComponent {
 	// Fields
-	@ViewChild('menuItemsBar') menuItemsBarElement: ElementRef;
+	@Input('Message') message:string;
 	private readonly viewModel: ViewModel = {
+		Message: null
 	};
 
 	// Constructor 
@@ -20,6 +21,7 @@ export class NoDataPanelComponent {
 
 	}
 	ngOnInit() {
+		this.viewModel.Message = this.message;
 	}
 
 
@@ -33,7 +35,7 @@ export class NoDataPanelComponent {
 
 
 interface ViewModel {
-
+	Message: string;
 }
 //export interface SplitButtonMenuItem {
 //	Label: string;

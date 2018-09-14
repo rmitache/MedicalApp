@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 // Project modules
-import { TabPanelComponent } from 'SPA/Components/Shared/Tabs/TabPanel/tab-panel.component';
-import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 
 // Components
+import { TabPanelComponent } from 'SPA/Components/Shared/Tabs/TabPanel/tab-panel.component';
+import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 
 
 

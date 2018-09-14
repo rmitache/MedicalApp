@@ -25,5 +25,7 @@
 
 
     </div>
-    <no-data-panel></no-data-panel>
+    <no-data-panel *ngIf="viewModel.NoDataInfo.ShowNoData===true"
+                   [Message]="viewModel.NoDataInfo.Message"
+                   ></no-data-panel>
 </div> 
