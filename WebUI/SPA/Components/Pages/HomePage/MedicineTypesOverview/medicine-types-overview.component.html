@@ -14,15 +14,16 @@
         </div>
     </div>
     <div class="body">
-        
+
         <div id="medicine-type-elems-list">
             <medicine-type-elem #medicineTypeElems *ngFor="let medicineType of viewModel.FilteredMedicineTypes"
                                 [MedicineTypeCLO]="medicineType"
                                 (AddSupplyTriggered)="onAddMedicineTypeSupplyTriggered($event)"
-                                (ClearSupplyTriggered)="onClearSupplyTriggered($event)"
-                                ></medicine-type-elem>
-            
+                                (ClearSupplyTriggered)="onClearSupplyTriggered($event)"></medicine-type-elem>
+
         </div>
 
+
     </div>
+    <no-data-panel></no-data-panel>
 </div> 
