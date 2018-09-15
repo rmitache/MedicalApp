@@ -25,7 +25,16 @@
 
 
     </div>
-    <no-data-panel *ngIf="viewModel.NoDataInfo.ShowNoData===true"
-                   [Message]="viewModel.NoDataInfo.Message"
-                   ></no-data-panel>
+    <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
+        <no-data-mode [ID]="noDataModes.NoAvailableMedicineTypes">
+            No available medicine types
+        </no-data-mode>
+        <no-data-mode [ID]="noDataModes.NoMedicineTypesInUse">
+            You have Medicine Types, but none of them are in use.
+        </no-data-mode>
+        <no-data-mode [ID]="noDataModes.NoMedicineTypesNotInUse">
+            All your Medicine Types are in use.
+        </no-data-mode>
+    </no-data-panel>
 </div> 

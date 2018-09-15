@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 // Components
 import { NoDataPanelComponent } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.component';
-import { InfoMessageComponent } from './InfoMessage/info-message.component';
+import { NoDataModeComponent } from './NoDataMode/no-data-mode.component';
 
 
 @NgModule({
@@ -16,9 +16,9 @@ import { InfoMessageComponent } from './InfoMessage/info-message.component';
     ],
     declarations: [
         NoDataPanelComponent,
-        InfoMessageComponent
+        NoDataModeComponent
     ],
-	exports: [NoDataPanelComponent, InfoMessageComponent],
+	exports: [NoDataPanelComponent, NoDataModeComponent],
     entryComponents: [
     ]
 })

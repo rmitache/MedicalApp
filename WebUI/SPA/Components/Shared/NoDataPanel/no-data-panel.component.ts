@@ -1,6 +1,7 @@
-import { Component, Input, EventEmitter, Output, ElementRef, HostListener, ViewChild, Renderer, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ElementRef, HostListener, ViewChild, Renderer, ChangeDetectionStrategy, ContentChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as $ from 'jquery';
+import { NoDataModeComponent } from './NoDataMode/no-data-mode.component';
 
 
 @Component({
@@ -11,34 +12,42 @@ import * as $ from 'jquery';
 })
 export class NoDataPanelComponent {
 	// Fields
-	@Input('Message') message:string;
-	private readonly viewModel: ViewModel = {
-		Message: null
-	};
+	@ContentChildren(NoDataModeComponent) noDataModes: QueryList<NoDataModeComponent>;
+	@Input('CurrentNoDataModeID') currentModeID:string;
+
 
 	// Constructor 
 	constructor() {
 
 	}
-	ngOnInit() {
-		this.viewModel.Message = this.message;
+	ngAfterContentInit() {
+		if (this.noDataModes) {
+			// Get all info messages
+			this.noDataModes.forEach((modeComponent) => {
+				if (modeComponent.id === this.currentModeID) {
+					modeComponent.visible = true;
+				} else {
+					modeComponent.visible = false;
+				}
+			});
+
+		}
+
 	}
+	ngOnChanges() {
+		if (this.noDataModes) {
+			// Get all info messages
+			this.noDataModes.forEach((modeComponent) => {
+				if (modeComponent.id === this.currentModeID) {
+					modeComponent.visible = true;
+				} else {
+					modeComponent.visible = false;
+				}
+			});
 
+		}
 
-
-	// Events
-	//@Output() public ItemClicked: EventEmitter<SplitButtonMenuItem> = new EventEmitter();
-
-
-
+	}
 }
 
 
-interface ViewModel {
-	Message: string;
-}
-//export interface SplitButtonMenuItem {
-//	Label: string;
-//	OnClick();
-//	Icon?: string;
-//}

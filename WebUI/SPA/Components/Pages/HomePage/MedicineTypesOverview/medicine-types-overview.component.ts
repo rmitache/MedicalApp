@@ -32,6 +32,7 @@ export class MedicineTypesOverviewComponent {
 	private medicineTypeElems: QueryList<MedicineTypeElemComponent>;
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
+	private readonly noDataModes = NoDataModes;
 	private medicineTypeStatusesEnum = Enums.MedicineTypeStatus;
 	private readonly medicineTypeStatusViewModes = {
 		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
@@ -42,13 +43,9 @@ export class MedicineTypesOverviewComponent {
 	private readonly viewModel: ViewModel = {
 		AvailableMedicineTypes: null,
 		FilteredMedicineTypes: null,
+
 		SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
-
-
-		NoDataInfo: {
-			ShowNoData: false,
-			Message:null
-		}
+		CurrentNoDataMode: null
 	};
 
 
@@ -146,11 +143,17 @@ export class MedicineTypesOverviewComponent {
 		this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
 
 		// No data logic
-		if (this.viewModel.AvailableMedicineTypes.length === 0) {
-			
-			this.viewModel.NoDataInfo.ShowNoData = true;
-			this.viewModel.NoDataInfo.Message = "You haven't created any Medicine Types yet. Press the plus in the top left corner of this panel";
+		//if (this.viewModel.AvailableMedicineTypes.length === 0) {
+		//	this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableMedicineTypes;
+		//}
+		if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.All) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableMedicineTypes;
+		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.InUse) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesInUse;
+		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.NotUsed) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesNotInUse;
 		}
+
 	}
 
 	// Constructor 
@@ -172,7 +175,7 @@ export class MedicineTypesOverviewComponent {
 	}
 	ngOnInit() {
 		// Set viewModel properties
-		this.viewModel.AvailableMedicineTypes = [];// this.dataService.GetMedicineTypesFromBundle().ToArray();
+		this.viewModel.AvailableMedicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
 		this.refreshUI();
 	}
 	ngOnDestroy() {
@@ -197,28 +200,6 @@ export class MedicineTypesOverviewComponent {
 
 			});
 
-		//// Variables
-		//var chosenMedType = this.viewModel.AvailableMedicineTypes.find(medType => {
-		//	return medType.ID === medicineFactorRecordCLO.MedicineType.ID;
-		//});
-		//if (chosenMedType.RemainingSupply === null) {
-		//	return;
-		//}
-
-		//// Determine which supplyValue to use 
-		//let supplyValue: number;
-		//if (chosenMedType.IsPackagedIntoUnits === true) {
-		//	supplyValue = 1;
-		//} else {
-		//	supplyValue = medicineFactorRecordCLO.UserDefinedUnitDoseSize;
-		//}
-
-		//// Determine whether to remove or add the supplyValue to the RemainingSupply of the MedicineType
-		//if (medicineFactorRecordCLO.Taken === true) {
-		//	chosenMedType.RemoveFromRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
-		//} else {
-		//	chosenMedType.AddToRemainingSupply(supplyValue * medicineFactorRecordCLO.UnitDoseQuantifier);
-		//}
 
 	}
 
@@ -298,13 +279,14 @@ interface ViewModel {
 	FilteredMedicineTypes: CLOs.MedicineTypeCLO[];
 
 	SelectedViewMode: any;
-	NoDataInfo: NoDataInfo;
+	CurrentNoDataMode: NoDataModes;
 }
 export enum MedicineTypeActionType {
 	CreateNew
 }
 
-interface NoDataInfo {
-	ShowNoData: boolean;
-	Message: string;
+enum NoDataModes {
+	NoAvailableMedicineTypes = 0,
+	NoMedicineTypesInUse = 1,
+	NoMedicineTypesNotInUse = 2
 }
