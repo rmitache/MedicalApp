@@ -1,12 +1,8 @@
 <div class="frame">
-    <i class="fa fa-info-circle fa-4x"></i>
-    <div class="modes-div">
-        <ng-content></ng-content>
+    <div class="inner-div">
+        <i [attr.class]="currentIconName"></i>
+        <div class="modes-div">
+            <ng-content></ng-content>
+        </div>
     </div>
 </div>
-
-
-<!--<div class="message-div">
-    <i class="fa fa-info-circle fa-4x"></i>
-    <span class="label">{{viewModel.Message}}</span>
-</div>-->

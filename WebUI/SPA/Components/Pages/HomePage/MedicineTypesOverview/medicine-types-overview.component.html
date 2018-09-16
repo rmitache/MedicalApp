@@ -28,13 +28,13 @@
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
         <no-data-mode [ID]="noDataModes.NoAvailableMedicineTypes">
-            No available medicine types
+            <span class="label-discrete">You haven't created any Medicine Types yet.</span> 
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesInUse">
-            You have Medicine Types, but none of them are in use.
-        </no-data-mode>
+            <span class="label-discrete">You have Medicine Types, but none of them are currently being used.</span>
+</no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesNotInUse">
-            All your Medicine Types are in use.
-        </no-data-mode>
+            <span class="label-discrete"> All your Medicine Types are currently in use.</span>
+</no-data-mode>
     </no-data-panel>
 </div> 

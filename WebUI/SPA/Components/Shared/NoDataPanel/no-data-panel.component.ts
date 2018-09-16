@@ -14,38 +14,33 @@ export class NoDataPanelComponent {
 	// Fields
 	@ContentChildren(NoDataModeComponent) noDataModes: QueryList<NoDataModeComponent>;
 	@Input('CurrentNoDataModeID') currentModeID:string;
+	private currentIconName: string = 'fa fa-info-circle fa-6x';
 
+	// Private methods
+	private refreshUI() {
+		if (this.noDataModes) {
+			// Get all info messages
+			this.noDataModes.forEach((modeComponent) => {
+				if (modeComponent.id === this.currentModeID) {
+					modeComponent.visible = true;
+					//this.currentIconName = modeComponent.iconName;
+				} else {
+					modeComponent.visible = false;
+				}
+			});
+
+		}
+	}
 
 	// Constructor 
 	constructor() {
 
 	}
 	ngAfterContentInit() {
-		if (this.noDataModes) {
-			// Get all info messages
-			this.noDataModes.forEach((modeComponent) => {
-				if (modeComponent.id === this.currentModeID) {
-					modeComponent.visible = true;
-				} else {
-					modeComponent.visible = false;
-				}
-			});
-
-		}
-
+		this.refreshUI(); // has to be called here, because ngOnChanges on first call doesnt have access to the ContentChildren
 	}
 	ngOnChanges() {
-		if (this.noDataModes) {
-			// Get all info messages
-			this.noDataModes.forEach((modeComponent) => {
-				if (modeComponent.id === this.currentModeID) {
-					modeComponent.visible = true;
-				} else {
-					modeComponent.visible = false;
-				}
-			});
-
-		}
+		this.refreshUI();
 
 	}
 }
