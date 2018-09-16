@@ -28,13 +28,17 @@
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
         <no-data-mode [ID]="noDataModes.NoAvailableMedicineTypes">
-            <span class="label-discrete">You haven't created any Medicine Types yet.</span> 
+            <span class="label-discrete">
+                You haven't created any Medicine Types yet.
+            </span>
+            <button style="margin-top:7px" pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="Create new"
+                    (click)="onAddNewMedicineTypeTriggered()"></button>
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesInUse">
             <span class="label-discrete">You have Medicine Types, but none of them are currently being used.</span>
-</no-data-mode>
+        </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesNotInUse">
             <span class="label-discrete"> All your Medicine Types are currently in use.</span>
-</no-data-mode>
+        </no-data-mode>
     </no-data-panel>
 </div> 

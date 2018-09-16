@@ -142,18 +142,16 @@ export class MedicineTypesOverviewComponent {
 	private refreshUI() {
 		this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
 
-		// No data logic
-		//if (this.viewModel.AvailableMedicineTypes.length === 0) {
-		//	this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableMedicineTypes;
-		//}
-		if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.All) {
+		// NoData triggers
+		if (this.viewModel.AvailableMedicineTypes.length === 0) {
 			this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableMedicineTypes;
-		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.InUse) {
+		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.InUse && this.viewModel.FilteredMedicineTypes.length === 0) {
 			this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesInUse;
-		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.NotUsed) {
+		} else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.NotUsed && this.viewModel.FilteredMedicineTypes.length === 0) {
 			this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesNotInUse;
+		} else {
+			this.viewModel.CurrentNoDataMode = null;
 		}
-
 	}
 
 	// Constructor 
