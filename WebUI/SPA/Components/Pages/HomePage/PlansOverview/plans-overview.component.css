@@ -63,3 +63,13 @@
     .plan-elem:first-of-type {
         margin-top: 0;
     }
+
+
+.no-data-panel {
+    height: calc(100% - 105px);
+    width: calc(100% - 15px);
+    padding: 5px 10px 5px 10px;
+    display: block;
+    float: left;
+    transform: translate(0, calc(-100%))
+}

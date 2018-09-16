@@ -2,7 +2,7 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">PLANS</span>
-            <button pButton type="button" icon="fa fa-plus" 
+            <button pButton type="button" icon="fa fa-plus"
                     (click)="onAddNewPlanTriggered()"></button>
         </div>
 
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="body">
-        
+
         <div id="plan-elems-list">
             <plan-elem #factorRecords *ngFor="let plan of viewModel.FilteredPlans"
                        [PlanCLO]="plan"
@@ -23,4 +23,21 @@
         </div>
 
     </div>
+
+    <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
+        <no-data-mode [ID]="noDataModes.NoAvailablePlans">
+            <span class="label-discrete">
+                You don't have any Plans yet.
+            </span>
+            <button style="margin-top:7px" pButton type="button" icon="fa fa-plus"  label="Create new"
+                    (click)="onAddNewPlanTriggered()"></button>
+        </no-data-mode>
+        <no-data-mode [ID]="noDataModes.NoActivePlans">
+            <span class="label-discrete">You have no Active Plans. Create a new one, or restart an older Inactive one.</span>
+        </no-data-mode>
+        <no-data-mode [ID]="noDataModes.NoInactivePlans">
+            <span class="label-discrete">You have no Inactive Plans.</span>
+        </no-data-mode>
+    </no-data-panel>
 </div> 

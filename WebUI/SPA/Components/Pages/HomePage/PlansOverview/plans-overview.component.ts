@@ -29,6 +29,7 @@ export class PlansOverviewComponent {
 	// Fields
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
+	private readonly noDataModes = NoDataModes;
 	private readonly planStatusViewModes = {
 		// Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
 		All: 'All',
@@ -39,6 +40,7 @@ export class PlansOverviewComponent {
 		AvailablePlans: null,
 		FilteredPlans: null,
 		SelectedViewMode: this.planStatusViewModes.Active,
+		CurrentNoDataMode: null
 	};
 
 	// Private methods
@@ -297,6 +299,17 @@ export class PlansOverviewComponent {
 	}
 	private refreshUI() {
 		this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
+
+		// NoData triggers
+		if (this.viewModel.AvailablePlans.length === 0) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailablePlans;
+		} else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Active && this.viewModel.FilteredPlans.length === 0) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoActivePlans;
+		} else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Inactive && this.viewModel.FilteredPlans.length === 0) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoInactivePlans;
+		} else {
+			this.viewModel.CurrentNoDataMode = null;
+		}
 	}
 
 
@@ -350,6 +363,7 @@ interface ViewModel {
 	AvailablePlans: CLOs.PlanCLO[];
 	FilteredPlans: CLOs.PlanCLO[];
 	SelectedViewMode: any;
+	CurrentNoDataMode: NoDataModes;
 }
 
 export enum PlanActionType {
@@ -362,4 +376,10 @@ export enum PlanActionType {
 	Stop = 6,
 	CancelStop = 7,
 	Rename = 8
+}
+
+enum NoDataModes {
+	NoAvailablePlans = 0,
+	NoActivePlans = 1,
+	NoInactivePlans = 2
 }
