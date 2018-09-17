@@ -130,31 +130,15 @@ h4,
     font-weight: bold;
 }
 .ui-inputtext:disabled {
-    background-color: #f1f1f1;
-    color: gray;
+    background-color: #e9e9e9 !important;
+    border: solid 1px gray !important;
+    color:black !important;
 }
 
-.ui-widget {
-    /*font-size: 16px !important;*/
-    /*font-family: Arial !important;*/
-}
-.ui-inputtext {
-    /*font*/
-    /*font-family: Arial;
-    font-size: 16px;
-    color: black;*/
-}
 
 .drop-down {
     border: solid 1px #dbdbdb;
-    /*padding: 5px;*/
     height: 29px;
-
-
-    /*font*/
-    /*font-family: Arial;
-    font-size: 14px;
-    color: black;*/
 }
 
     .drop-down:disabled {
