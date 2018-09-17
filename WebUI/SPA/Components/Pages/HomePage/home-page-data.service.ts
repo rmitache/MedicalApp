@@ -55,11 +55,14 @@ export class HomePageDataService {
 		let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.MedicineFactorRecordCLO>(CLOs.MedicineFactorRecordCLO, blos);
 		return cloList;
 	}
-	public GetHealthStatusEntriesForInitialRangeFromBundle(): DataStructures.List<CLOs.HealthStatusEntryCLO> {
-		let blos = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
+	public GetHealthStatusEntriesForInitialRangeFromBundle(): HealthStatusEntriesModel {
+		let obj = this.startupDataBundleService.GetBundle['HealthStatusEntriesForInitialRange'];
 
-		let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos);
-		return cloList;
+		let model = new HealthStatusEntriesModel();
+		model.HealthStatusEntryCLOs = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, obj['HealthStatusEntries']).ToArray();
+		model.UserHasAnyHealthStatusEntries = obj['UserHasAnyHealthStatusEntries'];
+
+		return model;
 	}
 
 	// FactorRecords
@@ -182,7 +185,7 @@ export class HomePageDataService {
 
 		return postDataPromise;
 	}
-	public GetHealthStatusEntries(dateRange: Range<Date>): Promise<CLOs.HealthStatusEntryCLO[]> {
+	public GetHealthStatusEntries(dateRange: Range<Date>): Promise<HealthStatusEntriesModel> {
 		const apiMethodName: string = 'GetHealthStatusEntries';
 
 		let model = {
@@ -191,8 +194,12 @@ export class HomePageDataService {
 
 		let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
 			.toPromise()
-			.then((blos) => {
-				return this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, blos).ToArray();
+			.then((obj) => {
+				let model = new HealthStatusEntriesModel();
+				model.HealthStatusEntryCLOs = this.genericCLOFactory.ConvertToCloList<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO, obj['HealthStatusEntries']).ToArray();
+				model.UserHasAnyHealthStatusEntries = obj['UserHasAnyHealthStatusEntries'];
+
+				return model;
 			});
 
 
@@ -316,3 +323,9 @@ export class HomePageDataService {
 	}
 }
 
+
+// Models - returned to BE
+class HealthStatusEntriesModel {
+	HealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[];
+	UserHasAnyHealthStatusEntries: boolean;
+}

@@ -97,6 +97,7 @@ namespace WebUI.Controllers
             var plans = planService.GetPlans(loggedInUser.ID, true);
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.UTCOffsetInMinutes, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);
+            var userHasAnyHealthStatusEntries = this.healthStatusEntryService.GetUserHasAnyHealthStatusEntries(loggedInUser.ID);
             //----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -108,7 +109,11 @@ namespace WebUI.Controllers
                 MedicineTypes = medicineTypes,
                 Plans = plans,
                 FactorRecordsForInitialRange = factorRecords,
-                HealthStatusEntriesForInitialRange = healthStatusEntries
+                HealthStatusEntriesForInitialRange = new HealthStatusEntriesModel()
+                {
+                    HealthStatusEntries = healthStatusEntries,
+                    UserHasAnyHealthStatusEntries = userHasAnyHealthStatusEntries
+                }
             };
 
             return Json(bundle);
@@ -191,7 +196,16 @@ namespace WebUI.Controllers
         {
             int? userID = this.webSecurityManager.CurrentUserID;
             var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, (int)userID, true);
-            return Json(blos);
+            var userHasAnyHealthStatusEntries = this.healthStatusEntryService.GetUserHasAnyHealthStatusEntries((int)userID);
+
+
+            var returnModel = new HealthStatusEntriesModel()
+            {
+                HealthStatusEntries = blos,
+                UserHasAnyHealthStatusEntries = userHasAnyHealthStatusEntries
+            };
+
+            return Json(returnModel);
         }
         //---------------------------------------------------------------------------------------------------------------------
 
@@ -281,7 +295,7 @@ namespace WebUI.Controllers
         //---------------------------------------------------------------------------------------------------------------------
 
 
-        // Models
+        // Models - sent to BE
         public class AddMedicineTypeSupplyEntryModel
         {
             public int MedicineTypeID;
@@ -318,6 +332,13 @@ namespace WebUI.Controllers
         {
             public int MedicineTypeID;
             public string NewName;
+        }
+
+        // Models - returned from BE
+        public class HealthStatusEntriesModel
+        {
+            public List<HealthStatusEntry> HealthStatusEntries;
+            public bool UserHasAnyHealthStatusEntries;
         }
     }
 }

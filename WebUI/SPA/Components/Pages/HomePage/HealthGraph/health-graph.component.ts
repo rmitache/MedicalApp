@@ -39,15 +39,19 @@ export class HealthGraphComponent {
 	private graphTooltipInstance: GraphTooltipComponent;
 	@ViewChild('navPanel')
 	private navPanelInstance: NavigationPanelComponent;
+	private readonly noDataModes = NoDataModes;
 	private readonly viewModel: ViewModel = {
 		AvailableDateRange: null,
 		AvailableHealthEntries: null,
+
 
 		SelectedDateRange: null,
 		ChartOptions: null,
 		ChartData: null,
 
 		DateRangeDisplayMode: DateRangeMode.SingleMonth,
+		CurrentNoDataMode: null,
+		UserHasAnyHealthStatusEntries: null
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
@@ -68,9 +72,10 @@ export class HealthGraphComponent {
 	private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
 		let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
 		let promise = this.dataService.GetHealthStatusEntries(jsDateRange)
-			.then(clos => {
+			.then(model => {
 				this.viewModel.AvailableDateRange = newDateRange;
-				this.viewModel.AvailableHealthEntries = clos;
+				this.viewModel.AvailableHealthEntries = model.HealthStatusEntryCLOs;
+				this.viewModel.UserHasAnyHealthStatusEntries = model.UserHasAnyHealthStatusEntries;
 			});
 		return promise;
 	}
@@ -97,6 +102,12 @@ export class HealthGraphComponent {
 			new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
 		this.chartInstance.reinit();
 
+		// NoData triggers
+		if (this.viewModel.UserHasAnyHealthStatusEntries === false) {
+			this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableHealthStatusEntries;
+		} else {
+			this.viewModel.CurrentNoDataMode = null;
+		}
 	}
 
 	// Constructor 
@@ -122,7 +133,8 @@ export class HealthGraphComponent {
 
 		// Init VM properties
 		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now,now, this.availableWindowPaddingInMonths);
-		this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
+		this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().HealthStatusEntryCLOs;
+		this.viewModel.UserHasAnyHealthStatusEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().UserHasAnyHealthStatusEntries;
 		this.viewModel.SelectedDateRange = initialSelectedDateRange;
 
 		// Refresh the UI
@@ -228,7 +240,6 @@ export class HealthGraphComponent {
 				});
 		}
 	}
-
 }
 
 interface ViewModel {
@@ -239,9 +250,15 @@ interface ViewModel {
 
 	ChartOptions: any;
 	ChartData: any;
+
 	DateRangeDisplayMode: DateRangeMode;
+	CurrentNoDataMode: NoDataModes;
+	UserHasAnyHealthStatusEntries: boolean;
 }
 
+enum NoDataModes {
+	NoAvailableHealthStatusEntries = 0,
+}
 
 // Supported Display modes
 interface IDisplayMode {

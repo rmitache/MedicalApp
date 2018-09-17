@@ -31,7 +31,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
             this.healthStatusEntryRepo.AddHealthStatusEntry(dataEntity);
 
             blo.ID = dataEntity.Id;
-            
+
             return blo;
         }
 
@@ -42,8 +42,14 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return blos;
         }
+        public bool GetUserHasAnyHealthStatusEntries(int userID)
+        {
+
+            return this.healthStatusEntryRepo.GetHealthStatusEntriesCount(userID) > 0;
+        }
 
     }
 
 
 }
+

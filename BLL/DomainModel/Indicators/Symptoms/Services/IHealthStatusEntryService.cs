@@ -9,6 +9,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
     {
         HealthStatusEntry AddHealthStatusEntry(HealthStatusEntry blo, int userID);
         List<HealthStatusEntry> GetHealthStatusEntries(Range<DateTime> dateRange, int userID, bool includeSymptoms);
+        bool GetUserHasAnyHealthStatusEntries(int userID);
     }
 
 

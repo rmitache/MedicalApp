@@ -29,15 +29,16 @@
 
         </div>
     </div>
-    <no-data-panel [CurrentNoDataModeID]="0"
+    <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [InnerMarginTop]="20"
                    [PositionStyle]="'horizontal'">
-        <no-data-mode [ID]="0">
+        <no-data-mode [ID]="noDataModes.NoAvailableHealthStatusEntries">
             <span class="label-discrete">
                 You don't have any Health entries yet.  
             </span>
             <button style="margin-top:15px" pButton type="button" icon="fa fa-plus" label="Add new Health Entry"
-                    (click)="onAddNewPlanTriggered()"></button>
+                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
         </no-data-mode>
 
     </no-data-panel>

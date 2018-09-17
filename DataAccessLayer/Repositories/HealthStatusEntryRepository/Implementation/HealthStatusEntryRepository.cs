@@ -61,6 +61,19 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
 
 
         }
+
+        public int GetHealthStatusEntriesCount(int userID)
+        {
+            var count = entitiesContext.THealthStatusEntry
+                .AsNoTracking()
+                .Where(
+                    healthStatusEntry =>
+                        healthStatusEntry.UserId == userID)
+                        .Count();
+
+            return count;
+
+        }
     }
 }
 

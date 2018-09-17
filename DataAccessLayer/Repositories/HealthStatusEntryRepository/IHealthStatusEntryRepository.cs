@@ -13,5 +13,6 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
     {
         THealthStatusEntry AddHealthStatusEntry(THealthStatusEntry dataEntity);
         List<THealthStatusEntry> GetHealthStatusEntries(Range<DateTime> dateRange, int userID, bool includeSymptoms);
+        int GetHealthStatusEntriesCount(int userID);
     }
 }
