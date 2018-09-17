@@ -25,6 +25,7 @@
     </div>
 
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [InnerMarginTop]="120"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
         <no-data-mode [ID]="noDataModes.NoAvailablePlans">
             <span class="label-discrete">

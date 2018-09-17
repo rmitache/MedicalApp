@@ -13,7 +13,9 @@ import { NoDataModeComponent } from './NoDataMode/no-data-mode.component';
 export class NoDataPanelComponent {
 	// Fields
 	@ContentChildren(NoDataModeComponent) noDataModes: QueryList<NoDataModeComponent>;
-	@Input('CurrentNoDataModeID') currentModeID:string;
+	@Input('CurrentNoDataModeID') currentModeID: string;
+	@Input('InnerMarginTop') innerMarginTop: number = 0;
+	@Input('PositionStyle') positionStyle: string = 'vertical';
 	private currentIconName: string = 'fa fa-info-circle fa-6x';
 
 	// Private methods

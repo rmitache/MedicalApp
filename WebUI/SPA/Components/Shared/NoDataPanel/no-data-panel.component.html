@@ -1,8 +1,12 @@
 <div class="frame">
-    <div class="inner-div">
-        <i [attr.class]="currentIconName"></i>
-        <div class="modes-div">
-            <ng-content></ng-content>
+    <div class="outer-div">
+        <div class="inner-div"
+             [ngClass]="positionStyle === 'horizontal' ? 'horizontal' :''"
+             [style.marginTop.px]="innerMarginTop">
+            <i [attr.class]="currentIconName"></i>
+            <div class="modes-div">
+                <ng-content></ng-content>
+            </div>
         </div>
     </div>
 </div>

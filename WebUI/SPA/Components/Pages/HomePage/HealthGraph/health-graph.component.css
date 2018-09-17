@@ -54,3 +54,11 @@
     padding: 0;
 }
 
+
+.no-data-panel {
+    height: calc(100% - 40px);
+    width: 100% ;
+    display: block;
+    float: left;
+    transform: translate(0, calc(-100%))
+}
