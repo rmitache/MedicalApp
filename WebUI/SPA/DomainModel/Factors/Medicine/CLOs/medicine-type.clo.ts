@@ -2,6 +2,7 @@
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { MedicineFactorRecordCLO } from 'SPA/DomainModel/clo-exports';
+import * as moment from 'moment';
 
 
 export class MedicineTypeCLO extends BaseCLO {
@@ -17,7 +18,8 @@ export class MedicineTypeCLO extends BaseCLO {
 
     public UsageStatus: Enums.MedicineTypeStatus;
     public RemainingSupply: number;
-    public RemainingSupplyMeasuredIn: string;
+	public RemainingSupplyMeasuredIn: string;
+	public SupplyWillLastUntil: Date;
 
     // Properties
     public get UnitOfMeasureName() {
@@ -27,6 +29,7 @@ export class MedicineTypeCLO extends BaseCLO {
 
         return Enums.UnitOfMeasure[this.BaseUnitOfMeasure];
     }
+	
 
     // Constructor
     constructor(init?: Partial<MedicineTypeCLO>) {

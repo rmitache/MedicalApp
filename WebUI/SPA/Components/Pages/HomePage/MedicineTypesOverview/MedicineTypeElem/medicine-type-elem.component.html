@@ -21,8 +21,9 @@
     </div>
     <span *ngIf="viewModel.MedicineTypeCLO.RemainingSupply !== null"
           class="supply-label label"
-          [ngClass]="{'red-label': viewModel.MedicineTypeCLO.RemainingSupply===0}">
-        {{viewModel.MedicineTypeCLO.RemainingSupply}} {{viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn}} left
+          [ngClass]="{'red-label': viewModel.MedicineTypeCLO.RemainingSupply===0}"
+          [attr.title]="viewModel.GetSupplyInfoForUI().TooltipText">
+        {{viewModel.GetSupplyInfoForUI().LabelText}}
     </span>
     <div style="clear:both"></div>
 </div>

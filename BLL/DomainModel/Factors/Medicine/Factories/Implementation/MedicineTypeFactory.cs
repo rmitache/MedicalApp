@@ -3,6 +3,7 @@ using DataAccessLayer.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using BLL.DomainModel.Factors.Medicine.BLOs;
+using System;
 
 namespace BLL.DomainModel.Factors.Medicine.Factories
 {
@@ -15,7 +16,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
 
         // Public methods
-        public MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null, int? remainingSupply = null)
+        public MedicineType Convert_ToBLO(TMedicineType dataEntity, bool? isInUse = null, int? remainingSupplyAmount = null,
+            DateTime? supplyWillLastUntil = null)
         {
             MedicineType blo = new MedicineType();
             blo.ID = dataEntity.Id;
@@ -28,7 +30,8 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
 
             blo.IsInUse = isInUse;
-            blo.RemainingSupply = remainingSupply;
+            blo.RemainingSupply = remainingSupplyAmount;
+            blo.SupplyWillLastUntil = supplyWillLastUntil;
 
             return blo;
         }
@@ -50,24 +53,25 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities,
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
-            Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType)
+            Dictionary<string, MedicineTypeSupplyInfo> supplyQuantitiesLeftPerMedicineType)
         {
 
             var bloList = dataEntities.Select(dataEntity =>
             {
-
+                // Is in Use 
                 bool? isInUse = null;
                 if (uniqueMedicineTypesInUseToday != null)
                 {
                     isInUse = uniqueMedicineTypesInUseToday.ContainsKey(dataEntity.Name);
                 }
-                int? remainingSupply = null;
-                if(supplyQuantitiesLeftPerMedicineType!=null)
-                {
-                    remainingSupply = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
-                }
 
-                return Convert_ToBLO(dataEntity, isInUse, remainingSupply);
+                // Supply
+                var supplyInfo = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
+                int? remainingSupplyAmount = supplyInfo.RemainingSupplyAmount;
+                DateTime? supplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
+
+
+                return Convert_ToBLO(dataEntity, isInUse, remainingSupplyAmount, supplyWillLastUntil);
             }).ToList();
             return bloList;
         }

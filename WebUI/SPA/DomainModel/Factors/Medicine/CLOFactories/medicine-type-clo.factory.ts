@@ -10,59 +10,60 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 @Injectable()
 export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO> {
 
-    // Public Methods
-    public Convert_ToCLO(blo: any): CLOs.MedicineTypeCLO {
-        let newCLO = new CLOs.MedicineTypeCLO();
-        newCLO.ID = blo['ID'];
-        newCLO.Name = blo['Name'];
-        newCLO.ProducerName = blo['ProducerName'];
+	// Public Methods
+	public Convert_ToCLO(blo: any): CLOs.MedicineTypeCLO {
+		let newCLO = new CLOs.MedicineTypeCLO();
+		newCLO.ID = blo['ID'];
+		newCLO.Name = blo['Name'];
+		newCLO.ProducerName = blo['ProducerName'];
 
-        newCLO.BaseUnitOfMeasure = blo['BaseUnitOfMeasure'];
-        newCLO.IsPackagedIntoUnits = blo['IsPackagedIntoUnits'];
-        newCLO.PackagedUnitDoseType = blo['PackagedUnitDoseType'];
-        newCLO.PackagedUnitDoseSize = blo['PackagedUnitDoseSize'];
+		newCLO.BaseUnitOfMeasure = blo['BaseUnitOfMeasure'];
+		newCLO.IsPackagedIntoUnits = blo['IsPackagedIntoUnits'];
+		newCLO.PackagedUnitDoseType = blo['PackagedUnitDoseType'];
+		newCLO.PackagedUnitDoseSize = blo['PackagedUnitDoseSize'];
 
 
-        let isInUse: boolean = blo['IsInUse'];
-        if (isInUse === true) {
-            newCLO.UsageStatus = Enums.MedicineTypeStatus.InUseToday;
-        } else if (isInUse === false) {
-            newCLO.UsageStatus = Enums.MedicineTypeStatus.NotInUse;
-        } else {
-            newCLO.UsageStatus = null;
-        }
-        newCLO.RemainingSupply = blo['RemainingSupply'];
-        newCLO.RemainingSupplyMeasuredIn = blo['RemainingSupplyMeasuredIn'];
+		let isInUse: boolean = blo['IsInUse'];
+		if (isInUse === true) {
+			newCLO.UsageStatus = Enums.MedicineTypeStatus.InUseToday;
+		} else if (isInUse === false) {
+			newCLO.UsageStatus = Enums.MedicineTypeStatus.NotInUse;
+		} else {
+			newCLO.UsageStatus = null;
+		}
+		newCLO.RemainingSupply = blo['RemainingSupply'];
+		newCLO.RemainingSupplyMeasuredIn = blo['RemainingSupplyMeasuredIn'];
+		newCLO.SupplyWillLastUntil = (blo['SupplyWillLastUntil'] !== null) ? new Date(blo['SupplyWillLastUntil']) : null;
 
-        return newCLO;
-    }
-    public Create_DefaultCLO(): CLOs.MedicineTypeCLO {
-        let newCLO = new CLOs.MedicineTypeCLO();
-        newCLO.ID = 0;
-        newCLO.Name = "Default name";
-        newCLO.ProducerName = "";
+		return newCLO;
+	}
+	public Create_DefaultCLO(): CLOs.MedicineTypeCLO {
+		let newCLO = new CLOs.MedicineTypeCLO();
+		newCLO.ID = 0;
+		newCLO.Name = "Default name";
+		newCLO.ProducerName = "";
 
-        newCLO.BaseUnitOfMeasure = Enums.UnitOfMeasure.mg;
-        newCLO.IsPackagedIntoUnits = true;
-        newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
-        newCLO.PackagedUnitDoseSize = 100;
+		newCLO.BaseUnitOfMeasure = Enums.UnitOfMeasure.mg;
+		newCLO.IsPackagedIntoUnits = true;
+		newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
+		newCLO.PackagedUnitDoseSize = 100;
 
-        newCLO.UsageStatus = null;
-        newCLO.RemainingSupply = null;
-        newCLO.RemainingSupplyMeasuredIn = null;
+		newCLO.UsageStatus = null;
+		newCLO.RemainingSupply = null;
+		newCLO.RemainingSupplyMeasuredIn = null;
 
-        return newCLO;
-    }
-    public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineTypeCLO> {
-        let cloList = new DataStructures.List<CLOs.MedicineTypeCLO>();
-        bloArray.forEach(blo => {
-            let clo = this.Convert_ToCLO(blo);
-            cloList.Add(clo);
-        });
+		return newCLO;
+	}
+	public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.MedicineTypeCLO> {
+		let cloList = new DataStructures.List<CLOs.MedicineTypeCLO>();
+		bloArray.forEach(blo => {
+			let clo = this.Convert_ToCLO(blo);
+			cloList.Add(clo);
+		});
 
-        return cloList;
-    }
-    public Clone_CLOAsNewBLO(clo: CLOs.MedicineTypeCLO): CLOs.MedicineTypeCLO {
-        throw new Error('Clone_CLO Not implemented');
-    }
+		return cloList;
+	}
+	public Clone_CLOAsNewBLO(clo: CLOs.MedicineTypeCLO): CLOs.MedicineTypeCLO {
+		throw new Error('Clone_CLO Not implemented');
+	}
 }

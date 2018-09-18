@@ -82,7 +82,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
 
-            // Get usage info for each MedicineType
+            // Get a dictionary with all medicineTypes in use 
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
             if (retreiveSupplyAndUsageInfo)
             {
@@ -92,17 +92,24 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
             }
 
-            // Get supply info for each MedicineType
-            Dictionary<string, int?> supplyQuantitiesLeftPerMedicineType = null;
+            // Get a dictionary with remaining supply info for each MedicineType
+            Dictionary<string, MedicineTypeSupplyInfo> supplyInfoPerMedicineType = new Dictionary<string, MedicineTypeSupplyInfo>(); ;
             if (retreiveSupplyAndUsageInfo)
             {
-                supplyQuantitiesLeftPerMedicineType = dataEntities.ToDictionary(entry => entry.Name,
-                    entry => this.medicineTypeSupplyService.DetermineRemainingSupplyAmount(entry));
+                foreach(TMedicineType dataEntity in dataEntities)
+                {
+                    var supplyInfo = new MedicineTypeSupplyInfo();
+                    supplyInfo.RemainingSupplyAmount = medicineTypeSupplyService.DetermineRemainingSupplyAmount(dataEntity);
+                    supplyInfo.SupplyWillLastUntil = DateTime.UtcNow.AddDays(10);
+
+                    supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
+                }
+                
             }
 
 
             // Construct the BLOs
-            var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities, uniqueMedicineTypesInUseToday, supplyQuantitiesLeftPerMedicineType);
+            var blos = this.medicineTypeFactory.Convert_ToBLOList(dataEntities, uniqueMedicineTypesInUseToday, supplyInfoPerMedicineType);
             var sortedBLOs = blos.OrderBy(medicineType => medicineType.Name).ToList();
 
 
@@ -123,4 +130,10 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
 
     }
+}
+
+public class MedicineTypeSupplyInfo
+{
+    public int? RemainingSupplyAmount { get; set; }
+    public DateTime? SupplyWillLastUntil { get; set; }
 }

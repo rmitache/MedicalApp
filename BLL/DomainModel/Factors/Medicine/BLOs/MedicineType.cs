@@ -1,5 +1,6 @@
 ﻿using BLL.DomainModel.Factors.Medicine.Enums;
 using BLL.DomainModel.General.Enums;
+using System;
 
 namespace BLL.DomainModel.Factors.Medicine.BLOs
 {
@@ -30,6 +31,8 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
                 }
             }
         }
+        virtual public DateTime? SupplyWillLastUntil { get; set; }
+        
 
         // Constructor
         public MedicineType() { }

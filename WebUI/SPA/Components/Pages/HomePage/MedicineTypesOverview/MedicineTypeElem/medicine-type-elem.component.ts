@@ -1,19 +1,15 @@
 // Angular and 3rd party stuff
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+
 import * as moment from 'moment';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import * as Enums from 'SPA/DomainModel/enum-exports';
-import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
-
-// Components
-import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
-import { SplitButtonMenuItem, SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { Inplace } from 'primeng/primeng';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
-import { MedicineTypeActionType } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.component';
+import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
+
 
 @Component({
 	selector: 'medicine-type-elem',
@@ -33,7 +29,44 @@ export class MedicineTypeElemComponent {
 	private readonly splitButton: SplitButtonComponent;
 	private readonly viewModel: ViewModel = {
 		MedicineTypeCLO: null,
-		MenuItems: null
+		MenuItems: null,
+
+		//GetSupplyInfoTooltip: () => {
+		//	if (this.viewModel.MedicineTypeCLO.RemainingSupply !== null) {
+		//		return this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left'
+		//	}
+		//},
+		GetSupplyInfoForUI: () => {
+			let supplyInfo: SupplyInfoForUI = {
+				LabelText: null,
+				TooltipText: null
+			};
+
+
+			if (this.viewModel.MedicineTypeCLO.RemainingSupply === 0) {
+
+				// Label text
+				supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
+
+			} else if (this.viewModel.MedicineTypeCLO.RemainingSupply > 0) {
+
+				// 
+				supplyInfo.TooltipText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
+				let relativeDateString = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil).calendar(null, {
+
+					sameDay: '[Today]',
+					nextDay: '[Tomorrow]',
+					nextWeek: '[Next] dddd',
+					//sameElse: 'MMM DD, YYYY',
+					sameElse: (dt) => {
+						return 'MMM DD, YYYY';
+					}
+				});
+				supplyInfo.LabelText = 'Supply ends ' + relativeDateString;
+			}
+			return supplyInfo;
+		},
+
 	};
 
 	// Properties
@@ -84,6 +117,7 @@ export class MedicineTypeElemComponent {
 		}
 
 	}
+
 
 	// Constructor 
 	constructor(
@@ -144,4 +178,11 @@ export class MedicineTypeElemComponent {
 interface ViewModel {
 	MedicineTypeCLO: CLOs.MedicineTypeCLO;
 	MenuItems: any;
+
+	GetSupplyInfoForUI(): SupplyInfoForUI;
+}
+
+interface SupplyInfoForUI {
+	TooltipText: string;
+	LabelText: string;
 }
