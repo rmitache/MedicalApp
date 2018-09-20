@@ -276,9 +276,15 @@ namespace WebUI.Controllers
         public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
+            var currentSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
+            var untilDate = this.medicineTypeSupplyService.DetermineSupplyWillLastUntil((int)userID, model.MedicineTypeID);
+            var returnModel = new MedicineTypeSupplyInfoModel()
+            {
+                CurrentSupplyAmount = currentSupplyAmount,
+                SupplyWillLastUntil = untilDate
+            };
 
-            return Json(remainingSupplyAmount);
+            return Json(returnModel);
         }
         //---------------------------------------------------------------------------------------------------------------------
 
@@ -339,6 +345,11 @@ namespace WebUI.Controllers
         {
             public List<HealthStatusEntry> HealthStatusEntries;
             public bool UserHasAnyHealthStatusEntries;
+        }
+        public class MedicineTypeSupplyInfoModel
+        {
+            public int? CurrentSupplyAmount { get; set; }
+            public DateTime? SupplyWillLastUntil { get; set; }
         }
     }
 }

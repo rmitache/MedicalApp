@@ -53,7 +53,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities,
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
-            Dictionary<string, MedicineTypeSupplyInfo> supplyQuantitiesLeftPerMedicineType)
+            Dictionary<string, SupplyInfo> supplyQuantitiesLeftPerMedicineType)
         {
 
             var bloList = dataEntities.Select(dataEntity =>
@@ -72,7 +72,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
                     // Supply
                     var supplyInfo = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
-                    remainingSupplyAmount = supplyInfo.RemainingSupplyAmount;
+                    remainingSupplyAmount = supplyInfo.CurrentSupplyAmount;
                     supplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
                 }
 

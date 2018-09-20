@@ -19,7 +19,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         // Fields
         private readonly IMedicineTypeRepository medicineTypeRepo;
 
-
         // Constructor
         public MedicineTypeSupplyService(
             IMedicineTypeRepository medicineTypeRepo)
@@ -57,6 +56,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
 
         }
+
+        
         public virtual int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity)
         {
             // Return null if there are no supply entries (eg: tracking is inactive)
@@ -110,6 +111,31 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             var remainingSupplyAmount = this.DetermineCurrentSupplyAmount(dataEntity);
             return remainingSupplyAmount;
         }
-        //public virtual int? Determine
+
+        public virtual DateTime? DetermineSupplyWillLastUntil(int userID, int medicineTypeID)
+        {
+            // Get the MedicineType dataEntity
+            var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
+
+            int? currentSupply = this.DetermineCurrentSupplyAmount(dataEntity);
+            DateTime? untilDate = this.DetermineSupplyWillLastUntil(dataEntity, currentSupply);
+            return untilDate;
+        }
+        public virtual DateTime? DetermineSupplyWillLastUntil(TMedicineType medTypeDataEntity, int? currentSupply)
+        {
+            
+            return DateTime.UtcNow.AddDays(120);
+        }
+    }
+}
+public class SupplyInfo
+{
+    public int? CurrentSupplyAmount { get; set; }
+    public DateTime? SupplyWillLastUntil { get; set; }
+
+
+    internal SupplyInfo()
+    {
+
     }
 }

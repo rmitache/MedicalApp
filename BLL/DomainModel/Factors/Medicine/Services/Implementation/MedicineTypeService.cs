@@ -93,19 +93,19 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             }
 
             // Get a dictionary with remaining supply info for each MedicineType
-            Dictionary<string, MedicineTypeSupplyInfo> supplyInfoPerMedicineType = null;
+            Dictionary<string, SupplyInfo> supplyInfoPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                supplyInfoPerMedicineType = new Dictionary<string, MedicineTypeSupplyInfo>();
+                supplyInfoPerMedicineType = new Dictionary<string, SupplyInfo>();
                 foreach (TMedicineType dataEntity in dataEntities)
                 {
-                    var supplyInfo = new MedicineTypeSupplyInfo();
-                    supplyInfo.RemainingSupplyAmount = medicineTypeSupplyService.DetermineCurrentSupplyAmount(dataEntity);
-                    supplyInfo.SupplyWillLastUntil = DateTime.UtcNow.AddDays(120);
+                    var supplyInfo = new SupplyInfo();
+                    supplyInfo.CurrentSupplyAmount = medicineTypeSupplyService.DetermineCurrentSupplyAmount(dataEntity);
+                    supplyInfo.SupplyWillLastUntil = medicineTypeSupplyService.DetermineSupplyWillLastUntil(dataEntity, supplyInfo.CurrentSupplyAmount);
 
                     supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
                 }
-                
+
             }
 
 
@@ -128,13 +128,6 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         {
             this.medicineTypeRepo.RenameMedicineType(medicineTypeID, newName, userID);
         }
-
-
     }
 }
 
-public class MedicineTypeSupplyInfo
-{
-    public int? RemainingSupplyAmount { get; set; }
-    public DateTime? SupplyWillLastUntil { get; set; }
-}

@@ -31,11 +31,6 @@ export class MedicineTypeElemComponent {
         MedicineTypeCLO: null,
         MenuItems: null,
 
-        //GetSupplyInfoTooltip: () => {
-        //	if (this.viewModel.MedicineTypeCLO.RemainingSupply !== null) {
-        //		return this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left'
-        //	}
-        //},
         GetSupplyInfoForUI: () => {
 
             // Variables

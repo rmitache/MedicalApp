@@ -191,8 +191,9 @@ export class MedicineTypesOverviewComponent {
 		var matchingElem = this.getMedicineTypeElemByCloID(medicineTypeID);
 
 		this.dataService.RecalculateRemainingSupplyAmount(medicineTypeID)
-			.then((newTotalSupplyAmount) => {
-				matchingElem.MedicineTypeCLO.CurrentSupplyAmount = newTotalSupplyAmount;
+			.then((supplyInfo) => {
+                matchingElem.MedicineTypeCLO.CurrentSupplyAmount = supplyInfo.CurrentSupplyAmount;
+                matchingElem.MedicineTypeCLO.SupplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
 				matchingElem.RefreshMenuItems(); // refresh the menuItems
 
 
@@ -236,8 +237,9 @@ export class MedicineTypesOverviewComponent {
 								.then(() => {
 									return this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
 								})
-								.then((newTotalSupplyAmount) => {
-									medicineTypeCLO.CurrentSupplyAmount = newTotalSupplyAmount;
+								.then((supplyInfo) => {
+                                    medicineTypeCLO.CurrentSupplyAmount = supplyInfo.CurrentSupplyAmount;
+                                    medicineTypeCLO.SupplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
 									this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 									// 
