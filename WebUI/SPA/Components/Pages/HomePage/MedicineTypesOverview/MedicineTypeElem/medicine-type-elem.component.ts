@@ -12,177 +12,199 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 
 
 @Component({
-	selector: 'medicine-type-elem',
-	templateUrl: './medicine-type-elem.component.html',
-	styleUrls: ['./medicine-type-elem.component.css'],
-	host: { 'class': 'medicine-type-elem' }
+    selector: 'medicine-type-elem',
+    templateUrl: './medicine-type-elem.component.html',
+    styleUrls: ['./medicine-type-elem.component.css'],
+    host: { 'class': 'medicine-type-elem' }
 })
 export class MedicineTypeElemComponent {
-	// Fields
-	@Input('MedicineTypeCLO')
-	private readonly medicineTypeCLO: CLOs.MedicineTypeCLO;
-	@ViewChild('inplace')
-	private inplaceInstance: Inplace;
-	@ViewChild('inplaceTextbox')
-	private inplaceTextbox: ElementRef;
-	@ViewChild('splitButton')
-	private readonly splitButton: SplitButtonComponent;
-	private readonly viewModel: ViewModel = {
-		MedicineTypeCLO: null,
-		MenuItems: null,
+    // Fields
+    @Input('MedicineTypeCLO')
+    private readonly medicineTypeCLO: CLOs.MedicineTypeCLO;
+    @ViewChild('inplace')
+    private inplaceInstance: Inplace;
+    @ViewChild('inplaceTextbox')
+    private inplaceTextbox: ElementRef;
+    @ViewChild('splitButton')
+    private readonly splitButton: SplitButtonComponent;
+    private readonly viewModel: ViewModel = {
+        MedicineTypeCLO: null,
+        MenuItems: null,
 
-		//GetSupplyInfoTooltip: () => {
-		//	if (this.viewModel.MedicineTypeCLO.RemainingSupply !== null) {
-		//		return this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left'
-		//	}
-		//},
-		GetSupplyInfoForUI: () => {
-			let supplyInfo: SupplyInfoForUI = {
-				LabelText: null,
-				TooltipText: null
-			};
+        //GetSupplyInfoTooltip: () => {
+        //	if (this.viewModel.MedicineTypeCLO.RemainingSupply !== null) {
+        //		return this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left'
+        //	}
+        //},
+        GetSupplyInfoForUI: () => {
 
+            // Variables
+            let supplyInfo: SupplyInfoForUI = {
+                LabelText: null,
+                TooltipText: null
+            };
 
-			if (this.viewModel.MedicineTypeCLO.RemainingSupply === 0) {
+            // Handle different scenarios
+            if (this.viewModel.MedicineTypeCLO.RemainingSupply === 0) {
 
-				// Label text
-				supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
+                // Supply is equal to 0
+                supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
 
-			} else if (this.viewModel.MedicineTypeCLO.RemainingSupply > 0) {
+            } else if (this.viewModel.MedicineTypeCLO.RemainingSupply > 0) {
 
-				// 
-				supplyInfo.TooltipText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
-				let relativeDateString = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil).calendar(null, {
+                // 
+                let supplyUntilMom = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil);
+                let relativeDateString = this.formatFutureRelativeDate(supplyUntilMom);
 
-					sameDay: '[Today]',
-					nextDay: '[Tomorrow]',
-					nextWeek: '[Next] dddd',
-					//sameElse: 'MMM DD, YYYY',
-					sameElse: (dt) => {
-						return 'MMM DD, YYYY';
-					}
-				});
-				supplyInfo.LabelText = 'Supply ends ' + relativeDateString;
-			}
-			return supplyInfo;
-		},
+                supplyInfo.LabelText = 'Runs out ' + relativeDateString;
+                //let quantityLeftText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
+                supplyInfo.TooltipText = 'You have supply until ' + supplyUntilMom.format('MMM DD, YYYY');
 
-	};
+            }
+            return supplyInfo;
+        },
 
-	// Properties
-	public get MedicineTypeID() {
-		if (this.medicineTypeCLO) {
-			return this.medicineTypeCLO.ID;
-		} else {
-			return null;
-		}
-	}
-	public get MedicineTypeCLO() {
-		return this.medicineTypeCLO;
-	}
+    };
 
-	// Private methods
-	private getMenuItems() {
+    // Properties
+    public get MedicineTypeID() {
+        if (this.medicineTypeCLO) {
+            return this.medicineTypeCLO.ID;
+        } else {
+            return null;
+        }
+    }
+    public get MedicineTypeCLO() {
+        return this.medicineTypeCLO;
+    }
 
-		var medicineTypeCLO = this.medicineTypeCLO;
+    // Private methods
+    private getMenuItems() {
 
-		var menuItemsA = [
-			{
-				Label: 'Add supply',
-				OnClick: () => {
-					this.AddSupplyTriggered.emit(medicineTypeCLO);
-				}
-			}
-		];
+        var medicineTypeCLO = this.medicineTypeCLO;
 
-		var menuItemsB = [
-			{
-				Label: 'Add supply',
-				OnClick: () => {
-					this.AddSupplyTriggered.emit(medicineTypeCLO);
-				}
-			},
-			{
-				Label: 'Clear supply',
-				OnClick: () => {
-					this.ClearSupplyTriggered.emit(medicineTypeCLO);
-				}
-			}
-		];
+        var menuItemsA = [
+            {
+                Label: 'Add supply',
+                OnClick: () => {
+                    this.AddSupplyTriggered.emit(medicineTypeCLO);
+                }
+            }
+        ];
 
-		if (medicineTypeCLO.RemainingSupply === null) {
-			return menuItemsA;
-		} else {
-			return menuItemsB;
-		}
+        var menuItemsB = [
+            {
+                Label: 'Add supply',
+                OnClick: () => {
+                    this.AddSupplyTriggered.emit(medicineTypeCLO);
+                }
+            },
+            {
+                Label: 'Clear supply',
+                OnClick: () => {
+                    this.ClearSupplyTriggered.emit(medicineTypeCLO);
+                }
+            }
+        ];
 
-	}
+        if (medicineTypeCLO.RemainingSupply === null) {
+            return menuItemsA;
+        } else {
+            return menuItemsB;
+        }
 
+    }
+    private formatFutureRelativeDate(targetDate: moment.Moment) {
 
-	// Constructor 
-	constructor(
-		private readonly dataService: HomePageDataService,
-		private readonly commandManager: CommandManager,
+        // Variables
+        var returnString: string;
+        var now = moment();
+        let today = moment().startOf('day');
+        let tomorrow = moment().add(1,'day');
+        let inSevenDays = today.clone().add(7, 'days');
 
-	) {
-	}
-	ngOnInit() {
+        // Today
+        if (targetDate.isSame(today, 'day')) {
+            return 'today';
+        }
+        // Tomorrow
+        if (targetDate.isSame(tomorrow, 'day')) {
+            return 'tomorrow';
+        }
 
-		// Setup VM fields
-		this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
-		this.viewModel.MenuItems = this.getMenuItems();
+        // After tomorrow and up until 6 days
+        let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day');
+        return 'in ' + nrOfDaysUntilTargetDate + ' days';
+        //if (targetDate.isSame(tomorrow, 'day')) {
+        //    return 'tomorrow';
+        //}
+        // After 7 days 
+    }
 
-		// Special handlers
-		this.inplaceInstance.onActivate.subscribe(() => {
-			this.onInplaceEditStarted();
-		});
-	}
+    // Constructor 
+    constructor(
+        private readonly dataService: HomePageDataService,
+        private readonly commandManager: CommandManager,
 
-	// Public methods
-	public RefreshMenuItems() {
-		this.viewModel.MenuItems = this.getMenuItems();
-		this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
-	}
+    ) {
+    }
+    ngOnInit() {
 
-	// Events
-	@Output() public AddSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
-	@Output() public ClearSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
+        // Setup VM fields
+        this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
+        this.viewModel.MenuItems = this.getMenuItems();
 
-	// Event handlers
-	private onInplaceEditStarted() {
-		this.inplaceTextbox.nativeElement.value = this.viewModel.MedicineTypeCLO.Name;
-		setTimeout(() => {
-			this.inplaceTextbox.nativeElement.focus();
+        // Special handlers
+        this.inplaceInstance.onActivate.subscribe(() => {
+            this.onInplaceEditStarted();
+        });
+    }
 
-		}, 10);
-	}
-	private onInplaceAcceptChangesTriggered() {
-		var currentValueTrimmed = (this.inplaceTextbox.nativeElement.value as string).trim();
-		if (currentValueTrimmed !== "" && currentValueTrimmed !== this.viewModel.MedicineTypeCLO.Name) {
-			this.inplaceTextbox.nativeElement.value;
-			this.viewModel.MedicineTypeCLO.Name = currentValueTrimmed;
-			this.dataService.RenameMedicineType(this.viewModel.MedicineTypeCLO.ID, currentValueTrimmed)
-				.then(() => {
-					this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
-				});
-		} else {
-			// do nothing if the name hasnt changed
-		}
+    // Public methods
+    public RefreshMenuItems() {
+        this.viewModel.MenuItems = this.getMenuItems();
+        this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
+    }
 
-		this.inplaceInstance.deactivate(null);
-	}
-	private onInplaceCancelChangesTriggered() {
-		this.inplaceInstance.deactivate(null);
-	}
+    // Events
+    @Output() public AddSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
+    @Output() public ClearSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
+
+    // Event handlers
+    private onInplaceEditStarted() {
+        this.inplaceTextbox.nativeElement.value = this.viewModel.MedicineTypeCLO.Name;
+        setTimeout(() => {
+            this.inplaceTextbox.nativeElement.focus();
+
+        }, 10);
+    }
+    private onInplaceAcceptChangesTriggered() {
+        var currentValueTrimmed = (this.inplaceTextbox.nativeElement.value as string).trim();
+        if (currentValueTrimmed !== "" && currentValueTrimmed !== this.viewModel.MedicineTypeCLO.Name) {
+            this.inplaceTextbox.nativeElement.value;
+            this.viewModel.MedicineTypeCLO.Name = currentValueTrimmed;
+            this.dataService.RenameMedicineType(this.viewModel.MedicineTypeCLO.ID, currentValueTrimmed)
+                .then(() => {
+                    this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                });
+        } else {
+            // do nothing if the name hasnt changed
+        }
+
+        this.inplaceInstance.deactivate(null);
+    }
+    private onInplaceCancelChangesTriggered() {
+        this.inplaceInstance.deactivate(null);
+    }
 }
 interface ViewModel {
-	MedicineTypeCLO: CLOs.MedicineTypeCLO;
-	MenuItems: any;
+    MedicineTypeCLO: CLOs.MedicineTypeCLO;
+    MenuItems: any;
 
-	GetSupplyInfoForUI(): SupplyInfoForUI;
+    GetSupplyInfoForUI(): SupplyInfoForUI;
 }
 
 interface SupplyInfoForUI {
-	TooltipText: string;
-	LabelText: string;
+    TooltipText: string;
+    LabelText: string;
 }

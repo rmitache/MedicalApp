@@ -104,7 +104,7 @@ namespace WebUI.Controllers
         public JsonResult UpdatePassword([FromBody]UpdatePasswordModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            //var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
+            this.webSecurityManager.UpdatePassword(model.NewPassword);
             return Json(null);
         }
         //---------------------------------------------------------------------------------------------------------------------

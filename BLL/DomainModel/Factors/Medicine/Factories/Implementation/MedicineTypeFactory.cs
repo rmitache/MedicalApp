@@ -58,18 +58,23 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
 
             var bloList = dataEntities.Select(dataEntity =>
             {
-                // Is in Use 
                 bool? isInUse = null;
-                if (uniqueMedicineTypesInUseToday != null)
+                int? remainingSupplyAmount = null;
+                DateTime? supplyWillLastUntil = null;
+
+                if (uniqueMedicineTypesInUseToday != null && supplyQuantitiesLeftPerMedicineType != null)
                 {
-                    isInUse = uniqueMedicineTypesInUseToday.ContainsKey(dataEntity.Name);
+                    // Is in Use 
+                    if (uniqueMedicineTypesInUseToday != null)
+                    {
+                        isInUse = uniqueMedicineTypesInUseToday.ContainsKey(dataEntity.Name);
+                    }
+
+                    // Supply
+                    var supplyInfo = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
+                    remainingSupplyAmount = supplyInfo.RemainingSupplyAmount;
+                    supplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
                 }
-
-                // Supply
-                var supplyInfo = supplyQuantitiesLeftPerMedicineType[dataEntity.Name];
-                int? remainingSupplyAmount = supplyInfo.RemainingSupplyAmount;
-                DateTime? supplyWillLastUntil = supplyInfo.SupplyWillLastUntil;
-
 
                 return Convert_ToBLO(dataEntity, isInUse, remainingSupplyAmount, supplyWillLastUntil);
             }).ToList();

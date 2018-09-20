@@ -93,14 +93,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             }
 
             // Get a dictionary with remaining supply info for each MedicineType
-            Dictionary<string, MedicineTypeSupplyInfo> supplyInfoPerMedicineType = new Dictionary<string, MedicineTypeSupplyInfo>(); ;
+            Dictionary<string, MedicineTypeSupplyInfo> supplyInfoPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                foreach(TMedicineType dataEntity in dataEntities)
+                supplyInfoPerMedicineType = new Dictionary<string, MedicineTypeSupplyInfo>();
+                foreach (TMedicineType dataEntity in dataEntities)
                 {
                     var supplyInfo = new MedicineTypeSupplyInfo();
                     supplyInfo.RemainingSupplyAmount = medicineTypeSupplyService.DetermineRemainingSupplyAmount(dataEntity);
-                    supplyInfo.SupplyWillLastUntil = DateTime.UtcNow.AddDays(10);
+                    supplyInfo.SupplyWillLastUntil = DateTime.UtcNow.AddDays(120);
 
                     supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
                 }
