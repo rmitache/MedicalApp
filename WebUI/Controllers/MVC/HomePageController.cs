@@ -276,8 +276,10 @@ namespace WebUI.Controllers
         public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
+            var user = this.webSecurityManager.GetCurrentUser();
             var currentSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
-            var untilDate = this.medicineTypeSupplyService.DetermineSupplyWillLastUntil((int)userID, model.MedicineTypeID);
+            var untilDate = this.medicineTypeSupplyService.DetermineSupplyWillLastUntil((int)userID, user.UTCOffsetInMinutes,
+                model.MedicineTypeID);
             var returnModel = new MedicineTypeSupplyInfoModel()
             {
                 CurrentSupplyAmount = currentSupplyAmount,

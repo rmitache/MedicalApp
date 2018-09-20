@@ -53,7 +53,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         }
         public List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities,
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
-            Dictionary<string, SupplyInfo> supplyQuantitiesLeftPerMedicineType)
+            Dictionary<string, SupplyInfoWrapper> supplyQuantitiesLeftPerMedicineType)
         {
 
             var bloList = dataEntities.Select(dataEntity =>

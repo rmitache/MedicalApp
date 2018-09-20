@@ -2,11 +2,13 @@
 using BLL.DomainModel.Factors.Medicine.Factories;
 using BLL.DomainModel.Plans.BLOs;
 using BLL.DomainModel.Plans.Services;
+using BLL.DomainModel.Users.Services;
 using Common;
 using Common.DataStructures;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MedicineTypeRepository;
 using DataAccessLayer.Repositories.TakenMedicineFactorRecordRepository;
+using DataAccessLayer.Repositories.UserRepository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +24,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly IMedicineTypeFactory medicineTypeFactory;
         private readonly IPlanService planService;
         private readonly IMedicineTypeSupplyService medicineTypeSupplyService;
+        private readonly IUserAccountService userService;
 
         // Private methods
         private Dictionary<string, MedicineType> GetUniqueMedicineTypesInUseByPlans(List<Plan> planBLOs, Range<DateTime> targetDateRange)
@@ -58,13 +61,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             IMedicineTypeRepository medicineTypeRepo,
             IMedicineTypeFactory medicineTypeFactory,
             IPlanService planService,
-            IMedicineTypeSupplyService medicineTypeSupplyService)
+            IMedicineTypeSupplyService medicineTypeSupplyService,
+            IUserAccountService userService)
         {
             this.takenMedFactorRecordRepo = takenMedFactorRecordRepo;
             this.medicineTypeRepo = medicineTypeRepo;
             this.medicineTypeFactory = medicineTypeFactory;
             this.planService = planService;
             this.medicineTypeSupplyService = medicineTypeSupplyService;
+            this.userService = userService;
         }
 
         // Public methods
@@ -81,6 +86,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         {
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
+            var user = this.userService.GetUserAccount(userID);
 
             // Get a dictionary with all medicineTypes in use 
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
@@ -93,15 +99,16 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             }
 
             // Get a dictionary with remaining supply info for each MedicineType
-            Dictionary<string, SupplyInfo> supplyInfoPerMedicineType = null;
+            Dictionary<string, SupplyInfoWrapper> supplyInfoPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
-                supplyInfoPerMedicineType = new Dictionary<string, SupplyInfo>();
+                supplyInfoPerMedicineType = new Dictionary<string, SupplyInfoWrapper>();
                 foreach (TMedicineType dataEntity in dataEntities)
                 {
-                    var supplyInfo = new SupplyInfo();
+                    var supplyInfo = new SupplyInfoWrapper();
                     supplyInfo.CurrentSupplyAmount = medicineTypeSupplyService.DetermineCurrentSupplyAmount(dataEntity);
-                    supplyInfo.SupplyWillLastUntil = medicineTypeSupplyService.DetermineSupplyWillLastUntil(dataEntity, supplyInfo.CurrentSupplyAmount);
+                    supplyInfo.SupplyWillLastUntil = medicineTypeSupplyService.DetermineSupplyWillLastUntil(userID, 
+                        user.UTCOffsetInMinutes,dataEntity.Id, true, supplyInfo.CurrentSupplyAmount);
 
                     supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
                 }

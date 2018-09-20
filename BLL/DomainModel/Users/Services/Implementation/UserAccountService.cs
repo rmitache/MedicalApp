@@ -50,6 +50,19 @@ namespace BLL.DomainModel.Users.Services
 
             return userAccount;
         }
+
+        public UserAccount GetUserAccount(int id)
+        {
+            UserAccount userAccount = null;
+            var userDataEntity = this.userRepo.GetUser(id);
+            if (userDataEntity != null)
+            {
+                userAccount = this.userAccountFactory.Convert_ToBLO(userDataEntity);
+
+            }
+
+            return userAccount;
+        }
         public void UpdatePassword(int userId, string newPassword)
         {
             this.userRepo.UpdatePassword(userId, newPassword);

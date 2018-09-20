@@ -12,6 +12,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
         TMedicineType Convert_ToDataEntity(MedicineType blo, int userID);
         List<MedicineType> Convert_ToBLOList(List<TMedicineType> dataEntities, 
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday,
-            Dictionary<string, SupplyInfo> supplyQuantitiesLeftPerMedicineType);
+            Dictionary<string, SupplyInfoWrapper> supplyQuantitiesLeftPerMedicineType);
     }
 }

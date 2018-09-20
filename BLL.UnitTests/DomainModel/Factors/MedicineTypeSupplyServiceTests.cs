@@ -58,7 +58,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityWithNoSuppliesAndNoTakenRecords_ReturnsNull()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
@@ -80,7 +80,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityWithNoSuppliesButWithTakenRecords_ReturnsNull()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
@@ -107,7 +107,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityWithSuppliesAndTakenRecordsAllBeforeFirstSupplyEntry_ReturnsSumOfAllSupplies()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
@@ -140,7 +140,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityWithSuppliesAndTakenRecordsOnlySomeAfterFirstSupplyEntry_ReturnsCorrectNumber()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
@@ -175,7 +175,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityNotPackedIntoUnitsWithSuppliesAndMoreTakenRecordsThanSupply_ReturnsZero()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
@@ -212,7 +212,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         public void DetermineRemainingSupplyAmount_DataEntityNotPackedIntoUnitsWithSuppliesAndSomeTakenRecordsAfterFirstSupplyEntry_ReturnsCorrectNumber()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null);
+            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
             serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 

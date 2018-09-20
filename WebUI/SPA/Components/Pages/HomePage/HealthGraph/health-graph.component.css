@@ -62,3 +62,8 @@
     float: left;
     transform: translate(0, calc(-100%))
 }
+.no-data-panel /deep/ .msg-label {
+    float:left;
+    clear:both;
+    white-space:nowrap;
+}

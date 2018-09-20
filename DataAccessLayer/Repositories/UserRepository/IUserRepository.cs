@@ -11,6 +11,7 @@ namespace DataAccessLayer.Repositories.UserRepository
     {
         TUser GetUser(string email, string password);
         TUser GetUser(string email);
+        TUser GetUser(int id);
         void UpdatePassword(int userId, string newPassword);
         void UpdateLastLoginDate(int userId, DateTime loginDate);
     }

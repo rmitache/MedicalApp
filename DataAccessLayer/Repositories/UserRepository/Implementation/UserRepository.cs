@@ -32,6 +32,14 @@ namespace DataAccessLayer.Repositories.UserRepository
                 .AsNoTracking()
                 .SingleOrDefault(user => user.Email == email);
         }
+
+        public TUser GetUser(int id)
+        {
+            return entitiesContext.TUser
+                .AsNoTracking()
+                .SingleOrDefault(user => user.Id == id);
+        }
+
         public void UpdatePassword(int userId, string newPassword)
         {
             TUser userAcc = entitiesContext.TUser.AsNoTracking().Where(user =>
