@@ -83,7 +83,19 @@ export class IndicatorsViewComponent {
 		'#808080', //gray
 		'#000000', //black
 		'#46f0f0', //cyan
-		'#d2f53c', //lime
+        '#d2f53c', //lime
+        '#f032e6', //magenta
+        '#008080', //teal
+        '#aa6e28', //brown
+        '#800000', //maroon
+        '#808000', //olive
+        '#aaffc3', //mint
+        '#ffd8b1', //coral
+        '#000080', //navy
+        '#808080', //gray
+        '#000000', //black
+        '#46f0f0', //cyan
+        '#d2f53c', //lime
 	];
 
 	// Private methods
