@@ -31,8 +31,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 		} else {
 			newCLO.UsageStatus = null;
 		}
-		newCLO.RemainingSupply = blo['RemainingSupply'];
-		newCLO.RemainingSupplyMeasuredIn = blo['RemainingSupplyMeasuredIn'];
+        newCLO.CurrentSupplyAmount = blo['CurrentSupplyAmount'];
+        newCLO.CurrentSupplyAmountMeasuredIn = blo['CurrentSupplyAmountMeasuredIn'];
 		newCLO.SupplyWillLastUntil = (blo['SupplyWillLastUntil'] !== null) ? new Date(blo['SupplyWillLastUntil']) : null;
 
 		return newCLO;
@@ -49,8 +49,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 		newCLO.PackagedUnitDoseSize = 100;
 
 		newCLO.UsageStatus = null;
-		newCLO.RemainingSupply = null;
-		newCLO.RemainingSupplyMeasuredIn = null;
+		newCLO.CurrentSupplyAmount = null;
+		newCLO.CurrentSupplyAmountMeasuredIn = null;
 
 		return newCLO;
 	}

@@ -59,7 +59,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity with empty lists for Supplies and Taken records
@@ -68,7 +68,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             medicineTypeMock.TTakenMedicineFactorRecord = new List<TTakenMedicineFactorRecord>();
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().BeNull();
@@ -81,7 +81,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity 
@@ -95,7 +95,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             };
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().BeNull();
@@ -108,7 +108,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity 
@@ -128,7 +128,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             };
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().Be(70);
@@ -141,7 +141,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity 
@@ -163,7 +163,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             };
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().Be(90 - 25);
@@ -176,7 +176,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity 
@@ -199,7 +199,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             };
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().Be(0);
@@ -213,7 +213,7 @@ namespace BLL.UnitTests.DomainModel.Factors
         {
             // Arrange - setup service
             var serviceMock = new Mock<MedicineTypeSupplyService>(null);
-            serviceMock.Setup(service => service.DetermineRemainingSupplyAmount(It.IsAny<TMedicineType>()))
+            serviceMock.Setup(service => service.DetermineCurrentSupplyAmount(It.IsAny<TMedicineType>()))
                 .CallBase();
 
             // Arrange - setup dataEntity 
@@ -236,7 +236,7 @@ namespace BLL.UnitTests.DomainModel.Factors
             };
 
             // Act 
-            var result = serviceMock.Object.DetermineRemainingSupplyAmount(medicineTypeMock);
+            var result = serviceMock.Object.DetermineCurrentSupplyAmount(medicineTypeMock);
 
             // Assert
             result.Should().Be(700);

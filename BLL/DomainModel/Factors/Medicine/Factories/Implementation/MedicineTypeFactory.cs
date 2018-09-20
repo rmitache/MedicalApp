@@ -30,7 +30,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.PackagedUnitDoseSize = dataEntity.PackagedUnitDoseSize;
 
             blo.IsInUse = isInUse;
-            blo.RemainingSupply = remainingSupplyAmount;
+            blo.CurrentSupplyAmount = remainingSupplyAmount;
             blo.SupplyWillLastUntil = supplyWillLastUntil;
 
             return blo;

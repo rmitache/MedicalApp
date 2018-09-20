@@ -42,7 +42,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // If there are previous SupplyEntries, but the current supply amount is 0, delete all existing supply entries
             if (medicineTypeDataEntity.TMedicineTypeSupplyEntry.Count > 0)
             {
-                if (this.DetermineRemainingSupplyAmount(medicineTypeDataEntity) == 0)
+                if (this.DetermineCurrentSupplyAmount(medicineTypeDataEntity) == 0)
                 {
                     this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
                 }
@@ -57,7 +57,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             this.medicineTypeRepo.DeleteSupplyEntriesByMedicineTypeID(userID, medicineTypeID);
 
         }
-        public virtual int? DetermineRemainingSupplyAmount(TMedicineType medTypeDataEntity)
+        public virtual int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity)
         {
             // Return null if there are no supply entries (eg: tracking is inactive)
             if (medTypeDataEntity.TMedicineTypeSupplyEntry.Count == 0)
@@ -101,14 +101,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return remainingSupplyAmount;
         }
-        public virtual int? DetermineRemainingSupplyAmount(int userID, int medicineTypeID)
+        public virtual int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID)
         {
             // Get the MedicineType dataEntity
             var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
 
             // Calculate remaining supply
-            var remainingSupplyAmount = this.DetermineRemainingSupplyAmount(dataEntity);
+            var remainingSupplyAmount = this.DetermineCurrentSupplyAmount(dataEntity);
             return remainingSupplyAmount;
         }
+        //public virtual int? Determine
     }
 }

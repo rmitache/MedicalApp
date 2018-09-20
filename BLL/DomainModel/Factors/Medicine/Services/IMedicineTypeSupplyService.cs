@@ -10,7 +10,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
     {
         void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
         void ClearSupplyEntries(int userID, int medicineTypeID);
-        int? DetermineRemainingSupplyAmount(TMedicineType medTypeDataEntity);
-        int? DetermineRemainingSupplyAmount(int userID, int medicineTypeID);
+        int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity);
+        int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID);
     }
 }

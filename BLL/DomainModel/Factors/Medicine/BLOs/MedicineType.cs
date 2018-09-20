@@ -17,8 +17,8 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public int? PackagedUnitDoseSize { get; set; }
 
         virtual public bool? IsInUse { get; set; }
-        virtual public int? RemainingSupply { get; set; } // Null if no SupplyEntries exist
-        virtual public string RemainingSupplyMeasuredIn
+        virtual public int? CurrentSupplyAmount { get; set; } // Null if no SupplyEntries exist
+        virtual public string CurrentSupplyAmountMeasuredIn
         {
             get
             {

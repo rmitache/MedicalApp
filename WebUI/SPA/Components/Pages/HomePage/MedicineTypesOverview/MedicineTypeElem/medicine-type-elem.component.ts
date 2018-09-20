@@ -45,21 +45,18 @@ export class MedicineTypeElemComponent {
             };
 
             // Handle different scenarios
-            if (this.viewModel.MedicineTypeCLO.RemainingSupply === 0) {
+            if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount === 0) {
 
-                // Supply is equal to 0
-                supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
+                // Scenario 1: Supply is equal to 0
+                supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.CurrentSupplyAmount + ' ' + this.viewModel.MedicineTypeCLO.CurrentSupplyAmountMeasuredIn + ' left';
 
-            } else if (this.viewModel.MedicineTypeCLO.RemainingSupply > 0) {
+            } else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0) {
 
-                // 
+                // Scenario 2: Supply is bigger than 0, which means we must show a label with the estimate date supply will run out
                 let supplyUntilMom = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil);
                 let relativeDateString = this.formatFutureRelativeDate(supplyUntilMom);
-
                 supplyInfo.LabelText = 'Runs out ' + relativeDateString;
-                //let quantityLeftText = this.viewModel.MedicineTypeCLO.RemainingSupply + ' ' + this.viewModel.MedicineTypeCLO.RemainingSupplyMeasuredIn + ' left';
                 supplyInfo.TooltipText = 'You have supply until ' + supplyUntilMom.format('MMM DD, YYYY');
-
             }
             return supplyInfo;
         },
@@ -107,7 +104,7 @@ export class MedicineTypeElemComponent {
             }
         ];
 
-        if (medicineTypeCLO.RemainingSupply === null) {
+        if (medicineTypeCLO.CurrentSupplyAmount === null) {
             return menuItemsA;
         } else {
             return menuItemsB;
@@ -135,10 +132,6 @@ export class MedicineTypeElemComponent {
         // After tomorrow and up until 6 days
         let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day');
         return 'in ' + nrOfDaysUntilTargetDate + ' days';
-        //if (targetDate.isSame(tomorrow, 'day')) {
-        //    return 'tomorrow';
-        //}
-        // After 7 days 
     }
 
     // Constructor 

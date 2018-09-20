@@ -192,7 +192,7 @@ export class MedicineTypesOverviewComponent {
 
 		this.dataService.RecalculateRemainingSupplyAmount(medicineTypeID)
 			.then((newTotalSupplyAmount) => {
-				matchingElem.MedicineTypeCLO.RemainingSupply = newTotalSupplyAmount;
+				matchingElem.MedicineTypeCLO.CurrentSupplyAmount = newTotalSupplyAmount;
 				matchingElem.RefreshMenuItems(); // refresh the menuItems
 
 
@@ -237,7 +237,7 @@ export class MedicineTypesOverviewComponent {
 									return this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
 								})
 								.then((newTotalSupplyAmount) => {
-									medicineTypeCLO.RemainingSupply = newTotalSupplyAmount;
+									medicineTypeCLO.CurrentSupplyAmount = newTotalSupplyAmount;
 									this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 									// 
@@ -265,7 +265,7 @@ export class MedicineTypesOverviewComponent {
 	}
 	private onClearSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 		this.dataService.ClearSupplyEntries(medicineTypeCLO.ID).then(() => {
-			medicineTypeCLO.RemainingSupply = null;
+			medicineTypeCLO.CurrentSupplyAmount = null;
 			this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).RefreshMenuItems(); // refresh the menuItems
 
 			this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');

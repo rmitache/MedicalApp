@@ -276,7 +276,7 @@ namespace WebUI.Controllers
         public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineRemainingSupplyAmount((int)userID, model.MedicineTypeID);
+            var remainingSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
 
             return Json(remainingSupplyAmount);
         }

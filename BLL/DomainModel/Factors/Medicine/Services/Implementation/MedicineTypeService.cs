@@ -100,7 +100,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 foreach (TMedicineType dataEntity in dataEntities)
                 {
                     var supplyInfo = new MedicineTypeSupplyInfo();
-                    supplyInfo.RemainingSupplyAmount = medicineTypeSupplyService.DetermineRemainingSupplyAmount(dataEntity);
+                    supplyInfo.RemainingSupplyAmount = medicineTypeSupplyService.DetermineCurrentSupplyAmount(dataEntity);
                     supplyInfo.SupplyWillLastUntil = DateTime.UtcNow.AddDays(120);
 
                     supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
