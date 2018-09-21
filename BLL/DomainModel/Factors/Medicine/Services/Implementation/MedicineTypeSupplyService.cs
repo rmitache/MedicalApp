@@ -24,6 +24,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly ISupplyCalculationEngine supplyCalculationEngine;
 
         // Private methods
+        private SupplyInfoWrapper DetermineSupplyInfo(int userID, TMedicineType medTypeDataEntity, List<MedicineFactorRecord> factorRecords)
+        {
+            // Variables
+            var supplyInfo = new SupplyInfoWrapper();
+            supplyInfo.CurrentSupplyAmount = this.supplyCalculationEngine.DetermineCurrentSupplyAmount(medTypeDataEntity);
+            supplyInfo.SupplyWillLastUntil = this.supplyCalculationEngine.DetermineSupplyWillLastUntil(medTypeDataEntity.Id, factorRecords, supplyInfo.CurrentSupplyAmount);
+
+            return supplyInfo;
+        }
 
         // Constructor
         public MedicineTypeSupplyService(
@@ -67,66 +76,36 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
         }
 
-        // Idea > mb the usage info should be here as a method as well ?
-
-        // GetCurrentSupplyInfo 
-        //  - 1 method called by MedicineTypeService, when getting the list of all MedicineTypes with usage/supply information
-        //  - 1 method called by HomeController, when recalculating SupplyInfo
-        // Why 2 diff. methods ?
-        // Answer: the first one already has the deep dataEntities, 
-
-
-        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(TMedicineType medTypeDataEntity, int userTZOffset)
+        public virtual Dictionary<string,SupplyInfoWrapper> GetCurrentSupplyInfo(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
         {
-            var supplyInfo = new SupplyInfoWrapper();
+            // Variables
+            var dict = new Dictionary<string, SupplyInfoWrapper>();
 
-            // Get the current Supply amount
-            supplyInfo.CurrentSupplyAmount = this.supplyCalculationEngine.DetermineCurrentSupplyAmount(medTypeDataEntity);
-
-            // Get the cut-off date
+            // Get the cut-off date and FactorRecords
             var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(120));
-            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, medTypeDataEntity.UserId);
-            supplyInfo.SupplyWillLastUntil = this.supplyCalculationEngine.DetermineSupplyWillLastUntil(medTypeDataEntity.Id, factorRecords,
-                supplyInfo.CurrentSupplyAmount);
+            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
 
+            // Loop and get supplyInfo for each medicineTypeDataEntity
+            foreach(TMedicineType dataEntity in medTypeDataEntities)
+            {
+                dict[dataEntity.Name] = this.DetermineSupplyInfo(userID, dataEntity, factorRecords);
+            }
+
+            return dict;
+        }
+        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity, int userTZOffset)
+        {
+            // Variables
+            SupplyInfoWrapper supplyInfo;
+
+            // Get the cut-off date and FactorRecords
+            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(120));
+            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
+
+            // Get supplyInfo
+            supplyInfo = this.DetermineSupplyInfo(userID, dataEntity, factorRecords);
             return supplyInfo;
         }
-
-
-
-
-
-        //public virtual int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID)
-        //{
-        //    // Get the MedicineType dataEntity
-        //    var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
-
-        //    // Calculate remaining supply
-        //    var remainingSupplyAmount = this.DetermineCurrentSupplyAmount(dataEntity);
-        //    return remainingSupplyAmount;
-        //}
-
-        //public virtual DateTime? DetermineSupplyWillLastUntil(int userID, int userTZOffset, int medicineTypeID, bool alreadyComputedSupply = false,
-        //    int? currentSupply = null, int daysLookAhead = 120)
-        //{
-        //    // Compute supply if it hasnt already been computed
-        //    if (alreadyComputedSupply == false && currentSupply == null)
-        //    {
-        //        currentSupply = this.DetermineCurrentSupplyAmount(userID, medicineTypeID);
-        //    }
-        //    else if (alreadyComputedSupply == true && currentSupply == null)
-        //    {
-        //        // Return null if already computed supply was null
-        //        return null;
-        //    }
-
-        //    // Get FactorRecords and then compute the untilDate
-        //    var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(daysLookAhead));
-        //    var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
-        //    DateTime? untilDate = this.DetermineSupplyWillLastUntil(medicineTypeID, factorRecords, currentSupply);
-        //    return untilDate;
-        //}
-        
     }
 }
 public class SupplyInfoWrapper // This is a temporary wrapper structure used only internally in the BL layer

@@ -86,7 +86,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         {
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
-            var userTZOffset = this.userService.GetUserAccount(userID).UTCOffsetInMinutes;
+           
 
             // Get supply and usage info if necessary
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
@@ -100,13 +100,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
 
                 // Get a dictionary with current supply info for all MedicineTypes
-                supplyInfoPerMedicineType = new Dictionary<string, SupplyInfoWrapper>();
-                foreach (TMedicineType dataEntity in dataEntities)
-                {
-                    var supplyInfo = medicineTypeSupplyService.GetCurrentSupplyInfo(dataEntity, userTZOffset);
-                    supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
-                }
-
+                var userTZOffset = this.userService.GetUserAccount(userID).UTCOffsetInMinutes;
+                supplyInfoPerMedicineType = medicineTypeSupplyService.GetCurrentSupplyInfo(userID, dataEntities, userTZOffset);
             }
 
 

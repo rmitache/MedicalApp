@@ -60,6 +60,7 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
         }
         public virtual DateTime? DetermineSupplyWillLastUntil(int medicineTypeID, List<MedicineFactorRecord> factorRecords, int? currentSupply)
         {
+            return DateTime.UtcNow.AddDays(2);
             // Cases
             // 1. CurrentSupply is null
             // 2. CurrentSupply is 0
