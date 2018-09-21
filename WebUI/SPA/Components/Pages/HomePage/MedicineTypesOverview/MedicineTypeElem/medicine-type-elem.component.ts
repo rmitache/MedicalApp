@@ -45,13 +45,18 @@ export class MedicineTypeElemComponent {
                 // Scenario 1: Supply is equal to 0
                 supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.CurrentSupplyAmount + ' ' + this.viewModel.MedicineTypeCLO.CurrentSupplyAmountMeasuredIn + ' left';
 
-            } else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0) {
+            } else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0 && this.viewModel.MedicineTypeCLO.SupplyWillLastUntil !== null) {
 
-                // Scenario 2: Supply is bigger than 0, which means we must show a label with the estimate date supply will run out
+                // Scenario 2: Supply is bigger than 0 and there is a supplyWillLastUntil DATE
                 let supplyUntilMom = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil);
                 let relativeDateString = this.formatFutureRelativeDate(supplyUntilMom);
                 supplyInfo.LabelText = 'Runs out ' + relativeDateString;
                 supplyInfo.TooltipText = 'You have supply until ' + supplyUntilMom.format('MMM DD, YYYY');
+            }
+            else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0 && this.viewModel.MedicineTypeCLO.SupplyWillLastUntil === null) {
+
+                 // Scenario 3: Supply is bigger than 0 but SupplyWillLastUntil is NULL
+                supplyInfo.LabelText = 'Not enough supply';
             }
             return supplyInfo;
         },
@@ -112,7 +117,7 @@ export class MedicineTypeElemComponent {
         var returnString: string;
         var now = moment();
         let today = moment().startOf('day');
-        let tomorrow = moment().add(1,'day');
+        let tomorrow = moment().add(1, 'day');
         let inSevenDays = today.clone().add(7, 'days');
 
         // Today

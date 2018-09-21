@@ -11,11 +11,14 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
         void ClearSupplyEntries(int userID, int medicineTypeID);
 
-        int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID);
-        int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity);
+        SupplyInfoWrapper GetCurrentSupplyInfo(TMedicineType medTypeDataEntity, int userTZOffset);
 
-        DateTime? DetermineSupplyWillLastUntil(int userID, int userTZOffset, int medicineTypeID, bool alreadyComputedSupply = false,
-            int? currentSupply = null, int daysLookAhead = 120);
-        DateTime? DetermineSupplyWillLastUntil(int medicineTypeID, List<MedicineFactorRecord> factorRecords, int? currentSupply);
+
+        //int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID);
+        //int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity);
+
+        //DateTime? DetermineSupplyWillLastUntil(int userID, int userTZOffset, int medicineTypeID, bool alreadyComputedSupply = false,
+        //    int? currentSupply = null, int daysLookAhead = 120);
+        //DateTime? DetermineSupplyWillLastUntil(int medicineTypeID, List<MedicineFactorRecord> factorRecords, int? currentSupply);
     }
 }

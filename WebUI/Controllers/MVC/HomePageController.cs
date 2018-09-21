@@ -277,16 +277,21 @@ namespace WebUI.Controllers
         {
             int? userID = this.webSecurityManager.CurrentUserID;
             var user = this.webSecurityManager.GetCurrentUser();
-            var currentSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
-            var untilDate = this.medicineTypeSupplyService.DetermineSupplyWillLastUntil((int)userID, user.UTCOffsetInMinutes,
-                model.MedicineTypeID);
-            var returnModel = new MedicineTypeSupplyInfoModel()
-            {
-                CurrentSupplyAmount = currentSupplyAmount,
-                SupplyWillLastUntil = untilDate
-            };
 
-            return Json(returnModel);
+            // TODO - SUPPLY
+            //var currentSupplyAmount = this.medicineTypeSupplyService.DetermineCurrentSupplyAmount((int)userID, model.MedicineTypeID);
+            //var untilDate = this.medicineTypeSupplyService.DetermineSupplyWillLastUntil((int)userID, user.UTCOffsetInMinutes,
+            //    model.MedicineTypeID);
+
+
+            //var returnModel = new MedicineTypeSupplyInfoModel()
+            //{
+            //    CurrentSupplyAmount = currentSupplyAmount,
+            //    SupplyWillLastUntil = untilDate
+            //};
+
+            //return Json(returnModel);
+            return Json(null);
         }
         //---------------------------------------------------------------------------------------------------------------------
 

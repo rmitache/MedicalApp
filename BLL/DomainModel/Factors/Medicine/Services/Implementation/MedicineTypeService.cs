@@ -86,30 +86,24 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         {
             // Get all the medicineTypes available for the current user 
             var dataEntities = this.medicineTypeRepo.GetAllMedicineTypes(userID, true);
-            var user = this.userService.GetUserAccount(userID);
+            var userTZOffset = this.userService.GetUserAccount(userID).UTCOffsetInMinutes;
 
-            // Get a dictionary with all medicineTypes in use 
+            // Get supply and usage info if necessary
             Dictionary<string, MedicineType> uniqueMedicineTypesInUseToday = null;
+            Dictionary<string, SupplyInfoWrapper> supplyInfoPerMedicineType = null;
             if (retreiveSupplyAndUsageInfo)
             {
+                // Get a dictionary with all medicineTypes in use 
                 var planBLOs = this.planService.GetPlans(userID, true);
                 var currentDateTime = Common.Functions.GetCurrentDateTimeInUTC();
                 Range<DateTime> today = new Range<DateTime>(currentDateTime, currentDateTime);
                 uniqueMedicineTypesInUseToday = this.GetUniqueMedicineTypesInUseByPlans(planBLOs, today);
-            }
 
-            // Get a dictionary with remaining supply info for each MedicineType
-            Dictionary<string, SupplyInfoWrapper> supplyInfoPerMedicineType = null;
-            if (retreiveSupplyAndUsageInfo)
-            {
+                // Get a dictionary with current supply info for all MedicineTypes
                 supplyInfoPerMedicineType = new Dictionary<string, SupplyInfoWrapper>();
                 foreach (TMedicineType dataEntity in dataEntities)
                 {
-                    var supplyInfo = new SupplyInfoWrapper();
-                    supplyInfo.CurrentSupplyAmount = medicineTypeSupplyService.DetermineCurrentSupplyAmount(dataEntity);
-                    supplyInfo.SupplyWillLastUntil = medicineTypeSupplyService.DetermineSupplyWillLastUntil(userID, 
-                        user.UTCOffsetInMinutes,dataEntity.Id, true, supplyInfo.CurrentSupplyAmount);
-
+                    var supplyInfo = medicineTypeSupplyService.GetCurrentSupplyInfo(dataEntity, userTZOffset);
                     supplyInfoPerMedicineType[dataEntity.Name] = supplyInfo;
                 }
 
