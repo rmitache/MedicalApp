@@ -91,10 +91,13 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
             {
                 if (record.MedicineType.ID == medicineTypeID)
                 {
-                    if (currentSupply - record.UnitDoseSize > 0)
+                    var recordAmountToSubtract = this.GetSupplyToSubtract(record.UnitDoseQuantifier, record.UserDefinedUnitDoseSize);
+
+                    // If there is enough to subtract the amount from the current record, do it
+                    if (currentSupply - recordAmountToSubtract >= 0)
                     {
                         lastOccurrenceDateTime = record.OccurrenceDateTime;
-
+                        currentSupply -= recordAmountToSubtract;
                     }
                     else
                     {

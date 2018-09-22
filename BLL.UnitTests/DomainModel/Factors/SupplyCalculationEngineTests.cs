@@ -255,9 +255,9 @@ namespace BLL.UnitTests.DomainModel.Factors
         #endregion
 
         #region DetermineSupplyWillLastUntil Tests
-        
+
         [Fact]
-        public void DetermineSupplyWillLastUntil_OnlyFactorRecordsMatchingMedTypeIDWithUserDefinedUnitDose_ReturnsCorrectDate()
+        public void DetermineSupplyWillLastUntil_OnlyFactorRecordsMatchingMedTypeIDWithPackagedUnitDose_ReturnsCorrectDate()
         {
             // Arrange - setup service
             var serviceMock = new Mock<SupplyCalculationEngine>();
@@ -276,21 +276,17 @@ namespace BLL.UnitTests.DomainModel.Factors
             factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(3), medicineTypeID, 1).Object);
             factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(4), medicineTypeID, 1).Object);
 
-
             // Act 
             var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, factorRecordsListMock, currentSupply);
 
             // Assert
-            result.Should().Be(nowUtc.AddDays(3));
-
-
+            result.Should().Be(nowUtc.AddDays(2));
         }
-        /*
         [Fact]
-        public void DetermineSupplyWillLastUntil_WithNullCurrentSupply_ReturnsNull()
+        public void DetermineSupplyWillLastUntil_OnlySomeFactorRecordsMatchingMedTypeIDWithPackagedUnitDose_ReturnsCorrectDate()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
+            var serviceMock = new Mock<SupplyCalculationEngine>();
             serviceMock.Setup(service => service.DetermineSupplyWillLastUntil(It.IsAny<int>(), It.IsAny<List<MedicineFactorRecord>>(),
                 It.IsAny<int?>()))
                 .CallBase();
@@ -298,20 +294,76 @@ namespace BLL.UnitTests.DomainModel.Factors
             // Arrange - setup parameters
             var nowUtc = DateTime.UtcNow;
             int medicineTypeID = 5;
-            int? currentSupply = null;
+            int differentMedTypeID = 20;
+            int? currentSupply = 10;
+            var factorRecordsListMock = new List<MedicineFactorRecord>();
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddMinutes(1), medicineTypeID, 2).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(1), differentMedTypeID, 1).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(2), medicineTypeID, 3).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(3), differentMedTypeID, 1).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(4), medicineTypeID, 7).Object);
 
             // Act 
-            var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, null, currentSupply);
+            var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, factorRecordsListMock, currentSupply);
+
+            // Assert
+            result.Should().Be(nowUtc.AddDays(2));
+        }
+        [Fact]
+        public void DetermineSupplyWillLastUntil_OnlyFactorRecordsMatchingMedTypeIDWithUserDefinedUnitDose_ReturnsCorrectDate()
+        {
+            // Arrange - setup service
+            var serviceMock = new Mock<SupplyCalculationEngine>();
+            serviceMock.Setup(service => service.DetermineSupplyWillLastUntil(It.IsAny<int>(), It.IsAny<List<MedicineFactorRecord>>(),
+                It.IsAny<int?>()))
+                .CallBase();
+
+            // Arrange - setup parameters
+            var nowUtc = DateTime.UtcNow;
+            int medicineTypeID = 5;
+            int? currentSupply = 800;
+            var factorRecordsListMock = new List<MedicineFactorRecord>();
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddMinutes(1), medicineTypeID, 1, 200).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(1), medicineTypeID, 1, 200).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(2), medicineTypeID, 2, 200).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(3), medicineTypeID, 1, 200).Object);
+            factorRecordsListMock.Add(this.CreateFactorRecordMock(nowUtc.AddDays(4), medicineTypeID, 1, 200).Object);
+
+            // Act 
+            var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, factorRecordsListMock, currentSupply);
+
+            // Assert
+            result.Should().Be(nowUtc.AddDays(2));
+        }
+
+
+        [Fact]
+        public void DetermineSupplyWillLastUntil_EmptyFactorRecordsList_ReturnsNull()
+        {
+            // Arrange - setup service
+            var serviceMock = new Mock<SupplyCalculationEngine>();
+            serviceMock.Setup(service => service.DetermineSupplyWillLastUntil(It.IsAny<int>(), It.IsAny<List<MedicineFactorRecord>>(),
+                It.IsAny<int?>()))
+                .CallBase();
+
+            // Arrange - setup parameters
+            var nowUtc = DateTime.UtcNow;
+            int medicineTypeID = 5;
+            int? currentSupply = 3;
+            var factorRecordsListMock = new List<MedicineFactorRecord>();
+
+            // Act 
+            var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, factorRecordsListMock, currentSupply);
 
             // Assert
             result.Should().BeNull();
-        }
 
+        }
         [Fact]
-        public void DetermineSupplyWillLastUntil_WithNullFactorRecords_ThrowsException()
+        public void DetermineSupplyWillLastUntil_NullCurrentSupply_ThrowsException()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
+            var serviceMock = new Mock<SupplyCalculationEngine>();
             serviceMock.Setup(service => service.DetermineSupplyWillLastUntil(It.IsAny<int>(), It.IsAny<List<MedicineFactorRecord>>(),
                 It.IsAny<int?>()))
                 .CallBase();
@@ -319,18 +371,17 @@ namespace BLL.UnitTests.DomainModel.Factors
             // Arrange - setup parameters
             var nowUtc = DateTime.UtcNow;
             int medicineTypeID = 5;
-            int? currentSupply = 2;
 
             // Act and Assert
-            Action callMethod = () => { serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, null, currentSupply); };
+            Action callMethod = () => { serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, null, null); };
             callMethod.Should().Throw<ArgumentNullException>();
-        }
 
+        }
         [Fact]
-        public void DetermineSupplyWillLastUntil_WithNoFactorRecords_ReturnsDate120DaysInFuture()
+        public void DetermineSupplyWillLastUntil_NullFactorRecords_ThrowsException()
         {
             // Arrange - setup service
-            var serviceMock = new Mock<MedicineTypeSupplyService>(null, null);
+            var serviceMock = new Mock<SupplyCalculationEngine>();
             serviceMock.Setup(service => service.DetermineSupplyWillLastUntil(It.IsAny<int>(), It.IsAny<List<MedicineFactorRecord>>(),
                 It.IsAny<int?>()))
                 .CallBase();
@@ -338,16 +389,13 @@ namespace BLL.UnitTests.DomainModel.Factors
             // Arrange - setup parameters
             var nowUtc = DateTime.UtcNow;
             int medicineTypeID = 5;
-            var factorRecordsListMock = new List<MedicineFactorRecord>();
-            int? currentSupply = 2;
 
-            // Act 
-            var result = serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, factorRecordsListMock, currentSupply);
+            // Act and Assert
+            Action callMethod = () => { serviceMock.Object.DetermineSupplyWillLastUntil(medicineTypeID, null, 2); };
+            callMethod.Should().Throw<ArgumentNullException>();
 
-            // Assert
-            result.Should().Be(nowUtc.AddDays(120));
         }
-        */
+        
         #endregion
     }
 }
