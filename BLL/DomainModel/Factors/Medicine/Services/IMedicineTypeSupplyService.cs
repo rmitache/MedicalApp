@@ -11,14 +11,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
         void ClearSupplyEntries(int userID, int medicineTypeID);
 
-        Dictionary<string, SupplyInfoWrapper> GetCurrentSupplyInfo(int userID, List<TMedicineType> dataEntities, int userTZOffset);
+        Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> dataEntities, int userTZOffset);
         SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity, int userTZOffset);
-
-        //int? DetermineCurrentSupplyAmount(int userID, int medicineTypeID);
-        //int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity);
-
-        //DateTime? DetermineSupplyWillLastUntil(int userID, int userTZOffset, int medicineTypeID, bool alreadyComputedSupply = false,
-        //    int? currentSupply = null, int daysLookAhead = 120);
-        //DateTime? DetermineSupplyWillLastUntil(int medicineTypeID, List<MedicineFactorRecord> factorRecords, int? currentSupply);
+        SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID, int userTZOffset);
     }
 }

@@ -14,6 +14,27 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
     }
     public class SupplyCalculationEngine : ISupplyCalculationEngine
     {
+        // Private methods
+        private int GetSupplyToSubtract(int quantifier, int? userDefinedUnitDoseSize)
+        {
+            if (userDefinedUnitDoseSize == null)
+            {
+                // If it's packaged into units, return only the quantifier in the ruleItem
+                return quantifier;
+            }
+            else
+            {
+                // If it's not packaged into units, return the quantity multiplied with the userDefinedUnitDoseSize 
+                return quantifier * (int)userDefinedUnitDoseSize;
+            }
+        }
+        // Constructor
+        public SupplyCalculationEngine()
+        {
+
+        }
+
+        // Public methods
         public virtual int? DetermineCurrentSupplyAmount(TMedicineType medTypeDataEntity)
         {
             // Return null if there are no supply entries (eg: tracking is inactive)
@@ -34,19 +55,9 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
             {
                 if (takenRecord.ActualTakenDateTime >= firstSupplyEntryDate) // only consider taken records which occurred after the first supplyEntry
                 {
-                    if (medTypeDataEntity.IsPackagedIntoUnits)
-                    {
-                        // If it's packaged into units, subtract using the quantity in the ruleItem
-                        // Extra info: we assume the amount to be measured in the UnitDoseSizeType 
-                        remainingSupplyAmount = remainingSupplyAmount - takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
-                    }
-                    else
-                    {
-                        // If it's not packaged into units, subtract using userDefinedUnitDoseSize times the quantity in the ruleItem
-                        // Extra info: we assume the amount to be measured in BaseUnitOfMeasure 
-                        remainingSupplyAmount = remainingSupplyAmount -
-                            (int)takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize * takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier;
-                    }
+                    var supplyToSubtract = this.GetSupplyToSubtract(takenRecord.PlanMedicineRuleItem.UnitDoseQuantifier,
+                        takenRecord.PlanMedicineRuleItem.UserDefinedUnitDoseSize);
+                    remainingSupplyAmount -= supplyToSubtract;
                 }
             }
 
@@ -60,15 +71,6 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
         }
         public virtual DateTime? DetermineSupplyWillLastUntil(int medicineTypeID, List<MedicineFactorRecord> factorRecords, int? currentSupply)
         {
-            return DateTime.UtcNow.AddDays(2);
-            // Cases
-            // 1. CurrentSupply is null
-            // 2. CurrentSupply is 0
-            // 3. factorRecords are null
-            // 4. factorRecords have count 0
-            // 5. CurrentSupply is > 0, but not enough for a FactorRecord - return null
-
-
             if (currentSupply == null)
             {
                 throw new ArgumentNullException("currentSupply");
@@ -82,20 +84,26 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
                 return null;
             }
 
-            // Loop through FactorRecords
-            var lastOccurrenceDateTime = DateTime.UtcNow;
-            int nextFactorRecordIndex = 0;
-            while (currentSupply > 0)
-            {
 
+            // Loop through FactorRecords
+            DateTime? lastOccurrenceDateTime = null;
+            foreach (MedicineFactorRecord record in factorRecords)
+            {
+                if (record.MedicineType.ID == medicineTypeID)
+                {
+                    if (currentSupply - record.UnitDoseSize > 0)
+                    {
+                        lastOccurrenceDateTime = record.OccurrenceDateTime;
+
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
 
             return lastOccurrenceDateTime;
-        }
-
-        public SupplyCalculationEngine()
-        {
-
         }
     }
 }

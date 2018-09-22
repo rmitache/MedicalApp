@@ -101,7 +101,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
                 // Get a dictionary with current supply info for all MedicineTypes
                 var userTZOffset = this.userService.GetUserAccount(userID).UTCOffsetInMinutes;
-                supplyInfoPerMedicineType = medicineTypeSupplyService.GetCurrentSupplyInfo(userID, dataEntities, userTZOffset);
+                supplyInfoPerMedicineType = medicineTypeSupplyService.GetDictionaryOfSupplyInfos(userID, dataEntities, userTZOffset);
             }
 
 

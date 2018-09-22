@@ -22,6 +22,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly IMedicineTypeRepository medicineTypeRepo;
         private readonly IMedicineFactorRecordService medicineFactorRecordService;
         private readonly ISupplyCalculationEngine supplyCalculationEngine;
+        private readonly int supplyComputationMaxLookAheadInDays = 120;
 
         // Private methods
         private SupplyInfoWrapper DetermineSupplyInfo(int userID, TMedicineType medTypeDataEntity, List<MedicineFactorRecord> factorRecords)
@@ -76,13 +77,14 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
         }
 
-        public virtual Dictionary<string,SupplyInfoWrapper> GetCurrentSupplyInfo(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
+        public virtual Dictionary<string,SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
         {
             // Variables
             var dict = new Dictionary<string, SupplyInfoWrapper>();
 
             // Get the cut-off date and FactorRecords
-            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(120));
+            // OBS range calculation: 130 represents 120 = 4 months plus 10 days, if the supplyUntil date is > 120, this can be used to say "More than 4 months"
+            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(130)); 
             var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
 
             // Loop and get supplyInfo for each medicineTypeDataEntity
@@ -106,15 +108,20 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             supplyInfo = this.DetermineSupplyInfo(userID, dataEntity, factorRecords);
             return supplyInfo;
         }
+        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID, int userTZOffset)
+        {
+            var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
+            return GetCurrentSupplyInfo(userID, dataEntity, userTZOffset);
+        }
     }
 }
-public class SupplyInfoWrapper // This is a temporary wrapper structure used only internally in the BL layer
+public class SupplyInfoWrapper 
 {
-    internal int? CurrentSupplyAmount { get; set; }
-    internal DateTime? SupplyWillLastUntil { get; set; }
+    public int? CurrentSupplyAmount { get; set; }
+    public DateTime? SupplyWillLastUntil { get; set; }
 
 
-    internal SupplyInfoWrapper()
+    public SupplyInfoWrapper()
     {
 
     }
