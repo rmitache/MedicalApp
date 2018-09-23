@@ -67,18 +67,18 @@
     display: block;
     clear: left;
     float: left;
-    color: #808080;
-    margin-top: 2px;
-    border: solid 1px red;
     width: 100%;
+    
 }
 
-    .frame .supply-div > i {
-    }
+
 
     .frame .supply-div > .main-supply-label {
+        vertical-align: middle;
     }
-
+    .frame .supply-div > i {
+        vertical-align: middle;
+    }
     .frame .supply-div > .secondary-supply-label {
     }
 

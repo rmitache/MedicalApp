@@ -13,7 +13,7 @@
                    formControlName="newSupplyAmount" pInputText 
                    [(ngModel)]="viewModel.NewSupplyAmount" />
              
-            <div class="inner-label label">{{viewModel.MedicineTypeCLO?.RemainingSupplyMeasuredIn}}</div>
+            <div class="inner-label label">{{viewModel.MedicineTypeCLO?.CurrentSupplyAmountMeasuredIn}}</div>
              
             <div *ngIf="viewModel.MedicineTypeCLO?.IsPackagedIntoUnits===true"
                  class="inner-label label">of {{viewModel.MedicineTypeCLO?.PackagedUnitDoseSize}} {{viewModel.MedicineTypeCLO?.UnitOfMeasureName}} each</div>

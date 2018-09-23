@@ -19,14 +19,26 @@
         </div>
         <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
     </div>
-    <div class="supply-div" *ngIf="viewModel.MedicineTypeCLO.CurrentSupplyAmount !== null">
-        <i class="fa fa-check"></i>
-        <span class="main-supply-label label">{{viewModel.CurrentSupplyInfoState.MainLabelText}}</span>
-        <span class="secondary-supply-label label-discrete">{{viewModel.CurrentSupplyInfoState.SecondaryLabelText}}</span>
+    <div class="supply-div" *ngIf="viewModel.MedicineTypeCLO.CurrentSupplyAmount !== null"
+         [attr.title]="viewModel.CurrentSupplyInfoState?.TooltipText">
+        
+        <i [ngClass]="viewModel.CurrentSupplyInfoState?.IconName"
+           [style.color]="viewModel.CurrentSupplyInfoState?.MainLabelColor"></i>
+
+        <span class="main-supply-label label"
+              [style.color]="viewModel.CurrentSupplyInfoState?.MainLabelColor">{{viewModel.CurrentSupplyInfoState?.MainLabelText}}</span>
+
     </div>
-    
+
     <div style="clear:both"></div>
+    
 </div>
+
+
+
+
+
+
 
 
 

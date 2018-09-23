@@ -1,11 +1,11 @@
 // Angular and 3rd party stuff
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-
+import { Inplace } from 'primeng/primeng';
 import * as moment from 'moment';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { Inplace } from 'primeng/primeng';
+import * as Enums from 'SPA/DomainModel/enum-exports';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
@@ -49,13 +49,37 @@ export class MedicineTypeElemComponent {
     // Private methods
     private getCurrentSupplyInfoState(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 
-
-        return new PlentyOfSupplyLeft(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-            medicineTypeCLO.SupplyWillLastUntil);
-        //// PlentyOfSupplyLeft
-        //if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(120, 'days')) {
-
+        //// NotInUseButHasSupply 
+        //if (medicineTypeCLO.UsageStatus === Enums.MedicineTypeStatus.NotInUse) {
+        //    return new NotInUseButNotEmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+        //        medicineTypeCLO.SupplyWillLastUntil);
         //}
+
+
+
+
+        //// HighSupply - more than 7 weeks 
+        //if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(49, 'days')) {
+        //    return new HighSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+        //        medicineTypeCLO.SupplyWillLastUntil);
+        //}
+        //// MediumSupply - more than 4 weeks
+        //else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(28, 'days')) {
+        //    return new MediumSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+        //        medicineTypeCLO.SupplyWillLastUntil);
+        //}
+        //// LowSupply - more than 2 weeks
+        //else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(14, 'days')) {
+            return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
+        //}
+        //// EmptySupply 
+        //else if (medicineTypeCLO.SupplyWillLastUntil === null) {
+        //    return new EmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+        //        medicineTypeCLO.SupplyWillLastUntil);
+        //}
+
+        //return null; // default return value
     }
     private getMenuItems() {
 
@@ -163,10 +187,6 @@ interface ViewModel {
 }
 
 
-// Special function
-
-// OBS: need separate state for NotInUse MedicineType ? -> f.ex: we'll just show 
-
 // Special states for how to render SupplyInfo
 function FormatFutureRelativeDate(targetDate: moment.Moment) {
 
@@ -187,23 +207,49 @@ function FormatFutureRelativeDate(targetDate: moment.Moment) {
     }
 
     // After tomorrow just say the nr of 'days'
-    let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day');
-    return 'in ' + nrOfDaysUntilTargetDate + ' days';
+    let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day') + 1;
+    return nrOfDaysUntilTargetDate + ' days';
 }
 interface ISupplyInfoState {
-    MainLabelTooltipText: string;
+
     MainLabelText: string;
     MainLabelColor: string;
-    SecondaryLabelText: string;
+
+    TooltipText: string;
+
     IconName: string;
 }
-class PlentyOfSupplyLeft implements ISupplyInfoState {
+class HighSupply implements ISupplyInfoState {
     // Fields
-    public MainLabelTooltipText: string = 'Until ' + moment(this.untilDate).format('MMM DD, YYYY');
-    public MainLabelText: string = '> 4 months supply';
-    public MainLabelColor: string = 'green';
-    public SecondaryLabelText: string = '(' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left)';
-    public IconName: string = 'fa fa-smile';
+    public readonly MainLabelText: string = FormatFutureRelativeDate(moment(this.untilDate)) + ' left';
+    public readonly MainLabelColor: string = 'green';
+    public readonly TooltipText: string = 'Will run' +
+        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY') + ' (you currently have ' +
+        this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ')';
+
+    public readonly IconName: string = 'fa fa-check-circle';
+
+    // Constructor
+    public constructor(
+        private readonly currentSupplyAmount: number,
+        private readonly currentSupplyAmountUnitOfMeasureName: string,
+        private readonly untilDate: Date) {
+
+        if (moment(this.untilDate) > moment().add(120, 'days')) {
+            this.MainLabelText = 'More than 4 months left';
+        }
+    }
+
+
+}
+class MediumSupply implements ISupplyInfoState {
+    // Fields
+    public readonly MainLabelText: string = 'Only ' + FormatFutureRelativeDate(moment(this.untilDate)) + ' days left';
+    public readonly MainLabelColor: string = 'darkorange';
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' will run' +
+        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
+
+    public readonly IconName: string = 'fa fa-info-circle';
 
     // Constructor
     public constructor(
@@ -214,4 +260,55 @@ class PlentyOfSupplyLeft implements ISupplyInfoState {
     }
 
 
+}
+class LowSupply implements ISupplyInfoState {
+    // Fields
+    public readonly MainLabelText: string = 'Only ' + FormatFutureRelativeDate(moment(this.untilDate)) + ' left';
+    public readonly MainLabelColor: string = 'red';
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' will run' +
+        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
+
+    public readonly IconName: string = 'fa fa-exclamation-triangle';
+
+    // Constructor
+    public constructor(
+        private readonly currentSupplyAmount: number,
+        private readonly currentSupplyAmountUnitOfMeasureName: string,
+        private readonly untilDate: Date) {
+
+    }
+
+
+}
+class EmptySupply implements ISupplyInfoState {
+    // Fields
+    public readonly MainLabelText: string = 'Supply is finished';
+    public readonly MainLabelColor: string = '#f6a3a3';
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+
+    public readonly IconName: string = 'fa fa-ban';
+
+    // Constructor
+    public constructor(
+        private readonly currentSupplyAmount: number,
+        private readonly currentSupplyAmountUnitOfMeasureName: string,
+        private readonly untilDate: Date) {
+
+    }
+}
+class NotInUseButNotEmptySupply implements ISupplyInfoState {
+    // Fields
+    public readonly MainLabelText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+    public readonly MainLabelColor: string = 'gray';
+    public readonly TooltipText: string = '';
+
+    public readonly IconName: string = '';
+
+    // Constructor
+    public constructor(
+        private readonly currentSupplyAmount: number,
+        private readonly currentSupplyAmountUnitOfMeasureName: string,
+        private readonly untilDate: Date) {
+
+    }
 }
