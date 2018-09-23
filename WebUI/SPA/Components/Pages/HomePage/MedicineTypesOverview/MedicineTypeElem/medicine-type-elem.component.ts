@@ -70,8 +70,8 @@ export class MedicineTypeElemComponent {
         //}
         //// LowSupply - more than 2 weeks
         //else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(14, 'days')) {
-            return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-                medicineTypeCLO.SupplyWillLastUntil);
+        return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+            medicineTypeCLO.SupplyWillLastUntil);
         //}
         //// EmptySupply 
         //else if (medicineTypeCLO.SupplyWillLastUntil === null) {
@@ -208,7 +208,7 @@ function FormatFutureRelativeDate(targetDate: moment.Moment) {
 
     // After tomorrow just say the nr of 'days'
     let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day') + 1;
-    return nrOfDaysUntilTargetDate + ' days';
+    return 'in ' + nrOfDaysUntilTargetDate + ' days';
 }
 interface ISupplyInfoState {
 
@@ -221,7 +221,7 @@ interface ISupplyInfoState {
 }
 class HighSupply implements ISupplyInfoState {
     // Fields
-    public readonly MainLabelText: string = FormatFutureRelativeDate(moment(this.untilDate)) + ' left';
+    public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'green';
     public readonly TooltipText: string = 'Will run' +
         ' out on ' + moment(this.untilDate).format('MMM DD, YYYY') + ' (you currently have ' +
@@ -244,7 +244,7 @@ class HighSupply implements ISupplyInfoState {
 }
 class MediumSupply implements ISupplyInfoState {
     // Fields
-    public readonly MainLabelText: string = 'Only ' + FormatFutureRelativeDate(moment(this.untilDate)) + ' days left';
+    public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'darkorange';
     public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' will run' +
         ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
@@ -263,9 +263,9 @@ class MediumSupply implements ISupplyInfoState {
 }
 class LowSupply implements ISupplyInfoState {
     // Fields
-    public readonly MainLabelText: string = 'Only ' + FormatFutureRelativeDate(moment(this.untilDate)) + ' left';
+    public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'red';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' will run' +
+    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' which will run' +
         ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
 
     public readonly IconName: string = 'fa fa-exclamation-triangle';
