@@ -22,7 +22,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly IMedicineTypeRepository medicineTypeRepo;
         private readonly IMedicineFactorRecordService medicineFactorRecordService;
         private readonly ISupplyCalculationEngine supplyCalculationEngine;
-        private readonly int supplyComputationMaxLookAheadInDays = 120;
+        private readonly int supplyComputationMaxLookAheadInDays = 130;
 
         // Private methods
         private SupplyInfoWrapper DetermineSupplyInfo(int userID, TMedicineType medTypeDataEntity, List<MedicineFactorRecord> factorRecords)
@@ -30,7 +30,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             // Variables
             var supplyInfo = new SupplyInfoWrapper();
             supplyInfo.CurrentSupplyAmount = this.supplyCalculationEngine.DetermineCurrentSupplyAmount(medTypeDataEntity);
-            supplyInfo.SupplyWillLastUntil = this.supplyCalculationEngine.DetermineSupplyWillLastUntil(medTypeDataEntity.Id, factorRecords, supplyInfo.CurrentSupplyAmount);
+            supplyInfo.SupplyWillLastUntil = (supplyInfo.CurrentSupplyAmount == null) ? null :
+                this.supplyCalculationEngine.DetermineSupplyWillLastUntil(medTypeDataEntity.Id, factorRecords, supplyInfo.CurrentSupplyAmount);
 
             return supplyInfo;
         }
@@ -77,18 +78,18 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
         }
 
-        public virtual Dictionary<string,SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
+        public virtual Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
         {
             // Variables
             var dict = new Dictionary<string, SupplyInfoWrapper>();
 
             // Get the cut-off date and FactorRecords
             // OBS range calculation: 130 represents 120 = 4 months plus 10 days, if the supplyUntil date is > 120, this can be used to say "More than 4 months"
-            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(130)); 
+            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(supplyComputationMaxLookAheadInDays));
             var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
 
             // Loop and get supplyInfo for each medicineTypeDataEntity
-            foreach(TMedicineType dataEntity in medTypeDataEntities)
+            foreach (TMedicineType dataEntity in medTypeDataEntities)
             {
                 dict[dataEntity.Name] = this.DetermineSupplyInfo(userID, dataEntity, factorRecords);
             }
@@ -115,7 +116,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         }
     }
 }
-public class SupplyInfoWrapper 
+public class SupplyInfoWrapper
 {
     public int? CurrentSupplyAmount { get; set; }
     public DateTime? SupplyWillLastUntil { get; set; }

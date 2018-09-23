@@ -31,36 +31,7 @@ export class MedicineTypeElemComponent {
         MedicineTypeCLO: null,
         MenuItems: null,
 
-        GetSupplyInfoForUI: () => {
-
-            // Variables
-            let supplyInfo: SupplyInfoForUI = {
-                LabelText: null,
-                TooltipText: null
-            };
-
-            // Handle different scenarios
-            if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount === 0) {
-
-                // Scenario 1: Supply is equal to 0
-                supplyInfo.LabelText = this.viewModel.MedicineTypeCLO.CurrentSupplyAmount + ' ' + this.viewModel.MedicineTypeCLO.CurrentSupplyAmountMeasuredIn + ' left';
-
-            } else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0 && this.viewModel.MedicineTypeCLO.SupplyWillLastUntil !== null) {
-
-                // Scenario 2: Supply is bigger than 0 and there is a supplyWillLastUntil DATE
-                let supplyUntilMom = moment(this.viewModel.MedicineTypeCLO.SupplyWillLastUntil);
-                let relativeDateString = this.formatFutureRelativeDate(supplyUntilMom);
-                supplyInfo.LabelText = 'Runs out ' + relativeDateString;
-                supplyInfo.TooltipText = 'You have supply until ' + supplyUntilMom.format('MMM DD, YYYY');
-            }
-            else if (this.viewModel.MedicineTypeCLO.CurrentSupplyAmount > 0 && this.viewModel.MedicineTypeCLO.SupplyWillLastUntil === null) {
-
-                 // Scenario 3: Supply is bigger than 0 but SupplyWillLastUntil is NULL
-                supplyInfo.LabelText = 'Not enough supply';
-            }
-            return supplyInfo;
-        },
-
+        CurrentSupplyInfoState: null,
     };
 
     // Properties
@@ -76,6 +47,16 @@ export class MedicineTypeElemComponent {
     }
 
     // Private methods
+    private getCurrentSupplyInfoState(medicineTypeCLO: CLOs.MedicineTypeCLO) {
+
+
+        return new PlentyOfSupplyLeft(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+            medicineTypeCLO.SupplyWillLastUntil);
+        //// PlentyOfSupplyLeft
+        //if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(120, 'days')) {
+
+        //}
+    }
     private getMenuItems() {
 
         var medicineTypeCLO = this.medicineTypeCLO;
@@ -111,28 +92,6 @@ export class MedicineTypeElemComponent {
         }
 
     }
-    private formatFutureRelativeDate(targetDate: moment.Moment) {
-
-        // Variables
-        var returnString: string;
-        var now = moment();
-        let today = moment().startOf('day');
-        let tomorrow = moment().add(1, 'day');
-        let inSevenDays = today.clone().add(7, 'days');
-
-        // Today
-        if (targetDate.isSame(today, 'day')) {
-            return 'today';
-        }
-        // Tomorrow
-        if (targetDate.isSame(tomorrow, 'day')) {
-            return 'tomorrow';
-        }
-
-        // After tomorrow and up until 6 days
-        let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day');
-        return 'in ' + nrOfDaysUntilTargetDate + ' days';
-    }
 
     // Constructor 
     constructor(
@@ -146,6 +105,7 @@ export class MedicineTypeElemComponent {
         // Setup VM fields
         this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
         this.viewModel.MenuItems = this.getMenuItems();
+        this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
 
         // Special handlers
         this.inplaceInstance.onActivate.subscribe(() => {
@@ -154,9 +114,14 @@ export class MedicineTypeElemComponent {
     }
 
     // Public methods
-    public RefreshMenuItems() {
+    public UpdateCLOSupplyFields(newCurrentSupplyAmount: number, newSupplyWillLastUntil: Date) {
+        this.MedicineTypeCLO.CurrentSupplyAmount = newCurrentSupplyAmount;
+        this.MedicineTypeCLO.SupplyWillLastUntil = newSupplyWillLastUntil;
+
+        // Refresh
         this.viewModel.MenuItems = this.getMenuItems();
         this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
+        this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
     }
 
     // Events
@@ -194,10 +159,59 @@ interface ViewModel {
     MedicineTypeCLO: CLOs.MedicineTypeCLO;
     MenuItems: any;
 
-    GetSupplyInfoForUI(): SupplyInfoForUI;
+    CurrentSupplyInfoState: ISupplyInfoState;
 }
 
-interface SupplyInfoForUI {
-    TooltipText: string;
-    LabelText: string;
+
+// Special function
+
+// OBS: need separate state for NotInUse MedicineType ? -> f.ex: we'll just show 
+
+// Special states for how to render SupplyInfo
+function FormatFutureRelativeDate(targetDate: moment.Moment) {
+
+    // Variables
+    var returnString: string;
+    var now = moment();
+    let today = moment().startOf('day');
+    let tomorrow = moment().add(1, 'day');
+    let inSevenDays = today.clone().add(7, 'days');
+
+    // Today
+    if (targetDate.isSame(today, 'day')) {
+        return 'today';
+    }
+    // Tomorrow
+    if (targetDate.isSame(tomorrow, 'day')) {
+        return 'tomorrow';
+    }
+
+    // After tomorrow just say the nr of 'days'
+    let nrOfDaysUntilTargetDate = targetDate.diff(moment(), 'day');
+    return 'in ' + nrOfDaysUntilTargetDate + ' days';
+}
+interface ISupplyInfoState {
+    MainLabelTooltipText: string;
+    MainLabelText: string;
+    MainLabelColor: string;
+    SecondaryLabelText: string;
+    IconName: string;
+}
+class PlentyOfSupplyLeft implements ISupplyInfoState {
+    // Fields
+    public MainLabelTooltipText: string = 'Until ' + moment(this.untilDate).format('MMM DD, YYYY');
+    public MainLabelText: string = '> 4 months supply';
+    public MainLabelColor: string = 'green';
+    public SecondaryLabelText: string = '(' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left)';
+    public IconName: string = 'fa fa-smile';
+
+    // Constructor
+    public constructor(
+        private readonly currentSupplyAmount: number,
+        private readonly currentSupplyAmountUnitOfMeasureName: string,
+        private readonly untilDate: Date) {
+
+    }
+
+
 }

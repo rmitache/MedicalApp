@@ -4,35 +4,23 @@
 }
 
 .frame /deep/ .ui-inplace-display {
-    padding-left:0;
+    padding-left: 0;
 }
-.frame /deep/ .ui-inplace-display:hover {
-    background-color: #f8f8f8;
-    border-radius: 4px;
-}
+
+    .frame /deep/ .ui-inplace-display:hover {
+        background-color: #f8f8f8;
+        border-radius: 4px;
+    }
 
 .frame {
     background-color: #eaeaea;
     padding: 10px;
-    
     border-radius: 3px;
     width: calc(100% - 20px);
 }
 
 
 
-
-    .frame .supply-label {
-        display: block;
-        clear: left;
-        float: left;
-        color: #808080;
-        margin-top: 2px;
-    }
-
-    .frame .red-label {
-        color: red;
-    }
 
 
 
@@ -43,7 +31,7 @@
 
     .top-part .left-side {
         width: calc(100% - 35px);
-        float:left;
+        float: left;
     }
 
         .top-part .left-side .medicine-type-name {
@@ -65,9 +53,35 @@
         .top-part .left-side .label {
             color: #2399e5;
             display: inline-block;
-            padding-bottom:10px;
+            padding-bottom: 10px;
         }
 
     .top-part .split-button {
         float: right;
     }
+
+
+
+
+.frame .supply-div {
+    display: block;
+    clear: left;
+    float: left;
+    color: #808080;
+    margin-top: 2px;
+    border: solid 1px red;
+    width: 100%;
+}
+
+    .frame .supply-div > i {
+    }
+
+    .frame .supply-div > .main-supply-label {
+    }
+
+    .frame .supply-div > .secondary-supply-label {
+    }
+
+.frame .red-label {
+    color: red;
+}
