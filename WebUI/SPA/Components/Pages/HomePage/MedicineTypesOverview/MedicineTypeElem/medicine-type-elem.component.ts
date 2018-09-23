@@ -58,26 +58,26 @@ export class MedicineTypeElemComponent {
 
 
 
-        //// HighSupply - more than 7 weeks 
-        //if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(49, 'days')) {
-        //    return new HighSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-        //        medicineTypeCLO.SupplyWillLastUntil);
-        //}
-        //// MediumSupply - more than 4 weeks
-        //else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(28, 'days')) {
-        //    return new MediumSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-        //        medicineTypeCLO.SupplyWillLastUntil);
-        //}
-        //// LowSupply - more than 2 weeks
-        //else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(14, 'days')) {
+        // HighSupply - more than 7 weeks 
+        if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(49, 'days')) {
+            return new HighSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
+        }
+        // MediumSupply - more than 4 weeks
+        else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(28, 'days')) {
+            return new MediumSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
+        }
+        // LowSupply - more than 2 weeks
+        else if (medicineTypeCLO.SupplyWillLastUntil !== null ) {
         return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
             medicineTypeCLO.SupplyWillLastUntil);
-        //}
-        //// EmptySupply 
-        //else if (medicineTypeCLO.SupplyWillLastUntil === null) {
-        //    return new EmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-        //        medicineTypeCLO.SupplyWillLastUntil);
-        //}
+        }
+        // EmptySupply 
+        else if (medicineTypeCLO.SupplyWillLastUntil === null) {
+            return new EmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
+        }
 
         //return null; // default return value
     }
