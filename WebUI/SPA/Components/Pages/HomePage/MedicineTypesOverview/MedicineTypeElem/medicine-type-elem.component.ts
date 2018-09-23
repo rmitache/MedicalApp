@@ -49,11 +49,11 @@ export class MedicineTypeElemComponent {
     // Private methods
     private getCurrentSupplyInfoState(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 
-        //// NotInUseButHasSupply 
-        //if (medicineTypeCLO.UsageStatus === Enums.MedicineTypeStatus.NotInUse) {
-        //    return new NotInUseButNotEmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-        //        medicineTypeCLO.SupplyWillLastUntil);
-        //}
+        // NotInUseButHasSupply 
+        if (medicineTypeCLO.UsageStatus === Enums.MedicineTypeStatus.NotInUse) {
+            return new NotInUseButNotEmptySupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
+        }
 
 
 
