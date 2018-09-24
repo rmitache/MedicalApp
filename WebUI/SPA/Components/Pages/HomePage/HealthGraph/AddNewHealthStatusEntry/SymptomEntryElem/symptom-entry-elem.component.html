@@ -11,6 +11,7 @@
                 <p-autoComplete #autocomplete
                                 formControlName="symptomTypeName"
                                 lazy="true"
+                                [forceSelection]="true"
                                 [suggestions]="viewModel.SymptomTypeSearchResults"
                                 [emptyMessage]="'No symptom types could be found. Please try a different name'"
                                 [placeholder]="'Type to choose a Symptom'"
