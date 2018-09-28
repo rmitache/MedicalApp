@@ -24,12 +24,17 @@ export class PlanCLO extends BaseCLO {
 
 		// Determine the Status ----------------------------------------------------------------------------------------
 
-		// This status has been commented out for now, as the all statuses need a proper revisit before going any deeper
-		//// ActiveWITHChangesTakingEffectToday status
-		//if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
-		//	&& moment(latestVersion.StartDateTime).isSame(moment(), 'date') && secondLatestVersion !== null) {
-		//	return Enums.PlanStatus.ActiveWITHChangesTakingEffectToday;
-		//}
+        // ActiveWITHChangesTakingEffectToday status
+        if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
+            && moment(latestVersion.StartDateTime).isSame(moment(), 'date') && secondLatestVersion !== null) {
+            return Enums.PlanStatus.ActiveWITHChangesTakingEffectToday;
+        }
+		
+		// ActiveStartedToday status
+		if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
+			&& moment(latestVersion.StartDateTime).isSame(moment(), 'date') && secondLatestVersion === null) {
+			return Enums.PlanStatus.ActiveStartedToday;
+		}
 
 		// ActiveWITHOUTAnyUpcomingChanges status
 		if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null) {
@@ -52,6 +57,7 @@ export class PlanCLO extends BaseCLO {
 		if (latestVersion.Status === Enums.VersionStatus.Inactive) {
 			return Enums.PlanStatus.Stopped;
 		}
+
 
 		// UpcomingAsNew status
 		if (latestVersion.Status === Enums.VersionStatus.Upcoming && secondLatestVersion === null) {

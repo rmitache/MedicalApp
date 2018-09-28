@@ -94,7 +94,7 @@ export class PlanEditorComponent implements IModalDialog {
 				Validators.compose([Validators.required])
 			],
 			dates: this.fb.group({
-				startDate: [null, Validators.compose([Validators.required, startDateMustNotBeBeforeTomorrowValidator])],
+                startDate: [null, Validators.compose([Validators.required, startDateMustNotBeBeforeTodayValidator])],
 				endDate: null
 			}, { validator: startDateMustBeBeforeOrSameAsEndDateValidator }),
 		});
@@ -183,9 +183,11 @@ interface ViewModel {
 // PlanMode logic and classes
 export enum PlanEditorMode {
 	CreateNew = 0,
-	Change = 1,
-	EditUpcomingChanges = 3, // Aka hard edit
-	Restart = 4
+	Change = 1, 
+    EditUpcomingChanges = 2, // Aka hard edit
+    EditTodaysChanges = 3, // Aka hard edit
+    EditPlanStartedToday = 4,
+	Restart = 5
 }
 interface IPlanEditorModeImplementation {
 	SaveData(): Promise<CLOs.PlanCLO>;
@@ -202,7 +204,7 @@ class CreateNewMode implements IPlanEditorModeImplementation {
 		// Prepare ViewModel 
 		this.vm.PlanCLO = planCLO;
 		this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
-		this.vm.InfoMessage = 'This will create a new Plan from scratch. As default Plans dont have an end date, but you can Stop them manually';
+		this.vm.InfoMessage = 'This will create a new Plan from scratch. You can stop it manually later';
 		this.vm.StartDateLabel = 'Start date:';
 		this.vm.EndDateLabel = 'Ends on:';
 	}
@@ -321,6 +323,81 @@ class EditUpcomingChangesMode implements IPlanEditorModeImplementation {
 		return saveDataPromise;
 	}
 }
+class EditTodaysChangesMode implements IPlanEditorModeImplementation {
+
+    // Fields
+    private prevVersion: CLOs.VersionCLO = null;
+
+    // Constructor
+    constructor(
+        private reactiveForm: FormGroup,
+        private planCLO: CLOs.PlanCLO,
+        private vm: ViewModel,
+        private globalDataService: HomePageDataService,
+        private genericCLOFactory: GenericCLOFactory) {
+
+        this.prevVersion = planCLO.GetSecondLatestVersion();
+
+
+        // Custom form logic
+        this.reactiveForm.get('planName').disable();
+        this.reactiveForm.get('dates').setValidators([(control: AbstractControl) => {
+            return advancedPlanDatesValidator(control as FormGroup, this.prevVersion);
+        }]);
+
+        // Prepare ViewModel 
+        this.vm.PlanCLO = planCLO;
+        this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.InfoMessage = 'You are about to edit the changes which took effect today for this Plan. ';
+        this.vm.StartDateLabel = 'Taking effect from:';
+        this.vm.EndDateLabel = 'New end date will be:';
+    }
+
+    // Public methods
+    public SaveData() {
+
+        // Automatically adjust the previous version's endDate
+        if (this.prevVersion !== null) {
+            this.prevVersion.EndDateTime = moment(this.vm.CurrentVersionCLO.StartDateTime).subtract(1, 'days').endOf('day').toDate();
+        }
+
+
+        // Save the data
+        let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
+        return saveDataPromise;
+    }
+}
+class EditPlanStartedTodayMode implements IPlanEditorModeImplementation {
+
+    // Constructor
+    constructor(
+        private reactiveForm: FormGroup,
+        private planCLO: CLOs.PlanCLO,
+        private vm: ViewModel,
+        private globalDataService: HomePageDataService,
+        private genericCLOFactory: GenericCLOFactory) {
+
+        // Custom form logic
+        this.reactiveForm.get('planName').disable();
+        
+
+        // Prepare ViewModel 
+        this.vm.PlanCLO = planCLO;
+        this.vm.CurrentVersionCLO = this.vm.PlanCLO.GetLatestVersion();
+        this.vm.InfoMessage = 'You are about to edit the Plan which just started today.';
+        this.vm.StartDateLabel = 'Starting from:';
+        this.vm.EndDateLabel = 'New end date will be:';
+    }
+
+    // Public methods
+    public SaveData() {
+
+        // Save the data
+        let saveDataPromise = this.globalDataService.UpdatePlan(this.vm.PlanCLO);
+        return saveDataPromise;
+    }
+}
+
 class RestartMode implements IPlanEditorModeImplementation {
 
 	// Fields
@@ -374,20 +451,22 @@ var modeImplementationsLookup = {};
 modeImplementationsLookup[PlanEditorMode.CreateNew] = CreateNewMode;
 modeImplementationsLookup[PlanEditorMode.Change] = ChangeMode;
 modeImplementationsLookup[PlanEditorMode.EditUpcomingChanges] = EditUpcomingChangesMode;
+modeImplementationsLookup[PlanEditorMode.EditTodaysChanges] = EditTodaysChangesMode;
+modeImplementationsLookup[PlanEditorMode.EditPlanStartedToday] = EditPlanStartedTodayMode;
 modeImplementationsLookup[PlanEditorMode.Restart] = RestartMode;
 
 // Custom validators
-//function startDateMustNotBeBeforeTodayValidator(control: AbstractControl) {
-//	// Variables
-//	var startDate = moment(control.value).startOf('day');
-//	var todayDate = moment().startOf('day');
+function startDateMustNotBeBeforeTodayValidator(control: AbstractControl) {
+	// Variables
+	var startDate = moment(control.value).startOf('day');
+	var todayDate = moment().startOf('day');
 	
-//	if (startDate < todayDate) {
-//		return { startBeforeToday: true };
-//	} else {
-//		return null;
-//	}
-//}
+	if (startDate < todayDate) {
+		return { startBeforeToday: true };
+	} else {
+		return null;
+	}
+}
 function startDateMustNotBeBeforeTomorrowValidator(control: AbstractControl) {
 	// Variables
 	var startDate = moment(control.value).startOf('day');

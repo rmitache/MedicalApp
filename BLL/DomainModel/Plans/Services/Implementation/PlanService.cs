@@ -59,21 +59,25 @@ namespace BLL.DomainModel.Plans.Services
             var lastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetLatestVersion());
             if (latestVersionBLO.ToBeDeleted)
             {
-                this.versionRepository.DeleteVersion(latestVersionBLO.ID, planBLO.ID); // Delete
+                // Delete
+                this.versionRepository.DeleteVersion(latestVersionBLO.ID, planBLO.ID); 
             }
             else if (lastVersionDataEntity.Id == 0)
             {
-                this.versionRepository.AddVersion(lastVersionDataEntity, planBLO.ID); // New 
+                // New 
+                this.versionRepository.AddVersion(lastVersionDataEntity, planBLO.ID); 
             }
             else if (lastVersionDataEntity.Id > 0)
             {
-                this.versionRepository.UpdateVersion(lastVersionDataEntity, planBLO.ID); // Update
+                // Update
+                this.versionRepository.UpdateVersion(lastVersionDataEntity, planBLO.ID); 
             }
 
 
-            // 2. Handle PreviousVersion  
+            // 2. Handle PreviousVersion  (if it has one)
             if (planBLO.GetPreviousLatestVersion() != null)
             {
+                // Update
                 var previousLastVersionDataEntity = this.versionFactory.Convert_ToDataEntity(planBLO.GetPreviousLatestVersion());
                 this.versionRepository.UpdateVersion(previousLastVersionDataEntity, planBLO.ID);
             }

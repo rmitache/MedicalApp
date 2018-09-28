@@ -25,7 +25,31 @@ export class PlanElemComponent {
 	@Input('PlanCLO')
 	private readonly planCLO: CLOs.PlanCLO;
 	private readonly planStatusesEnum = Enums.PlanStatus;
-	private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
+    private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
+
+        ActiveWITHChangesTakingEffectToday: [
+            {
+                Label: 'Edit todays changes',
+                OnClick: () => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.EditTodaysChanges]);
+                }
+            },
+            {
+                Label: 'Cancel changes',
+                OnClick: () => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.CancelTodaysChanges]);
+                }
+            }
+        ],
+        ActiveStartedToday: [
+            {
+                Label: 'Edit plan started today',
+                OnClick: () => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.EditPlanStartedToday]);
+                }
+            }
+        ],
+
 		ActiveWITHOUTAnyUpcomingChanges: [
 			{
 				Label: 'Stop plan',
@@ -140,7 +164,9 @@ export class PlanElemComponent {
 
 		// Handle different types of Statuses
 		switch (status) {
-			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.PlanStatus.ActiveWITHChangesTakingEffectToday:
+            case Enums.PlanStatus.ActiveStartedToday:
 			case Enums.PlanStatus.ActiveWITHUpcomingChanges:
 			case Enums.PlanStatus.ActiveWITHUpcomingStop:
 				iconName = 'fa fa-arrow-alt-circle-right';
@@ -191,7 +217,9 @@ export class PlanElemComponent {
 		let firstVersion = this.planCLO.GetFirstVersion();
 		switch (this.planCLO.Status) {
 			// ActiveWITHOUTAnyUpcomingChanges
-			case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.PlanStatus.ActiveStartedToday:
+            case Enums.PlanStatus.ActiveWITHChangesTakingEffectToday:
 				if (this.planCLO.Versions.Length > 1) {
 
 					this.viewModel.DateInfoLabel = 'Last changed:';

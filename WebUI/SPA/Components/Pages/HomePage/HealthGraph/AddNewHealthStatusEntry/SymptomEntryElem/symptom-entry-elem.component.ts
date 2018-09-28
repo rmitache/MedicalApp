@@ -97,7 +97,6 @@ export class SymptomEntryElemComponent {
 
         let searchResults = this.symptomTypeSearchService.Search(event.query);
         this.viewModel.SymptomTypeSearchResults = searchResults;
-
     }
     private onSymptomTypeSelected(value) {
         this.loadSymptomTypeByName(value);
