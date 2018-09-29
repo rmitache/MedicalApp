@@ -35,16 +35,23 @@ export class IFRPGroupListComponent {
                 return clo.Name === name;
             });
         },
-		Search: (searchString) => {
-			searchString = searchString.toLowerCase();
+        Search: (searchString) => {
 
+            // Return everything if searchString is passed as null
+            if (searchString === null) {
+                return this.availableMedicineTypes.map(clo => {
+                    return clo.Name;
+                });
+            }
+
+            // Properly parse a valid searchString
+			searchString = searchString.toLowerCase();
 			let matchingMedTypes = this.availableMedicineTypes.filter(clo => {
 				return clo.Name.toLowerCase().startsWith(searchString);
 			});
 			let results = matchingMedTypes.map(clo => {
 				return clo.Name;
 			});
-			
 			return results;
         }
     };

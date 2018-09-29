@@ -1,8 +1,9 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, AbstractControl } from '@angular/forms';
 import { AutoComplete } from 'primeng/primeng';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 // Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
@@ -100,6 +101,14 @@ export class IFRPGroupElemComponent {
     ngOnInit() {
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
+
+        // Special autosuggest validator (as a quick-fix for the ForceSelection bug)
+        this.reactiveForm.get('medicineTypeName').setValidators([(control: AbstractControl) => {
+            return autosuggestMustMatchSuggestions(control as FormGroup, this.medicineTypesSearchService);
+        }]);
+
+
+        //
         this.reactiveForm
             .statusChanges
             .subscribe((newStatus) => {
@@ -120,7 +129,7 @@ export class IFRPGroupElemComponent {
                 this.viewModel.UserDefinedControlsAreLocked = false;
                 this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
             }
-            
+
         }
 
     }
@@ -173,3 +182,24 @@ interface ViewModel {
 }
 
 
+function autosuggestMustMatchSuggestions(control: AbstractControl, searchService: IMedicineTypesSearchService) {
+    // Find out if the current value of the control matches exactly a suggestion from the list
+    var allSuggestions = searchService.Search(null);
+    var currentTextEntered = control.value;
+    var textMatchesSuggestionInList = false;
+    for (let i = 0; i < allSuggestions.length; i++) {
+        let suggestion = allSuggestions[i];
+
+        if (suggestion === currentTextEntered) {
+            textMatchesSuggestionInList = true;
+            break;
+        }
+    };
+
+    // Validate based on above logic 
+    if (textMatchesSuggestionInList) {
+        return null;
+    } else {
+        return { doesntMatchItemInList: true };
+    }
+}
