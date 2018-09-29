@@ -8,7 +8,6 @@
                 <p-autoComplete #autocomplete
                                 formControlName="medicineTypeName"
                                 lazy="true"
-                                
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
                                 [emptyMessage]="'No matches found'"
                                 [placeholder]="'Choose a Medicine Type'"
@@ -21,7 +20,7 @@
             <div class="label-input-pair quantifier-input-pair">
                 <span class="label-discrete">Dosage</span>
 
-                <input pInputText type="text"  formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
+                <input pInputText type="text" formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
             </div>
 
             <!--UnitDoseType-->
@@ -42,7 +41,7 @@
             <!--UnitDoseSize-->
             <div class="label-input-pair dose-size-input-pair">
                 <span class="label"></span>
-                <input pInputText type="text" formControlName="unitdosesize" 
+                <input pInputText type="text" formControlName="unitdosesize"
                        (ngModelChange)="onUnitDoseSizeChanged($event)"
                        [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
                        [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
@@ -55,10 +54,10 @@
                 <input pInputText type="text" disabled="disabled"
                        [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />
 
-                
+
             </div>
             <div class="label of-label">each</div>
-            
+
             <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 
         </div>
@@ -68,4 +67,3 @@
     </div>
 
 </form>
-

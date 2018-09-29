@@ -33,17 +33,24 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
                 return clo.Name === name;
             });
         },
-		Search: (searchString) => {
-			searchString = searchString.toLowerCase();
+        Search: (searchString) => {
+            // Return everything if searchString is passed as null
+            if (searchString === null) {
+                return this.availableSymptomTypes.ToArray().map(clo => {
+                    return clo.Name;
+                });
+            }
 
-			let matchingMedTypes = this.availableSymptomTypes.ToArray().filter(clo => {
-				return clo.Name.toLowerCase().startsWith(searchString);
-			});
-			let results = matchingMedTypes.map(clo => {
-				return clo.Name;
-			});
+            // Properly parse a valid searchString
+            searchString = searchString.toLowerCase();
+            let matchingMedTypes = this.availableSymptomTypes.ToArray().filter(clo => {
+                return clo.Name.toLowerCase().startsWith(searchString);
+            });
+            let results = matchingMedTypes.map(clo => {
+                return clo.Name;
+            });
 
-			return results;
+            return results;
         }
     };
     @ViewChildren('symptomEntryElems')
@@ -54,7 +61,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
-		HealthStatusEntryCLO: null,
+        HealthStatusEntryCLO: null,
         ShowSymptomEntriesOverlayDiv: true
     };
 
@@ -86,7 +93,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         let prevIsValid = this.isValid;
         this.isValid = this.checkChildrenAreValid() && this.reactiveForm.valid;
     }
-    
+
 
     // Constructor 
     constructor(
@@ -99,9 +106,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
-	ngOnInit() {
-		
-		this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
+    ngOnInit() {
+
+        this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
         this.reactiveForm = this.fb.group({
             occurrenceDateTime: [null, Validators.compose([
                 (control: AbstractControl) => {
@@ -181,7 +188,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
 
 interface ViewModel {
-	HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
+    HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
     ShowSymptomEntriesOverlayDiv: boolean;
 }
 export interface ISymptomTypesSearchService {

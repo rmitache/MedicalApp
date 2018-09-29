@@ -148,17 +148,16 @@ export class IFRPGroupElemComponent {
         this.RemoveClicked.emit(this.iFRPGroupCLO);
     }
     private onMedicineTypeTextBoxChanged(event) {
-
+        
         let searchResults = this.medicineTypesSearchService.Search(event.query);
-        this.viewModel.MedicineTypeSearchResults = searchResults;
-
+        this.viewModel.MedicineTypeSearchResults = searchResults;      
     }
     private onMedicineTypeSelected(value) {
+
         this.loadMedicineTypeByName(value);
         setTimeout(() => {
             this.viewModel.OverlayIsVisible = false;
         }, 1);
-
     }
     private onUnitDoseSizeChanged(value) {
         if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {

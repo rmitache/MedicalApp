@@ -1,6 +1,6 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, AbstractControl } from '@angular/forms';
 import { AutoComplete } from 'primeng/primeng';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -66,6 +66,11 @@ export class SymptomEntryElemComponent {
     ngOnInit() {
         this.viewModel.SymptomEntryCLO = this.symptomEntryCLO;
 
+        // Special autosuggest validator (as a quick-fix for the ForceSelection bug)
+        this.reactiveForm.get('symptomTypeName').setValidators([(control: AbstractControl) => {
+            return autosuggestMustMatchSuggestions(control as FormGroup, this.symptomTypeSearchService);
+        }]);
+
         this.reactiveForm
             .statusChanges
             .subscribe((newStatus) => {
@@ -114,3 +119,24 @@ interface ViewModel {
 }
 
 
+function autosuggestMustMatchSuggestions(control: AbstractControl, searchService: ISymptomTypesSearchService) {
+    // Find out if the current value of the control matches exactly a suggestion from the list
+    var allSuggestions = searchService.Search(null);
+    var currentTextEntered = control.value;
+    var textMatchesSuggestionInList = false;
+    for (let i = 0; i < allSuggestions.length; i++) {
+        let suggestion = allSuggestions[i];
+
+        if (suggestion === currentTextEntered) {
+            textMatchesSuggestionInList = true;
+            break;
+        }
+    };
+
+    // Validate based on above logic 
+    if (textMatchesSuggestionInList) {
+        return null;
+    } else {
+        return { doesntMatchItemInList: true };
+    }
+}
