@@ -7,7 +7,7 @@
     border-radius: 5px;
     position: absolute;
     padding: 10px;
-    z-index:99999999;
+    z-index:9999999999;
 }
 
 .health-chart-div {

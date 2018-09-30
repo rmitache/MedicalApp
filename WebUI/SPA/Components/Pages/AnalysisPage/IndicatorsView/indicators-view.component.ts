@@ -66,30 +66,30 @@ export class IndicatorsViewComponent {
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
     private readonly symptomTypesColors = [
-        '#e6194b', //red
-        '#3cb44b', //green
-        '#ffe119', //yellow
+        '#9c1a3a', //red
+        '#0c4213', //green
+        '#857717', //yellow
         '#0082c8', //blue
-        '#f58231', //orange
+        '#625fad', //orange
         '#911eb4', //purple
         '#f032e6', //magenta
         '#008080', //teal
         '#aa6e28', //brown
         '#800000', //maroon
-        '#808000', //olive
-        '#aaffc3', //mint
-        '#ffd8b1', //coral
+        '#1e5e14', //olive
+        '#77ae87', //mint
+        '#907355', //coral
         '#000080', //navy
         '#808080', //gray
         '#000000', //black
-        '#46f0f0', //cyan
-        '#d2f53c', //lime
+        '#61c1c1', //cyan
+        '#9e4cbf', //light purple
         '#f032e6', //magenta
         '#008080', //teal
-        '#aa6e28', //brown
+        '#795b4e', //brown
         '#800000', //maroon
         '#808000', //olive
-        '#aaffc3', //mint
+        '#8aaa93', //mint
         '#ffd8b1', //coral
         '#000080', //navy
         '#808080', //gray
