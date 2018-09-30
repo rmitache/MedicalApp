@@ -93,6 +93,7 @@ export class FactorsViewComponent {
     private refreshUI() {
         // Refresh vm properties
         this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.viewModel.SelectedPlans, this.viewModel.SelectedDateRange);
+
 		this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
 
         // Refresh children components
