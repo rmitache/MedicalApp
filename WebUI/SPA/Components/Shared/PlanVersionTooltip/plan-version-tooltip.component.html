@@ -1,0 +1,13 @@
+<div #tooltipDiv class="frame"
+     [ngClass]="viewModel.TooltipOrientationMode === orientationModesEnum.Above ? 'above-pos': 'below-pos'"
+     [style.visibility]="viewModel.Visible ? 'visible' : 'hidden'"
+     [style.top.px]="viewModel.TooltipPos?.Top ? viewModel.TooltipPos.Top : 0"
+     [style.left.px]="viewModel.TooltipPos?.Left ? viewModel.TooltipPos.Left : 0">
+
+    <div class="caret-div"
+         [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
+         [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
+    </div>
+
+    {{viewModel.TooltipOrientationMode === orientationModesEnum.Above ? 'above-pos': 'below-pos'}}
+</div>

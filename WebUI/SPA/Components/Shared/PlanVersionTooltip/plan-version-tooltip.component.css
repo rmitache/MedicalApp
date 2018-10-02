@@ -1,0 +1,46 @@
+
+
+/*General styles (any positioning)*/
+.frame {
+    width: 270px;
+    border: solid 1px #d5d5d5;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    padding: 10px;
+    z-index: 9999999999;
+}
+
+.caret-div {
+    width: 0;
+    height: 0;
+    position: relative;
+}
+
+/* ABOVE position mode*/
+.frame.above-pos {
+    padding-top: 0;
+}
+
+    .frame.above-pos .caret-div {
+        border-bottom: solid 15px black;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;
+        border-top: none;
+    }
+
+/* BELOW position mode */
+.frame.below-pos {
+    padding-top: 0;
+}
+
+    .frame.below-pos .caret-div {
+        border-bottom: none;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;
+        border-top: solid 15px black;
+    }
+
+
+
+

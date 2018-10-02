@@ -33,6 +33,7 @@ import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
 import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
+import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-pan
         IFRPGroupListComponent,
         NavigationPanelComponent,
         FilterListPanelComponent,
-		GraphTooltipComponent,
+        GraphTooltipComponent,
+        PlanVersionTooltipComponent
          
     ],
     exports: [
@@ -95,7 +97,8 @@ import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-pan
 		TooltipModule,
 		InplaceModule,
 		HeaderBarModule,
-		NoDataPanelModule
+        NoDataPanelModule,
+        PlanVersionTooltipComponent
     ]
 })
 export class SharedModule { }

@@ -17,6 +17,7 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { StopPlanDialogComponent } from 'SPA/Components/Pages/HomePage/PlansOverview/StopPlanDialog/stop-plan-dialog.component';
+import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/PlanVersionTooltip/plan-version-tooltip.component';
 
 
 @Component({
@@ -29,6 +30,8 @@ export class PlansOverviewComponent {
     // Fields
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
+    @ViewChild('planVersionTooltip')
+    private planVersionTooltipInstance: PlanVersionTooltipComponent;
     private readonly noDataModes = NoDataModes;
     private readonly planStatusViewModes = {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
@@ -371,7 +374,7 @@ export class PlansOverviewComponent {
     private onAddNewPlanTriggered() {
 
         this.triggerPlanAction(null, PlanActionType.CreateNew);
-
+        
     }
     private onPlanActionTriggered(arr: any[]) {
         let planCLO: CLOs.PlanCLO = arr[0];
@@ -384,6 +387,12 @@ export class PlansOverviewComponent {
         this.viewModel.SelectedViewMode = newVal;
 
         this.refreshUI();
+    }
+    private onPlanStatusElemMouseEnter(hoverEvent: PlanElemHoverEventInfo) {
+        this.planVersionTooltipInstance.Show(hoverEvent);
+    }
+    private onPlanStatusElemMouseLeave() {
+        this.planVersionTooltipInstance.HideAndClear();
     }
 }
 interface ViewModel {

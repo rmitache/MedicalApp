@@ -5,10 +5,11 @@
 
     <div class="top-part">
 
-        <i [ngClass]="viewModel.StatusIcon"
+        <i #statusIcon
+           [ngClass]="viewModel.StatusIcon"
            [style.color]="viewModel.StatusIconColor"
-           [pTooltip]="viewModel.StatusIconTooltipText"
-           tooltipPosition="top"></i>
+           (mouseenter)='onStatusIconMouseEnter($event)'
+           (mouseleave)='onStatusIconMouseLeave($event)'></i>
         <div class="right-side-div">
             <p-inplace #inplace>
                 <span pInplaceDisplay>
@@ -48,5 +49,4 @@
         </div>
     </div>
 </div>
-<!--{{planStatusesEnum[planCLO.Status]}}-->
-<!--[label]="viewModel.MainAction.ButtonText"-->
+
