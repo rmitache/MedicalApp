@@ -5,7 +5,8 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { HealthStatusEntryCLOService, SymptomTypeAndAvgIntensity } from 'SPA/DomainModel/Indicators/Symptoms/CLOServices/health-status-entry-clo.service';
+import { VersionCLOService } from '../../../DomainModel/Plans/CLOServices/version-clo.service';
+import { ConvertDictionaryToArray } from '../../../Core/Helpers/Functions/functions';
 
 
 
@@ -20,11 +21,14 @@ export class PlanVersionTooltipComponent {
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
     private orientationModesEnum = TooltipOrientationMode;
+    private planStatusesEnum = Enums.PlanStatus;
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
+        NrUniqueMedicineTypes: null,
+
         Visible: false,
         TooltipPos: null,
-        TooltipOrientationMode: TooltipOrientationMode.Above,
+        TooltipOrientationMode: null,
         CaretPos: null
     };
 
@@ -67,13 +71,26 @@ export class PlanVersionTooltipComponent {
 
     }
 
+    // Constructor
+    public constructor(
+        private readonly versionCLOService: VersionCLOService
+    ) {
+
+    }
+
     // Public 
     public Show(hoverEventInfo: PlanElemHoverEventInfo) {
 
-        // Calculate position
+        // Calculate fields
         setTimeout(() => {
-            var positionInfo = this.calculateTooltipPosition(hoverEventInfo.Left, hoverEventInfo.Top);
 
+            // Calculate
+            var positionInfo = this.calculateTooltipPosition(hoverEventInfo.Left, hoverEventInfo.Top);
+            var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
+            
+            // Set values
+            this.viewModel.PlanCLO = hoverEventInfo.PlanCLO;
+            this.viewModel.NrUniqueMedicineTypes = ConvertDictionaryToArray(uniqueMedTypes).length;
             this.viewModel.TooltipPos = positionInfo.TooltipCoordinates;
             this.viewModel.CaretPos = positionInfo.CaretCoordinates;
             this.viewModel.TooltipOrientationMode = positionInfo.OrientationMode;
@@ -83,10 +100,13 @@ export class PlanVersionTooltipComponent {
     }
     public HideAndClear() {
         setTimeout(() => {
-            this.viewModel.Visible = false;
-
+            this.viewModel.PlanCLO = null;
+            this.viewModel.NrUniqueMedicineTypes = null;
             this.viewModel.TooltipPos = null;
             this.viewModel.CaretPos = null;
+            this.viewModel.TooltipOrientationMode = null;
+            this.viewModel.Visible = false;
+
         }, 0);
     }
 }
@@ -94,6 +114,8 @@ export class PlanVersionTooltipComponent {
 
 interface ViewModel {
     PlanCLO: CLOs.PlanCLO;
+    NrUniqueMedicineTypes: number;
+
     Visible: boolean;
     TooltipPos: PosCoordinates;
     TooltipOrientationMode: TooltipOrientationMode;

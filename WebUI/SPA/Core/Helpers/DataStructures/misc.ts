@@ -6,11 +6,11 @@ export class Time {
 
 
     // Constructors
-	constructor(public readonly Hours: number, public readonly Minutes: number) {
-	}
+    constructor(public readonly Hours: number, public readonly Minutes: number) {
+    }
 
-	// Static creation methods
-	public static ParseString(str: string): Time {
+    // Static creation methods
+    public static ParseString(str: string): Time {
 
         // Check for colon
         let strArray = str.split(':');
@@ -33,14 +33,14 @@ export class Time {
         // Create Time instance
         let timeObj: Time = new Time(hours, minutes);
         return timeObj;
-	}
-	public static ParseJSON(json: string): Time {
+    }
+    public static ParseJSON(json: string): Time {
 
-		let time = new Time(parseInt(json['Hours']), parseInt(json['Minutes']));
-		return time;
-	}
-	public static ParseJSONArray(jsonArray: any[]): Time[] {
-        let array:Time[] = [];
+        let time = new Time(parseInt(json['Hours']), parseInt(json['Minutes']));
+        return time;
+    }
+    public static ParseJSONArray(jsonArray: any[]): Time[] {
+        let array: Time[] = [];
         if (jsonArray === null) {
             return array;
         }
@@ -63,7 +63,7 @@ export class Time {
         strHours = (this.Hours < 10) ? ('' + this.Hours) : this.Hours + '';
         strMins = (this.Minutes < 10) ? ('0' + this.Minutes) : this.Minutes + '';
         return strHours + ":" + strMins;
-	}
+    }
 
 }
 
@@ -71,7 +71,7 @@ export class Time {
 export class Range<T> {
     constructor(public readonly RangeStart: T, public readonly RangeEnd: T) {
     }
-   
+
 
 }
 
@@ -101,7 +101,7 @@ export class DaysInWeek {
     public Saturday: boolean = true;
     public Sunday: boolean = true;
 
-
+    // Constructor
     constructor(array?: boolean[]) {
         if (array === null || array === undefined) {
             return;
@@ -188,6 +188,38 @@ export class DaysInWeek {
         }
 
         return nrOfTrueDays;
+    }
+    public ToString() {
+        let arr: string[] = [];
+        if (this.Monday) {
+            arr.push('Mon');
+        }
+        if (this.Tuesday) {
+            arr.push('Tue');
+        }
+        if (this.Wednesday) {
+            arr.push('Wed');
+        }
+        if (this.Thursday) {
+            arr.push('Thu');
+        }
+        if (this.Friday) {
+            arr.push('Fri');
+        }
+        if (this.Saturday) {
+            arr.push('Sat');
+        }
+        if (this.Sunday) {
+            arr.push('Sun');
+        }
+
+        // 
+        let returnStr = '';
+        for (let i = 0; i < arr.length; i++) {
+            returnStr += arr[i] + ' ';
+        }
+
+        return returnStr;
     }
 }
 

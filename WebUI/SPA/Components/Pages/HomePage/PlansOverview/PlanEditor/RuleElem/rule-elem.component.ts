@@ -65,9 +65,9 @@ export class RuleElemComponent {
 
     }
     ngOnInit() {
+        
         this.viewModel.RuleCLO = this.ruleCLO;
         this.viewModel.MomentsInDayAsStrings = this.viewModel.RuleCLO.MomentsInDay.map(time => time.ToString());
-
         this.form.
             valueChanges.
             subscribe(() => {

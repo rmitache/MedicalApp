@@ -25,9 +25,9 @@ export class RuleCLOFactory implements ICLOFactory<CLOs.RuleCLO> {
         newCLO.ID = blo['ID'];
         newCLO.OrdinalFrequencyType = blo['OrdinalFrequencyType'];
         newCLO.FrequencyType = blo['FrequencyType'];
+        
         newCLO.DaysInWeek = DaysInWeek.FromJSON(blo['DaysInWeek']);
 		newCLO.MomentsInDay = Time.ParseJSONArray(blo['MomentsInDay']);
-
         newCLO.MedicineRuleItems = this.medicineRuleItemCLOFactory.Convert_ToCloList(blo['MedicineRuleItems']).ToArray();
 
         return newCLO;

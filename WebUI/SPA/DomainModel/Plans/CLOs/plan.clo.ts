@@ -74,6 +74,25 @@ export class PlanCLO extends BaseCLO {
 
 		throw new Error('No Status could be determined for Plan with name "' + this.Name + '"');
 	}
+    public get StatusSimpleName(): string {
+        // Handle different types of Statuses
+        switch (this.Status) {
+            case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.PlanStatus.ActiveWITHChangesTakingEffectToday:
+            case Enums.PlanStatus.ActiveStartedToday:
+            case Enums.PlanStatus.ActiveWITHUpcomingChanges:
+            case Enums.PlanStatus.ActiveWITHUpcomingStop:
+                return 'Active';
+
+            case Enums.PlanStatus.UpcomingAsNew:
+            case Enums.PlanStatus.UpcomingAsRestarted:
+                return 'Upcoming';
+
+            case Enums.PlanStatus.Stopped:
+                return 'Stopped';
+
+        }
+    }
 
 	// Constructor
 	constructor() {

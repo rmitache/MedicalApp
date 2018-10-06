@@ -17,6 +17,55 @@
     position: relative;
 }
 
+.header-div {
+    height: 30px;
+    margin-top: -10px;
+}
+
+    .header-div .status-info-label {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 30px;
+        text-transform: uppercase;
+    }
+
+    .header-div .med-types-count-div {
+        float: right;
+    }
+
+        .header-div .med-types-count-div .numbers-elem {
+            display: inline-block;
+            background-color: #e9e9e9;
+            border-radius: 18px;
+            padding: 5px 10px 5px 10px;
+        }
+
+            .header-div .med-types-count-div .numbers-elem .label {
+                font-weight: bold;
+                color: black;
+            }
+
+
+.content-div {
+    min-height: 80px;
+}
+
+.rule-elem-div {
+    margin-top: 10px;
+}
+
+    .rule-elem-div .rule-freq-info-div .label {
+        display: inline-block;
+    }
+
+    .rule-elem-div .rule-freq-info-div .time-chip {
+        background-color: #186ba0;
+        padding: 3px;
+        border-radius: 3px;
+        color: white;
+        
+    }
+
 /* ABOVE position mode*/
 .frame.above-pos {
     padding-top: 0;
@@ -40,7 +89,3 @@
         border-right: solid 15px transparent;
         border-top: solid 15px black;
     }
-
-
-
-

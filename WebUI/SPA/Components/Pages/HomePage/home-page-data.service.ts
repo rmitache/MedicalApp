@@ -46,7 +46,6 @@ export class HomePageDataService {
 
         let blos = this.startupDataBundleService.GetBundle['Plans'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.PlanCLO>(CLOs.PlanCLO, blos);
-
         return cloList;
     }
     public GetFactorRecordsForInitialRangeFromBundle(): DataStructures.List<CLOs.MedicineFactorRecordCLO> {

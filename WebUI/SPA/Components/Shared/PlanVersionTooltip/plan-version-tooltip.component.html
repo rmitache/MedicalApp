@@ -8,6 +8,29 @@
          [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
          [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
     </div>
+    <div class="header-div">
 
-    {{viewModel.TooltipOrientationMode === orientationModesEnum.Above ? 'above-pos': 'below-pos'}}
+
+        <span class="status-info-label h2">{{viewModel.PlanCLO?.StatusSimpleName}}</span>
+        <div class="med-types-count-div">
+            <div class="numbers-elem">
+                <span class="label">{{viewModel.NrUniqueMedicineTypes}}</span>
+            </div>
+            <span class="unique-med-types-label label">Medicine Types</span>
+        </div>
+    </div>
+    <div class="content-div">
+        <div class="rule-elem-div" *ngFor="let ruleCLO of viewModel.PlanCLO?.GetLatestVersion().Rules; let i = index">
+            <div class="rule-freq-info-div">
+                <span class="label">{{ruleCLO.FrequencyToString}} at</span>
+                <div class="time-chip label">7:30</div>
+                <div class="time-chip label">15:30</div>
+                <div class="time-chip label">21:30</div>
+            </div>
+                
+            
+            <div></div>
+        </div>
+
+    </div>
 </div>

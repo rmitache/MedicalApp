@@ -122,46 +122,25 @@ export function IsDateOnFirstOrLastDateInMonth(date: moment.Moment) {
 
 }
 
-//export function GetLocalTime(utcTime: Time) {
-//	var clientTZOffsetInMinutes = new Date().getTimezoneOffset();
-//	//let utcMoment = moment(utcTime.ToString(), 'HH:mm').format("HH:mm");
-//	var testTime = new Time(23, 30);
-//	let localMoment = moment.utc(testTime.ToString(), 'HH:mm').local().format("hh:mm");
-	
-
-//}
-///* Creates a string with the same Year, Date, Hours, Minutes, Seconds as the given local datetime and with UTC tz*/
-//export function GetUTCTimeStringFromLocalWithoutChangingOffset(date:Date): string {
-//	var mom = moment(date);
-//	mom.utcOffset('+00:00', true);
-
-//	return mom.format();
-//}
-///* Creates a moment with the same Year, Date, Hours, Minutes, Seconds as the given UTC string without performing any conversion */
-//export function GetLocalTimeFromUTCStringWithoutChangingOffset(utcString: string): moment.Moment {
-//	var clientTZOffsetInMinutes = new Date().getTimezoneOffset();
-//	var baseMoment = moment(utcString);
-//	baseMoment.add(clientTZOffsetInMinutes, 'minutes');
-
-//	return baseMoment;
-//}
-
-//export function ToLocalDateTime(utcString: string) {
-//	var date = new Date(utcString);
-//	return date;
-//}
-//export function ToUTCString(localDateTime: Date) {
-//	var utcString = localDateTime.toJSON();
-//	return utcString;
-//}
-
-
-
 
 
 // Numbers
 export function RandomIntFromInterval(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+export function GetOrdinalSuffix(nr:number) {
+    var j = nr % 10,
+        k = nr % 100;
+    if (j == 1 && k != 11) {
+        return nr + "st";
+    }
+    if (j == 2 && k != 12) {
+        return nr + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return nr + "rd";
+    }
+    return nr + "th";
 }
 
 // Colors
