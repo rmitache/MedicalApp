@@ -50,7 +50,6 @@ export class RuleCLO extends BaseCLO {
             GetOrdinalSuffix(this.OrdinalFrequencyType as number + 1) : '';
         returnString = 'Every ' + ordinalFreqText;
 
-
         // Handle frequency type text
         switch (this.FrequencyType) {
             case RuleFrequencyType.Day:
@@ -67,6 +66,7 @@ export class RuleCLO extends BaseCLO {
     // Constructor
     constructor() {
         super();
+        
     }
 
 }

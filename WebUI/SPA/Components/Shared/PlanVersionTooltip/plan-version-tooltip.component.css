@@ -47,25 +47,36 @@
 
 
 .content-div {
-    min-height: 80px;
+    min-height: 20px;
 }
 
 .rule-elem-div {
     margin-top: 10px;
 }
 
-    .rule-elem-div .rule-freq-info-div .label {
-        display: inline-block;
+    .rule-elem-div .rule-freq-info-div {
+        float: left;
+        clear: both;
     }
 
-    .rule-elem-div .rule-freq-info-div .time-chip {
-        background-color: #186ba0;
-        padding: 3px;
-        border-radius: 3px;
-        color: white;
-        
-    }
+        .rule-elem-div .rule-freq-info-div .label {
+            display: inline-block;
+        }
 
+        .rule-elem-div .rule-freq-info-div .time-chip {
+            background-color: #186ba0;
+            padding: 3px;
+            border-radius: 3px;
+            color: white;
+            margin-right: 3px;
+        }
+
+    .rule-elem-div .rule-item-div {
+        margin-left:10px;
+        margin-top:4px;
+        float: left;
+        clear: both;
+    }
 /* ABOVE position mode*/
 .frame.above-pos {
     padding-top: 0;

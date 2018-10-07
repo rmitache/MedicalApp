@@ -23,13 +23,14 @@
         <div class="rule-elem-div" *ngFor="let ruleCLO of viewModel.PlanCLO?.GetLatestVersion().Rules; let i = index">
             <div class="rule-freq-info-div">
                 <span class="label">{{ruleCLO.FrequencyToString}} at</span>
-                <div class="time-chip label">7:30</div>
-                <div class="time-chip label">15:30</div>
-                <div class="time-chip label">21:30</div>
+                <div class="time-chip label" *ngFor="let time of ruleCLO.MomentsInDay">{{time.ToString()}}</div>
+
             </div>
-                
-            
-            <div></div>
+            <div class="rule-item-div label" *ngFor="let ruleItemCLO of ruleCLO.MedicineRuleItems">
+                &#9642; {{ruleItemCLO.UnitDoseQuantifier}} x {{ruleItemCLO.MedicineType.Name}}
+            </div>
+
+            <div style="clear:both"></div>
         </div>
 
     </div>
