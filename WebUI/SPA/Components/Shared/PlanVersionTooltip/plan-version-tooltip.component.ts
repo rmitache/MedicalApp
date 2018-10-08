@@ -32,6 +32,7 @@ export class PlanVersionTooltipComponent {
         CaretPos: null
     };
 
+
     // Private methods
     private calculateTooltipPosition(hoverPointLeft: number, hoverPointTop: number) {
 
@@ -81,16 +82,14 @@ export class PlanVersionTooltipComponent {
     // Public 
     public Show(hoverEventInfo: PlanElemHoverEventInfo) {
 
-        // Calculate fields
-        setTimeout(() => {
+        // Load data 
+        var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
+        this.viewModel.PlanCLO = hoverEventInfo.PlanCLO;
+        this.viewModel.NrUniqueMedicineTypes = ConvertDictionaryToArray(uniqueMedTypes).length;
 
-            // Calculate
+        // Set position and show tooltip
+        setTimeout(() => {
             var positionInfo = this.calculateTooltipPosition(hoverEventInfo.Left, hoverEventInfo.Top);
-            var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
-            
-            // Set values
-            this.viewModel.PlanCLO = hoverEventInfo.PlanCLO;
-            this.viewModel.NrUniqueMedicineTypes = ConvertDictionaryToArray(uniqueMedTypes).length;
             this.viewModel.TooltipPos = positionInfo.TooltipCoordinates;
             this.viewModel.CaretPos = positionInfo.CaretCoordinates;
             this.viewModel.TooltipOrientationMode = positionInfo.OrientationMode;
