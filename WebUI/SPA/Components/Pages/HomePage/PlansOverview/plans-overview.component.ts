@@ -37,7 +37,8 @@ export class PlansOverviewComponent {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         All: 'All',
         Active: 'Active',
-        Inactive: 'Inactive'
+        Inactive: 'Inactive',
+        Upcoming: 'Upcoming'
     };
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
@@ -182,28 +183,28 @@ export class PlansOverviewComponent {
     private filterPlans(plans: CLOs.PlanCLO[], planStatusViewMode: any) {
 
         let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
-            let numericVal = plan.Status as number;
+            let statusVal = plan.Status as number;
 
             // All
             if (planStatusViewMode === this.planStatusViewModes.All) {
                 return true;
             }
 
+
             // Active 
             if (planStatusViewMode === this.planStatusViewModes.Active) {
-                return (numericVal === Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges)
-                    || (numericVal === Enums.PlanStatus.ActiveWITHUpcomingChanges)
-                    || (numericVal === Enums.PlanStatus.ActiveWITHUpcomingStop)
-                    || (numericVal === Enums.PlanStatus.ActiveWITHChangesTakingEffectToday)
-                    || (numericVal === Enums.PlanStatus.ActiveStartedToday)
-                    || (numericVal === Enums.PlanStatus.UpcomingAsNew)
-                    || (numericVal === Enums.PlanStatus.UpcomingAsRestarted);
+                return (statusVal === Enums.PlanStatus.Active);
             }
 
 
             // Inactive
             if (planStatusViewMode === this.planStatusViewModes.Inactive) {
-                return (numericVal === Enums.PlanStatus.Stopped);
+                return (statusVal === Enums.PlanStatus.Inactive);
+            }
+
+            // Upcoming
+            if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
+                return (statusVal === Enums.PlanStatus.Upcoming);
             }
 
             return null;

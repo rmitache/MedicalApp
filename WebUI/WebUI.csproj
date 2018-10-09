@@ -99,6 +99,7 @@
     <None Remove="SPA\DomainModel\Plans\CLOs\plan.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\rule.clo.ts" />
     <None Remove="SPA\DomainModel\Plans\CLOs\version.clo.ts" />
+    <None Remove="SPA\DomainModel\Plans\Enums\advanced-plan-status.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\ordinal-frequency-type.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
     <None Remove="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
@@ -198,6 +199,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\Enums\symptom-intensity-level.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Indicators\Symptoms\CLOs\symptom-type.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOServices\version-clo.service.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Users\CLOFactories\user-account-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Users\CLOs\user-account.clo.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\CLOFactories\rule-clo.factory.ts" />
@@ -209,7 +211,7 @@
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\ordinal-frequency-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\version-status.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
-    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\plan-status.enum.ts" />
+    <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\advanced-plan-status.enum.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

@@ -23,7 +23,9 @@ export class PlanVersionTooltipComponent {
     private orientationModesEnum = TooltipOrientationMode;
     private planStatusesEnum = Enums.PlanStatus;
     private readonly viewModel: ViewModel = {
-        PlanCLO: null,
+        CurrentPlanStatus: null,
+        CurrentPlanStatusDescription: null,
+        VersionCLOToShow: null,
         NrUniqueMedicineTypes: null,
 
         Visible: false,
@@ -71,6 +73,47 @@ export class PlanVersionTooltipComponent {
         return returnObj;
 
     }
+    private getStatusDescriptionAndTargetVersionToShow(planCLO: CLOs.PlanCLO) {
+
+        // Variables
+        let status = planCLO.Status;
+        var statusDescription: string;
+        var targetVersionToShow: CLOs.VersionCLO;
+
+        switch (status) {
+            case Enums.PlanStatus.Active:
+                statusDescription = 'You are currently taking:'
+                if (planCLO.GetLatestVersion().Status === Enums.VersionStatus.Active) {
+                    targetVersionToShow = planCLO.GetLatestVersion();
+                } else {
+                    targetVersionToShow = planCLO.GetSecondLatestVersion();
+                }
+
+                break;
+
+
+            case Enums.PlanStatus.Inactive:
+                statusDescription = 'You last took:'
+                if (planCLO.GetLatestVersion().Status === Enums.VersionStatus.Inactive) {
+                    targetVersionToShow = planCLO.GetLatestVersion();
+                } else {
+                    targetVersionToShow = planCLO.GetSecondLatestVersion();
+                }
+
+                break;
+            case Enums.PlanStatus.Upcoming:
+                statusDescription = 'You will start taking:'
+                targetVersionToShow = planCLO.GetLatestVersion();
+
+                break;
+
+        }
+
+        return {
+            StatusDescription: statusDescription,
+            TargetVersionToShow: targetVersionToShow
+        };
+    }
 
     // Constructor
     public constructor(
@@ -84,7 +127,10 @@ export class PlanVersionTooltipComponent {
 
         // Load data 
         var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
-        this.viewModel.PlanCLO = hoverEventInfo.PlanCLO;
+        this.viewModel.CurrentPlanStatus = hoverEventInfo.PlanCLO.Status;
+        let info = this.getStatusDescriptionAndTargetVersionToShow(hoverEventInfo.PlanCLO);
+        this.viewModel.CurrentPlanStatusDescription = info.StatusDescription;
+        this.viewModel.VersionCLOToShow = info.TargetVersionToShow;
         this.viewModel.NrUniqueMedicineTypes = ConvertDictionaryToArray(uniqueMedTypes).length;
 
         // Set position and show tooltip
@@ -99,8 +145,11 @@ export class PlanVersionTooltipComponent {
     }
     public HideAndClear() {
         setTimeout(() => {
-            this.viewModel.PlanCLO = null;
+            this.viewModel.CurrentPlanStatus = null;
+            this.viewModel.CurrentPlanStatusDescription = null;
+            this.viewModel.VersionCLOToShow = null;
             this.viewModel.NrUniqueMedicineTypes = null;
+
             this.viewModel.TooltipPos = null;
             this.viewModel.CaretPos = null;
             this.viewModel.TooltipOrientationMode = null;
@@ -112,7 +161,9 @@ export class PlanVersionTooltipComponent {
 
 
 interface ViewModel {
-    PlanCLO: CLOs.PlanCLO;
+    CurrentPlanStatus: Enums.PlanStatus;
+    CurrentPlanStatusDescription: string;
+    VersionCLOToShow: CLOs.VersionCLO;
     NrUniqueMedicineTypes: number;
 
     Visible: boolean;

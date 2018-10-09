@@ -25,7 +25,7 @@ export class PlanElemComponent {
     // Fields 
     @Input('PlanCLO')
     private readonly planCLO: CLOs.PlanCLO;
-    private readonly planStatusesEnum = Enums.PlanStatus;
+    private readonly planStatusesEnum = Enums.AdvancedPlanStatus;
     private menuItemsToPlanStatusMap: MenuItemsToPLanStatusMap = {
 
         ActiveWITHChangesTakingEffectToday: [
@@ -128,7 +128,7 @@ export class PlanElemComponent {
     private readonly viewModel: ViewModel = {
         PlanCLO: null,
         GetMenuItems: () => {
-            let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
+            let planStatusName = Enums.AdvancedPlanStatus[this.viewModel.PlanCLO.AdvancedStatus];
             return this.menuItemsToPlanStatusMap[planStatusName];
         },
         MainAction: null,
@@ -158,7 +158,7 @@ export class PlanElemComponent {
 
 
     }
-    private getStatusIconInfo(status: Enums.PlanStatus) {
+    private getStatusIconInfo(status: Enums.AdvancedPlanStatus) {
         // Variables
         var iconName: string;
         var colorName: string;
@@ -166,24 +166,24 @@ export class PlanElemComponent {
 
         // Handle different types of Statuses
         switch (status) {
-            case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
-            case Enums.PlanStatus.ActiveWITHChangesTakingEffectToday:
-            case Enums.PlanStatus.ActiveStartedToday:
-            case Enums.PlanStatus.ActiveWITHUpcomingChanges:
-            case Enums.PlanStatus.ActiveWITHUpcomingStop:
+            case Enums.AdvancedPlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.AdvancedPlanStatus.ActiveWITHChangesTakingEffectToday:
+            case Enums.AdvancedPlanStatus.ActiveStartedToday:
+            case Enums.AdvancedPlanStatus.ActiveWITHUpcomingChanges:
+            case Enums.AdvancedPlanStatus.ActiveWITHUpcomingStop:
                 iconName = 'fa fa-arrow-alt-circle-right';
                 colorName = '#afe036';
                 tooltipText = 'Active';
                 break;
 
-            case Enums.PlanStatus.UpcomingAsNew:
-            case Enums.PlanStatus.UpcomingAsRestarted:
+            case Enums.AdvancedPlanStatus.UpcomingAsNew:
+            case Enums.AdvancedPlanStatus.UpcomingAsRestarted:
                 iconName = 'fa fa-clock-o';
                 colorName = '#94e1f6';
                 tooltipText = 'Upcoming';
                 break;
 
-            case Enums.PlanStatus.Stopped:
+            case Enums.AdvancedPlanStatus.Stopped:
                 iconName = 'fa fa-stop-circle';
                 colorName = '#e05d5d';
                 tooltipText = 'Stopped';
@@ -209,7 +209,7 @@ export class PlanElemComponent {
 
         // Setup VM fields
         this.viewModel.PlanCLO = this.planCLO;
-        var statusIconInfo = this.getStatusIconInfo(this.planCLO.Status);
+        var statusIconInfo = this.getStatusIconInfo(this.planCLO.AdvancedStatus);
         this.viewModel.StatusIconTooltipText = statusIconInfo.tooltipText;
         this.viewModel.StatusIcon = statusIconInfo.iconName;
         this.viewModel.StatusIconColor = statusIconInfo.color;
@@ -217,11 +217,11 @@ export class PlanElemComponent {
         // StartDate and EndDate labels according to Plan.Status
         let latestVersion = this.planCLO.GetLatestVersion();
         let firstVersion = this.planCLO.GetFirstVersion();
-        switch (this.planCLO.Status) {
+        switch (this.planCLO.AdvancedStatus) {
             // ActiveWITHOUTAnyUpcomingChanges
-            case Enums.PlanStatus.ActiveWITHOUTAnyUpcomingChanges:
-            case Enums.PlanStatus.ActiveStartedToday:
-            case Enums.PlanStatus.ActiveWITHChangesTakingEffectToday:
+            case Enums.AdvancedPlanStatus.ActiveWITHOUTAnyUpcomingChanges:
+            case Enums.AdvancedPlanStatus.ActiveStartedToday:
+            case Enums.AdvancedPlanStatus.ActiveWITHChangesTakingEffectToday:
                 if (this.planCLO.Versions.Length > 1) {
 
                     this.viewModel.DateInfoLabel = 'Last changed:';
@@ -233,37 +233,37 @@ export class PlanElemComponent {
                 break;
 
             // ActiveWITHUpcomingChanges
-            case Enums.PlanStatus.ActiveWITHUpcomingChanges:
+            case Enums.AdvancedPlanStatus.ActiveWITHUpcomingChanges:
                 this.viewModel.DateInfoLabel = 'Will change:';
                 this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
 
             // ActiveWITHUpcomingStop
-            case Enums.PlanStatus.ActiveWITHUpcomingStop:
+            case Enums.AdvancedPlanStatus.ActiveWITHUpcomingStop:
                 this.viewModel.DateInfoLabel = 'Will stop:';
                 this.viewModel.DateInfoValue = moment(latestVersion.EndDateTime).format('MMM DD, YYYY');
                 break;
 
             // Stopped
-            case Enums.PlanStatus.Stopped:
+            case Enums.AdvancedPlanStatus.Stopped:
                 this.viewModel.DateInfoLabel = 'Stopped:';
                 this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.EndDateTime);
                 break;
 
             // UpcomingAsNew
-            case Enums.PlanStatus.UpcomingAsNew:
+            case Enums.AdvancedPlanStatus.UpcomingAsNew:
                 this.viewModel.DateInfoLabel = 'Will start:';
                 this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
 
             // UpcomingAsRestarted
-            case Enums.PlanStatus.UpcomingAsRestarted:
+            case Enums.AdvancedPlanStatus.UpcomingAsRestarted:
                 this.viewModel.DateInfoLabel = 'Will restart:';
                 this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
         }
 
-        let planStatusName = Enums.PlanStatus[this.viewModel.PlanCLO.Status];
+        let planStatusName = Enums.AdvancedPlanStatus[this.viewModel.PlanCLO.AdvancedStatus];
         this.viewModel.MainAction = this.mainActionToPlanStatusMap[planStatusName];
 
 

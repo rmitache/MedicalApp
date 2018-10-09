@@ -11,7 +11,8 @@
     <div class="header-div">
 
 
-        <span class="status-info-label h2">{{viewModel.PlanCLO?.StatusSimpleName}}</span>
+        <span class="status-info-label h2">{{planStatusesEnum[viewModel.CurrentPlanStatus]}}</span>
+        
         <div class="med-types-count-div">
             <div class="numbers-elem">
                 <span class="label">{{viewModel.NrUniqueMedicineTypes}}</span>
@@ -20,7 +21,10 @@
         </div>
     </div>
     <div class="content-div">
-        <div class="rule-elem-div" *ngFor="let ruleCLO of viewModel.PlanCLO?.GetLatestVersion().Rules; let i = index">
+        <div class="plan-status-description-div h4-alt">
+            {{viewModel.CurrentPlanStatusDescription}}
+        </div>
+        <div class="rule-elem-div" *ngFor="let ruleCLO of viewModel.VersionCLOToShow?.Rules; let i = index">
             <div class="rule-freq-info-div">
                 <span class="label">{{ruleCLO.FrequencyToString}} at</span>
                 <div class="time-chip label" *ngFor="let time of ruleCLO.MomentsInDay">{{time.ToString()}}</div>

@@ -10,6 +10,7 @@ export * from './Indicators/Symptoms/Enums/symptom-intensity-level.enum';
 export * from './Indicators/Symptoms/Enums/health-level.enum';
 
 // Plans
+export * from './Plans/Enums/advanced-plan-status.enum'
 export * from './Plans/Enums/plan-status.enum'
 export * from './Plans/Enums/version-status.enum'
 export * from './Plans/Enums/ordinal-frequency-type.enum'
