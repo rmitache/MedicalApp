@@ -331,13 +331,15 @@ export class PlansOverviewComponent {
     private refreshUI() {
         this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
 
-        // NoData triggers
+        // NoData logic
         if (this.viewModel.AvailablePlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailablePlans;
         } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Active && this.viewModel.FilteredPlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoActivePlans;
         } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Inactive && this.viewModel.FilteredPlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoInactivePlans;
+        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Upcoming && this.viewModel.FilteredPlans.length === 0) {
+            this.viewModel.CurrentNoDataMode = NoDataModes.NoUpcomingPlans;
         } else {
             this.viewModel.CurrentNoDataMode = null;
         }
@@ -428,5 +430,6 @@ export enum PlanActionType {
 enum NoDataModes {
     NoAvailablePlans = 0,
     NoActivePlans = 1,
-    NoInactivePlans = 2
+    NoInactivePlans = 2,
+    NoUpcomingPlans = 3
 }

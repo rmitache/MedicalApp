@@ -35,7 +35,7 @@
             <span class="label-discrete">
                 You don't have any Plans yet.
             </span>
-            <button style="margin-top:7px" pButton type="button" icon="fa fa-plus"  label="Create new"
+            <button style="margin-top:7px" pButton type="button" icon="fa fa-plus" label="Create new"
                     (click)="onAddNewPlanTriggered()"></button>
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoActivePlans">
@@ -43,6 +43,9 @@
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoInactivePlans">
             <span class="label-discrete">You have no Inactive Plans.</span>
+        </no-data-mode>
+        <no-data-mode [ID]="noDataModes.NoUpcomingPlans">
+            <span class="label-discrete">You have no Upcoming Plans.</span>
         </no-data-mode>
     </no-data-panel>
 </div> 
