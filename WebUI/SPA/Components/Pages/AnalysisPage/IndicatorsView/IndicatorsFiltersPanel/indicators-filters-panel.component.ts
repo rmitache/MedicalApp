@@ -2,22 +2,12 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
-import { Observable } from 'rxjs/Observable';
 
 // Project modules
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
-import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 
 // Components
-import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
-import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
-import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
-import { BaseCLO } from 'SPA/Core/CLO/base.clo';
-import { FilterListPanelComponent, FilterItem, FilterItemToggledEvent } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
 
 
 @Component({
@@ -28,14 +18,60 @@ import { FilterListPanelComponent, FilterItem, FilterItemToggledEvent } from 'SP
 })
 export class IndicatorsFiltersPanelComponent {
     // Fields
-    @ViewChild('filterListPanel')
-    private filterListPanelInstance: FilterListPanelComponent;
     private readonly viewModel: ViewModel = {
+        SymptomTypeFilterItems: null
     };
 
+    // Private methods
+    private isColorDark(colorCode: string) {
+        if (!colorCode)
+            return false;
+
+        var colorCode = colorCode.substring(1);      // strip #
+        var rgb = parseInt(colorCode, 16);   // convert rrggbb to decimal
+        var r = (rgb >> 16) & 0xff;  // extract red
+        var g = (rgb >> 8) & 0xff;  // extract green
+        var b = (rgb >> 0) & 0xff;  // extract blue
+
+        var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+        if (luma < 140) {
+            return true; // dark color
+        } else {
+            return false;
+        }
+    }
+    private generateFilterItems(availableCLOs: CLOs.SymptomTypeCLO[], selectedCLOs: CLOs.SymptomTypeCLO[]): SymptomTypeFilterItem[] {
+
+        // Variables
+        let filterItems: SymptomTypeFilterItem [] = [];
+
+        // Generate a FilterItem for each AvailableCLO
+        for (let i = 0; i < availableCLOs.length; i++) {
+            let availableCLO = availableCLOs[i];
+
+            // Check whether it should be Selected or Deselected
+            let isSelected = (selectedCLOs.find((clo) => {
+                if (clo !== null) {
+                    return clo['ID'] === availableCLO['ID'];
+                } else {
+                    return false;
+                }
+            }) !== undefined) ? true : false;
+
+            // Create the new FilterItem
+            let color = null;
+            let newFilterItem = new SymptomTypeFilterItem(availableCLO, isSelected, color);
+            filterItems.push(newFilterItem);
+
+        }
+        return filterItems;
+    }
+
+
     // Public methods
-    public Initialize(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[], customColors: string[] = null) {
-        this.filterListPanelInstance.Initialize(availableSymptomTypes, selectedSymptomTypes, customColors);
+    public InitializeItems(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[]) {
+        this.viewModel.SymptomTypeFilterItems = this.generateFilterItems(availableSymptomTypes, selectedSymptomTypes);
     }
 
     // Events
@@ -43,16 +79,24 @@ export class IndicatorsFiltersPanelComponent {
     @Output() public SymptomTypeDeselected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
 
     // Event handlers
-    private onFilterItemToggled(event: FilterItemToggledEvent) {
-
-        if (event.NewSelectionState === true) {
-            this.SymptomTypeSelected.emit(event.CLO as CLOs.PlanCLO);
-        } else {
-            this.SymptomTypeDeselected.emit(event.CLO as CLOs.PlanCLO);
-        }
+    private onFilterItemClicked(item: SymptomTypeFilterItem) {
+        alert(item.SymptomTypeCLO.Name);
+        //if (event.NewSelectionState === true) {
+        //    this.SymptomTypeSelected.emit(event.CLO as CLOs.PlanCLO);
+        //} else {
+        //    this.SymptomTypeDeselected.emit(event.CLO as CLOs.PlanCLO);
+        //}
     }
 
 }
 
 interface ViewModel {
+    SymptomTypeFilterItems: SymptomTypeFilterItem[];
+}
+
+class SymptomTypeFilterItem {
+    constructor(
+        public SymptomTypeCLO: CLOs.SymptomTypeCLO,
+        public IsSelected: boolean,
+        public Color: string) {}
 }

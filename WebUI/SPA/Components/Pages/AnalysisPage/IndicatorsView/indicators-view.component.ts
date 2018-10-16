@@ -157,6 +157,7 @@ export class IndicatorsViewComponent {
         return xPosition;
     }
     private refreshUI() {
+
         // Get the healthstatusEntry CLOs which are in the SelectedDateRange
         let filteredHealthStatusEntryCLOs = this.viewModel.HealthEntriesInSelectedDateRange.filter(entry => {
             return moment(entry.OccurrenceDateTime) >= this.viewModel.SelectedDateRange.RangeStart &&
@@ -174,7 +175,6 @@ export class IndicatorsViewComponent {
         // Refresh VM properties 
         let symptomTypesToColorsDictionary = this.getSymptomTypesToColorsDictionary(this.viewModel.AvailableSymptomTypes);
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
-
         this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(datesToCLOsDictionary);
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(this.viewModel.AvailableSymptomTypes, filteredHealthStatusEntryCLOs,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()),
@@ -232,13 +232,17 @@ export class IndicatorsViewComponent {
         // Initialize symptomTypes and filtersPanel
         this.viewModel.AvailableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.SelectedSymptomTypes = new Array(this.viewModel.AvailableSymptomTypes.length).fill(null);
-        this.filtersPanelInstance.Initialize(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes, this.symptomTypesColors.slice());
+        this.filtersPanelInstance.InitializeItems(this.viewModel.AvailableSymptomTypes, this.viewModel.SelectedSymptomTypes);
+
+
+        // AvailableSymptomTypes
+        // SelectedSymptomTypes 
+        // SymptomTypeAndColorPair 
 
         // Initialize date ranges
         let now = moment();
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
-
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
@@ -650,14 +654,15 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
     public GenerateChartData(availableSymptomTypes: CLOs.SymptomTypeCLO[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[], currentSelDateRange: Range<moment.Moment>,
         selectedSymptomTypeCLOs: CLOs.SymptomTypeCLO[], symptomTypesToColorsDictionary: { [symptomTypeName: string]: string }) {
 
-        // Variables
+
+        // Create SymptomType datasets
         let data = {
             datasets: []
         };
-
-        // Create SymptomType datasets
         let symptomTypeDataSetsDictionary = this.symptomTypeDatasetGenerator.GenerateDataSets(availableSymptomTypes,
             preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+
+        // Set the colors for each selected SymptomType dataset
         selectedSymptomTypeCLOs.forEach((selectedSymptomType) => {
             if (selectedSymptomType !== null) {
                 let symptomTypeDataset = symptomTypeDataSetsDictionary[selectedSymptomType.Name];

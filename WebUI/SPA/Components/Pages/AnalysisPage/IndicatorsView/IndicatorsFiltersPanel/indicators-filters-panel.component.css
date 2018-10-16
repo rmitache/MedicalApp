@@ -21,26 +21,48 @@
         overflow-y: auto;
     }
 
+
+
+.frame {
+    width: calc(100% - 10px);
+    padding: 5px;
+    height: calc(100% - 10px);
+}
+
+
 .filter-elem {
     float: left;
     clear: both;
     margin-bottom: 3px;
-    padding: 5px;
+    padding: 2px 5px 2px 5px;
     border-radius: 4px;
-    
-    width: calc(100% - 10px)
+    width: calc(100% - 10px);
+    cursor: pointer;
+    background-color: #c7dbf7;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
 }
 
+    .filter-elem:hover {
+        background-color: #acc8ef;
+    }
 
+    .filter-elem i {
+        float: right;
+        margin-right: 5px;
+        color: black;
+    }
 
-.filter-elem .check-box {
-    float: left;
-}
+    .filter-elem .item-name {
+        color: black;
+    }
 
-.filter-elem .item-name {
-    color: black;
-}
+    .filter-elem .light-item-name {
+        color: white;
+    }
 
 .active {
-    background-color: #e4efff;
+    /*filter: brightness(95%);*/
 }
