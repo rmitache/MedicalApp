@@ -7,16 +7,17 @@
     </div>
     <div class="body">
 
-        <div *ngFor="let filterItem of viewModel.SymptomTypeFilterItems"
+        <div *ngFor="let filterItem of viewModel.FilterItems"
+              [style.background-color]="filterItem.IsSelected ? filterItem.Color : ''"
              class="filter-elem"
              (click)="onFilterItemClicked(filterItem)">
             <span class="item-name label"
-                  [attr.class]="(isColorDark(filterItem.ColorCode) && filterItem.Selected) ? 'light-item-name' : ''">
+                  [attr.class]="(isColorDark(filterItem.Color) && filterItem.IsSelected) ? 'light-item-name' : ''">
                 {{filterItem.SymptomTypeCLO.Name}}
             </span>
             <i class="fa fa-check"
-               [style.color]="isColorDark(filterItem.ColorCode) ? 'white' : 'black'"
-               [style.visibility]="filterItem.Selected === true ? 'visible' : 'hidden'"></i>
+               [style.color]="isColorDark(filterItem.Color) ? 'white' : 'black'"
+               [style.visibility]="filterItem.IsSelected === true ? 'visible' : 'hidden'"></i>
         </div>
 
     </div>

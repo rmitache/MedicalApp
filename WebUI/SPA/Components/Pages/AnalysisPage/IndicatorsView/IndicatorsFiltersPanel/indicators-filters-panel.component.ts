@@ -6,6 +6,7 @@ import * as momentRange from 'moment-range';
 // Project modules
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { SymptomTypeDatasetItem } from '../indicators-view.component';
 
 // Components
 
@@ -19,7 +20,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 export class IndicatorsFiltersPanelComponent {
     // Fields
     private readonly viewModel: ViewModel = {
-        SymptomTypeFilterItems: null
+        FilterItems: null
     };
 
     // Private methods
@@ -41,62 +42,23 @@ export class IndicatorsFiltersPanelComponent {
             return false;
         }
     }
-    private generateFilterItems(availableCLOs: CLOs.SymptomTypeCLO[], selectedCLOs: CLOs.SymptomTypeCLO[]): SymptomTypeFilterItem[] {
-
-        // Variables
-        let filterItems: SymptomTypeFilterItem [] = [];
-
-        // Generate a FilterItem for each AvailableCLO
-        for (let i = 0; i < availableCLOs.length; i++) {
-            let availableCLO = availableCLOs[i];
-
-            // Check whether it should be Selected or Deselected
-            let isSelected = (selectedCLOs.find((clo) => {
-                if (clo !== null) {
-                    return clo['ID'] === availableCLO['ID'];
-                } else {
-                    return false;
-                }
-            }) !== undefined) ? true : false;
-
-            // Create the new FilterItem
-            let color = null;
-            let newFilterItem = new SymptomTypeFilterItem(availableCLO, isSelected, color);
-            filterItems.push(newFilterItem);
-
-        }
-        return filterItems;
-    }
-
 
     // Public methods
-    public InitializeItems(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[]) {
-        this.viewModel.SymptomTypeFilterItems = this.generateFilterItems(availableSymptomTypes, selectedSymptomTypes);
+    public InitializeItems(dataSetItems: SymptomTypeDatasetItem[]) {
+        this.viewModel.FilterItems = dataSetItems;
     }
 
     // Events
-    @Output() public SymptomTypeSelected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
-    @Output() public SymptomTypeDeselected: EventEmitter<CLOs.PlanCLO> = new EventEmitter();
+    @Output() public SymptomTypeToggleTriggered: EventEmitter<SymptomTypeDatasetItem> = new EventEmitter();
 
     // Event handlers
-    private onFilterItemClicked(item: SymptomTypeFilterItem) {
-        alert(item.SymptomTypeCLO.Name);
-        //if (event.NewSelectionState === true) {
-        //    this.SymptomTypeSelected.emit(event.CLO as CLOs.PlanCLO);
-        //} else {
-        //    this.SymptomTypeDeselected.emit(event.CLO as CLOs.PlanCLO);
-        //}
+    private onFilterItemClicked(item: SymptomTypeDatasetItem) {
+        this.SymptomTypeToggleTriggered.emit(item);
     }
 
 }
 
 interface ViewModel {
-    SymptomTypeFilterItems: SymptomTypeFilterItem[];
+    FilterItems: SymptomTypeDatasetItem[];
 }
 
-class SymptomTypeFilterItem {
-    constructor(
-        public SymptomTypeCLO: CLOs.SymptomTypeCLO,
-        public IsSelected: boolean,
-        public Color: string) {}
-}

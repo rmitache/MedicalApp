@@ -8,6 +8,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
+import { SymptomTypeDatasetItem } from './indicators-view.component';
 
 @Injectable()
 export class HealthStatusDatasetGenerator {
@@ -195,17 +196,17 @@ export class SymptomTypeDatasetGenerator {
     }
 
     // Public methods
-    public GenerateDataSets(availableSymptomTypes: CLOs.SymptomTypeCLO[],
+    public GenerateDataSets(symptomTypesDatasetItems: SymptomTypeDatasetItem[],
         preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[],
-        range: Range<moment.Moment>): { [symptomTypeName: string]: SymptomTypeDataset } {
+        range: Range<moment.Moment>) {
 
         // Variables
         var datesToHealthStatusCLOsDictionary = this.createDictionaryByDateForHealthStatusCLOs(preFilteredHealthStatusEntriesCLOs, range);
         let newDataSetsDictionary: { [symptomTypeName: string]: SymptomTypeDataset } = {};
-        availableSymptomTypes.forEach(symptomTypeCLO => {
-            newDataSetsDictionary[symptomTypeCLO.Name] = {
+        symptomTypesDatasetItems.forEach(dataSetItem => {
+            newDataSetsDictionary[dataSetItem.SymptomTypeCLO.Name] = {
                 borderWidth: 2.5,
-                borderColor: 'red',
+                borderColor: dataSetItem.Color, 
                 backgroundColor: 'transparent',
                 type: 'line',
                 data: []

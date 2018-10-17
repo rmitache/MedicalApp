@@ -14,6 +14,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { IndicatorsViewComponent } from './indicators-view.component';
 import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/dataset-generator';
+import { ColorProvider } from './color-provider';
 
 
 
@@ -36,7 +37,8 @@ import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/C
     ],
     providers: [
         HealthStatusDatasetGenerator,
-        SymptomTypeDatasetGenerator
+        SymptomTypeDatasetGenerator,
+        ColorProvider
     ]
 })
 export class IndicatorsViewModule { }
