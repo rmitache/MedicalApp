@@ -637,15 +637,12 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
         };
         let symptomTypeDataSetsDictionary = this.symptomTypeDatasetGenerator.GenerateDataSets(symptomTypesDatasetItems,
             preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
-
-        //// Set the colors for each selected SymptomType dataset
-        //selectedSymptomTypeCLOs.forEach((selectedSymptomType) => {
-        //    if (selectedSymptomType !== null) {
-        //        let symptomTypeDataset = symptomTypeDataSetsDictionary[selectedSymptomType.Name];
-        //        symptomTypeDataset.borderColor = symptomTypesToColorsDictionary[selectedSymptomType.Name];
-        //        data.datasets.push(symptomTypeDataset);
-        //    }
-        //});
+        symptomTypesDatasetItems.forEach((item) => {
+            if (item.IsSelected) {
+                let symptomTypeDataset = symptomTypeDataSetsDictionary[item.SymptomTypeCLO.Name];
+                data.datasets.push(symptomTypeDataset);
+            }
+        });
 
         // Create HealthStatus dataset
         let healthStatusDataset = this.healthStatusDataSetGenerator.GenerateDataSet(preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
