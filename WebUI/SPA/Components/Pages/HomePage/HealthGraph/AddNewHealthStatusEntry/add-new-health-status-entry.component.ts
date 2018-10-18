@@ -57,7 +57,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
 
     private reactiveForm: FormGroup;
-    private initialDateTime: Date = null; // initialized from dialogOnInit
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
     private readonly viewModel: ViewModel = {
@@ -108,29 +107,19 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
     ngOnInit() {
 
-        this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = this.initialDateTime;
+        this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
         this.reactiveForm = this.fb.group({
-            occurrenceDateTime: [null, Validators.compose([
-                (control: AbstractControl) => {
-                    var selDateTime = moment(control.value);
-                    if (selDateTime > moment()) {
-                        return { incorrect: true };
-                    }
-                    else {
-                        return null;
-                    }
-                }
-            ])],
-            healthLevel: [null, Validators.compose([
-                (control: AbstractControl) => {
-                    if (parseInt(control.value) === Enums.HealthLevel.Unspecified) {
-                        return { incorrect: true };
-                    }
-                    else {
-                        return null;
-                    }
-                }
-            ])]
+            
+            //healthLevel: [null, Validators.compose([
+            //    (control: AbstractControl) => {
+            //        if (parseInt(control.value) === Enums.HealthLevel.Unspecified) {
+            //            return { incorrect: true };
+            //        }
+            //        else {
+            //            return null;
+            //        }
+            //    }
+            //])]
 
 
         });
@@ -153,8 +142,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        let dateFromParent = options.data as Date;
-        this.initialDateTime = dateFromParent;
     }
 
     // Event handlers onRemoveSymptomEntryElemTriggered

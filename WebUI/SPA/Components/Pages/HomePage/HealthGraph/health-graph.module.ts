@@ -13,6 +13,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { HealthGraphComponent } from './health-graph.component';
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
+import { HealthLevelSelectorComponent } from './AddNewHealthStatusEntry/HealthLevelSelector/health-level-selector.component';
 
 
 
@@ -30,7 +31,8 @@ import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthG
     declarations: [
         HealthGraphComponent,
         AddNewHealthStatusEntryComponent,
-        SymptomEntryElemComponent
+        SymptomEntryElemComponent,
+        HealthLevelSelectorComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [

@@ -8,7 +8,7 @@
 
 
 .frame {
-    width: 740px;
+    width: 500px;
     height: 550px;
 }
 
@@ -18,22 +18,10 @@
 
 
 .when-section {
-    height: 90px;
+    height: 110px;
 }
 
-    .when-section #occurrence-date-time-picker {
-        float: left;
-        clear: both;
-    }
 
-        .when-section #occurrence-date-time-picker .ui-inputtext {
-            width: 250px;
-        }
-
-    .when-section .label-input-pair {
-        margin-top: 10px;
-        margin-right: 15px;
-    }
 
 
 .health-level-section {
@@ -82,7 +70,7 @@
 .hide-symptoms-overlay-div {
     height: calc(100% - 200px);
     width: 100%;
-    top: -400px;
+    top: -380px;
     background-color: #f7f7f7;
     border-radius: 6px;
     text-align: center;

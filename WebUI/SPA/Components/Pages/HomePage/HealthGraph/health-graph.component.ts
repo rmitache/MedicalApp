@@ -148,16 +148,15 @@ export class HealthGraphComponent {
 	private onAddNewHealthStatusEntryTriggered() {
 
 		this.modalDialogService.OpenDialog(this.viewContainerRef, {
-			title: 'Add new Health Entry ',
+			title: 'Health status',
 			childComponent: AddNewHealthStatusEntryComponent,
-			data: new Date(),
 			actionButtons: [
 				{
 					isDisabledFunction: (childComponentInstance: any) => {
 						let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
 						return !componentInstance.GetValidState();
 					},
-					text: 'Save',
+					text: 'Done',
 					onAction: (childComponentInstance: any) => {
 						let promiseWrapper = new Promise<void>((resolve) => {
 							this.spinnerService.Show();

@@ -1,6 +1,7 @@
 <form [formGroup]="reactiveForm">
     <div class="frame">
-        <div class="when-section">
+        
+        <!--<div class="when-section">
             <h3>WHEN</h3>
             <p-calendar id="occurrence-date-time-picker"
                         formControlName="occurrenceDateTime"
@@ -9,15 +10,20 @@
                         readonlyInput="true"
                         [(ngModel)]="viewModel.HealthStatusEntryCLO.OccurrenceDateTime"
                         [showTime]="true"></p-calendar>
-        </div>
-
-        <div class="health-level-section">
+        </div>-->
+        <!--<div class="health-level-section">
             <h3>HOW ARE YOU FEELING ?</h3>
 
             <select class="drop-down" formControlName="healthLevel"
                     [(ngModel)]="viewModel.HealthStatusEntryCLO.HealthLevel">
                 <option *ngFor="let healthLevel of healthLevelsEnum | enumkeys" [value]="healthLevel.value">{{healthLevel.key}}</option>
             </select>
+        </div>-->
+
+        <div class="health-level-section">
+            <h3>HOW DO YOU FEEL RIGHT NOW ?</h3>
+
+            <health-level-selector></health-level-selector>
         </div>
 
         <div class="symptoms-section">
@@ -41,7 +47,7 @@
             <div class="center-div" (click)="onRegisterSymptomsTriggered()">
                 <h2>SYMPTOMS</h2>
                 <span class="label-large">
-                    Click if you want to enter your Symptoms
+                    Click if you have any Symptoms
                 </span>
             </div>
         </div>

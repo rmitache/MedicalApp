@@ -1,0 +1,13 @@
+<div class="frame">
+    <div class="intensity-level-elem" 
+         [style.border-bottom-color]="definition.Color"
+         *ngFor="let definition of healthLevelDefinitions">
+        <!--<div class="color-box"
+             [style.backgroundColor]="definition.Color">
+        </div>
+        <br />-->
+
+        <span class="label">{{definition.Label}}</span>
+    </div>
+</div>
+
