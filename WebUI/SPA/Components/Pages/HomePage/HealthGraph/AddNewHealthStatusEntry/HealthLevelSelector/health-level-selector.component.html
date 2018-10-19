@@ -1,7 +1,11 @@
 <div class="frame">
     <div class="intensity-level-elem" 
+         [ngClass]="definition.HealthLevel === viewModel.SelectedHealthLevel ? 'selected-level' : ''"
          [style.border-bottom-color]="definition.Color"
-         *ngFor="let definition of healthLevelDefinitions">
+         *ngFor="let definition of healthLevelDefinitions"
+         (click)="onHealthLevelClicked(definition.HealthLevel)"
+         
+         >
         <!--<div class="color-box"
              [style.backgroundColor]="definition.Color">
         </div>

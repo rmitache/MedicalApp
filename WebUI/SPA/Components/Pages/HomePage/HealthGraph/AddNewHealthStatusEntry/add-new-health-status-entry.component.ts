@@ -15,6 +15,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
 import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
+import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level-selector.component';
 
 
 
@@ -55,7 +56,8 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     };
     @ViewChildren('symptomEntryElems')
     private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
-
+    @ViewChild('healthLevelSelector')
+    private healthLevelSel: HealthLevelSelectorComponent;
     private reactiveForm: FormGroup;
     private readonly healthLevelsEnum = Enums.HealthLevel;
     private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
@@ -90,7 +92,8 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
     private refreshIsValid() {
         let prevIsValid = this.isValid;
-        this.isValid = this.checkChildrenAreValid() && this.reactiveForm.valid;
+        this.isValid = this.checkChildrenAreValid() && this.reactiveForm.valid
+            && this.viewModel.HealthStatusEntryCLO.HealthLevel !== Enums.HealthLevel.Unspecified;
     }
 
 
@@ -109,7 +112,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
         this.reactiveForm = this.fb.group({
-            
+
             //healthLevel: [null, Validators.compose([
             //    (control: AbstractControl) => {
             //        if (parseInt(control.value) === Enums.HealthLevel.Unspecified) {
@@ -170,6 +173,10 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         setTimeout(() => {
             this.refreshIsValid();
         }, 1);
+    }
+    private onHealthLevelSelected(newHealthLevel: Enums.HealthLevel) {
+        this.viewModel.HealthStatusEntryCLO.HealthLevel = newHealthLevel;
+        this.refreshIsValid();
     }
 }
 

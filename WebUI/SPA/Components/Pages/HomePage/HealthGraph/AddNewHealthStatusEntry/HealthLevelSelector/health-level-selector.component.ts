@@ -18,7 +18,6 @@ import { ISymptomTypesSearchService } from 'SPA/Components/Pages/HomePage/Health
 })
 export class HealthLevelSelectorComponent {
     // Fields
-    private isValid: boolean = false;
     private readonly healthLevelDefinitions: HealthLevelDefinition[] = [
         {
             HealthLevel: Enums.HealthLevel.Great,
@@ -54,25 +53,13 @@ export class HealthLevelSelectorComponent {
         SelectedHealthLevel: Enums.HealthLevel.Unspecified
     };
 
-    // Constructor 
-    constructor() {
-
-    }
-    ngOnInit() {
-
-    }
-
-    // Public methods
-    public GetValidState() {
-        return this.isValid;
-    }
-
     // Events 
-    @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
+    @Output() public HealthLevelSelected: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
-    private onHealthLevelClicked() {
-
+    private onHealthLevelClicked(targetHealthLevel) {
+        this.viewModel.SelectedHealthLevel = targetHealthLevel;
+        this.HealthLevelSelected.emit(targetHealthLevel);
     }
 }
 
