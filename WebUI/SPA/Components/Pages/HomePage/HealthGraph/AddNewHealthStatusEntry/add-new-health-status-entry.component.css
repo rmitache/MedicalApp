@@ -1,11 +1,3 @@
-.drop-down.ng-invalid {
-    border: 1px solid red !important;
-}
-
-.when-section /deep/ #occurrence-date-time-picker.ng-invalid.ng-touched .ui-inputtext {
-    border: 1px solid red !important;
-}
-
 
 .frame {
     width: 550px;
@@ -16,59 +8,62 @@
     float: left;
 }
 
-
-.when-section {
-    height: 110px;
-}
-
-
-
-
 .health-level-section {
     height: 80px;
 }
 
-.what-section .label-input-pair {
-    margin-top: 10px;
-    margin-right: 15px;
-}
 
 .symptoms-section {
     height: calc(100% - 110px);
     margin-top: 20px;
-    
 }
 
-    .symptoms-section .h2 {
-        display: block;
-        float: left;
+    .symptoms-section .symptoms-section-header {
+        height:22px;
     }
 
-    .symptoms-section button {
+        .symptoms-section .symptoms-section-header .h2 {
+            display: block;
+            float: left;
+        }
+
+
+
+
+    .symptoms-section .symptoms-section-body button {
+        float: right;
+        margin-right: 5px;
+        
+        z-index: 1;
+        font-size: 14px;
+    }
+    .symptoms-section .symptoms-section-body /deep/ .ui-autocomplete {
         float: left;
-        margin-left: 10px;
-        margin-top: -6px;
-        z-index:1;
+        clear: both;
+    }
+    .symptoms-section .symptoms-section-body /deep/ .ui-autocomplete .ui-inputtext {
+        width: 360px !important;
     }
 
-    .symptoms-section .symptom-entry-elems-list {
+    .symptoms-section .symptoms-section-body  .symptom-entry-elems-list {
         margin-top: 15px;
         overflow-y: auto;
         height: calc(100% - 40px);
+        float: left;
     }
 
-        .symptoms-section .symptom-entry-elems-list .symptom-entry-elem {
-            margin-top: 10px;
-            float: left;
-            width:calc(100% - 5px)
+    .symptom-entry-elems-list .symptom-entry-elem {
+        margin-top: 10px;
+        float: left;
+        width: calc(100% - 5px)
+    }
+
+        .symptom-entry-elems-list .symptom-entry-elem:first-of-type {
+            margin-top: 0;
         }
 
-            .symptoms-section .symptom-entry-elems-list .symptom-entry-elem:first-of-type {
-                margin-top: 0;
-            }
-
 .hide-symptoms-overlay-div {
-    display:none;
+    display: none;
     height: calc(100% - 200px);
     width: 100%;
     top: -380px;
@@ -77,25 +72,24 @@
     text-align: center;
     vertical-align: middle;
     z-index: 999999999;
-    position:relative;
+    position: relative;
 }
 
     .hide-symptoms-overlay-div .center-div {
         border-radius: 2px;
-        top:30%;
-        width:50%;
-        margin-left:auto;
-        margin-right:auto;
+        top: 30%;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
         cursor: pointer;
-        padding:25px;
-        position:relative;
+        padding: 25px;
+        position: relative;
     }
 
         .hide-symptoms-overlay-div .center-div:hover {
         }
 
         .hide-symptoms-overlay-div .center-div.hide-symptoms-overlay-div h2 {
-           
         }
 
         .hide-symptoms-overlay-div .center-div.hide-symptoms-overlay-div span {

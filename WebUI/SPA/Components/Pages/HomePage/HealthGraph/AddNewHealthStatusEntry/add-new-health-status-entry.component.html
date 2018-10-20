@@ -7,21 +7,34 @@
         </div>
 
         <div class="symptoms-section">
-            <span class="h3">WHAT ARE YOUR SYMPTOMS ?</span>
-            <button pButton type="button" icon="fa fa-plus" label="Add Symptom"
-                    (click)="onAddNewSymptomEntryTriggered()"></button>
-            <br />
+            <div class="symptoms-section-header">
+                <span class="h3">WHAT ARE YOUR SYMPTOMS ?</span>
 
 
-            <div class="symptom-entry-elems-list">
-                <symptom-entry-elem #symptomEntryElems *ngFor="let clo of viewModel.HealthStatusEntryCLO.SymptomEntries"
-                                    [SymptomEntryCLO]="clo"
-                                    (RemoveTriggered)="onRemoveSymptomTriggered($event)"
-                                    (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"></symptom-entry-elem>
-                <div style="clear:both"></div>
+
+                
             </div>
-
+            <div class="symptoms-section-body">
+                <p-autoComplete #autocomplete
+                                lazy="true"
+                                [suggestions]="viewModel.SymptomTypeSearchResults"
+                                [emptyMessage]="'No symptoms could be found. Please try a different name'"
+                                [placeholder]="'Type to choose a Symptom'"
+                                (completeMethod)="onSymptomTypeTextBoxChanged($event)"
+                                (onSelect)="onSymptomTypeSelected($event)"></p-autoComplete>
+                <button pButton *ngIf="viewModel.HealthStatusEntryCLO.SymptomEntries.length > 0" type="button" label="Clear all" class="ui-button-secondary"
+                        (click)="onRemoveAllSymptomsTriggered()"></button>
+                <div class="symptom-entry-elems-list">
+                    <symptom-entry-elem #symptomEntryElems *ngFor="let clo of viewModel.HealthStatusEntryCLO.SymptomEntries"
+                                        [SymptomEntryCLO]="clo"
+                                        (RemoveTriggered)="onRemoveSymptomTriggered($event)"
+                                        (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"></symptom-entry-elem>
+                    <div style="clear:both"></div>
+                </div>
+            </div>
         </div>
+
+        
         <div class="hide-symptoms-overlay-div" *ngIf="viewModel.ShowSymptomEntriesOverlayDiv">
             <div class="center-div" (click)="onRegisterSymptomsTriggered()">
                 <h2>SYMPTOMS</h2>

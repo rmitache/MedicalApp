@@ -145,6 +145,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
     }
 
     // Event handlers onRemoveSymptomEntryElemTriggered
@@ -173,6 +176,14 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             this.refreshIsValid();
         }, 1);
     }
+    private onRemoveAllSymptomsTriggered() {
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
+
+        setTimeout(() => {
+            this.refreshIsValid();
+        }, 1);
+    }
+
     private onHealthLevelSelected(newHealthLevel: Enums.HealthLevel) {
         this.viewModel.HealthStatusEntryCLO.HealthLevel = newHealthLevel;
         this.refreshIsValid();
