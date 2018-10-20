@@ -9,7 +9,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Enums
     {
         None,
         Mild,
-        Intense,
+        Moderate,
         Severe
     }
 }

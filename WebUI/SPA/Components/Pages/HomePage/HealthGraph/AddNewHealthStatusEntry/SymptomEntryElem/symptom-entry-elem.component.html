@@ -1,43 +1,24 @@
-<form [formGroup]="reactiveForm">
-    <div class="frame">
-        <div class="draggable-area"></div>
-        <div class="right-side">
+<div class="frame">
+    <span class="symptom-name-label h2">Headache</span>
+
+    <div class="intensity-levels-list">
+
+        <div class="intensity-level-elem"
+             [style.background]="definition.Color"
+             (click)="onIntensityLevelClicked(definition)"
+             [ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"
+             *ngFor="let definition of symptomIntensityDefinitions">
 
 
-            <div class="label-input-pair symptom-type-input-pair">
-                <span class="label-discrete">Symptom</span>
-
-
-                <p-autoComplete #autocomplete
-                                formControlName="symptomTypeName"
-                                lazy="true"
-                               
-                                [suggestions]="viewModel.SymptomTypeSearchResults"
-                                [emptyMessage]="'No symptom types could be found. Please try a different name'"
-                                [placeholder]="'Type to choose a Symptom'"
-                                [dropdown]="true"
-                                (completeMethod)="onSymptomTypeTextBoxChanged($event)"
-                                (onSelect)="onSymptomTypeSelected($event)"></p-autoComplete>
-
-
-            </div>
-
-            <div class="label-input-pair intensity-level-input-pair">
-                <span class="label-discrete">Intensity:</span>
-                <select class="drop-down"
-                        formControlName="symptomIntensityLevelInput"
-                        [(ngModel)]="viewModel.SymptomEntryCLO.IntensityLevel">
-                    <option *ngFor="let intensityLevel of symptomIntensityLevelsEnum | enumkeys" [value]="intensityLevel.value">
-                        {{intensityLevel.key}}
-                    </option>
-                </select>
-            </div>
-
-
-
-            <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
+            <!--<span class="label">{{definition.Label}}</span>-->
         </div>
-        <div class="hide-controls-overlay" *ngIf="viewModel.OverlayIsVisible"></div>
     </div>
-</form>
+    <div class="intensity-level-label label-large"
+         [style.color]="viewModel.GetSelectedIntensityDefinition().Color"
+         >{{viewModel.GetSelectedIntensityDefinition().Label}}</div>
 
+    <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
+    
+</div>
+
+<!--{{viewModel.SymptomEntryCLO?.SymptomType?.Name}}-->

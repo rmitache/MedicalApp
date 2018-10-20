@@ -13,11 +13,11 @@
     background-color: #f2f2f2;
     cursor: pointer;
     border-bottom: solid 8px red;
+    border-radius: 4px;
 }
     .intensity-level-elem.selected-level,
     .intensity-level-elem:hover {
         background-color: #a9a9a9;
-        border-radius: 2px 2px 0 0;
     }
 
         .intensity-level-elem.selected-level span,
@@ -30,11 +30,4 @@
         text-transform: uppercase;
     }
 
-    .intensity-level-elem .color-box {
-        height: 15px;
-        width: 15px;
-        display: inline-block;
-        border-radius: 2px;
-        vertical-align: middle;
-        margin-left: 4px;
-    }
+

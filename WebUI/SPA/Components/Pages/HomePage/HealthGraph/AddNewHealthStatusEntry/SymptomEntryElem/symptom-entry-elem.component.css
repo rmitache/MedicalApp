@@ -1,80 +1,70 @@
-.frame /deep/ .ui-autocomplete input {
-    width: 430px;
-    float:left;
-}
 
-
-
-.symptom-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
-    border: 1px solid red !important;
-}
-
-input.ng-invalid.ng-touched {
-    border: 1px solid red !important;
-}
 
 .frame {
-    background-color: white;
-    height: 70px;
-    width: calc(100%);
-}
-
-.label-input-pair {
-    float: left;
-    margin-right: 10px;
-}
-
-    .label-input-pair:last-of-type {
-        margin-right: 0;
-    }
-
-.draggable-area {
     background-color: #efefef;
-    border-radius: 6px 0 0 6px;
+    height: 30px;
+    width: calc(100% - 25px);
+    border-radius: 4px;
+    padding: 5px 10px 5px 15px;
+}
+
+.symptom-name-label {
     float: left;
-    width: 20px;
-    height: 100%;
+    margin-top: 3px;
+    display: block;
+    width: 220px;
+    text-overflow: ellipsis;
 }
 
-.right-side {
-    background-color: #f7f7f7;
-    float: right;
-    padding: 15px 10px 15px 10px;
-    width: calc(100% - 40px);
-    height: calc(100% - 30px);
+
+.intensity-levels-list {
+    width: 100px;
+    float: left;
+    height: 10px;
+    margin-left: 10px;
 }
 
-    .right-side .symptom-type-input-pair {
-        width: 470px;
-        margin-right: 35px;
-    }
-
-
-
-    .right-side .intensity-level-input-pair .drop-down {
-        width: 100px;
-    }
-
-
-
-
-    .right-side .remove-button {
-        float: right;
-        margin-top:-8px;
+    .intensity-levels-list .intensity-level-elem {
+        width: 20px;
+        height: 30px;
+        float: left;
+        margin-right: 3px;
+        text-align: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        vertical-align: middle;
+        border-radius: 20px;
+        opacity: 0.5;
+        -webkit-filter: grayscale(100%);
+        filter: gray;
         cursor: pointer;
-        color: gray;
     }
 
-        .right-side .remove-button:hover {
-            color: blue;
+        .intensity-levels-list .intensity-level-elem span {
+            vertical-align: middle;
+            line-height: 30px;
         }
 
-.hide-controls-overlay {
-    width: calc(100% - 320px);
-    margin-right: 25px;
-    height: 70px;
-    background-color: #f7f7f7;
-    float: right;
-    margin-top: -70px;
-    display: none;
+        .intensity-levels-list .intensity-level-elem.selected-level,
+        .intensity-levels-list .intensity-level-elem:hover {
+            opacity: 1;
+            -webkit-filter: none;
+            filter: none;
+        }
+.intensity-level-label {
+    float: left;
+    margin-left: 10px;
+    vertical-align: middle;
+    line-height: 30px;
 }
+
+.remove-button {
+    float: right;
+    margin-top: 6px;
+    cursor: pointer;
+    color: gray;
+}
+
+    .remove-button:hover {
+        color: blue;
+    }

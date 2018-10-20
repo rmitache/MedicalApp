@@ -8,8 +8,8 @@
 
 
 .frame {
-    width: 500px;
-    height: 550px;
+    width: 550px;
+    height: 450px;
 }
 
 .h3 {
@@ -34,7 +34,7 @@
 }
 
 .symptoms-section {
-    height: calc(100% - 180px);
+    height: calc(100% - 110px);
     margin-top: 20px;
     
 }
@@ -68,6 +68,7 @@
             }
 
 .hide-symptoms-overlay-div {
+    display:none;
     height: calc(100% - 200px);
     width: 100%;
     top: -380px;

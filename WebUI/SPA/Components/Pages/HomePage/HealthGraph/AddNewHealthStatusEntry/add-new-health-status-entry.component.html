@@ -16,9 +16,7 @@
             <div class="symptom-entry-elems-list">
                 <symptom-entry-elem #symptomEntryElems *ngFor="let clo of viewModel.HealthStatusEntryCLO.SymptomEntries"
                                     [SymptomEntryCLO]="clo"
-                                    [SymptomTypeSearchService]="searchService"
-                                    (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"
-                                    (RemoveClicked)="onRemoveSymptomEntryElemTriggered($event)"></symptom-entry-elem>
+                                    (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"></symptom-entry-elem>
                 <div style="clear:both"></div>
             </div>
 
