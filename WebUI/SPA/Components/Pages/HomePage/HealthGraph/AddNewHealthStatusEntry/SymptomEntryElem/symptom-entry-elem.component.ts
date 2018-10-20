@@ -20,7 +20,7 @@ export class SymptomEntryElemComponent {
     // Fields
     @Input('SymptomEntryCLO')
     private readonly symptomEntryCLO: CLOs.SymptomEntryCLO;
-    private isValid: boolean = false;
+    private isValid: boolean = true;
     private readonly symptomIntensityDefinitions: SymptomIntensityDefinition[] = [
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Mild,
@@ -69,11 +69,15 @@ export class SymptomEntryElemComponent {
 
     // Events 
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
+    @Output() public RemoveTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
     private onIntensityLevelClicked(def: SymptomIntensityDefinition) {
         this.viewModel.SymptomEntryCLO.IntensityLevel = def.IntensityLevel;
         this.refreshIsValid();
+    }
+    private onRemoveClicked() {
+        this.RemoveTriggered.emit(this.viewModel.SymptomEntryCLO);
     }
 }
 

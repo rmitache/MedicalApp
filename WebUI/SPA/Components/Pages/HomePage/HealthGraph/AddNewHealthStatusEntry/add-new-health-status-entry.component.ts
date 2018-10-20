@@ -162,8 +162,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             this.refreshIsValid();
         }, 1);
     }
-    private onRemoveSymptomEntryElemTriggered(clo: CLOs.SymptomEntryCLO) {
-
+    private onRemoveSymptomTriggered(clo: CLOs.SymptomEntryCLO) {
         const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
 
         if (index !== -1) {
