@@ -29,7 +29,6 @@ export class HomePageDataService {
         return this.genericCLOFactory.ConvertToCLO<CLOs.UserAccountCLO>(CLOs.UserAccountCLO.name, this.startupDataBundleService.GetBundle['LoggedInUser']);
     }
     public GetSymptomTypesFromBundle(): DataStructures.List<CLOs.SymptomTypeCLO> {
-
         let blos = this.startupDataBundleService.GetBundle['SymptomTypes'];
         let cloList = this.genericCLOFactory.ConvertToCloList<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO, blos);
 

@@ -50,6 +50,7 @@
         overflow-y: auto;
         height: calc(100% - 40px);
         float: left;
+        width:100%;
     }
 
     .symptom-entry-elems-list .symptom-entry-elem {

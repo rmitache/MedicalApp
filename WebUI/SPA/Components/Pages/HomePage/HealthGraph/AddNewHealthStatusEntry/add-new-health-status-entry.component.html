@@ -1,4 +1,3 @@
-<form [formGroup]="reactiveForm">
     <div class="frame">
         <div class="health-level-section">
             <h3>HOW DO YOU FEEL RIGHT NOW ?</h3>
@@ -9,17 +8,14 @@
         <div class="symptoms-section">
             <div class="symptoms-section-header">
                 <span class="h3">WHAT ARE YOUR SYMPTOMS ?</span>
-
-
-
-                
             </div>
             <div class="symptoms-section-body">
                 <p-autoComplete #autocomplete
                                 lazy="true"
-                                [suggestions]="viewModel.SymptomTypeSearchResults"
+                                [(ngModel)]="viewModel.SearchText"
+                                [suggestions]="viewModel.SymptomTypesSearchResults"
                                 [emptyMessage]="'No symptoms could be found. Please try a different name'"
-                                [placeholder]="'Type to choose a Symptom'"
+                                [placeholder]="'Type to find symptoms'"
                                 (completeMethod)="onSymptomTypeTextBoxChanged($event)"
                                 (onSelect)="onSymptomTypeSelected($event)"></p-autoComplete>
                 <button pButton *ngIf="viewModel.HealthStatusEntryCLO.SymptomEntries.length > 0" type="button" label="Clear all" class="ui-button-secondary"
@@ -44,4 +40,3 @@
             </div>
         </div>
     </div>
-</form>

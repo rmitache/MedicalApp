@@ -16,6 +16,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 // Components
 import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level-selector.component';
+import { AutoComplete } from 'primeng/primeng';
 
 
 
@@ -28,23 +29,25 @@ import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level
 export class AddNewHealthStatusEntryComponent implements IModalDialog {
     // Fields
     private isValid: boolean = false;
+    @ViewChildren('symptomEntryElems')
+    private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
     private searchService: ISymptomTypesSearchService = {
         GetSymptomTypeByName: (name) => {
-            return this.availableSymptomTypes.ToArray().find(clo => {
+            return this.availableSymptomTypes.find(clo => {
                 return clo.Name === name;
             });
         },
         Search: (searchString) => {
             // Return everything if searchString is passed as null
             if (searchString === null) {
-                return this.availableSymptomTypes.ToArray().map(clo => {
+                return this.availableSymptomTypes.map(clo => {
                     return clo.Name;
                 });
             }
 
             // Properly parse a valid searchString
             searchString = searchString.toLowerCase();
-            let matchingMedTypes = this.availableSymptomTypes.ToArray().filter(clo => {
+            let matchingMedTypes = this.availableSymptomTypes.filter(clo => {
                 return clo.Name.toLowerCase().startsWith(searchString);
             });
             let results = matchingMedTypes.map(clo => {
@@ -54,19 +57,27 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             return results;
         }
     };
-    @ViewChildren('symptomEntryElems')
-    private symptomEntryElems: QueryList<SymptomEntryElemComponent>;
-    @ViewChild('healthLevelSelector')
-    private healthLevelSel: HealthLevelSelectorComponent;
-    private reactiveForm: FormGroup;
-    private readonly healthLevelsEnum = Enums.HealthLevel;
-    private readonly availableSymptomTypes: DataStructures.List<CLOs.SymptomTypeCLO>;
+    @ViewChild('autocomplete')
+    readonly autoCompleteComponentInstance: AutoComplete;
+    private readonly availableSymptomTypes: CLOs.SymptomTypeCLO[];
     private readonly viewModel: ViewModel = {
         HealthStatusEntryCLO: null,
-        ShowSymptomEntriesOverlayDiv: true
+        ShowSymptomEntriesOverlayDiv: true,
+        SymptomTypesSearchResults: [],
+        SearchText: null
     };
 
     // Private methods
+    private addNewSymptomEntry(symptomTypeName: string) {
+
+        // Get the symptomTypeCLO
+        let symptomTypeCLO = this.searchService.GetSymptomTypeByName(symptomTypeName);
+
+        // Create a new entry
+        let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
+        newSymptomEntry.SymptomType = symptomTypeCLO;
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
+    }
     private checkChildrenAreValid(): boolean {
 
         let allChildElemsAreValid = true;
@@ -92,46 +103,21 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
     private refreshIsValid() {
         let prevIsValid = this.isValid;
-        this.isValid = this.checkChildrenAreValid() && this.reactiveForm.valid
+        this.isValid = this.checkChildrenAreValid()
             && this.viewModel.HealthStatusEntryCLO.HealthLevel !== Enums.HealthLevel.Unspecified;
     }
-
 
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly globalDataService: HomePageDataService,
-        private fb: FormBuilder
     ) {
-        this.availableSymptomTypes = this.globalDataService.GetSymptomTypesFromBundle();
-
+        this.availableSymptomTypes = this.globalDataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
     ngOnInit() {
-
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
-        this.reactiveForm = this.fb.group({
-
-            //healthLevel: [null, Validators.compose([
-            //    (control: AbstractControl) => {
-            //        if (parseInt(control.value) === Enums.HealthLevel.Unspecified) {
-            //            return { incorrect: true };
-            //        }
-            //        else {
-            //            return null;
-            //        }
-            //    }
-            //])]
-
-
-        });
-
-        this.reactiveForm.
-            valueChanges.
-            subscribe(() => {
-                this.refreshIsValid();
-            });
     }
 
     // Public methods
@@ -145,9 +131,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
     }
 
     // Event handlers onRemoveSymptomEntryElemTriggered
@@ -183,10 +169,18 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             this.refreshIsValid();
         }, 1);
     }
-
     private onHealthLevelSelected(newHealthLevel: Enums.HealthLevel) {
         this.viewModel.HealthStatusEntryCLO.HealthLevel = newHealthLevel;
         this.refreshIsValid();
+    }
+    private onSymptomTypeTextBoxChanged(event) {
+        let searchResults = this.searchService.Search(event.query);
+
+        this.viewModel.SymptomTypesSearchResults = searchResults;
+    }
+    private onSymptomTypeSelected(value) {
+        this.addNewSymptomEntry(value);
+        this.viewModel.SearchText = '';
     }
 }
 
@@ -194,8 +188,11 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 interface ViewModel {
     HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
     ShowSymptomEntriesOverlayDiv: boolean;
+    SymptomTypesSearchResults: string[];
+    SearchText: string;
 }
 export interface ISymptomTypesSearchService {
     GetSymptomTypeByName(name: string): CLOs.SymptomTypeCLO;
     Search(searchString: string): string[];
+
 }
