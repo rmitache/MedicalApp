@@ -179,8 +179,19 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         this.viewModel.SymptomTypesSearchResults = searchResults;
     }
     private onSymptomTypeSelected(value) {
-        this.addNewSymptomEntry(value);
-        this.viewModel.SearchText = '';
+
+        // Verify if the SymptomType already has been added
+        let symptomTypeAlreadyAdded = this.viewModel.HealthStatusEntryCLO.SymptomEntries.find(symptomEntry => {
+            return symptomEntry.SymptomType.Name === value;
+        }) !== undefined;
+
+        // If it hasnt already been added, add it
+        if (!symptomTypeAlreadyAdded) {
+            this.addNewSymptomEntry(value);
+            this.viewModel.SearchText = '';
+        }
+
+        
     }
 }
 
