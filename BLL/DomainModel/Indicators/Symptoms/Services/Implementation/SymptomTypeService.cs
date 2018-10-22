@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
-    public class SymptomTypeService: ISymptomTypeService
+    public class SymptomTypeService : ISymptomTypeService
     {
         // Fields
         private readonly ISymptomTypeRepository symptomTypeRepo;
@@ -30,6 +30,25 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
 
             return sortedBLOs;
+        }
+        public List<SymptomType> GetSymptomTypesFromHealthEntries(List<HealthStatusEntry> healthEntries)
+        {
+            // Create a dictionary of unique symptomTypes
+            healthEntries = healthEntries.OrderByDescending(x => x.OccurrenceDateTime).ToList();
+            var symptomTypesDict = new Dictionary<string, SymptomType>();
+            foreach (HealthStatusEntry healthEntry in healthEntries)
+            {
+                foreach (SymptomEntry symptomEntry in healthEntry.SymptomEntries)
+                {
+                    if (!symptomTypesDict.ContainsKey(symptomEntry.SymptomType.Name))
+                    {
+                        symptomTypesDict.Add(symptomEntry.SymptomType.Name, symptomEntry.SymptomType);
+                    }
+
+                }
+            }
+
+            return symptomTypesDict.Values.ToList();
         }
     }
 }

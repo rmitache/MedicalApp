@@ -180,7 +180,7 @@ namespace WebUI.Controllers
         }
         //---------------------------------------------------------------------------------------------------------------------
 
-        // HealthStatusEntries-------------------------------------------------------------------------------------------------
+        // HealthStatusEntries & Symptoms -------------------------------------------------------------------------------------
         [Route("HomePage/AddHealthStatusEntry")]
         [HttpPost]
         public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
@@ -206,6 +206,23 @@ namespace WebUI.Controllers
             };
 
             return Json(returnModel);
+        }
+        [Route("HomePage/GetRecentSymptoms")]
+        [HttpPost]
+        public JsonResult GetRecentSymptoms()
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+
+            // Prepare the range (select 7 days into the past)
+            var now = Common.Functions.GetCurrentDateTimeInUTC();
+            var last7DaysRange = new Range<DateTime>(now.Subtract(new TimeSpan(7, 0, 0, 0)), now);
+
+            // Get the unique symptoms present in the above range
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
+            var recentSymptoms = this.symptomTypeService.GetSymptomTypesFromHealthEntries(healthStatusEntries);
+
+
+            return Json(recentSymptoms.Take(5));
         }
         //---------------------------------------------------------------------------------------------------------------------
 

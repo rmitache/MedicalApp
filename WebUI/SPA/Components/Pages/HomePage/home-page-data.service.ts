@@ -203,6 +203,21 @@ export class HomePageDataService {
 
         return getDataPromise;
     }
+    public GetRecentSymptoms(): Promise<CLOs.SymptomTypeCLO[]> {
+
+        const apiMethodName: string = 'GetRecentSymptoms';
+
+
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName)
+            .toPromise()
+            .then((blos) => {
+                return this.genericCLOFactory.ConvertToCloList<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO, blos).ToArray();
+            });
+
+
+        return getDataPromise;
+    }
+
 
     // MedicineTypes
     public AddMedicineType(medicineTypeCLO: CLOs.MedicineTypeCLO): Promise<CLOs.MedicineTypeCLO> {

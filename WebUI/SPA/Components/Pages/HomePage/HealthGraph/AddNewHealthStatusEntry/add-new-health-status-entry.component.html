@@ -17,7 +17,12 @@
                                 [emptyMessage]="'No symptoms could be found. Please try a different name'"
                                 [placeholder]="'Type to find symptoms'"
                                 (completeMethod)="onSymptomTypeTextBoxChanged($event)"
-                                (onSelect)="onSymptomTypeSelected($event)"></p-autoComplete>
+                                (onSelect)="onSymptomTypeSelected($event)">
+
+
+
+                </p-autoComplete>
+                <i class="fa fa-search  search-icon"></i>
                 <button pButton *ngIf="viewModel.HealthStatusEntryCLO.SymptomEntries.length > 0" type="button" label="Clear all" class="ui-button-secondary"
                         (click)="onRemoveAllSymptomsTriggered()"></button>
                 <div class="symptom-entry-elems-list">

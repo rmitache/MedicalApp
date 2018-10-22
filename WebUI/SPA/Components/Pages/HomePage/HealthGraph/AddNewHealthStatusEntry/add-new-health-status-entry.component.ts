@@ -48,7 +48,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             // Properly parse a valid searchString
             searchString = searchString.toLowerCase();
             let matchingMedTypes = this.availableSymptomTypes.filter(clo => {
-                return clo.Name.toLowerCase().startsWith(searchString);
+                return clo.Name.toLowerCase().includes(searchString);
             });
             let results = matchingMedTypes.map(clo => {
                 return clo.Name;
@@ -60,6 +60,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     @ViewChild('autocomplete')
     readonly autoCompleteComponentInstance: AutoComplete;
     private readonly availableSymptomTypes: CLOs.SymptomTypeCLO[];
+    private readonly dialogInitParameters = {
+        recentSymptomTypes: null
+    };
     private readonly viewModel: ViewModel = {
         HealthStatusEntryCLO: null,
         ShowSymptomEntriesOverlayDiv: true,
@@ -118,6 +121,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
     ngOnInit() {
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
+
+        
+        
     }
 
     // Public methods
@@ -131,9 +137,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
-        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
-        //this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
+        this.dialogInitParameters.recentSymptomTypes = options.data.recentSymptomTypes;
     }
 
     // Event handlers onRemoveSymptomEntryElemTriggered
@@ -142,7 +146,16 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     }
     private onRegisterSymptomsTriggered() {
         this.viewModel.ShowSymptomEntriesOverlayDiv = false;
-        this.onAddNewSymptomEntryTriggered();
+
+
+        // Add recent symptom types
+        for (let i = 0; i < this.dialogInitParameters.recentSymptomTypes.length; i++) {
+            let recentSymptomType = this.dialogInitParameters.recentSymptomTypes[i];
+
+            let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
+            newSymptomEntry.SymptomType = recentSymptomType;
+            this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
+        }
     }
     private onAddNewSymptomEntryTriggered() {
         this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));

@@ -8,5 +8,6 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
     public interface ISymptomTypeService
     {
         List<SymptomType> GetAllSymptomTypes();
+        List<SymptomType> GetSymptomTypesFromHealthEntries(List<HealthStatusEntry> healthEntries);
     }
 }

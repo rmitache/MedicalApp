@@ -1,6 +1,5 @@
 <div class="frame">
     <span class="symptom-name-label h2">{{viewModel.SymptomEntryCLO?.SymptomType?.Name}}</span>
-
     <div class="intensity-levels-list">
 
         <div class="intensity-level-elem"
@@ -9,16 +8,13 @@
              [ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"
              *ngFor="let definition of symptomIntensityDefinitions">
 
-
             <!--<span class="label">{{definition.Label}}</span>-->
         </div>
     </div>
     <div class="intensity-level-label label-large"
-         [style.color]="viewModel.GetSelectedIntensityDefinition().Color"
-         >{{viewModel.GetSelectedIntensityDefinition().Label}}</div>
+         [style.color]="viewModel.GetSelectedIntensityDefinition().Color">{{viewModel.GetSelectedIntensityDefinition().Label}}</div>
 
     <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
-    
+    <div style="clear: both"></div>
 </div>
 
-<!---->

@@ -2,7 +2,7 @@
 
 .frame {
     background-color: #efefef;
-    height: 30px;
+    
     width: calc(100% - 25px);
     border-radius: 4px;
     padding: 5px 10px 5px 15px;
@@ -11,7 +11,7 @@
 .symptom-name-label {
     float: left;
     margin-top: 3px;
-    display: block;
+    display: inline-block;
     width: 220px;
     text-overflow: ellipsis;
 }
@@ -56,6 +56,7 @@
     margin-left: 10px;
     vertical-align: middle;
     line-height: 30px;
+    filter: brightness(75%);
 }
 
 .remove-button {
