@@ -29,11 +29,13 @@
 
 
 
-
+    .symptoms-section .symptoms-section-body{
+        height:calc(100% - 22px);
+        
+    }
     .symptoms-section .symptoms-section-body button {
         float: right;
         margin-right: 5px;
-        
         z-index: 1;
         font-size: 14px;
     }
@@ -53,7 +55,7 @@
     }
     .symptoms-section .symptoms-section-body .symptom-entry-elems-list {
         margin-top: 15px;
-        overflow-y: auto;
+        overflow-y: scroll;
         height: calc(100% - 40px);
         float: left;
         width: 100%;
@@ -71,7 +73,7 @@
 
 .hide-symptoms-overlay-div {
     /*display:none;*/
-    height: calc(100% - 120px);
+    height: calc(100% - 80px);
     width: 100%;
     top: -360px;
     background-color: #f7f7f7;

@@ -39,6 +39,7 @@ export class SymptomEntryElemComponent {
         }];
     private readonly viewModel: ViewModel = {
         SymptomEntryCLO: null,
+        HoveredIntensityDefinition:null,
         GetSelectedIntensityDefinition: () => {
             var selectedDef = this.symptomIntensityDefinitions.find((def) => {
                 return def.IntensityLevel === this.viewModel.SymptomEntryCLO.IntensityLevel;
@@ -83,6 +84,7 @@ export class SymptomEntryElemComponent {
 
 interface ViewModel {
     SymptomEntryCLO: CLOs.SymptomEntryCLO;
+    HoveredIntensityDefinition: SymptomIntensityDefinition;
     GetSelectedIntensityDefinition(): SymptomIntensityDefinition;
 }
 

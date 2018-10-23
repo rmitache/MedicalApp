@@ -3,12 +3,16 @@
     <div class="intensity-levels-list">
 
         <div class="intensity-level-elem"
-             [style.background]="definition.Color"
+             *ngFor="let definition of symptomIntensityDefinitions"
              (click)="onIntensityLevelClicked(definition)"
-             [ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"
-             *ngFor="let definition of symptomIntensityDefinitions">
+             [style.background]="viewModel.HoveredIntensityDefinition && viewModel.HoveredIntensityDefinition.IntensityLevel >= definition.IntensityLevel 
+             ? viewModel.HoveredIntensityDefinition.Color : ''"
+             (mouseenter)="viewModel.HoveredIntensityDefinition = definition;"
+             (mouseleave)="viewModel.HoveredIntensityDefinition = null;"
+             >
+             
 
-            <!--<span class="label">{{definition.Label}}</span>-->
+
         </div>
     </div>
     <div class="intensity-level-label label-large"
@@ -18,3 +22,7 @@
     <div style="clear: both"></div>
 </div>
 
+<!--(mouseenter)="hoverBox = true;"
+             (mouseleave)="hoverBox = false;"-->
+<!--[style.background]="definition.Color"-->
+ <!--[ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"-->

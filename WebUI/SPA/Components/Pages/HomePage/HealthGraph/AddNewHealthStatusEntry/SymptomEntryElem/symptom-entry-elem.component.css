@@ -34,9 +34,7 @@
         padding-right: 5px;
         vertical-align: middle;
         border-radius: 20px;
-        opacity: 0.5;
-        -webkit-filter: grayscale(100%);
-        filter: gray;
+        background-color:#d7d7d7;
         cursor: pointer;
     }
 
@@ -45,12 +43,7 @@
             line-height: 30px;
         }
 
-        .intensity-levels-list .intensity-level-elem.selected-level,
-        .intensity-levels-list .intensity-level-elem:hover {
-            opacity: 1;
-            -webkit-filter: none;
-            filter: none;
-        }
+        
 .intensity-level-label {
     float: left;
     margin-left: 10px;
