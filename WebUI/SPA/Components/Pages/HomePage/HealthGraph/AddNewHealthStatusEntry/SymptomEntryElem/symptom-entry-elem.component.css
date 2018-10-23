@@ -3,7 +3,7 @@
 .frame {
     background-color: #efefef;
     
-    width: calc(100% - 25px);
+    width: calc(100% - 20px);
     border-radius: 4px;
     padding: 5px 10px 5px 15px;
 }

@@ -222,7 +222,7 @@ namespace WebUI.Controllers
             var recentSymptoms = this.symptomTypeService.GetSymptomTypesFromHealthEntries(healthStatusEntries);
 
 
-            return Json(recentSymptoms.Take(5));
+            return Json(recentSymptoms.Take(4));
         }
         //---------------------------------------------------------------------------------------------------------------------
 

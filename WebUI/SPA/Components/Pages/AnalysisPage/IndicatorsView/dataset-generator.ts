@@ -39,38 +39,39 @@ export class HealthStatusDatasetGenerator {
             avgHealthLevel = 0.2;
         }
 
-		//if (avgHealthLevel >= 0) {
-		//	color = '#9dc340';
-		//} else if (avgHealthLevel < 0) {
-		//	color = '#fe6060'
-		//} 
+        // Basic colors
+		if (avgHealthLevel >= 0) {
+			color = '#9dc340';
+		} else if (avgHealthLevel < 0) {
+			color = '#fe6060'
+		} 
 
 		
-        // Determine the color
-        if (avgHealthLevel >= 2) {
-            // great
-            color = 'green';
-        }
-        else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
-            // good
-            color = '#9dc340';
-        }
-        else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-            // ok
-            color = '#e2d77e';
-        }
-        else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
-            // notgreat 
-            color = '#ffc297';
-        }
-        else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
-            // bad 
-            color = '#fe6060';
-        }
-        else if (avgHealthLevel < -1) {
-            // very bad
-            color = 'red';
-        }
+        //// Determine the color
+        //if (avgHealthLevel >= 2) {
+        //    // great
+        //    color = 'green';
+        //}
+        //else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
+        //    // good
+        //    color = '#9dc340';
+        //}
+        //else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
+        //    // ok
+        //    color = '#e2d77e';
+        //}
+        //else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
+        //    // notgreat 
+        //    color = '#ffc297';
+        //}
+        //else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
+        //    // bad 
+        //    color = '#fe6060';
+        //}
+        //else if (avgHealthLevel < -1) {
+        //    // very bad
+        //    color = 'red';
+        //}
 
 
         //

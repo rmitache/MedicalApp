@@ -1,22 +1,19 @@
 <div class="frame">
     <span class="symptom-name-label h2">{{viewModel.SymptomEntryCLO?.SymptomType?.Name}}</span>
+
     <div class="intensity-levels-list">
 
         <div class="intensity-level-elem"
-             *ngFor="let definition of symptomIntensityDefinitions"
-             (click)="onIntensityLevelClicked(definition)"
-             [style.background]="viewModel.HoveredIntensityDefinition && viewModel.HoveredIntensityDefinition.IntensityLevel >= definition.IntensityLevel 
-             ? viewModel.HoveredIntensityDefinition.Color : ''"
-             (mouseenter)="viewModel.HoveredIntensityDefinition = definition;"
-             (mouseleave)="viewModel.HoveredIntensityDefinition = null;"
-             >
-             
-
+             *ngFor="let def of symptomIntensityDefinitions"
+             [style.background]="viewModel.GetBGColorForIntensityElem(def)"
+             (mouseenter)="onIntensityLevelMouseEnter(def)"
+             (mouseleave)="onIntensityLevelMouseLeave()"
+             (click)="onIntensityLevelClicked(def)">
 
         </div>
     </div>
     <div class="intensity-level-label label-large"
-         [style.color]="viewModel.GetSelectedIntensityDefinition().Color">{{viewModel.GetSelectedIntensityDefinition().Label}}</div>
+         [style.color]="viewModel.SelectedIntensityDef?.Color">{{viewModel.SelectedIntensityDef?.Label}}</div>
 
     <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
     <div style="clear: both"></div>
@@ -25,4 +22,6 @@
 <!--(mouseenter)="hoverBox = true;"
              (mouseleave)="hoverBox = false;"-->
 <!--[style.background]="definition.Color"-->
- <!--[ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"-->
+<!--[ngClass]="definition.IntensityLevel === viewModel.SymptomEntryCLO.IntensityLevel ? 'selected-level' : ''"-->
+<!--{{viewModel.SelectedIntensityDef?.IntensityLevel}}
+{{viewModel.HoveredIntensityDef?.IntensityLevel}}-->

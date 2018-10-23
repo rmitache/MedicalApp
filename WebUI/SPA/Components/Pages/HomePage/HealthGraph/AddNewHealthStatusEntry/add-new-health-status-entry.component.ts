@@ -66,6 +66,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     private readonly viewModel: ViewModel = {
         HealthStatusEntryCLO: null,
         ShowSymptomEntriesOverlayDiv: true,
+
+        ShowRecentSymptomsDiv: false,
+
         SymptomTypesSearchResults: [],
         SearchText: null
     };
@@ -79,7 +82,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         // Create a new entry
         let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
         newSymptomEntry.SymptomType = symptomTypeCLO;
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
+        this.viewModel.HealthStatusEntryCLO.SymptomEntries.unshift(newSymptomEntry);
     }
     private checkChildrenAreValid(): boolean {
 
@@ -122,8 +125,10 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     ngOnInit() {
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
 
-        
-        
+        if (this.dialogInitParameters.recentSymptomTypes.length > 0) {
+            this.viewModel.ShowRecentSymptomsDiv = true;
+        }
+
     }
 
     // Public methods
@@ -157,13 +162,6 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
             this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
         }
     }
-    private onAddNewSymptomEntryTriggered() {
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO));
-
-        setTimeout(() => {
-            this.refreshIsValid();
-        }, 1);
-    }
     private onRemoveSymptomTriggered(clo: CLOs.SymptomEntryCLO) {
         const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
 
@@ -174,9 +172,12 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         setTimeout(() => {
             this.refreshIsValid();
         }, 1);
+
+        this.viewModel.ShowRecentSymptomsDiv = false;
     }
-    private onRemoveAllSymptomsTriggered() {
+    private onClearRecentSymptomsTriggered() {
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
+        this.viewModel.ShowRecentSymptomsDiv = false;
 
         setTimeout(() => {
             this.refreshIsValid();
@@ -202,9 +203,11 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
         if (!symptomTypeAlreadyAdded) {
             this.addNewSymptomEntry(value);
             this.viewModel.SearchText = '';
+
+            this.viewModel.ShowRecentSymptomsDiv = false;
         }
 
-        
+
     }
 }
 
@@ -212,6 +215,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 interface ViewModel {
     HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
     ShowSymptomEntriesOverlayDiv: boolean;
+    ShowRecentSymptomsDiv: boolean;
+
+
     SymptomTypesSearchResults: string[];
     SearchText: string;
 }

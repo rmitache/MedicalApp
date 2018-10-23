@@ -316,38 +316,38 @@ class MonthDisplayMode implements IDisplayMode {
             };
             dataPoints.push(dp);
 
+            // Basic colors
+            if (avgHealthLevel >= 0) {
+            	dataPointsBgColors.push('#9dc340');
+            } else if (avgHealthLevel < 0) {
+            	dataPointsBgColors.push('#fe6060');
+            } 
 
-            //if (avgHealthLevel >= 0) {
-            //	dataPointsBgColors.push('#9dc340');
-            //} else if (avgHealthLevel < 0) {
-            //	dataPointsBgColors.push('#fe6060');
-            //} 
 
-
-            // great
-            if (avgHealthLevel >= 2) {
-                dataPointsBgColors.push('green');
-            }
-            // good
-            else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
-                dataPointsBgColors.push('#9dc340');
-            }
-            // ok
-            else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
-                dataPointsBgColors.push('#d8e27e');
-            }
-            // notgreat 
-            else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
-                dataPointsBgColors.push('#f3a590');
-            }
-            // bad 
-            else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
-                dataPointsBgColors.push('#fe6060');
-            }
-            // very bad
-            else if (avgHealthLevel < -1) {
-                dataPointsBgColors.push('red');
-            }
+            //// great
+            //if (avgHealthLevel >= 2) {
+            //    dataPointsBgColors.push('green');
+            //}
+            //// good
+            //else if (avgHealthLevel >= 1 && avgHealthLevel < 2) {
+            //    dataPointsBgColors.push('#9dc340');
+            //}
+            //// ok
+            //else if (avgHealthLevel >= 0 && avgHealthLevel < 1) {
+            //    dataPointsBgColors.push('#d8e27e');
+            //}
+            //// notgreat 
+            //else if (avgHealthLevel > -0.8 && avgHealthLevel < 0) {
+            //    dataPointsBgColors.push('#f3a590');
+            //}
+            //// bad 
+            //else if (avgHealthLevel >= -2 && avgHealthLevel <= -0.8) {
+            //    dataPointsBgColors.push('#fe6060');
+            //}
+            //// very bad
+            //else if (avgHealthLevel < -1) {
+            //    dataPointsBgColors.push('red');
+            //}
 
         });
 

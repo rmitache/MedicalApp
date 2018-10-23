@@ -39,12 +39,25 @@ export class SymptomEntryElemComponent {
         }];
     private readonly viewModel: ViewModel = {
         SymptomEntryCLO: null,
-        HoveredIntensityDefinition:null,
-        GetSelectedIntensityDefinition: () => {
-            var selectedDef = this.symptomIntensityDefinitions.find((def) => {
-                return def.IntensityLevel === this.viewModel.SymptomEntryCLO.IntensityLevel;
-            });
-            return selectedDef;
+
+        HoveredIntensityDef: null,
+        SelectedIntensityDef: null,
+        GetBGColorForIntensityElem: (def: SymptomIntensityDefinition) => {
+
+            // Hover effect (takes precedence over selection effect)
+            if (this.viewModel.HoveredIntensityDef !== null &&
+                this.viewModel.HoveredIntensityDef.IntensityLevel >= def.IntensityLevel) {
+                return this.viewModel.HoveredIntensityDef.Color;
+            }
+
+            // Select effect
+            if (this.viewModel.SelectedIntensityDef !== null && 
+                this.viewModel.SelectedIntensityDef.IntensityLevel >= def.IntensityLevel) {
+                return this.viewModel.SelectedIntensityDef.Color;
+            }
+
+
+            return '';
         }
     };
 
@@ -61,6 +74,10 @@ export class SymptomEntryElemComponent {
     // Constructor 
     ngOnInit() {
         this.viewModel.SymptomEntryCLO = this.symptomEntryCLO;
+        this.viewModel.SelectedIntensityDef = this.symptomIntensityDefinitions.find(def => {
+            return def.IntensityLevel === this.viewModel.SymptomEntryCLO.IntensityLevel;
+
+        });
     }
 
     // Public methods
@@ -75,7 +92,14 @@ export class SymptomEntryElemComponent {
     // EventHandlers
     private onIntensityLevelClicked(def: SymptomIntensityDefinition) {
         this.viewModel.SymptomEntryCLO.IntensityLevel = def.IntensityLevel;
+        this.viewModel.SelectedIntensityDef = def;
         this.refreshIsValid();
+    }
+    private onIntensityLevelMouseEnter(def: SymptomIntensityDefinition) {
+        this.viewModel.HoveredIntensityDef = def;
+    }
+    private onIntensityLevelMouseLeave(def: SymptomIntensityDefinition) {
+        this.viewModel.HoveredIntensityDef = null;
     }
     private onRemoveClicked() {
         this.RemoveTriggered.emit(this.viewModel.SymptomEntryCLO);
@@ -84,8 +108,10 @@ export class SymptomEntryElemComponent {
 
 interface ViewModel {
     SymptomEntryCLO: CLOs.SymptomEntryCLO;
-    HoveredIntensityDefinition: SymptomIntensityDefinition;
-    GetSelectedIntensityDefinition(): SymptomIntensityDefinition;
+
+    HoveredIntensityDef: SymptomIntensityDefinition;
+    SelectedIntensityDef: SymptomIntensityDefinition;
+    GetBGColorForIntensityElem(def: SymptomIntensityDefinition): string;
 }
 
 

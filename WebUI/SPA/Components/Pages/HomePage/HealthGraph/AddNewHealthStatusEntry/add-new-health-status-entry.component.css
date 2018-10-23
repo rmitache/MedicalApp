@@ -4,14 +4,13 @@
     height: 450px;
 }
 
-.h3 {
-    float: left;
-}
 
 .health-level-section {
     height: 80px;
 }
-
+.health-level-section h3 {
+    margin-top:0;
+}
 
 .symptoms-section {
     height: calc(100% - 110px);
@@ -19,7 +18,7 @@
 }
 
     .symptoms-section .symptoms-section-header {
-        height:22px;
+        height: 22px;
     }
 
         .symptoms-section .symptoms-section-header .h2 {
@@ -28,48 +27,70 @@
         }
 
 
-
-    .symptoms-section .symptoms-section-body{
-        height:calc(100% - 22px);
         
-    }
-    .symptoms-section .symptoms-section-body button {
-        float: right;
-        margin-right: 5px;
-        z-index: 1;
-        font-size: 14px;
-    }
-    .symptoms-section .symptoms-section-body /deep/ .ui-autocomplete {
-        float: left;
-        clear: both;
-    }
-    .symptoms-section .symptoms-section-body /deep/ .ui-autocomplete .ui-inputtext {
-        width: 360px !important;
-    }
-    .symptoms-section .symptoms-section-body .search-icon {
-        color:#e9e9e9;
-        font-size:1.3em;
-        float:left;
-        margin-left:4px;
-        margin-top:4px;
-    }
-    .symptoms-section .symptoms-section-body .symptom-entry-elems-list {
-        margin-top: 15px;
-        overflow-y: scroll;
-        height: calc(100% - 40px);
-        float: left;
-        width: 100%;
-    }
 
-    .symptom-entry-elems-list .symptom-entry-elem {
-        margin-top: 10px;
-        float: left;
-        width: calc(100% - 5px)
-    }
-
-        .symptom-entry-elems-list .symptom-entry-elem:first-of-type {
-            margin-top: 0;
+        .symptoms-section .symptoms-section-header /deep/ .ui-autocomplete {
+            float: right;
+            margin-top:-6px;
         }
+
+            .symptoms-section .symptoms-section-header /deep/ .ui-autocomplete .ui-inputtext {
+                width: 240px !important;
+            }
+
+        .symptoms-section .symptoms-section-header .search-icon {
+            color: #e9e9e9;
+            font-size: 1.3em;
+            float: right;
+            margin-left:2px;
+            margin-top: -3px;
+        }
+    .symptoms-section .symptoms-section-body {
+        height: calc(100% - 22px);
+    }
+
+    
+
+        .symptoms-section .symptoms-section-body .recent-symptoms-msg-div {
+            vertical-align: middle;
+            height:28px;
+            
+        }
+            .symptoms-section .symptoms-section-body .recent-symptoms-msg-div span {
+                vertical-align: middle;
+                line-height: 28px;
+            }
+            .symptoms-section .symptoms-section-body .recent-symptoms-msg-div button {
+                display:inline-block;
+                margin-left: 5px;
+                z-index: 1;
+                font-size: 12px;
+                margin-top:2px;
+            }
+            
+
+            .symptoms-section .symptoms-section-body .recent-symptoms-msg-div i {
+                color: #2399e5;
+                vertical-align: middle;
+            }
+
+        .symptoms-section .symptoms-section-body .symptom-entry-elems-list {
+            margin-top: 10px;
+            overflow-y: auto;
+            height: calc(100% - 40px);
+            float: left;
+            width: 100%;
+        }
+
+.symptom-entry-elems-list .symptom-entry-elem {
+    margin-top: 10px;
+    float: left;
+    width: calc(100% - 5px)
+}
+
+    .symptom-entry-elems-list .symptom-entry-elem:first-of-type {
+        margin-top: 0;
+    }
 
 .hide-symptoms-overlay-div {
     /*display:none;*/
