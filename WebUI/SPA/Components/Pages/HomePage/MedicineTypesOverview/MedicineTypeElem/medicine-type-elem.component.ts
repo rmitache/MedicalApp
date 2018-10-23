@@ -56,19 +56,17 @@ export class MedicineTypeElemComponent {
         }
 
 
-
-
-        // HighSupply - more than 7 weeks 
-        if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(49, 'days')) {
+        // HighSupply - more than 5 weeks 
+        if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(35, 'days')) {
             return new HighSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
                 medicineTypeCLO.SupplyWillLastUntil);
         }
-        // MediumSupply - more than 4 weeks
-        else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(28, 'days')) {
+        // MediumSupply - more than 3 weeks
+        else if (moment(medicineTypeCLO.SupplyWillLastUntil) > moment().add(21, 'days')) {
             return new MediumSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
                 medicineTypeCLO.SupplyWillLastUntil);
         }
-        // LowSupply - more than 2 weeks
+        // LowSupply - less than 3 weeks
         else if (medicineTypeCLO.SupplyWillLastUntil !== null ) {
         return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
             medicineTypeCLO.SupplyWillLastUntil);
@@ -222,7 +220,7 @@ interface ISupplyInfoState {
 class HighSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
-    public readonly MainLabelColor: string = 'green';
+    public readonly MainLabelColor: string = '#54a514';
     public readonly TooltipText: string = 'Will run' +
         ' out on ' + moment(this.untilDate).format('MMM DD, YYYY') + ' (you currently have ' +
         this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ')';

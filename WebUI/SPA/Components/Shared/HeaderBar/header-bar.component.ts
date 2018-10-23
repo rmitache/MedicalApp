@@ -14,7 +14,8 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 @Component({
     selector: 'header-bar',
     templateUrl: './header-bar.component.html',
-    styleUrls: ['./header-bar.component.css']
+    styleUrls: ['./header-bar.component.css'],
+    host: { 'class': 'header-bar' },
 })
 export class HeaderBarComponent {
     // Fields

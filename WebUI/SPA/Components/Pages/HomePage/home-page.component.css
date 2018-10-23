@@ -23,7 +23,7 @@
 .health-graph {
     float: left;
     width: calc(100% - 300px - 30px);
-    height:200px;
+    height: 200px;
     margin-top: 30px;
 }
 
@@ -36,6 +36,27 @@
     border-radius: 5px;
 }
 
+
+
+
+.right-side-panel .tabs {
+}
+
+.right-side-panel /deep/ .ui-tabview {
+    height: calc(100%);
+    padding: 0;
+}
+
+.right-side-panel /deep/ .ui-tabview-panels {
+    height: calc(100% - 40px);
+}
+
+.right-side-panel /deep/ .ui-tabview-panel {
+    height: 100%;
+    padding: 0;
+}
+
+/*Tablet*/
 @media only screen and (max-width: 1024px) {
     .schedule {
         width: calc(100% - 200px - 30px);
@@ -50,20 +71,33 @@
     }
 }
 
-
-    .right-side-panel .tabs {
+/*Mobile*/
+@media only screen and (max-width: 375px) {
+    .schedule {
+        width: calc(100% - 30px);
+        height:calc(100% - 30px);
     }
 
-    .right-side-panel /deep/ .ui-tabview {
-        height: calc(100%);
-        padding: 0;
+    .health-graph {
+        display: none;
     }
 
-    .right-side-panel /deep/ .ui-tabview-panels {
-        height: calc(100% - 40px);
+    .right-side-panel {
+        display: none;
     }
 
-    .right-side-panel /deep/ .ui-tabview-panel {
-        height: 100%;
-        padding: 0;
+    .header-bar {
+        display:none;
     }
+
+
+    .body-area {
+        height:100%;
+        width:100%;
+    }
+    /deep/ #scheduleHeaderLabel {
+        display: none !important;
+    }
+}
+
+
