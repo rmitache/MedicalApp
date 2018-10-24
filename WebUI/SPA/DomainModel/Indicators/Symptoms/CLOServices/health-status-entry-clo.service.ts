@@ -17,7 +17,7 @@ import { GetNrOfDaysBetweenDatesUsingMoment, ConvertDictionaryToArray } from 'SP
 export class HealthStatusEntryCLOService {
 	// Public Methods
 	public GetUniqueSymptomTypesWithAvgDose(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
-		let symptomTypesDict: { [symptomTypeName: string]: SymptomTypeAndAvgIntensity } = {};
+		let symptomTypesDict: { [symptomTypeName: string]: SymptomTypeWithAvgIntensity } = {};
 
 		
 		// Loop through healthEntryCLOs  
@@ -25,14 +25,14 @@ export class HealthStatusEntryCLOService {
 			healthEntryCLO.SymptomEntries.forEach((symptomEntryCLO, index) => {
 
 				if (symptomTypesDict[symptomEntryCLO.SymptomType.Name] === undefined) {
-					symptomTypesDict[symptomEntryCLO.SymptomType.Name] = new SymptomTypeAndAvgIntensity(symptomEntryCLO.SymptomType);
+					symptomTypesDict[symptomEntryCLO.SymptomType.Name] = new SymptomTypeWithAvgIntensity(symptomEntryCLO.SymptomType);
 				}
 				symptomTypesDict[symptomEntryCLO.SymptomType.Name].AddSymptomTypeIntensity(symptomEntryCLO.IntensityLevel as number);
 			});
 		});
 
 		// Sort and return as array
-		let uniqueSymptomTypesArray = ConvertDictionaryToArray<SymptomTypeAndAvgIntensity>(symptomTypesDict);
+		let uniqueSymptomTypesArray = ConvertDictionaryToArray<SymptomTypeWithAvgIntensity>(symptomTypesDict);
 		uniqueSymptomTypesArray = uniqueSymptomTypesArray.sort((entry1, entry2) => (entry1.AvgIntensity > entry2.AvgIntensity ? -1 : 1));
 
 		return uniqueSymptomTypesArray;
@@ -42,7 +42,7 @@ export class HealthStatusEntryCLOService {
 
 // Special classes 
 
-export class SymptomTypeAndAvgIntensity {
+export class SymptomTypeWithAvgIntensity {
 
 	// Fields
 	private totalIntensitySum: number = 0;
@@ -52,18 +52,7 @@ export class SymptomTypeAndAvgIntensity {
 	public get AvgIntensity(): number {
 		return this.totalIntensitySum / this.numberOfSymptomEntries;
 	}
-	public get Color(): string {
-		var colorCode = "";
-		if (this.AvgIntensity <= 3 && this.AvgIntensity > 2) {
-			colorCode = "red";
-		} else if (this.AvgIntensity <= 2 && this.AvgIntensity > 1) {
-			colorCode = "orange";
-		} else if (this.AvgIntensity <= 1 && this.AvgIntensity > 0) {
-			colorCode = "#fbfba5";
-		}
-
-		return colorCode;
-	}
+	
 
 	// Constructor
 	constructor(public readonly SymptomType: CLOs.SymptomTypeCLO) { }

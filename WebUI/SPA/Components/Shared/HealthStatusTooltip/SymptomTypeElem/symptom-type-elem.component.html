@@ -1,0 +1,18 @@
+<div class="frame">
+    <span class="label symptom-name-label"> {{viewModel.SymptomTypeWithAvgIntensity.SymptomType.Name}}</span>
+    <div class="intensity-levels-list">
+
+        <div class="intensity-level-elem"
+             *ngFor="let def of symptomIntensityDefinitions"
+             (mouseenter)="onIntensityLevelMouseEnter(def)"
+             (mouseleave)="onIntensityLevelMouseLeave()"
+             (click)="onIntensityLevelClicked(def)">
+
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+
+<!--[style.background]="viewModel.GetBGColorForIntensityElem(def)"-->

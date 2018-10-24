@@ -1,49 +1,38 @@
 
 
 .frame {
-    width: 270px;
+    width: 190px;
     border: solid 1px #d5d5d5;
     background-color: white;
     border-radius: 5px;
     position: absolute;
-    padding: 10px;
-    z-index:9999999999;
+    padding: 0 7px 7px 7px;
+    z-index: 9999999999;
 }
 
-.health-chart-div {
+.title-div {
+    text-align: center;
+    height: 20px;
+}
+
+/*.health-chart-div {
 }
 
     .health-chart-div .chart-wrapper-div {
-        padding-top: 10px;
-        height: 150px;
-    }
+        height: 110px;
+    }*/
 
 .symptoms-div {
 }
 
-    .symptoms-div .symptoms-list {
-        height: calc(100% - 150px - 20px - 40px);
-        width: 100%;
+    .symptoms-div .symptom-type-elem {
+        float: left;
+        margin-top: 6px;
+        width:100%;
     }
 
-        .symptoms-div .symptoms-list .symptom-elem-div {
-            float: left;
-            background-color: #d5d5d5;
-            padding: 3px 3px 3px 3px;
-           
-            border-radius: 4px;
-            margin-right: 6px;
-            margin-top: 4px;
-        }
 
-            .symptoms-div .symptoms-list .symptom-elem-div .label {
-            }
 
-.title-div {
-    
-    text-align: center;
-    height: 20px;
-}
 
 .caret-div {
     width: 0;
@@ -55,14 +44,4 @@
     position: relative;
     /*left: calc(50% - 10px);
         bottom: -5px;*/
-}
-
-
-
-.label {
-    color: black;
-}
-
-.h4 {
-    color: black;
 }

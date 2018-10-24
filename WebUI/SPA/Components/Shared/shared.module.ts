@@ -34,6 +34,7 @@ import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
 import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
 import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
+import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/symptom-type-elem.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-t
         NavigationPanelComponent,
         FilterListPanelComponent,
         GraphTooltipComponent,
-        PlanVersionTooltipComponent
+        PlanVersionTooltipComponent,
+        SymptomTypeElemComponent
          
     ],
     exports: [
@@ -98,7 +100,8 @@ import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-t
 		InplaceModule,
 		HeaderBarModule,
         NoDataPanelModule,
-        PlanVersionTooltipComponent
+        PlanVersionTooltipComponent,
+        SymptomTypeElemComponent
     ]
 })
 export class SharedModule { }
