@@ -4,6 +4,7 @@
 
         <div class="intensity-level-elem"
              *ngFor="let def of symptomIntensityDefinitions"
+             [style.background]="viewModel.GetBGColorForIntensityElem(def)"
              (mouseenter)="onIntensityLevelMouseEnter(def)"
              (mouseleave)="onIntensityLevelMouseLeave()"
              (click)="onIntensityLevelClicked(def)">
@@ -15,4 +16,3 @@
 </div>
 
 
-<!--[style.background]="viewModel.GetBGColorForIntensityElem(def)"-->

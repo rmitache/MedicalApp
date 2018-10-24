@@ -37,25 +37,57 @@ export class SymptomTypeElemComponent {
             Color: 'Red',
             Label: 'Severe'
         }];
-
     private readonly viewModel: ViewModel = {
         SymptomTypeWithAvgIntensity: null,
-        GetBGColorForIntensity: (avgIntensity:number) => {
+        SelectedIntensityDef: null,
+
+        GetBGColorForIntensityElem: (def: SymptomIntensityDefinition) => {
+
+            if (this.viewModel.SelectedIntensityDef.IntensityLevel >= def.IntensityLevel) {
+                
+                return this.viewModel.SelectedIntensityDef.Color;
+            }
+
 
             return '';
         }
     };
 
+    // Private methods
+    private getMatchingIntensityDefinition(avgIntensity: number): SymptomIntensityDefinition {
+        let targetIntensity: Enums.SymptomIntensityLevel;
+        if (avgIntensity === 0) {
+            targetIntensity = Enums.SymptomIntensityLevel.NotPresent;
+
+        } else if (avgIntensity > 0 && avgIntensity <= 1) {
+            targetIntensity = Enums.SymptomIntensityLevel.Mild;
+
+        } else if (avgIntensity > 1 && avgIntensity <= 2) {
+            targetIntensity = Enums.SymptomIntensityLevel.Moderate;
+
+        } else if (avgIntensity > 2 && avgIntensity <= 3) {
+            targetIntensity = Enums.SymptomIntensityLevel.Severe;
+        }
+
+
+        // Get the definition
+        return this.symptomIntensityDefinitions.find((def) => {
+            return def.IntensityLevel === targetIntensity;
+        });
+    }
 
     // Constructor 
     ngOnInit() {
         this.viewModel.SymptomTypeWithAvgIntensity = this.symptomTypeWithAvgIntensity;
+        this.viewModel.SelectedIntensityDef = this.getMatchingIntensityDefinition(this.symptomTypeWithAvgIntensity.AvgIntensity);
     }
 }
 
 interface ViewModel {
     SymptomTypeWithAvgIntensity: SymptomTypeWithAvgIntensity;
-    GetBGColorForIntensity(avgIntensity: number): string;
+    SelectedIntensityDef: SymptomIntensityDefinition;
+
+    GetBGColorForIntensityElem(def: SymptomIntensityDefinition): string;
 }
 
 
