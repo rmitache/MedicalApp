@@ -16,10 +16,10 @@ export class ColorProvider {
     private readonly availableColors = [
         '#000000', // black
         '#0082c8', // blue
-        '#625fad', // dark purple
+        '#911eb4', // purple
         '#9c1a3a', // dark red
         '#857717', // dark yellow
-        '#911eb4', // purple
+        '#625fad', // dark purple
         '#f032e6', // magenta
         '#008080', // teal
         '#aa6e28', // brown

@@ -10,5 +10,6 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
     public interface ISymptomTypeRepository
     {
         List<TSymptomType> GetAllSymptomTypes();
+        List<TSymptomType> GetSymptomTypesWhichHaveMatchingSymptomEntries(int userID);
     }
 }

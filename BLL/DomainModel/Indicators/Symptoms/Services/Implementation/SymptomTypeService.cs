@@ -31,6 +31,17 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return sortedBLOs;
         }
+        public List<SymptomType> GetOnlyRelevantSymptomTypes(int userID)
+        {
+            var dataEntities = this.symptomTypeRepo.GetSymptomTypesWhichHaveMatchingSymptomEntries(userID);
+            var blos = this.symptomTypeFactory.Convert_ToBLOList(dataEntities);
+
+            // Sort alphabetically
+            var sortedBLOs = blos.OrderBy(symptomType => symptomType.Name).ToList();
+
+
+            return sortedBLOs;
+        }
         public List<SymptomType> GetSymptomTypesFromHealthEntries(List<HealthStatusEntry> healthEntries)
         {
             // Create a dictionary of unique symptomTypes
