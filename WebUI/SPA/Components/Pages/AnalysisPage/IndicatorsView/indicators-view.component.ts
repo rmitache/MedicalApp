@@ -584,8 +584,8 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         padding: 5,
                         beginAtZero: true,
-                        min: -2,
-                        max: 2,
+                        min: -3,
+                        max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
 
