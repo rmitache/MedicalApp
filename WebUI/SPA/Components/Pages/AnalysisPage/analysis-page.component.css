@@ -1,8 +1,18 @@
 
+
+.outer-wrapper {
+    height: 100%;
+    background-color: #ebebeb;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .body-area {
-    width: calc(100% - 30px);
-    height: calc(100% - 40px - 20px);
-    padding: 15px;
+    width: calc(100%);
+    height: calc(100% - 70px);
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: #ebebeb;
 }
 
@@ -10,15 +20,34 @@
 .factors-view {
     float: left;
     width: calc(100%);
-    height: calc(50% - 30px);
+    height: calc(50%);
 }
 
 
 .indicators-view {
     float: left;
     width: calc(100%);
-    height: calc(50% - 10px);
-    margin-top: 30px;
+    height: calc(50% - 20px);
+    margin-top: 20px;
     
 }
 
+
+/*Computer*/
+@media only screen and (min-width: 1024px) {
+    .outer-wrapper {
+        min-width: calc(1024px - 24px);
+        max-width: 80%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+/*Tablet*/
+@media only screen and (max-width: 768px) {
+    .outer-wrapper {
+        width: calc(768px - 24px);
+    }
+
+   
+}

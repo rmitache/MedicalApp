@@ -1,24 +1,25 @@
+<div class="outer-wrapper">
+    <header-bar [ActivePageName]="'HomePage'"></header-bar>
 
-<header-bar [ActivePageName]="'HomePage'"></header-bar>
+    <div class="body-area">
+        <schedule></schedule>
+        <div class="right-side-panel">
 
-<div class="body-area">
-    <schedule></schedule>
-    <div class="right-side-panel">
-
-        <tabs>
-            <tab-panel [tabTitle]="'Inventory'">
-                <medicine-types-overview></medicine-types-overview>
-            </tab-panel>
-            <tab-panel [tabTitle]="'Plans'">
-                <plans-overview></plans-overview>
-            </tab-panel>
+            <tabs>
+                <tab-panel [tabTitle]="'Inventory'">
+                    <medicine-types-overview></medicine-types-overview>
+                </tab-panel>
+                <tab-panel [tabTitle]="'Plans'">
+                    <plans-overview></plans-overview>
+                </tab-panel>
 
 
-        </tabs>
+            </tabs>
+
+        </div>
+        <health-graph></health-graph>
+
 
     </div>
-    <health-graph></health-graph>
-
 
 </div>
-

@@ -1,14 +1,17 @@
 
-/deep/ .ui-button-icon-only {
-    padding: 0 !important;
+
+
+.outer-wrapper {
+    height: 100%;
+    background-color: #ebebeb;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-
-
 .body-area {
-    width: calc(100% - 30px);
-    height: calc(100% - 40px - 20px);
-    padding: 15px;
+    height: calc(100% - 70px);
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: #ebebeb;
 }
 
@@ -16,20 +19,20 @@
 
 .schedule {
     float: left;
-    width: calc(100% - 300px - 30px);
-    height: calc(100% - 30px - 200px);
+    width: calc(100% - 250px - 20px);
+    height: calc(100% - 200px - 20px);
 }
 
 .health-graph {
     float: left;
-    width: calc(100% - 300px - 30px);
+    width: calc(100% - 250px - 20px);
     height: 200px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .right-side-panel {
     float: right;
-    width: 300px;
+    width: 250px;
     height: 100%;
     background-color: white;
     border: solid 1px #f2f2f2;
@@ -39,31 +42,46 @@
 
 
 
-.right-side-panel .tabs {
-}
+    .right-side-panel .tabs {
+    }
 
-.right-side-panel /deep/ .ui-tabview {
-    height: calc(100%);
-    padding: 0;
-}
+    .right-side-panel /deep/ .ui-tabview {
+        height: calc(100%);
+        padding: 0;
+    }
 
-.right-side-panel /deep/ .ui-tabview-panels {
-    height: calc(100% - 40px);
-}
+    .right-side-panel /deep/ .ui-tabview-panels {
+        height: calc(100% - 40px);
+    }
 
-.right-side-panel /deep/ .ui-tabview-panel {
-    height: 100%;
-    padding: 0;
+    .right-side-panel /deep/ .ui-tabview-panel {
+        height: 100%;
+        padding: 0;
+    }
+
+
+/*Computer*/
+@media only screen and (min-width: 1024px) {
+    .outer-wrapper {
+        min-width: calc(1024px - 24px);
+        max-width:80%;
+        padding-left:12px;
+        padding-right:12px;
+    }
 }
 
 /*Tablet*/
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 768px) {
+    .outer-wrapper {
+        width: calc(768px - 24px);
+    }
+
     .schedule {
-        width: calc(100% - 200px - 30px);
+        width: calc(100% - 200px - 20px);
     }
 
     .health-graph {
-        width: calc(100% - 200px - 30px);
+        width: calc(100% - 200px - 20px);
     }
 
     .right-side-panel {
@@ -72,7 +90,7 @@
 }
 
 /*Mobile*/
-@media only screen and (max-width: 375px) {
+/*@media only screen and (max-width: 375px) {
     .schedule {
         width: calc(100% - 30px);
         height:calc(100% - 30px);
@@ -98,6 +116,6 @@
     /deep/ #scheduleHeaderLabel {
         display: none !important;
     }
-}
+}*/
 
 
