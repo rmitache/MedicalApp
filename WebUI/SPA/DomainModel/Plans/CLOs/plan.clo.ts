@@ -26,6 +26,7 @@ export class PlanCLO extends BaseCLO {
             case Enums.AdvancedPlanStatus.ActiveStartedToday:
             case Enums.AdvancedPlanStatus.ActiveWITHUpcomingChanges:
             case Enums.AdvancedPlanStatus.ActiveWITHUpcomingStop:
+            case Enums.AdvancedPlanStatus.ActiveRestartedToday:
                 return Enums.PlanStatus.Active;
 
             // Upcoming
@@ -47,11 +48,20 @@ export class PlanCLO extends BaseCLO {
 
         // Determine the Status ----------------------------------------------------------------------------------------
 
+        // ActiveRestartedToday status
+        if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
+            && moment(latestVersion.StartDateTime).isSame(moment(), 'date')
+            && secondLatestVersion !== null && secondLatestVersion.Status === Enums.VersionStatus.Inactive) {
+            return Enums.AdvancedPlanStatus.ActiveRestartedToday;
+        }
+
         // ActiveWITHChangesTakingEffectToday status
         if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
             && moment(latestVersion.StartDateTime).isSame(moment(), 'date') && secondLatestVersion !== null) {
             return Enums.AdvancedPlanStatus.ActiveWITHChangesTakingEffectToday;
         }
+
+        
 
         // ActiveStartedToday status
         if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
@@ -75,6 +85,8 @@ export class PlanCLO extends BaseCLO {
         }
 
 
+        
+       
 
         // Stopped status
         if (latestVersion.Status === Enums.VersionStatus.Inactive) {

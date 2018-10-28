@@ -50,6 +50,20 @@ export class PlanElemComponent {
                 }
             }
         ],
+        ActiveRestartedToday: [
+            {
+                Label: 'Edit plan restarted today',
+                OnClick: () => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.EditPlanRestartedToday]);
+                }
+            },
+            {
+                Label: 'Cancel restart',
+                OnClick: () => {
+                    this.ActionTriggered.emit([this.planCLO, PlanActionType.CancelRestart]);
+                }
+            }
+        ],
 
         ActiveWITHOUTAnyUpcomingChanges: [
             {
@@ -171,6 +185,7 @@ export class PlanElemComponent {
             case Enums.AdvancedPlanStatus.ActiveStartedToday:
             case Enums.AdvancedPlanStatus.ActiveWITHUpcomingChanges:
             case Enums.AdvancedPlanStatus.ActiveWITHUpcomingStop:
+            case Enums.AdvancedPlanStatus.ActiveRestartedToday:
                 iconName = 'fa fa-arrow-alt-circle-right';
                 colorName = '#afe036';
                 tooltipText = 'Active';
@@ -230,6 +245,11 @@ export class PlanElemComponent {
                     this.viewModel.DateInfoLabel = 'Started:';
                     this.viewModel.DateInfoValue = this.getRelativeDateAsString(firstVersion.StartDateTime);
                 }
+                break;
+
+            case Enums.AdvancedPlanStatus.ActiveRestartedToday:
+                this.viewModel.DateInfoLabel = 'Restarted:';
+                this.viewModel.DateInfoValue = this.getRelativeDateAsString(latestVersion.StartDateTime);
                 break;
 
             // ActiveWITHUpcomingChanges

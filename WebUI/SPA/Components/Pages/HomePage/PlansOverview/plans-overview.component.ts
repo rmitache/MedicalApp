@@ -288,6 +288,11 @@ export class PlansOverviewComponent {
                 this.openPlanEditor('Edit the plan started today', 'Save', cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
                 break;
 
+            // EditPlanRestartedToday
+            case PlanActionType.EditPlanRestartedToday:
+                var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
+                this.openPlanEditor('Edit the plan restarted today', 'Save', cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
+                break;
 
             // Restart
             case PlanActionType.Restart:
@@ -298,6 +303,7 @@ export class PlansOverviewComponent {
 
             // CancelRestart
             case PlanActionType.CancelRestart:
+            case PlanActionType.CancelPlanRestartedToday:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
                 cloneOfPlanCLO.GetLatestVersion().ToBeDeleted = true; // mark for deletion
                 this.updatePlan(cloneOfPlanCLO);
@@ -417,14 +423,16 @@ export enum PlanActionType {
     CancelTodaysChanges = 5,
 
     EditPlanStartedToday = 6, // hard edit
+    EditPlanRestartedToday = 7, // hard edit
+    CancelPlanRestartedToday = 9,
 
-    Restart = 7,
-    CancelRestart = 8,
+    Restart = 9,
+    CancelRestart = 10,
 
-    Stop = 9,
-    CancelStop = 10,
+    Stop = 11,
+    CancelStop = 12,
 
-    Rename = 11
+    Rename = 13
 }
 
 enum NoDataModes {
