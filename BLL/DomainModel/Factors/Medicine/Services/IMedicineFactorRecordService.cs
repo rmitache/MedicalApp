@@ -8,7 +8,7 @@ namespace BLL.DomainModel.Factors.Medicine.History.Services
     public interface IMedicineFactorRecordService
     {
         void MarkFactorRecordsAsTaken(string[] compositeIDs, bool[] newTakenStatuses, int userID);
-        List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int utcOffsetInMins, int userID);
+        List<MedicineFactorRecord> GetMedicineFactorRecords(Range<DateTime> dateRange, int userID);
     }
 
 

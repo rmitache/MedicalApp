@@ -63,8 +63,7 @@ namespace BLL.DomainModel.Plans.Services
 
             //
             var localDateTimeHits = eventObj.GetOccurrences(localMinDate, localMaxDate).Select(occurrence => occurrence.Period.StartTime.Value).ToList();
-            localDateTimeHits = localDateTimeHits.Select(date => date = DateTime.SpecifyKind(date, DateTimeKind.Local)).ToList();
-            // QUESTION: filter first and last dates based on hours/minutes ? Why ? Ex: so if start date starts at 22:00, not to include Moments like 16:00
+            localDateTimeHits = localDateTimeHits.Select(date => date = DateTime.SpecifyKind(date, DateTimeKind.Utc)).ToList();
             return localDateTimeHits;
         }
 
@@ -75,32 +74,32 @@ namespace BLL.DomainModel.Plans.Services
         }
 
         // Public methods
-        public List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime localVersionStartDateTime, DateTime? localVersionEndDateTime,
-            Range<DateTime> localWindowRange)
+        public List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime utcVersionStartDateTime, DateTime? utcVersionEndDateTime,
+            Range<DateTime> utcWindowRange)
         {
-            if (localVersionStartDateTime.Kind != DateTimeKind.Local || (localVersionEndDateTime != null && ((DateTime)localVersionEndDateTime).Kind != DateTimeKind.Local)
-                || localWindowRange.RangeStart.Kind != DateTimeKind.Local || localWindowRange.RangeEnd.Kind != DateTimeKind.Local)
+            if (utcVersionStartDateTime.Kind != DateTimeKind.Utc || (utcVersionEndDateTime != null && ((DateTime)utcVersionEndDateTime).Kind != DateTimeKind.Utc)
+                || utcWindowRange.RangeStart.Kind != DateTimeKind.Utc || utcWindowRange.RangeEnd.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException("DateTime parameters must be of Local kind");
+                throw new ArgumentException("DateTime parameters must be of utc kind");
             }
-            if (localWindowRange.RangeStart > localWindowRange.RangeEnd)
+            if (utcWindowRange.RangeStart > utcWindowRange.RangeEnd)
             {
                 throw new ArgumentException("MinDate cannot be greater than MaxDate");
             }
 
 
             //
-            List<DateTime> localDateTimeHits = new List<DateTime>();
+            List<DateTime> utcDateTimeHits = new List<DateTime>();
             foreach (Time time in rule.MomentsInDay)
             {
-                var localHitsForMoment = this.GetDateTimeHitsForMomentInDay(time, localVersionStartDateTime, localVersionEndDateTime,
-                    localWindowRange.RangeStart, localWindowRange.RangeEnd,
+                var utcHitsForMoment = this.GetDateTimeHitsForMomentInDay(time, utcVersionStartDateTime, utcVersionEndDateTime,
+                    utcWindowRange.RangeStart, utcWindowRange.RangeEnd,
                     rule.OrdinalFrequencyType, rule.FrequencyType, rule.DaysInWeek);
-                localDateTimeHits.AddRange(localHitsForMoment);
+                utcDateTimeHits.AddRange(utcHitsForMoment);
             }
 
-            localDateTimeHits = localDateTimeHits.OrderByDescending(date => date).Reverse().ToList();
-            return localDateTimeHits;
+            utcDateTimeHits = utcDateTimeHits.OrderByDescending(date => date).Reverse().ToList();
+            return utcDateTimeHits;
         }
     }
 

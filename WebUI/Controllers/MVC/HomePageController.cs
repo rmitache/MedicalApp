@@ -95,7 +95,7 @@ namespace WebUI.Controllers
             var symptomTypes = symptomTypeService.GetAllSymptomTypes();
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
             var plans = planService.GetPlans(loggedInUser.ID, true);
-            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.UTCOffsetInMinutes, loggedInUser.ID);
+            var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.ID);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);
             var userHasAnyHealthStatusEntries = this.healthStatusEntryService.GetUserHasAnyHealthStatusEntries(loggedInUser.ID);
             //----------------------------------------------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ namespace WebUI.Controllers
         {
             var currentUser = this.webSecurityManager.GetCurrentUser();
             int? userID = currentUser.ID;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, currentUser.UTCOffsetInMinutes, (int)userID);
+            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, (int)userID);
             return Json(blos);
         }
         //---------------------------------------------------------------------------------------------------------------------
@@ -293,9 +293,8 @@ namespace WebUI.Controllers
         public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var userTZOffset = this.webSecurityManager.GetCurrentUser().UTCOffsetInMinutes;
 
-            var supplyInfo = this.medicineTypeSupplyService.GetCurrentSupplyInfo((int)userID, model.MedicineTypeID, userTZOffset);
+            var supplyInfo = this.medicineTypeSupplyService.GetCurrentSupplyInfo((int)userID, model.MedicineTypeID);
 
             return Json(supplyInfo);
         }

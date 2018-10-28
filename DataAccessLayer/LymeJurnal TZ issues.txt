@@ -1,26 +1,7 @@
 Problems with timezones in LymeJurnal app:
 
-1. Problems:
-	- Although the BE is supposed to be all in UTC, we still have:
-		- Some dates which are not in UTC (Ex: Plan StartDate, User.BirthDate, User.SignupDate, etc)
-		- Rule Times which are supposed to be relative (untouched by TZ conversions) 
-		
-	- The above two cause problems with the range on the client when getting data:
-		- Either missing data +1/-1 day 
-		- Or showing factorRecords more than required (+1/-1 day)
 
-2. Ideal solution:
-	- Keep EVERYTHING in DB and BLL in UTC 
-	- Add a City field to the UserBLO and UserCLO
-		- All datetimes on the client will be shown in relation to that City TZ 
-		- On the BE, Rule Times will be designated to be in the current User.City 
-	- On the FE use something like CustomDateTime (or moment.tz) to:
-		- Use the given timezone for all date variables 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Current state (architecture):
+Current state (architecture) (August 2018)
 	1. FE:
 		- Everything works with local js time  (Date() and moment() usage)
 		- When sending data to the BE, Dates are converted to UTC using toJSON()
@@ -39,4 +20,9 @@ Current state (architecture):
 		- What happens when the user has a Plan between two dates, and then proceeds to change timezone (eg. by travelling) ?
 			- Wouldnt he have problems with the TakenFactorRecords somehow ? (why ? -> because they are in relative time)
 
-		-  
+
+Updated status (November 2018) 
+
+	- Support for DST isnt present. It results in the version startDates being on a different UTC offset than say the other half of the date range, resulting 
+	in the hard-coded UTCOffset being wrong 
+	- UTCOffset has no effect on the actual times and should perhaps be removed

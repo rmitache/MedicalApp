@@ -78,15 +78,15 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
         }
 
-        public virtual Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> medTypeDataEntities, int userTZOffset)
+        public virtual Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> medTypeDataEntities)
         {
             // Variables
             var dict = new Dictionary<string, SupplyInfoWrapper>();
 
             // Get the cut-off date and FactorRecords
             // OBS range calculation: 130 represents 120 = 4 months plus 10 days, if the supplyUntil date is > 120, this can be used to say "More than 4 months"
-            var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(supplyComputationMaxLookAheadInDays));
-            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
+            var utcDateRange = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(supplyComputationMaxLookAheadInDays));
+            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(utcDateRange, userID);
 
             // Loop and get supplyInfo for each medicineTypeDataEntity
             foreach (TMedicineType dataEntity in medTypeDataEntities)
@@ -96,23 +96,23 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return dict;
         }
-        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity, int userTZOffset)
+        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity)
         {
             // Variables
             SupplyInfoWrapper supplyInfo;
 
             // Get the cut-off date and FactorRecords
             var range = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(120));
-            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userTZOffset, userID);
+            var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(range, userID);
 
             // Get supplyInfo
             supplyInfo = this.DetermineSupplyInfo(userID, dataEntity, factorRecords);
             return supplyInfo;
         }
-        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID, int userTZOffset)
+        public virtual SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID)
         {
             var dataEntity = this.medicineTypeRepo.GetByID(userID, medicineTypeID);
-            return GetCurrentSupplyInfo(userID, dataEntity, userTZOffset);
+            return GetCurrentSupplyInfo(userID, dataEntity);
         }
     }
 }

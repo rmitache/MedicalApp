@@ -9,6 +9,6 @@ namespace BLL.DomainModel.Factors.Medicine.Factories.Implementation
     public interface IRuleHitPatternService
     {
 
-        List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime localVersionStartDate, DateTime? localVersionEndDate, Range<DateTime> localWindowRange);
+        List<DateTime> GetRuleDateTimeHitsPattern(Rule rule, DateTime utcVersionStartDate, DateTime? utcVersionEndDate, Range<DateTime> utcWindowRange);
     }
 }

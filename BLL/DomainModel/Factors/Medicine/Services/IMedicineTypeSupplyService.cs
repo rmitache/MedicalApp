@@ -11,8 +11,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         void AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity);
         void ClearSupplyEntries(int userID, int medicineTypeID);
 
-        Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> dataEntities, int userTZOffset);
-        SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity, int userTZOffset);
-        SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID, int userTZOffset);
+        Dictionary<string, SupplyInfoWrapper> GetDictionaryOfSupplyInfos(int userID, List<TMedicineType> dataEntities);
+        SupplyInfoWrapper GetCurrentSupplyInfo(int userID, TMedicineType dataEntity);
+        SupplyInfoWrapper GetCurrentSupplyInfo(int userID, int medicineTypeID);
     }
 }
