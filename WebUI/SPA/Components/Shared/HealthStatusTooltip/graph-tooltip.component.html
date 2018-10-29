@@ -23,11 +23,11 @@
             <span class="h4">{{viewModel.Title}}</span>
         </div>
         <div class="chart-wrapper-div">
-            <p-chart #chart type="line" [data]="viewModel.ChartData" height="110px" [options]="chartOptions"></p-chart>
+            <p-chart #chart type="line" [data]="viewModel.ChartData" height="80px" [options]="chartOptions"></p-chart>
         </div>
     </div>
     <div class="health-level-div">
-        <span class="h2"
+        <span class="h4"
                [style.color]="viewModel.SelectedHealthLevelDefinition?.Color">
               {{viewModel.SelectedHealthLevelDefinition?.Label}}</span>
     </div>

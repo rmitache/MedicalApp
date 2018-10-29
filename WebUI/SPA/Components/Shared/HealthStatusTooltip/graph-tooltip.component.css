@@ -31,7 +31,7 @@
 }
 
     .health-chart-div .chart-wrapper-div {
-        height: 110px;
+        height: 80px;
     }
 
 .health-level-div {
@@ -41,7 +41,6 @@
 }
 
 .health-level-div span {
-    text-transform:uppercase;
 }
 
 

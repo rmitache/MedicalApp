@@ -1,7 +1,7 @@
 <div class="frame"
      [style.background]="viewModel.SelectedIntensityDef?.Color">
     <span class="label symptom-name-label"
-          [style.font-size.px]="10 + viewModel.SelectedIntensityDef?.IntensityLevel * 2.5"
+          [style.font-size.px]="10 + viewModel.SelectedIntensityDef?.IntensityLevel * 2"
           [style.padding.px]="2 + viewModel.SelectedIntensityDef?.IntensityLevel * 2"
           [style.color]="viewModel.SelectedIntensityDef?.LabelColor">
         {{viewModel.SymptomTypeWithAvgIntensity.SymptomType.Name}}
