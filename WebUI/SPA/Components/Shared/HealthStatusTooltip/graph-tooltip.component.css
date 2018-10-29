@@ -15,12 +15,13 @@
     height: 20px;
 }
 
-/*.health-chart-div {
+.health-chart-div {
+    border:solid 1px red;
 }
 
     .health-chart-div .chart-wrapper-div {
         height: 110px;
-    }*/
+    }
 
 .symptoms-div {
     text-align:center;

@@ -25,7 +25,7 @@ export class SymptomTypeElemComponent {
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Mild,
             Color: '#f3e06a',
-            LabelColor: '#a06946',
+            LabelColor: '#93764d',
             Label: 'Mild'
         },
         {
