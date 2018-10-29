@@ -25,32 +25,26 @@ export class SymptomTypeElemComponent {
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Mild,
             Color: '#f3e06a',
+            LabelColor: '#a06946',
             Label: 'Mild'
         },
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Moderate,
-            Color: 'Orange',
+            Color: 'orange',
+            LabelColor: '#523707',
             Label: 'Moderate'
         },
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Severe,
-            Color: 'Red',
+            Color: 'red',
+            LabelColor: 'white',
             Label: 'Severe'
         }];
     private readonly viewModel: ViewModel = {
         SymptomTypeWithAvgIntensity: null,
         SelectedIntensityDef: null,
 
-        GetBGColorForIntensityElem: (def: SymptomIntensityDefinition) => {
-
-            if (this.viewModel.SelectedIntensityDef.IntensityLevel >= def.IntensityLevel) {
-                
-                return this.viewModel.SelectedIntensityDef.Color;
-            }
-
-
-            return '';
-        }
+        
     };
 
     // Private methods
@@ -87,12 +81,12 @@ interface ViewModel {
     SymptomTypeWithAvgIntensity: SymptomTypeWithAvgIntensity;
     SelectedIntensityDef: SymptomIntensityDefinition;
 
-    GetBGColorForIntensityElem(def: SymptomIntensityDefinition): string;
 }
 
 
 interface SymptomIntensityDefinition {
     IntensityLevel: Enums.SymptomIntensityLevel;
     Label: string;
+    LabelColor: string;
     Color: string;
 }

@@ -171,7 +171,7 @@ export class GraphTooltipComponent {
         tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
         tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
         caretPos.Left = currentWidth / 2 - 21;
-        caretPos.Top = 42;
+        caretPos.Top = 38;
 
 
         // Handle case when position overflows screen on the left side
@@ -242,15 +242,15 @@ export class GraphTooltipComponent {
         }, 0);
     }
     public HideAndClear() {
-        setTimeout(() => {
-            this.viewModel.Visible = false;
-            this.viewModel.Title = '';
-            this.viewModel.ChartData = null;
-            this.viewModel.SymptomTypes = null;
+        //setTimeout(() => {
+        //    this.viewModel.Visible = false;
+        //    this.viewModel.Title = '';
+        //    this.viewModel.ChartData = null;
+        //    this.viewModel.SymptomTypes = null;
 
-            this.viewModel.TooltipPos = null;
-            this.viewModel.CaretPos = null;
-        }, 0);
+        //    this.viewModel.TooltipPos = null;
+        //    this.viewModel.CaretPos = null;
+        //}, 0);
     }
 }
 

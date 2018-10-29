@@ -22,7 +22,8 @@ Current state (architecture) (August 2018)
 
 
 Updated status (November 2018) 
-
-	- Support for DST isnt present. It results in the version startDates being on a different UTC offset than say the other half of the date range, resulting 
-	in the hard-coded UTCOffset being wrong 
-	- UTCOffset has no effect on the actual times and should perhaps be removed
+	- The architecture currently doesn't handle the following scenarios
+		- DST changes: It results in the version startDates being on a different UTC offset than say the other half of the date range, resulting 
+		in the MomentInDay being different as the conversion doesn't adjust the 2nd half properly
+		- Changing client TZ (ex: user changes country)
+	- UTCOffset has been removed as it had no effect on the actual times returned and just complicated the codebase
