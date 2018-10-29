@@ -26,7 +26,11 @@
             <p-chart #chart type="line" [data]="viewModel.ChartData" height="110px" [options]="chartOptions"></p-chart>
         </div>
     </div>
-
+    <div class="health-level-div">
+        <span class="h2"
+               [style.color]="viewModel.SelectedHealthLevelDefinition?.Color">
+              {{viewModel.SelectedHealthLevelDefinition?.Label}}</span>
+    </div>
     <div class="caret-div"
          [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
          [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">

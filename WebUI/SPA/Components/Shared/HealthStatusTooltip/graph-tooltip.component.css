@@ -10,6 +10,17 @@
     z-index: 9999999999;
 }
 
+.symptoms-div {
+    text-align: center;
+}
+
+    .symptoms-div .symptom-type-elem {
+        display: inline-block;
+        margin-top: 3px;
+        margin-left: 3px;
+    }
+
+
 .date-label-div {
     text-align: center;
     height: 20px;
@@ -23,17 +34,15 @@
         height: 110px;
     }
 
-.symptoms-div {
+.health-level-div {
     text-align:center;
+    margin-top:15px;
+    margin-bottom:-10px;
 }
 
-    .symptoms-div .symptom-type-elem {
-        display:inline-block;
-        margin-top: 3px;
-        margin-left: 3px;
-    }
-
-
+.health-level-div span {
+    text-transform:uppercase;
+}
 
 
 .caret-div {

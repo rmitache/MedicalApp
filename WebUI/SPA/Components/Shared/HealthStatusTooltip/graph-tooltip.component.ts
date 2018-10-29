@@ -19,8 +19,53 @@ export class GraphTooltipComponent {
     // Fields
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
+    private readonly healthLevelDefinitions: HealthLevelDefinition[] = [
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= 3 && avgValue > 2;
+            },
+            Color: '#9dc340',
+            Label: 'Great'
+        },
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= 2 && avgValue > 1;
+            },
+            Color: '#9dc340',
+            Label: 'Good'
+        },
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= 1 && avgValue > 0;
+            },
+            Color: '#9dc340',
+            Label: 'Ok'
+        },
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= 0 && avgValue > -1;
+            },
+            Color: '#f35d5d',
+            Label: 'Not Great'
+        },
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= -1 && avgValue > -2;
+            },
+            Color: '#f35d5d',
+            Label: 'Bad'
+        },
+        {
+            ContainsHealthLevelValue: (avgValue) => {
+                return avgValue <= -2 && avgValue >= -3;
+            },
+            Color: '#f35d5d',
+            Label: 'Very Bad'
+        }];
     private readonly viewModel: ViewModel = {
         Title: '',
+        AverageHealthLevelValue: null,
+        SelectedHealthLevelDefinition: null,
         ChartData: null,
         SymptomTypes: null,
 
@@ -190,6 +235,7 @@ export class GraphTooltipComponent {
         return returnArray;
     }
 
+
     // Constructor 
     constructor(
         private readonly healthStatusEntryCLOService: HealthStatusEntryCLOService
@@ -201,9 +247,14 @@ export class GraphTooltipComponent {
     }
 
     // Public 
-    public SetDataAndPosition(dateString: string, healthEntryCLOs: CLOs.HealthStatusEntryCLO[], parentPosition: any, caretX: number, caretY: number) {
-
+    public SetDataAndPosition(dateString: string, healthEntryCLOs: CLOs.HealthStatusEntryCLO[], parentPosition: any,
+        caretX: number, caretY: number, avgHealthLevelValue: number = null) {
         this.viewModel.Title = dateString;
+        this.viewModel.AverageHealthLevelValue = avgHealthLevelValue;
+        
+        this.viewModel.SelectedHealthLevelDefinition = this.healthLevelDefinitions.find((def) => {
+            return def.ContainsHealthLevelValue(avgHealthLevelValue);
+        });
 
         // Generate dataPoints for chart
         var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
@@ -265,6 +316,9 @@ export class GraphTooltipComponent {
 
 interface ViewModel {
     Title: string;
+    AverageHealthLevelValue: number;
+    SelectedHealthLevelDefinition: HealthLevelDefinition;
+
     ChartData: any;
     SymptomTypes: SymptomTypeWithAvgIntensity[];
 
@@ -277,4 +331,12 @@ interface ViewModel {
 class PosCoordinates {
     constructor(public Left: number = 0, public Top: number = 0) {
     }
+}
+
+
+
+interface HealthLevelDefinition {
+    ContainsHealthLevelValue(avgValue);
+    Label: string;
+    Color: string;
 }

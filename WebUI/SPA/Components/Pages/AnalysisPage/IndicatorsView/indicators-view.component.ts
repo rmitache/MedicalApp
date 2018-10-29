@@ -506,6 +506,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     // Variables
                     var canvas = this.getChartCanvas();
                     var dateString = tooltipModel.title[0];
+                    var avgHealthLevelValue = tooltipModel.dataPoints[0].yLabel;
                     var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
                     var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
                     var parentPosition = canvas.getBoundingClientRect();
@@ -517,7 +518,8 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     }
 
                     //
-                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition, tooltipModel.caretX, tooltipModel.caretY);
+                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition,
+                        tooltipModel.caretX, tooltipModel.caretY, avgHealthLevelValue);
                 }
             },
             elements: {

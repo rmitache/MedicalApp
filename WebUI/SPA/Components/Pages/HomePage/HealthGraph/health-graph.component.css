@@ -49,8 +49,9 @@
     }
 
 #chart-wrapper-div {
-    width: 100%;
-    float: left;
+    width: calc(100% - 20px);
+    margin-left:auto;
+    margin-right:auto;
     padding: 0;
 }
 
