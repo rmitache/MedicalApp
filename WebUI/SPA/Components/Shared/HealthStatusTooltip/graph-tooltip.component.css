@@ -6,17 +6,17 @@
     background-color: white;
     border-radius: 5px;
     position: absolute;
-    padding: 7px 7px 3px 7px;
+    padding: 7px 7px 0 7px;
     z-index: 9999999999;
 }
 
-.title-div {
+.date-label-div {
     text-align: center;
     height: 20px;
 }
 
 .health-chart-div {
-    border:solid 1px red;
+    margin-top:25px;
 }
 
     .health-chart-div .chart-wrapper-div {

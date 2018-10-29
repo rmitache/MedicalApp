@@ -13,15 +13,22 @@
         </symptom-type-elem>
         <div style="clear:both"></div>
     </div>
+
+
+
+
+    
+    <div class="health-chart-div">
+        <div class="date-label-div">
+            <span class="h4">{{viewModel.Title}}</span>
+        </div>
+        <div class="chart-wrapper-div">
+            <p-chart #chart type="line" [data]="viewModel.ChartData" height="110px" [options]="chartOptions"></p-chart>
+        </div>
+    </div>
+
     <div class="caret-div"
          [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
          [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
     </div>
-    <div class="title-div">
-        <span class="h4">{{viewModel.Title}}</span>
-    </div>
-
-
-    
-
 </div>

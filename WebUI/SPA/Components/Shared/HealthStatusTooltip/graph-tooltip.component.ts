@@ -29,7 +29,7 @@ export class GraphTooltipComponent {
         TooltipPos: null,
         CaretPos: null
     };
-    private options =
+    private chartOptions =
         {
             animation: false,
             tooltips: {
@@ -48,9 +48,9 @@ export class GraphTooltipComponent {
                     type: "time",
                     distribution: 'linear',
                     time: {
-                        minUnit: 'minute',
-                        unit: 'minute',
-                        unitStepSize: 30,
+                        minUnit: 'hour',
+                        unit: 'hour',
+                        unitStepSize: 1,
                         displayFormats: {
                             hour: 'H:mm',
                             minute: 'H:mm',
@@ -62,12 +62,15 @@ export class GraphTooltipComponent {
                         offsetGridLines: false
                     },
                     ticks: {
+                        fontSize: 9,
+                        maxRotation: 0,
+                        minRotation: 0,
                         maxTicksLimit: 4,
                         fontColor: 'gray',
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            if (value === '0:00' || value === '6:00' || value === '12:00' || value === '18:00' || value === '23:30') {
+                            if (value === '0:00' || value === '12:00' || value === '23:00') {
                                 return value;
                             }
                             else {
@@ -80,15 +83,16 @@ export class GraphTooltipComponent {
 
                     gridLines: {
                         display: true,
-                        drawTicks: true,
+                        drawTicks: false,
                         drawOnChartArea: true,
                         tickMarkLength: 5,
                         drawBorder: true,
-                        zeroLineColor: 'black'
+                        zeroLineColor: 'gray'
                     },
 
                     ticks: {
                         fontColor: 'gray',
+                        
                         padding: 5,
                         beginAtZero: true,
                         min: -3,
@@ -171,7 +175,7 @@ export class GraphTooltipComponent {
         tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
         tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
         caretPos.Left = currentWidth / 2 - 21;
-        caretPos.Top = 38;
+        caretPos.Top = 15;
 
 
         // Handle case when position overflows screen on the left side
@@ -201,31 +205,35 @@ export class GraphTooltipComponent {
 
         this.viewModel.Title = dateString;
 
-        //// Generate dataPoints for chart
-        //var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
-        //	if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
-        //		return 1;
-        //	}
+        // Generate dataPoints for chart
+        var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
+            if (f1.GetTime().ToSeconds() > f2.GetTime().ToSeconds()) {
+                return 1;
+            }
 
-        //	if (f1.GetTime().ToSeconds() < f2.GetTime().ToSeconds()) {
-        //		return -1;
-        //	}
+            if (f1.GetTime().ToSeconds() < f2.GetTime().ToSeconds()) {
+                return -1;
+            }
 
-        //	return 0;
-        //});
-        //var dataPointsInfo = this.generateDataPointsForChart(sortedCLOs);
-        //var data = {
-        //	datasets: [
-        //		{
-        //			pointRadius: 5,
-        //			pointStyle: 'circle',
-        //			showLine: true,
-        //			data: dataPointsInfo.dataPoints,
-        //			pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
-        //		}
-        //	]
-        //}
-        //this.viewModel.ChartData = data;
+            return 0;
+        });
+        var dataPointsInfo = this.generateDataPointsForChart(sortedCLOs);
+        var data = {
+            datasets: [
+                {
+                    pointRadius: 5,
+                    pointStyle: 'circle',
+                    pointBorderWidth: 0,
+                    borderColor: 'black',
+                    backgroundColor: 'transparent',
+                    borderWidth:1,
+                    showLine: true,
+                    data: dataPointsInfo.dataPoints,
+                    pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
+                }
+            ]
+        }
+        this.viewModel.ChartData = data;
 
         // Get symptom entries
         this.viewModel.SymptomTypes = this.healthStatusEntryCLOService.GetUniqueSymptomTypesWithAvgDose(healthEntryCLOs);
@@ -242,15 +250,15 @@ export class GraphTooltipComponent {
         }, 0);
     }
     public HideAndClear() {
-        //setTimeout(() => {
-        //    this.viewModel.Visible = false;
-        //    this.viewModel.Title = '';
-        //    this.viewModel.ChartData = null;
-        //    this.viewModel.SymptomTypes = null;
+        setTimeout(() => {
+            this.viewModel.Visible = false;
+            this.viewModel.Title = '';
+            this.viewModel.ChartData = null;
+            this.viewModel.SymptomTypes = null;
 
-        //    this.viewModel.TooltipPos = null;
-        //    this.viewModel.CaretPos = null;
-        //}, 0);
+            this.viewModel.TooltipPos = null;
+            this.viewModel.CaretPos = null;
+        }, 0);
     }
 }
 
