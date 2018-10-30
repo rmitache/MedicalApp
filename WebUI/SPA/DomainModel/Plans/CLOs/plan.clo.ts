@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { ObservableList } from 'SPA/Core/Helpers/DataStructures/observable-list';
+import { GetNrOfDaysBetweenDatesUsingMoment } from '../../../Core/Helpers/Functions/functions';
 
 
 export class PlanCLO extends BaseCLO {
@@ -51,7 +52,8 @@ export class PlanCLO extends BaseCLO {
         // ActiveRestartedToday status
         if (latestVersion.Status === Enums.VersionStatus.Active && latestVersion.EndDateTime === null
             && moment(latestVersion.StartDateTime).isSame(moment(), 'date')
-            && secondLatestVersion !== null && secondLatestVersion.Status === Enums.VersionStatus.Inactive) {
+            && secondLatestVersion !== null && secondLatestVersion.Status === Enums.VersionStatus.Inactive
+            && GetNrOfDaysBetweenDatesUsingMoment(moment(secondLatestVersion.EndDateTime), moment(latestVersion.StartDateTime), false) !== 1 ) {
             return Enums.AdvancedPlanStatus.ActiveRestartedToday;
         }
 
