@@ -17,17 +17,17 @@
 
 
 
+
 .schedule {
     float: left;
     width: calc(100% - 250px - 20px);
     height: calc(100% - 200px - 20px);
 }
-
 .health-graph {
-    float: left;
-    width: calc(100% - 250px - 20px);
-    height: 200px;
     margin-top: 20px;
+    float: left;
+    width: calc(60% - 250px);
+    height: 200px;
 }
 
 .right-side-panel {

@@ -34,25 +34,37 @@
         .frame .header .center-section {
             float: left;
             width: calc(34%);
+            text-align: center;
         }
 
         .frame .header .right-section {
             float: right;
             width: calc(33%);
             height: 30px;
+            text-align: right;
         }
 
-
     .frame .body {
-        height: calc(100% - 40px);
+        height: calc(100% - 40px - 40px);
         width: calc(100%);
     }
+    .frame .footer {
+        padding:10px;
+        padding-top:0;
+        height: 30px;
+        width: calc(100% - 20px);
+        text-align:center;
+    }
 
+    .frame .footer button{
+        
+    }
 #chart-wrapper-div {
-    width: calc(100% - 20px);
-    margin-left:auto;
-    margin-right:auto;
+    width: calc(100% - 10px);
+    margin-left:5px;
+    float:left;
     padding: 0;
+    margin-top:-8px;
 }
 
 

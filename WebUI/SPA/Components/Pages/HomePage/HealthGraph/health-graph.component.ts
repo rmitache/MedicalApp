@@ -44,12 +44,11 @@ export class HealthGraphComponent {
         AvailableDateRange: null,
         AvailableHealthEntries: null,
 
-
         SelectedDateRange: null,
         ChartOptions: null,
         ChartData: null,
 
-        DateRangeDisplayMode: DateRangeMode.SingleMonth,
+        DateRangeDisplayMode: DateRangeMode.SingleDay,
         CurrentNoDataMode: null,
         UserHasAnyHealthStatusEntries: null
     };
@@ -61,8 +60,8 @@ export class HealthGraphComponent {
     private getCurrentDisplayModeInstance(): IDisplayMode {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
-        if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleMonth) {
-            currentStrategy = new MonthDisplayMode(this.chartInstance, this.graphTooltipInstance);
+        if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleDay) {
+            currentStrategy = new DayDisplayMode(this.chartInstance, this.graphTooltipInstance);
         } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
@@ -86,6 +85,7 @@ export class HealthGraphComponent {
             return moment(entry.OccurrenceDateTime) >= this.viewModel.SelectedDateRange.RangeStart &&
                 moment(entry.OccurrenceDateTime) <= this.viewModel.SelectedDateRange.RangeEnd;
         });
+
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
             let dateKey = moment(clo.OccurrenceDateTime).format('DD/MM/YYYY');
@@ -129,10 +129,12 @@ export class HealthGraphComponent {
     ngOnInit() {
         // Get the initial range using the current DisplayMode
         let now = moment();
-        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
+        //var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
+        var initialSelectedDateRange = new Range<moment.Moment>(moment().startOf('day'),
+            moment().endOf('day'));
 
         // Init VM properties
-        this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
+        this.viewModel.AvailableDateRange = initialSelectedDateRange; // GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
         this.viewModel.AvailableHealthEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().HealthStatusEntryCLOs;
         this.viewModel.UserHasAnyHealthStatusEntries = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().UserHasAnyHealthStatusEntries;
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
@@ -272,6 +274,208 @@ interface IDisplayMode {
     GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }): any;
     GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>): any;
 }
+class DayDisplayMode implements IDisplayMode {
+    // Private methods
+    private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+        var sum: number = 0;
+        var result = 0;
+        healthStatusEntryCLOs.forEach(clo => {
+            sum += clo.HealthLevel;
+        });
+
+        if (healthStatusEntryCLOs.length > 0)
+            result = sum / healthStatusEntryCLOs.length;
+        else
+            result = null;
+
+
+        if (result === 0) {
+            result = 0.2;
+        }
+        return result;
+    }
+    private generateDataPointsForChart(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
+
+        // Variables
+        var dataPoints = []
+        var dataPointsBgColors = [];
+
+
+        // Loop through clos and create datapoints
+        healthEntryCLOs.forEach((clo, index) => {
+
+            // Create datapoints
+            var dp = {
+                x: moment(clo.OccurrenceDateTime),
+                y: clo.HealthLevel
+            };
+            dataPoints.push(dp);
+            if (clo.HealthLevel >= 0) {
+                dataPointsBgColors.push('#9dc340'); // green
+            } else {
+                dataPointsBgColors.push('#f35d5d'); // red
+            }
+        });
+
+        // Add min/max special datapoints
+        if (healthEntryCLOs.length > 0) {
+            var minDp = {
+                x: moment(healthEntryCLOs[0].OccurrenceDateTime).startOf('day'),
+                y: null
+            }
+            dataPoints.splice(0, 0, minDp);
+            dataPointsBgColors.splice(0, 0, 'black');
+
+            var maxDp = {
+                x: moment(healthEntryCLOs[0].OccurrenceDateTime).endOf('day'),
+                y: null
+            }
+            dataPoints.push(maxDp);
+            dataPointsBgColors.push(maxDp);
+        }
+
+
+
+
+        return {
+            dataPoints: dataPoints,
+            dataPointsBgColors: dataPointsBgColors
+        };
+    }
+
+    // Constructor
+    constructor(
+        private readonly chartInstance: UIChart,
+        private readonly graphTooltipInstance: GraphTooltipComponent) {
+    }
+
+
+    // Public methods
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+        let chartOptions =
+        {
+            animation: false,
+            tooltips: {
+                enabled: false
+            },
+            elements: {
+                line: {
+                    tension: 0, // disables bezier curves
+                }
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    distribution: 'linear',
+                    time: {
+                        minUnit: 'hour',
+                        unit: 'hour',
+                        unitStepSize: 1,
+                        displayFormats: {
+                            hour: 'H:mm',
+                            minute: 'H:mm',
+                        }
+                    },
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                        offsetGridLines: false
+                    },
+                    ticks: {
+
+                        fontSize: 9,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 4,
+                        fontColor: 'gray',
+                        beginAtZero: true,
+                        autoSkip: false,
+                        callback: function (value, index, values) {
+                            if (value === '0:00' || value === '6:00' || value === '12:00' || value === '18:00' || value === '23:00') {
+                                return value;
+                            }
+                            else {
+                                return '';
+                            }
+                        }
+                    }
+                }],
+                yAxes: [{
+
+                    gridLines: {
+                        display: true,
+                        drawTicks: false,
+                        drawOnChartArea: true,
+                        tickMarkLength: 5,
+                        drawBorder: true,
+                        zeroLineColor: 'gray'
+                    },
+
+                    ticks: {
+                        padding: 10,
+                        fontColor: 'gray',
+                        //mirror: true,
+                        //padding: 5,
+                        beginAtZero: true,
+                        min: -3,
+                        max: 3,
+                        stepSize: 1,
+                        callback: function (label, index, labels) {
+                            if (label !== 0)
+                                return Enums.HealthLevel[label];
+                            else
+                                return '';
+                        }
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        };
+        return chartOptions;
+    }
+    public GenerateChartData(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, currentSelDateRange: Range<moment.Moment>) {
+
+        // Prepare data
+        var healthEntryCLOsInRange: CLOs.HealthStatusEntryCLO[] = [];
+        var datesWhichAreInGivenRange = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(currentSelDateRange, true);
+        datesWhichAreInGivenRange.forEach((date, index) => {
+
+            // Prepare data
+            let dateKey = date.format('DD/MM/YYYY');
+            var clos = (datesToCLOsDictionary[dateKey] !== undefined) ? datesToCLOsDictionary[dateKey] : [];
+            healthEntryCLOsInRange = healthEntryCLOsInRange.concat(clos);
+        });
+
+        var dataPointsInfo = this.generateDataPointsForChart(healthEntryCLOsInRange);
+
+        // Set data
+        var data = {
+            datasets: [
+                {
+                    pointRadius: 8,
+                    pointStyle: 'circle',
+                    pointBorderWidth: 0,
+                    pointHoverRadius: 8,
+                    borderColor: 'black',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    showLine: true,
+                    data: dataPointsInfo.dataPoints,
+                    pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
+                }
+            ]
+        }
+        return data;
+    }
+
+};
+
+
+/*
 class MonthDisplayMode implements IDisplayMode {
     // Private methods
     private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
@@ -485,4 +689,4 @@ class MonthDisplayMode implements IDisplayMode {
     }
 
 };
-
+*/

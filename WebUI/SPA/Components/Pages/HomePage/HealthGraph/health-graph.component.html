@@ -7,15 +7,16 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">HEALTH</span>
-            <button pButton type="button" icon="fa fa-plus" label="Status"
-                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
+            
         </div>
         <div class="center-section">
-            <navigation-panel #navPanel
-                              (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
-                              (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
+            <!-- <navigation-panel #navPanel
+              (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
+              (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>-->
+            <span class="h2-alt">TODAY</span>
         </div>
         <div class="right-section">
+            
             <!--<select class="view-mode-selector">
                 <option>Day</option>
                 <option>Week</option>
@@ -24,10 +25,13 @@
     </div>
     <div class="body">
         <div id="chart-wrapper-div">
-            <p-chart #chart type="bar" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="155px"></p-chart>
-
-
+            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="125px"></p-chart>
         </div>
+    </div>
+    <div class="footer">
+        <button pButton type="button" icon="fa fa-plus" label="How are you feeling ?"
+                (click)="onAddNewHealthStatusEntryTriggered()"></button>
+
     </div>
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
@@ -35,7 +39,7 @@
                    [PositionStyle]="'horizontal'">
         <no-data-mode [ID]="noDataModes.NoAvailableHealthStatusEntries">
             <span class="msg-label label-discrete">
-                You don't have any Health entries yet.  
+                You don't have any Health entries yet.
             </span>
             <button style="margin-top:15px" pButton type="button" icon="fa fa-plus" label="Add new "
                     (click)="onAddNewHealthStatusEntryTriggered()"></button>

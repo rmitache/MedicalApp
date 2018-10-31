@@ -223,12 +223,11 @@ export class GraphTooltipComponent {
         caretPos.Top = 15;
 
 
-        // Handle case when position overflows screen on the left side
+        // Handle case when position overflows screen 
         if (tooltipPos.Left < 0) {
             tooltipPos.Left = 10;
             caretPos.Left = parentPosition.left + hoverPointLeft - 35;
         }
-
 
         // 
         let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
@@ -313,7 +312,6 @@ export class GraphTooltipComponent {
     }
 }
 
-
 interface ViewModel {
     Title: string;
     AverageHealthLevelValue: number;
@@ -332,8 +330,6 @@ class PosCoordinates {
     constructor(public Left: number = 0, public Top: number = 0) {
     }
 }
-
-
 
 interface HealthLevelDefinition {
     ContainsHealthLevelValue(avgValue);
