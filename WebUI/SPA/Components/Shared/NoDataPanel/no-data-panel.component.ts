@@ -14,9 +14,10 @@ export class NoDataPanelComponent {
 	// Fields
 	@ContentChildren(NoDataModeComponent) noDataModes: QueryList<NoDataModeComponent>;
 	@Input('CurrentNoDataModeID') currentModeID: string;
-	@Input('InnerMarginTop') innerMarginTop: number = 0;
-	@Input('PositionStyle') positionStyle: string = 'vertical';
-	private currentIconName: string = 'fa fa-info-circle fa-6x';
+    @Input('InnerMarginTop') innerMarginTop: number = 0;
+    @Input('PositionStyle') positionStyle: string = 'vertical';
+    @Input('IconSizeInEM') iconSizeInEM: number = 6;
+    @Input('IconName') currentIconName: string = 'fa fa-info-circle';
 
 	// Private methods
 	private refreshUI() {

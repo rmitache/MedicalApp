@@ -3,7 +3,12 @@
         <div class="inner-div"
              [ngClass]="positionStyle === 'horizontal' ? 'horizontal' :''"
              [style.marginTop.px]="innerMarginTop">
-            <i [attr.class]="currentIconName"></i>
+
+
+           
+            <i 
+               [style.font-size.em]="iconSizeInEM"
+               [attr.class]="currentIconName"></i>
             <div class="modes-div">
                 <ng-content></ng-content>
             </div>

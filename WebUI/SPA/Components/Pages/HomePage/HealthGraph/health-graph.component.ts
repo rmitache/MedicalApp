@@ -424,9 +424,9 @@ class DayDisplayMode implements IDisplayMode {
                         max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-                            if (label !== 0)
-                                return Enums.HealthLevel[label];
-                            else
+                            //if (label !== 0)
+                            //    return Enums.HealthLevel[label];
+                            //else
                                 return '';
                         }
                     }

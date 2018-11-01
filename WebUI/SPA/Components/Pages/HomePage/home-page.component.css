@@ -24,12 +24,18 @@
     height: calc(100% - 200px - 20px);
 }
 .health-graph {
-    margin-top: 20px;
+    margin-bottom: 20px;
     float: left;
-    width: calc(60% - 250px);
+    width: calc(2*(100% - 250px)/3 - 10px);
     height: 200px;
 }
-
+.info-to-remember {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    float: left;
+    width: calc((100% - 250px)/3 - 30px);
+    height: 200px;
+}
 .right-side-panel {
     float: right;
     width: 250px;

@@ -16,23 +16,23 @@
             <span class="h2-alt">TODAY</span>
         </div>
         <div class="right-section">
-            
+            <button pButton type="button" icon="fa fa-notes-medical" label="Check in"
+                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
             <!--<select class="view-mode-selector">
-                <option>Day</option>
-                <option>Week</option>
-            </select>-->
+        <option>Day</option>
+        <option>Week</option>
+    </select>-->
         </div>
     </div>
     <div class="body">
         <div id="chart-wrapper-div">
-            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="125px"></p-chart>
+            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="165px"></p-chart>
         </div>
     </div>
-    <div class="footer">
-        <button pButton type="button" icon="fa fa-plus" label="How are you feeling ?"
-                (click)="onAddNewHealthStatusEntryTriggered()"></button>
+    <!--<div class="footer">
+       
 
-    </div>
+    </div>-->
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [InnerMarginTop]="20"

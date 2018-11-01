@@ -22,6 +22,7 @@ import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { IReadOnlyAppStateWithUser, IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.module';
+import { InfoToRememberModule } from './InfoToRemember/info-to-remember.module';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/Medic
         PlansOverviewModule,
 		MedicineTypesOverviewModule,
 		SharedModule,
-        HealthGraphModule
+        HealthGraphModule,
+        InfoToRememberModule
     ],
     providers: [
         StartupDataBundleService,
