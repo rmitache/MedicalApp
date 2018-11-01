@@ -276,24 +276,6 @@ interface IDisplayMode {
 }
 class DayDisplayMode implements IDisplayMode {
     // Private methods
-    private getAverageHealthLevel(healthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
-        var sum: number = 0;
-        var result = 0;
-        healthStatusEntryCLOs.forEach(clo => {
-            sum += clo.HealthLevel;
-        });
-
-        if (healthStatusEntryCLOs.length > 0)
-            result = sum / healthStatusEntryCLOs.length;
-        else
-            result = null;
-
-
-        if (result === 0) {
-            result = 0.2;
-        }
-        return result;
-    }
     private generateDataPointsForChart(healthEntryCLOs: CLOs.HealthStatusEntryCLO[]) {
 
         // Variables
@@ -381,7 +363,7 @@ class DayDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         display: true,
-                        drawOnChartArea: false,
+                        drawOnChartArea: true,
                         offsetGridLines: false
                     },
                     ticks: {
