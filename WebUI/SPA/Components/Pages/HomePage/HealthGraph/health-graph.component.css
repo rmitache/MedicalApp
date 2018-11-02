@@ -48,7 +48,7 @@
         height: calc(100% - 40px);
         width: calc(100%);
     }
-    .frame .footer {
+    /*.frame .footer {
         padding:10px;
         padding-top:0;
         height: 30px;
@@ -58,13 +58,13 @@
 
     .frame .footer button{
         
-    }
+    }*/
 #chart-wrapper-div {
     width: calc(100% - 10px);
     margin-left:5px;
     float:left;
     padding: 0;
-    margin-top:-8px;
+    overflow:visible;
 }
 
 

@@ -103,8 +103,8 @@ export class HealthGraphComponent {
         this.chartInstance.reinit();
 
         // NoData triggers
-        if (this.viewModel.UserHasAnyHealthStatusEntries === false) {
-            this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableHealthStatusEntries;
+        if (filteredHealthStatusEntryCLOs.length === 0) {
+            this.viewModel.CurrentNoDataMode = NoDataModes.NoHealthStatusEntriesToday;
         } else {
             this.viewModel.CurrentNoDataMode = null;
         }
@@ -266,7 +266,7 @@ interface ViewModel {
 }
 
 enum NoDataModes {
-    NoAvailableHealthStatusEntries = 0,
+    NoHealthStatusEntriesToday = 0,
 }
 
 // Supported Display modes
@@ -292,10 +292,31 @@ class DayDisplayMode implements IDisplayMode {
                 y: clo.HealthLevel
             };
             dataPoints.push(dp);
-            if (clo.HealthLevel >= 0) {
-                dataPointsBgColors.push('#9dc340'); // green
-            } else {
-                dataPointsBgColors.push('#f35d5d'); // red
+
+            // Color
+            // great
+            if (clo.HealthLevel > 2) {
+                dataPointsBgColors.push('#284e11');
+            }
+            // good
+            else if (clo.HealthLevel > 1 && clo.HealthLevel <= 2) {
+                dataPointsBgColors.push('#009e11');
+            }
+            // ok
+            else if (clo.HealthLevel > 0 && clo.HealthLevel <= 1) {
+                dataPointsBgColors.push('#b5d7a7');
+            }
+            // notgreat 
+            else if (clo.HealthLevel >= -1 && clo.HealthLevel < 0) {
+                dataPointsBgColors.push('#ff9900');
+            }
+            // bad 
+            else if (clo.HealthLevel >= -2 && clo.HealthLevel < -1) {
+                dataPointsBgColors.push('#e06666');
+            }
+            // very bad
+            else if (clo.HealthLevel < -2) {
+                dataPointsBgColors.push('red');
             }
         });
 
@@ -338,7 +359,7 @@ class DayDisplayMode implements IDisplayMode {
         {
             animation: false,
             tooltips: {
-                enabled: false
+                enabled: false,
             },
             elements: {
                 line: {
@@ -364,7 +385,8 @@ class DayDisplayMode implements IDisplayMode {
                     gridLines: {
                         display: true,
                         drawOnChartArea: true,
-                        offsetGridLines: false
+                        offsetGridLines: false,
+                        color: '#f7f7f7'
                     },
                     ticks: {
 
@@ -389,7 +411,7 @@ class DayDisplayMode implements IDisplayMode {
 
                     gridLines: {
                         display: true,
-                        drawTicks: false,
+                        drawTicks: true,
                         drawOnChartArea: true,
                         tickMarkLength: 5,
                         drawBorder: true,
@@ -398,17 +420,22 @@ class DayDisplayMode implements IDisplayMode {
 
                     ticks: {
                         padding: 10,
-                        fontColor: 'gray',
+                        fontColor: '#b6b6b6',
                         //mirror: true,
                         //padding: 5,
+                        fontSize: 10,
                         beginAtZero: true,
                         min: -3,
                         max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-                            //if (label !== 0)
-                            //    return Enums.HealthLevel[label];
-                            //else
+                            if (label === Enums.HealthLevel.NotGreat)
+                                return 'Not Great';
+                            if (label === Enums.HealthLevel.VeryBad)
+                                return 'Very Bad';
+                            else if (label !== 0)
+                                return Enums.HealthLevel[label];
+                            else
                                 return '';
                         }
                     }

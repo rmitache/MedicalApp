@@ -16,32 +16,29 @@
             <span class="h2-alt">TODAY</span>
         </div>
         <div class="right-section">
-            <button pButton type="button" icon="fa fa-notes-medical" label="Check in"
+            <button pButton type="button" icon="fa fa-plus" label="STATUS"
                     (click)="onAddNewHealthStatusEntryTriggered()"></button>
-            <!--<select class="view-mode-selector">
-        <option>Day</option>
-        <option>Week</option>
-    </select>-->
         </div>
     </div>
     <div class="body">
         <div id="chart-wrapper-div">
-            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="165px"></p-chart>
+            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="150px" style="overflow:visible"></p-chart>
         </div>
     </div>
-    <!--<div class="footer">
+    <div class="footer">
        
 
-    </div>-->
+    </div>
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [InnerMarginTop]="20"
+                   [IconName]="'fa fa-calendar-plus'"
                    [PositionStyle]="'horizontal'">
-        <no-data-mode [ID]="noDataModes.NoAvailableHealthStatusEntries">
+        <no-data-mode [ID]="noDataModes.NoHealthStatusEntriesToday">
             <span class="msg-label label-discrete">
-                You don't have any Health entries yet.
+                You haven't told us how you feel today
             </span>
-            <button style="margin-top:15px" pButton type="button" icon="fa fa-plus" label="Add new "
+            <button style="margin-top:15px" pButton type="button" icon="fa fa-plus" label="Add new"
                     (click)="onAddNewHealthStatusEntryTriggered()"></button>
         </no-data-mode>
 
