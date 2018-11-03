@@ -23,10 +23,51 @@ export class InfoToRememberComponent {
     // Fields
     private readonly noDataModes = NoDataModes;
     private readonly viewModel: ViewModel = {
+        AvailableMedicineTypes: null,
+        TargetMedicineType: null,
+        TargetMedTypeDaysUntilSupplyRunsOut: null,
         CurrentNoDataMode: null,
 
     };
     private readonly subscriptions: Subscription[] = [];
+
+    // Private methods
+    private getMedicineTypeWithFirstSupplyToRunOut(medTypesCLOs: CLOs.MedicineTypeCLO[]) {
+
+        // Variables
+        var firstToRunOut: CLOs.MedicineTypeCLO = null;
+
+        // Get the medicine types which have supply
+        let medTypesWithSupplyInfo = medTypesCLOs.filter(clo => {
+            return clo.SupplyWillLastUntil !== null;
+        });
+
+        // Find the one with the first supply to run out
+        medTypesWithSupplyInfo.forEach(clo => {
+
+            // If there already is a medTypeWithLowestSupply, compare to it
+            if (firstToRunOut === null) {
+                firstToRunOut = clo;
+            } else if (clo.SupplyWillLastUntil < firstToRunOut.SupplyWillLastUntil) {
+                firstToRunOut = clo;
+            }
+        });
+
+
+        return firstToRunOut;
+    }
+    private refreshUI() {
+        this.viewModel.TargetMedicineType = this.getMedicineTypeWithFirstSupplyToRunOut(this.viewModel.AvailableMedicineTypes);
+        let nrOfDaysUntilTargetDate = moment(this.viewModel.TargetMedicineType.SupplyWillLastUntil).diff(moment(), 'day') + 1;
+        this.viewModel.TargetMedTypeDaysUntilSupplyRunsOut = nrOfDaysUntilTargetDate;
+
+        // NoData triggers
+        if (this.viewModel.TargetMedicineType === null) {
+            this.viewModel.CurrentNoDataMode = NoDataModes.NoSupplyInfo;
+        } else {
+            this.viewModel.CurrentNoDataMode = null;
+        }
+    }
 
     // Constructor 
     constructor(
@@ -37,7 +78,9 @@ export class InfoToRememberComponent {
 
     }
     ngOnInit() {
-        //this.viewModel.CurrentNoDataMode = NoDataModes.NoUpcomingPlanChanges;
+        this.viewModel.AvailableMedicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
+        this.refreshUI();
+
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -46,8 +89,11 @@ export class InfoToRememberComponent {
 }
 
 interface ViewModel {
+    AvailableMedicineTypes: CLOs.MedicineTypeCLO[];
+    TargetMedicineType: CLOs.MedicineTypeCLO;
+    TargetMedTypeDaysUntilSupplyRunsOut: number;
     CurrentNoDataMode: NoDataModes;
 }
 enum NoDataModes {
-    NoUpcomingPlanChanges = 0,
+    NoSupplyInfo = 0,
 }

@@ -26,14 +26,14 @@
 .health-graph {
     margin-bottom: 20px;
     float: left;
-    width: calc((100% - 250px)/2 - 10px);
+    width: calc(2*(100% - 250px)/3 - 10px);
     height: 180px;
 }
 .info-to-remember {
     margin-bottom: 20px;
     margin-left: 20px;
     float: left;
-    width: calc((100% - 250px)/2 - 30px);
+    width: calc((100% - 250px)/3 - 30px);
     height: 180px;
 }
 .right-side-panel {

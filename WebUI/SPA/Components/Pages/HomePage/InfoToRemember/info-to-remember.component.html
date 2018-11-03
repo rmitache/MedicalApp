@@ -3,7 +3,7 @@
 <div class="frame">
     <div class="header">
         <div class="left-section">
-            <span class="header-label h1">SUPPLY</span>
+            <span class="header-label h1">REMINDERS</span>
 
         </div>
         <div class="center-section">
@@ -17,13 +17,15 @@
     <div class="body">
         <div class="upcoming-sub-section">
             <div class="when-div h2">
-                <span class="when-label h1">25</span> days until
+                <div>
+                    <span class="when-label h1">{{viewModel.TargetMedTypeDaysUntilSupplyRunsOut}}</span> days until
+                </div>
                 <!--<span class="when-label h1">Tomorrow</span>-->
             </div>
 
             <div class="what-happens-div">
                 <span class="label">
-                    ...you will run out of <strong>Vitamin C</strong>
+                    ...you will run out of <strong>{{viewModel.TargetMedicineType.Name}}</strong>
                 </span>
             </div>
         </div>
@@ -32,12 +34,12 @@
     </div>
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
-                   [InnerMarginTop]="15"
+                  
                    [IconSizeInEM]="5"
                    [PositionStyle]="'vertical'">
-        <no-data-mode [ID]="noDataModes.NoUpcomingPlanChanges">
+        <no-data-mode [ID]="noDataModes.NoSupplyInfo">
             <span class="msg-label label-discrete">
-                There are no upcoming events or changes to your treatment plans
+                There are no reminders
             </span>
         </no-data-mode>
 

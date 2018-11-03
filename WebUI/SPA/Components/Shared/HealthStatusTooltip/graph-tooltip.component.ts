@@ -271,6 +271,7 @@ export class GraphTooltipComponent {
         var data = {
             datasets: [
                 {
+                    //borderDash: [2, 2],
                     pointRadius: 5,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,

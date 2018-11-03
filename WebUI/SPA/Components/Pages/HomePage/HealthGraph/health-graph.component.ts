@@ -465,13 +465,14 @@ class DayDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
+                    //borderDash: [5, 5],
                     pointRadius: 8,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 1.5,
+                    borderWidth: 2,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

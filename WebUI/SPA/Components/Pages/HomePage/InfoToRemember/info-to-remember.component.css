@@ -42,7 +42,8 @@
         }
 
     .frame .body {
-        height: calc(100% - 40px);
+        height: calc(100% - 40px - 20px);
+        padding-top: 20px;
         width: calc(100%);
     }
 
@@ -52,7 +53,6 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    margin-top:10px;
 }
 
     .upcoming-sub-section .when-div {
@@ -65,7 +65,7 @@
             padding: 10px;
             min-width: 30px;
             border-radius: 50%;
-            color: red;
+            color: #2399e5;
             background-color: white;
             border: solid 3px #c4c4c4;
             font-size: 25px;
@@ -82,7 +82,7 @@
     width: 100%;
     display: block;
     float: left;
-    transform: translate(0, calc(-100%))
+    transform: translate(0, calc(-100%));
 }
 
     .no-data-panel /deep/ .msg-label {

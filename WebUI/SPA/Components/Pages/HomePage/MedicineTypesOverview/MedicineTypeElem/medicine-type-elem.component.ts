@@ -77,7 +77,6 @@ export class MedicineTypeElemComponent {
                 medicineTypeCLO.SupplyWillLastUntil);
         }
 
-        //return null; // default return value
     }
     private getMenuItems() {
 
