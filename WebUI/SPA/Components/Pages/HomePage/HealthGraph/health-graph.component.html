@@ -31,15 +31,13 @@
     </div>
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
-                   [InnerMarginTop]="20"
                    [IconName]="'fa fa-calendar-plus'"
-                   [PositionStyle]="'horizontal'">
+                   [PositionStyle]="'vertical'">
         <no-data-mode [ID]="noDataModes.NoHealthStatusEntriesToday">
             <span class="msg-label label-discrete">
                 You haven't told us how you feel today
             </span>
-            <button style="margin-top:15px" pButton type="button" icon="fa fa-plus" label="Add new"
-                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
+            
         </no-data-mode>
 
     </no-data-panel>

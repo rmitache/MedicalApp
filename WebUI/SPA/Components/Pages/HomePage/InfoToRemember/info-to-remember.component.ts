@@ -11,6 +11,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
+import { CommandManager } from '../../../../Core/Managers/CommandManager/command.manager';
 
 
 @Component({
@@ -32,6 +33,14 @@ export class InfoToRememberComponent {
     private readonly subscriptions: Subscription[] = [];
 
     // Private methods
+    private reloadDataFromServer(): Promise<void> {
+        var promise = this.dataService.GetMedicineTypes()
+            .then((medTypes) => {
+                this.viewModel.AvailableMedicineTypes = medTypes;
+            });
+
+        return promise;
+    }
     private getMedicineTypeWithFirstSupplyToRunOut(medTypesCLOs: CLOs.MedicineTypeCLO[]) {
 
         // Variables
@@ -57,9 +66,24 @@ export class InfoToRememberComponent {
         return firstToRunOut;
     }
     private refreshUI() {
-        this.viewModel.TargetMedicineType = this.getMedicineTypeWithFirstSupplyToRunOut(this.viewModel.AvailableMedicineTypes);
-        let nrOfDaysUntilTargetDate = moment(this.viewModel.TargetMedicineType.SupplyWillLastUntil).diff(moment(), 'day') + 1;
-        this.viewModel.TargetMedTypeDaysUntilSupplyRunsOut = nrOfDaysUntilTargetDate;
+
+        // Clear fields
+        this.viewModel.TargetMedicineType = null;
+        this.viewModel.TargetMedTypeDaysUntilSupplyRunsOut = null;
+
+        // Recalculate
+        if (this.viewModel.AvailableMedicineTypes !== null) {
+
+            // Get the medicineType whose supply will run out first. Returns null if there are no medTypes in use with supply being tracked
+            this.viewModel.TargetMedicineType = this.getMedicineTypeWithFirstSupplyToRunOut(this.viewModel.AvailableMedicineTypes);
+
+            // 
+            if (this.viewModel.TargetMedicineType) {
+                let nrOfDaysUntilTargetDate = moment(this.viewModel.TargetMedicineType.SupplyWillLastUntil).diff(moment(), 'day') + 1;
+                this.viewModel.TargetMedTypeDaysUntilSupplyRunsOut = nrOfDaysUntilTargetDate;
+            }
+        }
+
 
         // NoData triggers
         if (this.viewModel.TargetMedicineType === null) {
@@ -71,11 +95,11 @@ export class InfoToRememberComponent {
 
     // Constructor 
     constructor(
+        private readonly commandManager: CommandManager,
         private readonly dataService: HomePageDataService,
     ) {
-
-
-
+        // Register self to CommandManager
+        this.commandManager.RegisterComponentInstance(this);
     }
     ngOnInit() {
         this.viewModel.AvailableMedicineTypes = this.dataService.GetMedicineTypesFromBundle().ToArray();
@@ -84,6 +108,14 @@ export class InfoToRememberComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public methods
+    public ReloadData() {
+        this.reloadDataFromServer()
+            .then(() => {
+                this.refreshUI();
+            });
     }
 
 }
