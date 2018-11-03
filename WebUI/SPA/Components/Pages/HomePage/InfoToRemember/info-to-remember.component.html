@@ -3,21 +3,33 @@
 <div class="frame">
     <div class="header">
         <div class="left-section">
-            <span class="header-label h1">UPCOMING</span>
+            <span class="header-label h1">SUPPLY</span>
 
         </div>
         <div class="center-section">
 
-            <!--<span class="h2-alt">TODAY</span>-->
+
         </div>
         <div class="right-section">
 
         </div>
     </div>
     <div class="body">
-        Info to remember
-    </div>
+        <div class="upcoming-sub-section">
+            <div class="when-div h2">
+                <span class="when-label h1">25</span> days until
+                <!--<span class="when-label h1">Tomorrow</span>-->
+            </div>
 
+            <div class="what-happens-div">
+                <span class="label">
+                    ...you will run out of <strong>Vitamin C</strong>
+                </span>
+            </div>
+        </div>
+
+
+    </div>
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [InnerMarginTop]="15"
@@ -25,8 +37,8 @@
                    [PositionStyle]="'vertical'">
         <no-data-mode [ID]="noDataModes.NoUpcomingPlanChanges">
             <span class="msg-label label-discrete">
-                You have no upcoming changes to treatment plans.
-            </span>            
+                There are no upcoming events or changes to your treatment plans
+            </span>
         </no-data-mode>
 
     </no-data-panel>

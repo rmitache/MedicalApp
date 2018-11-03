@@ -384,9 +384,9 @@ class DayDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         display: true,
-                        drawOnChartArea: true,
+                        drawBorder:false,
+                        drawOnChartArea: false,
                         offsetGridLines: false,
-                        color: '#f7f7f7'
                     },
                     ticks: {
 
@@ -471,7 +471,7 @@ class DayDisplayMode implements IDisplayMode {
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 2,
+                    borderWidth: 1.5,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

@@ -47,7 +47,36 @@
     }
 
 
+.upcoming-sub-section {
+    
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top:10px;
+}
 
+    .upcoming-sub-section .when-div {
+        color: #bababa;
+        vertical-align: middle;
+    }
+
+        .upcoming-sub-section .when-div .when-label {
+            display: inline-block;
+            padding: 10px;
+            min-width: 30px;
+            border-radius: 50%;
+            color: red;
+            background-color: white;
+            border: solid 3px #c4c4c4;
+            font-size: 25px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+
+    .upcoming-sub-section .what-happens-div {
+        margin-top:10px;
+    }
 .no-data-panel {
     height: calc(100% - 40px);
     width: 100%;

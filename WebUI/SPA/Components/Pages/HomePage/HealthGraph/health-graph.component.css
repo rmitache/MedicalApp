@@ -26,23 +26,26 @@
                 float: left;
             }
 
-            .frame .header .left-section button {
-                float: left;
-                margin-left: 10px;
-            }
+            
 
         .frame .header .center-section {
             float: left;
             width: calc(34%);
             text-align: center;
+            
         }
-
+        .frame .header .center-section span {
+            
+        }
         .frame .header .right-section {
             float: right;
             width: calc(33%);
             height: 30px;
             text-align: right;
         }
+            .frame .header .right-section button {
+                float: right;
+            }
 
     .frame .body {
         height: calc(100% - 40px);

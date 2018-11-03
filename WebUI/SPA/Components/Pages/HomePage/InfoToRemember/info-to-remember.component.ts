@@ -28,32 +28,26 @@ export class InfoToRememberComponent {
     };
     private readonly subscriptions: Subscription[] = [];
 
-
-
     // Constructor 
     constructor(
-        
         private readonly dataService: HomePageDataService,
-        
     ) {
-       
+
 
 
     }
     ngOnInit() {
-        this.viewModel.CurrentNoDataMode = NoDataModes.NoUpcomingPlanChanges;
+        //this.viewModel.CurrentNoDataMode = NoDataModes.NoUpcomingPlanChanges;
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
-    // Event handlers
 }
 
 interface ViewModel {
     CurrentNoDataMode: NoDataModes;
 }
-
 enum NoDataModes {
     NoUpcomingPlanChanges = 0,
 }

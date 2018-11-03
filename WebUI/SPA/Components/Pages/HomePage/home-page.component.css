@@ -21,20 +21,20 @@
 .schedule {
     float: left;
     width: calc(100% - 250px - 20px);
-    height: calc(100% - 200px - 20px);
+    height: calc(100% - 180px - 20px);
 }
 .health-graph {
     margin-bottom: 20px;
     float: left;
     width: calc((100% - 250px)/2 - 10px);
-    height: 200px;
+    height: 180px;
 }
 .info-to-remember {
     margin-bottom: 20px;
     margin-left: 20px;
     float: left;
     width: calc((100% - 250px)/2 - 30px);
-    height: 200px;
+    height: 180px;
 }
 .right-side-panel {
     float: right;

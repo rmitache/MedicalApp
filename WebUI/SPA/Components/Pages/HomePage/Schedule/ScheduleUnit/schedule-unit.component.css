@@ -128,10 +128,8 @@
     .plan-div .factor-record-list-in-plan-grouping .factor-record-item .recently-added-span {
         
         padding: 3px;
-        border-radius:15px;
+        border-radius:5px;
         background-color: #4fc642;
-        
         display: inline-block;
-        position:relative;
-        top:-2px;
+        top:-12px;
     }
