@@ -66,7 +66,7 @@
     }
 
 
-/*Computer*/
+/*Bigger than 1024px in width*/
 @media only screen and (min-width: 1024px) {
     .outer-wrapper {
         min-width: calc(1024px - 24px);
@@ -76,8 +76,34 @@
     }
 }
 
-/*Tablet*/
-@media only screen and (max-width: 768px) {
+/*Lower than 1024px in width*/
+@media only screen and (max-width: 1024px) {
+    .outer-wrapper {
+        min-width: calc(768px - 12px);
+        max-width: 80%;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .right-side-panel {
+        width: 190px;
+    }
+
+    .schedule {
+        width: calc(100% - 190px - 20px);
+    }
+
+    .health-graph {
+        width: calc(2*(100% - 190px)/3 - 10px);
+    }
+
+    .info-to-remember {
+        width: calc((100% - 190px)/3 - 30px);
+    }
+}
+
+/*Up to 768px in width*/
+/*@media only screen and (max-width: 768px) {
     .outer-wrapper {
         width: calc(768px - 24px);
     }
@@ -93,7 +119,7 @@
     .right-side-panel {
         width: 200px;
     }
-}
+}*/
 
 /*Mobile*/
 /*@media only screen and (max-width: 375px) {
