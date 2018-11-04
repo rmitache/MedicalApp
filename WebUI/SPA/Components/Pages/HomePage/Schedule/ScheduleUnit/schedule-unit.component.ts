@@ -51,7 +51,7 @@ export class ScheduleUnitComponent {
 			this.dataService.MarkFactorRecordsAsTaken([factorRecordCLO])
 				.then(() => {
 					this.commandManager.InvokeCommandFlow('ToggleTakenForMedicineFactorRecordFlow', [factorRecordCLO]);
-
+                    this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
 				});
         } else {
             alert('You cannot take medicine more than 24 hours in the future');

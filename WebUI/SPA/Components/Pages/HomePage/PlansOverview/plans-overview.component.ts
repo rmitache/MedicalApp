@@ -84,6 +84,7 @@ export class PlansOverviewComponent {
 
 
                                         this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+                                        this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
 
                                         setTimeout(() => {
                                             this.spinnerService.Hide();

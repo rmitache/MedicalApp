@@ -239,6 +239,8 @@ export class MedicineTypesOverviewComponent {
 
                                     // 
                                     this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                                    this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
+
                                     this.spinnerService.Hide();
 
                                     resolve();
@@ -265,6 +267,7 @@ export class MedicineTypesOverviewComponent {
             this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).UpdateCLOSupplyFields(null, null); 
 
             this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+            this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
         });
     }
 }
