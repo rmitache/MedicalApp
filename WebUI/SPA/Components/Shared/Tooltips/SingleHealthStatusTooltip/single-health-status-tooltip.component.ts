@@ -82,10 +82,10 @@ export class SingleHealthStatusTooltipComponent {
         // Set position
         var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
         var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
+        tooltipPos.Top = parentPosition.top + hoverPointTop + 30;
         tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
         caretPos.Left = currentWidth / 2 - 21;
-        caretPos.Top = 15;
+        caretPos.Top = -15;
 
 
         // Handle case when position overflows screen 

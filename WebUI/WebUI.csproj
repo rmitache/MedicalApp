@@ -112,7 +112,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SPA\Components\Shared\HealthStatusTooltip\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOServices\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
