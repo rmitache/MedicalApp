@@ -30,11 +30,10 @@ import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/
 import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
-import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
 import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
 import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
-import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/symptom-type-elem.component';
+import { TooltipsModule } from './Tooltips/tooltips.module';
 
 
 @NgModule({
@@ -58,7 +57,8 @@ import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/
 		TooltipModule,
 		InplaceModule,
 		HeaderBarModule,
-		NoDataPanelModule
+        NoDataPanelModule,
+        TooltipsModule,
     ],
     declarations: [
         IconButtonComponent,
@@ -69,9 +69,7 @@ import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/
         IFRPGroupListComponent,
         NavigationPanelComponent,
         FilterListPanelComponent,
-        GraphTooltipComponent,
         PlanVersionTooltipComponent,
-        SymptomTypeElemComponent
          
     ],
     exports: [
@@ -91,7 +89,6 @@ import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/
         HeaderBarComponent,
         FilterListPanelComponent,
 		TabsModule,
-		GraphTooltipComponent,
 		ButtonModule,
 		CheckboxModule,
 		RadioButtonModule,
@@ -101,7 +98,7 @@ import { SymptomTypeElemComponent } from './HealthStatusTooltip/SymptomTypeElem/
 		HeaderBarModule,
         NoDataPanelModule,
         PlanVersionTooltipComponent,
-        SymptomTypeElemComponent
+        TooltipsModule
     ]
 })
 export class SharedModule { }

@@ -24,9 +24,9 @@ import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { IndicatorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/IndicatorsFiltersPanel/indicators-filters-panel.component';
 import { HealthStatusDatasetGenerator, SymptomTypeDatasetGenerator } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/dataset-generator';
-import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { ColorProvider } from './color-provider';
+import { HealthStatusesOverDayTooltipComponent } from '../../../Shared/Tooltips/HealthStatusesOverDayTooltip/health-statuses-over-day-tooltip.component';
 
 
 @Component({
@@ -41,8 +41,8 @@ export class IndicatorsViewComponent {
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.SingleMonth;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
-    @ViewChild('graphTooltip')
-    private graphTooltipInstance: GraphTooltipComponent;
+    @ViewChild('healthStatusTooltip')
+    private healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent;
     @ViewChild('filtersPanel')
     private filtersPanelInstance: IndicatorsFiltersPanelComponent;
     private canvas: any;
@@ -95,8 +95,11 @@ export class IndicatorsViewComponent {
     }
     private getCurrentDisplayModeInstance(): IDisplayMode {
 
-        var getChartInstanceFunction: GetChartCanvasFunc = () => {
+        var getChartCanvasFunction: GetChartCanvasFunc = () => {
             return this.canvas;
+        };
+        var getChartInstanceFunction: GetChartInstanceFunc = () => {
+            return this.chartInstance;
         };
 
         // Get Current Mode strategy
@@ -106,8 +109,8 @@ export class IndicatorsViewComponent {
             //    this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
             throw new Error('SingleMonth not working at the moment');
         } else if (this.viewModel.DateRangeDisplayMode === DateRangeMode.ThreeMonths) {
-            currentStrategy = new ThreeMonthsDisplayMode(getChartInstanceFunction, this.graphTooltipInstance,
-                this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
+            currentStrategy = new ThreeMonthsDisplayMode(getChartInstanceFunction, getChartCanvasFunction,
+                this.healthStatusesTooltipInstance, this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
         } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
@@ -306,6 +309,7 @@ export class SymptomTypeDatasetItem {
 
 // Supported Display modes
 type GetChartCanvasFunc = () => any;
+type GetChartInstanceFunc = () => any;
 interface IDisplayMode {
     GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] });
     GenerateChartData(symptomTypesDatasetItems: SymptomTypeDatasetItem[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[],
@@ -485,8 +489,9 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
 
     // Constructor
     constructor(
+        private readonly getChartInstance: GetChartInstanceFunc,
         private readonly getChartCanvas: GetChartCanvasFunc,
-        private readonly graphTooltipInstance: GraphTooltipComponent,
+        private readonly healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent,
         private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
         private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator) {
     }
@@ -499,10 +504,10 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                 enabled: false,
                 custom: (tooltipModel) => {
                     if (tooltipModel.opacity === 0) {
-                        this.graphTooltipInstance.HideAndClear();
+                        this.healthStatusesTooltipInstance.HideAndClear();
                         return;
                     }
-
+                    
                     // Variables
                     var canvas = this.getChartCanvas();
                     var dateString = tooltipModel.title[0];
@@ -510,16 +515,18 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
                     var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
                     var parentPosition = canvas.getBoundingClientRect();
+                    let index = tooltipModel.dataPoints[0].index;
+                    let dataPointColor = this.getChartInstance().data.datasets[0].backgroundColor[index];
 
                     // Hack for positioning of tooltip on negative bar chart values
                     var value = tooltipModel.dataPoints[0].yLabel;
                     if (value < 0) {
                         tooltipModel.caretY = (parentPosition.height / 2);
                     }
-
+                    
                     //
-                    this.graphTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition,
-                        tooltipModel.caretX, tooltipModel.caretY, avgHealthLevelValue);
+                    this.healthStatusesTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition,
+                        tooltipModel.caretX, tooltipModel.caretY, avgHealthLevelValue, dataPointColor);
                 }
             },
             elements: {

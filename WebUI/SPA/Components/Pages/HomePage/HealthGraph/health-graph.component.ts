@@ -20,8 +20,8 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { GraphTooltipComponent } from 'SPA/Components/Shared/HealthStatusTooltip/graph-tooltip.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
+import { SingleHealthStatusTooltipComponent } from '../../../Shared/Tooltips/SingleHealthStatusTooltip/single-health-status-tooltip.component';
 
 
 @Component({
@@ -35,8 +35,8 @@ export class HealthGraphComponent {
     private availableWindowPaddingInMonths = 0;
     @ViewChild('chart')
     private chartInstance: UIChart;
-    @ViewChild('graphTooltip')
-    private graphTooltipInstance: GraphTooltipComponent;
+    @ViewChild('healthStatusTooltip')
+    private healthStatusTooltipInstance: SingleHealthStatusTooltipComponent;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
     private readonly noDataModes = NoDataModes;
@@ -61,7 +61,7 @@ export class HealthGraphComponent {
         // Get Current Mode strategy
         let currentStrategy: IDisplayMode = null;
         if (this.viewModel.DateRangeDisplayMode === DateRangeMode.SingleDay) {
-            currentStrategy = new DayDisplayMode(this.chartInstance, this.graphTooltipInstance);
+            currentStrategy = new DayDisplayMode(this.chartInstance, this.healthStatusTooltipInstance);
         } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
@@ -345,11 +345,24 @@ class DayDisplayMode implements IDisplayMode {
             dataPointsBgColors: dataPointsBgColors
         };
     }
+    private getHealthStatusCLOByDateTime(targetDateTime: moment.Moment, datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] })
+        : CLOs.HealthStatusEntryCLO {
+        var allHealthEntryCLOs = HelperFunctions.ConvertDictionaryToArray(datesToCLOsDictionary)[0];
+        for (var i = 0; i < allHealthEntryCLOs.length; i++) {
+            let clo = allHealthEntryCLOs[i];
+            
+            if (moment(clo.OccurrenceDateTime).isSame(targetDateTime)) {
+                return clo;
+            }
+        }
+
+        return null;
+    }
 
     // Constructor
     constructor(
         private readonly chartInstance: UIChart,
-        private readonly graphTooltipInstance: GraphTooltipComponent) {
+        private readonly healthStatusTooltipInstance: SingleHealthStatusTooltipComponent) {
     }
 
 
@@ -360,6 +373,24 @@ class DayDisplayMode implements IDisplayMode {
             animation: false,
             tooltips: {
                 enabled: false,
+                custom: (tooltipModel) => {
+                    if (tooltipModel.opacity === 0) {
+                        this.healthStatusTooltipInstance.HideAndClear();
+                        return;
+                    }
+
+                    // Variables
+                    let dateTimeString = tooltipModel.title[0];
+                    let index = tooltipModel.dataPoints[0].index;
+                    let dataPointColor = this.chartInstance.data.datasets[0].pointBackgroundColor[index];
+                    let targetHealthStatusCLO = this.getHealthStatusCLOByDateTime(moment(dateTimeString), datesToCLOsDictionary);
+                    let parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
+
+                    //
+                    this.healthStatusTooltipInstance.SetDataAndPosition(targetHealthStatusCLO, parentPosition,
+                        tooltipModel.caretX, tooltipModel.caretY, dataPointColor);
+                }
+
             },
             elements: {
                 line: {
@@ -465,14 +496,14 @@ class DayDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    //borderDash: [5, 5],
+                    borderDash: [5, 5],
                     pointRadius: 8,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

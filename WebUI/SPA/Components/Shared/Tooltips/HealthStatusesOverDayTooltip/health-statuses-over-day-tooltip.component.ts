@@ -10,12 +10,12 @@ import { HealthStatusEntryCLOService, SymptomTypeWithAvgIntensity } from 'SPA/Do
 
 
 @Component({
-    selector: 'graph-tooltip',
-    templateUrl: './graph-tooltip.component.html',
-    styleUrls: ['./graph-tooltip.component.css'],
-    host: { 'class': 'graph-tooltip' }
+    selector: 'health-statuses-over-day-tooltip',
+    templateUrl: './health-statuses-over-day-tooltip.component.html',
+    styleUrls: ['./health-statuses-over-day-tooltip.component.css'],
+    host: { 'class': 'health-statuses-over-day-tooltip' }
 })
-export class GraphTooltipComponent {
+export class HealthStatusesOverDayTooltipComponent {
     // Fields
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
@@ -24,50 +24,45 @@ export class GraphTooltipComponent {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= 3 && avgValue > 2;
             },
-            Color: '#9dc340',
             Label: 'Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= 2 && avgValue > 1;
             },
-            Color: '#9dc340',
             Label: 'Good'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= 1 && avgValue > 0;
             },
-            Color: '#9dc340',
             Label: 'Ok'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= 0 && avgValue > -1;
             },
-            Color: '#f35d5d',
             Label: 'Not Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= -1 && avgValue > -2;
             },
-            Color: '#f35d5d',
             Label: 'Bad'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
                 return avgValue <= -2 && avgValue >= -3;
             },
-            Color: '#f35d5d',
             Label: 'Very Bad'
         }];
     private readonly viewModel: ViewModel = {
         Title: '',
-        AverageHealthLevelValue: null,
-        SelectedHealthLevelDefinition: null,
-        ChartData: null,
+        HealthLevelDefinition: null,
+        HealthLevelColor: null,
         SymptomTypes: null,
+
+        ChartData: null,
 
         HideSymptomsDiv: false,
         Visible: false,
@@ -137,7 +132,7 @@ export class GraphTooltipComponent {
 
                     ticks: {
                         fontColor: 'gray',
-                        
+
                         padding: 5,
                         beginAtZero: true,
                         min: -3,
@@ -234,26 +229,22 @@ export class GraphTooltipComponent {
         return returnArray;
     }
 
-
     // Constructor 
     constructor(
         private readonly healthStatusEntryCLOService: HealthStatusEntryCLOService
     ) {
 
     }
-    ngOnInit() {
-
-    }
 
     // Public 
-    public SetDataAndPosition(dateString: string, healthEntryCLOs: CLOs.HealthStatusEntryCLO[], parentPosition: any,
-        caretX: number, caretY: number, avgHealthLevelValue: number = null) {
-        this.viewModel.Title = dateString;
-        this.viewModel.AverageHealthLevelValue = avgHealthLevelValue;
-        
-        this.viewModel.SelectedHealthLevelDefinition = this.healthLevelDefinitions.find((def) => {
-            return def.ContainsHealthLevelValue(avgHealthLevelValue);
+    public SetDataAndPosition(titleString: string, healthEntryCLOs: CLOs.HealthStatusEntryCLO[], parentPosition: any,
+        caretX: number, caretY: number, averageHealthLevelValue: number, healthLevelColor: string) {
+        this.viewModel.Title = titleString;
+        this.viewModel.HealthLevelColor = healthLevelColor;
+        this.viewModel.HealthLevelDefinition = this.healthLevelDefinitions.find((def) => {
+            return def.ContainsHealthLevelValue(averageHealthLevelValue);
         });
+
 
         // Generate dataPoints for chart
         var sortedCLOs = healthEntryCLOs.sort((f1, f2) => {
@@ -277,7 +268,7 @@ export class GraphTooltipComponent {
                     pointBorderWidth: 0,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth:1,
+                    borderWidth: 1,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,
@@ -306,6 +297,8 @@ export class GraphTooltipComponent {
             this.viewModel.Title = '';
             this.viewModel.ChartData = null;
             this.viewModel.SymptomTypes = null;
+            this.viewModel.HealthLevelDefinition = null;
+            this.viewModel.HealthLevelColor = null; 
 
             this.viewModel.TooltipPos = null;
             this.viewModel.CaretPos = null;
@@ -315,17 +308,16 @@ export class GraphTooltipComponent {
 
 interface ViewModel {
     Title: string;
-    AverageHealthLevelValue: number;
-    SelectedHealthLevelDefinition: HealthLevelDefinition;
+    HealthLevelDefinition: HealthLevelDefinition;
+    HealthLevelColor: string;
+    SymptomTypes: SymptomTypeWithAvgIntensity[];
 
     ChartData: any;
-    SymptomTypes: SymptomTypeWithAvgIntensity[];
 
     HideSymptomsDiv: boolean;
     Visible: boolean;
     TooltipPos: PosCoordinates;
     CaretPos: PosCoordinates;
-
 }
 class PosCoordinates {
     constructor(public Left: number = 0, public Top: number = 0) {
@@ -335,5 +327,4 @@ class PosCoordinates {
 interface HealthLevelDefinition {
     ContainsHealthLevelValue(avgValue);
     Label: string;
-    Color: string;
 }

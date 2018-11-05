@@ -1,0 +1,51 @@
+
+
+.frame {
+    width: 150px;
+    border: solid 1px #d5d5d5;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    padding: 7px 7px 0 7px;
+    z-index: 9999999999;
+}
+
+.symptoms-div {
+    text-align: center;
+}
+
+    .symptoms-div .symptom-type-elem {
+        display: inline-block;
+        margin-top: 3px;
+        margin-left: 3px;
+    }
+
+
+.date-label-div {
+    text-align: center;
+    height: 20px;
+    margin-top: 8px;
+}
+
+
+.health-level-div {
+    text-align:center;
+    margin-top:8px;
+    margin-bottom:-10px;
+}
+
+.health-level-div span {
+}
+
+
+.caret-div {
+    width: 0;
+    height: 0;
+    border-top: solid 15px black;
+    border-left: solid 15px transparent;
+    border-right: solid 15px transparent;
+    border-bottom: none;
+    position: relative;
+    /*left: calc(50% - 10px);
+        bottom: -5px;*/
+}

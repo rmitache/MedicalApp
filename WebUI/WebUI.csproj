@@ -52,6 +52,7 @@
     <None Remove="SPA\Components\Shared\NoDataPanel\no-data-panel.module.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
     <None Remove="SPA\Components\Shared\Tabs\tabs.module.ts" />
+    <None Remove="SPA\Components\Shared\Tooltips\SingleHealthStatusTooltip\single-health-status-tooltip.module.ts" />
     <None Remove="SPA\Core\CLO\i-clo.factory.ts" />
     <None Remove="SPA\Core\core.module.ts" />
     <None Remove="SPA\Core\Helpers\comparers.ts" />
@@ -111,6 +112,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SPA\Components\Shared\HealthStatusTooltip\" />
     <Folder Include="SPA\Content\Images\" />
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOServices\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
@@ -158,6 +160,7 @@
     <TypeScriptCompile Include="SPA\Components\Shared\NoDataPanel\no-data-panel.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\shared.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Tabs\tabs.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Tooltips\tooltips.module.ts" />
     <TypeScriptCompile Include="SPA\Core\CLO\i-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\Core\core.module.ts" />
     <TypeScriptCompile Include="SPA\Core\CLO\base.clo.ts" />
