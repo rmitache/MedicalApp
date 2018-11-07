@@ -7,6 +7,7 @@ using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BLL.DomainModel.Users.BLOs;
 
 namespace WebUI.Controllers
 {
@@ -34,9 +35,18 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<JsonResult> Login([FromBody]LogInUserModel model)
         {
-            bool loginSuccessful = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn);
+            //// Find the UserAccount matching the credentials
+            //var user = webSecurityManager.GetUserAccount(model.Email, model.Password);
 
-            return Json(loginSuccessful);
+            // If it has accepted the terms and conditions
+            // Login
+            // Else 
+
+
+
+            var user = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn);
+            
+            return Json(user);
         }
         [Route("LoginPage/Logout")]
         [HttpPost]

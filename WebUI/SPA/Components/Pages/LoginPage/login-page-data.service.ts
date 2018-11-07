@@ -24,7 +24,7 @@ export class LoginPageDataService {
     ) { }
 
 
-    public Login(loginModel: Object): Promise<boolean> {
+    public Login(loginModel: Object): Promise<CLOs.UserAccountCLO> {
         let apiMethodName:string = 'Login';
 
         return this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, loginModel).toPromise();

@@ -1,6 +1,6 @@
 ﻿I. COMMAND to update entities from DATABASE
 
-dotnet ef dbcontext scaffold "Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --context DataEntitiesContext --output-dir Entities -v -f
+dotnet ef dbcontext scaffold "Server=MSI\SQLExpress;Database=MedicalApp;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --context DataEntitiesContext --output-dir Entities -v -f
 
 OBS -> when u run the above, the DataEntitiesContext.cs file gets overriden and you need to manually apply point VI again !!!!!
 

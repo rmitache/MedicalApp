@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Project modules
+import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as  HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 
 // Components
 import { LoginPageDataService } from 'SPA/Components/Pages/LoginPage/login-page-data.service';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
+import { AcceptTermsDialogComponent } from './AcceptTermsDialog/accept-terms-dialog.component';
 
 
 @Component({
@@ -27,6 +29,47 @@ export class LoginPanelComponent {
         Password: null,
         KeepLoggedIn: false,
     };
+
+    // Private methods
+    private openAcceptTermsDialog(userCLO: CLOs.UserAccountCLO) {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
+            title: 'Terms and Conditions',
+            childComponent: AcceptTermsDialogComponent,
+            data: null,
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let compInstance = childComponentInstance as AcceptTermsDialogComponent;
+                        return !compInstance.GetValidState();
+                    },
+                    text: 'Stop',
+                    buttonClass: 'ui-button-danger',
+                    onAction: (childComponentInstance: any) => {
+                        let promiseWrapper = new Promise<void>((resolve) => {
+
+                            
+                           resolve();
+                                    
+                        });
+                        return promiseWrapper;
+                    }
+                },
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    },
+                    buttonClass: 'ui-button-secondary'
+                }
+            ]
+
+
+        });
+
+    }
 
     // Constructor 
     constructor(
@@ -61,9 +104,12 @@ export class LoginPanelComponent {
 			
             var loginPromise = this.loginPageDataService.Login(loginModel);
 			this.spinnerService.Show();
-            loginPromise.then((loginSuccessful) => {
-                if (loginSuccessful === true) {
-                    window.location.href = '/HomePage';
+            loginPromise.then((loggedInUser) => {
+                if (loggedInUser !== null) {
+
+                    this.openAcceptTermsDialog(loggedInUser);
+
+                    //window.location.href = '/HomePage';
                 }
 
                 else {

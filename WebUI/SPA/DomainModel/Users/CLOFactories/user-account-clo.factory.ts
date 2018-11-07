@@ -10,9 +10,7 @@ export class UserAccountCLOFactory implements ICLOFactory<CLOs.UserAccountCLO> {
         let newCLO = new CLOs.UserAccountCLO();
         newCLO.ID = blo['ID'];
         newCLO.Email = blo['Email'];
-        newCLO.SignupDate = new Date(blo['SignupDate']);
-        newCLO.BirthDate = new Date(blo['BirthDate']);
-        newCLO.Language = blo['Language'];
+        newCLO.TermsAcceptedDate = blo['TermsAcceptedDate'];
 
         return newCLO;
     }

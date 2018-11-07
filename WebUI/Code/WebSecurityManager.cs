@@ -78,7 +78,7 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
         }
 
         // Public methods
-        public async Task<bool> LoginUser(string email, string clearTextPassword, bool keepLoggedIn)
+        public async Task<UserAccount> LoginUser(string email, string clearTextPassword, bool keepLoggedIn)
         {
             bool userLoginResult = false;
 
@@ -99,12 +99,16 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
                         ExpiresUtc = DateTime.UtcNow.AddDays(7)
                     });
 
-                userLoginResult = true;
-
                 
             }
 
-            return userLoginResult;
+            return user;
+        }
+        public UserAccount GetUserAccount(string email, string clearTextPassword)
+        {
+            var user = userAccountService.FindUserAccount(email, clearTextPassword);
+
+            return user;
         }
         public async Task LogOut()
         {

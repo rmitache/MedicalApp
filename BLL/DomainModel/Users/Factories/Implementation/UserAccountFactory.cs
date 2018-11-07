@@ -16,9 +16,7 @@ namespace BLL.DomainModel.Users.Factories
             UserAccount blo = new UserAccount();
             blo.ID = dataEntity.Id;
             blo.Email = dataEntity.Email;
-            blo.SignupDate = dataEntity.SignupDate;
-            blo.BirthDate = dataEntity.BirthDate;
-            blo.Language = dataEntity.Language;
+            blo.TermsAcceptedDate = dataEntity.TermsAcceptedDate;
 
             return blo;
         }

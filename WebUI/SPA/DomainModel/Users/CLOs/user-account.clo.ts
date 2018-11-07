@@ -5,9 +5,7 @@ export class UserAccountCLO extends BaseCLO {
     // Fields
     public ID: number;
     public Email: string;
-    public SignupDate: Date;
-    public BirthDate: Date;
-    public Language: string;
+    public TermsAcceptedDate: Date;
 
     // Constructor
     constructor() {
