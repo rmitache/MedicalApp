@@ -1,10 +1,7 @@
 ﻿using BLL.DomainModel.Users.BLOs;
 using BLL.DomainModel.Users.Factories;
-using Common.DataStructures;
 using DataAccessLayer.Repositories.UserRepository;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BLL.DomainModel.Users.Services
 {
@@ -70,6 +67,10 @@ namespace BLL.DomainModel.Users.Services
         public void UpdateLastLoginDate(int userId, DateTime loginDate)
         {
             this.userRepo.UpdateLastLoginDate(userId, loginDate);
+        }
+        public void UpdateAcceptedTermsDate(int userId, DateTime dateTime)
+        {
+            this.userRepo.UpdateAcceptedTermsDate(userId, dateTime);
         }
     }
 }

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as  HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
+import { LoginResultStatus } from 'SPA/Core/Helpers/Enums/enums';
 
 // Components
 import { LoginPageDataService } from 'SPA/Components/Pages/LoginPage/login-page-data.service';
@@ -19,7 +20,6 @@ import { AcceptTermsDialogComponent } from './AcceptTermsDialog/accept-terms-dia
     templateUrl: './login-panel.component.html',
     styleUrls: ['./login-panel.component.css'],
     host: { 'class': 'login-panel' }
-
 })
 export class LoginPanelComponent {
     // Fields
@@ -35,21 +35,28 @@ export class LoginPanelComponent {
         this.modalDialogService.OpenDialog(this.viewContainerRef, {
             title: 'Terms and Conditions',
             childComponent: AcceptTermsDialogComponent,
-            data: null,
+            data: {
+                user: userCLO
+            },
             actionButtons: [
                 {
                     isDisabledFunction: (childComponentInstance: any) => {
                         let compInstance = childComponentInstance as AcceptTermsDialogComponent;
                         return !compInstance.GetValidState();
                     },
-                    text: 'Stop',
-                    buttonClass: 'ui-button-danger',
+                    text: 'Continue',
+                    buttonClass: 'ui-button',
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {
+                            let acceptTermsDialog = childComponentInstance as AcceptTermsDialogComponent;
+                            acceptTermsDialog.AcceptTerms()
+                                .then(() => {
 
-                            
-                           resolve();
-                                    
+                                    alert('Terms accepted!');
+                                });
+
+                            resolve();
+
                         });
                         return promiseWrapper;
                     }
@@ -77,7 +84,7 @@ export class LoginPanelComponent {
         private readonly loginPageDataService: LoginPageDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
-		private readonly spinnerService: SpinnerService
+        private readonly spinnerService: SpinnerService
 
     ) {
         this.reactiveForm = this.fb.group({
@@ -101,20 +108,24 @@ export class LoginPanelComponent {
                 Password: this.viewModel.Password,
                 KeepLoggedIn: this.viewModel.KeepLoggedIn
             };
-			
+
+            this.spinnerService.Show();
             var loginPromise = this.loginPageDataService.Login(loginModel);
-			this.spinnerService.Show();
-            loginPromise.then((loggedInUser) => {
-                if (loggedInUser !== null) {
+            loginPromise.then((loginResult) => {
 
-                    this.openAcceptTermsDialog(loggedInUser);
+                // Login successful
+                if (loginResult.LoginResultStatus === LoginResultStatus.Success) {
 
-                    //window.location.href = '/HomePage';
+                    window.location.href = '/HomePage';
                 }
-
-                else {
-
-					this.spinnerService.Hide();
+                // User exists, but hasn't accepted Terms and Conditions
+                else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_TermsNotAccepted) {
+                    this.spinnerService.Hide();
+                    this.openAcceptTermsDialog(loginResult.User);
+                }
+                // User doesn't exist, or credentials were wrong
+                else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_CredentialsWrongOrUserNotFound) {
+                    this.spinnerService.Hide();
                     this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Login failed", "Wrong password or email doesn't exist");
                 }
             });

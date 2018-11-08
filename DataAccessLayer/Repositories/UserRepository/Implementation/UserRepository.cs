@@ -58,6 +58,15 @@ namespace DataAccessLayer.Repositories.UserRepository
             entitiesContext.Entry(userAcc).State = EntityState.Modified;
             entitiesContext.SaveChanges();
         }
+        public void UpdateAcceptedTermsDate(int userId, DateTime dateTime)
+        {
+            TUser userAcc = entitiesContext.TUser.AsNoTracking().Where(user =>
+                        user.Id == userId).SingleOrDefault();
+            userAcc.TermsAcceptedDate = dateTime;
+
+            entitiesContext.Entry(userAcc).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
+        }
     }
 }
 

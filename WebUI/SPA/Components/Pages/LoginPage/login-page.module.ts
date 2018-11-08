@@ -1,7 +1,7 @@
 // Angular and 3rd party stuff
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -28,6 +28,7 @@ import { AcceptTermsDialogComponent } from './LoginPanel/AcceptTermsDialog/accep
         AcceptTermsDialogComponent
     ],
     imports: [
+        FormsModule ,
         CommonModule,
         HttpModule,
         ReactiveFormsModule,

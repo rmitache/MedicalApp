@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BLL.DomainModel.Users.BLOs;
+using System;
 
 namespace WebUI.Controllers
 {
@@ -35,18 +36,18 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<JsonResult> Login([FromBody]LogInUserModel model)
         {
-            //// Find the UserAccount matching the credentials
-            //var user = webSecurityManager.GetUserAccount(model.Email, model.Password);
-
-            // If it has accepted the terms and conditions
-            // Login
-            // Else 
-
-
-
-            var user = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn);
+            var result = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn);
             
-            return Json(user);
+            return Json(result);
+        }
+
+        [Route("LoginPage/AcceptTerms")]
+        [HttpPost]
+        public JsonResult AcceptTerms([FromBody]UserAccount user)
+        {
+            webSecurityManager.UpdateAcceptedTermsDate(user.ID, (DateTime) user.TermsAcceptedDate);
+
+            return Json(null);
         }
         [Route("LoginPage/Logout")]
         [HttpPost]
@@ -56,6 +57,8 @@ namespace WebUI.Controllers
 
             return Json(true);
         }
+
+
         // Models
         public class LogInUserModel
         {
@@ -63,6 +66,9 @@ namespace WebUI.Controllers
             public string Password { get; set; }
             public bool KeepLoggedIn { get; set; }
         }
+
+
+
 
     }
 }

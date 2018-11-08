@@ -14,5 +14,6 @@ namespace DataAccessLayer.Repositories.UserRepository
         TUser GetUser(int id);
         void UpdatePassword(int userId, string newPassword);
         void UpdateLastLoginDate(int userId, DateTime loginDate);
+        void UpdateAcceptedTermsDate(int userId, DateTime dateTime);
     }
 }

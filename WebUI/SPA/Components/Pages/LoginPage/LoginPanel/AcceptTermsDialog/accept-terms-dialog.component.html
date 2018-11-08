@@ -1,7 +1,10 @@
-<!--<form [formGroup]="reactiveForm">-->
 
     <div class="frame">
+        <div class="terms-text-div">
 
-        Accept the Terms and Conditions ?
+            Do you agree to the terms and conditions 
+        </div>
+        <p-checkbox (click)="onCheckBoxToggled()"
+                    binary="true" [(ngModel)]="viewModel.AcceptTermsChecked" label="I have read the Terms and Conditions and agree to them"></p-checkbox>
+
     </div>
-<!--</form>-->

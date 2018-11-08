@@ -11,6 +11,7 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { LoginPageDataService } from '../../login-page-data.service';
 
 // Components
 
@@ -23,62 +24,51 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 export class AcceptTermsDialogComponent implements IModalDialog {
 	// Fields
 	private isValid: boolean;
-	private reactiveForm: FormGroup;
-	private readonly viewModel: ViewModel = {
-		
+    private readonly viewModel: ViewModel = {
+        UserCLO: null,
+		AcceptTermsChecked: false
 	};
 
 	// Private methods
 	private refreshIsValid() {
-		this.isValid = this.reactiveForm.valid;
+		this.isValid = this.viewModel.AcceptTermsChecked=== true;
 	}
 
 	// Constructor 
 	constructor(
-		private fb: FormBuilder
-
+        private fb: FormBuilder,
+        private dataService: LoginPageDataService
 	) {
 	}
-	ngOnInit() {
-		//// Define form
-		//this.reactiveForm = this.fb.group({
-		//	stopDate: [null, Validators.required]
 
-		//});
-		
-
-
-		//// Subscriptions
-		//this.reactiveForm.
-		//	valueChanges.
-		//	subscribe((value) => {
-		//		this.refreshIsValid();
-		//	});
-	}
 
 	// Public methods
-	public SaveData(): Promise<void> {
-		//let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
-		//latestVersion.EndDateTime = moment(this.viewModel.StopDate).endOf('day').toDate();
+	public AcceptTerms(): Promise<void> {
+        this.viewModel.UserCLO.TermsAcceptedDate = new Date();
 
-		//// Save the data
-		//let saveDataPromise = this.globalDataService.UpdatePlan(this.viewModel.PlanCLO);
-		//return saveDataPromise;
-        return null;
+		let saveDataPromise = this.dataService.AcceptTerms(this.viewModel.UserCLO);
+		return saveDataPromise;
 	}
-	public GetValidState() {
+    public GetValidState() {
+        
 		return this.isValid;
 	}
 
 	// IModalDialog
 	dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-		
-	}
+        this.viewModel.UserCLO = options.data.user;
+    }
+
+    // Event handlers
+    private onCheckBoxToggled() {
+        this.refreshIsValid();
+    }
 }
 
 
 interface ViewModel {
-	
+    UserCLO: CLOs.UserAccountCLO;
+    AcceptTermsChecked: boolean;
 }
 
 
