@@ -52,7 +52,9 @@ export class LoginPanelComponent {
                             acceptTermsDialog.AcceptTerms()
                                 .then(() => {
 
-                                    alert('Terms accepted!');
+                                    // After accepting the terms (eg: updating the datestamp)
+                                    // Try to log in again, if successful
+                                    this.onLoginClicked();
                                 });
 
                             resolve();
