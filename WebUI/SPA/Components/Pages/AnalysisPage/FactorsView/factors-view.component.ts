@@ -17,13 +17,13 @@ import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Com
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOfDaysBetweenDatesUsingMoment, IsDateOnFirstOrLastDateInMonth } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
-import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
+import { PlanVersionChangesTooltipComponent } from '../../../Shared/Tooltips/PlanVersionChangesTooltip/plan-version-changes-tooltip.component';
 
 
 @Component({
@@ -35,7 +35,7 @@ import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service
 export class FactorsViewComponent {
     // Fields
     @ViewChild('versionTooltip')
-    private versionTooltipInstance: VersionTooltipComponent;
+    private versionTooltipInstance: PlanVersionChangesTooltipComponent;
     @ViewChild('navPanel')
     private navPanelInstance: NavigationPanelComponent;
     @ViewChild('timeline')

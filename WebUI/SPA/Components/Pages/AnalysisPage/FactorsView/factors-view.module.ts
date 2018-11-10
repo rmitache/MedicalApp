@@ -16,7 +16,6 @@ import { VersionElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsV
 import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/TickElem/tick-elem.component';
 import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TodayIndicator/today-indicator.component';
-import { VersionTooltipComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/VersionTooltip/version-tooltip.component';
 import { HoverableVersionPointComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/HoverableVersionPoint/hoverable-version-point.component';
 import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 
@@ -37,16 +36,12 @@ import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/
         TimelineComponent,
         TickElemComponent,
         TodayIndicatorComponent,
-        VersionTooltipComponent,
         HoverableVersionPointComponent,
         FactorsFiltersPanelComponent
     ],
     exports: [
-        FactorsViewComponent],
-    entryComponents: [
-    ],
-    providers: [
-        
+        FactorsViewComponent,
+        SharedModule
     ]
 })
 export class FactorsViewModule { }

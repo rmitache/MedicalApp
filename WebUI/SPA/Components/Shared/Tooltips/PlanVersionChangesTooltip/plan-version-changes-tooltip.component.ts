@@ -12,12 +12,12 @@ import { VersionCLOService, MedicineTypeAndChangeTypePair, ChangeType } from 'SP
 
 
 @Component({
-    selector: 'version-tooltip',
-    templateUrl: './version-tooltip.component.html',
-    styleUrls: ['./version-tooltip.component.css'],
-    host: { 'class': 'version-tooltip' }
+    selector: 'plan-version-changes-tooltip',
+    templateUrl: './plan-version-changes-tooltip.component.html',
+    styleUrls: ['./plan-version-changes-tooltip.component.css'],
+    host: { 'class': 'plan-version-changes-tooltip' }
 })
-export class VersionTooltipComponent {
+export class PlanVersionChangesTooltipComponent {
     // Fields
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
