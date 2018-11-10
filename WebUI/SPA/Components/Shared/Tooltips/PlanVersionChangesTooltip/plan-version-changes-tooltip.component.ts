@@ -123,6 +123,13 @@ export class PlanVersionChangesTooltipComponent {
             this.viewModel.Visible = true;
         }, 10);
 
+
+        setTimeout(() => {
+            if (this.viewModel.AllChanges === null) {
+                this.HideAndClear();
+            }
+        }, 100);
+
     }
     public HideAndClear() {
         this.viewModel.Visible = false;

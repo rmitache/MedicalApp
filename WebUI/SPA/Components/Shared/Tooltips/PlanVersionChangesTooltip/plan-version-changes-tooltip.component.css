@@ -72,12 +72,17 @@
     .body .started-div.changes-div .top i {
         color: #2399e5;
     }
-       
+    .body .started-div.changes-div .medicine-type-div .label {
+        color: #2399e5;
+    }  
 
     /*Stopped*/
     .body .stopped-div.changes-div .medicine-type-div {
         text-decoration: line-through;
     }
+        .body .stopped-div.changes-div .medicine-type-div .label {
+            color: red;
+        }  
     .body .stopped-div.changes-div .top i {
         color: red;
     }
