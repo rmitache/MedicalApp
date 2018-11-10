@@ -1,14 +1,14 @@
 
 
 .frame {
-    min-width: 50px;
+    min-width: 135px;
     min-height: 30px;
     border: solid 1px #d5d5d5;
     background-color: white;
     border-radius: 5px;
     position: absolute;
-    padding:3px;
-    padding-bottom:0;
+    padding: 10px;
+    padding-bottom: 5px;
 }
 
     .frame .caret-div {
@@ -30,23 +30,55 @@
     float: left;
 }
 
-    .body .medicine-type-div {
+    .body .changes-div {
+        width: calc(100%);
+        margin-bottom: 15px;
         float: left;
         clear: both;
-        padding: 3px;
-        border-radius: 3px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        line-height: 15px;
-        vertical-align:middle;
     }
 
-        .body .medicine-type-div .label-text-dark {
-            font-weight:bold;
+        .body .changes-div:last-of-type {
+            margin-bottom: 0;
         }
 
-        .body .medicine-type-div img {
-            display:inline-block;
-            vertical-align:middle
+        .body .changes-div .top {
+            vertical-align: middle;
+            margin-bottom: 5px;
         }
 
+            .body .changes-div .top i {
+                margin-left: 3px;
+                vertical-align: middle;
+                color:gray;
+            }
+
+
+    .body .medicine-type-div {
+        background-color: #efefef;
+        padding: 2px;
+        border-radius: 6px;
+        margin-bottom: 3px;
+        line-height: 15px;
+        vertical-align: middle;
+        text-align:center;
+    }
+
+        .body .medicine-type-div i {
+            float: right;
+        }
+
+
+    /*Started*/
+    .body .started-div.changes-div .top i {
+        color: #2399e5;
+    }
+       
+
+    /*Stopped*/
+    .body .stopped-div.changes-div .medicine-type-div {
+        text-decoration: line-through;
+    }
+    .body .stopped-div.changes-div .top i {
+        color: red;
+    }
+       

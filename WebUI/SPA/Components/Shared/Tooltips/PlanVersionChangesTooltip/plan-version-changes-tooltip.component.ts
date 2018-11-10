@@ -24,22 +24,12 @@ export class PlanVersionChangesTooltipComponent {
     private changeTypeEnum: ChangeType;
     private readonly viewModel: ViewModel = {
         VersionCLO: null,
-        Changes: null,
-        GetChangeTypeIcon: (changeType: number) => {
+        AllChanges: null,
+        Changes_Started: null, 
+        Changes_Stopped: null,
+        Changes_Increased: null,
+        Changes_Decreased: null,
 
-            let iconName: string;
-            if (changeType == ChangeType.Increased) {
-                iconName = 'increase';
-            } else if (changeType == ChangeType.Decreased) {
-                iconName = 'decrease';
-            } else if (changeType == ChangeType.Stopped) {
-                iconName = 'stop';
-            } else if (changeType == ChangeType.New) {
-                iconName = 'new';
-            }
-
-            return '/Images/' + iconName + '.png'
-        },
 
         Visible: false,
         TooltipPos: null,
@@ -59,8 +49,8 @@ export class PlanVersionChangesTooltipComponent {
         var verticalSpacing = 55;
         tooltipPos.Left = hoverPointLeft - currentWidth / 2 - 1;
         tooltipPos.Top = hoverPointTop + verticalSpacing + 6;
-        caretPos.Left = currentWidth / 2 - 16;
-        caretPos.Top = -18;
+        caretPos.Left = currentWidth / 2 - 23;
+        caretPos.Top = -25;
 
         // Handle case when position overflows screen on the left side
         if (tooltipPos.Left < 0) {
@@ -91,20 +81,37 @@ export class PlanVersionChangesTooltipComponent {
         let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, currentVersion) : false;
         let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, currentVersion) : false;
 
+        // Get all changes----------------------------------------------------------------------------------------------------------
         // StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
         if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
             (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, currentVersion))) {
-            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
+            this.viewModel.AllChanges = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
         }
         // EndPoint, on version without any next adjacent version -> show list of all medTypes as STOPPED  
         else if (versionHoverEventInfo.PointType === HoverInfoPointType.EndPoint &&
             (nextVersion === null || !this.versionCLOService.AreAdjacent(nextVersion, currentVersion))) {
-            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(null, this.viewModel.VersionCLO);
+            this.viewModel.AllChanges = this.versionCLOService.GetChangesBetween(null, this.viewModel.VersionCLO);
         }
         // Any normal Points
         else {
-            this.viewModel.Changes = this.versionCLOService.GetChangesBetween(currentVersion, prevVersion);
+            this.viewModel.AllChanges = this.versionCLOService.GetChangesBetween(currentVersion, prevVersion);
         }
+        //--------------------------------------------------------------------------------------------------------------------------
+
+
+        // 
+        this.viewModel.Changes_Started = this.viewModel.AllChanges.filter(change => {
+            return change.ChangeType === ChangeType.Started;
+        });
+        this.viewModel.Changes_Stopped = this.viewModel.AllChanges.filter(change => {
+            return change.ChangeType === ChangeType.Stopped;
+        });
+        this.viewModel.Changes_Increased = this.viewModel.AllChanges.filter(change => {
+            return change.ChangeType === ChangeType.Increased;
+        });
+        this.viewModel.Changes_Decreased = this.viewModel.AllChanges.filter(change => {
+            return change.ChangeType === ChangeType.Decreased;
+        });
 
 
         // Calculate position
@@ -121,15 +128,23 @@ export class PlanVersionChangesTooltipComponent {
         this.viewModel.Visible = false;
         this.viewModel.TooltipPos = null;
         this.viewModel.CaretPos = null;
-        this.viewModel.Changes = null;
+        this.viewModel.AllChanges = null;
+        this.viewModel.Changes_Started = null;
+        this.viewModel.Changes_Stopped = null;
+        this.viewModel.Changes_Increased = null;
+        this.viewModel.Changes_Decreased = null;
     }
 }
 
 
 interface ViewModel {
     VersionCLO: CLOs.VersionCLO;
-    Changes: MedicineTypeAndChangeTypePair[];
-    GetChangeTypeIcon(changeType: ChangeType);
+
+    AllChanges: MedicineTypeAndChangeTypePair[];
+    Changes_Started: MedicineTypeAndChangeTypePair[];
+    Changes_Stopped: MedicineTypeAndChangeTypePair[];
+    Changes_Increased: MedicineTypeAndChangeTypePair[];
+    Changes_Decreased: MedicineTypeAndChangeTypePair[];
 
     Visible: boolean;
     TooltipPos: PosCoordinates;

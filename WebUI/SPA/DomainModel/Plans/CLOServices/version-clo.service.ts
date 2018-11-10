@@ -61,7 +61,7 @@ export class VersionCLOService {
 
             // New
             if (versionBUniqueMedTypes[medicineTypeName] === undefined) { // medicineType exists only in targetVersion
-                newMedTypeChangeSet.ChangeType = ChangeType.New;
+                newMedTypeChangeSet.ChangeType = ChangeType.Started;
             }
             // UnChanged & Changed
             else if (versionBUniqueMedTypes[medicineTypeName] !== undefined) { // medicineType exists in both
@@ -138,7 +138,7 @@ export enum ChangeType {
     Unchanged = 0,
     Increased = 1,
     Decreased = 2,
-    New = 3,
+    Started = 3,
     Stopped = 4
 }
 export class MedicineTypeAndAvgMonthlyDosage {

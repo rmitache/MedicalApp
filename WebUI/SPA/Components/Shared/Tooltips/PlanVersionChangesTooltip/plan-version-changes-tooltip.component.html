@@ -11,13 +11,69 @@
 
     <div class="body">
 
-        <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.Changes" [attr.class]="">
-            <span class="h4"> {{medTypeChange.MedicineType.Name}} </span>
-
-            <img src="{{viewModel.GetChangeTypeIcon(medTypeChange.ChangeType) }}" />
+        <!--Started-->
+        <div class="started-div changes-div" *ngIf="viewModel.Changes_Started?.length>0">
+            <div class="top">
+                <span class="h4">Started:</span>
+                <i class="fa fa-flag-checkered"></i>
+            </div>
+            <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Started" [attr.class]="">
+                <span class="label">{{medTypeChange.MedicineType.Name}} </span>
+                
+            </div>
         </div>
 
+        <!--Stopped-->
+        <div class="stopped-div changes-div" *ngIf="viewModel.Changes_Stopped?.length>0">
+            <div class="top">
+                <span class="h4">Stopped:</span>
+                <i class="fa fa-ban"></i>
+            </div>
+            <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Stopped" [attr.class]="">
+                <span class="label">{{medTypeChange.MedicineType.Name}} </span>
+                
+            </div>
+        </div>
+
+        <!--Increased-->
+        <div class="increased-div changes-div" *ngIf="viewModel.Changes_Increased?.length>0">
+            <div class="top">
+                <span class="h4">Increased dosage:</span>
+                <i class="fa fa-arrow-up"></i>
+            </div>
+            <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Increased" [attr.class]="">
+                <span class="label">{{medTypeChange.MedicineType.Name}} </span>
+                
+            </div>
+        </div>
+
+
+        <!--Decreased-->
+        <div class="decreased-div changes-div" *ngIf="viewModel.Changes_Decreased?.length>0">
+            <div class="top">
+                <span class="h4">Decreased dosage:</span>
+                <i class="fa fa-arrow-down"></i>
+            </div>
+            <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Decreased" [attr.class]="">
+                <span class="label">{{medTypeChange.MedicineType.Name}} </span>
+                
+            </div>
+        </div>
+
+        <!--Schedule-->
+        <div class="schedule-div changes-div" *ngIf="viewModel.AllChanges?.length===0">
+            <div class="top">
+                <span class="h4">Changed schedule</span>
+                <i class="fa fa-clock-o"></i>
+            </div>
+            
+        </div>
     </div>
 
 </div>
 
+
+<!--<div class="medicine-type-div" *ngFor="let medTypeChange of viewModel?.Changes" [attr.class]="">
+            <span class="h4"> {{medTypeChange.MedicineType.Name}} </span>
+
+        </div>-->
