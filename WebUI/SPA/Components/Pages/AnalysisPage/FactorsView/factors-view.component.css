@@ -39,7 +39,10 @@
             float: left;
             width: calc(34%);
         }
-
+        .left-side .header .right-section {
+            float: right;
+            width: calc(33%);
+        }
     .left-side .body {
         height: calc(100% - 45px);
         width:calc(100% - 35px);
@@ -72,7 +75,18 @@
     float: right;
 }
 
+.legend-item {
+    float: right;
+    margin-right: 20px;
+}
 
+    .legend-item i {
+        vertical-align: middle;
+    }
+
+    .legend-item span {
+        vertical-align: middle;
+    }
 
 @media only screen and (max-width: 1024px) {
     .left-side {
