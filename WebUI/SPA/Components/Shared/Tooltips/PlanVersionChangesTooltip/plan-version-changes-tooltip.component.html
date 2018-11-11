@@ -15,7 +15,7 @@
         <div class="started-div changes-div" *ngIf="viewModel.Changes_Started?.length>0">
             <div class="top">
                 <span class="h4">Started:</span>
-                <i class="fa fa-flag-checkered"></i>
+                <i class="fa fa-plus"></i>
             </div>
             <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Started" [attr.class]="">
                 <span class="label">{{medTypeChange.MedicineType.Name}} </span>
@@ -27,7 +27,7 @@
         <div class="stopped-div changes-div" *ngIf="viewModel.Changes_Stopped?.length>0">
             <div class="top">
                 <span class="h4">Stopped:</span>
-                <i class="fa fa-ban"></i>
+                <i class="fa fa-minus"></i>
             </div>
             <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Stopped" [attr.class]="">
                 <span class="label">{{medTypeChange.MedicineType.Name}} </span>
