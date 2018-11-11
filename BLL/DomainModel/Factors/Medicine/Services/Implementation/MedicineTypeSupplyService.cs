@@ -22,7 +22,7 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
         private readonly IMedicineTypeRepository medicineTypeRepo;
         private readonly IMedicineFactorRecordService medicineFactorRecordService;
         private readonly ISupplyCalculationEngine supplyCalculationEngine;
-        private readonly int supplyComputationMaxLookAheadInDays = 130;
+        private readonly int supplyComputationMaxLookAheadInDays = 230;
 
         // Private methods
         private SupplyInfoWrapper DetermineSupplyInfo(int userID, TMedicineType medTypeDataEntity, List<MedicineFactorRecord> factorRecords)
@@ -84,8 +84,8 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
             var dict = new Dictionary<string, SupplyInfoWrapper>();
 
             // Get the cut-off date and FactorRecords
-            // OBS range calculation: 130 represents 120 = 4 months plus 10 days, if the supplyUntil date is > 120, this can be used to say "More than 4 months"
-            var utcDateRange = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), Functions.GetCurrentDateTimeInUTC().AddDays(supplyComputationMaxLookAheadInDays));
+            var utcDateRange = new Range<DateTime>(Functions.GetCurrentDateTimeInUTC(), 
+                Functions.GetCurrentDateTimeInUTC().AddDays(this.supplyComputationMaxLookAheadInDays));
             var factorRecords = this.medicineFactorRecordService.GetMedicineFactorRecords(utcDateRange, userID);
 
             // Loop and get supplyInfo for each medicineTypeDataEntity
