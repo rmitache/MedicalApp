@@ -48,7 +48,6 @@ export class IndicatorsViewComponent {
     private canvas: any;
     private chartCanvasContext: any;
     private chartInstance: any;
-
     private readonly viewModel: ViewModel = {
         SymptomTypesDatasetItems: null,
 
@@ -586,12 +585,13 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         drawOnChartArea: true,
                         drawBorder: true,
                         zeroLineColor: 'gray',
+                        tickMarkLength: 2
                     },
 
                     ticks: {
                         fontColor: '#b6b6b6',
                         fontSize: 10,
-                        padding: 10,
+                        padding: 3,
                         beginAtZero: true,
                         min: -3,
                         max: 3,

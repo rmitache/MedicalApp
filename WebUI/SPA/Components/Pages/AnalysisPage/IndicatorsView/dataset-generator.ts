@@ -189,11 +189,11 @@ export class SymptomTypeDatasetGenerator {
             } else {
                 let sum = arrayOfSymptomTypeValues.reduce((a, b) => a + b, 0);
                 let computedAverage = sum / arrayOfSymptomTypeValues.length;
-                avgValuePerSymptomType[symptomTypeName] = computedAverage;
+                avgValuePerSymptomType[symptomTypeName] = computedAverage * -1;
             }
         }
 
-        return avgValuePerSymptomType;
+        return avgValuePerSymptomType ;
     }
 
     // Public methods
@@ -206,8 +206,11 @@ export class SymptomTypeDatasetGenerator {
         let newDataSetsDictionary: { [symptomTypeName: string]: SymptomTypeDataset } = {};
         symptomTypesDatasetItems.forEach(dataSetItem => {
             newDataSetsDictionary[dataSetItem.SymptomTypeCLO.Name] = {
-                borderWidth: 2.5,
+                borderWidth: 2,
                 borderColor: dataSetItem.Color, 
+                pointRadius: 2,
+                cubicInterpolationMode: 'monotone',
+
                 backgroundColor: 'transparent',
                 type: 'line',
                 data: []
@@ -274,6 +277,8 @@ export interface SymptomTypeDataset {
     borderWidth: number;
     borderColor: string;
     backgroundColor: string;
+    pointRadius: number;
+    cubicInterpolationMode: string;
     data: DataPoint[];
 }
 interface AverageHealthLevelPerDay {
