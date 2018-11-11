@@ -44,7 +44,7 @@ export class MedicineTypesOverviewComponent {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
 
-        SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
+        SelectedViewMode: this.medicineTypeStatusViewModes.All,
         CurrentNoDataMode: null
     };
 

@@ -9,7 +9,7 @@ https://stackoverflow.com/questions/46934893/how-to-prevent-entity-framework-cor
 
 
 III. Connection strings
-optionsBuilder.UseSqlServer(@"Server=LENOVO-PC\RADUSQLINSTANCE;Database=DEV_MedicalApp;Trusted_Connection=True;");
+optionsBuilder.UseSqlServer(@"Server=MSI\SQLExpress;Database=MedicalApp;Trusted_Connection=True;");
 optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
 IV. Local sql instance: 
