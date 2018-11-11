@@ -33,7 +33,7 @@
 }
 
 
-/*Computer*/
+/*Bigger than 1024*/
 @media only screen and (min-width: 1024px) {
     .outer-wrapper {
         min-width: calc(1024px - 24px);
@@ -43,11 +43,24 @@
     }
 }
 
-/*Tablet*/
-@media only screen and (max-width: 768px) {
+/*Lower than 1024px in width*/
+@media only screen and (max-width: 1024px) {
     .outer-wrapper {
-        width: calc(768px - 24px);
+        min-width: calc(768px - 12px);
+        max-width: 90%;
+        padding-left: 6px;
+        padding-right: 6px;
     }
 
    
 }
+
+/*@media only screen and (max-width: 1024px) {
+    .left-side {
+        width: calc(100% - 150px);
+    }
+
+    .right-side {
+        width: 150px;
+    }
+}*/

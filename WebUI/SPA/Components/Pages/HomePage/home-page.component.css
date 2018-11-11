@@ -80,7 +80,7 @@
 @media only screen and (max-width: 1024px) {
     .outer-wrapper {
         min-width: calc(768px - 12px);
-        max-width: 80%;
+        max-width: 90%;
         padding-left: 6px;
         padding-right: 6px;
     }

@@ -8,6 +8,7 @@
     border-radius: 5px;
     position: absolute;
     padding: 10px;
+    padding-top:7px;
     padding-bottom: 5px;
 }
 
@@ -32,7 +33,7 @@
 
     .body .changes-div {
         width: calc(100%);
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         float: left;
         clear: both;
     }
@@ -43,7 +44,7 @@
 
         .body .changes-div .top {
             vertical-align: middle;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
             
@@ -62,7 +63,6 @@
             display:inline-block;
         }
         .body .medicine-type-div i {
-            margin-right: 5px;
             vertical-align: middle;
             color: gray;
         }
