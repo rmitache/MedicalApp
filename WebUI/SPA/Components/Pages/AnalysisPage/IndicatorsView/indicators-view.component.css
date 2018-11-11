@@ -3,8 +3,7 @@
     background-color: white;
     height: 100%;
     border-radius: 5px;
-    width:100%;
-    
+    width: 100%;
 }
 
 .left-side {
@@ -44,6 +43,11 @@
             width: calc(34%);
         }
 
+        .left-side .header .right-section {
+            float: right;
+            width: calc(33%);
+        }
+
     .left-side .body {
         height: calc(100% - 45px);
         width: calc(100% - 13px);
@@ -72,7 +76,27 @@
     float: right;
 }
 
+.legend-item {
+    float: right;
+    margin-left: 7px;
+}
 
+    .legend-item i {
+        vertical-align: middle;
+    }
+
+    .legend-item span {
+        vertical-align: middle;
+    }
+
+
+    .legend-item.good-day-item i {
+        color: #9dc340;
+    }
+
+    .legend-item.bad-day-item i {
+        color: #fe6060;
+    }
 @media only screen and (max-width: 1024px) {
     .left-side {
         width: calc(100% - 150px);

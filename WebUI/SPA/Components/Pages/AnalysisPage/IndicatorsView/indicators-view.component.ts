@@ -632,7 +632,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                 borderWidth: 1,
                 label: {
                     fontFamily: 'Arial',
-                    fontSize: '10px',
+                    fontSize: 12,
                     enabled: true,
                     position: "top",
                     content: 'TODAY'
