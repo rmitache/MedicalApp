@@ -46,30 +46,29 @@
             margin-bottom: 5px;
         }
 
-            .body .changes-div .top i {
-                margin-left: 3px;
-                vertical-align: middle;
-                color:gray;
-            }
+            
 
 
     .body .medicine-type-div {
-        background-color: #efefef;
         padding: 2px;
         border-radius: 6px;
         margin-bottom: 3px;
         line-height: 15px;
         vertical-align: middle;
-        text-align:center;
+        text-align:left;
     }
 
         .body .medicine-type-div i {
-            float: right;
+            display:inline-block;
+        }
+        .body .medicine-type-div i {
+            margin-right: 5px;
+            vertical-align: middle;
+            color: gray;
         }
 
-
     /*Started*/
-    .body .started-div.changes-div .top i {
+    .body .started-div.changes-div .medicine-type-div i {
         color: #2399e5;
     }
     .body .started-div.changes-div .medicine-type-div .label {
@@ -82,8 +81,8 @@
     }
         .body .stopped-div.changes-div .medicine-type-div .label {
             color: red;
-        }  
-    .body .stopped-div.changes-div .top i {
+        }
+    .body .stopped-div.changes-div .medicine-type-div i {
         color: red;
     }
        

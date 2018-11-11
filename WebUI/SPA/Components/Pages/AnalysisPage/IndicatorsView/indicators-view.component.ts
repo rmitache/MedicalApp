@@ -584,21 +584,27 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         display: true,
                         drawTicks: true,
                         drawOnChartArea: true,
-                        tickMarkLength: 5,
                         drawBorder: true,
-                        zeroLineColor: 'gray'
+                        zeroLineColor: 'gray',
                     },
 
                     ticks: {
-                        fontColor: 'gray',
-                        padding: 5,
+                        fontColor: '#b6b6b6',
+                        fontSize: 10,
+                        padding: 10,
                         beginAtZero: true,
                         min: -3,
                         max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-
-                            return '';
+                            if (label === Enums.HealthLevel.NotGreat)
+                                return 'Not Great';
+                            if (label === Enums.HealthLevel.VeryBad)
+                                return 'Very Bad';
+                            else if (label !== 0)
+                                return Enums.HealthLevel[label];
+                            else
+                                return '';
 
                         }
                     }
