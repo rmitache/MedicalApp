@@ -21,13 +21,13 @@ export class SymptomTypeElemComponent {
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Mild,
             Color: '#f3e06a',
-            LabelColor: '#93764d',
+            LabelColor: 'black',
             Label: 'Mild'
         },
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Moderate,
             Color: 'orange',
-            LabelColor: '#523707',
+            LabelColor: 'white',
             Label: 'Moderate'
         },
         {

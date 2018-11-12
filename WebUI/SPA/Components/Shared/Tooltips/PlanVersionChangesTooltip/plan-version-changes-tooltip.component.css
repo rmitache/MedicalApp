@@ -1,14 +1,14 @@
 
 
 .frame {
-    min-width: 135px;
+    min-width: 120px;
     min-height: 30px;
     border: solid 1px #d5d5d5;
     background-color: white;
     border-radius: 5px;
     position: absolute;
     padding: 10px;
-    padding-top:7px;
+    padding-top: 7px;
     padding-bottom: 5px;
 }
 
@@ -32,8 +32,11 @@
 }
 
     .body .changes-div {
-        width: calc(100%);
-        margin-bottom: 5px;
+        width: calc(100% - 20px);
+        padding: 5px 10px 5px 10px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        margin-bottom: 10px;
         float: left;
         clear: both;
     }
@@ -44,10 +47,9 @@
 
         .body .changes-div .top {
             vertical-align: middle;
-            margin-bottom: 2px;
+            margin-bottom: 6px;
+            text-align: left;
         }
-
-            
 
 
     .body .medicine-type-div {
@@ -56,13 +58,17 @@
         margin-bottom: 3px;
         line-height: 15px;
         vertical-align: middle;
-        text-align:left;
+        text-align: left;
     }
 
-        .body .medicine-type-div i {
-            display:inline-block;
+        .body .medicine-type-div:last-of-type {
+            margin-bottom: 0;
+        }
+        .body .medicine-type-div span {
+            vertical-align: middle;
         }
         .body .medicine-type-div i {
+            display: inline-block;
             vertical-align: middle;
             color: gray;
         }
@@ -71,18 +77,29 @@
     .body .started-div.changes-div .medicine-type-div i {
         color: #2399e5;
     }
-    .body .started-div.changes-div .medicine-type-div .label {
-        color: #2399e5;
-    }  
+
 
     /*Stopped*/
     .body .stopped-div.changes-div .medicine-type-div {
         text-decoration: line-through;
     }
+
         .body .stopped-div.changes-div .medicine-type-div .label {
             color: red;
         }
-    .body .stopped-div.changes-div .medicine-type-div i {
-        color: red;
+
+        .body .stopped-div.changes-div .medicine-type-div i {
+            color: red;
+        }
+
+    /*Schedule changes*/
+    .body .schedule-div.changes-div .medicine-type-div {
+        margin-bottom: 0;
     }
-       
+
+    .body .schedule-div.changes-div .top {
+        margin-bottom: 0;
+    }
+    .body .schedule-div.changes-div .top i {
+        color:gray;
+    }
