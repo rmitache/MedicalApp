@@ -498,6 +498,11 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
     // Public methods
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
+            plugins: {
+                filler: {
+                    propagate: true
+                }
+            },
             animation: false,
             tooltips: {
                 enabled: false,

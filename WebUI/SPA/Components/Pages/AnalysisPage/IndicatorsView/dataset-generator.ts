@@ -206,12 +206,14 @@ export class SymptomTypeDatasetGenerator {
         let newDataSetsDictionary: { [symptomTypeName: string]: SymptomTypeDataset } = {};
         symptomTypesDatasetItems.forEach(dataSetItem => {
             newDataSetsDictionary[dataSetItem.SymptomTypeCLO.Name] = {
-                borderWidth: 2,
+                borderWidth: 3,
                 borderColor: dataSetItem.Color, 
-                pointRadius: 2,
+                pointRadius: 1.5,
                 cubicInterpolationMode: 'monotone',
+                lineTension: 0.2,
+                fill: true,
 
-                backgroundColor: 'transparent',
+                backgroundColor: HelperFunctions.HexToRgbA(dataSetItem.Color, 0.2),
                 type: 'line',
                 data: []
             };
@@ -273,12 +275,15 @@ export interface HealthStatusDataset {
     backgroundColor: string[];
 }
 export interface SymptomTypeDataset {
-    type: string;
     borderWidth: number;
     borderColor: string;
-    backgroundColor: string;
     pointRadius: number;
     cubicInterpolationMode: string;
+    lineTension: number;
+    fill: any;
+
+    backgroundColor: string;
+    type: string;
     data: DataPoint[];
 }
 interface AverageHealthLevelPerDay {
