@@ -132,14 +132,14 @@ export class PlanVersionChangesTooltipComponent {
 
     }
     public HideAndClear() {
-        //this.viewModel.Visible = false;
-        //this.viewModel.TooltipPos = null;
-        //this.viewModel.CaretPos = null;
-        //this.viewModel.AllChanges = null;
-        //this.viewModel.Changes_Started = null;
-        //this.viewModel.Changes_Stopped = null;
-        //this.viewModel.Changes_Increased = null;
-        //this.viewModel.Changes_Decreased = null;
+        this.viewModel.Visible = false;
+        this.viewModel.TooltipPos = null;
+        this.viewModel.CaretPos = null;
+        this.viewModel.AllChanges = null;
+        this.viewModel.Changes_Started = null;
+        this.viewModel.Changes_Stopped = null;
+        this.viewModel.Changes_Increased = null;
+        this.viewModel.Changes_Decreased = null;
     }
 }
 
