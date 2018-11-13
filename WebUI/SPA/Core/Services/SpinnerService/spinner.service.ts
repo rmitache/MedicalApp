@@ -2,7 +2,6 @@
 import { Injectable, Inject, ComponentFactoryResolver, ViewContainerRef, ApplicationRef, Injector, EmbeddedViewRef } from '@angular/core';
 import { BlockUIModule, BlockUI } from 'primeng/primeng';
 import { ProgressSpinnerModule } from 'primeng/primeng';
-import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 import { BlockUIWrapperComponent } from 'SPA/Core/Services/SpinnerService/block-ui-wrapper.component';
 
 
