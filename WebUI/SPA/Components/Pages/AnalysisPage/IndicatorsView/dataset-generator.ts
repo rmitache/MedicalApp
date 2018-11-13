@@ -213,7 +213,7 @@ export class SymptomTypeDatasetGenerator {
                 lineTension: 0.2,
                 fill: true,
 
-                backgroundColor: HelperFunctions.HexToRgbA(dataSetItem.Color, 0.2),
+                backgroundColor: HelperFunctions.HexToRgbA(dataSetItem.Color, 0.5),
                 type: 'line',
                 data: []
             };

@@ -21,7 +21,6 @@ import { InplaceModule } from 'primeng/primeng';
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
 
 // Components
-import { IconButtonComponent } from 'SPA/Components/Shared/IconButton/icon-button.component';
 import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
@@ -61,7 +60,6 @@ import { TooltipsModule } from './Tooltips/tooltips.module';
         TooltipsModule,
     ],
     declarations: [
-        IconButtonComponent,
         SplitButtonComponent,
         KeysPipe,
         EnumKeysPipe,
@@ -73,7 +71,6 @@ import { TooltipsModule } from './Tooltips/tooltips.module';
          
     ],
     exports: [
-        IconButtonComponent,
         SplitButtonComponent,
         KeysPipe,
         EnumKeysPipe,
