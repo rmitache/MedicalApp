@@ -22,37 +22,37 @@ export class HealthStatusesOverDayTooltipComponent {
     private readonly healthLevelDefinitions: HealthLevelDefinition[] = [
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 3 && avgValue > 2;
+                return avgValue > 2.6;
             },
             Label: 'Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 2 && avgValue > 1;
+                return avgValue > 1.6 && avgValue <= 2.6;
             },
             Label: 'Good'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 1 && avgValue > 0;
+                return avgValue > 0 && avgValue <= 1.6;
             },
             Label: 'Ok'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 0 && avgValue > -1;
+                return avgValue < 0 && avgValue >= -1.6;
             },
             Label: 'Not Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= -1 && avgValue > -2;
+                return avgValue < -1.6 && avgValue >= -2.6;
             },
             Label: 'Bad'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= -2 && avgValue >= -3;
+                return avgValue < -2.6;
             },
             Label: 'Very Bad'
         }];

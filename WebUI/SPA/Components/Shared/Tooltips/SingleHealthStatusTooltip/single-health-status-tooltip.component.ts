@@ -23,37 +23,37 @@ export class SingleHealthStatusTooltipComponent {
     private readonly healthLevelDefinitions: HealthLevelDefinition[] = [
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 3 && avgValue > 2;
+                return avgValue > 2.7;
             },
             Label: 'Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 2 && avgValue > 1;
+                return avgValue > 1.7 && avgValue <= 2.7;
             },
             Label: 'Good'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 1 && avgValue > 0;
+                return avgValue >0 && avgValue <= 1.7;
             },
             Label: 'Ok'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= 0 && avgValue > -1;
+                return avgValue < 0 && avgValue >= -1.7;
             },
             Label: 'Not Great'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= -1 && avgValue > -2;
+                return avgValue < -1.7 && avgValue >= -2.7;
             },
             Label: 'Bad'
         },
         {
             ContainsHealthLevelValue: (avgValue) => {
-                return avgValue <= -2 && avgValue >= -3;
+                return avgValue < -2.7 ;
             },
             Label: 'Very Bad'
         }];
@@ -115,6 +115,7 @@ export class SingleHealthStatusTooltipComponent {
         this.viewModel.Title = moment(healthEntryCLO.OccurrenceDateTime).format('H:mm');
         this.viewModel.HealthLevelColor = healthLevelColor;
         let healthLevelValue = healthEntryCLO.HealthLevel;
+        
         this.viewModel.HealthLevelDefinition = this.healthLevelDefinitions.find((def) => {
             return def.ContainsHealthLevelValue(healthLevelValue);
         });

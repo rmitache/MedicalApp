@@ -297,7 +297,7 @@ class DayDisplayMode implements IDisplayMode {
                 dataPointsBgColors.push('#9dc340');
             } else if (clo.HealthLevel < 0) {
                 dataPointsBgColors.push('#fe6060');
-            } 
+            }
 
             //// Color
             //// great
@@ -351,13 +351,14 @@ class DayDisplayMode implements IDisplayMode {
             dataPointsBgColors: dataPointsBgColors
         };
     }
-    private getHealthStatusCLOByDateTime(targetDateTime: moment.Moment, datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] })
+    private getHealthStatusCLOByDateTimeAndHealthLevel(targetDateTime: moment.Moment, healthLevel: number,
+        datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] })
         : CLOs.HealthStatusEntryCLO {
         var allHealthEntryCLOs = HelperFunctions.ConvertDictionaryToArray(datesToCLOsDictionary)[0];
         for (var i = 0; i < allHealthEntryCLOs.length; i++) {
             let clo = allHealthEntryCLOs[i];
-            
-            if (moment(clo.OccurrenceDateTime).isSame(targetDateTime)) {
+
+            if (moment(clo.OccurrenceDateTime).isSame(targetDateTime) && clo.HealthLevel === healthLevel) {
                 return clo;
             }
         }
@@ -388,8 +389,11 @@ class DayDisplayMode implements IDisplayMode {
                     // Variables
                     let dateTimeString = tooltipModel.title[0];
                     let index = tooltipModel.dataPoints[0].index;
+                    let healthLevel = tooltipModel.dataPoints[0].yLabel;
+
                     let dataPointColor = this.chartInstance.data.datasets[0].pointBackgroundColor[index];
-                    let targetHealthStatusCLO = this.getHealthStatusCLOByDateTime(moment(dateTimeString), datesToCLOsDictionary);
+                    let targetHealthStatusCLO = this.getHealthStatusCLOByDateTimeAndHealthLevel(moment(dateTimeString),
+                        healthLevel, datesToCLOsDictionary);
                     let parentPosition = (this.chartInstance.el.nativeElement as HTMLElement).getBoundingClientRect();
 
                     //
@@ -421,7 +425,7 @@ class DayDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         display: true,
-                        drawBorder:false,
+                        drawBorder: false,
                         drawOnChartArea: false,
                         offsetGridLines: false,
                     },
