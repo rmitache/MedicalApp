@@ -10,11 +10,6 @@ import { SpinnerService } from '../../../../Core/Services/SpinnerService/spinner
 @Injectable()
 export class AcceptTermsDialogService {
 
-	// Private methods
-    private openAcceptTermsDialog(userCLO: CLOs.UserAccountCLO, viewContainerRef:ViewContainerRef) {
-       
-    }
-
 	// Constructor
     constructor(
         private readonly modalDialogService: ModalDialogService,
@@ -24,7 +19,8 @@ export class AcceptTermsDialogService {
 	}
 
 	// Public methods
-    public Open(userCLO: CLOs.UserAccountCLO, viewContainerRef: ViewContainerRef) {
+    public Open(userCLO: CLOs.UserAccountCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+
         this.modalDialogService.OpenDialog(viewContainerRef, {
             title: 'Terms and Conditions',
             childComponent: AcceptTermsDialogComponent,
@@ -44,7 +40,7 @@ export class AcceptTermsDialogService {
                             let acceptTermsDialog = childComponentInstance as AcceptTermsDialogComponent;
                             acceptTermsDialog.AcceptTerms()
                                 .then(() => {
-
+                                    okCallBack();
 
                                 });
 
@@ -67,7 +63,5 @@ export class AcceptTermsDialogService {
             ]
         });
 	}
-	
-
 }
 
