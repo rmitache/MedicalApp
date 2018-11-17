@@ -33,6 +33,7 @@ import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.modu
 import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
 import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
 import { TooltipsModule } from './Tooltips/tooltips.module';
+import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accept-terms-dialog-service.module';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { TooltipsModule } from './Tooltips/tooltips.module';
 		HeaderBarModule,
         NoDataPanelModule,
         TooltipsModule,
+        AcceptTermsDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -95,7 +97,8 @@ import { TooltipsModule } from './Tooltips/tooltips.module';
 		HeaderBarModule,
         NoDataPanelModule,
         PlanVersionTooltipComponent,
-        TooltipsModule
+        TooltipsModule,
+        AcceptTermsDialogServiceModule
     ]
 })
 export class SharedModule { }

@@ -12,7 +12,7 @@ import { LoginResultStatus } from 'SPA/Core/Helpers/Enums/enums';
 // Components
 import { LoginPageDataService } from 'SPA/Components/Pages/LoginPage/login-page-data.service';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
-import { AcceptTermsDialogComponent } from './AcceptTermsDialog/accept-terms-dialog.component';
+import { AcceptTermsDialogService } from '../../../Shared/Popups/AcceptTermsDialog/accept-terms-dialog.service';
 
 
 @Component({
@@ -30,55 +30,7 @@ export class LoginPanelComponent {
         KeepLoggedIn: false,
     };
 
-    // Private methods
-    private openAcceptTermsDialog(userCLO: CLOs.UserAccountCLO) {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: 'Terms and Conditions',
-            childComponent: AcceptTermsDialogComponent,
-            data: {
-                user: userCLO
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let compInstance = childComponentInstance as AcceptTermsDialogComponent;
-                        return !compInstance.GetValidState();
-                    },
-                    text: 'Continue',
-                    buttonClass: 'ui-button',
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            let acceptTermsDialog = childComponentInstance as AcceptTermsDialogComponent;
-                            acceptTermsDialog.AcceptTerms()
-                                .then(() => {
 
-                                    // After accepting the terms (eg: updating the datestamp)
-                                    // Try to log in again, if successful
-                                    this.onLoginClicked();
-                                });
-
-                            resolve();
-
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    },
-                    buttonClass: 'ui-button-secondary'
-                }
-            ]
-
-
-        });
-
-    }
 
     // Constructor 
     constructor(
@@ -86,7 +38,8 @@ export class LoginPanelComponent {
         private readonly loginPageDataService: LoginPageDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
-        private readonly spinnerService: SpinnerService
+        private readonly spinnerService: SpinnerService,
+        private readonly acceptTermsDialogService: AcceptTermsDialogService
 
     ) {
         this.reactiveForm = this.fb.group({
@@ -123,7 +76,7 @@ export class LoginPanelComponent {
                 // User exists, but hasn't accepted Terms and Conditions
                 else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_TermsNotAccepted) {
                     this.spinnerService.Hide();
-                    this.openAcceptTermsDialog(loginResult.User);
+                    this.acceptTermsDialogService.Open(loginResult.User, this.viewContainerRef);
                 }
                 // User doesn't exist, or credentials were wrong
                 else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_CredentialsWrongOrUserNotFound) {

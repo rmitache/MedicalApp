@@ -48,6 +48,8 @@
     <None Remove="SPA\Components\Pages\HomePage\PlansOverview\plans-overview.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
     <None Remove="SPA\Components\Pages\HomePage\Shared\i-medicine-types-search-service.ts" />
+    <None Remove="SPA\Components\Shared\Popups\AcceptTermsDialog\accept-terms-dialog-service.module.ts" />
+    <None Remove="SPA\Components\Shared\Popups\AcceptTermsDialog\accept-terms-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\HeaderBar\header-bar.module.ts" />
     <None Remove="SPA\Components\Shared\NoDataPanel\no-data-panel.module.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
@@ -154,6 +156,8 @@
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\Schedule\schedule.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\HealthGraph\health-graph.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\Shared\i-medicine-types-search-service.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\AcceptTermsDialog\accept-terms-dialog-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\AcceptTermsDialog\accept-terms-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\HeaderBar\header-bar.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\NoDataPanel\no-data-panel.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\shared.module.ts" />

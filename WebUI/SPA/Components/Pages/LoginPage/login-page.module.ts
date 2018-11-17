@@ -16,19 +16,16 @@ import { LoginPageDataService } from './login-page-data.service';
 import { LoginPageComponent } from './login-page.component';
 import { LoginPanelComponent } from 'SPA/Components/Pages/LoginPage/LoginPanel/login-panel.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
-import { AcceptTermsDialogComponent } from './LoginPanel/AcceptTermsDialog/accept-terms-dialog.component';
 
 
 @NgModule({
     bootstrap: [LoginPageComponent],
     declarations: [
-        // LoginPage
         LoginPageComponent,
-        LoginPanelComponent,
-        AcceptTermsDialogComponent
+        LoginPanelComponent
     ],
     imports: [
-        FormsModule ,
+        FormsModule,
         CommonModule,
         HttpModule,
         ReactiveFormsModule,
@@ -47,9 +44,6 @@ import { AcceptTermsDialogComponent } from './LoginPanel/AcceptTermsDialog/accep
     ],
     providers: [
         LoginPageDataService
-    ],
-    entryComponents: [
-        AcceptTermsDialogComponent
     ]
 })
 export class LoginPageModule {
