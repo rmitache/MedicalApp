@@ -100,17 +100,19 @@ export class PlanEditorComponent implements IModalDialog {
                                 .then((newMedicineTypeCLO) => {
 
 
-                                    // Refresh AvailableMedicineTypes
+                                    // Refresh AvailableMedicineTypes and then set the MedicineType in the source IFRP component
                                     this.globalDataService.GetMedicineTypes().then(medicineTypeCLOs => {
                                         this.availableMedicineTypes = medicineTypeCLOs;
+
+                                        setTimeout(() => {
+                                            this.spinnerService.Hide();
+                                            sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
+
+                                            resolve();
+                                        }, 200);
                                     });
 
-                                    setTimeout(() => {
-                                        this.spinnerService.Hide();
-                                        sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
-
-                                        resolve();
-                                    }, 200);
+                                    
                                 });
 
                         });
