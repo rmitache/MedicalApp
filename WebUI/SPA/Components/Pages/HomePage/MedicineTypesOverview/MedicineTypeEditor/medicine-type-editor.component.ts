@@ -137,10 +137,6 @@ class CreateNewMode implements IMedicineTypeEditorModeImplementation {
 
 		// Prepare ViewModel 
 		this.vm.MedicineTypeCLO = medicineTypeCLO;
-
-		//// Sample to be used for eventual EditMode
-		//let emailToIgnore = this.userCLO.Email;
-		//this.reactiveForm.get('email').setAsyncValidators([ValidateEmailNotTaken.createValidator(this.appDataService, emailToIgnore)]);
 	}
 
 	// Public methods
