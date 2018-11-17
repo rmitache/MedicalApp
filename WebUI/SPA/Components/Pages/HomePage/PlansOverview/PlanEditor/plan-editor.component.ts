@@ -17,6 +17,9 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 // Components
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
+import { MedicineTypeEditorComponent, MedicineTypeEditorMode } from '../../MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
+import { SpinnerService } from '../../../../../Core/Services/SpinnerService/spinner.service';
+import { IFRPGroupElemComponent } from '../../Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({
@@ -72,10 +75,63 @@ export class PlanEditorComponent implements IModalDialog {
     private refreshIsValid() {
         this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
     }
-    private onNewMedTypeTriggered() {
+    private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO,
+        mode: MedicineTypeEditorMode, sourceIFRPComponent: IFRPGroupElemComponent) {
+        this.modalDialogService.OpenDialog(this.viewContainerRef, {
+            title: title,
+            childComponent: MedicineTypeEditorComponent,
+            data: {
+                medicineTypeCLO: medicineTypeCLO,
+                medicineTypeEditorMode: mode
+            },
+            actionButtons: [
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        let editorInstance = childComponentInstance as MedicineTypeEditorComponent;
+                        return !editorInstance.GetValidState();
+                    },
+                    text: saveButtonText,
+                    onAction: (childComponentInstance: any) => {
+                        let promiseWrapper = new Promise<void>((resolve) => {
+                            this.spinnerService.Show();
 
-        this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Hello", "This is a message");
+                            let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
+                            medicineTypeEditorComponentInstance.SaveData()
+                                .then((newMedicineTypeCLO) => {
+
+
+                                    // Refresh AvailableMedicineTypes
+                                    this.globalDataService.GetMedicineTypes().then(medicineTypeCLOs => {
+                                        this.availableMedicineTypes = medicineTypeCLOs;
+                                    });
+
+                                    setTimeout(() => {
+                                        this.spinnerService.Hide();
+                                        sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
+
+                                        resolve();
+                                    }, 200);
+                                });
+
+                        });
+                        return promiseWrapper;
+                    }
+                },
+                {
+                    isDisabledFunction: (childComponentInstance: any) => {
+                        return false;
+                    },
+                    text: 'Cancel',
+                    onAction: () => {
+                        return true;
+                    },
+                    buttonClass: 'ui-button-secondary'
+                }
+            ]
+        });
+
     }
+    
 
     // Constructor 
     constructor(
@@ -83,6 +139,8 @@ export class PlanEditorComponent implements IModalDialog {
         private readonly globalDataService: HomePageDataService,
         private fb: FormBuilder,
         private readonly modalDialogService: ModalDialogService,
+        private readonly spinnerService: SpinnerService,
+
         private viewContainerRef: ViewContainerRef,
     ) {
     }
@@ -158,6 +216,11 @@ export class PlanEditorComponent implements IModalDialog {
         setTimeout(() => {
             this.refreshIsValid();
         }, 1);
+    }
+    private onAddNewMedicineTypeTriggered(sourceComponent) {
+
+        let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
+        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew, sourceComponent);
     }
 
     // IModalDialog

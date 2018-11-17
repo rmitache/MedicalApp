@@ -33,7 +33,9 @@ export class IFRPGroupElemComponent {
 
         UnitDoseTypesEnum: {},
         OverlayIsVisible: true,
-        UserDefinedControlsAreLocked: true
+        UserDefinedControlsAreLocked: true,
+
+        SearchText: null
     };
 
     // Private methods
@@ -138,10 +140,19 @@ export class IFRPGroupElemComponent {
     public GetValidState() {
         return this.isValid;
     }
+    public SetMedicineType(name) {
+        
+        this.loadMedicineTypeByName(name);
+        setTimeout(() => {
+            this.viewModel.OverlayIsVisible = false;
+            this.viewModel.SearchText = name;
+        }, 1);
+    }
 
     // Events 
     @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
+    @Output() public AddNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
     private onRemoveClicked() {
@@ -153,6 +164,12 @@ export class IFRPGroupElemComponent {
         this.viewModel.MedicineTypeSearchResults = searchResults;      
     }
     private onMedicineTypeSelected(value) {
+        if (value === "Add a new Medicine Type...") {
+            this.AddNewMedicineTypeTriggered.emit(this);
+            this.viewModel.SearchText = '';
+            return;
+        }
+
 
         this.loadMedicineTypeByName(value);
         setTimeout(() => {
@@ -178,6 +195,8 @@ interface ViewModel {
     UnitDoseTypesEnum: any;
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;
+
+    SearchText: string;
 }
 
 

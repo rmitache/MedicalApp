@@ -89,8 +89,13 @@ export class RuleElemComponent {
     // Events 
     @Output() public RemoveClicked: EventEmitter<any> = new EventEmitter();
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
+    @Output() public AddNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
+    private onAddNewMedicineTypeTriggered(sourceComponent) {
+        this.AddNewMedicineTypeTriggered.emit(sourceComponent);
+       
+    }
     private onGroupListValidStateChanged() {
         this.refreshIsValid();
     }

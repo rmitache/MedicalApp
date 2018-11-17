@@ -6,6 +6,8 @@
         <br />
         <div id="elems-list">
             <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.IFRPGroupCLOs"
+
+                             (AddNewMedicineTypeTriggered)="onAddNewMedicineTypeTriggered($event)"
                              [IFRPGroupCLO]="clo"
                              [MedicineTypeSearchService]="searchService"
                              (ValidStateChanged)="onChildGroupElemValidStateChanged()"

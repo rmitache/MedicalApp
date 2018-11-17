@@ -51,7 +51,12 @@ export class IFRPGroupListComponent {
 			});
 			let results = matchingMedTypes.map(clo => {
 				return clo.Name;
-			});
+            });
+
+            // Add a special create new MedicineType option at the top
+            let addNewMedTypeOption = "Add a new Medicine Type...";
+            results.unshift(addNewMedTypeOption);
+
 			return results;
         }
     };
@@ -116,9 +121,12 @@ export class IFRPGroupListComponent {
     // Events 
     @Output() public AddNewClicked: EventEmitter<any> = new EventEmitter();
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
-
+    @Output() public AddNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
+    private onAddNewMedicineTypeTriggered(sourceComponent) {
+        this.AddNewMedicineTypeTriggered.emit(sourceComponent);
+    }
     private onChildGroupElemValidStateChanged() {
         this.refreshIsValid();
     }

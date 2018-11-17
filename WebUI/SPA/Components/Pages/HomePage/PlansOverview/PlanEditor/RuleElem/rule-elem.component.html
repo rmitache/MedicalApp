@@ -62,6 +62,7 @@
         </div>
         <div class="what-section">
             <ifrp-group-list #ifrpgrouplist
+                             (AddNewMedicineTypeTriggered)="onAddNewMedicineTypeTriggered($event)"
                              [IFRPGroupCLOs]="viewModel.RuleCLO.MedicineRuleItems"
                              [AvailableMedicineTypes]="availableMedicineTypes"
                              (ValidStateChanged)="onGroupListValidStateChanged()"

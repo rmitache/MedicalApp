@@ -4,12 +4,14 @@
     <div class="frame">
         <div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>
 
+
+
         <div class="top-section">
             <div class="label-input-pair">
                 <span class="label">Name:</span>
 
-                <input pInputText type="text" id="plan-name-input" formControlName="planName"  [(ngModel)]="viewModel.PlanCLO.Name" />
-                
+                <input pInputText type="text" id="plan-name-input" formControlName="planName" [(ngModel)]="viewModel.PlanCLO.Name" />
+
             </div>
             <div class="label-input-pair start" formGroupName="dates">
                 <span class="label">
@@ -37,10 +39,11 @@
             <span class="h2">RULES:</span>
             <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="Add Rule"
                     (click)="onAddNewRuleTriggered()"></button>
-            
+
             <br />
             <div class="rules-list">
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
+                           (AddNewMedicineTypeTriggered)="onAddNewMedicineTypeTriggered($event)"
                            (ValidStateChanged)="onChildRuleElemValidStateChanged()"
                            (RemoveClicked)="onRemoveRuleTriggered($event)"
                            [AvailableMedicineTypes]="availableMedicineTypes"
@@ -52,5 +55,3 @@
     </div>
 </form>
 
-<!--<button pButton type="button" icon="fa fa-plus" label="New MedicineType"
-        (click)="onNewMedTypeTriggered()"></button>-->
