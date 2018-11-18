@@ -27,9 +27,9 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
     imports: [
         FormsModule,
         CommonModule,
+        BrowserModule,
         HttpModule,
         ReactiveFormsModule,
-        BrowserModule,
         CoreModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(

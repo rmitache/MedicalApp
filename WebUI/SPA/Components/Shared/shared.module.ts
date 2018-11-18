@@ -34,6 +34,7 @@ import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-pan
 import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
 import { TooltipsModule } from './Tooltips/tooltips.module';
 import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accept-terms-dialog-service.module';
+import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accep
 		HeaderBarModule,
         NoDataPanelModule,
         TooltipsModule,
-        AcceptTermsDialogServiceModule
+        AcceptTermsDialogServiceModule,
+        UserAccountEditorDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -98,7 +100,8 @@ import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accep
         NoDataPanelModule,
         PlanVersionTooltipComponent,
         TooltipsModule,
-        AcceptTermsDialogServiceModule
+        AcceptTermsDialogServiceModule,
+        UserAccountEditorDialogServiceModule
     ]
 })
 export class SharedModule { }

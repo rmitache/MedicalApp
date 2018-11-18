@@ -9,13 +9,12 @@
         </div>
         <div class="label-input-pair" id="new-password-div">
             <span class="label-discrete">New Password:</span>
-            <input type="password" formControlName="newPassword" pInputText [value]="viewModel.NewPassword" />
+            <input type="password" formControlName="newPassword" pInputText  [(ngModel)]="viewModel.NewPassword" />
         </div>
-
 
         <div class="label-input-pair" id="confirm-password-div">
             <span class="label-discrete">Confirm Password:</span>
-            <input type="password" formControlName="confirmPassword" pInputText [value]="viewModel.ConfirmPassword" />
+            <input type="password" formControlName="confirmPassword" pInputText  [(ngModel)]="viewModel.ConfirmPassword" />
         </div>
     </div>
 </form>

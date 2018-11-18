@@ -7,29 +7,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { HeaderBarComponent } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
-import { UserAccountEditorComponent } from 'SPA/Components/Shared/HeaderBar/UserAccountEditor/user-account-editor.component';
-import { InputTextModule } from 'primeng/primeng';
+import { CommonModule } from '@angular/common';
+import { UserAccountEditorDialogServiceModule } from '../Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
 
 // Components
-
 
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-		ReactiveFormsModule,
-		InputTextModule
+        ReactiveFormsModule,
+        UserAccountEditorDialogServiceModule
     ],
 	declarations: [
-		UserAccountEditorComponent,
 		HeaderBarComponent
-
     ],
 	exports: [HeaderBarComponent],
-    providers: [ ],
-    entryComponents: [
-		UserAccountEditorComponent
-    ]
+    providers: [ ]
+    
 })
 export class HeaderBarModule { }

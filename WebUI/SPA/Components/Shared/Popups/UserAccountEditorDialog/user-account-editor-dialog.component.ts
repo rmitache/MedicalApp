@@ -19,12 +19,12 @@ import { IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar
 
 
 @Component({
-	selector: 'user-account-editor',
-	templateUrl: './user-account-editor.component.html',
-	styleUrls: ['./user-account-editor.component.css'],
-	host: { 'class': 'user-account-editor' }
+	selector: 'user-account-editor-dialog',
+    templateUrl: './user-account-editor-dialog.component.html',
+    styleUrls: ['./user-account-editor-dialog.component.css'],
+    host: { 'class': 'user-account-editor-dialog' }
 })
-export class UserAccountEditorComponent implements IModalDialog {
+export class UserAccountEditorDialogComponent implements IModalDialog {
 	// Fields
 	private isValid: boolean = false;
 	private currentModeInstance: IUserAccountEditorModeImplementation = null;
@@ -124,14 +124,14 @@ class EditCurrentMode implements IUserAccountEditorModeImplementation {
 		private genericCLOFactory: GenericCLOFactory) {
 
 		// Prepare ViewModel 
-		this.vm.UserAccountCLO = this.genericCLOFactory.CloneCLO(this.userAccountCLO);
+        this.vm.UserAccountCLO = this.genericCLOFactory.CloneCLO(this.userAccountCLO);
 		this.vm.NewPassword = '';
 		this.vm.ConfirmPassword = '';
 
 	}
 
 	// Public methods
-	public SaveData() {
+    public SaveData() {
 		let saveDataPromise = this.globalDataService.UpdatePassword(this.vm.NewPassword);
 		return saveDataPromise;
 
