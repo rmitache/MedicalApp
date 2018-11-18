@@ -1,13 +1,9 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { NgForm, AbstractControl } from '@angular/forms';
-import { AutoComplete } from 'primeng/primeng';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { ISymptomTypesSearchService } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 
 
 @Component({

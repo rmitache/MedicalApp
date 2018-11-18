@@ -11,32 +11,23 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { HealthGraphComponent } from './health-graph.component';
-import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
-import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
-import { HealthLevelSelectorComponent } from './AddNewHealthStatusEntry/HealthLevelSelector/health-level-selector.component';
 
 
 
 @NgModule({
     imports: [
-        
         BrowserModule,
         FormsModule,
         CalendarModule,
         AutoCompleteModule,
         ReactiveFormsModule,
-    
         SharedModule
     ],
     declarations: [
         HealthGraphComponent,
-        AddNewHealthStatusEntryComponent,
-        SymptomEntryElemComponent,
-        HealthLevelSelectorComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [
-        AddNewHealthStatusEntryComponent
     ]
 })
 export class HealthGraphModule { }

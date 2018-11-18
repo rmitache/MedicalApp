@@ -35,6 +35,8 @@ import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-t
 import { TooltipsModule } from './Tooltips/tooltips.module';
 import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accept-terms-dialog-service.module';
 import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
+import { AddHealthStatusDialogService } from './Popups/AddHealthStatusDialog/add-health-status-dialog.service';
+import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDialog/add-health-status-dialog-service.module';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditor
         NoDataPanelModule,
         TooltipsModule,
         AcceptTermsDialogServiceModule,
-        UserAccountEditorDialogServiceModule
+        UserAccountEditorDialogServiceModule,
+        AddHealthStatusDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -101,7 +104,8 @@ import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditor
         PlanVersionTooltipComponent,
         TooltipsModule,
         AcceptTermsDialogServiceModule,
-        UserAccountEditorDialogServiceModule
+        UserAccountEditorDialogServiceModule,
+        AddHealthStatusDialogServiceModule
     ]
 })
 export class SharedModule { }

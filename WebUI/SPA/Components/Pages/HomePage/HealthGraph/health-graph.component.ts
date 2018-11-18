@@ -17,11 +17,11 @@ import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
-import { AddNewHealthStatusEntryComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { SingleHealthStatusTooltipComponent } from '../../../Shared/Tooltips/SingleHealthStatusTooltip/single-health-status-tooltip.component';
+import { AddHealthStatusDialogService } from '../../../Shared/Popups/AddHealthStatusDialog/add-health-status-dialog.service';
 
 
 @Component({
@@ -117,7 +117,8 @@ export class HealthGraphComponent {
         private readonly commandManager: CommandManager,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
-        private readonly spinnerService: SpinnerService
+        private readonly spinnerService: SpinnerService,
+        private readonly addHealthStatusDialogService: AddHealthStatusDialogService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -149,56 +150,16 @@ export class HealthGraphComponent {
     // Event handlers
     private onAddNewHealthStatusEntryTriggered() {
 
-        this.spinnerService.Show();
-        this.dataService.GetRecentSymptoms().then(symptomTypeCLOs => {
-            this.spinnerService.Hide();
+        this.addHealthStatusDialogService.Open(this.viewContainerRef, () => {
 
-            this.modalDialogService.OpenDialog(this.viewContainerRef, {
-                title: 'Health status',
-                childComponent: AddNewHealthStatusEntryComponent,
-                data: {
-                    recentSymptomTypes: symptomTypeCLOs
-                },
-                actionButtons: [
-                    {
-                        isDisabledFunction: (childComponentInstance: any) => {
-                            let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                            return !componentInstance.GetValidState();
-                        },
-                        text: 'Done',
-                        onAction: (childComponentInstance: any) => {
-                            let promiseWrapper = new Promise<void>((resolve) => {
-                                this.spinnerService.Show();
 
-                                let componentInstance = childComponentInstance as AddNewHealthStatusEntryComponent;
-                                componentInstance.SaveData()
-                                    .then((healthStatusCLO) => {
-                                        this.reloadDataFromServer(this.viewModel.AvailableDateRange)
-                                            .then(() => {
-                                                this.refreshUI();
-                                                setTimeout(() => {
-                                                    this.spinnerService.Hide();
-                                                    resolve();
-                                                }, 200);
-                                            });
-
-                                    });
-                            });
-                            return promiseWrapper;
-                        }
-                    },
-                    {
-                        isDisabledFunction: (childComponentInstance: any) => {
-                            return false;
-                        },
-                        text: 'Cancel',
-                        onAction: () => {
-                            return true;
-                        },
-                        buttonClass: 'ui-button-secondary'
-                    }
-                ]
-            });
+            this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+                .then(() => {
+                    this.refreshUI();
+                    setTimeout(() => {
+                        this.spinnerService.Hide();
+                    }, 200);
+                });
         });
 
     }

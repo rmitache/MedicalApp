@@ -14,19 +14,19 @@ import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-dat
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 // Components
-import { SymptomEntryElemComponent } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/SymptomEntryElem/symptom-entry-elem.component';
 import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level-selector.component';
 import { AutoComplete } from 'primeng/primeng';
+import { SymptomEntryElemComponent } from './SymptomEntryElem/symptom-entry-elem.component';
 
 
 
 @Component({
-    selector: 'add-new-health-status-entry',
-    templateUrl: './add-new-health-status-entry.component.html',
-    styleUrls: ['./add-new-health-status-entry.component.css'],
-    host: { 'class': 'add-new-health-status-entry' }
+    selector: 'add-health-status-dialog',
+    templateUrl: './add-health-status-dialog.component.html',
+    styleUrls: ['./add-health-status-dialog.component.css'],
+    host: { 'class': 'add-health-status-dialog' }
 })
-export class AddNewHealthStatusEntryComponent implements IModalDialog {
+export class AddHealthStatusDialogComponent implements IModalDialog {
     // Fields
     private isValid: boolean = false;
     @ViewChildren('symptomEntryElems')
@@ -116,9 +116,9 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
     // Constructor 
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
-        private readonly globalDataService: HomePageDataService,
+        private readonly dataService: HomePageDataService,
     ) {
-        this.availableSymptomTypes = this.globalDataService.GetSymptomTypesFromBundle().ToArray();
+        this.availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
         this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
     }
@@ -133,7 +133,7 @@ export class AddNewHealthStatusEntryComponent implements IModalDialog {
 
     // Public methods
     public SaveData(): Promise<CLOs.HealthStatusEntryCLO> {
-        let saveDataPromise = this.globalDataService.AddHealthStatusEntry(this.viewModel.HealthStatusEntryCLO);
+        let saveDataPromise = this.dataService.AddHealthStatusEntry(this.viewModel.HealthStatusEntryCLO);
         return saveDataPromise;
     }
     public GetValidState() {

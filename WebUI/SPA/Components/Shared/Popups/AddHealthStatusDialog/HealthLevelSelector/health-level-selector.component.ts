@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Project modules
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
-import { ISymptomTypesSearchService } from 'SPA/Components/Pages/HomePage/HealthGraph/AddNewHealthStatusEntry/add-new-health-status-entry.component';
 
 
 @Component({
