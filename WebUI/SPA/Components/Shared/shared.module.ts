@@ -38,6 +38,7 @@ import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditor
 import { AddHealthStatusDialogService } from './Popups/AddHealthStatusDialog/add-health-status-dialog.service';
 import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDialog/add-health-status-dialog-service.module';
 import { AddSupplyDialogServiceModule } from './Popups/AddSupplyDialog/add-supply-dialog-service.module';
+import { StopPlanDialogServiceModule } from './Popups/StopPlanDialog/stop-plan-dialog-service.module';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { AddSupplyDialogServiceModule } from './Popups/AddSupplyDialog/add-suppl
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
         AddHealthStatusDialogServiceModule,
-        AddSupplyDialogServiceModule
+        AddSupplyDialogServiceModule,
+        StopPlanDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -108,7 +110,8 @@ import { AddSupplyDialogServiceModule } from './Popups/AddSupplyDialog/add-suppl
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
         AddHealthStatusDialogServiceModule,
-        AddSupplyDialogServiceModule
+        AddSupplyDialogServiceModule,
+        StopPlanDialogServiceModule
     ]
 })
 export class SharedModule { }

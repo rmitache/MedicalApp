@@ -56,6 +56,8 @@
     <None Remove="SPA\Components\Shared\Popups\AddHealthStatusDialog\add-health-status-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog.service.ts" />
+    <None Remove="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog-service.module.ts" />
+    <None Remove="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
@@ -170,6 +172,8 @@
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddHealthStatusDialog\add-health-status-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog.service.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\shared.module.ts" />

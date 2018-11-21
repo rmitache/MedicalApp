@@ -16,8 +16,8 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 // Components
 import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
-import { StopPlanDialogComponent } from 'SPA/Components/Pages/HomePage/PlansOverview/StopPlanDialog/stop-plan-dialog.component';
 import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/PlanVersionTooltip/plan-version-tooltip.component';
+import { StopPlanDialogService } from '../../../Shared/Popups/StopPlanDialog/stop-plan-dialog.service';
 
 
 @Component({
@@ -116,60 +116,17 @@ export class PlansOverviewComponent {
     }
     private openStopPlanDialog(planCLO: CLOs.PlanCLO) {
 
+        this.stopPlanDialogService.Open(planCLO, this.viewContainerRef, () => {
+            this.reloadDataFromServer()
+                .then(() => {
+                    this.refreshUI();
+                });
 
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: 'Stop Plan',
-            childComponent: StopPlanDialogComponent,
-            data: {
-                stopDate: moment().endOf('day').toDate(),
-                planCLO: planCLO
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let compInstance = childComponentInstance as StopPlanDialogComponent;
-                        return !compInstance.GetValidState();
-                    },
-                    text: 'Stop',
-                    buttonClass: 'ui-button-danger',
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.spinnerService.Show();
+            this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
-                            let compInstance = childComponentInstance as StopPlanDialogComponent;
-                            compInstance.SaveData()
-                                .then(() => {
-
-                                    this.reloadDataFromServer()
-                                        .then(() => {
-                                            this.refreshUI();
-                                        });
-
-                                    this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
-
-                                    setTimeout(() => {
-                                        this.spinnerService.Hide();
-                                        resolve();
-                                    }, 200);
-
-                                });
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    },
-                    buttonClass: 'ui-button-secondary'
-                }
-            ]
-
-
+            setTimeout(() => {
+                this.spinnerService.Hide();
+            }, 200);
         });
 
 
@@ -361,7 +318,8 @@ export class PlansOverviewComponent {
         private readonly dataService: HomePageDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
-        private readonly spinnerService: SpinnerService
+        private readonly spinnerService: SpinnerService,
+        private readonly stopPlanDialogService: StopPlanDialogService
 
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
@@ -384,7 +342,7 @@ export class PlansOverviewComponent {
     private onAddNewPlanTriggered() {
 
         this.triggerPlanAction(null, PlanActionType.CreateNew);
-        
+
     }
     private onPlanActionTriggered(arr: any[]) {
         let planCLO: CLOs.PlanCLO = arr[0];
