@@ -37,6 +37,7 @@ import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accep
 import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
 import { AddHealthStatusDialogService } from './Popups/AddHealthStatusDialog/add-health-status-dialog.service';
 import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDialog/add-health-status-dialog-service.module';
+import { AddSupplyDialogServiceModule } from './Popups/AddSupplyDialog/add-supply-dialog-service.module';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDial
         TooltipsModule,
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
-        AddHealthStatusDialogServiceModule
+        AddHealthStatusDialogServiceModule,
+        AddSupplyDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -105,7 +107,8 @@ import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDial
         TooltipsModule,
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
-        AddHealthStatusDialogServiceModule
+        AddHealthStatusDialogServiceModule,
+        AddSupplyDialogServiceModule
     ]
 })
 export class SharedModule { }

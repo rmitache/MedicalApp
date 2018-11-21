@@ -15,12 +15,12 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 // Components
 
 @Component({
-    selector: 'add-medicine-supply',
-    templateUrl: './add-medicine-supply.component.html',
-    styleUrls: ['./add-medicine-supply.component.css'],
-    host: { 'class': 'add-medicine-supply' }
+    selector: 'add-supply-dialog',
+    templateUrl: './add-supply-dialog.component.html',
+    styleUrls: ['./add-supply-dialog.component.css'],
+    host: { 'class': 'add-supply-dialog' }
 })
-export class AddMedicineSupplyComponent implements IModalDialog {
+export class AddSupplyDialogComponent implements IModalDialog {
     // Fields
     private isValid: boolean;
     private reactiveForm: FormGroup;
@@ -81,12 +81,10 @@ export class AddMedicineSupplyComponent implements IModalDialog {
     }
 }
 
-
 interface ViewModel {
     NewSupplyAmount: number;
     MedicineTypeCLO: CLOs.MedicineTypeCLO;
 }
-
 export interface IMedicineTypesSearchService {
     GetMedicineTypeByName(name: string): CLOs.MedicineTypeCLO;
     Search(searchString: string): string[];

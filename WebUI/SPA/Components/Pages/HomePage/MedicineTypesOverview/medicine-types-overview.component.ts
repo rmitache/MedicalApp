@@ -13,10 +13,9 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
-import { AddMedicineSupplyComponent } from './AddMedicineSupply/add-medicine-supply.component';
-import { MedicineFactorRecordCLO } from 'SPA/DomainModel/clo-exports';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { MedicineTypeElemComponent } from './MedicineTypeElem/medicine-type-elem.component';
+import { AddSupplyDialogService } from '../../../Shared/Popups/AddSupplyDialog/add-supply-dialog.service';
 
 
 
@@ -163,7 +162,7 @@ export class MedicineTypesOverviewComponent {
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private readonly spinnerService: SpinnerService,
-        private readonly changeDetectorRef: ChangeDetectorRef
+        private readonly addSupplyDialogService: AddSupplyDialogService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -211,60 +210,25 @@ export class MedicineTypesOverviewComponent {
         this.refreshUI();
     }
     private onAddMedicineTypeSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: 'Add new supply',
-            childComponent: AddMedicineSupplyComponent,
-            data: {
-                medicineTypeCLO: medicineTypeCLO,
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
-                        return !componentInstance.GetValidState();
-                    },
-                    text: 'Save',
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.spinnerService.Show();
 
-                            let componentInstance = childComponentInstance as AddMedicineSupplyComponent;
-                            componentInstance.SaveData()
-                                .then(() => {
-                                    return this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
-                                })
-                                .then((newSupplyInfo) => {
-                                    this.getMedicineTypeElemByCloID(medicineTypeCLO.ID)
-                                        .UpdateCLOSupplyFields(newSupplyInfo.CurrentSupplyAmount, newSupplyInfo.SupplyWillLastUntil);
+        this.addSupplyDialogService.Open(medicineTypeCLO, this.viewContainerRef, () => {
+            this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID)
+                .then((newSupplyInfo) => {
+                    this.getMedicineTypeElemByCloID(medicineTypeCLO.ID)
+                        .UpdateCLOSupplyFields(newSupplyInfo.CurrentSupplyAmount, newSupplyInfo.SupplyWillLastUntil);
 
-                                    // 
-                                    this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
-                                    this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
+                    // 
+                    this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
+                    this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
 
-                                    this.spinnerService.Hide();
-
-                                    resolve();
-                                });
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    },
-                    buttonClass: 'ui-button-secondary'
-                }
-            ]
+                    this.spinnerService.Hide();
+                });
         });
+        
     }
     private onClearSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
         this.dataService.ClearSupplyEntries(medicineTypeCLO.ID).then(() => {
-            this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).UpdateCLOSupplyFields(null, null); 
+            this.getMedicineTypeElemByCloID(medicineTypeCLO.ID).UpdateCLOSupplyFields(null, null);
 
             this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
             this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
