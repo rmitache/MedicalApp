@@ -9,9 +9,9 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { Time } from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
+import { IFRPGroupListComponent } from '../IFRPGroupList/ifrp-group-list.component';
 
 // Components
-import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 
 
 

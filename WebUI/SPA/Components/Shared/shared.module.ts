@@ -21,8 +21,6 @@ import { InplaceModule } from 'primeng/primeng';
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
 
 // Components
-import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
-import { IFRPGroupListComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/ifrp-group-list.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { HeaderBarComponent } from './HeaderBar/header-bar.component';
 import { FilterListPanelComponent } from 'SPA/Components/Shared/FilterListPanel/filter-list-panel.component';
@@ -39,6 +37,9 @@ import { AddHealthStatusDialogService } from './Popups/AddHealthStatusDialog/add
 import { AddHealthStatusDialogServiceModule } from './Popups/AddHealthStatusDialog/add-health-status-dialog-service.module';
 import { AddSupplyDialogServiceModule } from './Popups/AddSupplyDialog/add-supply-dialog-service.module';
 import { StopPlanDialogServiceModule } from './Popups/StopPlanDialog/stop-plan-dialog-service.module';
+import { PlanEditorDialogService } from './Popups/PlanEditorDialog/plan-editor-dialog.service';
+import { PlanEditorDialogServiceModule } from './Popups/PlanEditorDialog/plan-editor-dialog-service.module';
+import { PipesModule } from './Pipes/pipes.module';
 
 
 @NgModule({
@@ -64,29 +65,23 @@ import { StopPlanDialogServiceModule } from './Popups/StopPlanDialog/stop-plan-d
 		HeaderBarModule,
         NoDataPanelModule,
         TooltipsModule,
+        PipesModule,
+
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
         AddHealthStatusDialogServiceModule,
         AddSupplyDialogServiceModule,
-        StopPlanDialogServiceModule
+        StopPlanDialogServiceModule,
+        PlanEditorDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
-        KeysPipe,
-        EnumKeysPipe,
-        IFRPGroupElemComponent,
-        IFRPGroupListComponent,
         NavigationPanelComponent,
         FilterListPanelComponent,
         PlanVersionTooltipComponent,
-         
     ],
     exports: [
         SplitButtonComponent,
-        KeysPipe,
-        EnumKeysPipe,
-        IFRPGroupElemComponent,
-        IFRPGroupListComponent,
         SplitButtonModule,
         ChipsModule,
         ChartModule,
@@ -107,11 +102,14 @@ import { StopPlanDialogServiceModule } from './Popups/StopPlanDialog/stop-plan-d
         NoDataPanelModule,
         PlanVersionTooltipComponent,
         TooltipsModule,
+        PipesModule,
+
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
         AddHealthStatusDialogServiceModule,
         AddSupplyDialogServiceModule,
-        StopPlanDialogServiceModule
+        StopPlanDialogServiceModule,
+        PlanEditorDialogServiceModule
     ]
 })
 export class SharedModule { }

@@ -12,9 +12,9 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
+import { IFRPGroupElemComponent } from './IFRPGroupElem/ifrp-group-elem.component';
 
 // Components
-import { IFRPGroupElemComponent } from 'SPA/Components/Pages/HomePage/Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({

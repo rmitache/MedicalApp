@@ -16,7 +16,6 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 // Components
-import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';

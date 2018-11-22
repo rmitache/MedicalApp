@@ -17,18 +17,18 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 // Components
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
-import { MedicineTypeEditorComponent, MedicineTypeEditorMode } from '../../MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
-import { SpinnerService } from '../../../../../Core/Services/SpinnerService/spinner.service';
-import { IFRPGroupElemComponent } from '../../Shared/IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
+import { MedicineTypeEditorComponent, MedicineTypeEditorMode } from '../../../Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
+import { SpinnerService } from '../../../../Core/Services/SpinnerService/spinner.service';
+import { IFRPGroupElemComponent } from './IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 
 
 @Component({
-    selector: 'plan-editor',
-    templateUrl: './plan-editor.component.html',
-    styleUrls: ['./plan-editor.component.css'],
-    host: { 'class': 'plan-editor' }
+    selector: 'plan-editor-dialog',
+    templateUrl: './plan-editor-dialog.component.html',
+    styleUrls: ['./plan-editor-dialog.component.css'],
+    host: { 'class': 'plan-editor-dialog' }
 })
-export class PlanEditorComponent implements IModalDialog {
+export class PlanEditorDialogComponent implements IModalDialog {
     // Fields
     @ViewChildren('ruleelems')
     private ruleElems: QueryList<RuleElemComponent>;
@@ -186,8 +186,6 @@ export class PlanEditorComponent implements IModalDialog {
         if (this.viewModel.CurrentVersionCLO.EndDateTime !== null) {
             this.viewModel.CurrentVersionCLO.EndDateTime = moment(this.viewModel.CurrentVersionCLO.EndDateTime).endOf('day').toDate();
         }
-
-
 
 
         let saveDataPromise = this.currentModeInstance.SaveData();

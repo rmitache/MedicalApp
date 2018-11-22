@@ -14,10 +14,11 @@ import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
 
 // Components
-import { PlanEditorComponent, PlanEditorMode } from './PlanEditor/plan-editor.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/PlanVersionTooltip/plan-version-tooltip.component';
 import { StopPlanDialogService } from '../../../Shared/Popups/StopPlanDialog/stop-plan-dialog.service';
+import { PlanEditorMode } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.component';
+import { PlanEditorDialogService } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.service';
 
 
 @Component({
@@ -48,70 +49,22 @@ export class PlansOverviewComponent {
     };
 
     // Private methods
-    private openPlanEditor(title: string, saveButtonText: string, planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
+    private openPlanEditor(planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
 
-        this.spinnerService.Show();
-        this.dataService.GetMedicineTypes().then(medicineTypeCLOs => {
+        this.planEditorDialogService.Open(planCLO, mode, this.viewContainerRef, () => {
 
-            this.spinnerService.Hide();
-            this.modalDialogService.OpenDialog(this.viewContainerRef, {
-                title: title,
-                childComponent: PlanEditorComponent,
-                data: {
-                    planCLO: planCLO,
-                    planEditorMode: mode,
-                    availableMedicineTypes: medicineTypeCLOs
-                },
-                actionButtons: [
-                    {
-                        isDisabledFunction: (childComponentInstance: any) => {
-                            let planEditorInstance = childComponentInstance as PlanEditorComponent;
-                            return !planEditorInstance.GetValidState();
-                        },
-                        text: saveButtonText,
-                        onAction: (childComponentInstance: any) => {
-                            let promiseWrapper = new Promise<void>((resolve) => {
-                                this.spinnerService.Show();
+            this.reloadDataFromServer()
+                .then(() => {
+                    this.refreshUI();
+                });
 
-                                let planEditorComponentInstance = childComponentInstance as PlanEditorComponent;
-                                planEditorComponentInstance.SaveData()
-                                    .then((planCLO) => {
+            this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+            this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
 
-                                        this.reloadDataFromServer()
-                                            .then(() => {
-                                                this.refreshUI();
-                                            });
-
-
-                                        this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
-                                        this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
-
-                                        setTimeout(() => {
-                                            this.spinnerService.Hide();
-                                            resolve();
-                                        }, 200);
-
-                                    });
-                            });
-                            return promiseWrapper;
-                        }
-                    },
-                    {
-                        isDisabledFunction: (childComponentInstance: any) => {
-                            return false;
-                        },
-                        text: 'Cancel',
-                        onAction: () => {
-                            return true;
-                        },
-                        buttonClass: 'ui-button-secondary'
-                    }
-                ]
-
-
-            });
+            setTimeout(() => {
+                this.spinnerService.Hide();
+            }, 200);
         });
-
 
     }
     private openStopPlanDialog(planCLO: CLOs.PlanCLO) {
@@ -199,21 +152,21 @@ export class PlansOverviewComponent {
             // CreateNew
             case PlanActionType.CreateNew:
                 let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
-                this.openPlanEditor('Create a new Plan', 'Create', newPlanCLO, PlanEditorMode.CreateNew);
+                this.openPlanEditor(newPlanCLO, PlanEditorMode.CreateNew);
                 break;
 
 
             // Change
             case PlanActionType.Change:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Make changes to Plan', 'Confirm changes', cloneOfPlanCLO, PlanEditorMode.Change);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.Change);
                 break;
 
 
             // EditUpcomingChanges
             case PlanActionType.EditUpcomingChanges:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Edit upcoming changes', 'Save', cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.EditUpcomingChanges);
                 break;
 
 
@@ -229,7 +182,7 @@ export class PlansOverviewComponent {
             // EditTodaysChanges
             case PlanActionType.EditTodaysChanges:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Edit todays changes', 'Save', cloneOfPlanCLO, PlanEditorMode.EditTodaysChanges);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.EditTodaysChanges);
                 break;
 
             // CancelTodaysChanges
@@ -243,19 +196,19 @@ export class PlansOverviewComponent {
             // EditPlanStartedToday
             case PlanActionType.EditPlanStartedToday:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Edit the plan started today', 'Save', cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
                 break;
 
             // EditPlanRestartedToday
             case PlanActionType.EditPlanRestartedToday:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Edit the plan restarted today', 'Save', cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.EditPlanStartedToday);
                 break;
 
             // Restart
             case PlanActionType.Restart:
                 var cloneOfPlanCLO = this.genericCLOFactory.CloneCLO(targetExistingPlanCLO);
-                this.openPlanEditor('Restart Plan', 'Restart', cloneOfPlanCLO, PlanEditorMode.Restart);
+                this.openPlanEditor(cloneOfPlanCLO, PlanEditorMode.Restart);
                 break;
 
 
@@ -319,7 +272,8 @@ export class PlansOverviewComponent {
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private readonly spinnerService: SpinnerService,
-        private readonly stopPlanDialogService: StopPlanDialogService
+        private readonly stopPlanDialogService: StopPlanDialogService,
+        private readonly planEditorDialogService: PlanEditorDialogService
 
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;

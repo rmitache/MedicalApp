@@ -13,7 +13,6 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 // Components
 import { ScheduleComponent } from './schedule.component';
 import { ScheduleUnitComponent } from './ScheduleUnit/schedule-unit.component';
-import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
 
 
 @NgModule({
@@ -28,12 +27,10 @@ import { AddNewEventComponent } from './AddNewEvent/add-new-event.component';
     declarations: [
         ScheduleComponent,
         ScheduleUnitComponent,
-        AddNewEventComponent
     ],
     exports: [
         ScheduleComponent],
     entryComponents: [
-        AddNewEventComponent
     ]
 })
 export class ScheduleModule { }
