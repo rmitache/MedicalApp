@@ -121,6 +121,7 @@ export class IFRPGroupElemComponent {
         //
         if (this.iFRPGroupCLO.MedicineType !== null) {
             this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
+            this.viewModel.SearchText = this.iFRPGroupCLO.MedicineType.Name;
             this.viewModel.OverlayIsVisible = false;
 
             //
