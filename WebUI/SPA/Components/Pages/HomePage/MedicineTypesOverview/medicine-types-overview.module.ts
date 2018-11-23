@@ -12,7 +12,6 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { MedicineTypesOverviewComponent } from './medicine-types-overview.component';
-import { MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
 import { MedicineTypeElemComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeElem/medicine-type-elem.component';
 
@@ -29,13 +28,9 @@ import { MedicineTypeElemComponent } from 'SPA/Components/Pages/HomePage/Medicin
     ],
     declarations: [
         MedicineTypesOverviewComponent,
-        MedicineTypeEditorComponent,
 		MedicineTypeElemComponent
     ],
     exports: [MedicineTypesOverviewComponent],
-    providers: [ VersionCLOService],
-    entryComponents: [
-        MedicineTypeEditorComponent,
-    ]
+    providers: [ VersionCLOService]
 })
 export class MedicineTypesOverviewModule { }

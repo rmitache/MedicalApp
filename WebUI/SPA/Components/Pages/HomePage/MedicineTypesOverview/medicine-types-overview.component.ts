@@ -12,10 +12,11 @@ import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-dat
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-import { MedicineTypeEditorMode, MedicineTypeEditorComponent } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { MedicineTypeElemComponent } from './MedicineTypeElem/medicine-type-elem.component';
 import { AddSupplyDialogService } from '../../../Shared/Popups/AddSupplyDialog/add-supply-dialog.service';
+import { MedicineTypeEditorMode } from '../../../Shared/Popups/MedicineTypeEditorDialog/medicine-type-editor-dialog.component';
+import { MedicineTypeEditorDialogService } from '../../../Shared/Popups/MedicineTypeEditorDialog/medicine-type-editor-dialog.service';
 
 
 
@@ -49,60 +50,18 @@ export class MedicineTypesOverviewComponent {
 
 
     // Private methods
-    private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: title,
-            childComponent: MedicineTypeEditorComponent,
-            data: {
-                medicineTypeCLO: medicineTypeCLO,
-                medicineTypeEditorMode: mode
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let editorInstance = childComponentInstance as MedicineTypeEditorComponent;
-                        return !editorInstance.GetValidState();
-                    },
-                    text: saveButtonText,
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.spinnerService.Show();
+    private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
 
-                            let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
-                            medicineTypeEditorComponentInstance.SaveData()
-                                .then((planCLO) => {
+        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, this.viewContainerRef, () => {
+            this.reloadDataFromServer()
+                .then(() => {
+                    this.refreshUI();
+                });
 
-                                    this.reloadDataFromServer()
-                                        .then(() => {
-                                            this.refreshUI();
-                                        });
-
-                                    setTimeout(() => {
-                                        this.spinnerService.Hide();
-                                        resolve();
-                                    }, 200);
-                                });
-
-
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    },
-                    buttonClass: 'ui-button-secondary'
-                }
-            ]
-
-
+            setTimeout(() => {
+                this.spinnerService.Hide();
+            }, 200);
         });
-
     }
     private reloadDataFromServer(): Promise<void> {
         var promise = this.dataService.GetMedicineTypes()
@@ -162,7 +121,8 @@ export class MedicineTypesOverviewComponent {
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private readonly spinnerService: SpinnerService,
-        private readonly addSupplyDialogService: AddSupplyDialogService
+        private readonly addSupplyDialogService: AddSupplyDialogService,
+        private readonly medicineTypeEditorDialogService: MedicineTypeEditorDialogService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -200,7 +160,7 @@ export class MedicineTypesOverviewComponent {
     // Event handlers
     private onAddNewMedicineTypeTriggered() {
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
+        this.openMedicineTypeEditor(newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew);
 
     }
     private onSelectedViewModeChanged(event) {
@@ -224,7 +184,7 @@ export class MedicineTypesOverviewComponent {
                     this.spinnerService.Hide();
                 });
         });
-        
+
     }
     private onClearSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
         this.dataService.ClearSupplyEntries(medicineTypeCLO.ID).then(() => {

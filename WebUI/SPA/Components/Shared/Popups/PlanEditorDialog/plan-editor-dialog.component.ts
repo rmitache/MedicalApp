@@ -17,9 +17,10 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 // Components
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
-import { MedicineTypeEditorComponent, MedicineTypeEditorMode } from '../../../Pages/HomePage/MedicineTypesOverview/MedicineTypeEditor/medicine-type-editor.component';
 import { SpinnerService } from '../../../../Core/Services/SpinnerService/spinner.service';
 import { IFRPGroupElemComponent } from './IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
+import { MedicineTypeEditorDialogService } from '../MedicineTypeEditorDialog/medicine-type-editor-dialog.service';
+import { MedicineTypeEditorMode } from '../MedicineTypeEditorDialog/medicine-type-editor-dialog.component';
 
 
 @Component({
@@ -75,65 +76,25 @@ export class PlanEditorDialogComponent implements IModalDialog {
     private refreshIsValid() {
         this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
     }
-    private openMedicineTypeEditor(title: string, saveButtonText: string, medicineTypeCLO: CLOs.MedicineTypeCLO,
-        mode: MedicineTypeEditorMode, sourceIFRPComponent: IFRPGroupElemComponent) {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: title,
-            childComponent: MedicineTypeEditorComponent,
-            data: {
-                medicineTypeCLO: medicineTypeCLO,
-                medicineTypeEditorMode: mode
-            },
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let editorInstance = childComponentInstance as MedicineTypeEditorComponent;
-                        return !editorInstance.GetValidState();
-                    },
-                    text: saveButtonText,
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.spinnerService.Show();
+    private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, sourceIFRPComponent: IFRPGroupElemComponent) {
 
-                            let medicineTypeEditorComponentInstance = childComponentInstance as MedicineTypeEditorComponent;
-                            medicineTypeEditorComponentInstance.SaveData()
-                                .then((newMedicineTypeCLO) => {
+        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, this.viewContainerRef, () => {
 
+            // Refresh AvailableMedicineTypes and then set the MedicineType in the source IFRP component
+            this.globalDataService.GetMedicineTypes().then(medicineTypeCLOs => {
+                this.availableMedicineTypes = medicineTypeCLOs;
 
-                                    // Refresh AvailableMedicineTypes and then set the MedicineType in the source IFRP component
-                                    this.globalDataService.GetMedicineTypes().then(medicineTypeCLOs => {
-                                        this.availableMedicineTypes = medicineTypeCLOs;
-
-                                        setTimeout(() => {
-                                            this.spinnerService.Hide();
-                                            sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
-
-                                            resolve();
-                                        }, 200);
-                                    });
-
-                                    
-                                });
-
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    },
-                    buttonClass: 'ui-button-secondary'
-                }
-            ]
+                setTimeout(() => {
+                    this.spinnerService.Hide();
+                    sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
+                }, 200);
+            });
         });
 
+        
+
     }
-    
+
 
     // Constructor 
     constructor(
@@ -142,7 +103,7 @@ export class PlanEditorDialogComponent implements IModalDialog {
         private fb: FormBuilder,
         private readonly modalDialogService: ModalDialogService,
         private readonly spinnerService: SpinnerService,
-
+        private readonly medicineTypeEditorDialogService: MedicineTypeEditorDialogService,
         private viewContainerRef: ViewContainerRef,
     ) {
     }
@@ -220,7 +181,7 @@ export class PlanEditorDialogComponent implements IModalDialog {
     private onAddNewMedicineTypeTriggered(sourceComponent) {
 
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor('Add Medicine Type', 'Save', newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew, sourceComponent);
+        this.openMedicineTypeEditor(newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew, sourceComponent);
     }
 
     // IModalDialog

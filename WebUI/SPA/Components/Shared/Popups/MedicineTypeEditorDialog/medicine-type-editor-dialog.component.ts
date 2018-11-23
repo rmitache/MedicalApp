@@ -18,12 +18,12 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 
 
 @Component({
-	selector: 'medicine-type-editor',
-	templateUrl: './medicine-type-editor.component.html',
-	styleUrls: ['./medicine-type-editor.component.css'],
-	host: { 'class': 'medicine-type-editor' }
+    selector: 'medicine-type-editor-dialog',
+    templateUrl: './medicine-type-editor-dialog.component.html',
+    styleUrls: ['./medicine-type-editor-dialog.component.css'],
+	host: { 'class': 'medicine-type-editor-dialog' }
 })
-export class MedicineTypeEditorComponent implements IModalDialog {
+export class MedicineTypeEditorDialogComponent implements IModalDialog {
 	// Fields
 	private isValid: boolean = false;
 	private currentModeInstance: IMedicineTypeEditorModeImplementation = null;
