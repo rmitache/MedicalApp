@@ -23,7 +23,8 @@
             <span class="h4">{{viewModel.Title}}</span>
         </div>
         <div class="chart-wrapper-div">
-            <p-chart #chart type="line" [data]="viewModel.ChartData" height="80px" [options]="chartOptions"></p-chart>
+            <!--<p-chart #chart type="line" [data]="viewModel.ChartData" height="80px" [options]="chartOptions"></p-chart>-->
+            <canvas id="myHealthStatusChart"></canvas>
         </div>
     </div>
     <div class="health-level-div">

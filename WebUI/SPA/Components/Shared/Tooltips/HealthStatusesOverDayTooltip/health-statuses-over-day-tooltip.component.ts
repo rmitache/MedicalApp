@@ -1,6 +1,7 @@
 // Angular and 3rd party stuff
 import { Component, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import * as moment from 'moment';
+import * as Chart from 'chart.js';
 
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
@@ -69,6 +70,9 @@ export class HealthStatusesOverDayTooltipComponent {
         TooltipPos: null,
         CaretPos: null
     };
+    private canvas: any;
+    private chartCanvasContext: any;
+    private chartInstance: any;
     private chartOptions =
         {
             animation: false,
@@ -228,12 +232,32 @@ export class HealthStatusesOverDayTooltipComponent {
         let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
         return returnArray;
     }
+    private recreateChart() {
+        // Recreate the chart
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+        }
+        this.chartInstance = new Chart(this.chartCanvasContext, {
+            type: 'line',
+            data: this.viewModel.ChartData,
+            options: this.chartOptions,
+
+        });
+    }
+
 
     // Constructor 
     constructor(
         private readonly healthStatusEntryCLOService: HealthStatusEntryCLOService
     ) {
 
+    }
+    ngAfterViewInit() {
+        // Get references to the chart canvas context
+        this.canvas = document.getElementById('myHealthStatusChart');
+        this.chartCanvasContext = this.canvas.getContext('2d');
+
+        
     }
 
     // Public 
@@ -276,10 +300,13 @@ export class HealthStatusesOverDayTooltipComponent {
             ]
         }
         this.viewModel.ChartData = data;
+        this.recreateChart();
 
         // Get symptom entries
         this.viewModel.SymptomTypes = this.healthStatusEntryCLOService.GetUniqueSymptomTypesWithAvgDose(healthEntryCLOs);
         this.viewModel.HideSymptomsDiv = (this.viewModel.SymptomTypes.length === 0);
+
+
 
         // Calculate position
         setTimeout(() => {
