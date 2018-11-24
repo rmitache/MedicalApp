@@ -7,7 +7,7 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">HEALTH</span>
-            
+
         </div>
         <div class="center-section">
             <!-- <navigation-panel #navPanel
@@ -22,13 +22,14 @@
     </div>
     <div class="body">
         <div id="chart-wrapper-div">
-            <p-chart #chart type="line" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="130px" style="overflow:visible"></p-chart>
+            
+            <canvas id="myChart"></canvas>
         </div>
     </div>
-    <div class="footer">
-       
+    <!--<div class="footer">
 
-    </div>
+
+    </div>-->
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [IconName]="'fa fa-calendar-plus'"
@@ -37,9 +38,10 @@
             <span class="msg-label label-discrete">
                 You haven't told us how you feel today
             </span>
-            
+
         </no-data-mode>
 
     </no-data-panel>
 </div>
 
+<!--[responsive]="true"-->

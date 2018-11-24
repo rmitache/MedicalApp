@@ -68,13 +68,13 @@
     float:left;
     padding: 0;
     overflow:visible;
+    height:130px;
 }
 
 
 .no-data-panel {
     height: calc(100% - 40px);
     width: 100% ;
-    display: block;
     float: left;
     transform: translate(0, calc(-100%))
 }
