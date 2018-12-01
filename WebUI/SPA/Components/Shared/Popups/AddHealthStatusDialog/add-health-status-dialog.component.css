@@ -1,7 +1,7 @@
 
 .frame {
     width: 550px;
-    height: 500px;
+    height: 550px;
 }
 
 /*Health section*/
@@ -15,7 +15,7 @@
 
 /*Symptoms section */
 .symptoms-section {
-    height: calc(100% - 110px);
+    height: calc(100% - 200px);
     margin-top: 20px;
 }
 
@@ -61,32 +61,56 @@
 /*Recent symptoms*/
 .recent-symptoms-div {
     width: calc(100% - 20px);
-    height: 50px;
-    padding: 5px 10px 5px 10px;
+    height: 60px;
+    padding: 10px;
     background-color: #f1f7f8;
     border-radius: 6px;
     float: left;
     clear: both;
     margin-top: 5px;
 }
+
     .recent-symptoms-div > span {
-        
         float: left;
-        margin-bottom:5px;
-    }
-    .recent-symptoms-div .recent-symptom-elem {
-        padding: 5px;
-        border-radius: 4px;
-        background-color: #b0d7dd;
-        float: left;
-        clear: both;
-        cursor:pointer;
-        vertical-align:middle;
+        margin-bottom: 15px;
     }
 
-        .recent-symptoms-div .recent-symptom-elem span {
-            
+    .recent-symptoms-div > i {
+        float: right;
+        cursor: pointer;
+    }
+
+        .recent-symptoms-div > i:hover {
+            color: blue;
         }
+
+    .recent-symptoms-div .recent-symptoms-list {
+        float: left;
+        height: 40px;
+        width: 100%;
+    }
+
+        .recent-symptoms-div .recent-symptoms-list .recent-symptom-elem {
+            border-radius: 4px;
+            background-color: #2399e5;
+            float: left;
+            margin-right:5px;
+            margin-bottom:5px;
+            cursor: pointer;
+            padding: 3px 5px 3px 5px;
+        }
+
+            .recent-symptoms-div .recent-symptoms-list .recent-symptom-elem:hover {
+                background-color: #1c6fa4;
+            }
+
+    .recent-symptoms-div .recent-symptom-elem span {
+        color: white;
+    }
+    .recent-symptoms-div .recent-symptom-elem i {
+        color: white;
+        font-size:0.8em;
+    }
 
 
 /*Symptoms-Section-Body*/
@@ -94,34 +118,9 @@
     height: calc(100% - 22px);
 }
 
-    .symptoms-section .symptoms-section-body .recent-symptoms-msg-div {
-        vertical-align: middle;
-        height: 28px;
-    }
-
-        .symptoms-section .symptoms-section-body .recent-symptoms-msg-div span {
-            vertical-align: middle;
-            line-height: 28px;
-        }
-
-        .symptoms-section .symptoms-section-body .recent-symptoms-msg-div button {
-            display: inline-block;
-            margin-left: 5px;
-            z-index: 1;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-
-
-        .symptoms-section .symptoms-section-body .recent-symptoms-msg-div i {
-            color: #2399e5;
-            vertical-align: middle;
-        }
-
     .symptoms-section .symptoms-section-body .symptom-entry-elems-list {
-        margin-top: 10px;
         overflow-y: auto;
-        height: calc(100% - 40px);
+        height: calc(100% - 20px);
         float: left;
         width: 100%;
     }
@@ -140,7 +139,7 @@
     /*display:none;*/
     height: calc(100% - 80px);
     width: 100%;
-    top: -400px;
+    top: -360px;
     background-color: #f7f7f7;
     border-radius: 6px;
     text-align: center;

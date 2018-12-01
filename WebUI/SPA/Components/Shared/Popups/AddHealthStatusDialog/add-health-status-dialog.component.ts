@@ -17,6 +17,7 @@ import { List } from 'SPA/Core/Helpers/DataStructures/list';
 import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level-selector.component';
 import { AutoComplete } from 'primeng/primeng';
 import { SymptomEntryElemComponent } from './SymptomEntryElem/symptom-entry-elem.component';
+import { SymptomTypeCLO } from 'SPA/DomainModel/clo-exports';
 
 
 
@@ -68,6 +69,7 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         ShowSymptomEntriesOverlayDiv: true,
 
         ShowRecentSymptomsDiv: false,
+        RecentSymptomTypeCLOs: null,
 
         SymptomTypesSearchResults: [],
         SearchText: null
@@ -76,13 +78,26 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     // Private methods
     private addNewSymptomEntry(symptomTypeName: string) {
 
-        // Get the symptomTypeCLO
-        let symptomTypeCLO = this.searchService.GetSymptomTypeByName(symptomTypeName);
+        // Verify if the SymptomType already has been added
+        let symptomTypeAlreadyAdded = this.viewModel.HealthStatusEntryCLO.SymptomEntries.find(symptomEntry => {
+            return symptomEntry.SymptomType.Name === symptomTypeName;
+        }) !== undefined;
 
-        // Create a new entry
-        let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
-        newSymptomEntry.SymptomType = symptomTypeCLO;
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries.unshift(newSymptomEntry);
+        // If it hasn't been added yet
+        if (!symptomTypeAlreadyAdded) {
+
+            // Get the symptomTypeCLO
+            let symptomTypeCLO = this.searchService.GetSymptomTypeByName(symptomTypeName);
+
+            // Add a new entry
+            let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
+            newSymptomEntry.SymptomType = symptomTypeCLO;
+            this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
+
+            //// Scroll the list into view
+            //let list = document.getElementById('symptom-entry-elems-list');
+            //list.scrollIntoView();
+        }
     }
     private checkChildrenAreValid(): boolean {
 
@@ -145,22 +160,11 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         this.dialogInitParameters.recentSymptomTypes = options.data.recentSymptomTypes;
     }
 
-    // Event handlers onRemoveSymptomEntryElemTriggered
-    private onSymptomEntryElemValidStateChanged() {
-        this.refreshIsValid();
-    }
-    private onRegisterSymptomsTriggered() {
+    // Event handlers 
+    private onShowSymptomsAreaTriggered() {
         this.viewModel.ShowSymptomEntriesOverlayDiv = false;
 
-
-        // Add recent symptom types
-        for (let i = 0; i < this.dialogInitParameters.recentSymptomTypes.length; i++) {
-            let recentSymptomType = this.dialogInitParameters.recentSymptomTypes[i];
-
-            let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
-            newSymptomEntry.SymptomType = recentSymptomType;
-            this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
-        }
+        this.viewModel.RecentSymptomTypeCLOs = this.dialogInitParameters.recentSymptomTypes;
     }
     private onRemoveSymptomTriggered(clo: CLOs.SymptomEntryCLO) {
         const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
@@ -168,20 +172,9 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         if (index !== -1) {
             this.viewModel.HealthStatusEntryCLO.SymptomEntries.splice(index, 1);
         }
-
-        setTimeout(() => {
-            this.refreshIsValid();
-        }, 1);
-
-        this.viewModel.ShowRecentSymptomsDiv = false;
     }
-    private onClearRecentSymptomsTriggered() {
-        this.viewModel.HealthStatusEntryCLO.SymptomEntries = [];
+    private onCloseRecentSymptomsTriggered() {
         this.viewModel.ShowRecentSymptomsDiv = false;
-
-        setTimeout(() => {
-            this.refreshIsValid();
-        }, 1);
     }
     private onHealthLevelSelected(newHealthLevel: Enums.HealthLevel) {
         this.viewModel.HealthStatusEntryCLO.HealthLevel = newHealthLevel;
@@ -194,20 +187,21 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     }
     private onSymptomTypeSelected(value) {
 
-        // Verify if the SymptomType already has been added
-        let symptomTypeAlreadyAdded = this.viewModel.HealthStatusEntryCLO.SymptomEntries.find(symptomEntry => {
-            return symptomEntry.SymptomType.Name === value;
-        }) !== undefined;
+        this.addNewSymptomEntry(value);
+        this.viewModel.SearchText = '';
+    }
+    private onRecentSymptomTypeClicked(symptomTypeCLO) {
 
-        // If it hasnt already been added, add it
-        if (!symptomTypeAlreadyAdded) {
-            this.addNewSymptomEntry(value);
-            this.viewModel.SearchText = '';
+        this.addNewSymptomEntry(symptomTypeCLO.Name);
 
+        // Remove the SymptomType from the recents list
+        var index = this.viewModel.RecentSymptomTypeCLOs.indexOf(symptomTypeCLO);
+        this.viewModel.RecentSymptomTypeCLOs.splice(index, 1);
+
+        // Hide the recent-symptoms-div if there are not recent-symptoms left
+        if (this.viewModel.RecentSymptomTypeCLOs.length === 0) {
             this.viewModel.ShowRecentSymptomsDiv = false;
         }
-
-
     }
 }
 
@@ -215,8 +209,9 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
 interface ViewModel {
     HealthStatusEntryCLO: CLOs.HealthStatusEntryCLO;
     ShowSymptomEntriesOverlayDiv: boolean;
-    ShowRecentSymptomsDiv: boolean;
 
+    ShowRecentSymptomsDiv: boolean;
+    RecentSymptomTypeCLOs: CLOs.SymptomTypeCLO[];
 
     SymptomTypesSearchResults: string[];
     SearchText: string;
