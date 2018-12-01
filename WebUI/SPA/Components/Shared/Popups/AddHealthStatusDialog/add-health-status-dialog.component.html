@@ -7,43 +7,57 @@
 
         <div class="symptoms-section">
             <div class="symptoms-section-header">
-                <span class="h1">What symptoms do you have ?</span>
-
-                <i class="fa fa-search  search-icon"></i>
-                <p-autoComplete #autocomplete
-                                lazy="true"
-                                [(ngModel)]="viewModel.SearchText"
-                                [suggestions]="viewModel.SymptomTypesSearchResults"
-                                [emptyMessage]="'No symptoms could be found. Please try a different name'"
-                                [placeholder]="'Type to add symptoms'"
-                                (completeMethod)="onSymptomTypeTextBoxChanged($event)"
-                                (onSelect)="onSymptomTypeSelected($event)">
+                <span class="h1">Which symptoms do you have ?</span>
 
 
-
-                </p-autoComplete>
+                
 
             </div>
+            <div class="symptoms-search-section">
+                <div class="search-bar">
+                    <i class="fa fa-search  search-icon"></i>
+                    <p-autoComplete #autocomplete
+                                    lazy="true"
+                                    [(ngModel)]="viewModel.SearchText"
+                                    [suggestions]="viewModel.SymptomTypesSearchResults"
+                                    [emptyMessage]="'No symptoms could be found. Please try a different name'"
+                                    [placeholder]="''"
+                                    (completeMethod)="onSymptomTypeTextBoxChanged($event)"
+                                    (onSelect)="onSymptomTypeSelected($event)">
+
+
+
+                    </p-autoComplete>
+                </div>
+                <div class="recent-symptoms-div">
+                    <span class="h4">Recent symptoms (click to add)</span>
+                    <div class="recent-symptom-elem">
+                        <span class="label">Headache</span>
+                    </div>
+
+                </div>
+                <div style="clear:both"></div>
+            </div>
             <div class="symptoms-section-body">
-                
-                
+
+
                 <div class="symptom-entry-elems-list">
-                    <div *ngIf="viewModel.ShowRecentSymptomsDiv" class="recent-symptoms-msg-div">
+                    <!--<div *ngIf="viewModel.ShowRecentSymptomsDiv" class="recent-symptoms-msg-div">
                         <i class="fa fa-info-circle"></i>
                         <span class="label-alt">Do you have any of these symptoms ?</span>
-                        <button pButton *ngIf="viewModel.HealthStatusEntryCLO.SymptomEntries.length > 0" type="button" 
+                        <button pButton *ngIf="viewModel.HealthStatusEntryCLO.SymptomEntries.length > 0" type="button"
                                 class="ui-button-secondary"
-                                label="I don't have any of them" 
+                                label="I don't have any of them"
                                 (click)="onClearRecentSymptomsTriggered()"></button>
-                    </div>
-                    
-                          
-                          
+                    </div>-->
+
+
+
                     <symptom-entry-elem #symptomEntryElems *ngFor="let clo of viewModel.HealthStatusEntryCLO.SymptomEntries"
                                         [SymptomEntryCLO]="clo"
                                         (RemoveTriggered)="onRemoveSymptomTriggered($event)"
                                         (ValidStateChanged)="onSymptomEntryElemValidStateChanged()"></symptom-entry-elem>
-                    
+
                 </div>
             </div>
         </div>
