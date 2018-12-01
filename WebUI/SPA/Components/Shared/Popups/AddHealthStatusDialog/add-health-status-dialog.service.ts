@@ -28,7 +28,7 @@ export class AddHealthStatusDialogService {
             this.spinnerService.Hide();
 
             this.modalDialogService.OpenDialog(viewContainerRef, {
-                title: 'Health status',
+                title: 'How are you feeling ?',
                 childComponent: AddHealthStatusDialogComponent,
                 data: {
                     recentSymptomTypes: symptomTypeCLOs

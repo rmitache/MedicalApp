@@ -85,7 +85,7 @@ namespace DataAccessLayer.Repositories
         public void DeleteVersion(int versionID, int planID)
         {
 
-            // Delete any taken records matching the version (logic: if you delete it 
+            // Delete any taken records matching the version 
             entitiesContext.TTakenMedicineFactorRecord.Where(x =>
                 x.PlanMedicineRuleItem.PlanRule.PlanVersionId == versionID
             ).Delete();

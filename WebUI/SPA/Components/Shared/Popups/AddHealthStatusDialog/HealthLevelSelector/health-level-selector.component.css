@@ -1,6 +1,6 @@
 .frame {
     width: 100%;
-    height: 40px;
+    height: 50px;
 }
 
 .intensity-level-elem:first-of-type {
@@ -11,22 +11,33 @@
     border-radius: 0 4px 4px 0;
 }
 .intensity-level-elem {
-    padding: 5px 0 5px 0;
+    padding: 7px 0 7px 0;
     float: left;
-    margin-right:2.57px;
-    width: 16.2%;
+    margin-right:3.5px;
+    width: 16%;
     text-align: center;
     vertical-align: middle;
     background-color: #f2f2f2;
     cursor: pointer;
-    border-bottom: solid 8px red;
+    border-bottom: solid 8px transparent;
 }
-
-    .intensity-level-elem.selected-level,
-    .intensity-level-elem:hover {
-        background-color: #dddddd;
+    .intensity-level-elem.not-selected {
+        filter: brightness(75%);
+        
     }
 
+    .intensity-level-elem.selected-level {
+        background-color: #dddddd;
+        padding: 7px 0 15px 0;
+        border-bottom: none;
+        border-radius: 4px;
+    }
+    .intensity-level-elem:hover {
+        background-color: #dddddd;
+        border-radius: 4px;
+    }
+    
+   
         .intensity-level-elem.selected-level span {
             font-weight: bold;
         }

@@ -2,10 +2,9 @@
     <div class="intensity-level-elem"
          [ngClass]="definition.HealthLevel === viewModel.SelectedHealthLevel ? 'selected-level' : ''"
          [style.background]="definition.HealthLevel === viewModel.SelectedHealthLevel ? definition.Color : ''"
-         [style.border-bottom-color]="definition.Color"
+         [style.border-bottom-color]="!viewModel.SelectedHealthLevel ? definition.Color : ''"
          *ngFor="let definition of healthLevelDefinitions"
          (click)="onHealthLevelClicked(definition.HealthLevel)">
-
 
         <span class="label"
               [style.color]="definition.HealthLevel === viewModel.SelectedHealthLevel && isColorDark(definition.Color) ? 'white' : 'black'">{{definition.Label}}</span>
