@@ -33,8 +33,8 @@ export class FactorsFiltersPanelComponent {
     }
 
     // Public methods
-    public Initialize(availableSymptomTypes: CLOs.SymptomTypeCLO[], selectedSymptomTypes: CLOs.SymptomTypeCLO[]) {
-        this.filterListPanelInstance.Initialize(availableSymptomTypes, selectedSymptomTypes);
+    public Initialize(availableaPlans: CLOs.PlanCLO[], selectedPlans: CLOs.PlanCLO[]) {
+        this.filterListPanelInstance.Initialize(availableaPlans, selectedPlans);
     }
 
     // Events

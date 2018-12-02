@@ -15,6 +15,7 @@ export class SymptomTypeCLOFactory implements ICLOFactory<CLOs.SymptomTypeCLO> {
     public Convert_ToCLO(blo: any): CLOs.SymptomTypeCLO {
         let newCLO = new CLOs.SymptomTypeCLO();
         newCLO.ID = blo['ID'];
+        newCLO.IsCustomSymptom = blo['IsCustomSymptom'];
         newCLO.Name = blo['Name'];
 
         return newCLO;
