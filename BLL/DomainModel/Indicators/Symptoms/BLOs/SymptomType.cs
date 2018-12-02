@@ -8,8 +8,8 @@ namespace BLL.DomainModel.Indicators.Symptoms.BLOs
     {
         // Properties
         public int ID { get; set; }
+        public bool IsCustomSymptom { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
 
 
         // Constructor

@@ -18,9 +18,19 @@ namespace BLL.DomainModel.Indicators.Symptoms.Factories
         {
             SymptomType blo = new SymptomType();
             blo.ID = dataEntity.Id;
+            blo.IsCustomSymptom = (dataEntity.UserId != null);
             blo.Name = dataEntity.Name;
-            blo.Description = dataEntity.Description;
+
             return blo;
+        }
+        public TSymptomType Convert_ToDataEntity(SymptomType blo, int userID)
+        {
+            TSymptomType dataEntity = new TSymptomType();
+            dataEntity.Id = blo.ID;
+            dataEntity.UserId = userID;
+            dataEntity.Name = blo.Name;
+
+            return dataEntity;
         }
         public List<SymptomType> Convert_ToBLOList(List<TSymptomType> dataEntities)
         {
