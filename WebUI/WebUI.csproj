@@ -57,6 +57,8 @@
     <None Remove="SPA\Components\Shared\Popups\AddHealthStatusDialog\add-health-status-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog.service.ts" />
+    <None Remove="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog-service.module.ts" />
+    <None Remove="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\MedicineTypeEditorDialog\medicine-type-editor-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\MedicineTypeEditorDialog\medicine-type-editor-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\PlanEditorDialog\i-medicine-types-search-service.ts" />
@@ -179,6 +181,8 @@
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddHealthStatusDialog\add-health-status-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog.service.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\MedicineTypeEditorDialog\medicine-type-editor-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\MedicineTypeEditorDialog\medicine-type-editor-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\PlanEditorDialog\i-medicine-types-search-service.ts" />

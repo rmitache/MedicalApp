@@ -41,6 +41,7 @@ import { PlanEditorDialogService } from './Popups/PlanEditorDialog/plan-editor-d
 import { PlanEditorDialogServiceModule } from './Popups/PlanEditorDialog/plan-editor-dialog-service.module';
 import { PipesModule } from './Pipes/pipes.module';
 import { MedicineTypeEditorDialogServiceModule } from './Popups/MedicineTypeEditorDialog/medicine-type-editor-dialog-service.module';
+import { AddSymptomTypeDialogServiceModule } from './Popups/AddSymptomTypeDialog/add-symptom-type-dialog-service.module';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { MedicineTypeEditorDialogServiceModule } from './Popups/MedicineTypeEdit
         AddSupplyDialogServiceModule,
         StopPlanDialogServiceModule,
         PlanEditorDialogServiceModule,
-        MedicineTypeEditorDialogServiceModule
+        MedicineTypeEditorDialogServiceModule,
+        AddSymptomTypeDialogServiceModule
     ],
     declarations: [
         SplitButtonComponent,
@@ -112,7 +114,8 @@ import { MedicineTypeEditorDialogServiceModule } from './Popups/MedicineTypeEdit
         AddSupplyDialogServiceModule,
         StopPlanDialogServiceModule,
         PlanEditorDialogServiceModule,
-        MedicineTypeEditorDialogServiceModule
+        MedicineTypeEditorDialogServiceModule,
+        AddSymptomTypeDialogServiceModule
     ]
 })
 export class SharedModule { }

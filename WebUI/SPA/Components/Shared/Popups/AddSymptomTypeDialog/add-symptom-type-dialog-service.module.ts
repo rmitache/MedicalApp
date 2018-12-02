@@ -3,9 +3,9 @@ import { SpinnerServiceModule } from '../../../../Core/Services/SpinnerService/s
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/primeng';
-import { AddSupplyDialogComponent } from './add-supply-dialog.component';
-import { AddSupplyDialogService } from './add-supply-dialog.service';
+import { CheckboxModule, InputTextModule } from 'primeng/primeng';
+import { AddSymptomTypeDialogComponent } from './add-symptom-type-dialog.component';
+import { AddSymptomTypeDialogService } from './add-symptom-type-dialog.service';
 
 @NgModule({
 	imports: [
@@ -17,13 +17,13 @@ import { AddSupplyDialogService } from './add-supply-dialog.service';
         InputTextModule
 	],
 	declarations: [
-		AddSupplyDialogComponent,
+		AddSymptomTypeDialogComponent,
 	],
 	providers: [
-        AddSupplyDialogService
+        AddSymptomTypeDialogService
 	],
     entryComponents: [
-        AddSupplyDialogComponent
+        AddSymptomTypeDialogComponent
     ]
 })
-export class AddSupplyDialogServiceModule { }
+export class AddSymptomTypeDialogServiceModule { }

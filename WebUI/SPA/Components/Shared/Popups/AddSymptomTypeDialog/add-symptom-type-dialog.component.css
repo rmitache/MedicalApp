@@ -1,0 +1,33 @@
+.frame /deep/ .ng-invalid.ng-touched .ui-inputtext {
+    border: 1px solid red !important;
+}
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+}
+
+.frame {
+    width: 320px;
+    height: 130px;
+}
+.h4{
+    display:block;
+    float:left;
+
+}
+.input-row {
+    margin-top:15px;
+    float: left;
+    clear:both;
+}
+
+    .input-row #supplyAmount {
+        margin-left: 5px;
+        margin-right: 5px;
+        display: inline-block;
+        width: 90px;
+        text-align:right;
+    }
+    .input-row .inner-label {
+        color: black;
+        display: inline-block;
+    }

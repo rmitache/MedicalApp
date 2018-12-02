@@ -19,13 +19,13 @@ export class ModalDialogService {
      * @param  {IModalDialogOptions} dialogOptions?
      */
     public OpenDialog(target: ViewContainerRef, dialogOptions?: IModalDialogOptions) {
-        //this.modalDialogInstanceService.closeAnyExistingModalDialog();
+        //this.modalDialogInstanceService.closeAnyExistingModalDialog(); - Commented out to allow multiple modal dialogs
 
         const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
         const componentRef = target.createComponent(factory);
         componentRef.instance.dialogInit(componentRef, dialogOptions);
 
-        //this.modalDialogInstanceService.saveExistingModalDialog(componentRef);
+        //this.modalDialogInstanceService.saveExistingModalDialog(componentRef); - Commented out to allow multiple modal dialogs
     }
 
     public ShowNotificationDialog(target: ViewContainerRef, title:string, message:string) {
@@ -55,4 +55,6 @@ export class ModalDialogService {
         this.modalDialogInstanceService.saveExistingModalDialog(componentRef);
 
     }
+
+    
 }

@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, QueryList, ViewChildren, ViewChild, ApplicationRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, QueryList, ViewChildren, ViewChild, ApplicationRef, ViewContainerRef } from '@angular/core';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 
@@ -18,6 +18,8 @@ import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level
 import { AutoComplete } from 'primeng/primeng';
 import { SymptomEntryElemComponent } from './SymptomEntryElem/symptom-entry-elem.component';
 import { SymptomTypeCLO } from 'SPA/DomainModel/clo-exports';
+import { ModalDialogService } from '../../../../Core/Services/ModalDialogService/modal-dialog.service';
+import { AddSymptomTypeDialogService } from '../AddSymptomTypeDialog/add-symptom-type-dialog.service';
 
 
 
@@ -54,6 +56,10 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
             let results = matchingMedTypes.map(clo => {
                 return clo.Name;
             });
+
+            // Add a special create new SymptomType option at the top
+            let addNewOption = "Add a new Symptom...";
+            results.unshift(addNewOption);
 
             return results;
         }
@@ -93,10 +99,6 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
             let newSymptomEntry = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomEntryCLO);
             newSymptomEntry.SymptomType = symptomTypeCLO;
             this.viewModel.HealthStatusEntryCLO.SymptomEntries.push(newSymptomEntry);
-
-            //// Scroll the list into view
-            //let list = document.getElementById('symptom-entry-elems-list');
-            //list.scrollIntoView();
         }
     }
     private checkChildrenAreValid(): boolean {
@@ -132,6 +134,8 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     constructor(
         private readonly genericCLOFactory: GenericCLOFactory,
         private readonly dataService: HomePageDataService,
+        private readonly addSymptomTypeDialogService: AddSymptomTypeDialogService,
+        private viewContainerRef: ViewContainerRef,
     ) {
         this.availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
@@ -186,6 +190,14 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         this.viewModel.SymptomTypesSearchResults = searchResults;
     }
     private onSymptomTypeSelected(value) {
+        if (value === "Add a new Symptom...") {
+            this.addSymptomTypeDialogService.Open(null, this.viewContainerRef, () => {
+
+            });
+            this.viewModel.SearchText = '';
+            return; 
+        }
+
 
         this.addNewSymptomEntry(value);
         this.viewModel.SearchText = '';
