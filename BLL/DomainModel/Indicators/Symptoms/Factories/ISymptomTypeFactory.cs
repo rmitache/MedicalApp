@@ -10,5 +10,6 @@ namespace BLL.DomainModel.Indicators.Symptoms.Factories
     {
         SymptomType Convert_ToBLO(TSymptomType dataEntity);
         List<SymptomType> Convert_ToBLOList(List<TSymptomType> dataEntities);
+        TSymptomType Convert_ToDataEntity(SymptomType blo, int userID);
     }
 }

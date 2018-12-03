@@ -11,6 +11,7 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { SymptomTypeCLO } from 'SPA/DomainModel/clo-exports';
 
 // Components
 
@@ -47,31 +48,30 @@ export class AddSymptomTypeDialogComponent implements IModalDialog {
     ngOnInit() {
         // Define form
         this.reactiveForm = this.fb.group({
-            name: [null,
-                Validators.compose([
-                    Validators.required,
-                    Validators.min(1),
-                    Validators.pattern(new RegExp(/^\d+$/))])]
+            name: ['',
+                Validators.required,
+                ValidateSymptomTypeNameNotTaken.createValidator(this.globalDataService)
+            ]
         });
 
         // Subscriptions
         this.reactiveForm.
-            valueChanges.
+            statusChanges.
             subscribe((value) => {
+                
                 this.refreshIsValid();
             });
     }
 
     // Public methods
-    public SaveData(): Promise<number> {
+    public SaveData(): Promise<CLOs.SymptomTypeCLO> {
+        this.viewModel.SymptomTypeCLO.Name = this.viewModel.Name;
+        let saveDataPromise = this.globalDataService.AddCustomSymptomType(this.viewModel.SymptomTypeCLO)
+            .then((clo) => {
+                return clo;
+            });
 
-        //let saveDataPromise = this.globalDataService.AddMedicineTypeSupplyEntry(this.viewModel.SymptomTypeCLO.ID, this.viewModel.Name)
-        //    .then(() => {
-        //        return parseInt(this.viewModel.Name.toString());
-        //    });
-        //return saveDataPromise;
-
-        return null;
+        return saveDataPromise;
     }
     public GetValidState() {
         return this.isValid;
@@ -85,11 +85,18 @@ export class AddSymptomTypeDialogComponent implements IModalDialog {
 
 interface ViewModel {
     Name: string;
-    SymptomTypeCLO: CLOs.MedicineTypeCLO;
-}
-export interface IMedicineTypesSearchService {
-    GetMedicineTypeByName(name: string): CLOs.MedicineTypeCLO;
-    Search(searchString: string): string[];
+    SymptomTypeCLO: CLOs.SymptomTypeCLO;
 }
 
 
+
+// Async validator for SymptomType Name
+export class ValidateSymptomTypeNameNotTaken {
+    static createValidator(homePageDataService: HomePageDataService, nameToIgnore: string = null) {
+        return (control: AbstractControl) => {
+            return homePageDataService.IsSymptomTypeNameTaken(control.value, nameToIgnore).then(isTaken => {
+                return (isTaken === false) ? null : { nameTaken: true };
+            });
+        }
+    }
+}

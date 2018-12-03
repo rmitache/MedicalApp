@@ -93,7 +93,7 @@ namespace WebUI.Controllers
         {
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
-            var symptomTypes = symptomTypeService.GetAllSymptomTypes();
+            var symptomTypes = symptomTypeService.GetSymptomTypes(loggedInUser.ID);
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID, true);
             var plans = planService.GetPlans(loggedInUser.ID, true);
             var factorRecords = medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, loggedInUser.ID);
@@ -220,15 +220,32 @@ namespace WebUI.Controllers
 
             // Get the unique symptoms present in the above range
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
-            var recentSymptoms = this.symptomTypeService.GetSymptomTypesFromHealthEntries(healthStatusEntries);
+            var recentSymptoms = this.symptomTypeService.GetUniqueSymptomTypesInHealthEntries(healthStatusEntries);
 
+            // Limit the return to only last 5
+            return Json(recentSymptoms.Take(5));
+        }
+        [Route("HomePage/AddCustomSymptomType")]
+        [HttpPost]
+        public JsonResult AddCustomSymptomType([FromBody]SymptomType blo)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var bloWithUpdatedID = this.symptomTypeService.AddCustomSymptomType(blo, (int)userID);
+            return Json(bloWithUpdatedID);
+        }
+        [Route("HomePage/IsSymptomTypeNameTaken")]
+        [HttpPost]
+        public JsonResult IsSymptomTypeNameTaken([FromBody] IsSymptomTypeNameTakenModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            bool isTaken = this.symptomTypeService.SymptomTypeNameExists((int)userID, model.Name, model.IgnoreName);
 
-            return Json(recentSymptoms.Take(4));
+            return Json(isTaken);
         }
         //---------------------------------------------------------------------------------------------------------------------
 
 
-        // MedicineTypes-------------------------------------------------------------------------------------------------------
+            // MedicineTypes-------------------------------------------------------------------------------------------------------
         [Route("HomePage/AddMedicineType")]
         [HttpPost]
         public JsonResult AddMedicineType([FromBody]MedicineType blo)
@@ -237,7 +254,6 @@ namespace WebUI.Controllers
             var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
             return Json(bloWithUpdatedID);
         }
-
         [Route("HomePage/GetMedicineTypes")]
         [HttpPost]
         public JsonResult GetMedicineTypes()
@@ -246,7 +262,6 @@ namespace WebUI.Controllers
             var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID, true);
             return Json(blos);
         }
-
         [Route("HomePage/IsMedicineTypeNameTaken")]
         [HttpPost]
         public JsonResult IsMedicineTypeNameTaken([FromBody] IsMedicineTypeNameTakenModel model)
@@ -255,7 +270,6 @@ namespace WebUI.Controllers
             bool isTaken = this.medicineTypeService.MedicineTypeNameExists((int)userID, model.Name, model.IgnoreName);
             return Json(isTaken);
         }
-
         [Route("HomePage/RenameMedicineType")]
         [HttpPost]
         public JsonResult RenameMedicineType([FromBody]RenameMedicineTypeModel model)
@@ -264,7 +278,6 @@ namespace WebUI.Controllers
             this.medicineTypeService.RenameMedicineType(model.MedicineTypeID, model.NewName, (int)userID);
             return Json(null);
         }
-
         //---------------------------------------------------------------------------------------------------------------------
 
 
@@ -279,7 +292,6 @@ namespace WebUI.Controllers
 
             return Json(null);
         }
-
         [Route("HomePage/ClearSupplyEntries")]
         [HttpPost]
         public JsonResult ClearSupplyEntries([FromBody]MedicineTypeIDModel model)
@@ -288,7 +300,6 @@ namespace WebUI.Controllers
             this.medicineTypeSupplyService.ClearSupplyEntries((int)userID, model.MedicineTypeID);
             return Json(null);
         }
-
         [Route("HomePage/RecalculateRemainingSupplyAmount")]
         [HttpPost]
         public JsonResult RecalculateRemainingSupplyAmount([FromBody]MedicineTypeIDModel model)
@@ -351,6 +362,11 @@ namespace WebUI.Controllers
         {
             public int MedicineTypeID;
             public string NewName;
+        }
+        public class IsSymptomTypeNameTakenModel
+        {
+            public string Name { get; set; }
+            public string IgnoreName { get; set; }
         }
 
         // Models - returned from BE

@@ -17,16 +17,31 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
         }
 
         // Public methods
-        public List<TSymptomType> GetAllSymptomTypes()
+        public List<TSymptomType> GetSymptomTypes(int userID)
         {
-            return entitiesContext.TSymptomType.Select(symptomType => symptomType).ToList();
+            return entitiesContext.TSymptomType
+                 .AsNoTracking()
+                 .Where(symptomType => symptomType.UserId == null || symptomType.UserId == userID)
+                 .ToList();
         }
-        public List<TSymptomType> GetSymptomTypesWhichHaveMatchingSymptomEntries(int userID)
+        public List<TSymptomType> GetOnlySymptomTypesInUse(int userID)
         {
             return entitiesContext.TSymptomType
                 .AsNoTracking()
                 .Where(symptomType => symptomType.TSymptomEntry.Any(symptomEntry => symptomEntry.HealthStatusEntry.UserId == userID))
                 .ToList();
+        }
+        public TSymptomType AddCustomSymptomType(TSymptomType dataEntity)
+        {
+            if(dataEntity.UserId!=null)
+            {
+                throw new System.Exception("Only custom Symptom Types can be created - Eg: those WITH a valid UserId");
+            }
+
+            entitiesContext.TSymptomType.Add(dataEntity);
+            entitiesContext.SaveChanges();
+
+            return dataEntity;
         }
 
     }

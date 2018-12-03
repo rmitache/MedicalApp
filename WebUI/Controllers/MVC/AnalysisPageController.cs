@@ -68,7 +68,7 @@ namespace WebUI.Controllers
             // Get blos for initial bundle------------------------------------------------------------------------------------------------
 
             var loggedInUser = this.webSecurityManager.GetCurrentUser();
-            var symptomTypes = symptomTypeService.GetOnlyRelevantSymptomTypes(loggedInUser.ID);
+            var symptomTypes = symptomTypeService.GetSymptomTypesInUse(loggedInUser.ID);
             var medicineTypes = medicineTypeService.GetAllMedicineTypes(loggedInUser.ID);
             var plans = planService.GetPlans(loggedInUser.ID, true);
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, loggedInUser.ID, true);

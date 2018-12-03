@@ -1,6 +1,7 @@
 ﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.Factories;
 using DataAccessLayer.Repositories.SymptomTypeRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,9 +21,9 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
         }
 
         // Public methods
-        public List<SymptomType> GetAllSymptomTypes()
+        public List<SymptomType> GetSymptomTypes(int userID)
         {
-            var dataEntities = this.symptomTypeRepo.GetAllSymptomTypes();
+            var dataEntities = this.symptomTypeRepo.GetSymptomTypes(userID);
             var blos = this.symptomTypeFactory.Convert_ToBLOList(dataEntities);
 
             // Sort alphabetically
@@ -31,9 +32,9 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return sortedBLOs;
         }
-        public List<SymptomType> GetOnlyRelevantSymptomTypes(int userID)
+        public List<SymptomType> GetSymptomTypesInUse(int userID)
         {
-            var dataEntities = this.symptomTypeRepo.GetSymptomTypesWhichHaveMatchingSymptomEntries(userID);
+            var dataEntities = this.symptomTypeRepo.GetOnlySymptomTypesInUse(userID);
             var blos = this.symptomTypeFactory.Convert_ToBLOList(dataEntities);
 
             // Sort alphabetically
@@ -42,7 +43,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return sortedBLOs;
         }
-        public List<SymptomType> GetSymptomTypesFromHealthEntries(List<HealthStatusEntry> healthEntries)
+        public List<SymptomType> GetUniqueSymptomTypesInHealthEntries(List<HealthStatusEntry> healthEntries)
         {
             // Create a dictionary of unique symptomTypes
             healthEntries = healthEntries.OrderByDescending(x => x.OccurrenceDateTime).ToList();
@@ -60,6 +61,23 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
             }
 
             return symptomTypesDict.Values.ToList();
+        }
+        public SymptomType AddCustomSymptomType(SymptomType blo, int userID)
+        {
+            var dataEntity = this.symptomTypeFactory.Convert_ToDataEntity(blo, userID);
+            this.symptomTypeRepo.AddCustomSymptomType(dataEntity);
+
+            blo.ID = dataEntity.Id;
+
+            return blo;
+        }
+        public bool SymptomTypeNameExists(int userID, string name, string ignoreName)
+        {
+            var symptomTypes = this.GetSymptomTypes(userID);
+            bool exists = symptomTypes.Any(elem => String.Equals(elem.Name, name, StringComparison.OrdinalIgnoreCase) &&
+            !String.Equals(elem.Name, ignoreName, StringComparison.OrdinalIgnoreCase));
+
+            return exists;
         }
     }
 }

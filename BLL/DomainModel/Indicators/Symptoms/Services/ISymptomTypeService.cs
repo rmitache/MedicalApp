@@ -7,8 +7,10 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 {
     public interface ISymptomTypeService
     {
-        List<SymptomType> GetAllSymptomTypes();
-        List<SymptomType> GetOnlyRelevantSymptomTypes(int userID);
-        List<SymptomType> GetSymptomTypesFromHealthEntries(List<HealthStatusEntry> healthEntries);
+        List<SymptomType> GetSymptomTypes(int userID);
+        List<SymptomType> GetSymptomTypesInUse(int userID);
+        List<SymptomType> GetUniqueSymptomTypesInHealthEntries(List<HealthStatusEntry> healthEntries);
+        SymptomType AddCustomSymptomType(SymptomType blo, int userID);
+        bool SymptomTypeNameExists(int userID, string name, string ignoreName);
     }
 }

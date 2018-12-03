@@ -203,6 +203,8 @@ export class HomePageDataService {
 
         return getDataPromise;
     }
+
+    // Symptoms
     public GetRecentSymptoms(): Promise<CLOs.SymptomTypeCLO[]> {
 
         const apiMethodName: string = 'GetRecentSymptoms';
@@ -213,6 +215,33 @@ export class HomePageDataService {
             .then((blos) => {
                 return this.genericCLOFactory.ConvertToCloList<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO, blos).ToArray();
             });
+
+
+        return getDataPromise;
+    }
+    public AddCustomSymptomType(clo: CLOs.SymptomTypeCLO): Promise<CLOs.SymptomTypeCLO> {
+        const apiMethodName: string = 'AddCustomSymptomType';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(clo);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.SymptomTypeCLO>(CLOs.SymptomTypeCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
+    public IsSymptomTypeNameTaken(name: string, ignoreName: string): Promise<any> {
+        const apiMethodName: string = 'IsSymptomTypeNameTaken';
+        
+        var model = {
+            Name: name,
+            IgnoreName: ignoreName
+        };
+
+        let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
+            .toPromise();
 
 
         return getDataPromise;

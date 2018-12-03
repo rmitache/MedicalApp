@@ -191,7 +191,8 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     }
     private onSymptomTypeSelected(value) {
         if (value === "Add a new Symptom...") {
-            this.addSymptomTypeDialogService.Open(null, this.viewContainerRef, () => {
+            let newCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomTypeCLO);
+            this.addSymptomTypeDialogService.Open(newCLO, this.viewContainerRef, () => {
 
             });
             this.viewModel.SearchText = '';

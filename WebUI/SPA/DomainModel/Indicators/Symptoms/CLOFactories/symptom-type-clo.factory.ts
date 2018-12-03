@@ -21,7 +21,11 @@ export class SymptomTypeCLOFactory implements ICLOFactory<CLOs.SymptomTypeCLO> {
         return newCLO;
     }
     public Create_DefaultCLO(): CLOs.SymptomTypeCLO {
-        throw new Error("Create_DefaultCLO not implemented");
+        let newCLO = new CLOs.SymptomTypeCLO();
+        newCLO.ID = 0;
+        newCLO.IsCustomSymptom = true;
+
+        return newCLO;
     }
     public Convert_ToCloList(bloArray: Object[]): DataStructures.List<CLOs.SymptomTypeCLO> {
         let cloList = new DataStructures.List<CLOs.SymptomTypeCLO>();

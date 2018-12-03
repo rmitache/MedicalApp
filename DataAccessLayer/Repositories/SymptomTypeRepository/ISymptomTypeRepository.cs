@@ -9,7 +9,8 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
 {
     public interface ISymptomTypeRepository
     {
-        List<TSymptomType> GetAllSymptomTypes();
-        List<TSymptomType> GetSymptomTypesWhichHaveMatchingSymptomEntries(int userID);
+        List<TSymptomType> GetSymptomTypes(int userID);
+        List<TSymptomType> GetOnlySymptomTypesInUse(int userID);
+        TSymptomType AddCustomSymptomType(TSymptomType dataEntity);
     }
 }
