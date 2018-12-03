@@ -65,6 +65,7 @@ export class AddSymptomTypeDialogComponent implements IModalDialog {
 
     // Public methods
     public SaveData(): Promise<CLOs.SymptomTypeCLO> {
+        
         this.viewModel.SymptomTypeCLO.Name = this.viewModel.Name;
         let saveDataPromise = this.globalDataService.AddCustomSymptomType(this.viewModel.SymptomTypeCLO)
             .then((clo) => {

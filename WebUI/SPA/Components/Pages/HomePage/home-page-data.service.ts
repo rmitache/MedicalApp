@@ -221,7 +221,7 @@ export class HomePageDataService {
     }
     public AddCustomSymptomType(clo: CLOs.SymptomTypeCLO): Promise<CLOs.SymptomTypeCLO> {
         const apiMethodName: string = 'AddCustomSymptomType';
-
+        
         let blo = this.genericCLOFactory.ConvertToBlo(clo);
         let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
             .toPromise()

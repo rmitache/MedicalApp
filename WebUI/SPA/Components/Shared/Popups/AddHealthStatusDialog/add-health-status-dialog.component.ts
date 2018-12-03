@@ -20,6 +20,7 @@ import { SymptomEntryElemComponent } from './SymptomEntryElem/symptom-entry-elem
 import { SymptomTypeCLO } from 'SPA/DomainModel/clo-exports';
 import { ModalDialogService } from '../../../../Core/Services/ModalDialogService/modal-dialog.service';
 import { AddSymptomTypeDialogService } from '../AddSymptomTypeDialog/add-symptom-type-dialog.service';
+import { SpinnerService } from '../../../../Core/Services/SpinnerService/spinner.service';
 
 
 
@@ -136,6 +137,7 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         private readonly dataService: HomePageDataService,
         private readonly addSymptomTypeDialogService: AddSymptomTypeDialogService,
         private viewContainerRef: ViewContainerRef,
+        private readonly spinnerService: SpinnerService
     ) {
         this.availableSymptomTypes = this.dataService.GetSymptomTypesFromBundle().ToArray();
         this.viewModel.HealthStatusEntryCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.HealthStatusEntryCLO);
@@ -192,8 +194,12 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     private onSymptomTypeSelected(value) {
         if (value === "Add a new Symptom...") {
             let newCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.SymptomTypeCLO);
-            this.addSymptomTypeDialogService.Open(newCLO, this.viewContainerRef, () => {
+            this.addSymptomTypeDialogService.Open(newCLO, this.viewContainerRef, (newSymptomTypeCLO) => {
+                this.availableSymptomTypes.push(newSymptomTypeCLO);
+                this.addNewSymptomEntry(newSymptomTypeCLO.Name);
 
+
+                this.spinnerService.Hide();
             });
             this.viewModel.SearchText = '';
             return; 

@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
         }
         public TSymptomType AddCustomSymptomType(TSymptomType dataEntity)
         {
-            if(dataEntity.UserId!=null)
+            if(dataEntity.UserId==null)
             {
                 throw new System.Exception("Only custom Symptom Types can be created - Eg: those WITH a valid UserId");
             }

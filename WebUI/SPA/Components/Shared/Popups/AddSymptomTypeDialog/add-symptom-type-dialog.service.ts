@@ -19,13 +19,13 @@ export class AddSymptomTypeDialogService {
     }
 
     // Public methods
-    public Open(symptomTypeCLO: CLOs.SymptomTypeCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(symptomTypeCLO: CLOs.SymptomTypeCLO, viewContainerRef: ViewContainerRef, okCallBack: (symptomTypeCLO:CLOs.SymptomTypeCLO) => void) {
         
         this.modalDialogService.OpenDialog(viewContainerRef, {
             title: 'Add custom Symptom',
             childComponent: AddSymptomTypeDialogComponent,
             data: {
-                medicineTypeCLO: symptomTypeCLO,
+                symptomTypeCLO: symptomTypeCLO,
             },
             actionButtons: [
                 {
@@ -40,9 +40,9 @@ export class AddSymptomTypeDialogService {
 
                             let componentInstance = childComponentInstance as AddSymptomTypeDialogComponent;
                             componentInstance.SaveData()
-                                .then(() => {
+                                .then((clo) => {
                                     if (okCallBack) {
-                                        okCallBack();
+                                        okCallBack(clo);
                                     }
                                     resolve();
 
