@@ -47,7 +47,7 @@ export class IFRPGroupListComponent {
             // Properly parse a valid searchString
 			searchString = searchString.toLowerCase();
 			let matchingMedTypes = this.availableMedicineTypes.filter(clo => {
-				return clo.Name.toLowerCase().startsWith(searchString);
+                return clo.Name.toLowerCase().includes(searchString);
 			});
 			let results = matchingMedTypes.map(clo => {
 				return clo.Name;
