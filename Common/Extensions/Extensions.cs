@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Common
 {
     public static class Extensions
     {
-        // Commented out because they are not supposed to be used as they cause problems because BE is in UTC
-        //public static DateTime StartOfDay(this DateTime theDate)
-        //{
-        //    return theDate.Date;
-        //}
-
-        //public static DateTime EndOfDay(this DateTime theDate)
-        //{
-        //    return theDate.Date.AddDays(1).AddTicks(-1);
-        //}
+        public static string FirstCharToUpper(this string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input.First().ToString().ToUpper() + input.Substring(1);
+            }
+        }
 
         public static DateTime ZeroMilliseconds(this DateTime dt)
         {

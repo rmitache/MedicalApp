@@ -1,5 +1,6 @@
 ﻿using BLL.DomainModel.Indicators.Symptoms.BLOs;
 using BLL.DomainModel.Indicators.Symptoms.Factories;
+using Common;
 using DataAccessLayer.Repositories.SymptomTypeRepository;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,9 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
         }
         public SymptomType AddCustomSymptomType(SymptomType blo, int userID)
         {
+            blo.Name = blo.Name.FirstCharToUpper();
+
+            //
             var dataEntity = this.symptomTypeFactory.Convert_ToDataEntity(blo, userID);
             this.symptomTypeRepo.AddCustomSymptomType(dataEntity);
 
