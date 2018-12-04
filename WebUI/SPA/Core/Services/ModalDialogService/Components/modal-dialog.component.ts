@@ -54,6 +54,7 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
     };
     public actionButtons: IModalDialogButton[];
     public title: string;
+    public showTitleAsterisk: boolean;
     public onClose: () => Promise<any> | Observable<any> | boolean;
     public showAlert: boolean = false;
 
@@ -161,6 +162,7 @@ export class ModalDialogComponent implements IModalDialog, OnDestroy {
         }
         // set references
         this.title = (options && options.title) || '';
+        this.showTitleAsterisk = (options && options.showTitleAsterisk);
         this.onClose = (options && options.onClose) || null;
 
         this.actionButtons = (this._childInstance && this._childInstance['actionButtons']) ||

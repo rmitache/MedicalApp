@@ -8,6 +8,7 @@ export interface IModalDialog {
 
 export interface IModalDialogOptions {
     title?: string;
+    showTitleAsterisk?: boolean;
     bodyContentText?: string;
     childComponent?: any;
     onClose?: () => Promise<any> | Observable<any> | boolean;

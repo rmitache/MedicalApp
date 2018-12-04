@@ -2,20 +2,22 @@
 <div [ngClass]="settings.modalClass">
     <div [ngClass]="[ showAlert ? settings.alertClass : '', settings.contentClass]">
         <div [ngClass]="settings.headerClass">
-            <span [ngClass]="settings.headerTitleClass" class="h1">{{title}}</span>
+            <span [ngClass]="settings.headerTitleClass" class="h1">
+                {{title}}
+                <span *ngIf="showTitleAsterisk" style="color:red">*</span>
+            </span>
             <i class="fa fa-times close-button" (click)="close()"></i>
-            
+
         </div>
         <div [ngClass]="settings.bodyClass">
             <div #modalDialogBody></div>
         </div>
         <div [ngClass]="settings.footerClass" *ngIf="actionButtons && actionButtons.length">
             <div class="buttons-right-area">
-                <button pButton *ngFor="let button of actionButtons" 
+                <button pButton *ngFor="let button of actionButtons"
                         [attr.disabled]="button.isDisabledFunction(_childInstance)?'true':null" (click)="doAction(button.onAction)"
                         [label]="button.text"
-                        [ngClass]="button.buttonClass || settings.buttonClass">
-                </button>
+                        [ngClass]="button.buttonClass || settings.buttonClass"></button>
             </div>
         </div>
     </div>

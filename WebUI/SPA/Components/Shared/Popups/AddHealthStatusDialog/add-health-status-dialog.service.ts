@@ -29,6 +29,7 @@ export class AddHealthStatusDialogService {
 
             this.modalDialogService.OpenDialog(viewContainerRef, {
                 title: 'How are you feeling ?',
+                showTitleAsterisk:true,
                 childComponent: AddHealthStatusDialogComponent,
                 data: {
                     recentSymptomTypes: symptomTypeCLOs
