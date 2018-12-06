@@ -18,6 +18,11 @@
     </div>
 
     <div class="symptoms-div">
+        <!--<ng-container *ngFor="let symptomTypeInfo of viewModel.SymptomTypes">
+            <symptom-type-elem [SymptomTypeWithAvgIntensity]="symptomTypeInfo">
+            </symptom-type-elem>
+            <br />
+        </ng-container>-->
         <symptom-type-elem *ngFor="let symptomTypeInfo of viewModel.SymptomTypes"
                            [SymptomTypeWithAvgIntensity]="symptomTypeInfo">
         </symptom-type-elem>

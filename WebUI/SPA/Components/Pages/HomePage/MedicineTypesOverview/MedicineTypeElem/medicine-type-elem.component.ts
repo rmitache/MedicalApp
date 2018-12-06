@@ -220,7 +220,7 @@ class HighSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = '#54a514';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-check-circle';
 
@@ -241,7 +241,7 @@ class MediumSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'darkorange';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-info-circle';
 
@@ -259,7 +259,7 @@ class LowSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'red';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-exclamation-triangle';
 
@@ -277,7 +277,7 @@ class EmptySupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Supply is finished';
     public readonly MainLabelColor: string = '#f6a3a3';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
+    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-ban';
 

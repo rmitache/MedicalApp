@@ -23,6 +23,9 @@ import { CommandManager } from '../../../../Core/Managers/CommandManager/command
 export class InfoToRememberComponent {
     // Fields
     private readonly noDataModes = NoDataModes;
+    private infoTooltipText: string =
+        `Under REMINDERS you can be reminded when you will run out of supply.`;
+
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         TargetMedicineType: null,

@@ -4,7 +4,9 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1" id="scheduleHeaderLabel">SCHEDULE</span>
-            <!--<icon-button [IconName]="'plus'" (Clicked)="onAddNewEventTriggered()"></icon-button>-->
+            <i class="fa fa-question-circle"
+               [pTooltip]="infoTooltipText" [escape]="false"
+               tooltipPosition="bottom"></i>
         </div>
         <div class="center-section">
             <navigation-panel #navPanel 

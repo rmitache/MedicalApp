@@ -65,7 +65,9 @@ export class ScheduleComponent {
 	private animationVariables = {
 		animateForward: 0,
 		animateBackward: 0
-	}
+    }
+    private infoTooltipText: string =
+        `Under SCHEDULE you can see what you have to take every day.`;
 	private readonly viewModel: ViewModel = {
 		AvailableDateRange: null,
 

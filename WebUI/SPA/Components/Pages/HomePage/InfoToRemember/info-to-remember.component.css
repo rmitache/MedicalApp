@@ -18,25 +18,27 @@
         .frame .header .left-section {
             display: block;
             float: left;
-            width: calc(33%);
+            width: calc(57%);
         }
 
             .frame .header .left-section .header-label {
                 display: block;
                 float: left;
             }
+            .frame .header .left-section i {
+                display: block;
+                float: left;
+                margin-left: 5px;
+                margin-top: 4px;
+                color: #e5e5e5;
+                font-size: 1.3em;
+            }
 
 
-
-        .frame .header .center-section {
-            float: left;
-            width: calc(34%);
-            text-align: center;
-        }
-
+       
         .frame .header .right-section {
             float: right;
-            width: calc(33%);
+            width: calc(37%);
             height: 30px;
             text-align: right;
         }

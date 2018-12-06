@@ -42,6 +42,9 @@ export class HealthGraphComponent {
     private canvas: any;
     private chartCanvasContext: any;
     private chartInstance: any;
+    private infoTooltipText: string =
+        `Under HEALTH you can keep track of how you've been feeling throughout the day. <br />
+        It is recommended that you check-in at least several times per day, as this is valuable information which you can use later.`;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableHealthEntries: null,
