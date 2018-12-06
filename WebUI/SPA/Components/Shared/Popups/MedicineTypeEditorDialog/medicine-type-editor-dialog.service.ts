@@ -27,7 +27,7 @@ export class MedicineTypeEditorDialogService {
         let title: string, saveButtonText: string;
         switch (mode) {
             case MedicineTypeEditorMode.CreateNew:
-                title = "Create a new Medicine Type";
+                title = "New Medicine Type";
                 saveButtonText = "Create";
                 break;
 

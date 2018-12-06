@@ -20,8 +20,8 @@ export class SymptomTypeElemComponent {
     private readonly symptomIntensityDefinitions: SymptomIntensityDefinition[] = [
         {
             IntensityLevel: Enums.SymptomIntensityLevel.Mild,
-            Color: '#f3e06a',
-            LabelColor: 'black',
+            Color: '#fff19b',
+            LabelColor: 'gray',
             Label: 'Mild'
         },
         {

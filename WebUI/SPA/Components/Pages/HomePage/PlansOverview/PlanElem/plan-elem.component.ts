@@ -123,7 +123,7 @@ export class PlanElemComponent {
     };
     private mainActionToPlanStatusMap: MainActionsToPLanStatusMap = {
         ActiveWITHOUTAnyUpcomingChanges: {
-            TooltipText: 'Make changes to Plan',
+            TooltipText: 'Make changes to the Plan',
             Icon: 'fa fa-pencil-alt',
             ButtonClass: '',
             ButtonText: 'Change',
