@@ -20,10 +20,13 @@
         <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
     </div>
     <div class="supply-div" *ngIf="viewModel.MedicineTypeCLO.CurrentSupplyAmount !== null"
-         [attr.title]="viewModel.CurrentSupplyInfoState?.TooltipText">
+          [pTooltip]="viewModel.CurrentSupplyInfoState?.TooltipText"
+         tooltipPosition="bottom"
+         >
         
         <i [ngClass]="viewModel.CurrentSupplyInfoState?.IconName"
-           [style.color]="viewModel.CurrentSupplyInfoState?.MainLabelColor"></i>
+           [style.color]="viewModel.CurrentSupplyInfoState?.MainLabelColor"
+          ></i>
 
         <span class="main-supply-label label"
               [style.color]="viewModel.CurrentSupplyInfoState?.MainLabelColor">{{viewModel.CurrentSupplyInfoState?.MainLabelText}}</span>

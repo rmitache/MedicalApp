@@ -220,9 +220,7 @@ class HighSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = '#54a514';
-    public readonly TooltipText: string = 'Will run' +
-        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY') + ' (you currently have ' +
-        this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ')';
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-check-circle';
 
@@ -243,8 +241,7 @@ class MediumSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'darkorange';
-    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' will run' +
-        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-info-circle';
 
@@ -262,8 +259,7 @@ class LowSupply implements ISupplyInfoState {
     // Fields
     public readonly MainLabelText: string = 'Runs out ' + FormatFutureRelativeDate(moment(this.untilDate));
     public readonly MainLabelColor: string = 'red';
-    public readonly TooltipText: string = 'You have ' + this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' which will run' +
-        ' out on ' + moment(this.untilDate).format('MMM DD, YYYY');
+    public readonly TooltipText: string = this.currentSupplyAmount + ' ' + this.currentSupplyAmountUnitOfMeasureName + ' left';
 
     public readonly IconName: string = 'fa fa-exclamation-triangle';
 
