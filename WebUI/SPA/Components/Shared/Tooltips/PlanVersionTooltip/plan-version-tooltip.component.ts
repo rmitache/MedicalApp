@@ -5,8 +5,8 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { VersionCLOService } from '../../../DomainModel/Plans/CLOServices/version-clo.service';
-import { ConvertDictionaryToArray } from '../../../Core/Helpers/Functions/functions';
+import { VersionCLOService } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
+import { ConvertDictionaryToArray } from '../../../../Core/Helpers/Functions/functions';
 
 
 

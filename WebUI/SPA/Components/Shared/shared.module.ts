@@ -29,7 +29,6 @@ import { TabsComponent } from 'SPA/Components/Shared/Tabs/tabs.component';
 import { TabsModule } from 'SPA/Components/Shared/Tabs/tabs.module';
 import { HeaderBarModule } from 'SPA/Components/Shared/HeaderBar/header-bar.module';
 import { NoDataPanelModule } from 'SPA/Components/Shared/NoDataPanel/no-data-panel.module';
-import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
 import { TooltipsModule } from './Tooltips/tooltips.module';
 import { AcceptTermsDialogServiceModule } from './Popups/AcceptTermsDialog/accept-terms-dialog-service.module';
 import { UserAccountEditorDialogServiceModule } from './Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
@@ -82,7 +81,6 @@ import { AddSymptomTypeDialogServiceModule } from './Popups/AddSymptomTypeDialog
         SplitButtonComponent,
         NavigationPanelComponent,
         FilterListPanelComponent,
-        PlanVersionTooltipComponent,
     ],
     exports: [
         SplitButtonComponent,
@@ -104,7 +102,6 @@ import { AddSymptomTypeDialogServiceModule } from './Popups/AddSymptomTypeDialog
 		InplaceModule,
 		HeaderBarModule,
         NoDataPanelModule,
-        PlanVersionTooltipComponent,
         TooltipsModule,
         PipesModule,
 

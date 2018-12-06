@@ -3,6 +3,7 @@ html {
     width: 100%;
     height: 100%;
 }
+
 body {
     padding: 0;
     margin: 0;
@@ -29,6 +30,7 @@ h1,
     letter-spacing: 1.7px;
     color: #2399e5;
 }
+
 h2,
 .h2 {
     font-family: Arial;
@@ -36,12 +38,14 @@ h2,
     font-weight: bold;
     color: black;
 }
+
 .h2-alt {
     font-family: Arial;
     font-size: 13pt;
     font-weight: bold;
     color: #2399e5;
 }
+
 h3,
 .h3 {
     font-family: Arial;
@@ -49,12 +53,14 @@ h3,
     font-weight: bold;
     color: black;
 }
+
 .h3-alt {
     font-family: Arial;
     font-size: 11pt;
     font-weight: bold;
     color: #2399e5;
 }
+
 h4,
 .h4 {
     font-family: Arial;
@@ -62,6 +68,7 @@ h4,
     font-weight: bold;
     color: black;
 }
+
 .h4-alt {
     font-family: Arial;
     font-size: 10pt;
@@ -77,50 +84,59 @@ h4,
     font-family: Arial;
     color: #464646;
 }
+
 .label-alt {
     font-size: 9pt;
     font-family: Arial;
     color: #2399e5;
 }
+
 .label-discrete {
     font-size: 9pt;
     font-family: Arial;
     color: #989797;
 }
+
 .label-inv {
     font-size: 9pt;
     font-family: Arial;
     color: white;
 }
+
 .label-large {
     font-family: Arial;
     font-size: 15px;
     letter-spacing: 1.5px;
     color: black;
 }
+
 .label-large-inv {
     font-family: Arial;
     font-size: 15px;
     letter-spacing: 1.5px;
-    color:white;
+    color: white;
 }
+
 .label-medium {
     font-family: Arial;
     font-size: 14px;
     color: black;
 }
+
 .label-small-inv {
     color: white;
     font-weight: bold;
     font-size: 8px;
-    font-family:Arial;
+    font-family: Arial;
 }
+
 .ui-chkbox-label {
     font-size: 9pt;
     font-family: Arial;
     color: #464646;
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .ui-radiobutton-label {
     font-size: 9pt;
     font-family: Arial;
@@ -128,17 +144,31 @@ h4,
     cursor: pointer;
 }
 
-
 /*Controls*/
+.ui-tooltip-text {
+    font-size: 9pt;
+    font-family: Arial;
+    padding: 7px !important;
+    color: black !important;
+    border: solid 1px #d5d5d5;
+    background-color: white !important;
+    box-shadow:none !important;
+}
+
+.ui-tooltip-arrow {
+    color:black !important;
+}
+
 .ui-menuitem-link {
     font-family: Arial;
     font-size: 12px;
     font-weight: bold;
 }
+
 .ui-inputtext:disabled {
     background-color: #e9e9e9 !important;
     border: solid 1px gray !important;
-    color:black !important;
+    color: black !important;
 }
 
 

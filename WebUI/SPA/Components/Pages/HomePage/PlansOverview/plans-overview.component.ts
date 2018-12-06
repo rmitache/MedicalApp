@@ -15,10 +15,10 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 
 // Components
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
-import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/PlanVersionTooltip/plan-version-tooltip.component';
 import { StopPlanDialogService } from '../../../Shared/Popups/StopPlanDialog/stop-plan-dialog.service';
 import { PlanEditorMode } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.component';
 import { PlanEditorDialogService } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.service';
+import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
 
 
 @Component({

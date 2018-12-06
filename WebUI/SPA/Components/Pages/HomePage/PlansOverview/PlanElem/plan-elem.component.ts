@@ -5,7 +5,6 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { StringToColour } from 'SPA/Core/Helpers/Functions/functions';
 
 // Components
 import { PlanActionType } from 'SPA/Components/Pages/HomePage/PlansOverview/plans-overview.component';
@@ -13,7 +12,7 @@ import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-but
 import { Inplace } from 'primeng/primeng';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-import { PlanElemHoverEventInfo } from '../../../../Shared/PlanVersionTooltip/plan-version-tooltip.component';
+import { PlanElemHoverEventInfo } from '../../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
 
 @Component({
     selector: 'plan-elem',

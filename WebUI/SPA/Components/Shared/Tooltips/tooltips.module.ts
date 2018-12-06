@@ -6,6 +6,7 @@ import { SymptomTypeElemComponent } from './Shared/SymptomTypeElem/symptom-type-
 import { HealthStatusesOverDayTooltipComponent } from './HealthStatusesOverDayTooltip/health-statuses-over-day-tooltip.component';
 import { ChartModule } from 'primeng/primeng';
 import { PlanVersionChangesTooltipComponent } from './PlanVersionChangesTooltip/plan-version-changes-tooltip.component';
+import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
 
 // Components
 
@@ -16,14 +17,16 @@ import { PlanVersionChangesTooltipComponent } from './PlanVersionChangesTooltip/
         SingleHealthStatusTooltipComponent,
         HealthStatusesOverDayTooltipComponent,
         SymptomTypeElemComponent,
-        PlanVersionChangesTooltipComponent
+        PlanVersionChangesTooltipComponent,
+        PlanVersionTooltipComponent
     ],
     exports: [
         SingleHealthStatusTooltipComponent,
         HealthStatusesOverDayTooltipComponent,
         SymptomTypeElemComponent,
         HealthStatusesOverDayTooltipComponent,
-        PlanVersionChangesTooltipComponent
+        PlanVersionChangesTooltipComponent,
+        PlanVersionTooltipComponent
     ]
 })
 export class TooltipsModule { }
