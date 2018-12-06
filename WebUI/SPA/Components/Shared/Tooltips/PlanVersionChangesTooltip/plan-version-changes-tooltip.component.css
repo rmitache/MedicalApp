@@ -10,6 +10,8 @@
     padding: 10px;
     padding-top: 7px;
     padding-bottom: 5px;
+    box-shadow: 2px 2px 5px #c6c6c6;
+    z-index:999999;
 }
 
     .frame .caret-div {

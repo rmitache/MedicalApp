@@ -149,10 +149,10 @@ h4,
     font-size: 9pt;
     font-family: Arial;
     padding: 7px !important;
-    color: black !important;
+    /*color: black !important;
     border: solid 1px #d5d5d5;
-    background-color: white !important;
-    box-shadow:none !important;
+    background-color: white !important;*/
+    box-shadow: 2px 2px 5px #c6c6c6;
 }
 
 .ui-tooltip-arrow {

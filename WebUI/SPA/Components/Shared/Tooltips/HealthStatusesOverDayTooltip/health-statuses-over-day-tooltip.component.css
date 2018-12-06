@@ -8,6 +8,7 @@
     position: absolute;
     padding: 7px 7px 0 7px;
     z-index: 9999999999;
+    box-shadow: 2px 2px 5px #c6c6c6;
 }
 
 .symptoms-div {
