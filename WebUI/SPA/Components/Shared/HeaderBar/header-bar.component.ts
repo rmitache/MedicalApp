@@ -7,6 +7,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { UserAccountEditorDialogService } from '../Popups/UserAccountEditorDialog/user-account-editor-dialog.service';
+import { HelpDialogService } from '../Popups/HelpDialog/help-dialog.service';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class HeaderBarComponent {
         @Inject('IDataServiceWithUser') private readonly globalDataService: IDataServiceWithUser,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
-        private userAccountEditorDialogService: UserAccountEditorDialogService
+        private userAccountEditorDialogService: UserAccountEditorDialogService,
+        private helpDialogService: HelpDialogService
     ) {
 
         this.subscriptions.push(this.appState.LoggedInUserCLO.Changed.subscribe((newValue) => {
@@ -53,6 +55,9 @@ export class HeaderBarComponent {
         var userCLO = this.viewModel.LoggedInUser;
 
         this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
+    }
+    private onHelpClicked() {
+        this.helpDialogService.Open(this.viewContainerRef);
     }
 }
 interface ViewModel {
