@@ -18,6 +18,7 @@
         .frame .header .left-section {
             display: block;
             float: left;
+            width:100%;
         }
 
             .frame .header .left-section .header-label {
@@ -25,9 +26,17 @@
                 float: left;
             }
 
-            .frame .header .left-section button {
+            .frame .header .left-section i {
+                display: block;
                 float: left;
                 margin-left: 5px;
+                margin-top: 4px;
+                color: #e5e5e5;
+                font-size: 1.3em;
+            }
+
+            .frame .header .left-section button {
+                float: right;
             }
 
 

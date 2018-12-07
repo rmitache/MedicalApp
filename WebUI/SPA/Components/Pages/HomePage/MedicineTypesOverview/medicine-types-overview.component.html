@@ -2,8 +2,12 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">MEDICINES</span>
+            <i class="fa fa-question-circle"
+               [pTooltip]="infoTooltipText" [escape]="false"
+               tooltipPosition="bottom"></i>
+
             <button pButton type="button" icon="fa fa-plus"
-                     [pTooltip]="'Create a new Medicine Type'"
+                    [pTooltip]="'Create a new Medicine Type'"
                     (click)="onAddNewMedicineTypeTriggered()"></button>
         </div>
 

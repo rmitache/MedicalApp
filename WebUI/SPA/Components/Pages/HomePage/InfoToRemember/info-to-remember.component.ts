@@ -24,7 +24,7 @@ export class InfoToRememberComponent {
     // Fields
     private readonly noDataModes = NoDataModes;
     private infoTooltipText: string =
-        `Under REMINDERS you can be reminded when you will run out of supply.`;
+        `Here you can see important reminders, such as when you will run out of supply.`;
 
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,

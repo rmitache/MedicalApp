@@ -48,6 +48,11 @@ export class IndicatorsViewComponent {
     private canvas: any;
     private chartCanvasContext: any;
     private chartInstance: any;
+    private infoTooltipText: string =
+        `Here you can see an overview of how you've felt every day (good days and bad days). <br />
+        On the right side, you can also see a list of your Symptoms, which you can show/hide. This 
+        can be used in order to spot possible correlations and patterns. <br />
+        Another good use of this area is to look at Symptoms and see when else in the past you've had problems with them.`;
     private readonly viewModel: ViewModel = {
         SymptomTypesDatasetItems: null,
 

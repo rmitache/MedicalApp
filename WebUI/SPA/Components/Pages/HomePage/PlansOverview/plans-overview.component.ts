@@ -34,6 +34,11 @@ export class PlansOverviewComponent {
     @ViewChild('planVersionTooltip')
     private planVersionTooltipInstance: PlanVersionTooltipComponent;
     private readonly noDataModes = NoDataModes;
+    private infoTooltipText: string =
+        `PLANS allow you to group and define different types of treatments. <br />
+        You can change them as time goes by depending on your needs.
+        `;
+
     private readonly planStatusViewModes = {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         All: 'All',

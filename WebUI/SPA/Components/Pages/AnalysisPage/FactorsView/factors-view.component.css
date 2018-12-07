@@ -8,7 +8,6 @@
 
 .left-side {
     width: calc(100% - 240px);
-    
     height: 100%;
     float: left;
 }
@@ -33,19 +32,29 @@
                 float: left;
             }
 
+            .left-side .header .left-section i {
+                display: block;
+                float: left;
+                margin-left: 5px;
+                margin-top: 4px;
+                color: #e5e5e5;
+                font-size: 1.3em;
+            }
 
 
         .left-side .header .center-section {
             float: left;
             width: calc(34%);
         }
+
         .left-side .header .right-section {
             float: right;
             width: calc(33%);
         }
+
     .left-side .body {
         height: calc(100% - 45px);
-        width:calc(100% - 35px);
+        width: calc(100% - 35px);
         margin-left: 35px;
     }
 
@@ -59,9 +68,10 @@
     float: left;
     margin-top: -20px;
 }
+
 .timeline {
     width: calc(100% - 51px);
-    padding-left:18px;
+    padding-left: 18px;
     height: 30px;
     float: left;
 }
@@ -71,7 +81,6 @@
     border-radius: 0 5px 5px 0;
     width: 238px;
     height: 100%;
-    
     float: right;
 }
 

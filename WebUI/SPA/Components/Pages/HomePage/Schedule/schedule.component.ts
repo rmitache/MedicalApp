@@ -67,7 +67,8 @@ export class ScheduleComponent {
 		animateBackward: 0
     }
     private infoTooltipText: string =
-        `Under SCHEDULE you can see what you have to take every day.`;
+        `SCHEDULE shows a detailed picture of all treatments you have to take during the day. <br />
+        You can mark which items you have taken by clicking on them.`;
 	private readonly viewModel: ViewModel = {
 		AvailableDateRange: null,
 

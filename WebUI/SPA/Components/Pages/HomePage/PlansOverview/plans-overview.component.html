@@ -4,8 +4,13 @@
     <div class="header">
         <div class="left-section">
             <span class="header-label h1">PLANS</span>
+
+            <i class="fa fa-question-circle"
+               [pTooltip]="infoTooltipText" [escape]="false"
+               tooltipPosition="bottom"></i>
+
             <button pButton type="button" icon="fa fa-plus"
-                     [pTooltip]="'Create a new Plan'"
+                    [pTooltip]="'Create a new Plan'"
                     (click)="onAddNewPlanTriggered()"></button>
         </div>
 

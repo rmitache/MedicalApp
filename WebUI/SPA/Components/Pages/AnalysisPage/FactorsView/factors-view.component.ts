@@ -42,6 +42,12 @@ export class FactorsViewComponent {
     private timelineInstance: TimelineComponent;
     @ViewChild('filtersPanel')
     private filtersPanelInstance: FactorsFiltersPanelComponent;
+    private infoTooltipText: string =
+        `Here you can see which FACTORS have potentially influenced your HEALTH. <br />
+        You can see which changes you've made to your treatment Plans over time. If you hover over the small black circles you can 
+        see which Medicines were changed.  <br />
+        You can also show/hide Plans on the right side.`;
+
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
 

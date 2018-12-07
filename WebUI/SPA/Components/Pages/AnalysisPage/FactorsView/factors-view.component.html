@@ -3,7 +3,10 @@
     <div class="left-side">
         <div class="header">
             <div class="left-section">
-                <span class="header-label h1">MEDICINE</span>
+                <span class="header-label h1">FACTORS</span>
+                <i class="fa fa-question-circle"
+                   [pTooltip]="infoTooltipText" [escape]="false"
+                   tooltipPosition="bottom"></i>
             </div>
             <div class="center-section">
                 <navigation-panel #navPanel
@@ -15,7 +18,7 @@
                 <div>
                     <div class="legend-item plan-changes-item">
                         <i class="fa fa-circle"></i>
-                        <span class="label-discrete">Changes</span>
+                        <span class="label-discrete">Plan changes</span>
                     </div>
                 </div>
             </div>
