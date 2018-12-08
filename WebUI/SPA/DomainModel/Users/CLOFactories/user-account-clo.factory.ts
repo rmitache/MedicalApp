@@ -11,6 +11,7 @@ export class UserAccountCLOFactory implements ICLOFactory<CLOs.UserAccountCLO> {
         newCLO.ID = blo['ID'];
         newCLO.Email = blo['Email'];
         newCLO.TermsAcceptedDate = blo['TermsAcceptedDate'];
+        newCLO.HasSeenWelcome = blo['HasSeenWelcome'];
 
         return newCLO;
     }

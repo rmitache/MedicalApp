@@ -17,6 +17,7 @@ namespace BLL.DomainModel.Users.Factories
             blo.ID = dataEntity.Id;
             blo.Email = dataEntity.Email;
             blo.TermsAcceptedDate = dataEntity.TermsAcceptedDate;
+            blo.HasSeenWelcome = (dataEntity.HasSeenWelcome == true) ? true : false;
 
             return blo;
         }

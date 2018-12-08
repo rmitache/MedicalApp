@@ -20,7 +20,7 @@ export class HelpDialogService {
     public Open(viewContainerRef: ViewContainerRef, okCallBack: () => void = null) {
 
         this.modalDialogService.OpenDialog(viewContainerRef, {
-            title: "Welcome to LymeJournal !",
+            title: "Help",
             childComponent: HelpDialogComponent,
             data:null,
             actionButtons: [

@@ -6,6 +6,7 @@ export class UserAccountCLO extends BaseCLO {
     public ID: number;
     public Email: string;
     public TermsAcceptedDate: Date;
+    public HasSeenWelcome: boolean;
 
     // Constructor
     constructor() {

@@ -8,6 +8,7 @@ namespace BLL.DomainModel.Users.BLOs
         public int ID { get; set; }
         public string Email { get; set; }
         public DateTime? TermsAcceptedDate { get; set; }
+        public bool HasSeenWelcome { get; set; }
 
         // Constructor
         internal UserAccount() { }

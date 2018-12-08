@@ -18,6 +18,7 @@ namespace DataAccessLayer.Entities
         public string Password { get; set; }
         public DateTime? TermsAcceptedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public bool? HasSeenWelcome { get; set; }
 
         public ICollection<THealthStatusEntry> THealthStatusEntry { get; set; }
         public ICollection<TMedicineType> TMedicineType { get; set; }
