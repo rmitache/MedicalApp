@@ -1,7 +1,12 @@
-
-
-
 .frame {
-    width: 550px;
-    height: 450px;
+    width: 750px;
+    height: 650px;
+}
+
+.terms-text-div {
+    padding: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 30px);
+    margin-bottom: 10px;
+    overflow-y: auto;
 }
