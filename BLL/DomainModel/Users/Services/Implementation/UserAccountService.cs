@@ -72,5 +72,9 @@ namespace BLL.DomainModel.Users.Services
         {
             this.userRepo.UpdateAcceptedTermsDate(userId, dateTime);
         }
+        public void UpdateHasSeenWelcome(int userId, bool hasSeenWelcome)
+        {
+            this.userRepo.UpdateHasSeenWelcome(userId, hasSeenWelcome);
+        }
     }
 }

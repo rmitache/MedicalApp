@@ -15,5 +15,6 @@ namespace DataAccessLayer.Repositories.UserRepository
         void UpdatePassword(int userId, string newPassword);
         void UpdateLastLoginDate(int userId, DateTime loginDate);
         void UpdateAcceptedTermsDate(int userId, DateTime dateTime);
+        void UpdateHasSeenWelcome(int userId, bool hasSeenWelcome);
     }
 }

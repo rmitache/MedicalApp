@@ -67,6 +67,15 @@ namespace DataAccessLayer.Repositories.UserRepository
             entitiesContext.Entry(userAcc).State = EntityState.Modified;
             entitiesContext.SaveChanges();
         }
+        public void UpdateHasSeenWelcome(int userId, bool hasSeenWelcome)
+        {
+            TUser userAcc = entitiesContext.TUser.AsNoTracking().Where(user =>
+                        user.Id == userId).SingleOrDefault();
+            userAcc.HasSeenWelcome = hasSeenWelcome;
+
+            entitiesContext.Entry(userAcc).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
+        }
     }
 }
 

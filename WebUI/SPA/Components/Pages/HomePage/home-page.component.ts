@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, ViewContainerRef } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,6 +12,7 @@ import { HomePageApplicationState } from './home-page-application-state';
 
 // Components
 import { HomePageDataService } from './home-page-data.service';
+import { HelpDialogService } from '../../Shared/Popups/HelpDialog/help-dialog.service';
 
 
 @Component({
@@ -26,7 +27,9 @@ export class HomePageComponent {
         private readonly commandManager: CommandManager,
         private readonly globalDataService: HomePageDataService,
         private readonly changeDetectorRef: ChangeDetectorRef,
-        private readonly applicationRef: ApplicationRef
+        private readonly applicationRef: ApplicationRef,
+        private helpDialogService: HelpDialogService,
+        private viewContainerRef: ViewContainerRef,
     ) {
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
@@ -46,6 +49,15 @@ export class HomePageComponent {
         const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
         
+        //
+        setTimeout(() => {
+            if(!loggedInUserCLO.HasSeenWelcome) {
+                this.helpDialogService.Open(this.viewContainerRef, () => {
+                    loggedInUserCLO.HasSeenWelcome = true;
+                });
+            }
+        }, 0);
+
 
         //// Handle change tracking
         //setInterval(() => {

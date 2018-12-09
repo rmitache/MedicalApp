@@ -8,6 +8,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-dialog.service';
 import { UserAccountEditorDialogService } from '../Popups/UserAccountEditorDialog/user-account-editor-dialog.service';
 import { HelpDialogService } from '../Popups/HelpDialog/help-dialog.service';
+import { SpinnerService } from '../../../Core/Services/SpinnerService/spinner.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class HeaderBarComponent {
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private userAccountEditorDialogService: UserAccountEditorDialogService,
-        private helpDialogService: HelpDialogService
+        private helpDialogService: HelpDialogService,
+        private readonly spinnerService: SpinnerService,
     ) {
 
         this.subscriptions.push(this.appState.LoggedInUserCLO.Changed.subscribe((newValue) => {
@@ -46,6 +48,7 @@ export class HeaderBarComponent {
 
     // Event handlers
     private onLogoutTriggered() {
+        this.spinnerService.Show();
         var logoutPromise = this.globalDataService.Logout();
         logoutPromise.then(() => {
             window.location.href = '/LoginPage';
