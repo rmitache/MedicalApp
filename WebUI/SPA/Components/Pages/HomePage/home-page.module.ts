@@ -66,6 +66,7 @@ import { InfoToRememberModule } from './InfoToRemember/info-to-remember.module';
         HomePageDataService,
         { provide: 'IReadOnlyAppStateWithUser', useExisting: HomePageApplicationState },
         { provide: 'IDataServiceWithUser', useExisting: HomePageDataService },
+        { provide: 'IDataServiceWithSetHasSeenWelcome', useExisting: HomePageDataService },
     ]
 })
 export class HomePageModule {

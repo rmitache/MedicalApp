@@ -4,6 +4,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { ModalDialogService } from '../../../../Core/Services/ModalDialogService/modal-dialog.service';
 import { HelpDialogComponent } from './help-dialog.component';
 import { HomePageDataService } from '../../../Pages/HomePage/home-page-data.service';
+import { IDataServiceWithUser } from '../../HeaderBar/header-bar.component';
 
 
 
@@ -13,7 +14,7 @@ export class HelpDialogService {
     // Constructor
     constructor(
         private readonly modalDialogService: ModalDialogService,
-        private readonly homePageDataService: HomePageDataService
+        @Inject('IDataServiceWithSetHasSeenWelcome') private readonly globalDataService: IDataServiceWithSetHasSeenWelcome,
     ) {
 
     }
@@ -61,9 +62,13 @@ export class HelpDialogService {
         });
 
         //
-        this.homePageDataService.SetHasSeenWelcome();
+        this.globalDataService.SetHasSeenWelcome();
 
 
     }
 }
 
+@Injectable()
+export abstract class IDataServiceWithSetHasSeenWelcome {
+    abstract SetHasSeenWelcome(): void;
+}
