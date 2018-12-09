@@ -245,7 +245,7 @@ namespace WebUI.Controllers
         //---------------------------------------------------------------------------------------------------------------------
 
 
-            // MedicineTypes-------------------------------------------------------------------------------------------------------
+        // MedicineTypes-------------------------------------------------------------------------------------------------------
         [Route("HomePage/AddMedicineType")]
         [HttpPost]
         public JsonResult AddMedicineType([FromBody]MedicineType blo)
@@ -320,6 +320,15 @@ namespace WebUI.Controllers
         {
             int? userID = this.webSecurityManager.CurrentUserID;
             this.webSecurityManager.UpdatePassword(model.NewPassword);
+            return Json(null);
+        }
+
+        [Route("HomePage/SetHasSeenWelcome")]
+        [HttpPost]
+        public JsonResult SetHasSeenWelcome()
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.webSecurityManager.UpdateHasSeenWelcome((int)userID, true);
             return Json(null);
         }
         //---------------------------------------------------------------------------------------------------------------------

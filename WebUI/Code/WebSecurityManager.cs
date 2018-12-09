@@ -132,6 +132,10 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
         {
             this.userAccountService.UpdateAcceptedTermsDate(userID, dateTime);
         }
+        public void UpdateHasSeenWelcome(int userID, bool hasSeenWelcome)
+        {
+            this.userAccountService.UpdateHasSeenWelcome(userID, hasSeenWelcome);
+        }
         public void RefreshLastLoginDate()
         {
             if (this.CurrentUserID == null)

@@ -362,6 +362,16 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
+    public SetHasSeenWelcome(): Promise<void> {
+        const apiMethodName: string = 'SetHasSeenWelcome';
+
+        
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName)
+            .toPromise();
+
+        return postDataPromise;
+    }
+
 
     // Login
     public Logout(): Promise<boolean> {

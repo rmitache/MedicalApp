@@ -52,7 +52,7 @@ export class HomePageComponent {
         //
         setTimeout(() => {
             if(!loggedInUserCLO.HasSeenWelcome) {
-                this.helpDialogService.Open(this.viewContainerRef, () => {
+                this.helpDialogService.OpenAsWelcome(this.viewContainerRef, () => {
                     loggedInUserCLO.HasSeenWelcome = true;
                 });
             }
