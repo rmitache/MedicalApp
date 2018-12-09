@@ -222,8 +222,8 @@ namespace WebUI.Controllers
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
             var recentSymptoms = this.symptomTypeService.GetUniqueSymptomTypesInHealthEntries(healthStatusEntries);
 
-            // Limit the return to only last 5
-            return Json(recentSymptoms.Take(4));
+            // Limit the return 
+            return Json(recentSymptoms.Take(10));
         }
         [Route("HomePage/AddCustomSymptomType")]
         [HttpPost]
