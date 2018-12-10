@@ -49,6 +49,8 @@
         border-radius: 0 0 5px 0;
     }
 
+
+    .user-status-item.menu-bar-open,
     .user-status-item:hover {
         background-color: #6c6c6c;
     }
@@ -70,25 +72,29 @@
 
 
 .menu-div {
-    position:relative;
-    float:right;
-    clear:both;
-    
+    position: relative;
+    float: right;
+    clear: both;
     border: solid 1px #c6c6c6;
     background-color: white;
     z-index: 100;
+    text-align: left;
 }
 
 .menu-item {
     cursor: pointer;
-    padding: 5px;
-    width: 160px;
+    padding: 5px 10px 5px 10px;
+
+    width: 180px;
 }
 
     .menu-item:hover {
         background-color: #c6c6c6;
     }
 
-    .menu-item .label {
-        border:solid 1px red;
+    .menu-item > i {
+        margin-right: 7px;
+    }
+
+    .menu-item > span {
     }

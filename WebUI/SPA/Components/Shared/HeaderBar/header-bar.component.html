@@ -11,7 +11,8 @@
             <span class="label-inv">Help</span>
 
         </div>
-        <div (click)="onUserEmailClicked()" class="user-status-item">
+        <div (click)="onUserEmailClicked()" class="user-status-item"
+             [ngClass]="viewModel.MenuPanelVisible ? 'menu-bar-open' : ''">
             <i class="fa fa-user"></i>
             <span class="label-inv">{{viewModel.LoggedInUser?.Email }}</span>
 
@@ -22,14 +23,19 @@
         <span class="label-inv">Logout</span>
     </div>-->
 
-        <div class="menu-div" #menuItemsBar>
+        <div class="menu-div" #menuItemsBar
+             [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'">
+
             <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+                <i class="fa fa-file-export"></i>
                 <span class="label-large">Export data</span>
             </div>
             <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+                <i class="fa fa-key"></i>
                 <span class="label-large">Change password</span>
             </div>
             <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+                <i class="fa fa-sign-out-alt"></i>
                 <span class="label-large">Logout</span>
             </div>
             <div style="clear:both"></div>

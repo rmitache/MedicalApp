@@ -58,13 +58,37 @@ export class HeaderBarComponent {
             window.location.href = '/LoginPage';
         });
     }
-    private onUserEmailClicked() {
-        var userCLO = this.viewModel.LoggedInUser;
+    //private onUserEmailClicked() {
+    //    var userCLO = this.viewModel.LoggedInUser;
 
-        this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
-    }
+    //    this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
+    //}
     private onHelpClicked() {
         this.helpDialogService.Open(this.viewContainerRef);
+    }
+    private onUserEmailClicked($event: Event) {
+
+        // Hide menu panel 
+        if (this.viewModel.MenuPanelVisible === true) {
+            this.viewModel.MenuPanelVisible = false;
+        }
+        // Position and show menu panel
+        else {
+            this.viewModel.MenuPanelVisible = true;
+
+            document.addEventListener('click', this.onClickedOutside, true); // Add global click handler to detect "click outside" actions
+
+        }
+    }
+    private onClickedOutside = ($event: Event) => {
+        this.viewModel.MenuPanelVisible = false;
+
+        // Remove handler 
+        document.removeEventListener('click', this.onClickedOutside, true);
+    }
+    private onMenuItemClicked = (menuItem: any) => {
+
+        menuItem.OnClick();
     }
 }
 interface ViewModel {
