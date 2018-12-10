@@ -9,6 +9,7 @@ import { ModalDialogService } from 'SPA/Core/Services/ModalDialogService/modal-d
 import { UserAccountEditorDialogService } from '../Popups/UserAccountEditorDialog/user-account-editor-dialog.service';
 import { HelpDialogService } from '../Popups/HelpDialog/help-dialog.service';
 import { SpinnerService } from '../../../Core/Services/SpinnerService/spinner.service';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class HeaderBarComponent {
     private activePageName;
     private readonly viewModel: ViewModel = {
         LoggedInUser: null,
+        MenuPanelVisible: false,
     };
     private readonly subscriptions: Subscription[] = [];
 
@@ -42,6 +44,8 @@ export class HeaderBarComponent {
             this.viewModel.LoggedInUser = newValue;
         }));
     }
+
+   
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
@@ -64,7 +68,9 @@ export class HeaderBarComponent {
     }
 }
 interface ViewModel {
+    
     LoggedInUser: UserAccountCLO | null;
+    MenuPanelVisible: boolean;
 }
 @Injectable()
 export abstract class IReadOnlyAppStateWithUser {

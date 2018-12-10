@@ -59,10 +59,36 @@
         vertical-align: middle;
     }
 
-    .user-status-item span {
+    .user-status-item > span {
         display: inline-block;
         padding-left: 3px;
         line-height: 30px;
         vertical-align: middle;
         cursor: pointer;
+    }
+
+
+
+.menu-div {
+    position:relative;
+    float:right;
+    clear:both;
+    
+    border: solid 1px #c6c6c6;
+    background-color: white;
+    z-index: 100;
+}
+
+.menu-item {
+    cursor: pointer;
+    padding: 5px;
+    width: 160px;
+}
+
+    .menu-item:hover {
+        background-color: #c6c6c6;
+    }
+
+    .menu-item .label {
+        border:solid 1px red;
     }
