@@ -5,7 +5,7 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { VersionCLOService } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionCLOService, MedicineTypeAndAvgMonthlyDosage } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
 import { ConvertDictionaryToArray } from '../../../../Core/Helpers/Functions/functions';
 
 
@@ -27,6 +27,7 @@ export class PlanVersionTooltipComponent {
         CurrentPlanStatusDescription: null,
         VersionCLOToShow: null,
         NrUniqueMedicineTypes: null,
+        UniqueMedTypes: null,
 
         Visible: false,
         TooltipPos: null,
@@ -131,7 +132,10 @@ export class PlanVersionTooltipComponent {
         let info = this.getStatusDescriptionAndTargetVersionToShow(hoverEventInfo.PlanCLO);
         this.viewModel.CurrentPlanStatusDescription = info.StatusDescription;
         this.viewModel.VersionCLOToShow = info.TargetVersionToShow;
-        this.viewModel.NrUniqueMedicineTypes = ConvertDictionaryToArray(uniqueMedTypes).length;
+
+        let uniqueMedTypesArray = ConvertDictionaryToArray(uniqueMedTypes);
+        this.viewModel.NrUniqueMedicineTypes = uniqueMedTypesArray.length;
+        this.viewModel.UniqueMedTypes = uniqueMedTypesArray;
 
         // Set position and show tooltip
         setTimeout(() => {
@@ -149,6 +153,7 @@ export class PlanVersionTooltipComponent {
             this.viewModel.CurrentPlanStatusDescription = null;
             this.viewModel.VersionCLOToShow = null;
             this.viewModel.NrUniqueMedicineTypes = null;
+            this.viewModel.UniqueMedTypes = null;
 
             this.viewModel.TooltipPos = null;
             this.viewModel.CaretPos = null;
@@ -165,6 +170,7 @@ interface ViewModel {
     CurrentPlanStatusDescription: string;
     VersionCLOToShow: CLOs.VersionCLO;
     NrUniqueMedicineTypes: number;
+    UniqueMedTypes: MedicineTypeAndAvgMonthlyDosage[];
 
     Visible: boolean;
     TooltipPos: PosCoordinates;

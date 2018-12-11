@@ -8,35 +8,22 @@
          [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
          [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
     </div>
+
+   
     <div class="header-div">
 
 
         <span class="status-info-label h2">{{planStatusesEnum[viewModel.CurrentPlanStatus]}}</span>
-        
-        <div class="med-types-count-div">
-            <div class="numbers-elem">
-                <span class="label">{{viewModel.NrUniqueMedicineTypes}}</span>
-            </div>
-            <span class="unique-med-types-label label">Medicine Types</span>
+        <div class="plan-status-description-div h4-alt">
+            {{viewModel.NrUniqueMedicineTypes}} Medicine type(s):
         </div>
+        
     </div>
     <div class="content-div">
-        <div class="plan-status-description-div h4-alt">
-            {{viewModel.CurrentPlanStatusDescription}}
+        <div class="rule-elem-div" *ngFor="let medType of viewModel.UniqueMedTypes; let i = index">
+            <span class="label">{{medType.MedicineType.Name}}</span>
         </div>
-        <div class="rule-elem-div" *ngFor="let ruleCLO of viewModel.VersionCLOToShow?.Rules; let i = index">
-            <div class="rule-freq-info-div">
-                <span class="label">{{ruleCLO.FrequencyToString}} at</span>
-                <div class="time-chip label" *ngFor="let time of ruleCLO.MomentsInDay">{{time.ToString()}}</div>
-
-            </div>
-            <div class="rule-item-div label" *ngFor="let ruleItemCLO of ruleCLO.MedicineRuleItems">
-                &#9642; {{ruleItemCLO.UnitDoseQuantifier}} x {{ruleItemCLO.MedicineType.Name}}
-            </div>
-
-            <div style="clear:both"></div>
-        </div>
-
     </div>
 
 </div>
+<!--{{viewModel.CurrentPlanStatusDescription}}-->
