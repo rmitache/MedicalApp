@@ -37,20 +37,27 @@
     height: 30px;
 }
 
+.user-name-elem {
+    text-align: center;
+    border-radius: 0 0 5px 0;
+}
+
+    .user-name-elem.menu-bar-open {
+        background-color: #6c6c6c;
+        border-radius: 0;
+    }
+
 .user-status-item {
-    float: left;
+    float: right;
     padding-left: 15px;
     padding-right: 15px;
     height: 30px;
     cursor: pointer;
 }
 
-    .user-status-item:last-of-type {
-        border-radius: 0 0 5px 0;
-    }
 
 
-    .user-status-item.menu-bar-open,
+
     .user-status-item:hover {
         background-color: #6c6c6c;
     }
@@ -76,6 +83,7 @@
     float: right;
     clear: both;
     border: solid 1px #c6c6c6;
+    border-top: none;
     background-color: white;
     z-index: 100;
     text-align: left;
@@ -84,8 +92,7 @@
 .menu-item {
     cursor: pointer;
     padding: 5px 10px 5px 10px;
-
-    width: 180px;
+    width: 150px;
 }
 
     .menu-item:hover {

@@ -1,42 +1,37 @@
 <div class="frame">
-    
+
 
     <div class="navigation-menu">
         <a class="navigation-menu-item label-large-inv" href="/HomePage" [ngClass]="{'active': activePageName === 'HomePage' }">Home</a>
         <a class="navigation-menu-item label-large-inv" href="/AnalysisPage" [ngClass]="{'active': activePageName === 'AnalysisPage' }">History</a>
     </div>
     <div class="user-status-panel">
+        <div (click)="onUserEmailClicked()" class="user-status-item user-name-elem"
+             [ngClass]="viewModel.MenuPanelVisible ? 'menu-bar-open' : ''">
+            <i class="fa fa-user"></i>
+            <span class="label-inv">{{viewModel.LoggedInUser?.Email }}</span>
+            <i class="fa fa-caret-down"></i>
+        </div>
         <div (click)="onHelpClicked()" class="user-status-item">
             <i class="fa fa-question"></i>
             <span class="label-inv">Help</span>
 
         </div>
-        <div (click)="onUserEmailClicked()" class="user-status-item"
-             [ngClass]="viewModel.MenuPanelVisible ? 'menu-bar-open' : ''">
-            <i class="fa fa-user"></i>
-            <span class="label-inv">{{viewModel.LoggedInUser?.Email }}</span>
-
-        </div>
-
-        <!--<div (click)="onLogoutTriggered()" class="user-status-item">
-        <i class="fa fa-sign-out-alt"></i>
-        <span class="label-inv">Logout</span>
-    </div>-->
 
         <div class="menu-div" #menuItemsBar
              [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'">
 
-            <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
-                <i class="fa fa-file-export"></i>
-                <span class="label-large">Export data</span>
-            </div>
-            <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+            <!--<div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+            <i class="fa fa-file-export"></i>
+            <span class="label">Export data</span>
+        </div>-->
+            <div class="menu-item" (click)="onChangePasswordClicked()">
                 <i class="fa fa-key"></i>
-                <span class="label-large">Change password</span>
+                <span class="label">Change password</span>
             </div>
-            <div class="menu-item" (click)="onMenuItemClicked(menuItem)">
+            <div class="menu-item" (click)="onLogoutTriggered()">
                 <i class="fa fa-sign-out-alt"></i>
-                <span class="label-large">Logout</span>
+                <span class="label">Logout</span>
             </div>
             <div style="clear:both"></div>
 

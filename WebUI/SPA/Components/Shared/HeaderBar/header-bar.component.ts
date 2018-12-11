@@ -58,11 +58,11 @@ export class HeaderBarComponent {
             window.location.href = '/LoginPage';
         });
     }
-    //private onUserEmailClicked() {
-    //    var userCLO = this.viewModel.LoggedInUser;
+    private onChangePasswordClicked() {
+        var userCLO = this.viewModel.LoggedInUser;
 
-    //    this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
-    //}
+        this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
+    }
     private onHelpClicked() {
         this.helpDialogService.Open(this.viewContainerRef);
     }
