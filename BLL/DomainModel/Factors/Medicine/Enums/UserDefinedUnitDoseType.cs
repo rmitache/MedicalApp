@@ -10,10 +10,7 @@ namespace BLL.DomainModel.Factors.Medicine.Enums
     {
         Teaspoons = 0,
         Drops = 1,
-        Custom = 2
-
-        //Teaspoons = 3,
-        //Drops = 4,
-        //Custom = 5
+        Custom = 2,
+        Spoons = 3
     }
 }

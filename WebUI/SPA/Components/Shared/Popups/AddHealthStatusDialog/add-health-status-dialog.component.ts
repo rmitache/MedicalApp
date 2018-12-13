@@ -69,7 +69,6 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     readonly autoCompleteComponentInstance: AutoComplete;
     private readonly availableSymptomTypes: CLOs.SymptomTypeCLO[];
     private readonly dialogInitParameters = {
-        recentSymptomTypes: null,
         mostRecentHealthStatusEntry: null
     };
     private readonly viewModel: ViewModel = {
@@ -78,6 +77,7 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
 
         ShowRecentSymptomsDiv: false,
         MostRecentHealthStatusEntry: null,
+        MostRecentHealthStatusTimestamp: null,
 
         SymptomTypesSearchResults: [],
         SearchText: null
@@ -131,6 +131,19 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         this.isValid = this.checkChildrenAreValid()
             && this.viewModel.HealthStatusEntryCLO.HealthLevel !== Enums.HealthLevel.Unspecified;
     }
+    private getRelativeDateAsString(refDate: Date) {
+        return moment(refDate).calendar(null, {
+            lastDay: '[Yesterday]',
+            sameDay: '[Today]',
+            nextDay: '[Tomorrow]',
+            lastWeek: 'MMM DD, YYYY',//'[Last] dddd',
+            nextWeek: 'MMM DD, YYYY',//'[Next] dddd',
+            sameElse: 'MMM DD, YYYY',
+           
+        });
+
+
+    }
 
     // Constructor 
     constructor(
@@ -147,11 +160,14 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     ngOnInit() {
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
 
+        // Load info for the RecentSymptoms section if there are any to show
         if (this.dialogInitParameters.mostRecentHealthStatusEntry !== null && 
             this.dialogInitParameters.mostRecentHealthStatusEntry.SymptomEntries.length > 0) {
             this.viewModel.ShowRecentSymptomsDiv = true;
             this.viewModel.MostRecentHealthStatusEntry = this.dialogInitParameters.mostRecentHealthStatusEntry;
-            this.viewModel.MostRecentHealthStatusEntry.SymptomEntries = this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.concat(this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.slice());
+            this.viewModel.MostRecentHealthStatusTimestamp = moment(this.viewModel.MostRecentHealthStatusEntry.OccurrenceDateTime).fromNow(); //this.getRelativeDateAsString(this.viewModel.MostRecentHealthStatusEntry.OccurrenceDateTime);
+            //this.viewModel.MostRecentHealthStatusEntry.SymptomEntries = this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.concat(this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.slice());
+
         }
 
     }
@@ -234,6 +250,7 @@ interface ViewModel {
 
     ShowRecentSymptomsDiv: boolean;
     MostRecentHealthStatusEntry: CLOs.HealthStatusEntryCLO;
+    MostRecentHealthStatusTimestamp: string;
 
     SymptomTypesSearchResults: string[];
     SearchText: string;
