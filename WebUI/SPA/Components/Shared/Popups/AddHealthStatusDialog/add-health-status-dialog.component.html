@@ -24,7 +24,7 @@
             </div>
             <div class="recent-symptoms-div"
                  [style.display]="viewModel.ShowRecentSymptomsDiv ? 'block' : 'none'">
-                <span class="h4-alt">{{viewModel.MostRecentHealthStatusTimestamp}} you had:</span>
+                <span class="h4-alt">Do you still have any of these from {{viewModel.MostRecentHealthStatusTimestamp}}?</span>
                 <i class="fa fa-times" (click)="onCloseRecentSymptomsTriggered()"></i>
 
                 <div class="recent-symptoms-list">
