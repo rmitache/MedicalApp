@@ -69,14 +69,15 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     readonly autoCompleteComponentInstance: AutoComplete;
     private readonly availableSymptomTypes: CLOs.SymptomTypeCLO[];
     private readonly dialogInitParameters = {
-        recentSymptomTypes: null
+        recentSymptomTypes: null,
+        mostRecentHealthStatusEntry: null
     };
     private readonly viewModel: ViewModel = {
         HealthStatusEntryCLO: null,
         ShowSymptomEntriesOverlayDiv: true,
 
         ShowRecentSymptomsDiv: false,
-        RecentSymptomTypeCLOs: null,
+        MostRecentHealthStatusEntry: null,
 
         SymptomTypesSearchResults: [],
         SearchText: null
@@ -146,8 +147,11 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
     ngOnInit() {
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
 
-        if (this.dialogInitParameters.recentSymptomTypes.length > 0) {
+        if (this.dialogInitParameters.mostRecentHealthStatusEntry !== null && 
+            this.dialogInitParameters.mostRecentHealthStatusEntry.SymptomEntries.length > 0) {
             this.viewModel.ShowRecentSymptomsDiv = true;
+            this.viewModel.MostRecentHealthStatusEntry = this.dialogInitParameters.mostRecentHealthStatusEntry;
+            this.viewModel.MostRecentHealthStatusEntry.SymptomEntries = this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.concat(this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.slice());
         }
 
     }
@@ -163,14 +167,13 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-        this.dialogInitParameters.recentSymptomTypes = options.data.recentSymptomTypes;
+        this.dialogInitParameters.mostRecentHealthStatusEntry = options.data.mostRecentHealthStatusEntry;
     }
 
     // Event handlers 
     private onShowSymptomsAreaTriggered() {
         this.viewModel.ShowSymptomEntriesOverlayDiv = false;
 
-        this.viewModel.RecentSymptomTypeCLOs = this.dialogInitParameters.recentSymptomTypes;
     }
     private onRemoveSymptomTriggered(clo: CLOs.SymptomEntryCLO) {
         const index: number = this.viewModel.HealthStatusEntryCLO.SymptomEntries.indexOf(clo);
@@ -209,16 +212,16 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         this.addNewSymptomEntry(value);
         this.viewModel.SearchText = '';
     }
-    private onRecentSymptomTypeClicked(symptomTypeCLO) {
+    private onRecentSymptomTypeClicked(symptomEntryCLO) {
 
-        this.addNewSymptomEntry(symptomTypeCLO.Name);
+        this.addNewSymptomEntry(symptomEntryCLO.SymptomType.Name);
 
         // Remove the SymptomType from the recents list
-        var index = this.viewModel.RecentSymptomTypeCLOs.indexOf(symptomTypeCLO);
-        this.viewModel.RecentSymptomTypeCLOs.splice(index, 1);
+        var index = this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.indexOf(symptomEntryCLO);
+        this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.splice(index, 1);
 
         // Hide the recent-symptoms-div if there are not recent-symptoms left
-        if (this.viewModel.RecentSymptomTypeCLOs.length === 0) {
+        if (this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.length === 0) {
             this.viewModel.ShowRecentSymptomsDiv = false;
         }
     }
@@ -230,7 +233,7 @@ interface ViewModel {
     ShowSymptomEntriesOverlayDiv: boolean;
 
     ShowRecentSymptomsDiv: boolean;
-    RecentSymptomTypeCLOs: CLOs.SymptomTypeCLO[];
+    MostRecentHealthStatusEntry: CLOs.HealthStatusEntryCLO;
 
     SymptomTypesSearchResults: string[];
     SearchText: string;

@@ -222,8 +222,27 @@ namespace WebUI.Controllers
             var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
             var recentSymptoms = this.symptomTypeService.GetUniqueSymptomTypesInHealthEntries(healthStatusEntries);
 
-            // Limit the return 
+            // Limit the symptoms 
             return Json(recentSymptoms.Take(10));
+        }
+        [Route("HomePage/GetMostRecentHealthEntry")]
+        [HttpPost]
+        public JsonResult GetMostRecentHealthEntry()
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+
+            // Prepare the range (select 7 days into the past)
+            var now = Common.Functions.GetCurrentDateTimeInUTC();
+            var last7DaysRange = new Range<DateTime>(now.Subtract(new TimeSpan(7, 0, 0, 0)), now);
+
+            // Get the first (most recent) health status entry
+            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
+
+            // HACK
+            var lastHealthEntry = healthStatusEntries.FirstOrDefault();
+
+            // Limit the return 
+            return Json(lastHealthEntry);
         }
         [Route("HomePage/AddCustomSymptomType")]
         [HttpPost]

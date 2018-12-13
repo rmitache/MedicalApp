@@ -40,6 +40,9 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
             var dataEntities = this.healthStatusEntryRepo.GetHealthStatusEntries(dateRange, userID, includeSymptoms);
             var blos = this.healthStatusEntryFactory.Convert_ToBLOList(dataEntities);
 
+            // Sort descendingly by OccurrenceDateTime
+            blos = blos.OrderByDescending(o => o.OccurrenceDateTime).ToList();
+
             return blos;
         }
         public bool GetUserHasAnyHealthStatusEntries(int userID)
