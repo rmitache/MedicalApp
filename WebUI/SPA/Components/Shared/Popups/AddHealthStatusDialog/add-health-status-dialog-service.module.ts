@@ -5,7 +5,7 @@ import { SpinnerServiceModule } from '../../../../Core/Services/SpinnerService/s
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CheckboxModule, AutoCompleteModule, ButtonModule } from 'primeng/primeng';
+import { CheckboxModule, AutoCompleteModule, ButtonModule, TooltipModule } from 'primeng/primeng';
 import { AddHealthStatusDialogComponent } from './add-health-status-dialog.component';
 import { AddHealthStatusDialogService } from './add-health-status-dialog.service';
 import { SymptomEntryElemComponent } from './SymptomEntryElem/symptom-entry-elem.component';
@@ -19,7 +19,8 @@ import { HealthLevelSelectorComponent } from './HealthLevelSelector/health-level
         FormsModule,
         CheckboxModule,
         AutoCompleteModule,
-        ButtonModule
+        ButtonModule,
+        TooltipModule,
 	],
 	declarations: [
         AddHealthStatusDialogComponent,

@@ -145,6 +145,9 @@ h4,
 }
 
 /*Controls*/
+.ui-tooltip {
+    
+}
 .ui-tooltip-text {
     font-size: 9pt;
     font-family: Arial;

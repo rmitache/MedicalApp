@@ -95,10 +95,10 @@
             border-radius: 4px;
             background-color: #2399e5;
             float: left;
-            margin-right:5px;
-            margin-bottom:8px;
+            margin-right:4px;
+            margin-bottom:4px;
             cursor: pointer;
-            padding: 3px 5px 3px 5px;
+            padding: 2px 4px 2px 4px;
         }
 
             .recent-symptoms-div .recent-symptoms-list .recent-symptom-elem:hover {

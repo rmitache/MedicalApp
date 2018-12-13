@@ -18,7 +18,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 999;
+    z-index: 50;
 }
 
 .modal-content {
@@ -28,7 +28,7 @@
     transform: translateY(-50%) translateX(-50%);
     background-color: white;
     border-radius: 4px;
-    z-index: 9991;
+    z-index:51;
     box-shadow: 2px 2px 5px #b6b6b6;
 }
 
