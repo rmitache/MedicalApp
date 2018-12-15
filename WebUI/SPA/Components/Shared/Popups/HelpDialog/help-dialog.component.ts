@@ -13,7 +13,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
+import { ICommonDataService } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 // Components
 

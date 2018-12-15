@@ -21,10 +21,10 @@
         <div class="menu-div" #menuItemsBar
              [style.visibility]="viewModel.MenuPanelVisible ? 'visible' : 'hidden'">
 
-            <!--<div class="menu-item" (click)="onMenuItemClicked(menuItem)">
-            <i class="fa fa-file-export"></i>
-            <span class="label">Export data</span>
-        </div>-->
+            <div class="menu-item" (click)="onExportDataClicked()">
+                <i class="fa fa-download"></i>
+                <span class="label">Download data</span>
+            </div>
             <div class="menu-item" (click)="onChangePasswordClicked()">
                 <i class="fa fa-key"></i>
                 <span class="label">Change password</span>

@@ -1,0 +1,19 @@
+.frame /deep/ .ng-invalid.ng-touched .ui-inputtext {
+    border: 1px solid red !important;
+}
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+}
+
+.frame {
+    width: 320px;
+    height: 130px;
+}
+.h4{
+    display:block;
+    float:left;
+
+}
+#stop-date-picker /deep/ .ui-inputtext {
+    width: 90px !important;
+}

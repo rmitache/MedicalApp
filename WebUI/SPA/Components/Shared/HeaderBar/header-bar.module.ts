@@ -9,6 +9,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { HeaderBarComponent } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 import { CommonModule } from '@angular/common';
 import { UserAccountEditorDialogServiceModule } from '../Popups/UserAccountEditorDialog/user-account-editor-dialog-service.module';
+import { ExportDataDialogServiceModule } from '../Popups/ExportDataDialog/export-data-dialog-service.module';
 
 // Components
 
@@ -18,7 +19,8 @@ import { UserAccountEditorDialogServiceModule } from '../Popups/UserAccountEdito
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        UserAccountEditorDialogServiceModule
+        UserAccountEditorDialogServiceModule,
+        ExportDataDialogServiceModule
     ],
 	declarations: [
 		HeaderBarComponent

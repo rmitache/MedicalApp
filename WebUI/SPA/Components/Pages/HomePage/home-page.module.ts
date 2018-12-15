@@ -20,9 +20,10 @@ import { HomePageDataService } from './home-page-data.service';
 import { StartupDataBundleService } from './startup-data-bundle.service';
 import { HomePageComponent } from './home-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
-import { IReadOnlyAppStateWithUser, IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
+import { IReadOnlyAppStateWithUser, ICommonDataService } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 import { MedicineTypesOverviewModule } from 'SPA/Components/Pages/HomePage/MedicineTypesOverview/medicine-types-overview.module';
 import { InfoToRememberModule } from './InfoToRemember/info-to-remember.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { InfoToRememberModule } from './InfoToRemember/info-to-remember.module';
     imports: [
         CommonModule,
         HttpModule,
+        HttpClientModule,
         FormsModule,
         BrowserModule,
         CoreModule,
@@ -65,8 +67,7 @@ import { InfoToRememberModule } from './InfoToRemember/info-to-remember.module';
         HomePageApplicationState,
         HomePageDataService,
         { provide: 'IReadOnlyAppStateWithUser', useExisting: HomePageApplicationState },
-        { provide: 'IDataServiceWithUser', useExisting: HomePageDataService },
-        { provide: 'IDataServiceWithSetHasSeenWelcome', useExisting: HomePageDataService },
+        { provide: 'ICommonDataService', useExisting: HomePageDataService },
     ]
 })
 export class HomePageModule {

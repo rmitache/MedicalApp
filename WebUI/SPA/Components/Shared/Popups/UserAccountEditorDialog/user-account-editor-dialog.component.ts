@@ -13,7 +13,7 @@ import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures
 import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialogService/modal-dialog.interface';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { List } from 'SPA/Core/Helpers/DataStructures/list';
-import { IDataServiceWithUser } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
+import { ICommonDataService } from 'SPA/Components/Shared/HeaderBar/header-bar.component';
 
 // Components
 
@@ -47,7 +47,7 @@ export class UserAccountEditorDialogComponent implements IModalDialog {
 	// Constructor 
 	constructor(
 		private readonly genericCLOFactory: GenericCLOFactory,
-		@Inject('IDataServiceWithUser') private readonly globalDataService: IDataServiceWithUser,
+        @Inject('ICommonDataService') private readonly globalDataService: ICommonDataService,
 		private fb: FormBuilder
 	) {
 	}
@@ -120,7 +120,7 @@ class EditCurrentMode implements IUserAccountEditorModeImplementation {
 		private reactiveForm: FormGroup,
 		private userAccountCLO: CLOs.UserAccountCLO,
 		private vm: ViewModel,
-		private globalDataService: IDataServiceWithUser,
+		private globalDataService: ICommonDataService,
 		private genericCLOFactory: GenericCLOFactory) {
 
 		// Prepare ViewModel 

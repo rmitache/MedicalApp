@@ -10,6 +10,7 @@ import { UserAccountEditorDialogService } from '../Popups/UserAccountEditorDialo
 import { HelpDialogService } from '../Popups/HelpDialog/help-dialog.service';
 import { SpinnerService } from '../../../Core/Services/SpinnerService/spinner.service';
 import { MenuItem } from 'primeng/api';
+import { ExportDataDialogService } from '../Popups/ExportDataDialog/export-data-dialog.service';
 
 
 @Component({
@@ -32,11 +33,12 @@ export class HeaderBarComponent {
     // Constructor 
     constructor(
         @Inject('IReadOnlyAppStateWithUser') private readonly appState: IReadOnlyAppStateWithUser,
-        @Inject('IDataServiceWithUser') private readonly globalDataService: IDataServiceWithUser,
+        @Inject('ICommonDataService') private readonly globalDataService: ICommonDataService,
         private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private userAccountEditorDialogService: UserAccountEditorDialogService,
         private helpDialogService: HelpDialogService,
+        private exportDataDialogService: ExportDataDialogService,
         private readonly spinnerService: SpinnerService,
     ) {
 
@@ -80,16 +82,18 @@ export class HeaderBarComponent {
 
         }
     }
+    private onExportDataClicked = () => {
+
+        this.exportDataDialogService.Open(this.viewContainerRef, () => {
+        });
+    }
     private onClickedOutside = ($event: Event) => {
         this.viewModel.MenuPanelVisible = false;
 
         // Remove handler 
         document.removeEventListener('click', this.onClickedOutside, true);
     }
-    private onMenuItemClicked = (menuItem: any) => {
-
-        menuItem.OnClick();
-    }
+    
 }
 interface ViewModel {
     
@@ -101,8 +105,10 @@ export abstract class IReadOnlyAppStateWithUser {
     LoggedInUserCLO: DataStructures.IReadableProperty<CLOs.UserAccountCLO>;
 }
 @Injectable()
-export abstract class IDataServiceWithUser {
+export abstract class ICommonDataService {
     abstract GetLoggedInUserFromBundle(): CLOs.UserAccountCLO;
     abstract UpdatePassword(newPassword: string): Promise<void>;
     abstract Logout(): Promise<boolean>;
+    abstract SetHasSeenWelcome(): void;
+    abstract DownloadData(): void;
 }

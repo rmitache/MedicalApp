@@ -1,4 +1,5 @@
-﻿import { Http, RequestMethod, Response, RequestOptions, URLSearchParams, Request, Headers, HttpModule  } from '@angular/http';
+﻿import { Http, RequestMethod, Response, RequestOptions, URLSearchParams, Request, Headers } from '@angular/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
@@ -50,7 +51,8 @@ export class HttpHandlerService {
     }
 
     // Constructor
-    constructor( @Inject(Http) private http: Http) { }
+    constructor(@Inject(Http) private http: Http,
+        @Inject(HttpClient) private httpClient: HttpClient) { }
 
     // Public methods
     public Get(serviceUrl: string, data?: any): Observable<any> {
@@ -85,7 +87,11 @@ export class HttpHandlerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+    public DownloadFile(serviceUrl: string): Observable<any> {
 
+
+        return this.httpClient.get(serviceUrl, { responseType: 'arraybuffer' });
+    }
 }
 
 

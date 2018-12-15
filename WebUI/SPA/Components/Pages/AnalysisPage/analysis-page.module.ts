@@ -19,6 +19,7 @@ import { AnalysisPageComponent } from './analysis-page.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { FactorsViewModule } from 'SPA/Components/Pages/AnalysisPage/FactorsView/factors-view.module';
 import { IndicatorsViewModule } from 'SPA/Components/Pages/AnalysisPage/IndicatorsView/indicators-view.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { IndicatorsViewModule } from 'SPA/Components/Pages/AnalysisPage/Indicato
     imports: [
         CommonModule,
         HttpModule,
+        HttpClientModule,
         FormsModule,
         BrowserModule,
         CoreModule,
@@ -55,8 +57,7 @@ import { IndicatorsViewModule } from 'SPA/Components/Pages/AnalysisPage/Indicato
         AnalysisPageApplicationState,
         AnalysisPageDataService,
         { provide: 'IReadOnlyAppStateWithUser', useExisting: AnalysisPageApplicationState },
-        { provide: 'IDataServiceWithUser', useExisting: AnalysisPageDataService },
-        { provide: 'IDataServiceWithSetHasSeenWelcome', useExisting: AnalysisPageDataService },
+        { provide: 'ICommonDataService', useExisting: AnalysisPageDataService },
     ]
 })
 export class AnalysisPageModule {

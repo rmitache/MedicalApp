@@ -386,7 +386,15 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
+    public DownloadData(): Promise<void> {
+        const apiMethodName: string = 'DownloadData';
 
+
+        let postDataPromise = this.httpHandlerService.DownloadFile('CommonAPI/' + apiMethodName)
+            .toPromise();
+
+        return postDataPromise;
+    }
 
     // Login
     public Logout(): Promise<boolean> {

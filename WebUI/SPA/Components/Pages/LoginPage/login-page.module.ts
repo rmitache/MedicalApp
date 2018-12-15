@@ -16,6 +16,7 @@ import { LoginPageDataService } from './login-page-data.service';
 import { LoginPageComponent } from './login-page.component';
 import { LoginPanelComponent } from 'SPA/Components/Pages/LoginPage/LoginPanel/login-panel.component';
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
         CommonModule,
         BrowserModule,
         HttpModule,
+        HttpClientModule,
         ReactiveFormsModule,
         CoreModule,
         BrowserAnimationsModule,

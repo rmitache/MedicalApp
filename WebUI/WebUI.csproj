@@ -59,6 +59,8 @@
     <None Remove="SPA\Components\Shared\Popups\AddSupplyDialog\add-supply-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\AddSymptomTypeDialog\add-symptom-type-dialog.service.ts" />
+    <None Remove="SPA\Components\Shared\Popups\ExportDataDialog\export-data-dialog-service.module.ts" />
+    <None Remove="SPA\Components\Shared\Popups\ExportDataDialog\export-data-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\HelpDialog\help-dialog-service.module.ts" />
     <None Remove="SPA\Components\Shared\Popups\HelpDialog\help-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\Popups\MedicineTypeEditorDialog\medicine-type-editor-dialog-service.module.ts" />
@@ -132,6 +134,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SPA\Core\Services\CommonDataService\" />
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOServices\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
@@ -192,6 +195,8 @@
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\PlanEditorDialog\i-medicine-types-search-service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\PlanEditorDialog\plan-editor-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\PlanEditorDialog\plan-editor-dialog.service.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\ExportDataDialog\export-data-dialog-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Popups\ExportDataDialog\export-data-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog-service.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\StopPlanDialog\stop-plan-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog-service.module.ts" />
