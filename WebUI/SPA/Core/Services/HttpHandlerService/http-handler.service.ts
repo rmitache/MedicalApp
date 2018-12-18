@@ -1,11 +1,11 @@
 ﻿import { Http, RequestMethod, Response, RequestOptions, URLSearchParams, Request, Headers } from '@angular/http';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class HttpHandlerService {
@@ -72,7 +72,7 @@ export class HttpHandlerService {
             .catch(this.handleError);
     }
     public Post(serviceUrl: string, data?: any): Observable<any> {
-        
+
         var stringifiedData = null;
         if (data) {
             stringifiedData = JSON.stringify(data);
@@ -87,11 +87,32 @@ export class HttpHandlerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
-    public DownloadFile(serviceUrl: string): Observable<any> {
+    public DownloadFile(serviceUrl: string): void {
 
 
-        return this.httpClient.get(serviceUrl, { responseType: 'arraybuffer' });
+        //this.httpClient.get(serviceUrl, { responseType: 'arraybuffer' })
+        //    .subscribe(response => {
+        //        debugger;
+        //        this.downLoadFile(response, "text/plain");
+        //    });
+
+        this.httpClient.get(serviceUrl, { responseType: 'blob' }).subscribe(blob => {
+            saveAs(blob, 'file.csv', {
+                type: 'text/plain;charset=windows-1252' // --> or whatever you need here
+            });
+        });
     }
+
+
+    //downLoadFile(data: any, type: string) {
+
+    //    var blob = new Blob([data], { type: type });
+    //    var url = window.URL.createObjectURL(blob);
+    //    var pwa = window.open(url);
+    //    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+    //        alert('Please disable your Pop-up blocker and try again.');
+    //    }
+    //}
 }
 
 

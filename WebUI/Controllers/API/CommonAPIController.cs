@@ -12,6 +12,8 @@ using Common;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using MedicalApp.WebUI.Code.WebSecurity.Implementation;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebUI.Controllers
 {
@@ -26,7 +28,7 @@ namespace WebUI.Controllers
         private IPlanService planService { get; set; }
         private IHealthStatusEntryService healthStatusEntryService { get; set; }
         private WebSecurityManager webSecurityManager { get; set; }
-
+        private IHostingEnvironment _env;
 
         // Constructor
         public CommonAPIController(
@@ -36,7 +38,8 @@ namespace WebUI.Controllers
             IMedicineFactorRecordService medicineFactorRecordService,
             IPlanService planService,
             IHealthStatusEntryService healthStatusEntryService,
-            WebSecurityManager webSecurityManager
+            WebSecurityManager webSecurityManager,
+            IHostingEnvironment env
             )
         {
 
@@ -47,7 +50,10 @@ namespace WebUI.Controllers
             this.planService = planService;
             this.healthStatusEntryService = healthStatusEntryService;
             this.webSecurityManager = webSecurityManager;
+
+            this._env = env;
         }
+
 
         // Methods
         [Route("CommonAPI/DownloadData")]
@@ -56,11 +62,19 @@ namespace WebUI.Controllers
         {
             int? userID = this.webSecurityManager.CurrentUserID;
 
-            // Get MedicineTypes
-            return File($"~/files/test.txt", "application/text", "test.txt");
 
-            //var blos = this.medicineTypeService.GetAllMedicineTypes((int)userID);
-            //return Json(blos);
+            // Get MedicineTypes
+
+            MemoryStream stream = new MemoryStream();
+            StreamWriter csvWriter = new StreamWriter(stream);
+
+            csvWriter.WriteLine("First name,Second name,E-mail address,Preferred contact number,UserId");
+
+            stream.Position = 0;
+
+            var x = File(stream.ToArray(), "text/csv", "test.csv");
+            return x;
+
         }
 
     }
