@@ -38,11 +38,14 @@ export class ExportDataDialogService {
                             this.spinnerService.Show();
 
                             let compInstance = childComponentInstance as ExportDataDialogComponent;
-                            compInstance.ExportData();
+                            compInstance.ExportData().then(() => {
+                                this.spinnerService.Hide();
+                                resolve();
+                            });
 
-                            resolve();
+                           
 
-                            this.spinnerService.Hide();
+                            
                         });
                         return promiseWrapper;
                     }

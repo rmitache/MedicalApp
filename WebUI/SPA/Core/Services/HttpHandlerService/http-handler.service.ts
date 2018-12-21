@@ -87,26 +87,22 @@ export class HttpHandlerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
-    public DownloadFile(serviceUrl: string): void {
+    public DownloadFile(serviceUrl: string): Promise<void> {
 
+        let promiseWrapper = new Promise<void>((resolve) => {
 
-        this.httpClient.get(serviceUrl, { responseType: 'blob' }).subscribe(blob => {
-            saveAs(blob, 'file.xlsx', {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // --> or whatever you need here
+            this.httpClient.get(serviceUrl, { responseType: 'blob' }).subscribe(blob => {
+                resolve();
+                saveAs(blob, 'file.xlsx', {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // --> or whatever you need here
+                });
             });
         });
+
+        return promiseWrapper;
     }
 
 
-    //downLoadFile(data: any, type: string) {
-
-    //    var blob = new Blob([data], { type: type });
-    //    var url = window.URL.createObjectURL(blob);
-    //    var pwa = window.open(url);
-    //    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-    //        alert('Please disable your Pop-up blocker and try again.');
-    //    }
-    //}
 }
 
 

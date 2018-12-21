@@ -61,12 +61,10 @@ export class ExportDataDialogComponent implements IModalDialog {
 	}
 
 	// Public methods
-	public ExportData() {
-		//let latestVersion = this.viewModel.PlanCLO.GetLatestVersion();
-		//latestVersion.EndDateTime = moment(this.viewModel.StopDate).endOf('day').toDate();
+	public ExportData():Promise<void> {
 
 		// Export the data
-		this.globalDataService.DownloadData();
+		return this.globalDataService.DownloadData();
 	}
 	public GetValidState() {
 		return this.isValid;

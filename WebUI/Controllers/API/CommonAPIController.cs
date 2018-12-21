@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Hosting;
 using OfficeOpenXml;
 using BLL.DomainModel.Factors.Medicine.BLOs;
 using System.Text;
+using System.Threading;
 
 namespace WebUI.Controllers
 {
@@ -71,20 +72,33 @@ namespace WebUI.Controllers
             // Create the excel file for download
             using (ExcelPackage package = new ExcelPackage(stream))
             {
-                // 1. MedicineTypes
+
+                // 1. Relevant Symptom Types
+
+                // 2. MedicineTypes-------------------------------------------------------------------------------------
                 var medicineTypesWorksheet = package.Workbook.Worksheets.Add("Medicine Types");
+
+                // Create headers
+                medicineTypesWorksheet.Cells[1, 1].Value = "Name";
+                medicineTypesWorksheet.Cells[1, 1].Style.Font.Bold = true;
+                medicineTypesWorksheet.Cells[1, 2].Value = "Producer";
+                medicineTypesWorksheet.Cells[1, 2].Style.Font.Bold = true;
+
+                // Create rows
                 var medicineTypes = this.medicineTypeService.GetAllMedicineTypes((int)userID);
                 for (int i = 0; i < medicineTypes.Count; i++)
                 {
                     MedicineType medType = medicineTypes[i];
-                    medicineTypesWorksheet.Cells[i + 1, 1].Value = medType.Name;
-                    medicineTypesWorksheet.Cells[i + 1, 2].Value = medType.ProducerName;
+                    medicineTypesWorksheet.Cells[i + 2, 1].Value = medType.Name; 
+                    medicineTypesWorksheet.Cells[i + 2, 2].Value = medType.ProducerName;
                 }
                 medicineTypesWorksheet.Cells.AutoFitColumns();
-
+                //------------------------------------------------------------------------------------------------------
+                
 
                 package.Save();
             }
+            Thread.Sleep(5000);
 
             // Write to memory and return the file
             writer.Flush();
