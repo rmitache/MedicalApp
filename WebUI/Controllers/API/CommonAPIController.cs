@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using OfficeOpenXml;
+using BLL.DomainModel.Factors.Medicine.BLOs;
+using System.Text;
 
 namespace WebUI.Controllers
 {
@@ -60,20 +63,34 @@ namespace WebUI.Controllers
         [HttpGet]
         public FileResult DownloadData()
         {
+            // Variables
             int? userID = this.webSecurityManager.CurrentUserID;
-
-
-            // Get MedicineTypes
-
             MemoryStream stream = new MemoryStream();
-            StreamWriter csvWriter = new StreamWriter(stream);
+            StreamWriter writer = new StreamWriter(stream);
 
-            csvWriter.WriteLine("First name,Second name,E-mail address,Preferred contact number,UserId");
+            // Create the excel file for download
+            using (ExcelPackage package = new ExcelPackage(stream))
+            {
+                // 1. MedicineTypes
+                var medicineTypesWorksheet = package.Workbook.Worksheets.Add("Medicine Types");
+                var medicineTypes = this.medicineTypeService.GetAllMedicineTypes((int)userID);
+                for (int i = 0; i < medicineTypes.Count; i++)
+                {
+                    MedicineType medType = medicineTypes[i];
+                    medicineTypesWorksheet.Cells[i + 1, 1].Value = medType.Name;
+                    medicineTypesWorksheet.Cells[i + 1, 2].Value = medType.ProducerName;
+                }
+                medicineTypesWorksheet.Cells.AutoFitColumns();
 
+
+                package.Save();
+            }
+
+            // Write to memory and return the file
+            writer.Flush();
             stream.Position = 0;
-
-            var x = File(stream.ToArray(), "text/csv", "test.csv");
-            return x;
+            var file = File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "test.xlsx");
+            return file;
 
         }
 

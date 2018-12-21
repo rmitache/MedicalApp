@@ -90,15 +90,9 @@ export class HttpHandlerService {
     public DownloadFile(serviceUrl: string): void {
 
 
-        //this.httpClient.get(serviceUrl, { responseType: 'arraybuffer' })
-        //    .subscribe(response => {
-        //        debugger;
-        //        this.downLoadFile(response, "text/plain");
-        //    });
-
         this.httpClient.get(serviceUrl, { responseType: 'blob' }).subscribe(blob => {
-            saveAs(blob, 'file.csv', {
-                type: 'text/plain;charset=windows-1252' // --> or whatever you need here
+            saveAs(blob, 'file.xlsx', {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // --> or whatever you need here
             });
         });
     }

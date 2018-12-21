@@ -41,7 +41,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             dataEntity.Id = blo.ID;
             dataEntity.UserId = userID;
             dataEntity.Name = blo.Name;
-            dataEntity.ProducerName = blo.Name;
+            dataEntity.ProducerName = blo.ProducerName;
 
             dataEntity.BaseUnitOfMeasureId = (int)blo.BaseUnitOfMeasure;
             dataEntity.IsPackagedIntoUnits = blo.IsPackagedIntoUnits;
