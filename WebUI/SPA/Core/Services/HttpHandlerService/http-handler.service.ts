@@ -87,13 +87,13 @@ export class HttpHandlerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
-    public DownloadFile(serviceUrl: string): Promise<void> {
+    public DownloadFile(serviceUrl: string, fileName:string): Promise<void> {
 
         let promiseWrapper = new Promise<void>((resolve) => {
 
             this.httpClient.get(serviceUrl, { responseType: 'blob' }).subscribe(blob => {
                 resolve();
-                saveAs(blob, 'file.xlsx', {
+                saveAs(blob, fileName, {
                     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // --> or whatever you need here
                 });
             });

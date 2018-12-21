@@ -73,37 +73,49 @@ namespace WebUI.Controllers
             using (ExcelPackage package = new ExcelPackage(stream))
             {
 
-                // 1. Relevant Symptom Types
+                // 1. Health Status Entries ----------------------------------------------------------------------------
+                var healthEntriesWorksheet = package.Workbook.Worksheets.Add("Health Entries");
 
+                // Create headers
+                healthEntriesWorksheet.Cells[1, 1].Value = "Date";
+                healthEntriesWorksheet.Cells[1, 2].Value = "Time";
+                healthEntriesWorksheet.Cells[1, 3].Value = "Status";
+                healthEntriesWorksheet.Cells[1, 4].Value = "Symptoms";
+                healthEntriesWorksheet.Cells[1, 5].Value = "Symptom Intensities";
+                healthEntriesWorksheet.Cells[1, 1, 1, 5].Style.Font.Bold = true;
+
+
+
+
+                healthEntriesWorksheet.Cells.AutoFitColumns();
                 // 2. MedicineTypes-------------------------------------------------------------------------------------
                 var medicineTypesWorksheet = package.Workbook.Worksheets.Add("Medicine Types");
 
                 // Create headers
                 medicineTypesWorksheet.Cells[1, 1].Value = "Name";
-                medicineTypesWorksheet.Cells[1, 1].Style.Font.Bold = true;
                 medicineTypesWorksheet.Cells[1, 2].Value = "Producer";
-                medicineTypesWorksheet.Cells[1, 2].Style.Font.Bold = true;
+                medicineTypesWorksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
 
                 // Create rows
                 var medicineTypes = this.medicineTypeService.GetAllMedicineTypes((int)userID);
                 for (int i = 0; i < medicineTypes.Count; i++)
                 {
                     MedicineType medType = medicineTypes[i];
-                    medicineTypesWorksheet.Cells[i + 2, 1].Value = medType.Name; 
+                    medicineTypesWorksheet.Cells[i + 2, 1].Value = medType.Name;
                     medicineTypesWorksheet.Cells[i + 2, 2].Value = medType.ProducerName;
                 }
                 medicineTypesWorksheet.Cells.AutoFitColumns();
                 //------------------------------------------------------------------------------------------------------
-                
+
 
                 package.Save();
             }
-            Thread.Sleep(5000);
+
 
             // Write to memory and return the file
             writer.Flush();
             stream.Position = 0;
-            var file = File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "test.xlsx");
+            var file = File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "radu.xlsx");
             return file;
 
         }

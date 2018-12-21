@@ -22,17 +22,11 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 })
 export class ExportDataDialogComponent implements IModalDialog {
 	// Fields
-	private isValid: boolean;
-	private reactiveForm: FormGroup;
 	private readonly viewModel: ViewModel = {
 		StopDate: null,
 		PlanCLO: null
 	};
 
-	// Private methods
-	private refreshIsValid() {
-		this.isValid = this.reactiveForm.valid;
-	}
 
 	// Constructor 
 	constructor(
@@ -42,38 +36,18 @@ export class ExportDataDialogComponent implements IModalDialog {
 	) {
 	}
 	ngOnInit() {
-		//// Define form
-		//this.reactiveForm = this.fb.group({
-		//	stopDate: [null, Validators.required]
 
-		//});
-		//this.reactiveForm.get('stopDate').setValidators([(control: AbstractControl) => {
-		//	return stopDateValidator(control as FormGroup, this.viewModel.PlanCLO.GetLatestVersion(), this.viewModel.PlanCLO.GetSecondLatestVersion());
-		//}]);
-
-
-		//// Subscriptions
-		//this.reactiveForm.
-		//	valueChanges.
-		//	subscribe((value) => {
-		//		this.refreshIsValid();
-		//	});
 	}
 
 	// Public methods
 	public ExportData():Promise<void> {
-
+        
 		// Export the data
-		return this.globalDataService.DownloadData();
-	}
-	public GetValidState() {
-		return this.isValid;
+        return this.globalDataService.DownloadData("Your LymeJournal data " + moment().format("DD-MM-YYYY"));
 	}
 
 	// IModalDialog
 	dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
-		//this.viewModel.StopDate = options.data.stopDate;
-		//this.viewModel.PlanCLO = options.data.planCLO;
 	}
 }
 
