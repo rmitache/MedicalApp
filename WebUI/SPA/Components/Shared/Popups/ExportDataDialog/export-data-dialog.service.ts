@@ -31,7 +31,7 @@ export class ExportDataDialogService {
                     isDisabledFunction: (childComponentInstance: any) => {
                         return false;
                     },
-                    text: 'Download',
+                    text: 'Download as Excel',
                     
                     onAction: (childComponentInstance: any) => {
                         let promiseWrapper = new Promise<void>((resolve) => {

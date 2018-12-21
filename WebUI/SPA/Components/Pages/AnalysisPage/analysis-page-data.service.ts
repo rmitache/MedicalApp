@@ -90,6 +90,13 @@ export class AnalysisPageDataService {
 
         return postDataPromise;
     }
+    public DownloadData(fileName: string): Promise<void> {
+        const apiMethodName: string = 'DownloadData';
+
+
+        return this.httpHandlerService.DownloadFile('CommonAPI/' + apiMethodName, fileName);
+
+    }
 
     // Login
     public Logout(): Promise<boolean> {

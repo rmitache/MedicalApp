@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, ApplicationRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ComponentRef, ViewChild, ApplicationRef, Inject } from '@angular/core';
 import * as moment from 'moment';
 
 // Project modules
@@ -11,6 +11,7 @@ import { IModalDialog, IModalDialogOptions } from 'SPA/Core/Services/ModalDialog
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { ICommonDataService } from '../../HeaderBar/header-bar.component';
 
 // Components
 
@@ -30,7 +31,7 @@ export class ExportDataDialogComponent implements IModalDialog {
 
 	// Constructor 
 	constructor(
-		private readonly globalDataService: HomePageDataService,
+        @Inject('ICommonDataService') private readonly globalDataService: ICommonDataService,
 		private fb: FormBuilder
 
 	) {

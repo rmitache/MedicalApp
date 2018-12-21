@@ -68,10 +68,13 @@ namespace WebUI.Controllers
             int? userID = this.webSecurityManager.CurrentUserID;
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
+            var dateSelectionRange = new Range<DateTime>(Common.Functions.GetCurrentDateTimeInUTC().AddYears(-2),
+                Common.Functions.GetCurrentDateTimeInUTC());
 
             // Create the excel file for download
             using (ExcelPackage package = new ExcelPackage(stream))
             {
+                
 
                 // 1. Health Status Entries ----------------------------------------------------------------------------
                 var healthEntriesWorksheet = package.Workbook.Worksheets.Add("Health Entries");
@@ -84,10 +87,21 @@ namespace WebUI.Controllers
                 healthEntriesWorksheet.Cells[1, 5].Value = "Symptom Intensities";
                 healthEntriesWorksheet.Cells[1, 1, 1, 5].Style.Font.Bold = true;
 
-
-
-
+                // Create rows
+                var healthEntries = this.healthStatusEntryService.GetHealthStatusEntries(dateSelectionRange,(int)userID, true);
+                for (int i = 0; i < healthEntries.Count; i++)
+                {
+                    var blo = healthEntries[i];
+                    healthEntriesWorksheet.Cells[i + 2, 1].Value = blo.OccurrenceDateTime.ToShortDateString();
+                    healthEntriesWorksheet.Cells[i + 2, 2].Value = blo.OccurrenceDateTime.ToShortTimeString();
+                    healthEntriesWorksheet.Cells[i + 2, 3].Value = blo.HealthLevel.ToString();
+                    healthEntriesWorksheet.Cells[i + 2, 4].Value = blo.GetSymptomEntriesNames();
+                    healthEntriesWorksheet.Cells[i + 2, 5].Value = blo.GetSymptomEntriesIntensities();
+                }
                 healthEntriesWorksheet.Cells.AutoFitColumns();
+                //-----------------------------------------------------------------------------------------------------
+
+
                 // 2. MedicineTypes-------------------------------------------------------------------------------------
                 var medicineTypesWorksheet = package.Workbook.Worksheets.Add("Medicine Types");
 

@@ -110,5 +110,5 @@ export abstract class ICommonDataService {
     abstract UpdatePassword(newPassword: string): Promise<void>;
     abstract Logout(): Promise<boolean>;
     abstract SetHasSeenWelcome(): void;
-    abstract DownloadData(): void;
+    abstract DownloadData(fileName: string): Promise<void>;
 }
