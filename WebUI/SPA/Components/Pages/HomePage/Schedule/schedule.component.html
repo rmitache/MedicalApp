@@ -1,3 +1,6 @@
+<p-sidebar [(visible)]="display" position="right">
+    <plans-overview></plans-overview>
+</p-sidebar>
 
 <div class="frame">
 
@@ -15,10 +18,14 @@
                               (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
         </div>
         <div class="right-section">
+
+            <button pButton type="button" icon="fa fa-cog"
+                    [pTooltip]="'Manage your Schedule'"
+                    (click)="display = true"></button>
             <!--<select class="view-mode-selector">
-                <option>Day</option>
-                <option>Week</option>
-            </select>-->
+        <option>Day</option>
+        <option>Week</option>
+    </select>-->
         </div>
     </div>
     <div class="body" [@goForwardAnimation]="animationVariables.animateForward" [@goBackwardAnimation]="animationVariables.animateBackward">

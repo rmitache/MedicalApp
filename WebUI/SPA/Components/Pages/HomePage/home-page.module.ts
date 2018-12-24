@@ -50,7 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
 
         // Root components
         ScheduleModule,
-        PlansOverviewModule,
+        
 		MedicineTypesOverviewModule,
 		SharedModule,
         HealthGraphModule,

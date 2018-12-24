@@ -46,7 +46,9 @@
             width: calc(33%);
             height:30px;
         }
-
+            .frame .header .right-section button {
+                float: right;
+            }
 
     .frame .body {
         height: calc(100% - 50px);

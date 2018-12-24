@@ -20,20 +20,20 @@
 
 .schedule {
     float: left;
-    width: calc(100% - 250px - 20px);
+    width: calc(100%);
     height: calc(100% - 180px - 20px);
 }
 .health-graph {
     margin-bottom: 20px;
     float: left;
-    width: calc(2*(100% - 250px)/3 - 10px);
+    width: calc(60% - 10px);
     height: 180px;
 }
 .info-to-remember {
     margin-bottom: 20px;
     margin-left: 20px;
     float: left;
-    width: calc((100% - 250px)/3 - 30px);
+    width: calc(40% - 10px);
     height: 180px;
 }
 .right-side-panel {
@@ -85,7 +85,7 @@
         padding-right: 6px;
     }
 
-    .right-side-panel {
+    /*.right-side-panel {
         width: 190px;
     }
 
@@ -99,7 +99,7 @@
 
     .info-to-remember {
         width: calc((100% - 190px)/3 - 30px);
-    }
+    }*/
 }
 
 /*Up to 768px in width*/

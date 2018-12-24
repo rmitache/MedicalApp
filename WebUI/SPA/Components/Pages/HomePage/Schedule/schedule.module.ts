@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { BlockUIModule } from 'primeng/primeng';
 import { CalendarModule } from 'primeng/primeng';
 import { AutoCompleteModule } from 'primeng/primeng';
+import {SidebarModule} from 'primeng/sidebar';
 
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
@@ -13,6 +14,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 // Components
 import { ScheduleComponent } from './schedule.component';
 import { ScheduleUnitComponent } from './ScheduleUnit/schedule-unit.component';
+import { PlansOverviewModule } from '../PlansOverview/plans-overview.module';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { ScheduleUnitComponent } from './ScheduleUnit/schedule-unit.component';
         CalendarModule,
         AutoCompleteModule,
         BlockUIModule,
-        SharedModule
+        SidebarModule,
+        SharedModule,
+        PlansOverviewModule
     ],
     declarations: [
         ScheduleComponent,
