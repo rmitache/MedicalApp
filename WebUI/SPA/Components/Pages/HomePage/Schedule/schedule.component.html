@@ -1,4 +1,4 @@
-<custom-sidebar [(visible)]="display" position="right" >
+<custom-sidebar [(visible)]="displaySideBar" position="right" >
     <plans-overview></plans-overview>
 </custom-sidebar>
 
@@ -21,11 +21,8 @@
 
             <button pButton type="button" icon="fa fa-cog"
                     [pTooltip]="'Manage your Schedule'"
-                    (click)="display = true"></button>
-            <!--<select class="view-mode-selector">
-        <option>Day</option>
-        <option>Week</option>
-    </select>-->
+                    (click)="displaySideBar = true"></button>
+           
         </div>
     </div>
     <div class="body" [@goForwardAnimation]="animationVariables.animateForward" [@goBackwardAnimation]="animationVariables.animateBackward">

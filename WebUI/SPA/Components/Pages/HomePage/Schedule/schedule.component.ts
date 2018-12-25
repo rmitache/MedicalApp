@@ -81,7 +81,7 @@ export class ScheduleComponent {
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
 
-    display: boolean = false;
+    private displaySideBar: boolean = false;
 
 	// Private methods
 	private getCurrentDisplayModeInstance(): IDisplayMode {

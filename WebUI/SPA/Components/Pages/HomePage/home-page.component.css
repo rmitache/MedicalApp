@@ -23,17 +23,27 @@
     width: calc(100%);
     height: calc(100% - 180px - 20px);
 }
+.health-trends-div {
+    float: left;
+    background-color: white;
+    border: solid 1px #f2f2f2;
+    border-radius: 5px;
+    width: 210px;
+    height: 180px;
+    margin-bottom: 18px;
+    margin-right: 20px;
+}
 .health-graph {
     margin-bottom: 20px;
     float: left;
-    width: calc(60% - 10px);
+    width: calc(100% - 420px - 42px);
     height: 180px;
 }
 .info-to-remember {
     margin-bottom: 20px;
     margin-left: 20px;
     float: left;
-    width: calc(40% - 10px);
+    width: 210px;
     height: 180px;
 }
 .right-side-panel {

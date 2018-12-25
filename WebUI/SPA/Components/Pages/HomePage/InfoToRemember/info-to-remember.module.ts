@@ -9,6 +9,7 @@ import { AutoCompleteModule } from 'primeng/primeng';
 // Project modules
 import { SharedModule } from 'SPA/Components/Shared/shared.module';
 import { InfoToRememberComponent } from './info-to-remember.component';
+import { MedicineTypesOverviewModule } from '../MedicineTypesOverview/medicine-types-overview.module';
 
 // Components
 
@@ -16,13 +17,12 @@ import { InfoToRememberComponent } from './info-to-remember.component';
 
 @NgModule({
     imports: [
-        
         BrowserModule,
         FormsModule,
         CalendarModule,
         AutoCompleteModule,
         ReactiveFormsModule,
-    
+        MedicineTypesOverviewModule,
         SharedModule
     ],
     declarations: [

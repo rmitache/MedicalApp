@@ -1,16 +1,20 @@
-
+<custom-sidebar [(visible)]="display" position="right">
+    <medicine-types-overview></medicine-types-overview>
+</custom-sidebar>
 
 <div class="frame">
     <div class="header">
         <div class="left-section">
-            <span class="header-label h1">REMINDERS</span>
+            <span class="header-label h1">SUPPLY</span>
             <i class="fa fa-question-circle"
                [pTooltip]="infoTooltipText" [escape]="false"
                tooltipPosition="bottom"></i>
         </div>
         
         <div class="right-section">
-
+            <button pButton type="button" icon="fa fa-cog"
+                    [pTooltip]="'Manage your Supplements'"
+                    (click)="display = true"></button>
         </div>
     </div>
     <div class="body">

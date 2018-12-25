@@ -18,7 +18,7 @@
         .frame .header .left-section {
             display: block;
             float: left;
-            width: calc(100%);
+            width: calc(70%);
         }
 
             .frame .header .left-section .header-label {
@@ -35,8 +35,14 @@
             }
 
 
-       
-        
+        .frame .header .right-section {
+            display: block;
+            float: right;
+            width: calc(29%);
+        }
+            .frame .header .right-section button {
+                float: right;
+            }
 
     .frame .body {
         height: calc(100% - 40px - 20px);

@@ -24,8 +24,7 @@ export class InfoToRememberComponent {
     // Fields
     private readonly noDataModes = NoDataModes;
     private infoTooltipText: string =
-        `Here you can see important reminders, such as when you will run out of supply.`;
-
+        `Here you can see the first Supplement you will run out of supply for.`;
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         TargetMedicineType: null,
@@ -34,6 +33,7 @@ export class InfoToRememberComponent {
 
     };
     private readonly subscriptions: Subscription[] = [];
+    private displaySideBar: boolean = false;
 
     // Private methods
     private reloadDataFromServer(): Promise<void> {
