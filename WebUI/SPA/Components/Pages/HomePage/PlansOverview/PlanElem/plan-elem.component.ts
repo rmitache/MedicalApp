@@ -12,7 +12,7 @@ import { SplitButtonMenuItem } from 'SPA/Components/Shared/SplitButton/split-but
 import { Inplace } from 'primeng/primeng';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-import { PlanElemHoverEventInfo } from '../../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
+import { PlanElemHoverEventInfo } from 'SPA/Components/Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.service';
 
 @Component({
     selector: 'plan-elem',

@@ -18,7 +18,8 @@ import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service
 import { StopPlanDialogService } from '../../../Shared/Popups/StopPlanDialog/stop-plan-dialog.service';
 import { PlanEditorMode } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.component';
 import { PlanEditorDialogService } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.service';
-import { PlanVersionTooltipComponent, PlanElemHoverEventInfo } from '../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
+import { PlanVersionTooltipComponent } from '../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
+import { PlanElemHoverEventInfo, PlanVersionTooltipService } from 'SPA/Components/Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.service';
 
 
 @Component({
@@ -31,12 +32,11 @@ export class PlansOverviewComponent {
     // Fields
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
-    @ViewChild('planVersionTooltip')
-    private planVersionTooltipInstance: PlanVersionTooltipComponent;
+    
     private readonly noDataModes = NoDataModes;
     private infoTooltipText: string =
-        `PLANS allow you to group and define different types of treatments. <br />
-        You can change them as time goes by depending on your needs.
+        `Your PLANS determine how your SCHEDULE looks like. <br />
+        They allow you to group and define different types of treatments, which you can change as time goes by depending on your needs.
         `;
 
     private readonly planStatusViewModes = {
@@ -278,7 +278,8 @@ export class PlansOverviewComponent {
         private viewContainerRef: ViewContainerRef,
         private readonly spinnerService: SpinnerService,
         private readonly stopPlanDialogService: StopPlanDialogService,
-        private readonly planEditorDialogService: PlanEditorDialogService
+        private readonly planEditorDialogService: PlanEditorDialogService,
+        private readonly planVersionTooltipService: PlanVersionTooltipService
 
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
@@ -316,10 +317,10 @@ export class PlansOverviewComponent {
         this.refreshUI();
     }
     private onPlanStatusElemMouseEnter(hoverEvent: PlanElemHoverEventInfo) {
-        this.planVersionTooltipInstance.Show(hoverEvent);
+        this.planVersionTooltipService.Show(hoverEvent);
     }
     private onPlanStatusElemMouseLeave() {
-        this.planVersionTooltipInstance.HideAndClear();
+        this.planVersionTooltipService.Hide();
     }
 }
 interface ViewModel {

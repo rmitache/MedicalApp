@@ -1,20 +1,16 @@
-
-
-
 .ui-sidebar {
     position: fixed;
     padding: 5px;
     -webkit-transition: transform .3s;
     transition: transform .3s;
+    background-color: white;
+    border: solid 1px #f2f2f2;
+    border-radius: 5px 0 0 5px;
 }
 
-    .ui-sidebar .ui-widget * {
-        /*box-sizing: content-box !important;*/
-    }
 
-
-    .ui-sidebar > .ui-sidebar-close {
-        display: none;
+    .ui-sidebar-close {
+        display: none !important;
     }
 
 .ui-sidebar-left {

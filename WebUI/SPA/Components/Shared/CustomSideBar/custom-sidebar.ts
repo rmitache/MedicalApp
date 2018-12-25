@@ -5,8 +5,9 @@ import { DomHandler } from 'primeng/api';
 
 @Component({
     selector: 'custom-sidebar',
+    styleUrls: ['./custom-sidebar.css'],
     template: `
-        <div #container [ngClass]="{'ui-sidebar ui-widget ui-widget-content ui-shadow':true, 'ui-sidebar-active': visible, 
+        <div #container [ngClass]="{'ui-sidebar ':true, 'ui-sidebar-active': visible, 
             'ui-sidebar-left': (position === 'left'), 'ui-sidebar-right': (position === 'right'),
             'ui-sidebar-top': (position === 'top'), 'ui-sidebar-bottom': (position === 'bottom'), 
             'ui-sidebar-full': fullScreen}"

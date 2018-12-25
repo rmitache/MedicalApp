@@ -6,19 +6,22 @@ import { SymptomTypeElemComponent } from './Shared/SymptomTypeElem/symptom-type-
 import { HealthStatusesOverDayTooltipComponent } from './HealthStatusesOverDayTooltip/health-statuses-over-day-tooltip.component';
 import { ChartModule } from 'primeng/primeng';
 import { PlanVersionChangesTooltipComponent } from './PlanVersionChangesTooltip/plan-version-changes-tooltip.component';
-import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-tooltip.component';
+import { PlanVersionTooltipServiceModule } from './PlanVersionTooltip/plan-version-tooltip-service.module';
 
 // Components
 
 
 @NgModule({
-    imports: [BrowserModule, ChartModule],
+    imports: [
+        BrowserModule,
+        ChartModule,
+        PlanVersionTooltipServiceModule
+    ],
     declarations: [
         SingleHealthStatusTooltipComponent,
         HealthStatusesOverDayTooltipComponent,
         SymptomTypeElemComponent,
-        PlanVersionChangesTooltipComponent,
-        PlanVersionTooltipComponent
+        PlanVersionChangesTooltipComponent
     ],
     exports: [
         SingleHealthStatusTooltipComponent,
@@ -26,7 +29,7 @@ import { PlanVersionTooltipComponent } from './PlanVersionTooltip/plan-version-t
         SymptomTypeElemComponent,
         HealthStatusesOverDayTooltipComponent,
         PlanVersionChangesTooltipComponent,
-        PlanVersionTooltipComponent
+        PlanVersionTooltipServiceModule
     ]
 })
 export class TooltipsModule { }

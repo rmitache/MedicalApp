@@ -7,6 +7,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import { VersionCLOService, MedicineTypeAndAvgMonthlyDosage } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
 import { ConvertDictionaryToArray } from '../../../../Core/Helpers/Functions/functions';
+import { PlanElemHoverEventInfo } from './plan-version-tooltip.service';
 
 
 
@@ -62,7 +63,8 @@ export class PlanVersionTooltipComponent {
             orientationMode = TooltipOrientationMode.Below;
         }
 
-
+        //tooltipPos.Left = 0;
+        //tooltipPos.Top = 0;
 
         // 
         let returnObj = {
@@ -125,6 +127,7 @@ export class PlanVersionTooltipComponent {
 
     // Public 
     public Show(hoverEventInfo: PlanElemHoverEventInfo) {
+        
 
         // Load data 
         var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
@@ -139,7 +142,10 @@ export class PlanVersionTooltipComponent {
 
         // Set position and show tooltip
         setTimeout(() => {
+            //alert(hoverEventInfo.Left + " " + hoverEventInfo.Top);
+
             var positionInfo = this.calculateTooltipPosition(hoverEventInfo.Left, hoverEventInfo.Top);
+            
             this.viewModel.TooltipPos = positionInfo.TooltipCoordinates;
             this.viewModel.CaretPos = positionInfo.CaretCoordinates;
             this.viewModel.TooltipOrientationMode = positionInfo.OrientationMode;
@@ -181,13 +187,7 @@ class PosCoordinates {
     constructor(public Left: number = 0, public Top: number = 0) {
     }
 }
-export class PlanElemHoverEventInfo {
-    constructor(
-        public readonly Left: number,
-        public readonly Top: number,
-        public readonly PlanCLO: CLOs.PlanCLO) {
-    }
-}
+
 enum TooltipOrientationMode {
     Above = 0,
     Below = 1

@@ -75,6 +75,8 @@
     <None Remove="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog.service.ts" />
     <None Remove="SPA\Components\Shared\shared.module.ts" />
     <None Remove="SPA\Components\Shared\Tabs\tabs.module.ts" />
+    <None Remove="SPA\Components\Shared\Tooltips\PlanVersionTooltip\plan-version-tooltip-service.module.ts" />
+    <None Remove="SPA\Components\Shared\Tooltips\PlanVersionTooltip\plan-version-tooltip.service.ts" />
     <None Remove="SPA\Components\Shared\Tooltips\SingleHealthStatusTooltip\single-health-status-tooltip.module.ts" />
     <None Remove="SPA\Core\CLO\i-clo.factory.ts" />
     <None Remove="SPA\Core\core.module.ts" />
@@ -204,6 +206,8 @@
     <TypeScriptCompile Include="SPA\Components\Shared\Popups\UserAccountEditorDialog\user-account-editor-dialog.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\shared.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Tabs\tabs.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Tooltips\PlanVersionTooltip\plan-version-tooltip-service.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Shared\Tooltips\PlanVersionTooltip\plan-version-tooltip.service.ts" />
     <TypeScriptCompile Include="SPA\Components\Shared\Tooltips\tooltips.module.ts" />
     <TypeScriptCompile Include="SPA\Core\CLO\i-clo.factory.ts" />
     <TypeScriptCompile Include="SPA\Core\core.module.ts" />
