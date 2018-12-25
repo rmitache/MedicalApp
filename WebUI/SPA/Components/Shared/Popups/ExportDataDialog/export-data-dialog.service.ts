@@ -20,9 +20,9 @@ export class ExportDataDialogService {
     }
 
     // Public methods
-    public Open(viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(okCallBack: () => void) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: 'Download your data',
             childComponent: ExportDataDialogComponent,
             data: null,

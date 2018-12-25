@@ -76,7 +76,7 @@ export class LoginPanelComponent {
                 // User exists, but hasn't accepted Terms and Conditions
                 else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_TermsNotAccepted) {
                     this.spinnerService.Hide();
-                    this.acceptTermsDialogService.Open(loginResult.User, this.viewContainerRef, () => {
+                    this.acceptTermsDialogService.Open(loginResult.User, () => {
                         this.onLoginClicked();
                     });
                 }

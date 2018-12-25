@@ -19,9 +19,9 @@ export class AcceptTermsDialogService {
 	}
 
 	// Public methods
-    public Open(userCLO: CLOs.UserAccountCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(userCLO: CLOs.UserAccountCLO, okCallBack: () => void) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: 'Terms and Conditions',
             childComponent: AcceptTermsDialogComponent,
             data: {

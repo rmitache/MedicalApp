@@ -19,16 +19,9 @@ export class ModalDialogService {
 
     /**
      * Open dialog in given target element with given options
-     * @param  {ViewContainerRef} target
      * @param  {IModalDialogOptions} dialogOptions?
      */
-    public OpenDialog(target: ViewContainerRef, dialogOptions?: IModalDialogOptions) {
-        //const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
-        //const componentRef = target.createComponent(factory);
-        //componentRef.instance.dialogInit(componentRef, dialogOptions);
-
-
-
+    public OpenDialog(dialogOptions?: IModalDialogOptions) {
         const componentRef = this.factoryResolver
             .resolveComponentFactory(ModalDialogComponent)
             .create(this.injector);

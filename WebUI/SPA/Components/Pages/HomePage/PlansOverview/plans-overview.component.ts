@@ -56,7 +56,7 @@ export class PlansOverviewComponent {
     // Private methods
     private openPlanEditor(planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
 
-        this.planEditorDialogService.Open(planCLO, mode, this.viewContainerRef, () => {
+        this.planEditorDialogService.Open(planCLO, mode,  () => {
 
             this.reloadDataFromServer()
                 .then(() => {
@@ -74,7 +74,7 @@ export class PlansOverviewComponent {
     }
     private openStopPlanDialog(planCLO: CLOs.PlanCLO) {
 
-        this.stopPlanDialogService.Open(planCLO, this.viewContainerRef, () => {
+        this.stopPlanDialogService.Open(planCLO, () => {
             this.reloadDataFromServer()
                 .then(() => {
                     this.refreshUI();

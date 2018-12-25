@@ -20,9 +20,9 @@ export class HelpDialogService {
     }
 
     // Public methods
-    public Open(viewContainerRef: ViewContainerRef, okCallBack: () => void = null) {
+    public Open(okCallBack: () => void = null) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: "Help",
             childComponent: HelpDialogComponent,
             data:null,
@@ -42,9 +42,9 @@ export class HelpDialogService {
 
         });
     }
-    public OpenAsWelcome(viewContainerRef: ViewContainerRef, okCallBack: () => void = null) {
+    public OpenAsWelcome(okCallBack: () => void = null) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: "Welcome to LymeJournal !",
             childComponent: HelpDialogComponent,
             data: null,

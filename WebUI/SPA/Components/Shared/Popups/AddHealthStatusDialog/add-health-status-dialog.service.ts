@@ -27,7 +27,7 @@ export class AddHealthStatusDialogService {
         this.dataService.GetMostRecentHealthEntry().then(healthStatusCLO => {
             this.spinnerService.Hide();
 
-            this.modalDialogService.OpenDialog(viewContainerRef, {
+            this.modalDialogService.OpenDialog({
                 title: 'How are you feeling ?',
                 showTitleAsterisk:true,
                 childComponent: AddHealthStatusDialogComponent,

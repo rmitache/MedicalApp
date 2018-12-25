@@ -20,9 +20,9 @@ export class StopPlanDialogService {
     }
 
     // Public methods
-    public Open(planCLO: CLOs.PlanCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(planCLO: CLOs.PlanCLO,  okCallBack: () => void) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: 'Stop Plan',
             childComponent: StopPlanDialogComponent,
             data: {

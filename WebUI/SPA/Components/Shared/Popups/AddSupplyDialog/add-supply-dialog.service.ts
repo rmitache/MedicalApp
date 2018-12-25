@@ -19,9 +19,9 @@ export class AddSupplyDialogService {
     }
 
     // Public methods
-    public Open(medicineTypeCLO: CLOs.MedicineTypeCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(medicineTypeCLO: CLOs.MedicineTypeCLO, okCallBack: () => void) {
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: 'Add new supply',
             childComponent: AddSupplyDialogComponent,
             data: {

@@ -21,7 +21,7 @@ export class PlanEditorDialogService {
     }
 
     // Public methods
-    public Open(planCLO: CLOs.PlanCLO, mode: PlanEditorMode, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(planCLO: CLOs.PlanCLO, mode: PlanEditorMode, okCallBack: () => void) {
 
         // Determine variables based on the given editor mode
         let title: string, saveButtonText: string;
@@ -61,7 +61,7 @@ export class PlanEditorDialogService {
         this.dataService.GetMedicineTypes().then(medicineTypeCLOs => {
 
             this.spinnerService.Hide();
-            this.modalDialogService.OpenDialog(viewContainerRef, {
+            this.modalDialogService.OpenDialog({
                 title: title,
                 childComponent: PlanEditorDialogComponent,
                 data: {

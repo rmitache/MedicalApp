@@ -56,7 +56,7 @@ export class MedicineTypesOverviewComponent {
     // Private methods
     private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
 
-        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, this.viewContainerRef, () => {
+        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, () => {
             this.reloadDataFromServer()
                 .then(() => {
                     this.refreshUI();
@@ -175,7 +175,7 @@ export class MedicineTypesOverviewComponent {
     }
     private onAddMedicineTypeSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 
-        this.addSupplyDialogService.Open(medicineTypeCLO, this.viewContainerRef, () => {
+        this.addSupplyDialogService.Open(medicineTypeCLO, () => {
             this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID)
                 .then((newSupplyInfo) => {
                     this.getMedicineTypeElemByCloID(medicineTypeCLO.ID)

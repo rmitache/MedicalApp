@@ -78,7 +78,7 @@ export class PlanEditorDialogComponent implements IModalDialog {
     }
     private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, sourceIFRPComponent: IFRPGroupElemComponent) {
 
-        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, this.viewContainerRef, () => {
+        this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode,  () => {
 
             // Refresh AvailableMedicineTypes and then set the MedicineType in the source IFRP component
             this.globalDataService.GetMedicineTypes().then(medicineTypeCLOs => {

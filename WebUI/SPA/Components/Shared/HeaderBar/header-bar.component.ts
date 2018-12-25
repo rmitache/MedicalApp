@@ -63,10 +63,10 @@ export class HeaderBarComponent {
     private onChangePasswordClicked() {
         var userCLO = this.viewModel.LoggedInUser;
 
-        this.userAccountEditorDialogService.Open(userCLO, this.viewContainerRef);
+        this.userAccountEditorDialogService.Open(userCLO);
     }
     private onHelpClicked() {
-        this.helpDialogService.Open(this.viewContainerRef);
+        this.helpDialogService.Open();
     }
     private onUserEmailClicked($event: Event) {
 
@@ -84,7 +84,7 @@ export class HeaderBarComponent {
     }
     private onExportDataClicked = () => {
 
-        this.exportDataDialogService.Open(this.viewContainerRef, () => {
+        this.exportDataDialogService.Open(() => {
         });
     }
     private onClickedOutside = ($event: Event) => {

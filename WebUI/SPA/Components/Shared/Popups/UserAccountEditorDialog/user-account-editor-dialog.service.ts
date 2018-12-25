@@ -17,10 +17,10 @@ export class UserAccountEditorDialogService {
     }
 
     // Public methods
-    public Open(userCLO: CLOs.UserAccountCLO, viewContainerRef: ViewContainerRef, okCallBack: () => void = null) {
+    public Open(userCLO: CLOs.UserAccountCLO,  okCallBack: () => void = null) {
         let mode: UserAccountEditorMode = UserAccountEditorMode.EditCurrent;
 
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog( {
             title: "Change password",
             childComponent: UserAccountEditorDialogComponent,
             data: {

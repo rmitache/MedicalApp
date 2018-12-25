@@ -21,7 +21,7 @@ export class MedicineTypeEditorDialogService {
     }
 
     // Public methods
-    public Open(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, viewContainerRef: ViewContainerRef, okCallBack: () => void) {
+    public Open(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, okCallBack: () => void) {
 
         // Determine variables based on the given editor mode
         let title: string, saveButtonText: string;
@@ -34,7 +34,7 @@ export class MedicineTypeEditorDialogService {
         }
 
         // Open the dialog
-        this.modalDialogService.OpenDialog(viewContainerRef, {
+        this.modalDialogService.OpenDialog({
             title: title,
             childComponent: MedicineTypeEditorDialogComponent,
             data: {

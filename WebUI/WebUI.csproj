@@ -137,7 +137,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SPA\Core\Services\CommonDataService\" />
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOServices\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
   </ItemGroup>
