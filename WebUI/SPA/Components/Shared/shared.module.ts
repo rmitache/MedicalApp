@@ -43,6 +43,7 @@ import { MedicineTypeEditorDialogServiceModule } from './Popups/MedicineTypeEdit
 import { AddSymptomTypeDialogServiceModule } from './Popups/AddSymptomTypeDialog/add-symptom-type-dialog-service.module';
 import { HelpDialogServiceModule } from './Popups/HelpDialog/help-dialog-service.module';
 import { ExportDataDialogServiceModule } from './Popups/ExportDataDialog/export-data-dialog-service.module';
+import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ExportDataDialogServiceModule } from './Popups/ExportDataDialog/export-
         NoDataPanelModule,
         TooltipsModule,
         PipesModule,
+        CustomSidebarModule,
 
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
@@ -108,6 +110,7 @@ import { ExportDataDialogServiceModule } from './Popups/ExportDataDialog/export-
         NoDataPanelModule,
         TooltipsModule,
         PipesModule,
+        CustomSidebarModule,
 
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,

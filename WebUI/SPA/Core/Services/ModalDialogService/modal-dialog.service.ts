@@ -1,16 +1,20 @@
-﻿import { ComponentFactoryResolver, ViewContainerRef, Inject } from '@angular/core';
+﻿import { ComponentFactoryResolver, ViewContainerRef, Inject, ApplicationRef, Injector, EmbeddedViewRef, Injectable } from '@angular/core';
 import { ModalDialogComponent } from './Components/modal-dialog.component';
 import { IModalDialogOptions } from './modal-dialog.interface';
 import { ModalDialogInstanceService } from './modal-dialog-instance.service';
 
+@Injectable()
 export class ModalDialogService {
     /**
      * CTOR
      * @param componentFactoryResolver
      * @param modalDialogInstanceService
      */
-    constructor( @Inject(ComponentFactoryResolver) private componentFactoryResolver: ComponentFactoryResolver,
-        @Inject(ModalDialogInstanceService) private modalDialogInstanceService: ModalDialogInstanceService) {
+    constructor(
+        @Inject(ModalDialogInstanceService) private modalDialogInstanceService: ModalDialogInstanceService,
+        private factoryResolver: ComponentFactoryResolver,
+        private appRef: ApplicationRef,
+        private injector: Injector) {
     }
 
     /**
@@ -19,17 +23,26 @@ export class ModalDialogService {
      * @param  {IModalDialogOptions} dialogOptions?
      */
     public OpenDialog(target: ViewContainerRef, dialogOptions?: IModalDialogOptions) {
-        //this.modalDialogInstanceService.closeAnyExistingModalDialog(); - Commented out to allow multiple modal dialogs
+        //const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
+        //const componentRef = target.createComponent(factory);
+        //componentRef.instance.dialogInit(componentRef, dialogOptions);
 
-        const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
-        const componentRef = target.createComponent(factory);
+
+
+        const componentRef = this.factoryResolver
+            .resolveComponentFactory(ModalDialogComponent)
+            .create(this.injector);
+
+        
+        this.appRef.attachView(componentRef.hostView);
+        const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+            .rootNodes[0] as HTMLElement;
+        document.body.appendChild(domElem);
+
         componentRef.instance.dialogInit(componentRef, dialogOptions);
-
-        //this.modalDialogInstanceService.saveExistingModalDialog(componentRef); - Commented out to allow multiple modal dialogs
     }
 
-    public ShowNotificationDialog(target: ViewContainerRef, title:string, message:string) {
-        this.modalDialogInstanceService.closeAnyExistingModalDialog();
+    public ShowAlert(target: ViewContainerRef, title: string, message: string) {
 
         var dialogOptions: IModalDialogOptions = {
             title: title,
@@ -47,14 +60,15 @@ export class ModalDialogService {
             ]
         };
 
-
-        const factory = this.componentFactoryResolver.resolveComponentFactory(ModalDialogComponent);
-        const componentRef = target.createComponent(factory);
+        const componentRef = this.factoryResolver
+            .resolveComponentFactory(ModalDialogComponent)
+            .create(this.injector);
+        this.appRef.attachView(componentRef.hostView);
+        const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+            .rootNodes[0] as HTMLElement;
+        document.body.appendChild(domElem);
         componentRef.instance.dialogInit(componentRef, dialogOptions);
-
-        this.modalDialogInstanceService.saveExistingModalDialog(componentRef);
-
     }
 
-    
+
 }

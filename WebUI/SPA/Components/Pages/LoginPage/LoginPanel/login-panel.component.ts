@@ -83,7 +83,7 @@ export class LoginPanelComponent {
                 // User doesn't exist, or credentials were wrong
                 else if (loginResult.LoginResultStatus === LoginResultStatus.Failure_CredentialsWrongOrUserNotFound) {
                     this.spinnerService.Hide();
-                    this.modalDialogService.ShowNotificationDialog(this.viewContainerRef, "Login failed", "Wrong password or email doesn't exist");
+                    this.modalDialogService.ShowAlert(this.viewContainerRef, "Login failed", "Wrong password or email doesn't exist");
                 }
             });
 

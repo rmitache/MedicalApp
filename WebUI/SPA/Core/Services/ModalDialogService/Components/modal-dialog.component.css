@@ -7,7 +7,6 @@
     bottom: auto;
     backface-visibility: hidden;
     overflow: visible;
-    
 }
 
 .modal-backdrop {
@@ -18,7 +17,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 50;
+    z-index: 51000;
 }
 
 .modal-content {
@@ -28,7 +27,7 @@
     transform: translateY(-50%) translateX(-50%);
     background-color: white;
     border-radius: 4px;
-    z-index:51;
+    z-index: 51000;
     box-shadow: 2px 2px 5px #b6b6b6;
 }
 
