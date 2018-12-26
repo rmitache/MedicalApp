@@ -18,7 +18,7 @@
         .frame .header .left-section {
             display: block;
             float: left;
-            width: calc(33%);
+            width: 115px;
         }
 
             .frame .header .left-section .header-label {
@@ -37,18 +37,16 @@
 
         .frame .header .center-section {
             float: left;
-            width: calc(34%);
+            width: calc(100% - 250px);
             text-align: center;
             
         }
-        .frame .header .center-section span {
-            
-        }
+
         .frame .header .right-section {
             float: right;
-            width: calc(33%);
             height: 30px;
             text-align: right;
+            width: 115px;
         }
             .frame .header .right-section button {
                 float: right;
@@ -89,4 +87,18 @@
     float:left;
     clear:both;
     white-space:nowrap;
+}
+
+#status-icon-small {
+    display:none;
+}
+
+/*Lower than 1024px in width*/
+@media only screen and (max-width: 1024px) {
+    #status-icon-large {
+        display: none;
+    }
+    #status-icon-small {
+        display: block;
+    }
 }

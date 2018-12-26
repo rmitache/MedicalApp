@@ -10,7 +10,7 @@
             <i class="fa fa-question-circle"
                [pTooltip]="infoTooltipText" [escape]="false"
                tooltipPosition="bottom"></i>
-            <!--showDelay="300"-->
+            
         </div>
         <div class="center-section">
             <!-- <navigation-panel #navPanel
@@ -19,8 +19,11 @@
             <span class="h2-alt">TODAY</span>
         </div>
         <div class="right-section">
-            <button pButton type="button" icon="fa fa-plus" label="STATUS"
-                     [pTooltip]="'Tell us how you are feeling'"
+            <button pButton id="status-icon-large" type="button" icon="fa fa-plus" label="STATUS"
+                    [pTooltip]="'Tell us how you are feeling'"
+                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
+            <button pButton id="status-icon-small" type="button" icon="fa fa-plus" 
+                    [pTooltip]="'Tell us how you are feeling'"
                     (click)="onAddNewHealthStatusEntryTriggered()"></button>
         </div>
     </div>
