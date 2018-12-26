@@ -8,6 +8,7 @@
 }
 
     .frame .left-box {
+        float: left;
         width: calc(33%);
         height: calc(100%);
     }
@@ -36,9 +37,16 @@
 
             .frame .left-box .body {
                 padding:10px;
-                height:calc(100% - 40px - 20px);
+                padding-top:0;
+                height:calc(100% - 40px - 10px);
                 width:calc(100% - 20px);
             }
+
+    .frame .center-box {
+        float:left;
+        width: calc(33%);
+        height: calc(100%);
+    }
 
 .health-status-inner-div {
     background-color: #f1f7f8;
@@ -69,6 +77,7 @@
     }
 
     .health-status-inner-div i {
+        margin-top:5px;
         font-size:2em;
         color:red;
     }

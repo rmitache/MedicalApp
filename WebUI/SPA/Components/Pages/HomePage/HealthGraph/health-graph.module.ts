@@ -11,6 +11,7 @@ import { SharedModule } from 'SPA/Components/Shared/shared.module';
 
 // Components
 import { HealthGraphComponent } from './health-graph.component';
+import { TodaysHealthViewComponent } from './TodaysHealthView/todays-health-view.component';
 
 
 
@@ -25,6 +26,7 @@ import { HealthGraphComponent } from './health-graph.component';
     ],
     declarations: [
         HealthGraphComponent,
+        TodaysHealthViewComponent
     ],
     exports: [HealthGraphComponent],
     entryComponents: [

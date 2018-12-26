@@ -42,9 +42,6 @@ export class TodaysHealthViewComponent {
     private canvas: any;
     private chartCanvasContext: any;
     private chartInstance: any;
-    private infoTooltipText: string =
-        `Under HEALTH you can keep track of how you've been feeling throughout the day. <br />
-        It is recommended that you check-in at least several times per day, as this is valuable information which you can use later.`;
     private readonly viewModel: ViewModel = {
         AvailableDateRange: null,
         AvailableHealthEntries: null,
@@ -138,10 +135,7 @@ export class TodaysHealthViewComponent {
         applicationState: HomePageApplicationState,
         private readonly dataService: HomePageDataService,
         private readonly commandManager: CommandManager,
-        private readonly modalDialogService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef,
-        private readonly spinnerService: SpinnerService,
-        private readonly addHealthStatusDialogService: AddHealthStatusDialogService
+        private readonly spinnerService: SpinnerService
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -153,7 +147,6 @@ export class TodaysHealthViewComponent {
     ngOnInit() {
         // Get the initial range using the current DisplayMode
         let now = moment();
-        //var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
         var initialSelectedDateRange = new Range<moment.Moment>(moment().startOf('day'),
             moment().endOf('day'));
 
@@ -176,56 +169,7 @@ export class TodaysHealthViewComponent {
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
-
-    // Event handlers
     
-    private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
-        // Check if newSelDateRange is within the AvailableDateRange        
-        if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
-            this.viewModel.SelectedDateRange = newSelDateRange;
-            this.refreshUI();
-        }
-        else {
-            // If it isn't, load a new "window" of FactorRecords from the server
-            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
-                newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
-
-            this.spinnerService.Show();
-            this.reloadDataFromServer(newAvailableDateRange)
-                .then(() => {
-                    this.viewModel.SelectedDateRange = newSelDateRange;
-                    this.refreshUI();
-                    setTimeout(() => {
-                        this.spinnerService.Hide();
-                    }, 200);
-                });
-        }
-    }
-    private onSelectedDateRangeChangedForward(newSelDateRange: Range<moment.Moment>) {
-
-        // Check if newSelDateRange is within the AvailableDateRange
-        if (newSelDateRange.RangeEnd <= this.viewModel.AvailableDateRange.RangeEnd) {
-            this.viewModel.SelectedDateRange = newSelDateRange;
-            this.refreshUI();
-        }
-        else {
-            // If it isn't, load a new "window" of FactorRecords from the server
-            var newAvailableDateRange = GetMonthRangeWithPaddingUsingMoment(newSelDateRange.RangeStart.clone(),
-                newSelDateRange.RangeEnd.clone(), this.availableWindowPaddingInMonths);
-
-            this.spinnerService.Show();
-            this.reloadDataFromServer(newAvailableDateRange)
-                .then(() => {
-
-                    this.viewModel.SelectedDateRange = newSelDateRange;
-                    this.refreshUI();
-                    setTimeout(() => {
-                        this.spinnerService.Hide();
-                    }, 200);
-
-                });
-        }
-    }
 }
 
 interface ViewModel {

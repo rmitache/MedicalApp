@@ -5,38 +5,16 @@
 <div class="frame">
 
     <div class="header">
-        <div class="left-section">
-            <span class="header-label h1">HEALTH</span>
-            <i class="fa fa-question-circle"
-               [pTooltip]="infoTooltipText" [escape]="false"
-               tooltipPosition="bottom"></i>
-            
-        </div>
-        <div class="center-section">
-            <!-- <navigation-panel #navPanel
-              (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
-              (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>-->
-            <span class="h2-alt">TODAY</span>
-        </div>
-        <div class="right-section">
-            <button pButton id="status-icon-large" type="button" icon="fa fa-plus" label="STATUS"
-                    [pTooltip]="'Tell us how you are feeling'"
-                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
-            <button pButton id="status-icon-small" type="button" icon="fa fa-plus" 
-                    [pTooltip]="'Tell us how you are feeling'"
-                    (click)="onAddNewHealthStatusEntryTriggered()"></button>
-        </div>
+        <span class="h2-alt">TODAY</span>
     </div>
     <div class="body">
         <div id="chart-wrapper-div">
-            
+
             <canvas id="myChart"></canvas>
         </div>
     </div>
-    <!--<div class="footer">
 
 
-    </div>-->
     <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
                    [IconName]="'fa fa-calendar-plus'"
