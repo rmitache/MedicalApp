@@ -23,20 +23,11 @@
     width: calc(100%);
     height: calc(100% - 180px - 20px);
 }
-.health-trends-div {
-    float: left;
-    background-color: #cce3f2;
-    border: solid 1px #c9deeb;
-    border-radius: 5px;
-    width: 210px;
-    height: 180px;
-    margin-bottom: 18px;
-    margin-right: 20px;
-}
+
 .health-graph {
     margin-bottom: 20px;
     float: left;
-    width: calc(100% - 420px - 42px);
+    width: calc(100% - 210px - 20px);
     height: 180px;
 }
 .info-to-remember {

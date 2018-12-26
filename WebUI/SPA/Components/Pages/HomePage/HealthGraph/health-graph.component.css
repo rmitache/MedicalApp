@@ -7,98 +7,68 @@
     border-radius: 5px;
 }
 
-    .frame .header {
-        width: calc(100% - 20px);
-        height: 30px;
-        padding: 5px 10px 5px 10px;
-        vertical-align: middle;
-        line-height: 30px;
+    .frame .left-box {
+        width: calc(33%);
+        height: calc(100%);
     }
 
-        .frame .header .left-section {
+        .frame .left-box .header {
+            width: calc(100% - 20px);
+            height: 30px;
+            padding: 5px 10px 5px 10px;
+            vertical-align: middle;
+            line-height: 30px;
+        }
+
+        .frame .left-box .header .header-label {
             display: block;
             float: left;
-            width: 115px;
         }
 
-            .frame .header .left-section .header-label {
-                display: block;
-                float: left;
-            }
-            .frame .header .left-section i {
-                display: block;
-                float: left;
-                margin-left: 5px;
-                margin-top: 4px;
-                color: #e5e5e5;
-                font-size: 1.3em;
-            }
-            
-
-        .frame .header .center-section {
+        .frame .left-box .header i {
+            display: block;
             float: left;
-            width: calc(100% - 250px);
-            text-align: center;
-            
+            margin-left: 5px;
+            margin-top: 4px;
+            color: #e5e5e5;
+            font-size: 1.3em;
         }
 
-        .frame .header .right-section {
-            float: right;
-            height: 30px;
-            text-align: right;
-            width: 115px;
-        }
-            .frame .header .right-section button {
-                float: right;
+            .frame .left-box .body {
+                padding:10px;
+                height:calc(100% - 40px - 20px);
+                width:calc(100% - 20px);
             }
 
-    .frame .body {
-        height: calc(100% - 40px);
-        width: calc(100%);
+.health-status-inner-div {
+    background-color: #f1f7f8;
+    border-radius: 5px;
+    min-width: 150px;
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    height: calc(100% - 10px);
+    text-align: center;
+    border-radius: 30px;
+    padding:5px;
+}
+
+    .health-status-inner-div .feeling-label {
+        display: inline-block;
+        margin-top: 5px;
     }
-    /*.frame .footer {
-        padding:10px;
-        padding-top:0;
-        height: 30px;
-        width: calc(100% - 20px);
-        text-align:center;
+    .health-status-inner-div .last-status-label {
+        display: inline-block;
     }
 
-    .frame .footer button{
-        
-    }*/
-#chart-wrapper-div {
-    width: calc(100% - 10px);
-    margin-left:5px;
-    float:left;
-    padding: 0;
-    overflow:visible;
-    height:130px;
-}
+    
 
-
-.no-data-panel {
-    height: calc(100% - 40px);
-    width: 100% ;
-    float: left;
-    transform: translate(0, calc(-100%))
-}
-.no-data-panel /deep/ .msg-label {
-    float:left;
-    clear:both;
-    white-space:nowrap;
-}
-
-#status-icon-small {
-    display:none;
-}
-
-/*Lower than 1024px in width*/
-@media only screen and (max-width: 1024px) {
-    #status-icon-large {
-        display: none;
+    .health-status-inner-div #status-icon-large {
+        display: inline-block;
+        margin-top: 10px;
     }
-    #status-icon-small {
-        display: block;
+
+    .health-status-inner-div i {
+        font-size:2em;
+        color:red;
     }
-}
