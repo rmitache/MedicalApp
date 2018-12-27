@@ -299,6 +299,12 @@ class DayDisplayMode implements IDisplayMode {
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions =
         {
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: -10
+                }
+            },
             animation: false,
             tooltips: {
                 enabled: false,
@@ -346,7 +352,7 @@ class DayDisplayMode implements IDisplayMode {
                         }
                     },
                     gridLines: {
-                        display: true,
+                        display: false,
                         drawBorder: false,
                         drawOnChartArea: false,
                         offsetGridLines: false,
@@ -361,12 +367,12 @@ class DayDisplayMode implements IDisplayMode {
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            if (value === '0:00' || value === '6:00' || value === '12:00' || value === '18:00' || value === '23:00') {
-                                return value;
-                            }
-                            else {
+                            //if (value === '0:00' || value === '6:00' || value === '12:00' || value === '18:00' || value === '23:00') {
+                            //    return value;
+                            //}
+                            //else {
                                 return '';
-                            }
+                            //}
                         }
                     }
                 }],
@@ -374,10 +380,11 @@ class DayDisplayMode implements IDisplayMode {
 
                     gridLines: {
                         display: true,
-                        drawTicks: true,
+                        color: "white",
+                        drawTicks: false,
                         drawOnChartArea: true,
                         tickMarkLength: 5,
-                        drawBorder: true,
+                        drawBorder: false,
                         zeroLineColor: 'gray'
                     },
 
@@ -392,13 +399,13 @@ class DayDisplayMode implements IDisplayMode {
                         max: 3,
                         stepSize: 1,
                         callback: function (label, index, labels) {
-                            if (label === Enums.HealthLevel.NotGreat)
-                                return 'Not Great';
-                            if (label === Enums.HealthLevel.VeryBad)
-                                return 'Very Bad';
-                            else if (label !== 0)
-                                return Enums.HealthLevel[label];
-                            else
+                            //if (label === Enums.HealthLevel.NotGreat)
+                            //    return 'Not Great';
+                            //if (label === Enums.HealthLevel.VeryBad)
+                            //    return 'Very Bad';
+                            //else if (label !== 0)
+                            //    return Enums.HealthLevel[label];
+                            //else
                                 return '';
                         }
                     }
@@ -428,14 +435,14 @@ class DayDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    borderDash: [5, 5],
+                    //borderDash: [5, 5],
                     pointRadius: 8,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 1,
+                    borderWidth: 2,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

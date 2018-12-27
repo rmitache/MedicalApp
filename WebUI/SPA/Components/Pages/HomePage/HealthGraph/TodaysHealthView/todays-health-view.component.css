@@ -1,6 +1,9 @@
 
 .frame {
-    width: 100%;
+    width: 95%;
+    margin-left:auto;
+    margin-right:auto;
+    
     height: 100%;
     border-radius: 5px;
 }
@@ -17,17 +20,46 @@
        
 
     .frame .body {
-        height: calc(100% - 40px);
+        height: calc(100% - 40px - 30px);
         width: calc(100%);
     }
-    
+
+    .frame .footer {
+        height: 20px;
+        width: calc(100%);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+
+.legend-item {
+    display:inline-block;
+    margin-right: 10px;
+}
+
+    .legend-item i {
+        vertical-align: middle;
+        font-size:0.7em;
+    }
+
+    .legend-item span {
+        vertical-align: middle;
+    }
+.feeling-good-item i {
+    color: #9dc340;
+}
+.feeling-bad-item i {
+    color: #fe6060;
+}
+
 #chart-wrapper-div {
+    margin-top:5px;
     width: calc(100% - 10px);
-    margin-left:5px;
-    float:left;
+    margin-left: 5px;
+    float: left;
     padding: 0;
-    overflow:visible;
-    height:130px;
+    overflow: visible;
+    height: 110px;
 }
 
 
