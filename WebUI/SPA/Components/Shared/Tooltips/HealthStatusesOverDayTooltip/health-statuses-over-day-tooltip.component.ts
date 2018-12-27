@@ -20,6 +20,7 @@ export class HealthStatusesOverDayTooltipComponent {
     // Fields
     @ViewChild('tooltipDiv')
     private tooltipDiv: ElementRef;
+    private orientationModesEnum = TooltipOrientationMode;
     private readonly healthLevelDefinitions: HealthLevelDefinition[] = [
         {
             ContainsHealthLevelValue: (avgValue) => {
@@ -67,6 +68,7 @@ export class HealthStatusesOverDayTooltipComponent {
 
         HideSymptomsDiv: false,
         Visible: false,
+        TooltipOrientationMode: null,
         TooltipPos: null,
         CaretPos: null
     };
@@ -204,33 +206,51 @@ export class HealthStatusesOverDayTooltipComponent {
             dataPointsBgColors: dataPointsBgColors
         };
     }
-    private calculateTooltipPosition(parentPosition: any, hoverPointLeft: number, hoverPointTop: number): PosCoordinates[] {
+    private calculateTooltipPosition(parentPosition: any, hoverPointLeft: number, hoverPointTop: number){
 
         // Variables
+        let orientationMode: TooltipOrientationMode = TooltipOrientationMode.Above;
         let tooltipPos = new PosCoordinates();
         let caretPos = new PosCoordinates();
-        var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-
+        var tooltipWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+        var tooltipHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
 
         // Set position
-        var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-        var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
-        tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
-        caretPos.Left = currentWidth / 2 - 21;
+        //var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
+        //var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
+        //tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
+        //tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
+        //caretPos.Left = currentWidth / 2 - 21;
+        //caretPos.Top = 15;
+
+        // Calculate tooltip and caret position
+        var verticalSpacing = 45;
+        tooltipPos.Top = parentPosition.top + hoverPointTop - tooltipHeight - verticalSpacing;
+        tooltipPos.Left = parentPosition.left + hoverPointLeft - tooltipWidth / 2 -1;
+        caretPos.Left = tooltipWidth / 2 - 21;
         caretPos.Top = 15;
 
-
-        // Handle case when position overflows screen 
+        // Handle cases when position overflows screen 
         if (tooltipPos.Left < 0) {
             tooltipPos.Left = 10;
             caretPos.Left = parentPosition.left + hoverPointLeft - 35;
         }
+        if (tooltipPos.Top < 0) {
+            orientationMode = TooltipOrientationMode.Below;
+
+            tooltipPos.Top = parentPosition.top + hoverPointTop + verticalSpacing;
+            caretPos.Top = - tooltipHeight;
+        }
+        
 
         // 
-        let returnArray: PosCoordinates[] = [tooltipPos, caretPos];
-        return returnArray;
+        let returnObj = {
+            TooltipCoordinates: tooltipPos,
+            CaretCoordinates: caretPos,
+            OrientationMode: orientationMode
+
+        }
+        return returnObj;
     }
     private recreateChart() {
         // Recreate the chart
@@ -310,10 +330,10 @@ export class HealthStatusesOverDayTooltipComponent {
 
         // Calculate position
         setTimeout(() => {
-            var tooltipAndCaretPos = this.calculateTooltipPosition(parentPosition, caretX, caretY);
-
-            this.viewModel.TooltipPos = tooltipAndCaretPos[0];
-            this.viewModel.CaretPos = tooltipAndCaretPos[1];
+            var positionInfo = this.calculateTooltipPosition(parentPosition, caretX, caretY);
+            this.viewModel.TooltipOrientationMode = positionInfo.OrientationMode;
+            this.viewModel.TooltipPos = positionInfo.TooltipCoordinates;
+            this.viewModel.CaretPos = positionInfo.CaretCoordinates;
             this.viewModel.Visible = true;
 
         }, 0);
@@ -328,6 +348,7 @@ export class HealthStatusesOverDayTooltipComponent {
             this.viewModel.HealthLevelColor = null; 
 
             this.viewModel.TooltipPos = null;
+            this.viewModel.TooltipOrientationMode = null;
             this.viewModel.CaretPos = null;
         }, 0);
     }
@@ -343,6 +364,7 @@ interface ViewModel {
 
     HideSymptomsDiv: boolean;
     Visible: boolean;
+    TooltipOrientationMode: TooltipOrientationMode;
     TooltipPos: PosCoordinates;
     CaretPos: PosCoordinates;
 }
@@ -354,4 +376,8 @@ class PosCoordinates {
 interface HealthLevelDefinition {
     ContainsHealthLevelValue(avgValue);
     Label: string;
+}
+enum TooltipOrientationMode {
+    Above = 0,
+    Below = 1
 }

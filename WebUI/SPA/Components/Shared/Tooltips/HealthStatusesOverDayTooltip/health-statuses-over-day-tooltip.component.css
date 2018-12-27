@@ -12,6 +12,8 @@
 }
 
 .symptoms-div {
+    padding-top:10px;
+
     text-align: center;
 }
 
@@ -36,23 +38,47 @@
     }
 
 .health-level-div {
-    text-align:center;
-    margin-top:15px;
-    margin-bottom:-10px;
+    text-align: center;
+    padding-top:5px;
+    padding-bottom:5px;
+    position: relative;
+}
+.health-level-div > span{
+    text-transform:uppercase;
 }
 
-.health-level-div span {
-}
 
 
 .caret-div {
     width: 0;
     height: 0;
-    border-top: solid 15px black;
-    border-left: solid 15px transparent;
-    border-right: solid 15px transparent;
-    border-bottom: none;
     position: relative;
-    /*left: calc(50% - 10px);
-        bottom: -5px;*/
+    
 }
+
+
+/* ABOVE position mode*/
+.frame.above-pos {
+    padding-top: 0;
+}
+
+    .frame.above-pos .caret-div {
+        border-bottom: none;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;
+        border-top: solid 15px black;
+        margin-bottom: -15px;
+    }
+
+/* BELOW position mode */
+.frame.below-pos {
+    padding-top: 0;
+}
+
+    .frame.below-pos .caret-div {
+        margin-top:-15px;
+        border-bottom: solid 15px black;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;
+        border-top: none;
+    }

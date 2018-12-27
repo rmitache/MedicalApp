@@ -350,7 +350,7 @@ class DayDisplayMode implements IDisplayMode {
                         }
                     },
                     gridLines: {
-                        display: true,
+                        display: false,
                         drawBorder: false,
                         drawOnChartArea: false,
                         offsetGridLines: false,
@@ -383,7 +383,7 @@ class DayDisplayMode implements IDisplayMode {
                         drawOnChartArea: true,
                         tickMarkLength: 5,
                         drawBorder: false,
-                        zeroLineColor: 'gray'
+                        zeroLineColor: '#c4c4c4'
                     },
 
                     ticks: {
@@ -433,14 +433,14 @@ class DayDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    borderDash: [5, 5],
-                    pointRadius: 7,
+                    //borderDash: [5, 5],
+                    pointRadius: 8,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 1,
+                    borderWidth: 1.5,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

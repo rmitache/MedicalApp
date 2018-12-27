@@ -1,25 +1,28 @@
 <div #tooltipDiv class="frame"
+     [ngClass]="viewModel.TooltipOrientationMode === orientationModesEnum.Above ? 'above-pos': 'below-pos'"
      [style.visibility]="viewModel.Visible ? 'visible' : 'hidden'"
      [style.top.px]="viewModel.TooltipPos?.Top ? viewModel.TooltipPos.Top : 0"
      [style.left.px]="viewModel.TooltipPos?.Left ? viewModel.TooltipPos.Left : 0">
 
-
+    <!--Below mode elements-->
+    <ng-container *ngIf="viewModel.TooltipOrientationMode === orientationModesEnum.Below">
+        <div class="caret-div"
+             [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
+        </div>
+        <div class="health-level-div">
+            <span class="h3" [style.color]="viewModel.HealthLevelColor">
+                {{viewModel.HealthLevelDefinition?.Label}}
+            </span>
+        </div>
+    </ng-container>
 
 
     <div class="symptoms-div">
-
         <symptom-type-elem *ngFor="let symptomTypeInfo of viewModel.SymptomTypes"
                            [SymptomTypeWithAvgIntensity]="symptomTypeInfo">
         </symptom-type-elem>
-
-
         <div style="clear:both"></div>
     </div>
-
-
-
-
-
     <div class="health-chart-div">
         <div class="date-label-div">
             <span class="h4">{{viewModel.Title}}</span>
@@ -28,14 +31,17 @@
             <canvas id="myHealthStatusChart"></canvas>
         </div>
     </div>
-    <div class="health-level-div">
-        <span class="h4"
-              [style.color]="viewModel.HealthLevelColor">
-            {{viewModel.HealthLevelDefinition?.Label}}
-        </span>
-    </div>
-    <div class="caret-div"
-         [style.top.px]="viewModel.CaretPos?.Top ? viewModel.CaretPos.Top : 0"
-         [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
-    </div>
+
+
+    <!--Above mode elements-->
+    <ng-container *ngIf="viewModel.TooltipOrientationMode === orientationModesEnum.Above">
+        <div class="health-level-div">
+            <span class="h3" [style.color]="viewModel.HealthLevelColor">
+                {{viewModel.HealthLevelDefinition?.Label}}
+            </span>
+        </div>
+        <div class="caret-div"
+             [style.left.px]="viewModel.CaretPos?.Left ? viewModel.CaretPos.Left : 0">
+        </div>
+    </ng-container>
 </div>

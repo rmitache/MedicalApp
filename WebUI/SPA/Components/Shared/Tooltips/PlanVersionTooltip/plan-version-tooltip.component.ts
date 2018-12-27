@@ -63,8 +63,8 @@ export class PlanVersionTooltipComponent {
             orientationMode = TooltipOrientationMode.Below;
         }
 
-        //tooltipPos.Left = 0;
-        //tooltipPos.Top = 0;
+        
+        
 
         // 
         let returnObj = {
@@ -142,7 +142,6 @@ export class PlanVersionTooltipComponent {
 
         // Set position and show tooltip
         setTimeout(() => {
-            //alert(hoverEventInfo.Left + " " + hoverEventInfo.Top);
 
             var positionInfo = this.calculateTooltipPosition(hoverEventInfo.Left, hoverEventInfo.Top);
             

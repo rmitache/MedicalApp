@@ -11,6 +11,7 @@
         float: left;
         width: calc(33%);
         height: calc(100%);
+        border-right: dashed 1px #e1e1e1;
     }
 
         .frame .left-box .header {
@@ -47,6 +48,7 @@
         width: calc(33%);
         height: calc(100%);
         min-width: 150px;
+        border-right: dashed 1px #e1e1e1;
     }
 
     .frame .right-box {
@@ -57,8 +59,6 @@
     }
 
 .health-status-inner-div {
-    background-color: #f1f7f8;
-    border-radius: 5px;
     min-width: 150px;
     max-width: 260px;
     margin-left: auto;
@@ -66,7 +66,9 @@
     height: calc(100% - 10px);
     text-align: center;
     border-radius: 30px;
-    padding:5px;
+    background-color: #f1f7f8;
+    border-radius: 5px;
+    padding: 5px;
 }
 
     .health-status-inner-div .feeling-label {

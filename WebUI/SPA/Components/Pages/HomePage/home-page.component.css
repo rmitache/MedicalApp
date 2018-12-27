@@ -71,7 +71,7 @@
 @media only screen and (min-width: 1024px) {
     .outer-wrapper {
         min-width: calc(1024px - 24px);
-        max-width:80%;
+        max-width:70%;
         padding-left:12px;
         padding-right:12px;
     }

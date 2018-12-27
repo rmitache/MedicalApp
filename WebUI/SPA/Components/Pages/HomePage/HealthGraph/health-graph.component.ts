@@ -44,7 +44,6 @@ export class HealthGraphComponent {
 
 
     // Private methods
-    
     private refreshUI() {
 
         
@@ -55,7 +54,6 @@ export class HealthGraphComponent {
         applicationState: HomePageApplicationState,
         private readonly dataService: HomePageDataService,
         private readonly commandManager: CommandManager,
-        private readonly modalDialogService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private readonly spinnerService: SpinnerService,
         private readonly addHealthStatusDialogService: AddHealthStatusDialogService
@@ -65,12 +63,10 @@ export class HealthGraphComponent {
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
 
-
     }
     ngOnInit() {
         
     }
-    
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
@@ -78,6 +74,10 @@ export class HealthGraphComponent {
     // Event handlers
     private onAddNewHealthStatusEntryTriggered() {
         this.addHealthStatusDialogService.Open(this.viewContainerRef, () => {
+
+
+            // Get data and then refresh the two child components
+
             //this.reloadDataFromServer(this.viewModel.AvailableDateRange)
             //    .then(() => {
             //        this.refreshUI();

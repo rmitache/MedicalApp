@@ -199,6 +199,7 @@ class TenDaysDisplayMode implements IDisplayMode {
                 padding: {
                     top: 0,
                     bottom: -60,
+
                 }
             },
             animation: false,
