@@ -1,9 +1,7 @@
-
 .frame {
     width: 95%;
-    margin-left:auto;
-    margin-right:auto;
-    
+    margin-left: auto;
+    margin-right: auto;
     height: 100%;
     border-radius: 5px;
 }
@@ -17,7 +15,7 @@
         text-align: center;
     }
 
-       
+
 
     .frame .body {
         height: calc(100% - 40px - 30px);
@@ -33,48 +31,33 @@
     }
 
 .legend-item {
-    display:inline-block;
+    display: inline-block;
     margin-right: 10px;
 }
 
     .legend-item i {
         vertical-align: middle;
-        font-size:0.7em;
+        font-size: 0.7em;
     }
 
     .legend-item span {
         vertical-align: middle;
     }
-.feeling-good-item i {
+
+.good-day-item i {
     color: #9dc340;
 }
-.feeling-bad-item i {
+
+.bad-day-item i {
     color: #fe6060;
 }
 
 #chart-wrapper-div {
-    margin-top:2px;
+    margin-top: -3px;
     width: calc(100% - 10px);
     margin-left: 5px;
     float: left;
     padding: 0;
     overflow: visible;
-    height: 110px;
-}
-
-
-.no-data-panel {
-    height: calc(100% - 40px);
-    width: 100% ;
-    float: left;
-    transform: translate(0, calc(-100%))
-}
-.no-data-panel /deep/ .msg-label {
-    float:left;
-    clear:both;
-    white-space:nowrap;
-}
-
-#status-icon-small {
-    display:none;
+    height: 115px;
 }

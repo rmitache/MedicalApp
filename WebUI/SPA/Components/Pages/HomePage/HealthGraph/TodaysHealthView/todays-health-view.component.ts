@@ -33,11 +33,8 @@ import { AddHealthStatusDialogService } from 'SPA/Components/Shared/Popups/AddHe
 })
 export class TodaysHealthViewComponent {
     // Fields
-    private availableWindowPaddingInMonths = 0;
     @ViewChild('healthStatusTooltip')
     private healthStatusTooltipInstance: SingleHealthStatusTooltipComponent;
-    @ViewChild('navPanel')
-    private navPanelInstance: NavigationPanelComponent;
     private readonly noDataModes = NoDataModes;
     private canvas: any;
     private chartCanvasContext: any;
@@ -160,7 +157,7 @@ export class TodaysHealthViewComponent {
     }
     ngAfterViewInit() {
         // Get references to the chart canvas context
-        this.canvas = document.getElementById('myChart');
+        this.canvas = document.getElementById('todaysHealthViewChart');
         this.chartCanvasContext = this.canvas.getContext('2d');
 
         // Refresh the UI
@@ -299,6 +296,7 @@ class DayDisplayMode implements IDisplayMode {
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions =
         {
+            
             layout: {
                 padding: {
                     top: 10,
@@ -332,7 +330,7 @@ class DayDisplayMode implements IDisplayMode {
             },
             elements: {
                 line: {
-                    tension: 0, // disables bezier curves
+                    tension: 0, 
                 }
             },
             legend: {
@@ -435,14 +433,14 @@ class DayDisplayMode implements IDisplayMode {
         var data = {
             datasets: [
                 {
-                    //borderDash: [5, 5],
-                    pointRadius: 8,
+                    borderDash: [5, 5],
+                    pointRadius: 7,
                     pointStyle: 'circle',
                     pointBorderWidth: 0,
                     pointHoverRadius: 8,
                     borderColor: 'black',
                     backgroundColor: 'transparent',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     showLine: true,
                     data: dataPointsInfo.dataPoints,
                     pointBackgroundColor: dataPointsInfo.dataPointsBgColors,

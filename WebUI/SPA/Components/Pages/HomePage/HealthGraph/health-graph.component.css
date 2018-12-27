@@ -43,8 +43,16 @@
             }
 
     .frame .center-box {
-        float:left;
+        float: left;
         width: calc(33%);
+        height: calc(100%);
+        min-width: 150px;
+    }
+
+    .frame .right-box {
+        float: right;
+        width: calc(33%);
+        min-width: 150px;
         height: calc(100%);
     }
 

@@ -1,6 +1,6 @@
 ﻿export enum DateRangeMode {
     SingleDay,
-    SevenDays,
+    TenDays,
     SingleMonth,
 	ThreeMonths
 }
