@@ -198,7 +198,7 @@ class TenDaysDisplayMode implements IDisplayMode {
             layout: {
                 padding: {
                     top: 0,
-                    bottom: -60
+                    bottom: -60,
                 }
             },
             animation: false,
@@ -269,11 +269,11 @@ class TenDaysDisplayMode implements IDisplayMode {
                         minRotation: 0,
                         fontColor: 'gray',
                         fontFamily: 'Arial',
-                        fontSize: 10,
+                        fontSize: 9,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            return '';
-                            //if (!(index % 2)) return value;
+                            //return '';
+                            /*if (!(index % 2))*/ return value;
                         }
                     }
                 }],

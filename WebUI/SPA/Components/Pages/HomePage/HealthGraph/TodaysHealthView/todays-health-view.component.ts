@@ -300,7 +300,7 @@ class DayDisplayMode implements IDisplayMode {
             layout: {
                 padding: {
                     top: 10,
-                    bottom: -10
+                    bottom: 0
                 }
             },
             animation: false,
@@ -350,14 +350,14 @@ class DayDisplayMode implements IDisplayMode {
                         }
                     },
                     gridLines: {
-                        display: false,
+                        display: true,
                         drawBorder: false,
                         drawOnChartArea: false,
                         offsetGridLines: false,
                     },
                     ticks: {
-
-                        fontSize: 9,
+                        mirror: true,
+                        fontSize: 8,
                         maxRotation: 0,
                         minRotation: 0,
                         maxTicksLimit: 4,
@@ -365,12 +365,12 @@ class DayDisplayMode implements IDisplayMode {
                         beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            //if (value === '0:00' || value === '6:00' || value === '12:00' || value === '18:00' || value === '23:00') {
-                            //    return value;
-                            //}
-                            //else {
+                            if (value === '0:00' /*|| value === '6:00'*/ || value === '12:00' || /*value === '18:00' ||*/ value === '23:00') {
+                                return value;
+                            }
+                            else {
                                 return '';
-                            //}
+                            }
                         }
                     }
                 }],
@@ -389,7 +389,7 @@ class DayDisplayMode implements IDisplayMode {
                     ticks: {
                         padding: 10,
                         fontColor: '#b6b6b6',
-                        //mirror: true,
+                        
                         //padding: 5,
                         fontSize: 10,
                         beginAtZero: true,
