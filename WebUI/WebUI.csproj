@@ -38,6 +38,7 @@
     <None Remove="SPA\Components\Pages\home-page-application-state.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\flow-definitions.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\init-and-start-page.flow.ts" />
+    <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-health-graph.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-reminders.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule-and-medicine-types-overview.flow.ts" />
     <None Remove="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
@@ -166,6 +167,7 @@
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\IndicatorsView\color-provider.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\IndicatorsView\dataset-generator.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\IndicatorsView\indicators-view.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-health-graph.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-reminders.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\HomePage\CommandFlows\refresh-schedule-and-medicine-types-overview.flow.ts" />

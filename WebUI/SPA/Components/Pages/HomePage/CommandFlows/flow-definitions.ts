@@ -4,6 +4,7 @@ import { RefreshScheduleAndMedicineTypesOverviewFlow } from 'SPA/Components/Page
 import { ToggleTakenForMedicineFactorRecordFlow } from 'SPA/Components/Pages/HomePage/CommandFlows/toggle-taken-for-medicine-factor-record.flow';
 import { RefreshScheduleFlow } from 'SPA/Components/Pages/HomePage/CommandFlows/refresh-schedule.flow';
 import { RefreshRemindersFlow } from './refresh-reminders.flow';
+import { RefreshHealthGraphFlow } from './refresh-health-graph.flow';
 
 // Define CommandFlows for RoutesPage
 export const FlowDefinitions: { [flowName: string]: any } = {
@@ -12,5 +13,6 @@ export const FlowDefinitions: { [flowName: string]: any } = {
     'ToggleTakenForMedicineFactorRecordFlow': ToggleTakenForMedicineFactorRecordFlow,
     'RefreshScheduleFlow': RefreshScheduleFlow,
     'RefreshRemindersFlow': RefreshRemindersFlow,
+    'RefreshHealthGraphFlow': RefreshHealthGraphFlow
 };
 

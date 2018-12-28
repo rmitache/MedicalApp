@@ -75,16 +75,11 @@ export class HealthGraphComponent {
     private onAddNewHealthStatusEntryTriggered() {
         this.addHealthStatusDialogService.Open(this.viewContainerRef, () => {
 
-
-            // Get data and then refresh the two child components
-
-            //this.reloadDataFromServer(this.viewModel.AvailableDateRange)
-            //    .then(() => {
-            //        this.refreshUI();
-            //        setTimeout(() => {
-            //            this.spinnerService.Hide();
-            //        }, 200);
-            //    });
+            this.commandManager.InvokeCommandFlow('RefreshHealthGraphFlow');
+                    setTimeout(() => {
+                        this.spinnerService.Hide();
+                    }, 200);
+            
         });
     }
 }

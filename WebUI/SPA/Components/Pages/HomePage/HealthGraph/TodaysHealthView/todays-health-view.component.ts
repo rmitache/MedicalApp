@@ -131,8 +131,7 @@ export class TodaysHealthViewComponent {
     constructor(
         applicationState: HomePageApplicationState,
         private readonly dataService: HomePageDataService,
-        private readonly commandManager: CommandManager,
-        private readonly spinnerService: SpinnerService
+        private readonly commandManager: CommandManager
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
 
@@ -165,6 +164,14 @@ export class TodaysHealthViewComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public methods
+    public ReloadData() {
+        this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+            .then(() => {
+                this.refreshUI();
+            });
     }
     
 }

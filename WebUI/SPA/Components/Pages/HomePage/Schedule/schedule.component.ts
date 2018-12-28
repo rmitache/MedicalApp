@@ -80,7 +80,6 @@ export class ScheduleComponent {
 	};
 	private readonly subscriptions: Subscription[] = [];
 	private readonly appState: IReadOnlyApplicationState;
-
     private displaySideBar: boolean = false;
 
 	// Private methods
@@ -158,52 +157,6 @@ export class ScheduleComponent {
 	}
 
 	// Event handlers
-    /*private onAddNewEventTriggered() {
-        this.modalDialogService.OpenDialog(this.viewContainerRef, {
-            title: 'Add new one-off Event',
-            childComponent: AddNewEventComponent,
-            data: moment().toDate(),
-            actionButtons: [
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                        return !addNewEventComponentInstance.GetValidState();
-                    },
-                    text: 'Save',
-                    onAction: (childComponentInstance: any) => {
-                        let promiseWrapper = new Promise<void>((resolve) => {
-                            this.viewModel.Blocked = true;
-
-                            let addNewEventComponentInstance = childComponentInstance as AddNewEventComponent;
-                            addNewEventComponentInstance.SaveData()
-                                .then((cloList) => {
-
-                                    this.reloadDataFromServer(this.viewModel.AvailableDateRange)
-                                        .then(() => {
-                                            this.refreshUI();
-                                            setTimeout(() => {
-                                                this.viewModel.Blocked = false;
-                                                resolve();
-                                            }, 200);
-                                        });
-
-                                });
-                        });
-                        return promiseWrapper;
-                    }
-                },
-                {
-                    isDisabledFunction: (childComponentInstance: any) => {
-                        return false;
-                    },
-                    text: 'Cancel',
-                    onAction: () => {
-                        return true;
-                    }
-                }
-            ]
-        });
-    }*/
 	private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
 		// Check if newSelDateRange is within the AvailableDateRange
 		if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {

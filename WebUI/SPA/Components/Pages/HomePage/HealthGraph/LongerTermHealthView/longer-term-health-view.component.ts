@@ -156,6 +156,13 @@ export class LongerTermHealthViewComponent {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    // Public methods
+    public ReloadData() {
+        this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+            .then(() => {
+                this.refreshUI();
+            });
+    }
 }
 
 interface ViewModel {
@@ -198,7 +205,7 @@ class TenDaysDisplayMode implements IDisplayMode {
             layout: {
                 padding: {
                     top: 0,
-                    bottom:-20
+                    bottom: -20
                 }
             },
             animation: false,
