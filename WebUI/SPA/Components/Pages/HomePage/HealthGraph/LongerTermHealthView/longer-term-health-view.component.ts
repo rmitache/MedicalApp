@@ -198,8 +198,7 @@ class TenDaysDisplayMode implements IDisplayMode {
             layout: {
                 padding: {
                     top: 0,
-                    bottom: -60,
-
+                    bottom:-20
                 }
             },
             animation: false,
@@ -262,6 +261,8 @@ class TenDaysDisplayMode implements IDisplayMode {
                     gridLines: {
                         color: '#cacaca',
                         display: false,
+                        drawTicks: false,
+                        drawBorder: false,
                         drawOnChartArea: false,
                         offsetGridLines:false
                     },
@@ -273,8 +274,8 @@ class TenDaysDisplayMode implements IDisplayMode {
                         fontSize: 9,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            //return '';
-                            /*if (!(index % 2))*/ return value;
+                            return '';
+                            /*if (!(index % 2)) return value;*/
                         }
                     }
                 }],
@@ -295,8 +296,8 @@ class TenDaysDisplayMode implements IDisplayMode {
                         fontSize: 10,
                         padding: 3,
                         beginAtZero: true,
-                        //min: -3,
-                        //max: 3,
+                        //min: -2.5,
+                        //max: 2.5,
                         stepSize: 1,
                         callback: function (label, index, labels) {
                             //if (label === Enums.HealthLevel.NotGreat)

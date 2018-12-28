@@ -12,7 +12,8 @@
 }
 
 .symptoms-div {
-    padding-top:10px;
+    padding-top:5px;
+    padding-bottom:5px;
 
     text-align: center;
 }
@@ -30,7 +31,8 @@
 }
 
 .health-chart-div {
-    margin-top:25px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
     .health-chart-div .chart-wrapper-div {

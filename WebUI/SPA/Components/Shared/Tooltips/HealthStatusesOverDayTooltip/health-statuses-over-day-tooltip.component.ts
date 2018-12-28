@@ -215,16 +215,8 @@ export class HealthStatusesOverDayTooltipComponent {
         var tooltipWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
         var tooltipHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
 
-        // Set position
-        //var currentHeight = (this.tooltipDiv.nativeElement as HTMLElement).clientHeight;
-        //var currentWidth = (this.tooltipDiv.nativeElement as HTMLElement).clientWidth;
-        //tooltipPos.Top = parentPosition.top + hoverPointTop - currentHeight - 40;
-        //tooltipPos.Left = parentPosition.left + hoverPointLeft - currentWidth / 2 - 1;
-        //caretPos.Left = currentWidth / 2 - 21;
-        //caretPos.Top = 15;
-
         // Calculate tooltip and caret position
-        var verticalSpacing = 45;
+        var verticalSpacing = 65;
         tooltipPos.Top = parentPosition.top + hoverPointTop - tooltipHeight - verticalSpacing;
         tooltipPos.Left = parentPosition.left + hoverPointLeft - tooltipWidth / 2 -1;
         caretPos.Left = tooltipWidth / 2 - 21;
@@ -238,7 +230,7 @@ export class HealthStatusesOverDayTooltipComponent {
         if (tooltipPos.Top < 0) {
             orientationMode = TooltipOrientationMode.Below;
 
-            tooltipPos.Top = parentPosition.top + hoverPointTop + verticalSpacing;
+            tooltipPos.Top = parentPosition.top + hoverPointTop + 45;
             caretPos.Top = - tooltipHeight;
         }
         

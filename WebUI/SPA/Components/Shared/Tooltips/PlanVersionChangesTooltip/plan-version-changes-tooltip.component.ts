@@ -78,11 +78,11 @@ export class PlanVersionChangesTooltipComponent {
         let currentVersion = this.viewModel.VersionCLO;
         let prevVersion = currentVersion.GetPreviousVersion();
         let nextVersion = currentVersion.GetNextVersion();
-        let adjacentToPrevVersion = (prevVersion) ? this.versionCLOService.AreAdjacent(prevVersion, currentVersion) : false;
-        let adjacentToNextVersion = (nextVersion) ? this.versionCLOService.AreAdjacent(nextVersion, currentVersion) : false;
 
         // Get all changes----------------------------------------------------------------------------------------------------------
         // StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
+
+
         if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
             (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, currentVersion))) {
             this.viewModel.AllChanges = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);

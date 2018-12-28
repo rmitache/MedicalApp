@@ -115,15 +115,27 @@ export class VersionCLOService {
         let versionBEndDate = moment(versionB.EndDateTime);
 
 
+
+        //
         let nrOfDaysOneSide = GetNrOfDaysBetweenDatesUsingMoment(versionBEndDate, versionAStartDate, false);
         let nrOfDaysOtherSide = GetNrOfDaysBetweenDatesUsingMoment(versionBStartDate, versionAEndDate, false);
-
 
         if (nrOfDaysOneSide === 1 || nrOfDaysOtherSide === 1) {
             return true;
         } else {
             return false;
         }
+
+        // OBS: below code was commented out because
+        
+        //let nrOfHoursOneSide = versionBStartDate.diff(versionAEndDate, 'hours');
+        //let nrOfHoursOtherSide = versionAEndDate.diff(versionBStartDate, 'hours');
+        
+        //if (nrOfHoursOneSide < 24 || nrOfHoursOtherSide < 24) {
+        //    return true;
+        //} else {
+        //    return false;
+        //}
     }
 }
 
