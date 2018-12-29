@@ -13,13 +13,13 @@
         </div>
         <div class="body">
             <div class="health-status-inner-div">
-
-                <span class="h2-alt feeling-label">How are you feeling ?</span><br />
+                <div class="inner-top-part-div">
+                    <span class="h2-alt feeling-label">How are you feeling ?</span>
+                </div>
                 <i class="fa fa-heartbeat"></i><br />
-                <button pButton id="status-icon-large" type="button" icon="fa fa-plus" label="STATUS"
+                <button pButton id="status-button" type="button" icon="fa fa-plus" label="STATUS"
                         [pTooltip]="'Tell us how you are feeling'"
                         (click)="onAddNewHealthStatusEntryTriggered()"></button><br />
-                <!--<span class="label-alt last-status-label">Last status: 3 hours ago</span>-->
             </div>
         </div>
     </div>

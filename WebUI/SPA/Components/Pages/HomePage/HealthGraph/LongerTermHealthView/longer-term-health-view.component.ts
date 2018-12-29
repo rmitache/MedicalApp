@@ -205,7 +205,8 @@ class TenDaysDisplayMode implements IDisplayMode {
             layout: {
                 padding: {
                     top: 0,
-                    bottom: -20
+                    bottom: -20,
+                    right:10
                 }
             },
             animation: false,
@@ -303,8 +304,8 @@ class TenDaysDisplayMode implements IDisplayMode {
                         fontSize: 10,
                         padding: 3,
                         beginAtZero: true,
-                        //min: -2.5,
-                        //max: 2.5,
+                        min: -2.5,
+                        max: 2.5,
                         stepSize: 1,
                         callback: function (label, index, labels) {
                             //if (label === Enums.HealthLevel.NotGreat)

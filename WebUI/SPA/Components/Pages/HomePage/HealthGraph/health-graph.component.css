@@ -22,26 +22,26 @@
             line-height: 30px;
         }
 
-        .frame .left-box .header .header-label {
-            display: block;
-            float: left;
-        }
-
-        .frame .left-box .header i {
-            display: block;
-            float: left;
-            margin-left: 5px;
-            margin-top: 4px;
-            color: #e5e5e5;
-            font-size: 1.3em;
-        }
-
-            .frame .left-box .body {
-                padding:10px;
-                padding-top:0;
-                height:calc(100% - 40px - 10px);
-                width:calc(100% - 20px);
+            .frame .left-box .header .header-label {
+                display: block;
+                float: left;
             }
+
+            .frame .left-box .header i {
+                display: block;
+                float: left;
+                margin-left: 5px;
+                margin-top: 4px;
+                color: #e5e5e5;
+                font-size: 1.3em;
+            }
+
+        .frame .left-box .body {
+            padding: 10px;
+            padding-top: 0;
+            height: calc(100% - 40px - 10px);
+            width: calc(100% - 20px);
+        }
 
     .frame .center-box {
         float: left;
@@ -71,23 +71,24 @@
     padding: 5px;
 }
 
-    .health-status-inner-div .feeling-label {
-        display: inline-block;
-        margin-top: 5px;
-    }
-    .health-status-inner-div .last-status-label {
-        display: inline-block;
+    .health-status-inner-div .inner-top-part-div {
+        height: calc(100% - 75px);
+        display:table;
+        width:100%;
     }
 
-    
 
-    .health-status-inner-div #status-icon-large {
-        display: inline-block;
-        margin-top: 10px;
-    }
+        .health-status-inner-div .inner-top-part-div .feeling-label {
+            vertical-align: middle;
+            display:table-cell;
+        }
+
 
     .health-status-inner-div i {
-        margin-top:15px;
-        font-size:2em;
-        color:red;
+        font-size: 2em;
+        color: red;
+        margin-bottom:10px;
+    }
+
+    .health-status-inner-div #status-button {
     }
