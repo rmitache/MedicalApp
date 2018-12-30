@@ -4,7 +4,7 @@
 
             <!--Medicine picker-->
             <div class="label-input-pair medicine-type-input-pair">
-                <span class="label-discrete">Medicine Type</span>
+                <span class="label-discrete">Supplement</span>
                 <p-autoComplete #autocomplete
                                 formControlName="medicineTypeName"
                                 lazy="true"
@@ -12,7 +12,7 @@
                                  [(ngModel)]="viewModel.SearchText"
                                 [suggestions]="viewModel.MedicineTypeSearchResults"
                                 [emptyMessage]="'No matches found'"
-                                [placeholder]="'Choose a Medicine Type'"
+                                [placeholder]="'Choose a Supplement'"
                                 [dropdown]="true"
                                 (completeMethod)="onMedicineTypeTextBoxChanged($event)"
                                 (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>

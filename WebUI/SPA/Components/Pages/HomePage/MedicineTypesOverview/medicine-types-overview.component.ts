@@ -35,8 +35,8 @@ export class MedicineTypesOverviewComponent {
     private readonly noDataModes = NoDataModes;
     private medicineTypeStatusesEnum = Enums.MedicineTypeStatus;
     private infoTooltipText: string =
-        `Here you can see which Medicines you have. These can be herbs, vitamins, etc. <br />
-        The app can also track supply for you, so you know when a Medicine Type will run out.`;
+        `Here you can see which Supplements you have. These can be herbs, vitamins, etc. <br />
+        The app can also track supply for you, so you know when a Supplement will run out.`;
 
     private readonly medicineTypeStatusViewModes = {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates

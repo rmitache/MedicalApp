@@ -165,7 +165,7 @@ export class IFRPGroupElemComponent {
         this.viewModel.MedicineTypeSearchResults = searchResults;      
     }
     private onMedicineTypeSelected(value) {
-        if (value === "Add a new Medicine Type...") {
+        if (value === "Add a new Supplement...") {
             this.AddNewMedicineTypeTriggered.emit(this);
             this.viewModel.SearchText = '';
             return;

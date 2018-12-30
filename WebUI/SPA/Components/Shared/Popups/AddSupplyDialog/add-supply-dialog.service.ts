@@ -48,18 +48,7 @@ export class AddSupplyDialogService {
 
 
                                 })
-                            //this.dataService.RecalculateRemainingSupplyAmount(medicineTypeCLO.ID);
-                            //    .then((newSupplyInfo) => {
-                            //        this.getMedicineTypeElemByCloID(medicineTypeCLO.ID)
-                            //            .UpdateCLOSupplyFields(newSupplyInfo.CurrentSupplyAmount, newSupplyInfo.SupplyWillLastUntil);
 
-                            //        // 
-                            //        this.commandManager.InvokeCommandFlow('RefreshScheduleFlow');
-                            //        this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
-
-                            //        this.spinnerService.Hide();
-
-                            //    });
                         });
                         return promiseWrapper;
                     }

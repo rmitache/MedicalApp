@@ -17,7 +17,7 @@
                                 [(ngModel)]="viewModel.SearchText"
                                 [suggestions]="viewModel.SymptomTypesSearchResults"
                                 [emptyMessage]="'No symptoms could be found. Please try a different name'"
-                                [placeholder]="'Type to choose Symptoms'"
+                                [placeholder]="'Search symptoms...'"
                                 (completeMethod)="onSymptomTypeTextBoxChanged($event)"
                                 (onSelect)="onSymptomTypeSelected($event)">
                 </p-autoComplete>

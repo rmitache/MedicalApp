@@ -54,7 +54,7 @@ export class IFRPGroupListComponent {
             });
 
             // Add a special create new MedicineType option at the top
-            let addNewMedTypeOption = "Add a new Medicine Type...";
+            let addNewMedTypeOption = "Add a new Supplement...";
             results.unshift(addNewMedTypeOption);
 
 			return results;

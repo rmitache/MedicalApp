@@ -1,7 +1,7 @@
 <div class="frame">
     <div class="header">
         <div class="left-section">
-            <span class="header-label h1">MEDICINES</span>
+            <span class="header-label h1">SUPPLEMENTS</span>
             <i class="fa fa-question-circle"
                [pTooltip]="infoTooltipText" [escape]="false"
                tooltipPosition="bottom"></i>
@@ -35,16 +35,16 @@
                    [CurrentNoDataModeID]="viewModel.CurrentNoDataMode">
         <no-data-mode [ID]="noDataModes.NoAvailableMedicineTypes">
             <span class="label-discrete">
-                You haven't created any Medicine Types yet.
+                You haven't defined any Supplements yet.
             </span> <br />
             <button style="margin-top:7px" pButton type="button" icon="fa fa-plus"  label="Create new"
                     (click)="onAddNewMedicineTypeTriggered()"></button>
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesInUse">
-            <span class="label-discrete">You have Medicine Types, but none of them are currently being used.</span>
+            <span class="label-discrete">You have Supplements defined, but none of them are currently being used.</span>
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesNotInUse">
-            <span class="label-discrete"> All your Medicine Types are currently in use.</span>
+            <span class="label-discrete"> All your Supplements are currently in use.</span>
         </no-data-mode>
     </no-data-panel>
 </div> 

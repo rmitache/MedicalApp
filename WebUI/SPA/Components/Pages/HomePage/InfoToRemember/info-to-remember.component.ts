@@ -24,7 +24,7 @@ export class InfoToRememberComponent {
     // Fields
     private readonly noDataModes = NoDataModes;
     private infoTooltipText: string =
-        `Here you can see the first Supplement you will run out of supply for.`;
+        `Here you can track supply for your Supplements so you know when they will run out.`;
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         TargetMedicineType: null,
