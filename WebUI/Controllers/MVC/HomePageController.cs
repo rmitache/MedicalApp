@@ -179,6 +179,16 @@ namespace WebUI.Controllers
             var blos = this.planService.GetPlans((int)userID, true);
             return Json(blos);
         }
+
+        [Route("HomePage/UserHasAnyPlans")]
+        [HttpGet]
+        public JsonResult UserHasAnyPlans()
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.planService.GetPlans((int)userID, true);
+            bool userHasPlans = blos.Count > 0;
+            return Json(userHasPlans);
+        }
         //---------------------------------------------------------------------------------------------------------------------
 
         // HealthStatusEntries & Symptoms -------------------------------------------------------------------------------------

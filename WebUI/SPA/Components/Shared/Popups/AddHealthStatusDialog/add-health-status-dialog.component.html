@@ -31,7 +31,7 @@
                     <div class="recent-symptom-elem" *ngFor="let clo of viewModel.MostRecentHealthStatusEntry?.SymptomEntries"
                          (click)="onRecentSymptomTypeClicked(clo)"
                          [pTooltip]="'Click to add this symptom'"
-                         [tooltipZIndex]="52"
+                         [tooltipZIndex]="52000"
                          [tooltipPosition]="'bottom'">
                         <span class="label">{{clo.SymptomType.Name}}</span>
                         <i class="fa fa-plus"></i>

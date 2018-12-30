@@ -167,6 +167,17 @@ export class HomePageDataService {
 
         return getDataPromise;
     }
+    public UserHasAnyPlans(): Promise<boolean> {
+        const apiMethodName: string = 'UserHasAnyPlans';
+
+
+        let getDataPromise = this.httpHandlerService.Get(this.apiUrl + '/' + apiMethodName)
+            .toPromise();
+
+
+        return getDataPromise;
+    }
+
 
     // HealthStatusEntries
     public AddHealthStatusEntry(healthStatusEntryCLO: CLOs.HealthStatusEntryCLO): Promise<CLOs.HealthStatusEntryCLO> {

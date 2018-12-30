@@ -32,13 +32,11 @@ export class PlansOverviewComponent {
     // Fields
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
-    
     private readonly noDataModes = NoDataModes;
     private infoTooltipText: string =
         `Your PLANS determine how your SCHEDULE looks like. <br />
         They allow you to group and define different types of treatments, which you can change as time goes by depending on your needs.
         `;
-
     private readonly planStatusViewModes = {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         All: 'All',
@@ -64,6 +62,7 @@ export class PlansOverviewComponent {
                 });
 
             this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+            this.commandManager.InvokeCommandFlow('RefreshPlansOverviewFlow');
             this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
 
             setTimeout(() => {
@@ -296,6 +295,14 @@ export class PlansOverviewComponent {
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    // Public methods
+    public ReloadData() {
+        this.reloadDataFromServer()
+            .then(() => {
+                this.refreshUI();
+            });
     }
 
     // Event handlers

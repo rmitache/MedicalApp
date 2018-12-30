@@ -218,37 +218,37 @@ class DayDisplayMode implements IDisplayMode {
             };
             dataPoints.push(dp);
 
-            if (clo.HealthLevel >= 0) {
-                dataPointsBgColors.push('#9dc340');
-            } else if (clo.HealthLevel < 0) {
-                dataPointsBgColors.push('#fe6060');
-            }
+            //if (clo.HealthLevel >= 0) {
+            //    dataPointsBgColors.push('#9dc340');
+            //} else if (clo.HealthLevel < 0) {
+            //    dataPointsBgColors.push('#fe6060');
+            //}
 
-            //// Color
-            //// great
-            //if (clo.HealthLevel > 2) {
-            //    dataPointsBgColors.push('#284e11');
-            //}
-            //// good
-            //else if (clo.HealthLevel > 1 && clo.HealthLevel <= 2) {
-            //    dataPointsBgColors.push('#009e11');
-            //}
-            //// ok
-            //else if (clo.HealthLevel > 0 && clo.HealthLevel <= 1) {
-            //    dataPointsBgColors.push('#b5d7a7');
-            //}
-            //// notgreat 
-            //else if (clo.HealthLevel >= -1 && clo.HealthLevel < 0) {
-            //    dataPointsBgColors.push('#ff9900');
-            //}
-            //// bad 
-            //else if (clo.HealthLevel >= -2 && clo.HealthLevel < -1) {
-            //    dataPointsBgColors.push('#e06666');
-            //}
-            //// very bad
-            //else if (clo.HealthLevel < -2) {
-            //    dataPointsBgColors.push('red');
-            //}
+            // Color
+            // great
+            if (clo.HealthLevel > 2) {
+                dataPointsBgColors.push('#284e11');
+            }
+            // good
+            else if (clo.HealthLevel > 1 && clo.HealthLevel <= 2) {
+                dataPointsBgColors.push('#009e11');
+            }
+            // ok
+            else if (clo.HealthLevel > 0 && clo.HealthLevel <= 1) {
+                dataPointsBgColors.push('#b5d7a7');
+            }
+            // notgreat 
+            else if (clo.HealthLevel >= -1 && clo.HealthLevel < 0) {
+                dataPointsBgColors.push('#ff9900');
+            }
+            // bad 
+            else if (clo.HealthLevel >= -2 && clo.HealthLevel < -1) {
+                dataPointsBgColors.push('#e06666');
+            }
+            // very bad
+            else if (clo.HealthLevel < -2) {
+                dataPointsBgColors.push('red');
+            }
         });
 
         // Add min/max special datapoints

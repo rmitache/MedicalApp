@@ -20,6 +20,8 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
+import { PlanEditorMode } from 'SPA/Components/Shared/Popups/PlanEditorDialog/plan-editor-dialog.component';
+import { PlanEditorDialogService } from 'SPA/Components/Shared/Popups/PlanEditorDialog/plan-editor-dialog.service';
 
 
 // Animations
@@ -69,10 +71,14 @@ export class ScheduleComponent {
     private infoTooltipText: string =
         `SCHEDULE shows a detailed picture of all treatments you have to take during the day. <br />
         You can mark which items you have taken by clicking on them.`;
-	private readonly viewModel: ViewModel = {
-		AvailableDateRange: null,
+    private readonly noDataModes = NoDataModes;
+    private readonly viewModel: ViewModel = {
+        UserHasAnyPlans: null,
+        CurrentNoDataMode:null,
 
-		SelectedDateRange: null,
+		AvailableDateRange: null,
+        SelectedDateRange: null,
+
 		AvailableFactorRecords: null,
 		VisibleDisplayRepresentation: null,
 
@@ -93,15 +99,45 @@ export class ScheduleComponent {
 		}
 		return currentStrategy;
 	}
-	private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+    private reloadDataFromServer(newDateRange: Range<moment.Moment>): Promise<void> {
+
+        // Two promises
 		let jsDateRange = new Range<Date>(newDateRange.RangeStart.toDate(), newDateRange.RangeEnd.toDate());
-		let promise = this.dataService.GetFactorRecords(jsDateRange)
-			.then(factorRecordCLOs => {
-				this.viewModel.AvailableDateRange = newDateRange;
-				this.viewModel.AvailableFactorRecords = factorRecordCLOs;
-			});
-		return promise;
-	}
+        let getFactorRecordsPromise = this.dataService.GetFactorRecords(jsDateRange);
+        let getUserHasAnyPlansPromise = this.dataService.UserHasAnyPlans();
+
+        // Then logic
+        let promise = Promise.all([getFactorRecordsPromise, getUserHasAnyPlansPromise])
+            .then((results) => {
+                let factorRecordCLOs = results[0];
+                let userHasAnyPlans = results[1];
+
+                //
+                this.viewModel.AvailableDateRange = newDateRange;
+                this.viewModel.AvailableFactorRecords = factorRecordCLOs;
+                this.viewModel.UserHasAnyPlans = userHasAnyPlans;
+            });
+        return promise;
+    }
+    private openPlanEditor(planCLO: CLOs.PlanCLO, mode: PlanEditorMode) {
+
+        this.planEditorDialogService.Open(planCLO, mode, () => {
+
+            this.reloadDataFromServer(this.viewModel.AvailableDateRange)
+                .then(() => {
+                    this.refreshUI();
+                });
+
+            this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
+            this.commandManager.InvokeCommandFlow('RefreshPlansOverviewFlow');
+            this.commandManager.InvokeCommandFlow('RefreshRemindersFlow');
+
+            setTimeout(() => {
+                this.spinnerService.Hide();
+            }, 200);
+        });
+
+    }
 	private refreshUI() {
 		// Use selectedDateRange to get a subset of data from AvailableFactorRecords
 		let visibleFactorRecords = this.viewModel.AvailableFactorRecords.filter(fRec => {
@@ -112,7 +148,14 @@ export class ScheduleComponent {
 		
 		// Refresh VM properties
 		let currentDisplayMode = this.getCurrentDisplayModeInstance();
-		this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(visibleFactorRecords);
+        this.viewModel.VisibleDisplayRepresentation = currentDisplayMode.GenerateDisplayRepresentation(visibleFactorRecords);
+
+        // NoData
+        if (this.viewModel.UserHasAnyPlans === false) {
+            this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailablePlans;
+        } else {
+            this.viewModel.CurrentNoDataMode = null;
+        }
 	}
 
 	// Constructor 
@@ -120,10 +163,10 @@ export class ScheduleComponent {
 		applicationState: HomePageApplicationState,
 		private readonly dataService: HomePageDataService,
 		private readonly commandManager: CommandManager,
-		private readonly modalDialogService: ModalDialogService,
-		private viewContainerRef: ViewContainerRef,
 		private readonly genericCLOFactory: GenericCLOFactory,
-		private readonly spinnerService: SpinnerService
+        private readonly spinnerService: SpinnerService,
+        private readonly planEditorDialogService: PlanEditorDialogService,
+
 
 	) {
 		this.appState = applicationState as IReadOnlyApplicationState;
@@ -139,7 +182,11 @@ export class ScheduleComponent {
 		// Init VM properties
 		this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(initialSelectedDateRange.RangeStart, initialSelectedDateRange.RangeEnd, this.availableWindowPaddingInMonths);
 		this.viewModel.AvailableFactorRecords = this.dataService.GetFactorRecordsForInitialRangeFromBundle().ToArray();
-		this.viewModel.SelectedDateRange = initialSelectedDateRange;
+        this.viewModel.SelectedDateRange = initialSelectedDateRange;
+
+        // Init info for NoData
+        let plans = this.dataService.GetPlansFromBundle();
+        this.viewModel.UserHasAnyPlans = (plans.Length > 0) ? true : false;
 		
 		// Refresh the UI
 		this.refreshUI();
@@ -157,6 +204,12 @@ export class ScheduleComponent {
 	}
 
 	// Event handlers
+    private onAddNewPlanTriggered() {
+
+        let newPlanCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.PlanCLO);
+        this.openPlanEditor(newPlanCLO, PlanEditorMode.CreateNew);
+    }
+
 	private onSelectedDateRangeChangedBackward(newSelDateRange: Range<moment.Moment>) {
 		// Check if newSelDateRange is within the AvailableDateRange
 		if (newSelDateRange.RangeStart >= this.viewModel.AvailableDateRange.RangeStart) {
@@ -211,6 +264,10 @@ export class ScheduleComponent {
 	}
 }
 interface ViewModel {
+    UserHasAnyPlans: boolean;
+    CurrentNoDataMode: NoDataModes;
+
+
 	AvailableDateRange: Range<moment.Moment>;
 	AvailableFactorRecords: CLOs.MedicineFactorRecordCLO[];
 
@@ -221,6 +278,9 @@ interface ViewModel {
 }
 
 
+enum NoDataModes {
+    NoAvailablePlans = 0
+}
 
 // Supported Display modes
 interface IDisplayMode {
@@ -229,10 +289,6 @@ interface IDisplayMode {
 class DayDisplayMode implements IDisplayMode {
 	// Fields
 	private unitsConfiguration = [
-		//{
-		//	Title: 'Night',
-		//	TimeInterval: new TimeRange(new Time(0, 0), new Time(5, 59))
-		//},
 		{
 			Title: 'Night / Morning',
 			TimeInterval: new TimeRange(new Time(0, 0), new Time(9, 59))

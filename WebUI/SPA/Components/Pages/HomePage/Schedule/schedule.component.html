@@ -1,4 +1,4 @@
-<custom-sidebar [(visible)]="displaySideBar" position="right" >
+<custom-sidebar [(visible)]="displaySideBar" position="right">
     <plans-overview></plans-overview>
 </custom-sidebar>
 
@@ -12,7 +12,8 @@
                tooltipPosition="bottom"></i>
         </div>
         <div class="center-section">
-            <navigation-panel #navPanel 
+            <navigation-panel [hidden]="viewModel.CurrentNoDataMode!==null"
+                              #navPanel
                               [Width]="310"
                               (DateRangeChangedBackward)="onSelectedDateRangeChangedBackward($event)"
                               (DateRangeChangedForward)="onSelectedDateRangeChangedForward($event)"></navigation-panel>
@@ -22,18 +23,34 @@
             <button pButton type="button" icon="fa fa-cog"
                     [pTooltip]="'Manage your Schedule'"
                     (click)="displaySideBar = true"></button>
-           
+
         </div>
     </div>
     <div class="body" [@goForwardAnimation]="animationVariables.animateForward" [@goBackwardAnimation]="animationVariables.animateBackward">
         <div class="outer">
-                <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
-                               [Title]="unitRepr.Title"
-                               [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
+            <schedule-unit *ngFor="let unitRepr of viewModel.VisibleDisplayRepresentation.UnitRepresentations"
+                           [Title]="unitRepr.Title"
+                           [TimeGroupRepresentations]="unitRepr.TimeGroupRepresentations">
 
-                </schedule-unit>
+            </schedule-unit>
         </div>
 
 
     </div>
-</div> 
+
+    <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [InnerMarginTop]="120"
+                   [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
+                    [PositionStyle]="'vertical'">
+        <no-data-mode [ID]="noDataModes.NoAvailablePlans">
+            <span class="label-discrete">
+                There is nothing in your Schedule yet
+            </span>
+            <br />
+            <button style="margin-top:7px" pButton type="button" icon="fa fa-plus" label="Define your first Treatment Plan"
+                    (click)="onAddNewPlanTriggered()"></button>
+        </no-data-mode>
+
+    </no-data-panel>
+</div>
+
