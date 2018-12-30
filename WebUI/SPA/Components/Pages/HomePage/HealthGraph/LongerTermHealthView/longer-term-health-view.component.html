@@ -22,6 +22,17 @@
         </div>
     </div>
 
+    <no-data-panel *ngIf="viewModel.CurrentNoDataMode!==null"
+                   [CurrentNoDataModeID]="viewModel.CurrentNoDataMode"
+                   [IconName]="'fa fa-calendar-plus'"
+                   [PositionStyle]="'vertical'">
+        <no-data-mode [ID]="noDataModes.NoHealthStatusEntriesLastTenDays">
+            <span class="msg-label label-discrete">
+                You haven't recorded your Health in the last 10 days
+            </span>
 
+        </no-data-mode>
+
+    </no-data-panel>
 
 </div> 

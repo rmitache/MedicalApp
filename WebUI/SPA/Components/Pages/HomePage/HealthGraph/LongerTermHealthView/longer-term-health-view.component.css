@@ -61,3 +61,18 @@
     overflow: visible;
     height: 115px;
 }
+
+
+.no-data-panel {
+    height: calc(100% - 30px);
+    width: 100%;
+    float: left;
+    transform: translate(0, calc(-102% ));
+
+}
+
+    .no-data-panel /deep/ .msg-label {
+        float: left;
+        clear: both;
+    }
+

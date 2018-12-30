@@ -211,7 +211,10 @@ export class HomePageDataService {
         let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName)
             .toPromise()
             .then((blo) => {
-                return this.genericCLOFactory.ConvertToCLO<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO.name, blo);
+                if (blo !== null)
+                    return this.genericCLOFactory.ConvertToCLO<CLOs.HealthStatusEntryCLO>(CLOs.HealthStatusEntryCLO.name, blo);
+                else
+                    return null;
             });
 
 

@@ -139,7 +139,7 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
             lastWeek: 'MMM DD, YYYY',//'[Last] dddd',
             nextWeek: 'MMM DD, YYYY',//'[Next] dddd',
             sameElse: 'MMM DD, YYYY',
-           
+
         });
 
 
@@ -161,13 +161,13 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
         this.viewModel.HealthStatusEntryCLO.OccurrenceDateTime = new Date();
 
         // Load info for the RecentSymptoms section if there are any to show
-        if (this.dialogInitParameters.mostRecentHealthStatusEntry !== null && 
+        if (this.dialogInitParameters.mostRecentHealthStatusEntry !== null &&
             this.dialogInitParameters.mostRecentHealthStatusEntry.SymptomEntries.length > 0) {
             this.viewModel.ShowRecentSymptomsDiv = true;
+
             this.viewModel.MostRecentHealthStatusEntry = this.dialogInitParameters.mostRecentHealthStatusEntry;
             this.viewModel.MostRecentHealthStatusTimestamp = moment(this.viewModel.MostRecentHealthStatusEntry.OccurrenceDateTime).fromNow(); //this.getRelativeDateAsString(this.viewModel.MostRecentHealthStatusEntry.OccurrenceDateTime);
             //this.viewModel.MostRecentHealthStatusEntry.SymptomEntries = this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.concat(this.viewModel.MostRecentHealthStatusEntry.SymptomEntries.slice());
-
         }
 
     }
@@ -221,7 +221,7 @@ export class AddHealthStatusDialogComponent implements IModalDialog {
                 this.spinnerService.Hide();
             });
             this.viewModel.SearchText = '';
-            return; 
+            return;
         }
 
 

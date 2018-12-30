@@ -64,17 +64,13 @@
 
 
 .no-data-panel {
-    height: calc(100% - 40px);
+    height: calc(100% - 30px);
     width: 100% ;
     float: left;
-    transform: translate(0, calc(-100%))
+    transform: translate(0, calc(-100% + 25px));
 }
 .no-data-panel /deep/ .msg-label {
     float:left;
     clear:both;
-    white-space:nowrap;
 }
 
-#status-icon-small {
-    display:none;
-}

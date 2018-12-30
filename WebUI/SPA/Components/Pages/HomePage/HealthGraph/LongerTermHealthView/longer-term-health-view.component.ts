@@ -35,6 +35,8 @@ export class LongerTermHealthViewComponent {
     // Fields
     @ViewChild('healthStatusTooltip')
     private healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent;
+    private readonly noDataModes = NoDataModes;
+
     private canvas: any;
     private chartCanvasContext: any;
     private chartInstance: any;
@@ -45,7 +47,9 @@ export class LongerTermHealthViewComponent {
 
         ChartOptions: null,
         ChartData: null,
+
         DateRangeDisplayMode: DateRangeMode.TenDays,
+        CurrentNoDataMode: null,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -113,6 +117,13 @@ export class LongerTermHealthViewComponent {
             options: this.viewModel.ChartOptions,
 
         });
+
+        // NoData triggers
+        if (filteredHealthStatusEntryCLOs.length === 0) {
+            this.viewModel.CurrentNoDataMode = NoDataModes.NoHealthStatusEntriesLastTenDays;
+        } else {
+            this.viewModel.CurrentNoDataMode = null;
+        }
     }
 
     // Constructor 
@@ -172,7 +183,10 @@ interface ViewModel {
 
     ChartOptions: any;
     ChartData: any;
+
     DateRangeDisplayMode: DateRangeMode;
+    CurrentNoDataMode: NoDataModes;
+
 }
 export class SymptomTypeDatasetItem {
     constructor(
@@ -181,6 +195,9 @@ export class SymptomTypeDatasetItem {
         public Color: string) { }
 }
 
+enum NoDataModes {
+    NoHealthStatusEntriesLastTenDays = 0,
+}
 
 // Supported Display modes
 type GetChartCanvasFunc = () => any;
