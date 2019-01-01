@@ -8,7 +8,7 @@ import { GetMonthRangeWithPaddingUsingMoment } from 'SPA/Core/Helpers/Functions/
 export class StartupDataBundleService {
     // Fields
 	private readonly initialDataApiUrl: string = '/HomePage/';
-	private availableWindowPaddingInMonths = 0;
+	private availableWindowPaddingInMonths = 1;
     private bundle: Object | null = null;
 
     // Properties

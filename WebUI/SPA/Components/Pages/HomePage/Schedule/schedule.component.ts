@@ -61,7 +61,7 @@ export const goBackwardAnimation = trigger('goBackwardAnimation', [
 })
 export class ScheduleComponent {
 	// Fields
-	private availableWindowPaddingInMonths = 0;
+	private availableWindowPaddingInMonths = 1;
 	@ViewChild('navPanel')
 	private navPanelInstance: NavigationPanelComponent;
 	private animationVariables = {

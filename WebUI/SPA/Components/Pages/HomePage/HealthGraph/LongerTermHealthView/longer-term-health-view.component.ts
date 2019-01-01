@@ -144,7 +144,6 @@ export class LongerTermHealthViewComponent {
     ngOnInit() {
 
         // Get the initial range using the current DisplayMode
-        let now = moment();
         var initialSelectedDateRange = new Range<moment.Moment>(moment().startOf('day').subtract(9, 'days'),
             moment().endOf('day'));
 
