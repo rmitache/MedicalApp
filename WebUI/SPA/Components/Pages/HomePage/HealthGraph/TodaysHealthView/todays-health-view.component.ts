@@ -425,7 +425,7 @@ class DayDisplayMode implements IDisplayMode {
 
         // Prepare data
         var healthEntryCLOsInRange: CLOs.HealthStatusEntryCLO[] = [];
-        var datesWhichAreInGivenRange = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(currentSelDateRange, true);
+        var datesWhichAreInGivenRange = HelperFunctions.EnumerateDatesBetweenDatesUsingMoment(currentSelDateRange, true);
         datesWhichAreInGivenRange.forEach((date, index) => {
 
             // Prepare data

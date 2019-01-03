@@ -254,13 +254,7 @@ class ChangeMode implements IPlanEditorModeImplementation {
 
         this.prevVersion = planCLO.GetLatestVersion();
 
-        // If prevVersion starts in the future - throw exception -> this should have different logic as in HardEdit instead of creating a new version
-        if (this.prevVersion === null) {
-            throw new Error('Adjusting a plan only works for plans with at least 1 previous version!');
-        }
-        if (moment(this.prevVersion.StartDateTime).startOf('day') > moment().startOf('day')) {
-            throw new Error('Adjusting a plan whose last version starts in the future is not yet supported!');
-        }
+
 
 
         // Create a new version for the planCLO
@@ -563,7 +557,7 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
     var endDateErrorsCount = 0;
 
     // Rule 1. newVersion.StartDate must be > prevVersion.StartDate
-    if (prevVersion !== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDateTime).startOf('day'))) {
+    if (prevVersion !== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.StartDateTime))) {
         startDateErrorsCount++;
     }
 
@@ -576,7 +570,7 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
 
     // Rule 3. Conditional: newversion.StartDate must be > prevVersion.EndDate 
     if (newStartDateCanBeBeforePrevVersionEndDate === false) {
-        if (prevVersion !== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.EndDateTime).endOf('day'))) {
+        if (prevVersion !== null && (moment(startDateInput.value).startOf('day') <= moment(prevVersion.EndDateTime))) {
             startDateErrorsCount++;
         }
     }

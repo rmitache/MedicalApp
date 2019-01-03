@@ -114,7 +114,7 @@ export class HealthStatusDatasetGenerator {
 
 
         // Loop through ALL dates in the range and create datapoints
-        let datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(range, true);
+        let datesInRangeArray = HelperFunctions.EnumerateDatesBetweenDatesUsingMoment(range, true);
         datesInRangeArray.forEach((date, index) => {
 
             // Get the HealthStatusCLOs for the date
@@ -228,7 +228,7 @@ export class SymptomTypeDatasetGenerator {
 
         // Loop through ALL dates in the range and create datapoints
         let targetRange = new Range<moment.Moment>(range.RangeStart, cutOffRangeEnd);
-        let datesInRangeArray = HelperFunctions.EnumerateDaysBetweenDatesUsingMoment(targetRange, true);
+        let datesInRangeArray = HelperFunctions.EnumerateDatesBetweenDatesUsingMoment(targetRange, true);
         datesInRangeArray.forEach((date, index) => {
 
             // Get the HealthStatusCLOs for the date

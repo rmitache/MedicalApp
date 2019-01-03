@@ -33,7 +33,7 @@ export class VersionCLO extends BaseCLO {
         }
     }
     public get HasStarted(): boolean {
-        if (moment(this.StartDateTime).startOf('day') <= moment()) {
+        if (moment(this.StartDateTime) <= moment()) {
             return true;
         } else {
             return false;
@@ -47,7 +47,7 @@ export class VersionCLO extends BaseCLO {
             return false;
         }
 
-        if (moment(this.EndDateTime).endOf('day') <= moment()) {
+        if (moment(this.EndDateTime) <= moment()) {
             return true;
         } else {
             return false;
@@ -69,14 +69,14 @@ export class VersionCLO extends BaseCLO {
 
         // Variables
         var intersectionRange = null;
-        var momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), targetDateRange.RangeEnd.clone().endOf('day'));
+        var momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone(), targetDateRange.RangeEnd.clone());
 
 
         // Exclude future -> If requested, intersect only up until TODAY 
         if (excludeFuture === true) {
             var today = moment();
             if (momentTargetDateRange.contains(today)) {
-                momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone().startOf('day'), today.endOf('day'));
+                momentTargetDateRange = new momentRange.DateRange(targetDateRange.RangeStart.clone(), today);
             } else if (momentTargetDateRange.start > today ) {
                 return null;
             }
@@ -85,7 +85,7 @@ export class VersionCLO extends BaseCLO {
 
         // Get the intersection when there is an EndDate
         if (this.EndDateTime !== null) {
-            var versionDateRange = new momentRange.DateRange(moment(this.StartDateTime).startOf('day'), moment(this.EndDateTime).endOf('day'));
+            var versionDateRange = new momentRange.DateRange(moment(this.StartDateTime), moment(this.EndDateTime));
             intersectionRange = momentTargetDateRange.intersect(versionDateRange);
         }
         // Get the intersection when there is no EndDate

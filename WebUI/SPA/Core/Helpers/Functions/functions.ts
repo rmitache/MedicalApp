@@ -19,7 +19,7 @@ export function GetEnumEntryByIndex(enumRef: any, index: number): any {
 }
 
 // Dates
-export function EnumerateDaysBetweenDates(startDate: Date, endDate: Date, includeEdges: boolean): Date[] {
+export function EnumerateDatesBetweenDates(startDate: Date, endDate: Date, includeEdges: boolean): Date[] {
 	var dates = [];
 
 	var currDate = moment(startDate).startOf('day');
@@ -36,7 +36,7 @@ export function EnumerateDaysBetweenDates(startDate: Date, endDate: Date, includ
 
 	return dates;
 };
-export function EnumerateDaysBetweenDatesUsingMoment(range: Range<moment.Moment>, includeEdges: boolean): moment.Moment[] {
+export function EnumerateDatesBetweenDatesUsingMoment(range: Range<moment.Moment>, includeEdges: boolean): moment.Moment[] {
 	var momentDates = [];
 
 	var currDate = range.RangeStart.clone().startOf('day');
@@ -81,7 +81,7 @@ export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, sec
 	return nrOfDays;
 }
 export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
-	var datesInRange = EnumerateDaysBetweenDatesUsingMoment(targetDateRange, true);
+	var datesInRange = EnumerateDatesBetweenDatesUsingMoment(targetDateRange, true);
 	for (var i = 0; i < datesInRange.length; i++) {
 		var datesMatch = datesInRange[i].isSame(date, 'days');
 		if (datesMatch) {

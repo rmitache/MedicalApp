@@ -13,7 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDatesBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
 
 
@@ -47,7 +47,7 @@ export class TimelineComponent {
 
         // Variables
         var tickInfoWrappers: TickInfoWrapper[] = [];
-        this.viewModel.DatesInSelectedDateRange = EnumerateDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange, true);
+        this.viewModel.DatesInSelectedDateRange = EnumerateDatesBetweenDatesUsingMoment(this.viewModel.SelectedDateRange, true);
 
         // Compute % width per tick 
         var width = 100 / (this.viewModel.DatesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
