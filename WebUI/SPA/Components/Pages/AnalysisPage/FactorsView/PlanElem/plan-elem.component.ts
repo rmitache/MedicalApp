@@ -13,9 +13,9 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { GetNrOfDaysBetweenDates, GetNrOfDaysBetweenDatesUsingMoment, EnumerateDatesBetweenDatesUsingMoment, GetDateIndexInTargetRange } from 'SPA/Core/Helpers/Functions/functions';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionElemInfoWrapper, VersionInfoGenerator } from './version-info-generator';
 
 
 @Component({
@@ -42,68 +42,11 @@ export class PlanElemComponent {
         VersionInfoWrappers: null
     };
 
-    // Private methods
-    private createVersionInfoWrappers(): VersionElemInfoWrapper[] {
-
-        // Variables
-        var versionCLOs = this.planCLO.Versions.ToArray();
-        var versionInfoWrappers: VersionElemInfoWrapper[] = [];
-        var nrOfDaysInSelectedDateRange = GetNrOfDaysBetweenDatesUsingMoment(this.viewModel.SelectedDateRange.RangeStart, this.viewModel.SelectedDateRange.RangeEnd);
-        var widthBetweenDates = 100 / (nrOfDaysInSelectedDateRange - 1);
-
-        // Create versionInfoWrappers
-        for (let i = 0; i < versionCLOs.length; i++) {
-            let versionCLO = versionCLOs[i];
-
-            // Only consider Versions which are within the SelectedDateRange
-            let intersectionRange = versionCLO.GetIntersectionWithDateRange(this.viewModel.SelectedDateRange, true);
-            if (intersectionRange !== null) {
-
-                // Determine the Width
-                let nrOfDaysInIntersection = GetNrOfDaysBetweenDatesUsingMoment(intersectionRange.start, intersectionRange.end);
-                let width = (nrOfDaysInIntersection - 1) * widthBetweenDates; // minus one is because any date is shown as the nth tick, which actually is n - 1 ticks WIDE
-
-                // Determine the X and Y positions
-                let startDateIndex = GetDateIndexInTargetRange(moment(versionCLO.StartDateTime), this.viewModel.SelectedDateRange);
-                let xPosition = (startDateIndex) * widthBetweenDates;
-                let yPosition = 5;
-
-                // Create the wrapper
-                let newWrapper = new VersionElemInfoWrapper(versionCLO, width, xPosition, yPosition, intersectionRange);
-                versionInfoWrappers.push(newWrapper);
-            }
-        }
-
-        // Second iteration through versionInfoWrappers 
-        if (versionInfoWrappers.length > 0) {
-
-            // Show plan name above first visible versionElem
-            let firstVersionInfoWrapper = versionInfoWrappers[0];
-            firstVersionInfoWrapper.PlanName = this.viewModel.PlanCLO.Name;
-
-            // Handle special width adjustments for adjacent versions
-            for (let j = 0; j < versionInfoWrappers.length - 1; j++) {
-
-                // If the versionWrapper is adjacent to its next versionWrapper, slightly expand it's width
-                if (j < versionInfoWrappers.length - 1) {
-                    var currentVersion = versionInfoWrappers[j].VersionCLO;
-                    var nextVersion = versionInfoWrappers[j + 1].VersionCLO;
-
-                    if (this.versionCLOService.AreAdjacent(currentVersion, nextVersion)) {
-                        versionInfoWrappers[j].Width += 1 * widthBetweenDates;
-                    }
-
-                }
-            }
-
-        }
-
-        return versionInfoWrappers;
-    }
 
     // Constructor
     constructor(
-        private versionCLOService: VersionCLOService
+        private versionCLOService: VersionCLOService,
+        private versionInfoGenerator: VersionInfoGenerator
     ) {
     }
     ngOnInit() {
@@ -112,7 +55,7 @@ export class PlanElemComponent {
         this.viewModel.XPos = this.xPos;
         this.viewModel.YPos = this.yPos;
 
-        this.viewModel.VersionInfoWrappers = this.createVersionInfoWrappers();
+        this.viewModel.VersionInfoWrappers = this.versionInfoGenerator.CreateVersionInfoWrappers(this.viewModel.PlanCLO, this.viewModel.SelectedDateRange);
     }
 
     // Events
@@ -130,58 +73,5 @@ interface ViewModel {
     YPos: number;
 
     VersionInfoWrappers: VersionElemInfoWrapper[];
-}
-
-// Representation
-export class VersionElemInfoWrapper {
-    // Fields
-    public VersionCLO: CLOs.VersionCLO;
-    public IntersectionDateRange: momentRange.DateRange;
-
-    public Width: number;
-    public XPos: number;
-    public YPos: number;
-    public PlanName: string;
-
-    // Properties
-    public get VersionStartsOnIntersectionStart(): boolean {
-        var versionStartSameAsIntersectionStart = moment(this.VersionCLO.StartDateTime).isSame(this.IntersectionDateRange.start, 'day');
-        return versionStartSameAsIntersectionStart;
-    }
-    public get VersionEndsOnIntersectionEnd(): boolean {
-        var versionEndSameAsIntersectionEnd = moment(this.VersionCLO.EndDateTime).isSame(this.IntersectionDateRange.end, 'day');
-        return versionEndSameAsIntersectionEnd;
-    }
-    public get StartMarkerName(): string {
-
-        if (this.VersionStartsOnIntersectionStart === true) {
-            return 'url(#circle-tick-start)'
-        } else {
-            return '';
-        }
-    }
-    public get EndMarkerName(): string {
-        if (this.VersionEndsOnIntersectionEnd === true) {
-            return 'url(#circle-tick-start)';
-        } else {
-            return 'url(#arrow)';
-        }
-    }
-
-    // Constructor
-    constructor(
-        versionCLO: CLOs.VersionCLO,
-        width: number,
-        xPos: number,
-        yPos: number,
-        intersectionWithVisibleDateRange: momentRange.DateRange
-    ) {
-        this.VersionCLO = versionCLO;
-        this.Width = width;
-        this.XPos = xPos;
-        this.YPos = yPos;
-        this.IntersectionDateRange = intersectionWithVisibleDateRange;
-
-    }
 }
 

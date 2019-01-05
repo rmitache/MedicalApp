@@ -7,11 +7,7 @@ import * as momentRange from 'moment-range';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
 import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
-import { BaseCLO } from 'SPA/Core/CLO/base.clo';
-import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
-import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
-import { GetNrOfDaysBetweenDatesUsingMoment, ConvertDictionaryToArray } from 'SPA/Core/Helpers/Functions/functions';
+import { ConvertDictionaryToArray } from 'SPA/Core/Helpers/Functions/functions';
 
 @Injectable()
 export class HealthStatusEntryCLOService {

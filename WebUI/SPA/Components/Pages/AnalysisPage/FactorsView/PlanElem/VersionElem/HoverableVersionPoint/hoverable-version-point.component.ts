@@ -12,7 +12,6 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 // Components
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
-import { VersionElemInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/plan-elem.component';
 
 
 @Component({

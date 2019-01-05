@@ -112,12 +112,11 @@ export class FactorsViewComponent {
         applicationState: AnalysisPageApplicationState,
         private readonly dataService: AnalysisPageDataService,
         private readonly commandManager: CommandManager,
-		private readonly genericCLOFactory: GenericCLOFactory,
-		private readonly spinnerService: SpinnerService
+		private readonly genericCLOFactory: GenericCLOFactory
 
     ) {
         this.appState = applicationState as IReadOnlyApplicationState;
-
+        
         // Subscriptions to AppState
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.viewModel.SelectedDateRange = newValue;

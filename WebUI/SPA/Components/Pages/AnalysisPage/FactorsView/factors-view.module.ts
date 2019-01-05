@@ -18,6 +18,7 @@ import { TickElemComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView
 import { TodayIndicatorComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/TodayIndicator/today-indicator.component';
 import { HoverableVersionPointComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/HoverableVersionPoint/hoverable-version-point.component';
 import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
+import { VersionInfoGenerator } from './PlanElem/version-info-generator';
 
 
 @NgModule({
@@ -38,6 +39,9 @@ import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/
         TodayIndicatorComponent,
         HoverableVersionPointComponent,
         FactorsFiltersPanelComponent
+    ],
+    providers: [
+        VersionInfoGenerator
     ],
     exports: [
         FactorsViewComponent,

@@ -81,16 +81,61 @@ export function GetNrOfDaysBetweenDatesUsingMoment(firstDate: moment.Moment, sec
 	return nrOfDays;
 }
 export function GetDateIndexInTargetRange(date: moment.Moment, targetDateRange: Range<moment.Moment>) {
-	var datesInRange = EnumerateDatesBetweenDatesUsingMoment(targetDateRange, true);
-	for (var i = 0; i < datesInRange.length; i++) {
-		var datesMatch = datesInRange[i].isSame(date, 'days');
-		if (datesMatch) {
-			return i;
-		}
-	}
+    var datesInRange = EnumerateDatesBetweenDatesUsingMoment(targetDateRange, true);
+    for (var i = 0; i < datesInRange.length; i++) {
+        var datesMatch = datesInRange[i].isSame(date, 'days');
+        if (datesMatch) {
+            return i;
+        }
+    }
 
-	return null;
+    return null;
 }
+
+
+
+export function GetNrOfHoursBetweenDatesUsingMoment(firstDate: moment.Moment, secondDate: moment.Moment, includeEdges: boolean = true) {
+
+    var largestDateTime;
+    var smallestDateTime;
+    if (firstDate.isSameOrAfter(secondDate)) {
+        largestDateTime = moment(firstDate).clone();
+        smallestDateTime = moment(secondDate).clone();
+    } else {
+        largestDateTime = moment(secondDate).clone();
+        smallestDateTime = moment(firstDate).clone();
+    }
+
+    var nrOfHours = largestDateTime.diff(smallestDateTime, 'hours');
+
+    //if (includeEdges) {
+    //    nrOfMins += 1;
+    //}
+
+
+
+
+    return nrOfHours;
+}
+export function GetHourIndexInTargetRange(dateTime: moment.Moment, targetDateRange: Range<moment.Moment>) {
+
+    //var startDateInHours = targetDateRange.RangeStart.
+
+
+    //var datesInRange = EnumerateDatesBetweenDatesUsingMoment(targetDateRange, true);
+    //for (var i = 0; i < datesInRange.length; i++) {
+    //    var datesMatch = datesInRange[i].isSame(dateTime, 'days');
+    //    if (datesMatch) {
+    //        return i;
+    //    }
+    //}
+
+    return null;
+}
+
+
+
+
 /* 
  * Returns a range of dates starting at the beginning of a month and ending at the end of a month 
  */

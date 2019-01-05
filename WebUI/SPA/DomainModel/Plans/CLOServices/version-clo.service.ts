@@ -47,7 +47,7 @@ export class VersionCLOService {
         // null - versionB -> everything in versionB is shown as STOPPED
         // versionA - null -> everything in versionA is shown as NEW
 
-
+       
         // Variables
         let medTypeChanges: MedicineTypeAndChangeTypePair[] = [];
         let versionAUniqueMedTypes =  (versionA !== null) ? this.GetUniqueMedicineTypesWithAvgDosePerMonth(versionA) : {};
@@ -103,39 +103,30 @@ export class VersionCLOService {
 
         return medTypeChanges;
     }
-    /** Checks whether two Versions are adjacent. The check is done on both sides  */
+    /** Checks whether two Versions are adjacent. The check is done on both sides, meaning the order of the Versions passed is irrelevant */
     public AreAdjacent(versionA: CLOs.VersionCLO, versionB: CLOs.VersionCLO) {
         if (versionA === null || versionB === null) {
             return false;
         }
+        // OBS: the reason the calc is done on both sides, is that the order of versions (time-wise) might be either AB or BA
 
-        let versionAStartDate = moment(versionA.StartDateTime);
-        let versionAEndDate = moment(versionA.EndDateTime);
-        let versionBStartDate = moment(versionB.StartDateTime);
-        let versionBEndDate = moment(versionB.EndDateTime);
+        // Convert all the dates to UTC (to ensure that calculations are not affected by potential DST)
+        let versionAStartDate = moment(versionA.StartDateTime).utc();
+        let versionAEndDate = moment(versionA.EndDateTime).utc();
+        let versionBStartDate = moment(versionB.StartDateTime).utc();
+        let versionBEndDate = moment(versionB.EndDateTime).utc();
 
 
-
-        //
-        let nrOfDaysOneSide = GetNrOfDaysBetweenDatesUsingMoment(versionBEndDate, versionAStartDate, false);
-        let nrOfDaysOtherSide = GetNrOfDaysBetweenDatesUsingMoment(versionBStartDate, versionAEndDate, false);
-
-        if (nrOfDaysOneSide === 1 || nrOfDaysOtherSide === 1) {
+        // The idea is that adjacent dates will be of the form 23:59 and 00:00 (in local time), so the different should be only 1 minute between them
+        var minutesOnOneSide = versionBEndDate.diff(versionAStartDate, 'minutes');
+        var minutesOnOtherSide = versionBStartDate.diff(versionAEndDate, 'minutes');
+        if (minutesOnOneSide === 1 || minutesOnOtherSide === 1) { 
             return true;
         } else {
             return false;
         }
 
-        // OBS: below code was commented out because
         
-        //let nrOfHoursOneSide = versionBStartDate.diff(versionAEndDate, 'hours');
-        //let nrOfHoursOtherSide = versionAEndDate.diff(versionBStartDate, 'hours');
-        
-        //if (nrOfHoursOneSide < 24 || nrOfHoursOtherSide < 24) {
-        //    return true;
-        //} else {
-        //    return false;
-        //}
     }
 }
 
