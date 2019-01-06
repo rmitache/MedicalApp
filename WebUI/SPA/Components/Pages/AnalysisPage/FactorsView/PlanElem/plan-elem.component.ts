@@ -15,7 +15,7 @@ import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
-import { VersionElemInfoWrapper, VersionInfoGenerator } from './version-info-generator';
+import { VersionUIRepresentationObj, VersionInfoGenerator } from './version-info-generator';
 
 
 @Component({
@@ -72,6 +72,6 @@ interface ViewModel {
     XPos: number;
     YPos: number;
 
-    VersionInfoWrappers: VersionElemInfoWrapper[];
+    VersionInfoWrappers: VersionUIRepresentationObj[];
 }
 

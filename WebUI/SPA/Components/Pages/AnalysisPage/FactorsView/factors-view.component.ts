@@ -56,7 +56,7 @@ export class FactorsViewComponent {
         SelectedPlans: null,
 
         TodayXPosition: null,
-        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
+        DateRangeDisplayMode: DateRangeMode.SingleMonth,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -136,7 +136,6 @@ export class FactorsViewComponent {
         // Initialize date range
         var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
         this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        
 
         // Refresh the UI
         this.refreshUI();

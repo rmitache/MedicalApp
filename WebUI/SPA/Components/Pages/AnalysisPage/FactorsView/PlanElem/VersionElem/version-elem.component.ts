@@ -13,7 +13,7 @@ import * as CLOs from 'SPA/DomainModel/clo-exports';
 import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 import { VersionCLOService } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
-import { VersionElemInfoWrapper } from '../version-info-generator';
+import { VersionUIRepresentationObj } from '../version-info-generator';
 
 
 @Component({
@@ -25,16 +25,13 @@ import { VersionElemInfoWrapper } from '../version-info-generator';
 export class VersionElemComponent {
     // Fields
     @Input('VersionInfoWrapper')
-    private versionInfoWrapper: VersionElemInfoWrapper;
+    private versionInfoWrapper: VersionUIRepresentationObj;
     @Input('ParentGroupYPos')
     private parentGroupYPos: number;
     @ViewChild("svgElem") svgElem;
     private readonly viewModel: ViewModel = {
         VersionInfoWrapper: null,
         ParentGroupYPos: null,
-
-        StartPointEnabled: false,
-        EndPointEnabled: false
     };
 
     // Constructor
@@ -47,17 +44,17 @@ export class VersionElemComponent {
         this.viewModel.VersionInfoWrapper = this.versionInfoWrapper;
         this.viewModel.ParentGroupYPos = this.parentGroupYPos;
 
-        // Determine whether the startPoint and endPoint should be shown 
-        this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
-        let versionCLO = this.viewModel.VersionInfoWrapper.VersionCLO;
-        let nextVersion = versionCLO.GetNextVersion();
-        if (!nextVersion && this.viewModel.VersionInfoWrapper.VersionEndsOnIntersectionEnd) {
-            this.viewModel.EndPointEnabled = true;
-        } else if (nextVersion && !this.versionCLOService.AreAdjacent(nextVersion, versionCLO)) {
-            this.viewModel.EndPointEnabled = true;
-        } else {
-            this.viewModel.EndPointEnabled = false;
-        }
+        //// Determine whether the startPoint and endPoint should be shown 
+        //this.viewModel.StartPointEnabled = (this.viewModel.VersionInfoWrapper.VersionStartsOnIntersectionStart === true);
+        //let versionCLO = this.viewModel.VersionInfoWrapper.VersionCLO;
+        //let nextVersion = versionCLO.GetNextVersion();
+        //if (!nextVersion && this.viewModel.VersionInfoWrapper.VersionEndsOnIntersectionEnd) {
+        //    this.viewModel.EndPointEnabled = true;
+        //} else if (nextVersion && !this.versionCLOService.AreAdjacent(nextVersion, versionCLO)) {
+        //    this.viewModel.EndPointEnabled = true;
+        //} else {
+        //    this.viewModel.EndPointEnabled = false;
+        //}
     }
 
 
@@ -102,11 +99,8 @@ export class VersionElemComponent {
     }
 }
 interface ViewModel {
-    VersionInfoWrapper: VersionElemInfoWrapper;
+    VersionInfoWrapper: VersionUIRepresentationObj;
     ParentGroupYPos: number;
-
-    StartPointEnabled: boolean;
-    EndPointEnabled: boolean;
 }
 
 export class VersionElemHoverEventInfo {

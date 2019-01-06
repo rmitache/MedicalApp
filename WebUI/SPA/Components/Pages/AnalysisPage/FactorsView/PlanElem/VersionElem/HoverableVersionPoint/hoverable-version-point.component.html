@@ -1,18 +1,22 @@
 
 <svg:svg [attr.x]="viewModel.XPos + '%'" overflow="visible">
 
-    <!--Hover effect - StartPoint -->
+    <!--Circle-->
+    <svg:circle r="10" cy="15" class="circle"></svg:circle>
+
+
+    <!--Hover effect -->
     <svg:circle r="25" style="z-index:-9999" cy="15" class="hover-effect-rect" [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"></svg:circle>
     <svg:line x1="1" y1="16" x2="1" y2="2500"
               [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"
               style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
 
 
-    <!--Hitbox hover - StartPoint-->
+    <!--Hitbox hover -->
     <svg:rect x="-20" height="40px" width="40px" class="hit-box-rect"
               (mouseenter)="onMouseEnter($event)"
               (mouseleave)="onMouseLeave(evt)"></svg:rect>
 
-    
+
 </svg:svg>
 

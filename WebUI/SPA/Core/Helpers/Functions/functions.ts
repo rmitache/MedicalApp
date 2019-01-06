@@ -108,11 +108,9 @@ export function GetNrOfHoursBetweenDatesUsingMoment(firstDate: moment.Moment, se
 
     var nrOfHours = largestDateTime.diff(smallestDateTime, 'hours');
 
-    //if (includeEdges) {
-    //    nrOfMins += 1;
-    //}
-
-
+    if (includeEdges) {
+        nrOfHours += 1;
+    }
 
 
     return nrOfHours;
