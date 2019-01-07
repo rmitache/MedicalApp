@@ -18,21 +18,9 @@
 
     <!--Horizontal line and plan name-->
     <svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" class="horizontal-line" />
-    <svg:text x="0" y="5" class="label-discrete">
-        {{viewModel.VersionInfoWrapper.IntersectionDateRange.start.format('DD')}}
-        -
-        {{viewModel.VersionInfoWrapper.IntersectionDateRange.end.format('DD')}}
-
+    <svg:text x="0" y="5" class="label-discrete"
+              *ngIf="viewModel.VersionInfoWrapper.VisiblePlanName!==null">
+        {{viewModel?.VersionInfoWrapper?.VisiblePlanName}}
     </svg:text>
 
-
-
 </svg:svg>
-
-
-
-<!---->
-<!--{{viewModel?.VersionInfoWrapper?.VisiblePlanName}}-->
-<!--<svg:line x1="0%" y1="16" [attr.x2]="'100%'" y2="16" class="horizontal-line"
-          [attr.marker-start]="viewModel.VersionInfoWrapper.StartMarkerName"
-          [attr.marker-end]="viewModel.VersionInfoWrapper.EndMarkerName" />-->

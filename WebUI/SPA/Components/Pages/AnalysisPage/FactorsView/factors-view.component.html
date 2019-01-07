@@ -28,22 +28,6 @@
             <div class="factors-rendering-area">
                 <svg xmlns="http://www.w3.org/2000/svg" height="700" width="100%" overflow="visible" >
 
-                    <!--Markers-->
-                    <svg:defs>
-                        <marker id="circle-tick-start" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" overflow="visible">
-                            <circle cx="6" cy="6" r="3" style="stroke: none; fill:#000000;" />
-                        </marker>
-                        <marker id="circle-tick-end" markerWidth="12" markerHeight="12" refX="4" refY="4" orient="auto" overflow="visible">
-                            <circle cx="4" cy="4" r="2" style="stroke: none; fill:#000000;" />
-                        </marker>
-
-                        <marker id="arrow" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10" markerHeight="10" orient="auto" overflow="visible">
-                            <path d="M 0 0 L 10 5 L 0 10 z" style="fill:#d5d5d5; stroke:none" />
-                        </marker>
-                    </svg:defs>
-
-
-
                     <!--PlanElems-->
                     <svg:g *ngFor="let plan of viewModel.PlansInSelectedDateRange; let i = index" plan-elem
                            overflow="visible"

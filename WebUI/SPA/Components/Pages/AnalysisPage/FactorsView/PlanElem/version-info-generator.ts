@@ -9,17 +9,26 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as HelperFunctions from 'SPA/Core/Helpers/Functions/functions';
 import { VersionCLOService, ChangeType } from 'SPA/DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionCLO } from 'SPA/DomainModel/clo-exports';
 
 @Injectable()
 export class VersionInfoGenerator {
 
     // Private methods
-    private calculateDimensionsAndPosition(versionCLO: CLOs.VersionCLO, prevVersionCLO: CLOs.VersionCLO,
+    private calculateDimensionsAndPosition(versionCLO: CLOs.VersionCLO, prevVersionCLO: CLOs.VersionCLO, nextVersionCLO: CLOs.VersionCLO,
         versionIntersection, widthPerEachDay, selectedDateRange) {
 
         // Calculate the base width
         let nrOfDaysInIntersection = HelperFunctions.GetNrOfDaysBetweenDatesUsingMoment(versionIntersection.start, versionIntersection.end);
         let width = (nrOfDaysInIntersection - 1) * widthPerEachDay; // minus one is because any date is shown as the nth tick, and the total range is actually is n - 1 ticks WIDE
+
+        // Calculate special extra width adjustment
+        let versionStartsOnSameLocalDateAsPrevious = moment(versionCLO.StartDateTime).isSame(moment(prevVersionCLO.EndDateTime), 'day');
+        var nextVersionIsAdjacent = (nextVersionCLO !== null && this.versionCLOService.AreAdjacent(versionCLO, nextVersionCLO));
+        if (!versionStartsOnSameLocalDateAsPrevious && nextVersionIsAdjacent) {
+            width += 1 * widthPerEachDay; // fill in gap to next version if they are adjacent and on separate days
+        }
+
 
         // Calculate the position
         let startDateIndex = HelperFunctions.GetDateIndexInTargetRange(moment(versionCLO.StartDateTime), selectedDateRange);
@@ -32,7 +41,7 @@ export class VersionInfoGenerator {
             YPos: yPosition
         };
     }
-    private createStartMarker(versionCLO: CLOs.VersionCLO,  versionIntersection) {
+    private createStartMarker(versionCLO: CLOs.VersionCLO, versionIntersection) {
         // Explanation: If a version doesnt end at one of the ends of its intersection, it means it goes longer than the selection range
         //              In which case it doesnt make sense to render any marker.
         var versionStartsOnIntersectionLeftEdge = moment(versionCLO.StartDateTime).isSame(versionIntersection.start, 'day');
@@ -47,11 +56,11 @@ export class VersionInfoGenerator {
             return marker;
         }
     }
-    private createEndMarker(versionCLO: CLOs.VersionCLO, nextVersionCLO: CLOs.VersionCLO,versionIntersection) {
+    private createEndMarker(versionCLO: CLOs.VersionCLO, nextVersionCLO: CLOs.VersionCLO, versionIntersection) {
         // Explanation: If a version doesnt end at one of the ends of its intersection, it means it goes longer than the selection range
         //              In which case it doesnt make sense to render any marker.
         var versionEndsOnIntersectionRightEdge = moment(versionCLO.EndDateTime).isSame(versionIntersection.end, 'day');
-        var nextVersionIsAdjacent = (nextVersionCLO !== null && this.versionCLOService.AreAdjacent(versionCLO, nextVersionCLO)); 
+        var nextVersionIsAdjacent = (nextVersionCLO !== null && this.versionCLOService.AreAdjacent(versionCLO, nextVersionCLO));
 
         // Verify
         if (!versionEndsOnIntersectionRightEdge || nextVersionIsAdjacent) {
@@ -85,13 +94,13 @@ export class VersionInfoGenerator {
         for (let i = 0; i < versionCLOs.length; i++) {
             let versionCLO = versionCLOs[i];
             let prevVersionCLO = (i > 0) ? versionCLOs[i - 1] : null;
-            let nextVersionCLO = (versionCLOs.length > i +1) ? versionCLOs[i + 1] : null;
+            let nextVersionCLO = (versionCLOs.length > i + 1) ? versionCLOs[i + 1] : null;
             let versionIntersection = versionCLO.GetIntersectionWithDateRange(selectedDateRange, true);
             if (versionIntersection !== null) {
 
                 // Calculate the dimensions and position
-                var dimensionsAndPos = this.calculateDimensionsAndPosition(versionCLO, prevVersionCLO, versionIntersection, widthPerEachDay,
-                    selectedDateRange);
+                var dimensionsAndPos = this.calculateDimensionsAndPosition(versionCLO, prevVersionCLO, nextVersionCLO,
+                    versionIntersection, widthPerEachDay, selectedDateRange);
 
                 // Create the wrapper
                 let newWrapper: VersionUIRepresentationObj = {
