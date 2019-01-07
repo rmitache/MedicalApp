@@ -40,8 +40,8 @@ export class FactorsViewComponent {
     private navPanelInstance: NavigationPanelComponent;
     @ViewChild('timeline')
     private timelineInstance: TimelineComponent;
-    @ViewChild('filtersPanel')
-    private filtersPanelInstance: FactorsFiltersPanelComponent;
+    //@ViewChild('filtersPanel')
+    //private filtersPanelInstance: FactorsFiltersPanelComponent;
     private infoTooltipText: string =
         `Here you can see which FACTORS have potentially influenced your HEALTH. <br />
         You can see which changes you've made to your treatment Plans over time. If you hover over the small black circles you can 
@@ -130,7 +130,7 @@ export class FactorsViewComponent {
         // Initialize plans
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
         this.viewModel.SelectedPlans = this.viewModel.AvailablePlans.slice(); // everything starts selected
-        this.filtersPanelInstance.Initialize(this.viewModel.AvailablePlans, this.viewModel.SelectedPlans);
+        //this.filtersPanelInstance.Initialize(this.viewModel.AvailablePlans, this.viewModel.SelectedPlans);
 
 
         // Initialize date range

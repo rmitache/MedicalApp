@@ -16,21 +16,29 @@
     background-color: #ebebeb;
 }
 
-
-.factors-view {
-    float: left;
-    width: calc(100%);
-    height: calc(50%);
+.main-panel {
+    background-color: white;
+    border-radius: 5px;
+    height:100%;
+    width:100%;
 }
+    .main-panel .main-panel-header {
+        width: calc(100%);
+        height: 50px;
+        float: left;
+    }
+    .main-panel .factors-view {
+        width: calc(100%);
+        height: calc(50% - 50px);
+        float:left;
+    }
 
 
-.indicators-view {
-    float: left;
-    width: calc(100%);
-    height: calc(50% - 20px);
-    margin-top: 20px;
-    
-}
+    .main-panel .indicators-view {
+        width: calc(100%);
+        height: calc(50% - 55px);
+        float: left;
+    }
 
 
 /*Bigger than 1024*/
