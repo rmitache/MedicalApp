@@ -1,5 +1,9 @@
-
 <health-statuses-over-day-tooltip #healthStatusTooltip></health-statuses-over-day-tooltip>
+
+<custom-sidebar [(visible)]="displaySideBar" position="right">
+    hello
+</custom-sidebar>
+
 
 <div class="frame">
     <div class="left-side">
@@ -11,13 +15,7 @@
                    tooltipPosition="bottom"></i>
             </div>
             <div class="center-section">
-                <navigation-panel #navPanel
-                                  [Width]="270"
-                                  [TriggerOnlyModeOn]="true"
-                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangeTriggered($event)"></navigation-panel>
-            </div>
-            <div class="right-section">
-                <div>
+                <div class="legend-div">
                     <div class="legend-item bad-day-item">
                         <i class="fa fa-square"></i>
                         <span class="label-discrete">Bad days</span>
@@ -27,6 +25,11 @@
                         <span class="label-discrete">Good days</span>
                     </div>
                 </div>
+            </div>
+            <div class="right-section">
+                <button pButton type="button" icon="fa fa-cog"
+                        [pTooltip]="'Toggle Symptoms'"
+                        (click)="displaySideBar = true"></button>
             </div>
         </div>
         <div class="body">

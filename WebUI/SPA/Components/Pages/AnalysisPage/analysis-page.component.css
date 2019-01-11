@@ -25,19 +25,17 @@
 
     .main-panel .factors-view {
         width: calc(100%);
-        height: calc(50% - 47px - 22px);
+        height: calc(40% - 57px - 22px);
         float: left;
         padding-bottom: 10px;
     }
 
     .main-panel .main-panel-timeline {
         width: calc(100% - 40px);
-        height: 64px;
+        height: 74px;
         float: left;
-        padding: 10px 20px 10px 20px;
+        padding: 20px 20px 10px 20px;
         background-color: #ebebeb;
-        border-bottom: solid 1px #cacaca;
-        border-top: solid 1px #cacaca;
     }
 
         .main-panel .main-panel-timeline .navigation-panel {
@@ -51,7 +49,7 @@
     .main-panel .indicators-view {
         padding-top: 10px;
         width: calc(100%);
-        height: calc(50% - 47px - 10px);
+        height: calc(60% - 57px - 10px);
         float: left;
     }
 

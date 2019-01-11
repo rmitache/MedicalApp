@@ -6,10 +6,11 @@
 
 
 .horizontal-line {
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke: gray;
 }
 
 .label-discrete {
-    fill: #2399e5;
+    fill: gray;
+    text-transform: uppercase;
 }

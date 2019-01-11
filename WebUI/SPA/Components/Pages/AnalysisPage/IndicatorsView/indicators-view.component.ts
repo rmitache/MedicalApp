@@ -39,8 +39,6 @@ export class IndicatorsViewComponent {
     // Fields
     private availableWindowPaddingInMonths = 3;
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.SingleMonth;
-    //@ViewChild('navPanel')
-    //private navPanelInstance: NavigationPanelComponent;
     @ViewChild('healthStatusTooltip')
     private healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent;
     @ViewChild('filtersPanel')
@@ -69,6 +67,7 @@ export class IndicatorsViewComponent {
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
+    private displaySideBar: boolean = false;
 
     // Private methods
     private generateSymptomTypeDatasetItems(availableCLOs: CLOs.SymptomTypeCLO[], selectedCLOs: number[]): SymptomTypeDatasetItem[] {
@@ -212,24 +211,23 @@ export class IndicatorsViewComponent {
         }));
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.onSelectedDateRangeChanged(newValue);
-            //this.navPanelInstance.SetSelectedDateRange(newValue);
         }));
     }
     ngOnInit() {
 
         //// Initialize symptomTypes and filtersPanel
-        //this.viewModel.SymptomTypesDatasetItems = this.generateSymptomTypeDatasetItems(this.dataService.GetSymptomTypesFromBundle().ToArray(), []);
+        this.viewModel.SymptomTypesDatasetItems = this.generateSymptomTypeDatasetItems(this.dataService.GetSymptomTypesFromBundle().ToArray(), []);
         ////this.filtersPanelInstance.InitializeItems(this.viewModel.SymptomTypesDatasetItems);
 
         //// Initialize date ranges
-        //let now = moment();
+        let now = moment();
         //var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
 
         
 
-        //this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
+        this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
         //this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        //this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
+        this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         
 
@@ -240,8 +238,8 @@ export class IndicatorsViewComponent {
         this.canvas = document.getElementById('myChart');
         this.chartCanvasContext = this.canvas.getContext('2d');
 
-        // Refresh the UI
-        this.refreshUI();
+        //// Refresh the UI
+        //this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -272,10 +270,6 @@ export class IndicatorsViewComponent {
                     }, 200);
                 });
         }
-    }
-    private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
-
-        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
     private onSymptomTypeToggleTriggered(targetItem: SymptomTypeDatasetItem) {
         if (targetItem.IsSelected === true) {

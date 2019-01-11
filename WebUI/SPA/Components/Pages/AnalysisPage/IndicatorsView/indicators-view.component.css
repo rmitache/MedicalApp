@@ -42,7 +42,7 @@
         .left-side .header .center-section {
             float: left;
             width: calc(34%);
-            
+            text-align: center;
         }
         .left-side .header .center-section .navigation-panel{
             visibility:hidden;
@@ -51,6 +51,9 @@
             float: right;
             width: calc(33%);
         }
+            .left-side .header .right-section button {
+                float: right;
+            }
 
     .left-side .body {
         height: calc(100% - 45px);
@@ -79,11 +82,12 @@
     height: 100%;
     float: right;
 }*/
-
+.legend-div {
+    height:20px;
+}
 .legend-item {
-    float: right;
     margin-left: 7px;
-
+    display:inline-block;
 }
 
     .legend-item i {

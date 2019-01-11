@@ -60,13 +60,13 @@
 
 
 .factors-rendering-area {
-    height: calc(100% - 10px);
+    height: calc(100% - 5px);
     width: calc(100% - 50px);
     padding-right: 17px;
     padding-left: 17px;
     overflow-y: hidden;
     float: left;
-    margin-top: -20px;
+    margin-top: -10px;
 }
 
 .timeline {
@@ -86,11 +86,11 @@
 }*/
 
 .legend-item {
-    margin-right: 20px;
 }
 
     .legend-item i {
         vertical-align: middle;
+        color: gray;
     }
 
     .legend-item span {
