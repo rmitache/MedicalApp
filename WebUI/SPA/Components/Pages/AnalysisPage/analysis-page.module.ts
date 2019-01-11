@@ -25,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     bootstrap: [AnalysisPageComponent],
     declarations: [
-        AnalysisPageComponent,
+        AnalysisPageComponent
     ],
     imports: [
         CommonModule,

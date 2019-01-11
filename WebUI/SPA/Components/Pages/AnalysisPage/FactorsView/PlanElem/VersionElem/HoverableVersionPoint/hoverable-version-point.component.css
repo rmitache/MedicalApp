@@ -9,6 +9,6 @@
 }
 
 .circle {
-    fill:black;
-    
+    fill:white;
+    stroke:black;
 }

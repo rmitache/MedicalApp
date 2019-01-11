@@ -3,7 +3,7 @@
     height: 100%;
 }
 .timeline-line {
-    stroke-width: 0.5;
-    stroke: gray;
+    stroke-width: 1;
+    stroke: black;
 }
 

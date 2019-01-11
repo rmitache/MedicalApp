@@ -2,8 +2,11 @@
 <svg:svg [attr.x]="viewModel.XPos + '%'" overflow="visible">
 
     <!--Circle-->
-    <svg:circle r="10" cy="15" class="circle"></svg:circle>
+    <svg:circle r="14" cy="15" class="circle"></svg:circle>
+    <!--<svg:foreignObject x="10" y="10" width="100" height="150">
+            Wtf
 
+    </svg:foreignObject>-->
 
     <!--Hover effect -->
     <svg:circle r="25" style="z-index:-9999" cy="15" class="hover-effect-rect" [style.visibility]="viewModel.ShowHoverEffect === true ? 'visible' : 'hidden'"></svg:circle>

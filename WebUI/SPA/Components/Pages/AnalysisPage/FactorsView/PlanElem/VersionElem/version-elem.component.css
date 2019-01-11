@@ -6,10 +6,10 @@
 
 
 .horizontal-line {
-    stroke-width: 1;
-    stroke: black;
+    stroke-width: 0.5;
+    stroke: gray;
 }
 
 .label-discrete {
-    fill: black;
+    fill: #2399e5;
 }

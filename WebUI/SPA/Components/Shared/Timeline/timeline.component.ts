@@ -61,7 +61,7 @@ export class TimelineComponent {
 
 		// Return nth
 		var filteredTickInfoWrappers = tickInfoWrappers.filter((wrapper,index) => {
-			return index % 8 === 0;
+			return index % 2 === 0;
 		});
 
 		return filteredTickInfoWrappers;

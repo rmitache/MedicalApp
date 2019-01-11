@@ -63,7 +63,7 @@
 @media only screen and (min-width: 1024px) {
     .outer-wrapper {
         min-width: calc(1024px - 24px);
-        max-width:70%;
+        max-width:65%;
         padding-left:12px;
         padding-right:12px;
     }
@@ -78,21 +78,7 @@
         padding-right: 6px;
     }
 
-    /*.right-side-panel {
-        width: 190px;
-    }
-
-    .schedule {
-        width: calc(100% - 190px - 20px);
-    }
-
-    .health-graph {
-        width: calc(2*(100% - 190px)/3 - 10px);
-    }
-
-    .info-to-remember {
-        width: calc((100% - 190px)/3 - 30px);
-    }*/
+    
 }
 
 /*Up to 768px in width*/

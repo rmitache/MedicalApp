@@ -44,6 +44,7 @@
         .left-side .header .center-section {
             float: left;
             width: calc(34%);
+            text-align:center;
         }
 
         .left-side .header .right-section {
@@ -52,7 +53,7 @@
         }
 
     .left-side .body {
-        height: calc(100% - 45px);
+        height: calc(100% - 15px);
         width: calc(100% - 35px);
         margin-left: 35px;
     }
@@ -60,10 +61,10 @@
 
 .factors-rendering-area {
     height: calc(100% - 10px);
-    width: calc(100% - 34px);
+    width: calc(100% - 50px);
     padding-right: 17px;
     padding-left: 17px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     float: left;
     margin-top: -20px;
 }
@@ -73,6 +74,7 @@
     padding-left: 18px;
     height: 30px;
     float: left;
+    display:none;
 }
 
 
@@ -84,7 +86,6 @@
 }*/
 
 .legend-item {
-    float: right;
     margin-right: 20px;
 }
 

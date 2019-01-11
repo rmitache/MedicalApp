@@ -9,18 +9,15 @@
                    tooltipPosition="bottom"></i>
             </div>
             <div class="center-section">
-                <navigation-panel #navPanel
-                                  [Width]="270"
-                                  [TriggerOnlyModeOn]="true"
-                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangeTriggered($event)"></navigation-panel>
-            </div>
-            <div class="right-section">
-                <div>
+                <div style="white-space:nowrap">
                     <div class="legend-item plan-changes-item">
                         <i class="fa fa-circle"></i>
                         <span class="label-discrete">Plan changes</span>
                     </div>
                 </div>
+            </div>
+            <div class="right-section">
+                
             </div>
         </div>
         <!--Plans rendering area-->
@@ -34,7 +31,7 @@
                            [PlanCLO]="plan"
                            [SelectedDateRange]="viewModel.SelectedDateRange"
                            [XPos]="0"
-                           [YPos]="20 + 40 * i"
+                           [YPos]="20 + 60 * i"
                            (VersionElemHover)="onVersionElemHover($event)"></svg:g>
 
                     <!--Vertical TODAY indicator-->
@@ -43,7 +40,7 @@
                            [YPos]="10"></svg:g>
                 </svg>
             </div>
-            <timeline #timeline></timeline>
+            <!--<timeline #timeline></timeline>-->
         </div>
 
     </div>

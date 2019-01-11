@@ -5,9 +5,9 @@ import * as moment from 'moment';
 // Project modules
 import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { TickInfoWrapper } from '../timeline.component';
 
 // Components
-import { TickInfoWrapper } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 
 
 @Component({

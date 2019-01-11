@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
@@ -8,10 +8,15 @@ import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager
 import { FlowDefinitions } from 'SPA/Components/Pages/AnalysisPage/CommandFlows/flow-definitions';
 import '../../../Content/styles.css';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
+import { Time, Range, TimeRange } from 'SPA/Core/Helpers/DataStructures/misc';
 
 // Components
-import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
+import { AnalysisPageApplicationState, IReadOnlyApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
 import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
+import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
+import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
+import { Subscription } from 'rxjs/Subscription';
+import { TimelineComponent } from 'SPA/Components/Shared/Timeline/timeline.component';
 
 
 @Component({
@@ -20,6 +25,18 @@ import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analy
     styleUrls: ['./analysis-page.component.css']
 })
 export class AnalysisPageComponent {
+
+    // Fields
+    @ViewChild('navPanel')
+    private navPanelInstance: NavigationPanelComponent;
+    @ViewChild('timeline')
+    private timelineInstance: TimelineComponent;
+    private readonly viewModel: ViewModel = {
+        DateRangeDisplayMode: DateRangeMode.SingleMonth,
+    };
+    private readonly subscriptions: Subscription[] = [];
+    private readonly appState: IReadOnlyApplicationState;
+
     // Constructor
     constructor(
         private readonly applicationState: AnalysisPageApplicationState,
@@ -28,6 +45,9 @@ export class AnalysisPageComponent {
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly applicationRef: ApplicationRef
     ) {
+        this.appState = applicationState as IReadOnlyApplicationState;
+
+
         // Init different services and managers
         commandManager.Initialize(applicationState, FlowDefinitions);
 
@@ -40,11 +60,23 @@ export class AnalysisPageComponent {
 
         // Register self to CommandManager
         this.commandManager.RegisterComponentInstance(this);
+
+        // Subscriptions to AppState
+        this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
+            this.navPanelInstance.SetSelectedDateRange(newValue);
+            this.timelineInstance.SetSelectedDateRange(newValue);
+        }));
     }
     ngAfterViewInit() {
         // Initialize and start the Page
         const loggedInUserCLO: CLOs.UserAccountCLO = this.globalDataService.GetLoggedInUserFromBundle();
         this.commandManager.InvokeCommandFlow('InitAndStartPageFlow', [loggedInUserCLO]);
+
+
+        // Initialize date range
+        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
+        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [initialSelectedDateRange]);
+        
 
         //// Handle change tracking
         //setInterval(() => {
@@ -53,4 +85,13 @@ export class AnalysisPageComponent {
         this.changeDetectorRef.detectChanges();
     }
 
+    // Event handlers
+    private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
+        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
+    }
+
+}
+
+interface ViewModel {
+    DateRangeDisplayMode: DateRangeMode;
 }

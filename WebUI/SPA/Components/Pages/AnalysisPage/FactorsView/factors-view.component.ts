@@ -19,7 +19,6 @@ import { GetMonthRangeWithPaddingUsingMoment, GetDateIndexInTargetRange, GetNrOf
 import { VersionElemHoverEventInfo } from 'SPA/Components/Pages/AnalysisPage/FactorsView/PlanElem/VersionElem/version-elem.component';
 import { NavigationPanelComponent } from 'SPA/Components/Shared/NavigationPanel/navigation-panel.component';
 import { DateRangeMode } from 'SPA/Core/Helpers/Enums/enums';
-import { TimelineComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/Timeline/timeline.component';
 import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/FactorsView/FactorsFiltersPanel/factors-filters-panel.component';
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
@@ -35,11 +34,7 @@ import { PlanVersionChangesTooltipComponent } from '../../../Shared/Tooltips/Pla
 export class FactorsViewComponent {
     // Fields
     @ViewChild('versionTooltip')
-    private versionTooltipInstance: PlanVersionChangesTooltipComponent;
-    @ViewChild('navPanel')
-    private navPanelInstance: NavigationPanelComponent;
-    @ViewChild('timeline')
-    private timelineInstance: TimelineComponent;
+    private versionTooltipInstance: PlanVersionChangesTooltipComponent;   
     //@ViewChild('filtersPanel')
     //private filtersPanelInstance: FactorsFiltersPanelComponent;
     private infoTooltipText: string =
@@ -99,12 +94,8 @@ export class FactorsViewComponent {
     private refreshUI() {
         // Refresh vm properties
         this.viewModel.PlansInSelectedDateRange = this.filterPlansByDateRange(this.viewModel.SelectedPlans, this.viewModel.SelectedDateRange);
-
 		this.viewModel.TodayXPosition = this.computeXPositionFromDate(moment());
-
-        // Refresh children components
-        this.timelineInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
-        this.navPanelInstance.SetSelectedDateRange(this.viewModel.SelectedDateRange);
+        
     }
 
     // Constructor
@@ -130,15 +121,6 @@ export class FactorsViewComponent {
         // Initialize plans
         this.viewModel.AvailablePlans = this.dataService.GetPlansFromBundle().ToArray();
         this.viewModel.SelectedPlans = this.viewModel.AvailablePlans.slice(); // everything starts selected
-        //this.filtersPanelInstance.Initialize(this.viewModel.AvailablePlans, this.viewModel.SelectedPlans);
-
-
-        // Initialize date range
-        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, moment());
-        this.viewModel.SelectedDateRange = initialSelectedDateRange;
-
-        // Refresh the UI
-        this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -152,9 +134,6 @@ export class FactorsViewComponent {
         } else {
             this.versionTooltipInstance.HideAndClear();
         }
-    }
-    private onSelectedDateRangeChangeTriggered(newSelDateRange: Range<moment.Moment>) {
-        this.commandManager.InvokeCommandFlow('ChangeSelectedDateRangeFlow', [newSelDateRange]);
     }
     private onPlanSelected(plan: CLOs.PlanCLO) {
         let indexInAvailablePlansArray = this.viewModel.AvailablePlans.findIndex((planCLO) => {

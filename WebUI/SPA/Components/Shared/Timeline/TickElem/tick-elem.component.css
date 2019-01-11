@@ -6,11 +6,11 @@
 
 }
 .tick-line {
-    stroke: #cacaca;
-    stroke-width: 0.5;
+    stroke: gray;
+    stroke-width: 1;
 }
 .date-text {
     font-family: Arial;
     font-size: 10px;
-    fill: #8b8b8b;
+    fill: black;
 }

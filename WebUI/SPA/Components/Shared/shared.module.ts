@@ -44,6 +44,7 @@ import { AddSymptomTypeDialogServiceModule } from './Popups/AddSymptomTypeDialog
 import { HelpDialogServiceModule } from './Popups/HelpDialog/help-dialog-service.module';
 import { ExportDataDialogServiceModule } from './Popups/ExportDataDialog/export-data-dialog-service.module';
 import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
+import { TimeLineModule } from './Timeline/timeline.module';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
         TooltipsModule,
         PipesModule,
         CustomSidebarModule,
+        TimeLineModule,
 
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
@@ -81,7 +83,7 @@ import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
         MedicineTypeEditorDialogServiceModule,
         AddSymptomTypeDialogServiceModule,
         HelpDialogServiceModule,
-        ExportDataDialogServiceModule
+        ExportDataDialogServiceModule,
     ],
     declarations: [
         SplitButtonComponent,
@@ -111,6 +113,7 @@ import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
         TooltipsModule,
         PipesModule,
         CustomSidebarModule,
+        TimeLineModule,
 
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,

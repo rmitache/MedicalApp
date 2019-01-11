@@ -5,7 +5,7 @@
 }
 
 .left-side {
-    width: calc(100% - 240px);
+    width: calc(100%);
     height: 100%;
     float: left;
 }
@@ -42,8 +42,11 @@
         .left-side .header .center-section {
             float: left;
             width: calc(34%);
+            
         }
-
+        .left-side .header .center-section .navigation-panel{
+            visibility:hidden;
+        }
         .left-side .header .right-section {
             float: right;
             width: calc(33%);
@@ -70,16 +73,17 @@
             }
 
 
-.right-side {
+/*.right-side {
     border-radius: 0 5px 5px 0;
     width: 238px;
     height: 100%;
     float: right;
-}
+}*/
 
 .legend-item {
     float: right;
     margin-left: 7px;
+
 }
 
     .legend-item i {

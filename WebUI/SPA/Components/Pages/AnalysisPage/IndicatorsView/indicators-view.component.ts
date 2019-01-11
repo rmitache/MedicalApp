@@ -39,8 +39,8 @@ export class IndicatorsViewComponent {
     // Fields
     private availableWindowPaddingInMonths = 3;
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.SingleMonth;
-    @ViewChild('navPanel')
-    private navPanelInstance: NavigationPanelComponent;
+    //@ViewChild('navPanel')
+    //private navPanelInstance: NavigationPanelComponent;
     @ViewChild('healthStatusTooltip')
     private healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent;
     @ViewChild('filtersPanel')
@@ -212,24 +212,24 @@ export class IndicatorsViewComponent {
         }));
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.onSelectedDateRangeChanged(newValue);
-            this.navPanelInstance.SetSelectedDateRange(newValue);
+            //this.navPanelInstance.SetSelectedDateRange(newValue);
         }));
     }
     ngOnInit() {
 
-        // Initialize symptomTypes and filtersPanel
-        this.viewModel.SymptomTypesDatasetItems = this.generateSymptomTypeDatasetItems(this.dataService.GetSymptomTypesFromBundle().ToArray(), []);
-        this.filtersPanelInstance.InitializeItems(this.viewModel.SymptomTypesDatasetItems);
+        //// Initialize symptomTypes and filtersPanel
+        //this.viewModel.SymptomTypesDatasetItems = this.generateSymptomTypeDatasetItems(this.dataService.GetSymptomTypesFromBundle().ToArray(), []);
+        ////this.filtersPanelInstance.InitializeItems(this.viewModel.SymptomTypesDatasetItems);
 
-        // Initialize date ranges
-        let now = moment();
-        var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
+        //// Initialize date ranges
+        //let now = moment();
+        //var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
 
         
 
-        this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
-        this.viewModel.SelectedDateRange = initialSelectedDateRange;
-        this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
+        //this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
+        //this.viewModel.SelectedDateRange = initialSelectedDateRange;
+        //this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
 
         
 
@@ -389,12 +389,14 @@ class SingleMonthDisplayMode implements IDisplayMode {
             },
             scales: {
                 xAxes: [{
+                    position: 'bottom',
+                    offset: true,
                     id: 'x-axis-0',
                     type: "time",
                     time: {
                         unit: 'day',
                         round: 'day',
-                        unitStepSize: 8,
+                        unitStepSize: 4,
                         tooltipFormat: "dddd MMM D, YYYY",
                         displayFormats: {
                             hour: 'MMM D'
@@ -402,8 +404,9 @@ class SingleMonthDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         color: '#cacaca',
-                        display: true,
+                        display: false,
                         drawOnChartArea: false,
+                        drawBorder: false,
                     },
                     ticks: {
                         maxRotation: 0,
@@ -411,25 +414,25 @@ class SingleMonthDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         fontFamily: 'Arial',
                         fontSize: 10,
+                        display:false,
                         //beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
                             //if (!(index % 2)) return value;
                         },
-                        major: {
-                            //fontStyle: 'bold',
-                            //fontColor: 'black'
-                        }
+                        
                     }
                 }],
                 yAxes: [{
+                    
                     id: 'y-axis-0',
                     gridLines: {
+                        color: '#f1f1f1',
                         display: true,
                         drawTicks: true,
                         drawOnChartArea: true,
-                        drawBorder: true,
+                        drawBorder: false,
                         zeroLineColor: 'gray',
                         tickMarkLength: 2
                     },

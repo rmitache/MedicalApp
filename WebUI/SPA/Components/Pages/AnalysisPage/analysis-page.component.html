@@ -4,9 +4,19 @@
     <div class="body-area">
         
         <div class="main-panel">
-            <div class="main-panel-header"></div>
+
             <factors-view></factors-view>
-            <indicators-view></indicators-view>
+            <div class="main-panel-timeline">
+                <navigation-panel #navPanel
+                                  [Width]="270"
+                                  [TriggerOnlyModeOn]="true"
+                                  (DateRangeChangeTriggered)="onSelectedDateRangeChangeTriggered($event)"></navigation-panel>
+                <timeline #timeline></timeline>
+
+            </div>
+            <!--<indicators-view></indicators-view>-->
+
+
         </div>
     </div>
 

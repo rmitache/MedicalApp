@@ -23,7 +23,8 @@ export class VersionInfoGenerator {
         let width = (nrOfDaysInIntersection - 1) * widthPerEachDay; // minus one is because any date is shown as the nth tick, and the total range is actually is n - 1 ticks WIDE
 
         // Calculate special extra width adjustment
-        let versionStartsOnSameLocalDateAsPrevious = moment(versionCLO.StartDateTime).isSame(moment(prevVersionCLO.EndDateTime), 'day');
+        let versionStartsOnSameLocalDateAsPrevious = (prevVersionCLO !== null) ?
+            moment(versionCLO.StartDateTime).isSame(moment(prevVersionCLO.EndDateTime), 'day') : false;
         var nextVersionIsAdjacent = (nextVersionCLO !== null && this.versionCLOService.AreAdjacent(versionCLO, nextVersionCLO));
         if (!versionStartsOnSameLocalDateAsPrevious && nextVersionIsAdjacent) {
             width += 1 * widthPerEachDay; // fill in gap to next version if they are adjacent and on separate days
