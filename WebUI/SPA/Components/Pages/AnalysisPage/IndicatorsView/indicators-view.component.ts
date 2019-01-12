@@ -215,31 +215,19 @@ export class IndicatorsViewComponent {
     }
     ngOnInit() {
 
-        //// Initialize symptomTypes and filtersPanel
+        // Initialize symptomTypes and filtersPanel
         this.viewModel.SymptomTypesDatasetItems = this.generateSymptomTypeDatasetItems(this.dataService.GetSymptomTypesFromBundle().ToArray(), []);
-        ////this.filtersPanelInstance.InitializeItems(this.viewModel.SymptomTypesDatasetItems);
+        this.filtersPanelInstance.InitializeItems(this.viewModel.SymptomTypesDatasetItems);
 
-        //// Initialize date ranges
+        // Initialize date ranges
         let now = moment();
-        //var initialSelectedDateRange = this.navPanelInstance.InitAndGetSelDateRange(this.viewModel.DateRangeDisplayMode, now);
-
-        
-
         this.viewModel.AvailableDateRange = GetMonthRangeWithPaddingUsingMoment(now, now, this.availableWindowPaddingInMonths);
-        //this.viewModel.SelectedDateRange = initialSelectedDateRange;
         this.viewModel.HealthEntriesInSelectedDateRange = this.dataService.GetHealthStatusEntriesForInitialRangeFromBundle().ToArray();
-
-        
-
-        // OBS: Refresh the UI -> is done in ngAfterViewInit (in order to reference the chart properly)
     }
     ngAfterViewInit() {
         // Get references to the chart canvas context
         this.canvas = document.getElementById('myChart');
         this.chartCanvasContext = this.canvas.getContext('2d');
-
-        //// Refresh the UI
-        //this.refreshUI();
     }
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
@@ -333,11 +321,6 @@ class SingleMonthDisplayMode implements IDisplayMode {
     // Public methods
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
-            plugins: {
-                filler: {
-                    propagate: true
-                }
-            },
             animation: false,
             tooltips: {
                 enabled: false,
@@ -383,23 +366,23 @@ class SingleMonthDisplayMode implements IDisplayMode {
             },
             scales: {
                 xAxes: [{
-                    position: 'bottom',
-                    offset: true,
+                    //offset: true,
+                    position:'top',
                     id: 'x-axis-0',
                     type: "time",
                     time: {
                         unit: 'day',
                         round: 'day',
-                        unitStepSize: 4,
+                        unitStepSize: 1,
                         tooltipFormat: "dddd MMM D, YYYY",
                         displayFormats: {
                             hour: 'MMM D'
                         }
                     },
                     gridLines: {
-                        color: '#cacaca',
-                        display: false,
-                        drawOnChartArea: false,
+                        color: '#e8e8ff',
+                        display: true,
+                        drawOnChartArea: true,
                         drawBorder: false,
                     },
                     ticks: {
@@ -409,7 +392,6 @@ class SingleMonthDisplayMode implements IDisplayMode {
                         fontFamily: 'Arial',
                         fontSize: 10,
                         display:false,
-                        //beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
@@ -524,11 +506,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
     // Public methods
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
-            plugins: {
-                filler: {
-                    propagate: true
-                }
-            },
+            
             animation: false,
             tooltips: {
                 enabled: false,
@@ -596,16 +574,11 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         fontFamily: 'Arial',
                         fontSize: 10,
-                        //beginAtZero: true,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
                             //if (!(index % 2)) return value;
                         },
-                        major: {
-                            //fontStyle: 'bold',
-                            //fontColor: 'black'
-                        }
                     }
                 }],
                 yAxes: [{
@@ -644,7 +617,6 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
             responsive: true,
             maintainAspectRatio: false,
             annotation: {
-
                 annotations: []
             }
         };

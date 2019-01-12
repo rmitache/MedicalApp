@@ -39,6 +39,7 @@ export class VersionElemComponent {
         private readonly commandManager: CommandManager,
         private versionCLOService: VersionCLOService
     ) {
+        
     }
     ngOnInit() {
         this.viewModel.VersionInfoWrapper = this.versionInfoWrapper;
@@ -70,8 +71,9 @@ export class VersionElemComponent {
 
         // Emit hover event (used to show the tooltip)
         var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
-        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO, HoverInfoPointType.StartPoint);
-        this.Hover.emit(eventInfo);
+        var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO,
+            HoverInfoPointType.StartPoint);
+        //this.Hover.emit(eventInfo);
     }
     private onMouseLeaveStartPoint() {
 

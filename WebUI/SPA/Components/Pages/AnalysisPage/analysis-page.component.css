@@ -31,10 +31,10 @@
     }
 
     .main-panel .main-panel-timeline {
-        width: calc(100% - 40px);
+        width: calc(100% - 108px);
         height: 74px;
         float: left;
-        padding: 20px 20px 10px 20px;
+        padding: 20px 54px 10px 54px;
         background-color: #ebebeb;
     }
 
@@ -47,7 +47,7 @@
         }
 
     .main-panel .indicators-view {
-        padding-top: 10px;
+        padding-top: 5px;
         width: calc(100%);
         height: calc(60% - 57px - 10px);
         float: left;

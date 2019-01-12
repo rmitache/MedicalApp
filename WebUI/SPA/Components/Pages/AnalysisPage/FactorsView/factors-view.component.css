@@ -61,17 +61,17 @@
 
 .factors-rendering-area {
     height: calc(100% - 5px);
-    width: calc(100% - 50px);
-    padding-right: 17px;
-    padding-left: 17px;
-    overflow-y: hidden;
+    width: calc(100% - 17px - 41px);
+    padding-left: 20px;
+    padding-right: 38px;
+    overflow-y: scroll;
     float: left;
     margin-top: -10px;
 }
 
 .timeline {
-    width: calc(100% - 51px);
-    padding-left: 18px;
+    width: calc(100% - 75px);
+    padding-left: 21px;
     height: 30px;
     float: left;
     display:none;
@@ -97,7 +97,7 @@
         vertical-align: middle;
     }
 
-@media only screen and (max-width: 1024px) {
+/*@media only screen and (max-width: 1024px) {
     .left-side {
         width: calc(100% - 150px);
     }
@@ -105,4 +105,4 @@
     .right-side {
         width: 150px;
     }
-}
+}*/

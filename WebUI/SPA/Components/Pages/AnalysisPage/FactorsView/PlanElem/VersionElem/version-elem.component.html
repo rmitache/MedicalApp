@@ -6,12 +6,14 @@
     <!--HoverableStartPoint-->
     <svg:g *ngIf="viewModel.VersionInfoWrapper.StartMarker !== null"
            hoverable-version-point overflow="visible"
+           [TargetDate]="viewModel.VersionInfoWrapper.VersionCLO.StartDateTime"
            [XPos]="0"
            (MouseEnter)="onMouseEnterStartPoint()"
            (MouseLeave)="onMouseLeaveStartPoint()"></svg:g>
     <!--HoverableEndPoint-->
     <svg:g *ngIf="viewModel.VersionInfoWrapper.EndMarker !== null"
            hoverable-version-point overflow="visible"
+           [TargetDate]="viewModel.VersionInfoWrapper.VersionCLO.EndDateTime"
            [XPos]="100"
            (MouseEnter)="onMouseEnterEndPoint()"
            (MouseLeave)="onMouseLeaveEndPoint()"></svg:g>

@@ -23,6 +23,7 @@ import { FactorsFiltersPanelComponent } from 'SPA/Components/Pages/AnalysisPage/
 import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 import { SpinnerService } from 'SPA/Core/Services/SpinnerService/spinner.service';
 import { PlanVersionChangesTooltipComponent } from '../../../Shared/Tooltips/PlanVersionChangesTooltip/plan-version-changes-tooltip.component';
+import { TimelineComponent } from 'SPA/Components/Shared/Timeline/timeline.component';
 
 
 @Component({
@@ -37,6 +38,8 @@ export class FactorsViewComponent {
     private versionTooltipInstance: PlanVersionChangesTooltipComponent;   
     //@ViewChild('filtersPanel')
     //private filtersPanelInstance: FactorsFiltersPanelComponent;
+    @ViewChild('timeline')
+    private timelineInstance: TimelineComponent;
     private infoTooltipText: string =
         `Here you can see which FACTORS have potentially influenced your HEALTH. <br />
         You can see which changes you've made to your treatment Plans over time. If you hover over the small black circles you can 
@@ -112,6 +115,8 @@ export class FactorsViewComponent {
         this.subscriptions.push(this.appState.SelectedDateRange.Changed.subscribe((newValue) => {
             this.viewModel.SelectedDateRange = newValue;
             this.refreshUI();
+
+            this.timelineInstance.SetSelectedDateRange(newValue);
         }));
 
         // Register self to CommandManager

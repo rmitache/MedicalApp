@@ -1,7 +1,9 @@
 <health-statuses-over-day-tooltip #healthStatusTooltip></health-statuses-over-day-tooltip>
 
 <custom-sidebar [(visible)]="displaySideBar" position="right">
-    hello
+    <indicators-filters-panel #filtersPanel
+                              
+                              (SymptomTypeToggleTriggered)="onSymptomTypeToggleTriggered($event)"></indicators-filters-panel>
 </custom-sidebar>
 
 
@@ -34,7 +36,6 @@
         </div>
         <div class="body">
             <div id="chart-wrapper-div">
-                <!--<p-chart #chart type="line" id="indicators-view-chart" [data]="viewModel.ChartData" [options]="viewModel.ChartOptions" height="380px"></p-chart>-->
                 <canvas id="myChart"></canvas>
 
                 <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" >

@@ -1,17 +1,12 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input, EventEmitter, ViewChild, Output } from '@angular/core';
+import { Component, Input, EventEmitter,  Output } from '@angular/core';
 import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
 
 // Project modules
 import { Time, Range, TimeRange, CoordinatePair } from 'SPA/Core/Helpers/DataStructures/misc';
-import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
-import { FlowDefinitions } from 'SPA/Components/Pages/HomePage/CommandFlows/flow-definitions';
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 
 // Components
-import { AnalysisPageApplicationState } from 'SPA/Components/Pages/AnalysisPage/analysis-page-application-state';
-import { AnalysisPageDataService } from 'SPA/Components/Pages/AnalysisPage/analysis-page-data.service';
 
 
 @Component({
@@ -24,14 +19,18 @@ export class HoverableVersionPointComponent {
     // Fields
     @Input('XPos')
     private xPos: number = 0;
+    @Input('TargetDate')
+    private targetDate: Date;
     private readonly viewModel: ViewModel = {
         XPos: null,
-        ShowHoverEffect: false
+        ShowHoverEffect: false,
+        TargetDateText: null
     };
 
     // Constructor
     ngOnInit() {
         this.viewModel.XPos = this.xPos;
+        this.viewModel.TargetDateText = moment(this.targetDate).format("MMM D");
     }
 
     // Events
@@ -53,4 +52,5 @@ export class HoverableVersionPointComponent {
 interface ViewModel {
     XPos: number;
     ShowHoverEffect: boolean;
+    TargetDateText: string;
 }
