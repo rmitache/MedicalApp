@@ -37,7 +37,7 @@ import { HealthStatusesOverDayTooltipComponent } from '../../../Shared/Tooltips/
 })
 export class IndicatorsViewComponent {
     // Fields
-    private availableWindowPaddingInMonths = 3;
+    private availableWindowPaddingInMonths = 1;
     private dateRangeDisplayMode: DateRangeMode = DateRangeMode.SingleMonth;
     @ViewChild('healthStatusTooltip')
     private healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent;
@@ -113,7 +113,10 @@ export class IndicatorsViewComponent {
         } else if (this.viewModel.DateRangeDisplayMode === DateRangeMode.ThreeMonths) {
             currentStrategy = new ThreeMonthsDisplayMode(getChartInstanceFunction, getChartCanvasFunction,
                 this.healthStatusesTooltipInstance, this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
-        } else {
+        } else if (this.viewModel.DateRangeDisplayMode === DateRangeMode.TwelveMonths) {
+            currentStrategy = new TwelveMonthsDisplayMode(getChartInstanceFunction, getChartCanvasFunction,
+                this.healthStatusesTooltipInstance, this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
+        }else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
         }
@@ -515,7 +518,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         this.healthStatusesTooltipInstance.HideAndClear();
                         return;
                     }
-                    
+
                     // Variables
                     var canvas = this.getChartCanvas();
                     var dateString = tooltipModel.title[0];
@@ -531,7 +534,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     if (value < 0) {
                         tooltipModel.caretY = (parentPosition.height / 2);
                     }
-                    
+
                     //
                     this.healthStatusesTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition,
                         tooltipModel.caretX, tooltipModel.caretY, avgHealthLevelValue, dataPointColor);
@@ -552,21 +555,24 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
             },
             scales: {
                 xAxes: [{
+                    //offset: true,
+                    position: 'top',
                     id: 'x-axis-0',
                     type: "time",
                     time: {
                         unit: 'day',
                         round: 'day',
-                        unitStepSize: 8,
+                        unitStepSize: 1,
                         tooltipFormat: "dddd MMM D, YYYY",
                         displayFormats: {
                             hour: 'MMM D'
                         }
                     },
                     gridLines: {
-                        color: '#cacaca',
-                        display: true,
+                        color: '#e8e8ff',
+                        display: false,
                         drawOnChartArea: false,
+                        drawBorder: false,
                     },
                     ticks: {
                         maxRotation: 0,
@@ -574,20 +580,24 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         fontFamily: 'Arial',
                         fontSize: 10,
+                        display: false,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
                             //if (!(index % 2)) return value;
                         },
+
                     }
                 }],
                 yAxes: [{
+
                     id: 'y-axis-0',
                     gridLines: {
+                        color: '#f1f1f1',
                         display: true,
                         drawTicks: true,
                         drawOnChartArea: true,
-                        drawBorder: true,
+                        drawBorder: false,
                         zeroLineColor: 'gray',
                         tickMarkLength: 2
                     },
@@ -617,6 +627,197 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
             responsive: true,
             maintainAspectRatio: false,
             annotation: {
+
+                annotations: []
+            }
+        };
+
+        // Annotations
+        let today = moment();
+        let lastDayOfThisMonth = moment().endOf('month');
+
+        if (!today.isSame(lastDayOfThisMonth, 'day')) {
+            let annotations = [{
+                type: 'line',
+                mode: 'vertical',
+                scaleID: 'x-axis-0',
+                value: moment(),
+                borderColor: 'gray',
+                borderWidth: 1,
+                label: {
+                    fontFamily: 'Arial',
+                    fontSize: 12,
+                    enabled: true,
+                    position: "top",
+                    content: 'TODAY'
+                }
+            }];
+            chartOptions.annotation.annotations = annotations;
+        }
+        return chartOptions;
+    }
+    public GenerateChartData(symptomTypesDatasetItems: SymptomTypeDatasetItem[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[]
+        , currentSelDateRange: Range<moment.Moment>) {
+
+
+        // Create SymptomType datasets
+        let data = {
+            datasets: []
+        };
+        let symptomTypeDataSetsDictionary = this.symptomTypeDatasetGenerator.GenerateDataSets(symptomTypesDatasetItems,
+            preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+        symptomTypesDatasetItems.forEach((item) => {
+            if (item.IsSelected) {
+                let symptomTypeDataset = symptomTypeDataSetsDictionary[item.SymptomTypeCLO.Name];
+                data.datasets.push(symptomTypeDataset);
+            }
+        });
+
+        // Create HealthStatus dataset
+        let healthStatusDataset = this.healthStatusDataSetGenerator.GenerateDataSet(preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
+        data.datasets.push(healthStatusDataset);
+
+
+        return data;
+    }
+};
+class TwelveMonthsDisplayMode implements IDisplayMode {
+
+    // Constructor
+    constructor(
+        private readonly getChartInstance: GetChartInstanceFunc,
+        private readonly getChartCanvas: GetChartCanvasFunc,
+        private readonly healthStatusesTooltipInstance: HealthStatusesOverDayTooltipComponent,
+        private readonly healthStatusDataSetGenerator: HealthStatusDatasetGenerator,
+        private readonly symptomTypeDatasetGenerator: SymptomTypeDatasetGenerator) {
+    }
+
+    // Public methods
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+        let chartOptions = {
+            plugins: {
+                filler: {
+                    propagate: true
+                }
+            },
+            animation: false,
+            tooltips: {
+                enabled: false,
+                custom: (tooltipModel) => {
+                    if (tooltipModel.opacity === 0) {
+                        this.healthStatusesTooltipInstance.HideAndClear();
+                        return;
+                    }
+
+                    // Variables
+                    var canvas = this.getChartCanvas();
+                    var dateString = tooltipModel.title[0];
+                    var avgHealthLevelValue = tooltipModel.dataPoints[0].yLabel;
+                    var dateKey = moment(dateString, "dddd MMM D, YYYY").format('DD/MM/YYYY');
+                    var healthStatusEntryCLOsForDate = datesToCLOsDictionary[dateKey];
+                    var parentPosition = canvas.getBoundingClientRect();
+                    let index = tooltipModel.dataPoints[0].index;
+                    let dataPointColor = this.getChartInstance().data.datasets[0].backgroundColor[index];
+
+                    // Hack for positioning of tooltip on negative bar chart values
+                    var value = tooltipModel.dataPoints[0].yLabel;
+                    if (value < 0) {
+                        tooltipModel.caretY = (parentPosition.height / 2);
+                    }
+
+                    //
+                    this.healthStatusesTooltipInstance.SetDataAndPosition(dateString, healthStatusEntryCLOsForDate, parentPosition,
+                        tooltipModel.caretX, tooltipModel.caretY, avgHealthLevelValue, dataPointColor);
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0, // disables bezier curves
+                }
+            },
+            legend: {
+                display: false,
+                position: 'top',
+                labels: {
+                    boxWidth: 15,
+
+                },
+            },
+            scales: {
+                xAxes: [{
+                    //offset: true,
+                    position: 'top',
+                    id: 'x-axis-0',
+                    type: "time",
+                    time: {
+                        unit: 'day',
+                        round: 'day',
+                        unitStepSize: 1,
+                        tooltipFormat: "dddd MMM D, YYYY",
+                        displayFormats: {
+                            hour: 'MMM D'
+                        }
+                    },
+                    gridLines: {
+                        color: '#e8e8ff',
+                        display: false,
+                        drawOnChartArea: false,
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        maxRotation: 0,
+                        minRotation: 0,
+                        fontColor: 'gray',
+                        fontFamily: 'Arial',
+                        fontSize: 10,
+                        display: false,
+                        autoSkip: false,
+                        callback: function (value, index, values) {
+                            return value;
+                            //if (!(index % 2)) return value;
+                        },
+
+                    }
+                }],
+                yAxes: [{
+
+                    id: 'y-axis-0',
+                    gridLines: {
+                        color: '#f1f1f1',
+                        display: true,
+                        drawTicks: true,
+                        drawOnChartArea: true,
+                        drawBorder: false,
+                        zeroLineColor: 'gray',
+                        tickMarkLength: 2
+                    },
+
+                    ticks: {
+                        fontColor: '#b6b6b6',
+                        fontSize: 10,
+                        padding: 3,
+                        beginAtZero: true,
+                        min: -2.1,
+                        max: 2.1,
+                        stepSize: 1,
+                        callback: function (label, index, labels) {
+                            if (label === Enums.HealthLevel.NotGreat)
+                                return 'Not Great';
+                            if (label === Enums.HealthLevel.VeryBad)
+                                return 'Very Bad';
+                            else if (label !== 0)
+                                return Enums.HealthLevel[label];
+                            else
+                                return '';
+
+                        }
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            annotation: {
+
                 annotations: []
             }
         };

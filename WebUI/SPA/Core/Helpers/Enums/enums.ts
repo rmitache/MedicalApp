@@ -2,7 +2,8 @@
     SingleDay,
     TenDays,
     SingleMonth,
-	ThreeMonths
+    ThreeMonths,
+    TwelveMonths
 }
 export enum LoginResultStatus {
     Success = 0,

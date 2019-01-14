@@ -1,9 +1,8 @@
 <div class="frame" #frame>
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" overflow="visible">
-        <svg:line x1="0%" y1="0" [attr.x2]="'100%'" y2="0" class="timeline-line"/>
+        <svg:line x1="0%" y1="0" [attr.x2]="'100%'" y2="0" class="timeline-line" />
 
         <svg:g *ngFor="let tickInfoWrapper of viewModel.TickInfoWrappers; let i = index" tick-elem
-               [TickWidthInPX]="viewModel.TickDynamicWidthInPX"
                [TickInfoWrapper]="tickInfoWrapper">
         </svg:g>
     </svg>

@@ -32,7 +32,7 @@ export class AnalysisPageComponent {
     @ViewChild('timeline')
     private timelineInstance: TimelineComponent;
     private readonly viewModel: ViewModel = {
-        DateRangeDisplayMode: DateRangeMode.SingleMonth,
+        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;

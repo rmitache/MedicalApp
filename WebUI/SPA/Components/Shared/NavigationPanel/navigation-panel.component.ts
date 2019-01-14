@@ -37,6 +37,8 @@ export class NavigationPanelComponent {
 			currentStrategy = new SingleDayMode();
 		} else if (this.dateRangeSelectionMode === DateRangeMode.ThreeMonths) {
 			currentStrategy = new ThreeMonthsMode();
+        } else if (this.dateRangeSelectionMode === DateRangeMode.TwelveMonths) {
+            currentStrategy = new TwelveMonthsMode();
         } else {
             // OBS -> Not implemented yet
             throw new Error('Not implemented yet');
@@ -206,8 +208,37 @@ class ThreeMonthsMode implements IDateRangeSelectionMode {
 	}
 	public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
 		
-		var labelText = currentSelDateRange.RangeStart.format('MMM, YYYY') + " - " + currentSelDateRange.RangeEnd.format('MMM, YYYY');
+		var labelText = currentSelDateRange.RangeStart.format('MMM YYYY') + " - " + currentSelDateRange.RangeEnd.format('MMM YYYY');
 		return labelText;
 	}
+
+};
+class TwelveMonthsMode implements IDateRangeSelectionMode {
+
+
+    // Public methods
+    public GetInitialSelectedDateRange(referenceDate: moment.Moment) {
+
+        // Get 5 previous months and the current month as the range
+        let range = new Range<moment.Moment>(referenceDate.clone().subtract(11, 'months').startOf('month').startOf('day'),
+            referenceDate.clone().endOf('month').endOf('day'));
+        return range;
+    }
+    public GetNextSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().add(12, 'months').startOf('month').startOf('day'),
+            currentSelDateRange.RangeEnd.clone().add(12, 'months').endOf('month').endOf('day'));
+        return range;
+    }
+    public GetPreviousSelectedDateRange(currentSelDateRange: Range<moment.Moment>): Range<moment.Moment> {
+
+        let range = new Range<moment.Moment>(currentSelDateRange.RangeStart.clone().subtract(12, 'months').startOf('month').startOf('day'),
+            currentSelDateRange.RangeEnd.clone().subtract(12, 'months').endOf('month').endOf('day'));
+        return range;
+    }
+    public GetNavigationLabel(currentSelDateRange: Range<moment.Moment>) {
+
+        var labelText = currentSelDateRange.RangeStart.format('MMM YYYY') + " - " + currentSelDateRange.RangeEnd.format('MMM YYYY');
+        return labelText;
+    }
 
 };

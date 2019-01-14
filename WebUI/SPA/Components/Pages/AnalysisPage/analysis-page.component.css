@@ -36,6 +36,8 @@
         float: left;
         padding: 20px 54px 10px 54px;
         background-color: #ebebeb;
+        border-top: solid 1px #cccccc;
+        border-bottom: solid 1px #cccccc;
     }
 
         .main-panel .main-panel-timeline .navigation-panel {

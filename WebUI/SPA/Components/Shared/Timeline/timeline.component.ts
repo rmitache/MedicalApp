@@ -1,5 +1,5 @@
 // Angular and 3rd party stuff
-import { Component, ChangeDetectorRef, ApplicationRef, Input, ElementRef, ViewChild, HostListener} from '@angular/core';
+import { Component, ChangeDetectorRef, ApplicationRef, Input, ElementRef, ViewChild, HostListener } from '@angular/core';
 import * as moment from 'moment';
 import * as momentRange from 'moment-range';
 import { Observable } from 'rxjs/Observable';
@@ -27,48 +27,21 @@ export class TimelineComponent {
     private readonly viewModel: ViewModel = {
         SelectedDateRange: null,
         TickInfoWrappers: null,
-        TickDynamicWidthInPX: null,
-        DatesInSelectedDateRange: null
+        DateRangeDisplayMode: DateRangeMode.ThreeMonths
     };
 
     // Private methods
-    private getTickDynamicWidthInPX() {
-        var frameWidth = (this.frame.nativeElement as HTMLElement).offsetWidth;
-        var tickWidth = frameWidth / (this.viewModel.DatesInSelectedDateRange.length -1 );
+    private getCurrentDisplayModeInstance(): IDateRangeModeImplementation {
 
-        let newTickDynamicWidthInPX = Math.round(tickWidth);
-        return newTickDynamicWidthInPX;
-    }
-    private createTickInfoWrappers(): TickInfoWrapper[] {
+        let modeImplementationClass = displayModesLookup[this.viewModel.DateRangeDisplayMode];
+        let currentModeInstance: IDateRangeModeImplementation = new modeImplementationClass();
 
-        // Variables
-        var tickInfoWrappers: TickInfoWrapper[] = [];
-        this.viewModel.DatesInSelectedDateRange = EnumerateDatesBetweenDatesUsingMoment(this.viewModel.SelectedDateRange, true);
 
-        // Compute % width per tick 
-        var width = 100 / (this.viewModel.DatesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
-
-        // Create tick info wrappers
-        for (var i = 0; i < this.viewModel.DatesInSelectedDateRange.length; i++) {
-
-            // Compute XPos
-            var xPos = width * i;
-
-            // Create wrapper
-            var newTickInfoWrapper = new TickInfoWrapper(this.viewModel.DatesInSelectedDateRange[i], width, xPos, 0);
-            tickInfoWrappers.push(newTickInfoWrapper);
-        }
-
-		// Return nth
-		var filteredTickInfoWrappers = tickInfoWrappers.filter((wrapper,index) => {
-			return index % 2 === 0;
-		});
-
-		return filteredTickInfoWrappers;
+        return currentModeInstance;
     }
     private refreshUI() {
-        this.viewModel.TickInfoWrappers = this.createTickInfoWrappers();
-        this.viewModel.TickDynamicWidthInPX = this.getTickDynamicWidthInPX();
+        let currentMode = this.getCurrentDisplayModeInstance();
+        this.viewModel.TickInfoWrappers = currentMode.CreateTickInfoWrappers(this.viewModel.SelectedDateRange);
     }
 
     // Public methods
@@ -77,32 +50,83 @@ export class TimelineComponent {
         this.refreshUI();
     }
 
-    // Event handlers
-    @HostListener('window:resize', ['$event'])
-    private onResizeWindow(event) {
-        this.refreshUI();
-    }
+    //// Event handlers
+    //@HostListener('window:resize', ['$event'])
+    //private onResizeWindow(event) {
+    //    //this.refreshUI();
+    //}
 }
 interface ViewModel {
     SelectedDateRange: Range<moment.Moment>;
     TickInfoWrappers: TickInfoWrapper[];
-    TickDynamicWidthInPX: number; 
-    DatesInSelectedDateRange: moment.Moment[];
-
+    DateRangeDisplayMode: DateRangeMode;
 }
 export class TickInfoWrapper {
-    // Fields
-    public Date: moment.Moment;
-    public Width: number;
-    public XPos: number;
-    public YPos: number;
-    
 
     // Constructor
-    constructor(date: moment.Moment, width:number, xPos: number, yPos: number) {
-        this.Date = date;
-        this.Width = width;
-        this.XPos = xPos;
-        this.YPos = yPos;
+    constructor(
+        public readonly Date: moment.Moment,
+        public readonly Width: number,
+        public readonly XPos: number,
+        public readonly YPos: number) {
+
     }
 }
+
+// Display modes
+interface IDateRangeModeImplementation {
+    CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[];
+}
+class SingleMonthDisplayMode implements IDateRangeModeImplementation {
+
+    // Public methods
+    public CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[] {
+
+        // Variables
+        var tickInfoWrappers: TickInfoWrapper[] = [];
+        let datesInSelectedDateRange = EnumerateDatesBetweenDatesUsingMoment(selectedDateRange, true);
+        var width = 100 / (datesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
+
+        // Create tick info wrappers
+        for (var i = 0; i < datesInSelectedDateRange.length; i++) {
+            var xPos = width * i;
+            var newTickInfoWrapper = new TickInfoWrapper(datesInSelectedDateRange[i], width, xPos, 0);
+            tickInfoWrappers.push(newTickInfoWrapper);
+        }
+
+        // Return only some ticks nth
+        var filteredTickInfoWrappers = tickInfoWrappers.filter((wrapper, index) => {
+            return index % 2 === 0;
+        });
+
+        return filteredTickInfoWrappers;
+    }
+};
+class ThreeMonthsDisplayMode implements IDateRangeModeImplementation {
+
+    // Public methods
+    public CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[] {
+
+        // Variables
+        var tickInfoWrappers: TickInfoWrapper[] = [];
+        let datesInSelectedDateRange = EnumerateDatesBetweenDatesUsingMoment(selectedDateRange, true);
+        var width = 100 / (datesInSelectedDateRange.length - 1); // the -1 is in order to hit the last tick on the right extreme of the timeline
+
+        // Create tick info wrappers
+        for (var i = 0; i < datesInSelectedDateRange.length; i++) {
+            var xPos = width * i;
+            var newTickInfoWrapper = new TickInfoWrapper(datesInSelectedDateRange[i], width, xPos, 0);
+            tickInfoWrappers.push(newTickInfoWrapper);
+        }
+
+        // Return only some ticks nth
+        var filteredTickInfoWrappers = tickInfoWrappers.filter((wrapper, index) => {
+            return index % 7 === 0;
+        });
+
+        return filteredTickInfoWrappers;
+    }
+};
+var displayModesLookup = {};
+displayModesLookup[DateRangeMode.SingleMonth] = SingleMonthDisplayMode;
+displayModesLookup[DateRangeMode.ThreeMonths] = ThreeMonthsDisplayMode;

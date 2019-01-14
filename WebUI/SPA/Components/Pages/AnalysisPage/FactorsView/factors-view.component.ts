@@ -54,7 +54,7 @@ export class FactorsViewComponent {
         SelectedPlans: null,
 
         TodayXPosition: null,
-        DateRangeDisplayMode: DateRangeMode.SingleMonth,
+        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -170,3 +170,17 @@ interface ViewModel {
     TodayXPosition: number;
     DateRangeDisplayMode: DateRangeMode;
 }
+interface IDisplayMode {
+
+}
+
+class SingleMonthDisplayMode implements IDisplayMode {
+
+    // Constructor
+    constructor(
+    ) {
+    }
+
+    // Public methods
+
+};

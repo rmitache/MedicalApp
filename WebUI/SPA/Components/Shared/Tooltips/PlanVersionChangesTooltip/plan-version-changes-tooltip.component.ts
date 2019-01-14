@@ -49,7 +49,7 @@ export class PlanVersionChangesTooltipComponent {
         var verticalSpacing = 55;
         tooltipPos.Left = hoverPointLeft - currentWidth / 2 - 1;
         tooltipPos.Top = hoverPointTop + verticalSpacing + 6;
-        caretPos.Left = currentWidth / 2 - 25;
+        caretPos.Left = currentWidth / 2 - 24;
         caretPos.Top = -22;
 
         // Handle case when position overflows screen on the left side

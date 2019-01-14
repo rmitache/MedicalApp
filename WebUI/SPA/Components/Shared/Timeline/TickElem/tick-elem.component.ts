@@ -24,20 +24,20 @@ export class TickElemComponent {
     private tickWidthInPX: number;
     private readonly viewModel: ViewModel = {
         TickInfoWrapper: null,
-        TickWidthInPX: null,
+        //TickWidthInPX: null,
         DateText:null
     };
 
     // Constructor
     ngOnInit() {
         this.viewModel.TickInfoWrapper = this.tickInfoWrapper;
-        this.viewModel.TickWidthInPX = this.tickWidthInPX;
+        //this.viewModel.TickWidthInPX = this.tickWidthInPX;
         this.viewModel.DateText = this.tickInfoWrapper.Date.format('MMM D');
     }
 }
 
 interface ViewModel {
     TickInfoWrapper: TickInfoWrapper;
-    TickWidthInPX: number;
+    //TickWidthInPX: number;
     DateText: string;
 }
