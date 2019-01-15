@@ -43,7 +43,7 @@ export class FactorsViewComponent {
     private infoTooltipText: string =
         `Here you can see which FACTORS have potentially influenced your HEALTH. <br />
         You can see which changes you've made to your treatment Plans over time. If you hover over the small black circles you can 
-        see which Medicines were changed.  <br />
+        see what was changed.  <br />
         You can also show/hide Plans on the right side.`;
 
     private readonly viewModel: ViewModel = {
@@ -54,7 +54,7 @@ export class FactorsViewComponent {
         SelectedPlans: null,
 
         TodayXPosition: null,
-        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
+        //DateRangeDisplayMode: DateRangeMode.ThreeMonths,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -168,19 +168,17 @@ interface ViewModel {
     SelectedPlans: CLOs.PlanCLO[];
 
     TodayXPosition: number;
-    DateRangeDisplayMode: DateRangeMode;
+    //DateRangeDisplayMode: DateRangeMode;
 }
-interface IDisplayMode {
+//interface IDisplayModeImplementation {
 
-}
+//}
+//class ThreeMonthsDisplayMode implements IDisplayModeImplementation {
 
-class SingleMonthDisplayMode implements IDisplayMode {
+    
 
-    // Constructor
-    constructor(
-    ) {
-    }
+//    // Public methods
 
-    // Public methods
-
-};
+//};
+//var displayModesLookup = {};
+//displayModesLookup[DateRangeMode.ThreeMonths] = ThreeMonthsDisplayMode;

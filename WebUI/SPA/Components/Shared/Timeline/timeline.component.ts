@@ -31,10 +31,10 @@ export class TimelineComponent {
     };
 
     // Private methods
-    private getCurrentDisplayModeInstance(): IDateRangeModeImplementation {
+    private getCurrentDisplayModeInstance(): IDisplayModeImplementation {
 
         let modeImplementationClass = displayModesLookup[this.viewModel.DateRangeDisplayMode];
-        let currentModeInstance: IDateRangeModeImplementation = new modeImplementationClass();
+        let currentModeInstance: IDisplayModeImplementation = new modeImplementationClass();
 
 
         return currentModeInstance;
@@ -49,12 +49,6 @@ export class TimelineComponent {
         this.viewModel.SelectedDateRange = newDateRange;
         this.refreshUI();
     }
-
-    //// Event handlers
-    //@HostListener('window:resize', ['$event'])
-    //private onResizeWindow(event) {
-    //    //this.refreshUI();
-    //}
 }
 interface ViewModel {
     SelectedDateRange: Range<moment.Moment>;
@@ -74,10 +68,10 @@ export class TickInfoWrapper {
 }
 
 // Display modes
-interface IDateRangeModeImplementation {
+interface IDisplayModeImplementation {
     CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[];
 }
-class SingleMonthDisplayMode implements IDateRangeModeImplementation {
+class SingleMonthDisplayMode implements IDisplayModeImplementation {
 
     // Public methods
     public CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[] {
@@ -102,7 +96,7 @@ class SingleMonthDisplayMode implements IDateRangeModeImplementation {
         return filteredTickInfoWrappers;
     }
 };
-class ThreeMonthsDisplayMode implements IDateRangeModeImplementation {
+class ThreeMonthsDisplayMode implements IDisplayModeImplementation {
 
     // Public methods
     public CreateTickInfoWrappers(selectedDateRange: Range<moment.Moment>): TickInfoWrapper[] {

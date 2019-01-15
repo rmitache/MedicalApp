@@ -142,14 +142,11 @@
   <ItemGroup>
     <Folder Include="SPA\DomainModel\Factors\Medicine\CLOServices\" />
     <Folder Include="SPA\DomainModel\General\CLOs\" />
+    <Folder Include="wwwroot\Pages\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\globalStyles.css.map" />
-    <None Include="wwwroot\Pages\HomePage\homepage.js" />
-    <None Include="wwwroot\Pages\HomePage\homepage.js.map" />
-    <None Include="wwwroot\Pages\LoginPage\loginpage.js" />
-    <None Include="wwwroot\Pages\LoginPage\loginpage.js.map" />
     <None Include="wwwroot\Vendor\912ec66d7572ff821749319396470bde.svg" />
     <None Include="wwwroot\Vendor\vendor.js" />
   </ItemGroup>

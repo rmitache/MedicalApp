@@ -6,8 +6,8 @@
 
 
 .horizontal-line {
-    stroke-width: 0.2;
-    stroke: gray;
+    stroke-width: 1;
+    stroke: #8d8ddc;
 }
 
 .label-discrete {

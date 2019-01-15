@@ -31,10 +31,10 @@
     }
 
     .main-panel .main-panel-timeline {
-        width: calc(100% - 108px);
+        width: calc(100% - 119px);
         height: 74px;
         float: left;
-        padding: 20px 54px 10px 54px;
+        padding: 20px 60px 10px 59px;
         background-color: #ebebeb;
         border-top: solid 1px #cccccc;
         border-bottom: solid 1px #cccccc;

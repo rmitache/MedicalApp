@@ -63,7 +63,7 @@ export class IndicatorsViewComponent {
 
         ChartOptions: null,
         ChartData: null,
-        DateRangeDisplayMode: DateRangeMode.SingleMonth,
+        DateRangeDisplayMode: DateRangeMode.ThreeMonths,
     };
     private readonly subscriptions: Subscription[] = [];
     private readonly appState: IReadOnlyApplicationState;
@@ -116,7 +116,7 @@ export class IndicatorsViewComponent {
         } else if (this.viewModel.DateRangeDisplayMode === DateRangeMode.TwelveMonths) {
             currentStrategy = new TwelveMonthsDisplayMode(getChartInstanceFunction, getChartCanvasFunction,
                 this.healthStatusesTooltipInstance, this.healthStatusDataSetGenerator, this.symptomTypeDatasetGenerator);
-        }else {
+        } else {
             // OBS -> Not implemented yet
             throw new Error('HealthGraphDisplayMode not implemented yet');
         }
@@ -370,7 +370,7 @@ class SingleMonthDisplayMode implements IDisplayMode {
             scales: {
                 xAxes: [{
                     //offset: true,
-                    position:'top',
+                    position: 'top',
                     id: 'x-axis-0',
                     type: "time",
                     time: {
@@ -394,17 +394,17 @@ class SingleMonthDisplayMode implements IDisplayMode {
                         fontColor: 'gray',
                         fontFamily: 'Arial',
                         fontSize: 10,
-                        display:false,
+                        display: false,
                         autoSkip: false,
                         callback: function (value, index, values) {
                             return value;
                             //if (!(index % 2)) return value;
                         },
-                        
+
                     }
                 }],
                 yAxes: [{
-                    
+
                     id: 'y-axis-0',
                     gridLines: {
                         color: '#f1f1f1',
@@ -487,6 +487,7 @@ class SingleMonthDisplayMode implements IDisplayMode {
             }
         });
 
+
         // Create HealthStatus dataset
         let healthStatusDataset = this.healthStatusDataSetGenerator.GenerateDataSet(preFilteredHealthStatusEntriesCLOs, currentSelDateRange);
         data.datasets.push(healthStatusDataset);
@@ -509,7 +510,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
     // Public methods
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
-            
+           
             animation: false,
             tooltips: {
                 enabled: false,
@@ -555,7 +556,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
             },
             scales: {
                 xAxes: [{
-                    //offset: true,
+                    offset: true,
                     position: 'top',
                     id: 'x-axis-0',
                     type: "time",
@@ -590,7 +591,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     }
                 }],
                 yAxes: [{
-
+                    position: 'left',
                     id: 'y-axis-0',
                     gridLines: {
                         color: '#f1f1f1',
@@ -617,6 +618,42 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                                 return 'Very Bad';
                             else if (label !== 0)
                                 return Enums.HealthLevel[label];
+                            else
+                                return '';
+
+                        }
+                    }
+                },
+                {
+
+                    id: 'y-axis-symptoms',
+                    position: 'right',
+                    gridLines: {
+                        color: 'red',
+                        display: false,
+                        drawTicks: true,
+                        drawOnChartArea: true,
+                        drawBorder: false,
+                        tickMarkLength: 2
+                    },
+
+                    ticks: {
+                        fontColor: '#2399e5',
+                        fontSize: 10,
+                        padding: 3,
+                        beginAtZero: true,
+                        min: -3,
+                        max: 3,
+                        stepSize: 1,
+                        callback: function (label, index, labels) {
+                            if (label === Enums.SymptomIntensityLevel.Severe)
+                                return 'Severe';
+                            if (label === Enums.SymptomIntensityLevel.Moderate)
+                                return 'Moderate';
+                            else if (label === Enums.SymptomIntensityLevel.Mild)
+                                return 'Mild';
+                            else if (label === 0)
+                                return 'Nothing';
                             else
                                 return '';
 
@@ -695,11 +732,11 @@ class TwelveMonthsDisplayMode implements IDisplayMode {
     // Public methods
     public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
         let chartOptions = {
-            plugins: {
-                filler: {
-                    propagate: true
-                }
-            },
+            //plugins: {
+            //    filler: {
+            //        propagate: true
+            //    }
+            //},
             animation: false,
             tooltips: {
                 enabled: false,
@@ -779,40 +816,44 @@ class TwelveMonthsDisplayMode implements IDisplayMode {
 
                     }
                 }],
-                yAxes: [{
+                yAxes: [
+                    {
+                        position: 'right',
+                        id: 'y-axis-0',
+                        gridLines: {
+                            color: 'blue',
+                            display: true,
+                            drawTicks: true,
+                            drawOnChartArea: true,
+                            drawBorder: false,
+                            zeroLineColor: 'gray',
+                            tickMarkLength: 2
+                        },
 
-                    id: 'y-axis-0',
-                    gridLines: {
-                        color: '#f1f1f1',
-                        display: true,
-                        drawTicks: true,
-                        drawOnChartArea: true,
-                        drawBorder: false,
-                        zeroLineColor: 'gray',
-                        tickMarkLength: 2
+                        ticks: {
+                            fontColor: '#b6b6b6',
+                            fontSize: 10,
+                            padding: 3,
+                            beginAtZero: true,
+                            min: -2.1,
+                            max: 2.1,
+                            stepSize: 1,
+                            callback: function (label, index, labels) {
+                                if (label === Enums.HealthLevel.NotGreat)
+                                    return 'Not Great';
+                                if (label === Enums.HealthLevel.VeryBad)
+                                    return 'Very Bad';
+                                else if (label !== 0)
+                                    return Enums.HealthLevel[label];
+                                else
+                                    return '';
+
+                            }
+                        }
                     },
 
-                    ticks: {
-                        fontColor: '#b6b6b6',
-                        fontSize: 10,
-                        padding: 3,
-                        beginAtZero: true,
-                        min: -2.1,
-                        max: 2.1,
-                        stepSize: 1,
-                        callback: function (label, index, labels) {
-                            if (label === Enums.HealthLevel.NotGreat)
-                                return 'Not Great';
-                            if (label === Enums.HealthLevel.VeryBad)
-                                return 'Very Bad';
-                            else if (label !== 0)
-                                return Enums.HealthLevel[label];
-                            else
-                                return '';
 
-                        }
-                    }
-                }]
+                ]
             },
             responsive: true,
             maintainAspectRatio: false,
@@ -822,9 +863,13 @@ class TwelveMonthsDisplayMode implements IDisplayMode {
             }
         };
 
+
+
         // Annotations
         let today = moment();
         let lastDayOfThisMonth = moment().endOf('month');
+
+
 
         if (!today.isSame(lastDayOfThisMonth, 'day')) {
             let annotations = [{

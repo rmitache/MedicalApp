@@ -189,7 +189,7 @@ export class SymptomTypeDatasetGenerator {
             } else {
                 let sum = arrayOfSymptomTypeValues.reduce((a, b) => a + b, 0);
                 let computedAverage = sum / arrayOfSymptomTypeValues.length;
-                avgValuePerSymptomType[symptomTypeName] = computedAverage * -1;
+                avgValuePerSymptomType[symptomTypeName] = computedAverage ;
             }
         }
 
@@ -206,6 +206,7 @@ export class SymptomTypeDatasetGenerator {
         let newDataSetsDictionary: { [symptomTypeName: string]: SymptomTypeDataset } = {};
         symptomTypesDatasetItems.forEach(dataSetItem => {
             newDataSetsDictionary[dataSetItem.SymptomTypeCLO.Name] = {
+                yAxisID: 'y-axis-symptoms',
                 borderWidth: 3,
                 borderColor: dataSetItem.Color, 
                 pointRadius: 1.5,
@@ -219,7 +220,7 @@ export class SymptomTypeDatasetGenerator {
             };
         });
 
-
+        
         // Adjust the range to cut it off on today's date (if it intersects with it)
         let today = moment();
         let todayIsInRange = today.isSameOrBefore(range.RangeEnd, 'day') && today.isSameOrAfter(range.RangeStart, 'day');
@@ -275,6 +276,10 @@ export interface HealthStatusDataset {
     backgroundColor: string[];
 }
 export interface SymptomTypeDataset {
+
+
+    yAxisID:string;
+
     borderWidth: number;
     borderColor: string;
     pointRadius: number;
