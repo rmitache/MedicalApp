@@ -583,8 +583,8 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                         display: false,
                         autoSkip: false,
                         callback: function (value, index, values) {
-                            return value;
-                            //if (!(index % 2)) return value;
+                            //return value;
+                            if (!(index % 7)) return value;
                         },
 
                     }

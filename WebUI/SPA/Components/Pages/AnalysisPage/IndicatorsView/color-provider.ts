@@ -14,8 +14,8 @@ export class ColorProvider {
 
     // Fields
     private readonly availableColors = [
+        '#2399e5', // blue
         '#000000', // black
-        '#0082c8', // blue
         '#911eb4', // purple
         '#9c1a3a', // dark red
         '#857717', // dark yellow
