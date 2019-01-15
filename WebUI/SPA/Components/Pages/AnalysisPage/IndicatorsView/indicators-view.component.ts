@@ -557,7 +557,6 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
             scales: {
                 xAxes: [{
                     offset: true,
-                    position: 'top',
                     id: 'x-axis-0',
                     type: "time",
                     time: {
@@ -571,8 +570,8 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     },
                     gridLines: {
                         color: '#e8e8ff',
-                        display: false,
-                        drawOnChartArea: false,
+                        display: true,
+                        drawOnChartArea: true,
                         drawBorder: false,
                     },
                     ticks: {

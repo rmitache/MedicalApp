@@ -61,13 +61,12 @@
 
 .factors-rendering-area {
     height: calc(100% - 5px);
-    width: calc(100% - 17px - 41px);
+    width: calc(100% - 23px - 45px);
     padding-left: 23px;
-    padding-right: 38px;
+    padding-right: 45px;
     overflow-y: scroll;
     float: left;
     margin-top: -10px;
-    border:solid 1px red;
 }
 
 .timeline {
@@ -79,12 +78,6 @@
 }
 
 
-/*.right-side {
-    border-radius: 0 5px 5px 0;
-    width: 238px;
-    height: 100%;
-    float: right;
-}*/
 
 .legend-item {
 }
@@ -99,12 +92,3 @@
         vertical-align: middle;
     }
 
-/*@media only screen and (max-width: 1024px) {
-    .left-side {
-        width: calc(100% - 150px);
-    }
-
-    .right-side {
-        width: 150px;
-    }
-}*/
