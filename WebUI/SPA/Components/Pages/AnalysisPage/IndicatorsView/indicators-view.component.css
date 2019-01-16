@@ -22,7 +22,7 @@
         .left-side .header .left-section {
             display: block;
             float: left;
-            width: calc(33%);
+            width: 110px;
         }
 
             .left-side .header .left-section .header-label {
@@ -41,7 +41,7 @@
 
         .left-side .header .center-section {
             float: left;
-            width: calc(34%);
+            width: calc(100% - 145px);
             text-align: center;
         }
         .left-side .header .center-section .navigation-panel{
@@ -49,7 +49,7 @@
         }
         .left-side .header .right-section {
             float: right;
-            width: calc(33%);
+            width: 35px;
         }
             .left-side .header .right-section button {
                 float: right;

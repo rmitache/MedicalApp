@@ -155,7 +155,6 @@ export class IndicatorsViewComponent {
             return moment(entry.OccurrenceDateTime) >= this.viewModel.SelectedDateRange.RangeStart &&
                 moment(entry.OccurrenceDateTime) <= this.viewModel.SelectedDateRange.RangeEnd;
         });
-
         var datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] } = {};
         filteredHealthStatusEntryCLOs.forEach((clo, index) => {
             let dateKey = moment(clo.OccurrenceDateTime).format('DD/MM/YYYY');
@@ -166,8 +165,11 @@ export class IndicatorsViewComponent {
         });
 
         // Refresh VM properties 
+        let anySymptomsAreSelected = this.viewModel.SymptomTypesDatasetItems.some(elem => {
+            return elem.IsSelected;
+        });
         let currentDisplayMode = this.getCurrentDisplayModeInstance();
-        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(datesToCLOsDictionary);
+        this.viewModel.ChartOptions = currentDisplayMode.GenerateChartOptions(datesToCLOsDictionary, anySymptomsAreSelected);
         this.viewModel.ChartData = currentDisplayMode.GenerateChartData(this.viewModel.SymptomTypesDatasetItems, filteredHealthStatusEntryCLOs,
             new Range<moment.Moment>(this.viewModel.SelectedDateRange.RangeStart.clone(), this.viewModel.SelectedDateRange.RangeEnd.clone()));
 
@@ -305,7 +307,7 @@ export class SymptomTypeDatasetItem {
 type GetChartCanvasFunc = () => any;
 type GetChartInstanceFunc = () => any;
 interface IDisplayMode {
-    GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] });
+    GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, showSymptomsAxis?: boolean);
     GenerateChartData(symptomTypesDatasetItems: SymptomTypeDatasetItem[], preFilteredHealthStatusEntriesCLOs: CLOs.HealthStatusEntryCLO[],
         currentSelDateRange: Range<moment.Moment>);
 }
@@ -322,7 +324,7 @@ class SingleMonthDisplayMode implements IDisplayMode {
     }
 
     // Public methods
-    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, showSymptomsAxis = false) {
         let chartOptions = {
             animation: false,
             tooltips: {
@@ -508,9 +510,10 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
     }
 
     // Public methods
-    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, showSymptomsAxis = false) {
+
         let chartOptions = {
-           
+
             animation: false,
             tooltips: {
                 enabled: false,
@@ -637,7 +640,7 @@ class ThreeMonthsDisplayMode implements IDisplayMode {
                     },
 
                     ticks: {
-                        fontColor: '#2399e5',
+                        fontColor: showSymptomsAxis ? '#2399e5' : 'white',
                         fontSize: 10,
                         padding: 3,
                         beginAtZero: true,
@@ -729,7 +732,7 @@ class TwelveMonthsDisplayMode implements IDisplayMode {
     }
 
     // Public methods
-    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }) {
+    public GenerateChartOptions(datesToCLOsDictionary: { [dateKey: string]: CLOs.HealthStatusEntryCLO[] }, showSymptomsAxis = false) {
         let chartOptions = {
             //plugins: {
             //    filler: {

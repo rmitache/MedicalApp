@@ -209,12 +209,12 @@ export class SymptomTypeDatasetGenerator {
                 yAxisID: 'y-axis-symptoms',
                 borderWidth: 3,
                 borderColor: dataSetItem.Color, 
-                pointRadius: 1.5,
+                pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
                 lineTension: 0.2,
                 fill: true,
 
-                backgroundColor: HelperFunctions.HexToRgbA(dataSetItem.Color, 0.5),
+                backgroundColor: HelperFunctions.HexToRgbA(dataSetItem.Color, 0.3),
                 type: 'line',
                 data: []
             };

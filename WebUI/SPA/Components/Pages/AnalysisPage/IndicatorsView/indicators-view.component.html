@@ -26,6 +26,14 @@
                         <i class="fa fa-square"></i>
                         <span class="label-discrete">Good days</span>
                     </div>
+
+                    <ng-container *ngFor="let symptomDSItem of viewModel.SymptomTypesDatasetItems">
+                        <div *ngIf="symptomDSItem.IsSelected" class="legend-item">
+                            <i class="fa fa-minus-circle"
+                               [style.color]="symptomDSItem.Color"></i>
+                            <span class="label-discrete">{{symptomDSItem.SymptomTypeCLO.Name}}</span>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="right-section">

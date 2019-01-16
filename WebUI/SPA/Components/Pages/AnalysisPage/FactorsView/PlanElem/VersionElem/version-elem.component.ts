@@ -73,7 +73,7 @@ export class VersionElemComponent {
         var bRect = this.svgElem.nativeElement.getBoundingClientRect() as ClientRect;
         var eventInfo = new VersionElemHoverEventInfo(bRect.left + 24, bRect.top + 10, this.viewModel.VersionInfoWrapper.VersionCLO,
             HoverInfoPointType.StartPoint);
-        //this.Hover.emit(eventInfo);
+        this.Hover.emit(eventInfo);
     }
     private onMouseLeaveStartPoint() {
 
