@@ -41,7 +41,7 @@
 
         .left-side .header .center-section {
             float: left;
-            width: calc(100% - 145px);
+            width: calc(100% - 220px);
             text-align: center;
         }
         .left-side .header .center-section .navigation-panel{
