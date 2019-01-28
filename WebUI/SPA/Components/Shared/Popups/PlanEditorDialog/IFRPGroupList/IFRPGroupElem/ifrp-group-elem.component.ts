@@ -29,18 +29,15 @@ export class IFRPGroupElemComponent {
 
     private readonly viewModel: ViewModel = {
         IFRPGroupCLO: null,
-        MedicineTypeSearchResults: [],
 
         UnitDoseTypesEnum: {},
         OverlayIsVisible: true,
         UserDefinedControlsAreLocked: true,
-
-        SearchText: null
     };
 
     // Private methods
     private loadMedicineTypeByName(selectedMedicineTypeName: string) {
-
+        
         // Get and load the medicineTypeCLO
         let factorRecordCLO = this.viewModel.IFRPGroupCLO;
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
@@ -101,39 +98,39 @@ export class IFRPGroupElemComponent {
         });
     }
     ngOnInit() {
-        this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
+        //this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
 
-        // Special autosuggest validator (as a quick-fix for the ForceSelection bug)
-        this.reactiveForm.get('medicineTypeName').setValidators([(control: AbstractControl) => {
-            return autosuggestMustMatchSuggestions(control as FormGroup, this.medicineTypesSearchService);
-        }]);
+        //// Special autosuggest validator (as a quick-fix for the ForceSelection bug)
+        //this.reactiveForm.get('medicineTypeName').setValidators([(control: AbstractControl) => {
+        //    return autosuggestMustMatchSuggestions(control as FormGroup, this.medicineTypesSearchService);
+        //}]);
 
 
-        //
-        this.reactiveForm
-            .statusChanges
-            .subscribe((newStatus) => {
-                this.refreshIsValid();
+        ////
+        //this.reactiveForm
+        //    .statusChanges
+        //    .subscribe((newStatus) => {
+        //        this.refreshIsValid();
 
-            });
+        //    });
 
-        //
-        if (this.iFRPGroupCLO.MedicineType !== null) {
-            this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
-            this.viewModel.SearchText = this.iFRPGroupCLO.MedicineType.Name;
-            this.viewModel.OverlayIsVisible = false;
+        ////
+        //if (this.iFRPGroupCLO.MedicineType !== null) {
+        //    this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
+        //    this.viewModel.SearchText = this.iFRPGroupCLO.MedicineType.Name;
+        //    this.viewModel.OverlayIsVisible = false;
 
-            //
-            if (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true) {
-                this.viewModel.UserDefinedControlsAreLocked = true;
-                this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
-            } else {
-                this.viewModel.UserDefinedControlsAreLocked = false;
-                this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
-            }
+        //    //
+        //    if (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true) {
+        //        this.viewModel.UserDefinedControlsAreLocked = true;
+        //        this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
+        //    } else {
+        //        this.viewModel.UserDefinedControlsAreLocked = false;
+        //        this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
+        //    }
 
-        }
+        //}
 
     }
 
@@ -143,11 +140,11 @@ export class IFRPGroupElemComponent {
     }
     public SetMedicineType(name) {
         
-        this.loadMedicineTypeByName(name);
-        setTimeout(() => {
-            this.viewModel.OverlayIsVisible = false;
-            this.viewModel.SearchText = name;
-        }, 1);
+        //this.loadMedicineTypeByName(name);
+        //setTimeout(() => {
+        //    this.viewModel.OverlayIsVisible = false;
+        //    this.viewModel.SearchText = name;
+        //}, 1);
     }
 
     // Events 
@@ -161,21 +158,21 @@ export class IFRPGroupElemComponent {
     }
     private onMedicineTypeTextBoxChanged(event) {
         
-        let searchResults = this.medicineTypesSearchService.Search(event.query);
-        this.viewModel.MedicineTypeSearchResults = searchResults;      
+        //let searchResults = this.medicineTypesSearchService.Search(event.query);
+        //this.viewModel.MedicineTypeSearchResults = searchResults;      
     }
     private onMedicineTypeSelected(value) {
-        if (value === "Add a new Supplement...") {
-            this.AddNewMedicineTypeTriggered.emit(this);
-            this.viewModel.SearchText = '';
-            return;
-        }
+        //if (value === "Add a new Supplement...") {
+        //    this.AddNewMedicineTypeTriggered.emit(this);
+        //    this.viewModel.SearchText = '';
+        //    return;
+        //}
 
 
-        this.loadMedicineTypeByName(value);
-        setTimeout(() => {
-            this.viewModel.OverlayIsVisible = false;
-        }, 1);
+        //this.loadMedicineTypeByName(value);
+        //setTimeout(() => {
+        //    this.viewModel.OverlayIsVisible = false;
+        //}, 1);
     }
     private onUnitDoseSizeChanged(value) {
         if (this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose === true) {
@@ -191,13 +188,10 @@ export class IFRPGroupElemComponent {
 
 interface ViewModel {
     IFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
-    MedicineTypeSearchResults: string[];
-
+    
     UnitDoseTypesEnum: any;
     OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;
-
-    SearchText: string;
 }
 
 

@@ -1,5 +1,4 @@
 .frame /deep/ .ui-autocomplete input {
-
     width: 265px;
 }
 
@@ -13,103 +12,97 @@ input.ng-invalid.ng-touched {
 }
 
 .frame {
-    height: 70px;
-    width: calc(100% - 5px);
-    border-radius: 6px 0 0 6px;
-    border: solid 1px #dbdbdb;
+    padding: 10px;
+    width: calc(100% - 20px);
+    height: calc(30px);
+    border-radius: 6px;
+    background-color: white;
 }
 
 .label-input-pair {
     float: left;
     margin-right: 10px;
 }
-.label-input-pair .label{
-    color:black;
 
-}
+    .label-input-pair .label {
+        color: black;
+    }
+
     .label-input-pair:last-of-type {
         margin-right: 0;
     }
 
 
 
-.right-side {
-    border-radius: 6px;
-    background-color: white;
-    float: right;
-    padding: 15px 10px 15px 10px;
-    width: calc(100% - 20px);
-    height: calc(100% - 30px);
+
+.frame .medicine-type-input-pair {
+    width: 300px;
+    margin-right: 10px;
 }
 
-    .right-side .medicine-type-input-pair {
-        width: 300px;
-        margin-right: 10px;
-    }
+.frame .quantifier-input-pair {
+    margin-right: 2px !important;
+}
 
-    .right-side .quantifier-input-pair {
-        margin-right: 2px !important;
-    }
-
-        .right-side .quantifier-input-pair .ui-inputtext {
-            width: 35px;
-            text-align: right;
-        }
-
-    .right-side .dose-type-input-pair .drop-down {
-        width: 100px;
-    }
-
-
-    .right-side .of-label {
-        float: left;
-        margin-left: -3px;
-        margin-right: 5px;
-        margin-top:5px;
-        height: 45px;
-        vertical-align: middle;
-        line-height: 45px;
-        padding-top: 4px;
-    }
-
-
-
-    .right-side .dose-size-input-pair .ui-inputtext {
-        width: 80px;
+    .frame .quantifier-input-pair .ui-inputtext {
+        width: 35px;
         text-align: right;
     }
 
+.frame .dose-type-input-pair .drop-down {
+    width: 100px;
+}
 
-    .right-side .dose-uom-input-pair .ui-inputtext {
-        width: 60px;
-    }
+
+.frame .of-label {
+    float: left;
+    margin-left: -3px;
+    margin-right: 5px;
+    /*margin-top: 5px;
+    height: 45px;
+    vertical-align: middle;
+    line-height: 45px;
+    padding-top: 4px;*/
+}
 
 
-    .right-side .instructions-input-pair {
-        margin-left: 50px;
-    }
 
-        .right-side .instructions-input-pair .drop-down {
-        }
+.frame .dose-size-input-pair .ui-inputtext {
+    width: 80px;
+    text-align: right;
+}
 
-.remove-button {
+
+.frame .dose-uom-input-pair .ui-inputtext {
+    width: 60px;
+}
+
+
+.frame .instructions-input-pair {
+    margin-left: 50px;
+}
+
+.right-side .instructions-input-pair .drop-down {
+}
+
+.frame .remove-button {
     float: right;
     margin-top: -4px;
     cursor: pointer;
-    color: gray;
+    color: black;
 }
 
-    .remove-button:hover {
+    .frame .remove-button:hover {
         color: blue;
     }
 
 
 .hide-controls-overlay {
     width: calc(100% - 340px);
-    margin-right: 25px;
-    height: 70px;
+    margin-right: 30px;
+    height: 40px;
     background-color: white;
     float: right;
-    margin-top: -70px;
-    position:relative;
+    margin-top: -45px;
+    position: relative;
 }

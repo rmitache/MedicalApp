@@ -27,7 +27,7 @@ export class PlanEditorDialogService {
         let title: string, saveButtonText: string;
         switch (mode) {
             case PlanEditorMode.CreateNew:
-                title = "Create a new Treatment Plan";
+                title = "New Treatment Plan";
                 saveButtonText = "Create";
                 break;
             case PlanEditorMode.Change:

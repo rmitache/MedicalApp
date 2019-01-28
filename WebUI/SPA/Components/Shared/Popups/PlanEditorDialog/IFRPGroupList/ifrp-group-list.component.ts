@@ -29,7 +29,7 @@ export class IFRPGroupListComponent {
 	private readonly availableMedicineTypes: CLOs.MedicineTypeCLO[];
     @Input('IFRPGroupCLOs')
     private readonly iFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
-    private readonly searchService: IMedicineTypesSearchService = {
+    private readonly medicineTypesSearchService: IMedicineTypesSearchService = {
         GetMedicineTypeByName: (name) => {
             return this.availableMedicineTypes.find(clo => {
                 return clo.Name === name;
@@ -64,7 +64,9 @@ export class IFRPGroupListComponent {
     @ViewChildren('IFRPGroupElems')
     private iFRPGroupElems: QueryList<IFRPGroupElemComponent>;
     private readonly viewModel: ViewModel = {
-        IFRPGroupCLOs: []
+        IFRPGroupCLOs: [],
+        MedicineTypeSearchResults: null,
+        SearchText: null
     };
 
     // Private methods
@@ -124,6 +126,11 @@ export class IFRPGroupListComponent {
     @Output() public AddNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
+    private onAddMedicineTypeTextBoxChanged(event) {
+        alert('wtf')
+        //let searchResults = this.medicineTypesSearchService.Search(event.query);
+        //this.viewModel.MedicineTypeSearchResults = searchResults;      
+    }
     private onAddNewMedicineTypeTriggered(sourceComponent) {
         this.AddNewMedicineTypeTriggered.emit(sourceComponent);
     }
@@ -156,6 +163,9 @@ export class IFRPGroupListComponent {
 
 interface ViewModel {
     IFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
+    MedicineTypeSearchResults: string[];
+    SearchText: string;
+
 }
 
 export interface IMedicineTypesSearchService {

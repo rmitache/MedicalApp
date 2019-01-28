@@ -13,6 +13,9 @@
         margin-top: 0;
     }
 
+.h1 {
+    text-transform: uppercase;
+}
 /*Symptoms section */
 .symptoms-section {
     height: calc(100% - 200px);
@@ -88,7 +91,6 @@
 
     .recent-symptoms-div .recent-symptoms-list {
         float: left;
-        
         width: 100%;
     }
 
@@ -96,8 +98,8 @@
             border-radius: 4px;
             background-color: #2399e5;
             float: left;
-            margin-right:4px;
-            margin-bottom:4px;
+            margin-right: 4px;
+            margin-bottom: 4px;
             cursor: pointer;
             padding: 2px 4px 2px 4px;
         }
@@ -109,9 +111,10 @@
     .recent-symptoms-div .recent-symptom-elem span {
         color: white;
     }
+
     .recent-symptoms-div .recent-symptom-elem i {
         color: white;
-        font-size:0.8em;
+        font-size: 0.8em;
     }
 
 

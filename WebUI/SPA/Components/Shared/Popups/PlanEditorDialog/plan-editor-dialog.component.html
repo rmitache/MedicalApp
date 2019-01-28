@@ -2,18 +2,17 @@
 <form [formGroup]="reactiveForm">
     
     <div class="frame">
-        <div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>
+        <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>-->
 
 
 
         <div class="top-section">
-            <div class="label-input-pair">
-                <span class="label">Name:</span>
 
-                <input pInputText type="text" id="plan-name-input" formControlName="planName" [(ngModel)]="viewModel.PlanCLO.Name" />
+                <input pInputText type="text" id="plan-name-input" formControlName="planName" 
+                       placeholder="Enter a Name"
+                       [(ngModel)]="viewModel.PlanCLO.Name" />
 
-            </div>
-            <div class="label-input-pair start" formGroupName="dates">
+            <div class="start-date-div" formGroupName="dates">
                 <span class="label">
                     {{viewModel.StartDateLabel }}
                 </span>
@@ -24,20 +23,11 @@
                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDateTime"
                             showIcon="true"></p-calendar>
             </div>
-            <div class="label-input-pair" formGroupName="dates" style="display:none">
-                <span class="label">
-                    {{viewModel.EndDateLabel }}
-                </span>
-                <p-calendar formControlName="endDate"
-                            dateFormat="dd-mm-yy"
-                            id="end-date-picker"
-                            [(ngModel)]="viewModel.CurrentVersionCLO.EndDateTime"
-                            showIcon="true"></p-calendar>
-            </div>
+            
         </div>
         <div class="rules-section">
             <span class="h2">RULES:</span>
-            <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="Add Rule"
+            <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="ADD RULE"
                     (click)="onAddNewRuleTriggered()"></button>
 
             <br />
