@@ -33,12 +33,15 @@
             <br />
             <div class="rules-list">
                 <rule-elem #ruleelems *ngFor="let rule of viewModel.CurrentVersionCLO.Rules"
-                           (AddNewMedicineTypeTriggered)="onAddNewMedicineTypeTriggered($event)"
+                           (CreateNewMedicineTypeTriggered)="onCreateNewMedicineTypeTriggered($event)"
                            (ValidStateChanged)="onChildRuleElemValidStateChanged()"
                            (RemoveClicked)="onRemoveRuleTriggered($event)"
                            [AvailableMedicineTypes]="availableMedicineTypes"
                            [RuleCLO]="rule">
                 </rule-elem>
+                <div *ngIf="viewModel.CurrentVersionCLO.Rules.length===0" class="label" style="color:red;">
+                    * You need to add at least one Rule
+                </div>
             </div>
         </div>
 

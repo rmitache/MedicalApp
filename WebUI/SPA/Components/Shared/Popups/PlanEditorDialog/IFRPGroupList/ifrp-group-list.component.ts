@@ -64,7 +64,7 @@ export class IFRPGroupListComponent {
     @ViewChildren('IFRPGroupElems')
     private iFRPGroupElems: QueryList<IFRPGroupElemComponent>;
     private readonly viewModel: ViewModel = {
-        IFRPGroupCLOs: [],
+        RuleItemCLOs: [],
         MedicineTypeSearchResults: null,
         SearchText: null
     };
@@ -101,14 +101,45 @@ export class IFRPGroupListComponent {
             this.ValidStateChanged.emit();
         }
     }
+    private createNewRuleItemFromMedTypeName(selectedMedicineTypeName: string) {
+
+        // Get and load the medicineTypeCLO
+        let newRuleItemCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineRuleItemCLO);
+        let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
+        newRuleItemCLO.MedicineType = medicineTypeCLO;
+        this.viewModel.RuleItemCLOs.push(newRuleItemCLO);
+
+        //// Handle fields for factorRecord
+        //factorRecordCLO.UnitDoseQuantifier = 1;
+        //if (medicineTypeCLO.IsPackagedIntoUnits === true) {
+        //    factorRecordCLO.HasUserDefinedUnitDose = false;
+        //    factorRecordCLO.UserDefinedUnitDoseType = null;
+        //    factorRecordCLO.UserDefinedUnitDoseSize = null;
+
+        //    // Make the controls readonly and load enum values
+        //    this.viewModel.UserDefinedControlsAreLocked = true;
+        //    this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
+        //}
+        //else {
+        //    factorRecordCLO.HasUserDefinedUnitDose = true;
+        //    factorRecordCLO.UserDefinedUnitDoseType = 0;
+        //    factorRecordCLO.UserDefinedUnitDoseSize = 100;
+
+        //    // Unlock the controls
+        //    this.viewModel.UserDefinedControlsAreLocked = false;
+        //    this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
+        //}
+    }
 
     // Constructor 
     constructor(
+        private readonly genericCLOFactory: GenericCLOFactory,
+
     ) {
         
     }
     ngOnInit() {
-        this.viewModel.IFRPGroupCLOs = this.iFRPGroupCLOs;
+        this.viewModel.RuleItemCLOs = this.iFRPGroupCLOs;
 
         setTimeout(() => {
             this.refreshIsValid();
@@ -123,16 +154,27 @@ export class IFRPGroupListComponent {
     // Events 
     @Output() public AddNewClicked: EventEmitter<any> = new EventEmitter();
     @Output() public ValidStateChanged: EventEmitter<any> = new EventEmitter();
-    @Output() public AddNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
+    @Output() public CreateNewMedicineTypeTriggered: EventEmitter<any> = new EventEmitter();
 
     // EventHandlers
     private onAddMedicineTypeTextBoxChanged(event) {
-        alert('wtf')
-        //let searchResults = this.medicineTypesSearchService.Search(event.query);
-        //this.viewModel.MedicineTypeSearchResults = searchResults;      
+        
+        let searchResults = this.medicineTypesSearchService.Search(event.query);
+        this.viewModel.MedicineTypeSearchResults = searchResults;      
     }
-    private onAddNewMedicineTypeTriggered(sourceComponent) {
-        this.AddNewMedicineTypeTriggered.emit(sourceComponent);
+    private onAddMedicineTypeItemSelected(medTypeName) {
+
+        // Open the popup to register a new MedType 
+        if (medTypeName === "Add a new Supplement...") {
+            this.CreateNewMedicineTypeTriggered.emit((newMedTypeCLO) => {
+                alert(newMedTypeCLO.Name);
+            });
+            this.viewModel.SearchText = '';
+            return;
+        }
+
+        // Or add a new factorRecord
+        this.createNewRuleItemFromMedTypeName(medTypeName);
     }
     private onChildGroupElemValidStateChanged() {
         this.refreshIsValid();
@@ -148,10 +190,10 @@ export class IFRPGroupListComponent {
     }
     private onRemoveIFRPGroupTriggered(iFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO) {
 
-        const index: number = this.viewModel.IFRPGroupCLOs.indexOf(iFRPGroupCLO);
+        const index: number = this.viewModel.RuleItemCLOs.indexOf(iFRPGroupCLO);
 
         if (index !== -1) {
-            this.viewModel.IFRPGroupCLOs.splice(index, 1);
+            this.viewModel.RuleItemCLOs.splice(index, 1);
         }
 
         setTimeout(() => {
@@ -162,7 +204,7 @@ export class IFRPGroupListComponent {
 
 
 interface ViewModel {
-    IFRPGroupCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
+    RuleItemCLOs: CLOs.AbstractMedicineFactorRecordCLO[];
     MedicineTypeSearchResults: string[];
     SearchText: string;
 

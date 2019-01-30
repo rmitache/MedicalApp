@@ -1,6 +1,6 @@
 <form #form="ngForm">
     <div class="what-section">
-        <span class="h3">WHAT</span>
+        <span class="h3">WHAT:</span>
         <div class="search-bar">
             <i class="fa fa-search  search-icon"></i>
             <p-autoComplete #autocomplete
@@ -9,7 +9,7 @@
                             [emptyMessage]="'No matches found'"
                             [placeholder]="'Type to choose Supplements'"
                             (completeMethod)="onAddMedicineTypeTextBoxChanged($event)"
-                            (onSelect)="onMedicineTypeSelected($event)"></p-autoComplete>
+                            (onSelect)="onAddMedicineTypeItemSelected($event)"></p-autoComplete>
 
         </div>
 
@@ -18,17 +18,15 @@
             (click)="onAddNewIFRPGroupTriggered()"></button>-->
         <br />
         <div id="elems-list">
-            <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.IFRPGroupCLOs"
-                             (AddNewMedicineTypeTriggered)="onAddNewMedicineTypeTriggered($event)"
+            <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.RuleItemCLOs"
                              [IFRPGroupCLO]="clo"
-                             [MedicineTypeSearchService]="searchService"
                              (ValidStateChanged)="onChildGroupElemValidStateChanged()"
                              (RemoveClicked)="onRemoveIFRPGroupTriggered($event)"></ifrp-group-elem>
+            <div *ngIf="viewModel.RuleItemCLOs.length===0" class="label" style="color:red;">
+                * You need to add at least one Supplement to this Rule
+            </div>
             <div style="clear:both"></div>
         </div>
     </div>
 </form>
 
-<!--formControlName="medicineTypeName"
-[(ngModel)]="viewModel.SearchText"
-    [dropdown]="true"-->

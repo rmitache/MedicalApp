@@ -76,7 +76,7 @@ export class PlanEditorDialogComponent implements IModalDialog {
     private refreshIsValid() {
         this.isValid = this.checkIfRuleElemsValid() && this.reactiveForm.valid;
     }
-    private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, sourceIFRPComponent: IFRPGroupElemComponent) {
+    private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode, callback: (newMedType)=> void) {
 
         this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode,  () => {
 
@@ -86,7 +86,8 @@ export class PlanEditorDialogComponent implements IModalDialog {
 
                 setTimeout(() => {
                     this.spinnerService.Hide();
-                    sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
+                    //sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
+                    callback(medicineTypeCLO);
                 }, 200);
             });
         });
@@ -178,10 +179,10 @@ export class PlanEditorDialogComponent implements IModalDialog {
             this.refreshIsValid();
         }, 1);
     }
-    private onAddNewMedicineTypeTriggered(sourceComponent) {
+    private onCreateNewMedicineTypeTriggered(callback: (newMedType) => void) {
 
         let newMedicineTypeCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineTypeCLO);
-        this.openMedicineTypeEditor(newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew, sourceComponent);
+        this.openMedicineTypeEditor(newMedicineTypeCLO, MedicineTypeEditorMode.CreateNew, callback);
     }
 
     // IModalDialog

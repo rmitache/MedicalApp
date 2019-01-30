@@ -4,11 +4,10 @@
 
 .frame {
     background-color: #efefef;
-    min-height: 190px;
+    /*min-height: 190px;*/
     width: calc(100% - 22px);
     padding: 10px;
     border-radius: 6px;
-    /*border: solid 1px #cbcbcb;*/
 }
 
 .remove-button {
