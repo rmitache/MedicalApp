@@ -4,6 +4,7 @@
 
 .moments-in-day-div /deep/ .ui-chips-token {
    padding:1px;
+   margin-top:2px;
 }
 .moments-in-day-div /deep/ .ui-chips-token:last-of-type {
    margin-right:0;
@@ -12,6 +13,7 @@
     margin-right:20px;
 }
 .moments-in-day-div /deep/ .ui-chips-input-token input.undefined {
+    margin-top:-3px;
 }
 .frame {
     background-color: #efefef;
@@ -33,7 +35,8 @@
 
 
 .when-section {
-    height: 85px;
+    min-height: 75px;
+    padding-bottom:10px;
     border-bottom: dashed 1px #8d8d8d;
 }
 
@@ -48,14 +51,15 @@
     }
 
     .when-section .non-daily-controls-div {
-        width: 260px;
+        width: 295px;
         float: left;
     }
 
         .when-section .non-daily-controls-div .on-label {
             display: block;
-            margin-right: 5px;
-            margin-top: 5px;
+            margin-right: 8px;
+            margin-left:5px;
+            margin-top: 8px;
             float: left;
         }
 
@@ -65,15 +69,15 @@
 
     .when-section .moments-in-day-div {
         float: left;
-        height: 50px;
-        width: 275px;
+        width: 230px;
         
     }
-    
+
         .when-section .moments-in-day-div .at-label {
             display: block;
-            margin-right: 5px;
-            margin-top: 5px;
+            margin-right: 8px;
+            margin-left: 5px;
+            margin-top: 8px;
             float: left;
         }
 
@@ -82,7 +86,6 @@
             float: left;
             
             width: calc(100% - 25px);
-            height: 20px;
         }
 
 
@@ -110,10 +113,13 @@
 .check-box-label-pair {
     background-color: #186ba0;
     border-radius:6px;
-    padding: 2px;
-    margin-right:1px;
+    padding: 3px;
+    margin-right:2px;
+    margin-top:2px;
     float: left;
     width: 30px;
+    height:20px;
+    cursor:pointer;
 }
 
     .check-box-label-pair input {
