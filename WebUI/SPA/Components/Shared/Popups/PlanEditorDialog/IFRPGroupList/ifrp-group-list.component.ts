@@ -109,26 +109,7 @@ export class IFRPGroupListComponent {
         newRuleItemCLO.MedicineType = medicineTypeCLO;
         this.viewModel.RuleItemCLOs.push(newRuleItemCLO);
 
-        //// Handle fields for factorRecord
-        //factorRecordCLO.UnitDoseQuantifier = 1;
-        //if (medicineTypeCLO.IsPackagedIntoUnits === true) {
-        //    factorRecordCLO.HasUserDefinedUnitDose = false;
-        //    factorRecordCLO.UserDefinedUnitDoseType = null;
-        //    factorRecordCLO.UserDefinedUnitDoseSize = null;
-
-        //    // Make the controls readonly and load enum values
-        //    this.viewModel.UserDefinedControlsAreLocked = true;
-        //    this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
-        //}
-        //else {
-        //    factorRecordCLO.HasUserDefinedUnitDose = true;
-        //    factorRecordCLO.UserDefinedUnitDoseType = 0;
-        //    factorRecordCLO.UserDefinedUnitDoseSize = 100;
-
-        //    // Unlock the controls
-        //    this.viewModel.UserDefinedControlsAreLocked = false;
-        //    this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
-        //}
+        
     }
 
     // Constructor 
@@ -167,7 +148,7 @@ export class IFRPGroupListComponent {
         // Open the popup to register a new MedType 
         if (medTypeName === "Add a new Supplement...") {
             this.CreateNewMedicineTypeTriggered.emit((newMedTypeCLO) => {
-                alert(newMedTypeCLO.Name);
+                this.createNewRuleItemFromMedTypeName(newMedTypeCLO.Name);
             });
             this.viewModel.SearchText = '';
             return;
@@ -175,6 +156,7 @@ export class IFRPGroupListComponent {
 
         // Or add a new factorRecord
         this.createNewRuleItemFromMedTypeName(medTypeName);
+        this.viewModel.SearchText = '';
     }
     private onChildGroupElemValidStateChanged() {
         this.refreshIsValid();

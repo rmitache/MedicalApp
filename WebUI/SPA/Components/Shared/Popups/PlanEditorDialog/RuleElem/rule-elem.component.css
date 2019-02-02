@@ -2,9 +2,19 @@
     border: solid 1px red !important;
 }
 
+.moments-in-day-div /deep/ .ui-chips-token {
+   padding:1px;
+}
+.moments-in-day-div /deep/ .ui-chips-token:last-of-type {
+   margin-right:0;
+}
+.moments-in-day-div /deep/ .ui-chips-token-label {
+    margin-right:20px;
+}
+.moments-in-day-div /deep/ .ui-chips-input-token input.undefined {
+}
 .frame {
     background-color: #efefef;
-    /*min-height: 190px;*/
     width: calc(100% - 22px);
     padding: 10px;
     border-radius: 6px;
@@ -21,32 +31,30 @@
     color: blue;
 }
 
-.what-section /deep/ .ifrp-group-elem .frame {
-}
 
 .when-section {
-    height: 80px;
+    height: 85px;
+    border-bottom: dashed 1px #8d8d8d;
 }
 
     .when-section .when-label {
         display: inline-block;
         padding-bottom: 10px;
-        color:black;
     }
 
     .when-section .drop-down {
         float: left;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .when-section .non-daily-controls-div {
-        width: 310px;
+        width: 260px;
         float: left;
     }
 
         .when-section .non-daily-controls-div .on-label {
             display: block;
-            margin-right: 10px;
+            margin-right: 5px;
             margin-top: 5px;
             float: left;
         }
@@ -58,13 +66,13 @@
     .when-section .moments-in-day-div {
         float: left;
         height: 50px;
-        width: 225px;
+        width: 275px;
         
     }
     
         .when-section .moments-in-day-div .at-label {
             display: block;
-            margin-right: 10px;
+            margin-right: 5px;
             margin-top: 5px;
             float: left;
         }
@@ -77,16 +85,12 @@
             height: 20px;
         }
 
-.when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-inputtext {
-    
-}
 
-.when-section /deep/ .moments-in-day-div #moments-in-day-input .ui-chips-input-token input {
-    margin-top: -5px;
-}
+
 
 .what-section {
     width: 100%;
+    margin-top:20px;
 }
 
     .what-section .what-label {
@@ -100,15 +104,15 @@
         margin-top: -4px;
     }
 
-    
+
 
 
 .check-box-label-pair {
-    background-color: white;
-    border: solid 1px #dbdbdb;
-    padding: 3px;
+    background-color: #186ba0;
+    border-radius:6px;
+    padding: 2px;
+    margin-right:1px;
     float: left;
-    margin-right: 2px;
     width: 30px;
 }
 
@@ -121,7 +125,7 @@
     .check-box-label-pair span {
         float: left;
         clear: both;
-        color: black;
+        color: white;
         width: 30px;
         text-align: center;
     }

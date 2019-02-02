@@ -3,45 +3,46 @@
     height: 650px;
 }
 
-.h3 {
+.what-label {
     float: left;
 }
 
 
-.what-section {
-    height: calc(100% );
-    margin-top:15px;
+.what-inner-section {
+    height: calc(100%);
 }
 
-    .what-section #elems-list {
+    .what-inner-section #elems-list {
         width: calc(100%);
-        margin-top: 15px;
+        margin-top: 25px;
         height: calc(100% - 15px);
         box-sizing: padding-box;
     }
 
-    .what-section #add-new-button {
+    .what-inner-section #add-new-button {
         float: left;
         margin-left: 10px;
         margin-top: -6px;
     }
 
-    .what-section .label-input-pair {
+    .what-inner-section .label-input-pair {
         float: left;
         margin-right: 10px;
     }
 
-        .what-section .label-input-pair:last-of-type {
+        .what-inner-section .label-input-pair:last-of-type {
             margin-right: 0;
         }
 
 
-    .what-section .ifrp-group-elem {
+    .what-inner-section #elems-list .ifrp-group-elem {
         float: left;
-        margin-bottom: 10px;
         width: 100%;
+        /*margin-bottom:5px;*/
     }
-
+        .what-inner-section #elems-list .ifrp-group-elem:last-of-type {
+            margin-bottom: 0;
+        }
 
 /*Search bar for Supplements*/
 .search-bar {
@@ -51,18 +52,18 @@
     margin-top:-8px;
 }
 
-.what-section /deep/ .ui-autocomplete {
+.what-inner-section /deep/ .ui-autocomplete {
     float: left;
     font-size: 18px;
     width: calc(100% - 25px);
 }
 
-    .what-section /deep/ .ui-autocomplete .ui-inputtext {
+    .what-inner-section /deep/ .ui-autocomplete .ui-inputtext {
         width: 100%;
     }
 
-.what-section .search-icon {
-    color: gray;
+.what-inner-section .search-icon {
+    color: #2399e5;
     font-size: 1.3em;
     float: right;
     margin-left: 2px;

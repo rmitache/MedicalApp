@@ -211,6 +211,8 @@ h4,
 
 .drop-down {
     border: solid 1px #dbdbdb;
+    font-family: "Roboto", "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
     height: 29px;
 }
 

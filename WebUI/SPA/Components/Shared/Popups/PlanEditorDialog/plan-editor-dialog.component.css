@@ -11,9 +11,8 @@
     border: 1px solid red !important;
 }
 
-.frame #add-new-rule-button,
-.frame /deep/ #add-new-button {
-    font-size: 14px;
+.frame #add-new-rule-button {
+    margin-top:-4px;
 }
 
 .frame {

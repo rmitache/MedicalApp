@@ -27,7 +27,6 @@ export class IFRPGroupElemComponent {
         IFRPGroupCLO: null,
 
         UnitDoseTypesEnum: {},
-        OverlayIsVisible: true,
         UserDefinedControlsAreLocked: true,
     };
 
@@ -64,6 +63,27 @@ export class IFRPGroupElemComponent {
     ngOnInit() {
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
+        // Load fields 
+        this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
+        var medicineTypeCLO = this.viewModel.IFRPGroupCLO.MedicineType;
+        if (medicineTypeCLO.IsPackagedIntoUnits === true) {
+            this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose = false;
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = null;
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = null;
+
+            // Make the controls readonly and load enum values
+            this.viewModel.UserDefinedControlsAreLocked = true;
+            this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
+        }
+        else {
+            this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose = true;
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = 0;
+            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = 100;
+
+            // Unlock the controls
+            this.viewModel.UserDefinedControlsAreLocked = false;
+            this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
+        }
 
         
 
@@ -90,9 +110,7 @@ export class IFRPGroupElemComponent {
         //        this.viewModel.UserDefinedControlsAreLocked = false;
         //        this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
         //    }
-
         //}
-
     }
 
     // Public methods
@@ -124,7 +142,6 @@ interface ViewModel {
     IFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
     
     UnitDoseTypesEnum: any;
-    OverlayIsVisible: boolean;
     UserDefinedControlsAreLocked: boolean;
 }
 

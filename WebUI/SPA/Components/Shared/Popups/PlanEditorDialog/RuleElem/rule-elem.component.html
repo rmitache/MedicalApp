@@ -4,7 +4,7 @@
 
         <div class="when-section">
 
-            <span class="h3 when-label">WHEN:</span>
+            <span class="h3-alt when-label">WHEN</span>
 
             <br />
             <select class="drop-down" name="ordinalfrequency" [(ngModel)]="viewModel.RuleCLO.OrdinalFrequencyType">
@@ -18,31 +18,31 @@
                 <span class="label on-label">on</span>
                 <div class="week-days-list">
                     <div class="check-box-label-pair">
-                        <input name="monday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Monday" type="checkbox" />
+                        <!--<input name="monday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Monday" type="checkbox" />-->
                         <span class="label">MON</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="tuesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Tuesday" type="checkbox" />
+                        <!--<input name="tuesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Tuesday" type="checkbox" />-->
                         <span class="label">TUE</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="wednesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Wednesday" type="checkbox" />
+                        <!--<input name="wednesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Wednesday" type="checkbox" />-->
                         <span class="label">WED</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="thursday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Thursday" type="checkbox" />
+                        <!--<input name="thursday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Thursday" type="checkbox" />-->
                         <span class="label">THU</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="friday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Friday" type="checkbox" />
+                        <!--<input name="friday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Friday" type="checkbox" />-->
                         <span class="label">FRI</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="saturday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Saturday" type="checkbox" />
+                        <!--<input name="saturday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Saturday" type="checkbox" />-->
                         <span class="label">SAT</span>
                     </div>
                     <div class="check-box-label-pair">
-                        <input name="sunday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Sunday" type="checkbox" />
+                        <!--<input name="sunday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Sunday" type="checkbox" />-->
                         <span class="label">SUN</span>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                          [styleClass]="viewModel.ShowChipsInputInvalid ? 'chips-input-invalid' : ''"
                          addOnTab="true"
                          addOnBlur="true"
-                         placeholder="Type in format HH:MM"
+                         placeholder="For example 15:30"
                          (onAdd)="onAddMomentInDayChip($event.value)"
                          (onRemove)="onRemoveMomentInDayChip($event.value)"
                          [(ngModel)]="viewModel.MomentsInDayAsStrings"></p-chips>
