@@ -1,0 +1,24 @@
+.frame {
+    height: 20px;
+    width: 30px;
+    border-radius: 6px;
+    padding: 3px;
+    cursor: pointer;
+    text-align:center;
+}
+
+.frame.checked {
+    background-color: #186ba0;
+}
+    .frame.checked .label {
+        color: white;
+    }
+
+
+    .frame.unchecked {
+        background-color: #c4c4c4;
+    }
+
+        .frame.unchecked .label {
+            color: gray;
+        }

@@ -17,34 +17,20 @@
                  class="non-daily-controls-div">
                 <span class="label on-label">on</span>
                 <div class="week-days-list">
-                    <div class="check-box-label-pair">
-                        <!--<input name="monday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Monday" type="checkbox" />-->
-                        <span class="label">MON</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="tuesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Tuesday" type="checkbox" />-->
-                        <span class="label">TUE</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="wednesday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Wednesday" type="checkbox" />-->
-                        <span class="label">WED</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="thursday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Thursday" type="checkbox" />-->
-                        <span class="label">THU</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="friday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Friday" type="checkbox" />-->
-                        <span class="label">FRI</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="saturday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Saturday" type="checkbox" />-->
-                        <span class="label">SAT</span>
-                    </div>
-                    <div class="check-box-label-pair">
-                        <!--<input name="sunday" [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Sunday" type="checkbox" />-->
-                        <span class="label">SUN</span>
-                    </div>
+                    <custom-checkbox [LabelText]="'MON'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Monday" name="monday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'TUE'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Tuesday" name="tuesday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'WED'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Wednesday" name="wednesday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'THU'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Thursday" name="thursday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'FRI'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Friday" name="friday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'SAT'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Saturday" name="saturday"></custom-checkbox>
+                    <custom-checkbox [LabelText]="'SUN'"
+                                     [(ngModel)]="viewModel.RuleCLO.DaysInWeek.Sunday" name="sunday"></custom-checkbox>
                 </div>
             </div>
             <div class="moments-in-day-div">
@@ -68,7 +54,7 @@
                              [AvailableMedicineTypes]="availableMedicineTypes"
                              (ValidStateChanged)="onGroupListValidStateChanged()"
                              (AddNewClicked)="onAddIFRPGroupTriggered()"></ifrp-group-list>
-            
+
         </div>
 
     </div>

@@ -45,6 +45,7 @@ import { HelpDialogServiceModule } from './Popups/HelpDialog/help-dialog-service
 import { ExportDataDialogServiceModule } from './Popups/ExportDataDialog/export-data-dialog-service.module';
 import { CustomSidebarModule } from './CustomSideBar/custom-sidebar';
 import { TimeLineModule } from './Timeline/timeline.module';
+import { CustomCheckboxComponent } from './CustomCheckbox/custom-checkbox.component';
 
 
 @NgModule({
@@ -88,7 +89,7 @@ import { TimeLineModule } from './Timeline/timeline.module';
     declarations: [
         SplitButtonComponent,
         NavigationPanelComponent,
-        FilterListPanelComponent,
+        FilterListPanelComponent
     ],
     exports: [
         SplitButtonComponent,
@@ -98,6 +99,7 @@ import { TimeLineModule } from './Timeline/timeline.module';
         CalendarModule,
         BlockUIModule,
         NavigationPanelComponent,
+
         ProgressSpinnerModule,
         HeaderBarComponent,
         FilterListPanelComponent,

@@ -11,6 +11,7 @@ import { KeysPipe } from '../../Pipes/keys.pipe';
 import { PipesModule } from '../../Pipes/pipes.module';
 import { IFRPGroupListComponent } from './IFRPGroupList/ifrp-group-list.component';
 import { IFRPGroupElemComponent } from './IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
+import { CustomCheckboxComponent } from '../../CustomCheckbox/custom-checkbox.component';
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import { IFRPGroupElemComponent } from './IFRPGroupList/IFRPGroupElem/ifrp-group
         PlanEditorDialogComponent,
         RuleElemComponent,
         IFRPGroupListComponent,
-        IFRPGroupElemComponent
+        IFRPGroupElemComponent,
+        CustomCheckboxComponent
 	],
 	providers: [
         PlanEditorDialogService
