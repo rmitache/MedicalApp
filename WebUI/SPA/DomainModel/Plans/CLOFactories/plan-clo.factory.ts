@@ -29,7 +29,7 @@ export class PlanCLOFactory implements ICLOFactory<CLOs.PlanCLO> {
     public Create_DefaultCLO(): CLOs.PlanCLO {
         let newCLO = new CLOs.PlanCLO();
         newCLO.ID = 0;
-        newCLO.Name = 'Untitled Plan';
+        newCLO.Name = '';
         newCLO.DateCreated = new Date();
         newCLO.Versions.AddArray([this.versionCLOFactory.Create_DefaultCLO()]);
 

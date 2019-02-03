@@ -14,7 +14,7 @@
 
     .what-inner-section #elems-list {
         width: calc(100%);
-        margin-top: 25px;
+        margin-top: 15px;
         height: calc(100% - 15px);
         box-sizing: padding-box;
     }
@@ -38,7 +38,7 @@
     .what-inner-section #elems-list .ifrp-group-elem {
         float: left;
         width: 100%;
-        /*margin-bottom:5px;*/
+        margin-bottom:5px;
     }
         .what-inner-section #elems-list .ifrp-group-elem:last-of-type {
             margin-bottom: 0;

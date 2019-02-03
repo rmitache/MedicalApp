@@ -22,7 +22,7 @@ export class IFRPGroupElemComponent {
     private readonly iFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
     private isValid: boolean = false;
     private reactiveForm: FormGroup;
-
+    only2Digits: RegExp = /^([0-9]|[1-9][0-9])$/
     private readonly viewModel: ViewModel = {
         IFRPGroupCLO: null,
 

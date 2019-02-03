@@ -3,11 +3,12 @@
         <span class="h3-alt what-label">WHAT</span>
 
 
-        <div class="search-bar" style="display:none">
-            <i class="fa fa-search  search-icon"></i>
+        <div class="search-bar" 
+              [style.display]="viewModel.ShowSearchBar ? 'block' : 'none'">
+            <i class="fa fa-plus  search-icon"></i>
             <p-autoComplete #autocomplete
 
-                            name="wtf"
+                            name="autocomplete"
                             [(ngModel)]="viewModel.SearchText"
                             lazy="true"
                             [suggestions]="viewModel.MedicineTypeSearchResults"
@@ -20,7 +21,8 @@
 
 
         <button pButton type="button" icon="fa fa-plus" id="add-new-button" 
-            (click)="onAddNewIFRPGroupTriggered()"></button>
+                [style.display]="viewModel.ShowSearchBar ? 'none' : 'block'"
+                (click)="onStartAddingSupplementsButtonClicked()"></button>
         <br />
         <div id="elems-list">
             <ifrp-group-elem #IFRPGroupElems *ngFor="let clo of viewModel.RuleItemCLOs"

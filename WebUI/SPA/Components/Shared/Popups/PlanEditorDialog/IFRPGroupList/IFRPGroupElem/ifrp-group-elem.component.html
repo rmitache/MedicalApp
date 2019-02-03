@@ -1,16 +1,22 @@
 <form [formGroup]="reactiveForm">
     <div class="frame">
 
-        <!--Medicine picker-->
-        <div class="label-input-pair medicine-type-input-pair">
-            
-            <span class="h2">{{this.viewModel.IFRPGroupCLO?.MedicineType?.Name}}</span>
-        </div>
-
         <!--Quantifier-->
         <div class="label-input-pair quantifier-input-pair">
 
-            <input pInputText type="text" formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
+            <input pInputText  [pKeyFilter]="only2Digits"
+                   maxlength="2"
+                   (click)="$event.target.select()"
+                   type="text" formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
+        </div>
+
+        <!--X-->
+        <div class="label-large x-label">x</div>
+
+        <!--Supplement name-->
+        <div class="label-input-pair medicine-type-input-pair">
+
+            <span class="h2">{{this.viewModel.IFRPGroupCLO?.MedicineType?.Name}}</span>
         </div>
 
         <!--UnitDoseType-->
@@ -25,6 +31,7 @@
             </select>
         </div>
 
+        <!--Of-->
         <div class="label of-label">of</div>
 
         <!--UnitDoseSize-->
@@ -47,7 +54,7 @@
 
         <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 
-       
+
 
 
     </div>
