@@ -1,10 +1,18 @@
 <form [formGroup]="reactiveForm">
     <div class="frame">
 
+
+        <!--Supplement name-->
+        <div class="label-input-pair medicine-type-input-pair">
+
+            <span class="h2">{{this.viewModel.IFRPGroupCLO?.MedicineType?.Name}}</span>
+        </div>
+
+
         <!--Quantifier-->
         <div class="label-input-pair quantifier-input-pair">
 
-            <input pInputText  [pKeyFilter]="only2Digits"
+            <input pInputText [pKeyFilter]="only2Digits"
                    maxlength="2"
                    (click)="$event.target.select()"
                    type="text" formControlName="unitDoseQuantifierInput" [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
@@ -13,44 +21,42 @@
         <!--X-->
         <div class="label-large x-label">x</div>
 
-        <!--Supplement name-->
-        <div class="label-input-pair medicine-type-input-pair">
 
-            <span class="h2">{{this.viewModel.IFRPGroupCLO?.MedicineType?.Name}}</span>
-        </div>
+        <!--When the MedType is FreeForm (not packaged into unit doses)-->
+        <ng-container *ngIf="viewModel.IFRPGroupCLO.HasUserDefinedUnitDose">
+            <!--UnitDoseType-->
+            <div class="label-input-pair dose-type-input-pair">
+                <select class="drop-down"
+                        [value]="viewModel.IFRPGroupCLO.UnitDoseType"
+                        (ngModelChange)="onUnitDoseTypeChanged($event)"
+                        [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
+                        formControlName="unitdosetype"
+                        name="unitdosetype">
+                    <option *ngFor="let doseType of viewModel.UnitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
+                </select>
+                <!--<span class="label-large">{{viewModel.UnitDoseTypesEnum[viewModel.IFRPGroupCLO.UnitDoseType]}}</span>-->
+            </div>
 
-        <!--UnitDoseType-->
-        <div class="label-input-pair dose-type-input-pair">
-            <select class="drop-down"
-                    [value]="viewModel.IFRPGroupCLO.UnitDoseType"
-                    (ngModelChange)="onUnitDoseTypeChanged($event)"
-                    [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
-                    formControlName="unitdosetype"
-                    name="unitdosetype">
-                <option *ngFor="let doseType of viewModel.UnitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
-            </select>
-        </div>
+            <!--Of-->
+            <div class="label of-label">of</div>
 
-        <!--Of-->
-        <div class="label of-label">of</div>
+            <!--UnitDoseSize-->
+            <div class="label-input-pair dose-size-input-pair">
+                <input pInputText type="text" formControlName="unitdosesize"
+                       (ngModelChange)="onUnitDoseSizeChanged($event)"
+                       [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
+                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
+            </div>
 
-        <!--UnitDoseSize-->
-        <div class="label-input-pair dose-size-input-pair">
-            <input pInputText type="text" formControlName="unitdosesize"
-                   (ngModelChange)="onUnitDoseSizeChanged($event)"
-                   [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
-                   [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
+            <!--Unit of Measure-->
+            <div class="label-input-pair dose-uom-input-pair">
+                <span class="label">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
+                <!--<input pInputText type="text" disabled="disabled"
+           [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />-->
+            </div>
+            
+        </ng-container>
 
-        </div>
-
-        <!--Unit of Measure-->
-        <div class="label-input-pair dose-uom-input-pair">
-            <input pInputText type="text" disabled="disabled"
-                   [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />
-
-
-        </div>
-        <div class="label of-label">each</div>
 
         <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 

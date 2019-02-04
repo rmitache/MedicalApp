@@ -134,7 +134,7 @@ export class IFRPGroupListComponent {
         setTimeout(() => {
             var all = this.medicineTypesSearchService.Search("");
             this.onAddMedicineTypeItemSelected(all[1]);
-            this.onAddMedicineTypeItemSelected(all[2]);
+            this.onAddMedicineTypeItemSelected(all[6]);
         }, 100);
 
         this.autocomplete.onBlur.subscribe(() => {
