@@ -34,11 +34,10 @@
                         name="unitdosetype">
                     <option *ngFor="let doseType of viewModel.UnitDoseTypesEnum | enumkeys" [value]="doseType.value">{{doseType.key}}</option>
                 </select>
-                <!--<span class="label-large">{{viewModel.UnitDoseTypesEnum[viewModel.IFRPGroupCLO.UnitDoseType]}}</span>-->
             </div>
 
             <!--Of-->
-            <div class="label of-label">of</div>
+            <div class="label-large of-label">of</div>
 
             <!--UnitDoseSize-->
             <div class="label-input-pair dose-size-input-pair">
@@ -50,13 +49,19 @@
 
             <!--Unit of Measure-->
             <div class="label-input-pair dose-uom-input-pair">
-                <span class="label">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
-                <!--<input pInputText type="text" disabled="disabled"
-           [value]="viewModel.IFRPGroupCLO.UnitOfMeasureName" />-->
+                <span class="label-large">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
             </div>
-            
+
         </ng-container>
 
+        <!--When the MedType is Packaged-->
+        <ng-container *ngIf="!viewModel.IFRPGroupCLO.HasUserDefinedUnitDose">
+            <div class="label-input-pair">
+                <span class="packaged-text-label label-large">
+                    {{viewModel.UnitDoseTypesEnum[viewModel.IFRPGroupCLO.UnitDoseType]}} ({{viewModel.IFRPGroupCLO.UnitDoseSize}} {{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each)
+                </span>
+            </div>
+        </ng-container>
 
         <i class="fa fa-times remove-button" (click)="onRemoveClicked()"></i>
 
