@@ -112,9 +112,10 @@ export class PlanEditorDialogComponent implements IModalDialog {
     ngOnInit() {
 
         // Define form
+        
         this.reactiveForm = this.fb.group({
             planName: ['',
-                Validators.compose([Validators.required])
+                Validators.required
             ],
             dates: this.fb.group({
                 startDate: [null, Validators.compose([Validators.required, startDateMustNotBeBeforeTodayValidator])],

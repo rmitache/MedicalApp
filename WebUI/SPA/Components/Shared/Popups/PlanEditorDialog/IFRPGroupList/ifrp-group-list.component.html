@@ -29,8 +29,8 @@
                              [IFRPGroupCLO]="clo"
                              (ValidStateChanged)="onChildGroupElemValidStateChanged()"
                              (RemoveClicked)="onRemoveIFRPGroupTriggered($event)"></ifrp-group-elem>
-            <div *ngIf="viewModel.RuleItemCLOs.length===0" class="label" style="color:red;">
-                * You need to add at least one Supplement to this Rule
+            <div *ngIf="viewModel.RuleItemCLOs.length===0" class="label-error">
+                <i class="fa fa-warning validation-error-icon"></i> You need to add at least one Supplement to this Rule
             </div>
             <div style="clear:both"></div>
         </div>

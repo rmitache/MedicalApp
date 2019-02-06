@@ -4,12 +4,17 @@
     <div class="frame">
         <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>-->
 
+
         <div class="top-section">
 
             <input pInputText type="text" id="plan-name-input" formControlName="planName"
                    placeholder="Enter a Name"
                    [(ngModel)]="viewModel.PlanCLO.Name" />
-            <span class="label-error">*</span>
+            <i [style.visibility]="reactiveForm.controls.planName.valid ? 'hidden' : 'visible'"
+               class="fa fa-warning validation-error-icon"
+               [tooltipZIndex]="52000"
+               [tooltipPosition]="'bottom'"
+               [pTooltip]="'You need to enter a name for your Treatment Plan'"></i>
 
             <div class="start-date-div" formGroupName="dates">
                 <span class="label">
@@ -21,9 +26,13 @@
                             readonlyInput="true"
                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDateTime"
                             showIcon="true"></p-calendar>
+                <i [style.visibility]="reactiveForm.controls.dates.controls.startDate.valid ? 'hidden' : 'visible'"
+                   class="fa fa-warning validation-error-icon"></i>
             </div>
 
         </div>
+
+
         <div class="rules-section">
             <span class="h2">RULES:</span>
             <button pButton type="button" icon="fa fa-plus" id="add-new-rule-button" label="Add Rule"
@@ -39,7 +48,7 @@
                            [RuleCLO]="rule">
                 </rule-elem>
                 <div *ngIf="viewModel.CurrentVersionCLO.Rules.length===0" class="label-error">
-                    * You need to add at least one Rule
+                    <i class="fa fa-warning validation-error-icon"></i> You need to add at least one Rule
                 </div>
             </div>
         </div>

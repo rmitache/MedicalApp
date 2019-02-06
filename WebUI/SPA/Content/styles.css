@@ -110,19 +110,23 @@ h4,
     color: #2399e5;
 }
 
-
-
-/*Labels*/
-.label {
-    font-size: 9pt;
-    font-family: Arial;
-    color: #464646;
+/*Validation*/
+.validation-error-icon {
+    color: red;
+    font-size:0.9em;
 }
 .label-error {
     color: red;
     font-size: 9pt;
     font-family: Arial;
 }
+/*Labels*/
+.label {
+    font-size: 9pt;
+    font-family: Arial;
+    color: #464646;
+}
+
 .label-alt {
     font-size: 9pt;
     font-family: Arial;

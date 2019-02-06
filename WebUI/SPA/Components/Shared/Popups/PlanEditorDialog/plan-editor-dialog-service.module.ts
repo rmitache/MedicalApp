@@ -3,7 +3,7 @@ import { SpinnerServiceModule } from '../../../../Core/Services/SpinnerService/s
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxModule, CalendarModule, ChipsModule, AutoCompleteModule, KeyFilterModule } from 'primeng/primeng';
+import { CheckboxModule, CalendarModule, ChipsModule, AutoCompleteModule, KeyFilterModule, TooltipModule } from 'primeng/primeng';
 import { PlanEditorDialogComponent } from './plan-editor-dialog.component';
 import { PlanEditorDialogService } from './plan-editor-dialog.service';
 import { RuleElemComponent } from './RuleElem/rule-elem.component';
@@ -24,7 +24,8 @@ import { CustomCheckboxComponent } from '../../CustomCheckbox/custom-checkbox.co
         PipesModule,
         ChipsModule,
         AutoCompleteModule,
-        KeyFilterModule
+        KeyFilterModule,
+        TooltipModule
 	],
 	declarations: [
         PlanEditorDialogComponent,
