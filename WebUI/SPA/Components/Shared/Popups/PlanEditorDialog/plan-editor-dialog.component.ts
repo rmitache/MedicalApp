@@ -107,6 +107,7 @@ export class PlanEditorDialogComponent implements IModalDialog {
         private readonly medicineTypeEditorDialogService: MedicineTypeEditorDialogService,
         private viewContainerRef: ViewContainerRef,
     ) {
+        
     }
     ngOnInit() {
 

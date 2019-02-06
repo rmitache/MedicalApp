@@ -1,16 +1,15 @@
 
 <form [formGroup]="reactiveForm">
-    
+
     <div class="frame">
         <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>-->
 
-
-
         <div class="top-section">
 
-                <input pInputText type="text" id="plan-name-input" formControlName="planName" 
-                       placeholder="Enter a Name"
-                       [(ngModel)]="viewModel.PlanCLO.Name" />
+            <input pInputText type="text" id="plan-name-input" formControlName="planName"
+                   placeholder="Enter a Name"
+                   [(ngModel)]="viewModel.PlanCLO.Name" />
+            <span class="label-error">*</span>
 
             <div class="start-date-div" formGroupName="dates">
                 <span class="label">
@@ -23,7 +22,7 @@
                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDateTime"
                             showIcon="true"></p-calendar>
             </div>
-            
+
         </div>
         <div class="rules-section">
             <span class="h2">RULES:</span>
@@ -39,7 +38,7 @@
                            [AvailableMedicineTypes]="availableMedicineTypes"
                            [RuleCLO]="rule">
                 </rule-elem>
-                <div *ngIf="viewModel.CurrentVersionCLO.Rules.length===0" class="label" style="color:red;">
+                <div *ngIf="viewModel.CurrentVersionCLO.Rules.length===0" class="label-error">
                     * You need to add at least one Rule
                 </div>
             </div>

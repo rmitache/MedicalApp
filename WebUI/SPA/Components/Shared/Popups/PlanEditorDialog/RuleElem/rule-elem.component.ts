@@ -47,14 +47,12 @@ export class RuleElemComponent {
     private refreshIsValid() {
         // Special hack for custom validation for chipsInput
         this.viewModel.ShowChipsInputInvalid = this.viewModel.MomentsInDayAsStrings.length < 1;
-
-        //
+        
+        // Validation logic
         let prevIsValid = this.isValid;
         this.isValid = !this.viewModel.ShowChipsInputInvalid && this.groupList.GetValidState();
-
         if (prevIsValid !== this.isValid) {
             this.ValidStateChanged.emit();
-            
         }
     }
 

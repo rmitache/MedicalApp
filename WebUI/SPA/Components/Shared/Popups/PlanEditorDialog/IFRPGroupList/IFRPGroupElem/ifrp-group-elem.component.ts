@@ -46,6 +46,10 @@ export class IFRPGroupElemComponent {
         private readonly cdRef: ChangeDetectorRef,
 
     ) {
+        
+    }
+    ngOnInit() {
+        
         this.reactiveForm = this.fb.group({
             unitDoseQuantifierInput: [null,
                 Validators.compose([
@@ -53,14 +57,13 @@ export class IFRPGroupElemComponent {
                     Validators.min(1),
                     Validators.pattern(new RegExp(/^\d+$/))])],
             unitdosetype: null,
-            unitdosesize: [null,
+            unitdosesize: [this.iFRPGroupCLO.UnitDoseSize,
                 Validators.compose([
                     Validators.required,
                     Validators.min(1),
                     Validators.pattern(new RegExp(/^\d+$/))])],
         });
-    }
-    ngOnInit() {
+
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
         // Load fields 
@@ -88,29 +91,14 @@ export class IFRPGroupElemComponent {
         
 
 
-        ////
-        //this.reactiveForm
-        //    .statusChanges
-        //    .subscribe((newStatus) => {
-        //        this.refreshIsValid();
+        //
+        this.reactiveForm
+            .statusChanges
+            .subscribe((newStatus) => {
+                this.refreshIsValid();
 
-        //    });
+            });
 
-        ////
-        //if (this.iFRPGroupCLO.MedicineType !== null) {
-        //    this.reactiveForm.get('medicineTypeName').setValue(this.iFRPGroupCLO.MedicineType.Name);
-        //    this.viewModel.SearchText = this.iFRPGroupCLO.MedicineType.Name;
-        //    this.viewModel.OverlayIsVisible = false;
-
-        //    //
-        //    if (this.iFRPGroupCLO.MedicineType.IsPackagedIntoUnits === true) {
-        //        this.viewModel.UserDefinedControlsAreLocked = true;
-        //        this.viewModel.UnitDoseTypesEnum = Enums.PackagedUnitDoseType;
-        //    } else {
-        //        this.viewModel.UserDefinedControlsAreLocked = false;
-        //        this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
-        //    }
-        //}
     }
 
     // Public methods

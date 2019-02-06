@@ -33,11 +33,14 @@
         width: 350px;
         float: left;
     }
-
+    .top-section .label-error {
+        float: left;
+        margin-left:2px;
+        margin-top:5px;
+    }
     .top-section .start-date-div {
         float: left;
         margin-left: 25px;
-        border: solid 1px double;
     }
 
         .top-section .start-date-div > span {

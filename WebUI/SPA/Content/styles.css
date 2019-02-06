@@ -118,7 +118,11 @@ h4,
     font-family: Arial;
     color: #464646;
 }
-
+.label-error {
+    color: red;
+    font-size: 9pt;
+    font-family: Arial;
+}
 .label-alt {
     font-size: 9pt;
     font-family: Arial;
