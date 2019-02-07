@@ -43,6 +43,11 @@
                          (onAdd)="onAddMomentInDayChip($event.value)"
                          (onRemove)="onRemoveMomentInDayChip($event.value)"
                          [(ngModel)]="viewModel.MomentsInDayAsStrings"></p-chips>
+                <i [style.visibility]="viewModel.ShowChipsInputInvalid ? 'visible' : 'hidden'"
+                   class="fa fa-warning validation-error-icon"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'You need to specify at least one time during the day'"></i>
             </div>
             <div style="clear:both"></div>
         </div>
