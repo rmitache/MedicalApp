@@ -12,6 +12,8 @@ import { PipesModule } from '../../Pipes/pipes.module';
 import { IFRPGroupListComponent } from './IFRPGroupList/ifrp-group-list.component';
 import { IFRPGroupElemComponent } from './IFRPGroupList/IFRPGroupElem/ifrp-group-elem.component';
 import { CustomCheckboxComponent } from '../../CustomCheckbox/custom-checkbox.component';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
 	imports: [
@@ -25,7 +27,7 @@ import { CustomCheckboxComponent } from '../../CustomCheckbox/custom-checkbox.co
         ChipsModule,
         AutoCompleteModule,
         KeyFilterModule,
-        TooltipModule
+        TooltipModule,
 	],
 	declarations: [
         PlanEditorDialogComponent,

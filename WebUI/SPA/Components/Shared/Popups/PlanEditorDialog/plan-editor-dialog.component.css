@@ -20,8 +20,13 @@
 
 .info-msg {
     padding: 10px;
-    background-color: #f1f7f8;
-    border-radius: 2px;
+    background-color: #bfe0fa;
+    border-radius: 4px;
+    margin-bottom:25px;
+}
+
+.info-msg i {
+   font-size:1.5em;
 }
 
 

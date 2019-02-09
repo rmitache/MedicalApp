@@ -34,7 +34,7 @@ export class MedicineRuleItemCLOFactory implements ICLOFactory<CLOs.MedicineRule
         newCLO.ID = 0;
         newCLO.MedicineType = null;
 
-        newCLO.UnitDoseQuantifier = null;
+        newCLO.UnitDoseQuantifier = 1;
         newCLO.HasUserDefinedUnitDose = null;
         newCLO.UserDefinedUnitDoseType = null;
         newCLO.UserDefinedUnitDoseSize = null;

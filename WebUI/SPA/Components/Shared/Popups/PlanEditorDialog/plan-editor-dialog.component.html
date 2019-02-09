@@ -2,12 +2,18 @@
 <form [formGroup]="reactiveForm">
 
     <div class="frame">
-        <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>-->
+        <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg">
+            <i class="fa fa-info-circle"></i>
+            <span class="label">
+                {{viewModel.InfoMessage}}
+
+            </span>
+        </div>-->
 
         <div class="top-section">
 
             <div class="plan-name-div">
-                <input pInputText type="text" id="plan-name-input" formControlName="planName"
+                <input type="text" id="plan-name-input" formControlName="planName" pInputText
                        placeholder="Enter a Name"
                        [(ngModel)]="viewModel.PlanCLO.Name" />
                 <i [style.visibility]="(reactiveForm.controls.planName.valid || !reactiveForm.controls.planName.enabled) ? 'hidden' : 'visible'"

@@ -67,7 +67,7 @@ export class IFRPGroupElemComponent {
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
         // Load fields 
-        this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
+        //this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
         var medicineTypeCLO = this.viewModel.IFRPGroupCLO.MedicineType;
         if (medicineTypeCLO.IsPackagedIntoUnits === true) {
             this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose = false;
