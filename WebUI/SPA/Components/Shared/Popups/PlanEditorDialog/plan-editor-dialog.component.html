@@ -4,18 +4,18 @@
     <div class="frame">
         <!--<div *ngIf="viewModel.InfoMessage != null" class="info-msg label-discrete">{{viewModel.InfoMessage}}</div>-->
 
-
         <div class="top-section">
 
-            <input pInputText type="text" id="plan-name-input" formControlName="planName"
-                   placeholder="Enter a Name"
-                   [(ngModel)]="viewModel.PlanCLO.Name" />
-            <i [style.visibility]="reactiveForm.controls.planName.valid ? 'hidden' : 'visible'"
-               class="fa fa-warning validation-error-icon"
-               [tooltipZIndex]="52000"
-               [tooltipPosition]="'bottom'"
-               [pTooltip]="'You need to enter a name for your Treatment Plan'"></i>
-
+            <div class="plan-name-div">
+                <input pInputText type="text" id="plan-name-input" formControlName="planName"
+                       placeholder="Enter a Name"
+                       [(ngModel)]="viewModel.PlanCLO.Name" />
+                <i [style.visibility]="(reactiveForm.controls.planName.valid || !reactiveForm.controls.planName.enabled) ? 'hidden' : 'visible'"
+                   class="fa fa-warning validation-error-icon"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'You need to enter a name for your Treatment Plan'"></i>
+            </div>
             <div class="start-date-div" formGroupName="dates">
                 <span class="label">
                     {{viewModel.StartDateLabel }}
@@ -26,7 +26,15 @@
                             readonlyInput="true"
                             [(ngModel)]="viewModel.CurrentVersionCLO.StartDateTime"
                             showIcon="true"></p-calendar>
-                <i [style.visibility]="reactiveForm.controls.dates.controls.startDate.valid ? 'hidden' : 'visible'"
+                <i [style.display]="!reactiveForm.controls.dates.controls.startDate.errors?.startDateMustNotBeBeforeToday ? 'none' : 'block'"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'Start date cannot be before today'"
+                   class="fa fa-warning validation-error-icon"></i>
+                <i [style.display]="!reactiveForm.controls.dates.controls.startDate.errors?.incorrect ? 'none' : 'block'"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'Please try moving the start date more to the future'"
                    class="fa fa-warning validation-error-icon"></i>
             </div>
 

@@ -37,7 +37,7 @@
 .when-section {
     min-height: 62px;
     padding-bottom:10px;
-    border-bottom: dashed 1px #8d8d8d;
+    border-bottom: dashed 1px #c7c7c7;
 }
 
     .when-section .when-label {
@@ -90,7 +90,7 @@
         .when-section .moments-in-day-div .validation-error-icon {
             display: block;
             margin-left: 5px;
-            margin-top: 5px;
+            margin-top: 6px;
             float: left;
         }
 

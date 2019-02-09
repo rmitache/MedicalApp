@@ -23,38 +23,53 @@
     background-color: #f1f7f8;
     border-radius: 2px;
 }
+
+
+/*Top section*/
 .top-section {
     width: 100%;
     height: 55px;
 }
 
-    .top-section #plan-name-input {
+.plan-name-div {
+    float:left;
+}
+
+    .plan-name-div #plan-name-input {
         width: 350px;
         float: left;
     }
-.top-section .validation-error-icon {
-    float: left;
-    margin-left: 4px;
-    margin-top: 5px;
-}
-    .top-section .start-date-div {
+
+    .plan-name-div > .validation-error-icon {
         float: left;
-        margin-left: 25px;
+        margin-left: 4px;
+        margin-top: 6px;
     }
 
-        .top-section .start-date-div > span {
-            float: left;
-            margin-right: 5px;
-            margin-top: 7px;
-        }
+.start-date-div {
+    float: left;
+    margin-left: 25px;
+}
 
-        .top-section .start-date-div #start-date-picker {
-            float: left;
-        }
+    .start-date-div > .validation-error-icon {
+        float: left;
+        margin-left: 37px;
+        margin-top: 6px;
+    }
 
-            .top-section .start-date-div #start-date-picker /deep/ .ui-inputtext {
-                width: 100px !important;
-            }
+    .start-date-div > span {
+        float: left;
+        margin-right: 5px;
+        margin-top: 7px;
+    }
+
+    .start-date-div #start-date-picker {
+        float: left;
+    }
+
+        .start-date-div #start-date-picker /deep/ .ui-inputtext {
+            width: 100px !important;
+        }
 
 
 

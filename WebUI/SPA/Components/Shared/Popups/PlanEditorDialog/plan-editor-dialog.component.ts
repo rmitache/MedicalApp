@@ -254,11 +254,7 @@ class ChangeMode implements IPlanEditorModeImplementation {
         private vm: ViewModel,
         private globalDataService: HomePageDataService,
         private genericCLOFactory: GenericCLOFactory) {
-
         this.prevVersion = planCLO.GetLatestVersion();
-
-
-
 
         // Create a new version for the planCLO
         let newVersion = this.genericCLOFactory.CloneCLOAsNewBLO(this.prevVersion);
@@ -267,7 +263,6 @@ class ChangeMode implements IPlanEditorModeImplementation {
             defaultStartDate.add(1, 'days');
         }
         newVersion.StartDateTime = defaultStartDate.toDate();
-
         planCLO.Versions.Add(newVersion);
 
 
@@ -512,7 +507,7 @@ function startDateMustNotBeBeforeTodayValidator(control: AbstractControl) {
     var todayDate = moment().startOf('day');
 
     if (startDate < todayDate) {
-        return { startBeforeToday: true };
+        return { startDateMustNotBeBeforeToday: true };
     } else {
         return null;
     }
@@ -582,7 +577,6 @@ function advancedPlanDatesValidator(group: FormGroup, prevVersion: CLOs.VersionC
     if (startDateErrorsCount > 0) {
         startDateInput.setErrors({ incorrect: true });
     } else {
-        //startDateInput.setErrors({ incorrect: null });
         startDateInput.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
     if (endDateErrorsCount > 0) {

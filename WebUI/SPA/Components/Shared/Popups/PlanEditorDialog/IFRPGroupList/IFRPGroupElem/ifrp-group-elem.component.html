@@ -56,7 +56,7 @@
         <!--When the MedType is Packaged-->
         <ng-container *ngIf="!viewModel.IFRPGroupCLO.HasUserDefinedUnitDose">
             <div class="label-input-pair">
-                <span class="packaged-text-label label-large">
+                <span class="packaged-text-label label">
                     {{viewModel.UnitDoseTypesEnum[viewModel.IFRPGroupCLO.UnitDoseType]}} ({{viewModel.IFRPGroupCLO.UnitDoseSize}} {{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each)
                 </span>
             </div>
