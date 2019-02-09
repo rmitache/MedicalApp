@@ -91,11 +91,23 @@ input.ng-invalid.ng-touched {
     margin-top: 6px;
 }
 
-.frame .dose-size-input-pair .ui-inputtext {
-    width: 70px;
+.frame .dose-size-input-pair {
+    float:left;
+    min-width: 70px;
     text-align: right;
 }
 
+    .frame .dose-size-input-pair .ui-inputtext {
+        float: left;
+        width: 70px;
+        text-align: right;
+    }
+
+    .frame .dose-size-input-pair .validation-error-icon {
+        float: left;
+        margin-left: 4px;
+        margin-top: 6px;
+    }
 .frame .dose-uom-input-pair .ui-inputtext {
     width: 60px;
 }
@@ -109,7 +121,7 @@ input.ng-invalid.ng-touched {
 
 /*Packaged MedType*/
 .frame .packaged-text-label {
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 

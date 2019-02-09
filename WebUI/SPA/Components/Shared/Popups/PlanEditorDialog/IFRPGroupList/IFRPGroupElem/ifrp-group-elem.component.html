@@ -36,7 +36,7 @@
             </div>
 
             <!--Of-->
-            <div class="label-large of-label">of</div>
+            <div class="label of-label">of</div>
 
             <!--UnitDoseSize-->
             <div class="label-input-pair dose-size-input-pair">
@@ -44,11 +44,16 @@
                        (ngModelChange)="onUnitDoseSizeChanged($event)"
                        [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
                        [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
+                <i [style.display]="!reactiveForm.controls.unitdosesize.errors ? 'none' : 'block'"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'Please enter a valid amount. This has to be an integer'"
+                   class="fa fa-warning validation-error-icon"></i>
             </div>
 
             <!--Unit of Measure-->
             <div class="label-input-pair dose-uom-input-pair">
-                <span class="label-large">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
+                <span class="label">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
             </div>
 
         </ng-container>

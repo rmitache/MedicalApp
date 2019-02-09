@@ -130,22 +130,17 @@ export class IFRPGroupListComponent {
             this.refreshIsValid();
         }, 1);
 
-        // Hack for DEVELOPMENT TESTING
-        setTimeout(() => {
-            var all = this.medicineTypesSearchService.Search("");
-            this.onAddMedicineTypeItemSelected(all[1]);
-            this.onAddMedicineTypeItemSelected(all[6]);
-        }, 100);
+        
+        // Logic to hide the searchBar when it loses focus (commented out for now)
+        //this.autocomplete.onBlur.subscribe(() => {
 
-        this.autocomplete.onBlur.subscribe(() => {
+        //    setTimeout(() => {
+        //        var isFocused = (document.activeElement === this.autocomplete.inputEL.nativeElement);
+        //        if (!isFocused)
+        //            this.viewModel.ShowSearchBar = false;
+        //    }, 100);
 
-            setTimeout(() => {
-                var isFocused = (document.activeElement === this.autocomplete.inputEL.nativeElement);
-                if (!isFocused)
-                    this.viewModel.ShowSearchBar = false;
-            }, 100);
-
-        });
+        //});
     }
 
     // Public methods
