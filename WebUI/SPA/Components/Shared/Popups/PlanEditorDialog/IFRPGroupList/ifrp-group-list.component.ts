@@ -111,6 +111,12 @@ export class IFRPGroupListComponent {
         let newRuleItemCLO = this.genericCLOFactory.CreateDefaultClo(CLOs.MedicineRuleItemCLO);
         let medicineTypeCLO = this.medicineTypesSearchService.GetMedicineTypeByName(selectedMedicineTypeName);
         newRuleItemCLO.MedicineType = medicineTypeCLO;
+        if (!medicineTypeCLO.IsPackagedIntoUnits) {
+            newRuleItemCLO.UserDefinedUnitDoseType = Enums.UserDefinedUnitDoseType.Teaspoons;
+        }
+        //newRuleItemCLO.HasUserDefinedUnitDose = true;
+        //newRuleItemCLO.UserDefinedUnitDoseSize = 1;
+        
         this.viewModel.RuleItemCLOs.push(newRuleItemCLO);
 
 

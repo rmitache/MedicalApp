@@ -7,21 +7,41 @@ input.ng-invalid.ng-touched {
 }
 
 .frame {
-    width: 280px;
-    height: 450px;
+    width: 350px;
+    height: 350px;
+}
+
+/*Top*/
+.top-section {
+    height: 70px;
+    padding-bottom: 20px;
+    border-bottom: dashed 1px #c7c7c7;
+}
+    .top-section .validation-error-icon {
+        display: block;
+        margin-left: 5px;
+        margin-top: 6px;
+        float: left;
+    }
+.name-div .ui-inputtext,
+.producer-div .ui-inputtext {
+    width: calc(100% - 25px);
+}
+
+/*Bottom*/
+.bottom-section {
+    min-height: 80px;
+    padding-top: 20px;
 }
 
 .label-input-pair {
     float: left;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     clear: both;
-    width:100%;
-}
-
-#name-div .ui-inputtext,
-#producer-div .ui-inputtext {
     width: 100%;
 }
+
+
 
 
 .radio-button-group {

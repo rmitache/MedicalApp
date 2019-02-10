@@ -15,7 +15,7 @@ namespace BLL.DomainModel.Factors.Medicine.Services.Implementation
     public class SupplyCalculationEngine : ISupplyCalculationEngine
     {
         // Private methods
-        private int GetSupplyToSubtract(int quantifier, int? userDefinedUnitDoseSize)
+        private int GetSupplyToSubtract(int quantifier, decimal? userDefinedUnitDoseSize)
         {
             if (userDefinedUnitDoseSize == null)
             {

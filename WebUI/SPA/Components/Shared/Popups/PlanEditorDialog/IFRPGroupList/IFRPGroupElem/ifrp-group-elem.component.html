@@ -14,7 +14,7 @@
             <input pInputText [pKeyFilter]="only2Digits"
                    maxlength="2"
                    (click)="$event.target.select()"
-                   type="text" formControlName="unitDoseQuantifierInput" 
+                   type="text" formControlName="unitDoseQuantifierInput"
                    [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseQuantifier" />
         </div>
 
@@ -36,26 +36,9 @@
                 </select>
             </div>
 
-            <!--Of-->
-            <div class="label of-label">of</div>
 
-            <!--UnitDoseSize-->
-            <div class="label-input-pair dose-size-input-pair">
-                <input pInputText type="text" formControlName="unitdosesize"
-                       (ngModelChange)="onUnitDoseSizeChanged($event)"
-                       [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
-                       [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
-                <i [style.display]="!reactiveForm.controls.unitdosesize.errors ? 'none' : 'block'"
-                   [tooltipZIndex]="52000"
-                   [tooltipPosition]="'bottom'"
-                   [pTooltip]="'Please enter a valid amount. This has to be an integer'"
-                   class="fa fa-warning validation-error-icon"></i>
-            </div>
 
-            <!--Unit of Measure-->
-            <div class="label-input-pair dose-uom-input-pair">
-                <span class="label">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
-            </div>
+
 
         </ng-container>
 
@@ -76,3 +59,25 @@
     </div>
 
 </form>
+
+
+<!--Of
+<div class="label of-label">of</div>
+    -->
+<!--UnitDoseSize
+<div class="label-input-pair dose-size-input-pair">
+    <input pInputText type="text" formControlName="unitdosesize"
+           (ngModelChange)="onUnitDoseSizeChanged($event)"
+           [attr.disabled]="viewModel.UserDefinedControlsAreLocked?'true':null"
+           [(ngModel)]="viewModel.IFRPGroupCLO.UnitDoseSize" />
+    <i [style.display]="!reactiveForm.controls.unitdosesize.errors ? 'none' : 'block'"
+       [tooltipZIndex]="52000"
+       [tooltipPosition]="'bottom'"
+       [pTooltip]="'You need to enter a positive decimal or integer. Example: 1 or 1.5'"
+       class="fa fa-warning validation-error-icon"></i>
+</div>
+    -->
+<!--Unit of Measure
+<div class="label-input-pair dose-uom-input-pair">
+    <span class="label">{{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each</span>
+</div>-->

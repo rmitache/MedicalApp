@@ -3,7 +3,7 @@ import { SpinnerServiceModule } from '../../../../Core/Services/SpinnerService/s
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxModule, CalendarModule, ChipsModule, AutoCompleteModule, RadioButtonModule } from 'primeng/primeng';
+import { CheckboxModule, CalendarModule, ChipsModule, AutoCompleteModule, RadioButtonModule, TooltipModule } from 'primeng/primeng';
 import { KeysPipe } from '../../Pipes/keys.pipe';
 import { PipesModule } from '../../Pipes/pipes.module';
 import { MedicineTypeEditorDialogComponent } from './medicine-type-editor-dialog.component';
@@ -20,7 +20,8 @@ import { MedicineTypeEditorDialogService } from './medicine-type-editor-dialog.s
         PipesModule,
         ChipsModule,
         AutoCompleteModule,
-        RadioButtonModule
+        RadioButtonModule,
+        TooltipModule
 	],
 	declarations: [
         MedicineTypeEditorDialogComponent

@@ -27,7 +27,7 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public int UnitDoseQuantifier { get; set; }
         virtual public bool HasUserDefinedUnitDose { get; set; }
         virtual public UserDefinedUnitDoseType? UserDefinedUnitDoseType { get; set; }
-        virtual public int? UserDefinedUnitDoseSize { get; set; }
+        virtual public decimal? UserDefinedUnitDoseSize { get; set; }
 
 
         virtual public string UnitDoseTypeName
@@ -62,11 +62,11 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
                 return unitOfMeasureName;
             }
         }
-        virtual public int? UnitDoseSize
+        virtual public decimal? UnitDoseSize
         {
             get
             {
-                int? unitDoseSize = 0;
+                decimal? unitDoseSize = 0;
                 if (this.HasUserDefinedUnitDose == true)
                 {
                     unitDoseSize = this.UserDefinedUnitDoseSize;

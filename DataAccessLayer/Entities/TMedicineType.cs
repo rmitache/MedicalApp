@@ -19,7 +19,7 @@ namespace DataAccessLayer.Entities
         public int BaseUnitOfMeasureId { get; set; }
         public bool IsPackagedIntoUnits { get; set; }
         public int? PackagedUnitDoseTypeId { get; set; }
-        public int? PackagedUnitDoseSize { get; set; }
+        public decimal? PackagedUnitDoseSize { get; set; }
 
         public TUser User { get; set; }
         public ICollection<TMedicineTypeSupplyEntry> TMedicineTypeSupplyEntry { get; set; }

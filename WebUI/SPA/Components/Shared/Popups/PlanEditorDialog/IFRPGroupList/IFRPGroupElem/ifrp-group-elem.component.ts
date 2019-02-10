@@ -46,10 +46,10 @@ export class IFRPGroupElemComponent {
         private readonly cdRef: ChangeDetectorRef,
 
     ) {
-        
+
     }
     ngOnInit() {
-        
+
         this.reactiveForm = this.fb.group({
             unitDoseQuantifierInput: [null,
                 Validators.compose([
@@ -57,17 +57,17 @@ export class IFRPGroupElemComponent {
                     Validators.min(1),
                     Validators.pattern(new RegExp(/^\d+$/))])],
             unitdosetype: null,
-            unitdosesize: [this.iFRPGroupCLO.UnitDoseSize,
-                Validators.compose([
-                    Validators.required,
-                    Validators.min(1),
-                    Validators.pattern(new RegExp(/^\d+$/))])],
+            //unitdosesize: [this.iFRPGroupCLO.UnitDoseSize,
+            //Validators.compose([
+            //    Validators.required,
+            //    Validators.pattern(new RegExp(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)),
+            //    Validators.min(0.00000000001)
+            //])],
         });
 
         this.viewModel.IFRPGroupCLO = this.iFRPGroupCLO;
 
         // Load fields 
-        //this.viewModel.IFRPGroupCLO.UnitDoseQuantifier = 1;
         var medicineTypeCLO = this.viewModel.IFRPGroupCLO.MedicineType;
         if (medicineTypeCLO.IsPackagedIntoUnits === true) {
             this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose = false;
@@ -80,15 +80,13 @@ export class IFRPGroupElemComponent {
         }
         else {
             this.viewModel.IFRPGroupCLO.HasUserDefinedUnitDose = true;
-            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseType = 0;
-            this.viewModel.IFRPGroupCLO.UserDefinedUnitDoseSize = 100;
 
             // Unlock the controls
             this.viewModel.UserDefinedControlsAreLocked = false;
             this.viewModel.UnitDoseTypesEnum = Enums.UserDefinedUnitDoseType;
         }
 
-        
+
 
 
         //
@@ -128,7 +126,7 @@ export class IFRPGroupElemComponent {
 
 interface ViewModel {
     IFRPGroupCLO: CLOs.AbstractMedicineFactorRecordCLO;
-    
+
     UnitDoseTypesEnum: any;
     UserDefinedControlsAreLocked: boolean;
 }

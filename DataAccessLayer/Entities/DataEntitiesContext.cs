@@ -25,8 +25,8 @@ namespace DataAccessLayer.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer(@"Server=MSI\SQLEXPRESS;Database=MedicalApp;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer(@"Server=MSI\SQLEXPRESS;Database=MedicalApp;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer(@"Server=tcp:medicalappdb.database.windows.net,1433;Initial Catalog=MedicalApp;Persist Security Info=False;User ID=rmitache@hotmail.com@medicalappdb.database.windows.net;Password=JohnDoe1453;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
             }
 
@@ -72,7 +72,9 @@ namespace DataAccessLayer.Entities
                     .HasColumnName("name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PackagedUnitDoseSize).HasColumnName("packaged_unit_dose_size");
+                entity.Property(e => e.PackagedUnitDoseSize)
+                    .HasColumnName("packaged_unit_dose_size")
+                    .HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.PackagedUnitDoseTypeId).HasColumnName("packaged_unit_dose_type_id");
 
@@ -146,7 +148,9 @@ namespace DataAccessLayer.Entities
 
                 entity.Property(e => e.UnitDoseQuantifier).HasColumnName("unit_dose_quantifier");
 
-                entity.Property(e => e.UserDefinedUnitDoseSize).HasColumnName("user_defined_unit_dose_size");
+                entity.Property(e => e.UserDefinedUnitDoseSize)
+                    .HasColumnName("user_defined_unit_dose_size")
+                    .HasColumnType("decimal(18, 4)");
 
                 entity.Property(e => e.UserDefinedUnitDoseTypeId).HasColumnName("user_defined_unit_dose_type_id");
 

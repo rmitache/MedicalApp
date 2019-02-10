@@ -438,10 +438,17 @@ export class TimeGroupRepresentation {
 		});
 		return sorted;
 	}
-	public GetStringLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
+	public GetTooltipText(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
 
 		let record = factorRecordCLO;
 		return factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.UnitDoseTypeName
 			+ ' (' + record.UnitDoseSize + ' ' + record.UnitOfMeasureName + ')';
-	}
+    }
+    public GetLabel(factorRecordCLO: CLOs.MedicineFactorRecordCLO): string {
+
+        let record = factorRecordCLO;
+        let labelText = factorRecordCLO.MedicineType.Name + ' - ' + record.UnitDoseQuantifier + ' x ' + record.UnitDoseTypeName
+            + ' (' + record.UnitDoseSize + ' ' + record.UnitOfMeasureName + ')';
+        return labelText;
+    }
 }

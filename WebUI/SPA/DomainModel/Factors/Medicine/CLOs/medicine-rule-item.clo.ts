@@ -28,6 +28,5 @@ export class MedicineRuleItemCLO extends AbstractMedicineFactorRecordCLO {
     constructor() {
         super();
     }
-
    
 }

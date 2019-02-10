@@ -40,8 +40,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 	public Create_DefaultCLO(): CLOs.MedicineTypeCLO {
 		let newCLO = new CLOs.MedicineTypeCLO();
 		newCLO.ID = 0;
-		newCLO.Name = "Default name";
-		newCLO.ProducerName = "";
+		newCLO.Name = null;
+        newCLO.ProducerName = null;
 
 		newCLO.BaseUnitOfMeasure = Enums.UnitOfMeasure.mg;
 		newCLO.IsPackagedIntoUnits = true;

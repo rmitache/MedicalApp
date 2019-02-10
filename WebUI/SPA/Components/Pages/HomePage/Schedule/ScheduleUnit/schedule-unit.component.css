@@ -104,6 +104,10 @@
         width: calc(100% - 14px);
         border-left: none;
     }
+    .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item .label-discrete {
+        text-decoration: line-through;
+        color: #bebebe;
+    }
         .plan-div .factor-record-list-in-plan-grouping .taken-factor-record-item:hover {
             background-color: #f2f2f2;
         }
