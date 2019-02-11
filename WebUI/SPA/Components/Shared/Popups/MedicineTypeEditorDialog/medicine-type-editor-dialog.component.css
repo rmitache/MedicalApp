@@ -1,3 +1,11 @@
+.frame /deep/ .ui-state-active .fa-circle:before {
+    content: none;
+}
+
+.frame /deep/ .ui-radio-button-label {
+    cursor: pointer;
+}
+
 .medicine-type-input-pair /deep/ .ng-invalid.ng-touched .ui-inputtext {
     border: 1px solid red !important;
 }
@@ -17,12 +25,14 @@ input.ng-invalid.ng-touched {
     padding-bottom: 20px;
     border-bottom: dashed 1px #c7c7c7;
 }
+
     .top-section .validation-error-icon {
         display: block;
         margin-left: 5px;
         margin-top: 6px;
         float: left;
     }
+
 .name-div .ui-inputtext,
 .producer-div .ui-inputtext {
     width: calc(100% - 25px);
@@ -44,60 +54,74 @@ input.ng-invalid.ng-touched {
 
 
 
-.radio-button-group {
-    float: left;
+
+
+
+
+/*Packaged into units*/
+.packaged-into-units-div {
+    width: 100%;
 }
 
-    .radio-button-group .radio-button-div {
-        padding: 5px;
-        padding-left: 8px;
-        padding-right:8px;
-        background-color: #efefef;
-        border-radius: 4px;
+    .packaged-into-units-div .radio-button-group {
         float: left;
-        margin-right: 10px;
+        clear: both;
+        margin-top: 10px;
     }
 
-        .radio-button-group .radio-button-div label {
-            vertical-align: middle;
+        .packaged-into-units-div .radio-button-group .radio-button-div {
+            padding: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #efefef;
+            border-radius: 4px;
+            float: left;
+            margin-right: 10px;
         }
 
-.active label {
-    color: black !important;
+            .packaged-into-units-div .radio-button-group .radio-button-div label {
+                vertical-align: middle;
+            }
+
+        .packaged-into-units-div .radio-button-group .active {
+            color: black !important;
+        }
+
+/*Packaged as*/
+.packaged-as-div {
+    width: 100%;
+    margin-top:20px;
 }
-
-
-#packaged-div {
-    width:100%;
-}
-
-
-    #packaged-div #packagedUnitDoseSize {
-        width: 60px;
+    .packaged-as-div .header {
+        height: 30px;
     }
 
-    #packaged-div .header{
-        height:20px;
+    .packaged-as-div.body {
+        height: 70px;
     }
-    #packaged-div .body {
-        height:70px;
+
+    .packaged-as-div #packagedUnitDoseSize {
+        width: 100px;
     }
-    #packaged-div #packagedUnitDoseType,
-    #packaged-div #packagedUnitDoseSize,
-    #packaged-div .inner-label {
+
+    .packaged-as-div .validation-error-icon {
+        float: left;
+        margin-left:-2px;
+        margin-right: 6px;
+        margin-top: 6px;
+    }
+
+
+    .packaged-as-div #packagedUnitDoseType,
+    .packaged-as-div #packagedUnitDoseSize,
+    .packaged-as-div #baseUnitOfMeasure,
+    .packaged-as-div .inner-label {
         float: left;
         display: block;
         clear: none;
-        margin-right:8px;
-    }
-    
-    #packaged-div .inner-label {
-        margin-top:4px;
+        margin-right: 8px;
     }
 
-.frame /deep/ .ui-state-active .fa-circle:before {
-    content: none;
-}
-.frame /deep/ .ui-radio-button-label {
-    cursor:pointer;
-}
+    .packaged-as-div .inner-label {
+        margin-top: 6px;
+    }

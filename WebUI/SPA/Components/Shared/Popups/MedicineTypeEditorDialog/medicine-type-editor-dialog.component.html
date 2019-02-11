@@ -15,7 +15,7 @@
                 <i [style.display]="reactiveForm.controls.name.valid ? 'none' : 'block'"
                    [tooltipZIndex]="52000"
                    [tooltipPosition]="'bottom'"
-                   [pTooltip]="'Please enter a Name'"
+                   [pTooltip]="'Please enter a Name for the Supplement'"
                    class="fa fa-warning validation-error-icon"></i>
 
             </div>
@@ -35,7 +35,7 @@
         <div class="bottom-section">
             <!--IsPackagedIntoUnits-->
             <div class="label-input-pair packaged-into-units-div">
-                <span class="h3">Is packaged into Unit Doses ?</span>
+                <span class="label-large">Is it packaged into Unit Doses ?</span>
                 <div class="radio-button-group">
 
 
@@ -48,22 +48,11 @@
                 </div>
             </div>
 
-            <!--BaseUnitOfMeasure-->
-            <div class="label-input-pair"
-                 [style.visibility]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits === true ? 'visible' : 'hidden'">
-                <span class="label-discrete">Unit of Measure</span>
-                <select class="drop-down"
-                        [(ngModel)]="viewModel.MedicineTypeCLO.BaseUnitOfMeasure"
-                        formControlName="baseUnitOfMeasure">
-                    <option *ngFor="let unitOfMeasure of unitsOfMeasureEnum | enumkeys" [value]="unitOfMeasure.value">{{unitOfMeasure.key}}</option>
-                </select>
-            </div>
-
             <!--PackagedUnitDoseType-->
-            <div class="label-input-pair" id="packaged-div"
+            <div class="label-input-pair packaged-as-div"
                  [style.visibility]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits === true ? 'visible' : 'hidden'">
                 <div class="header">
-                    <span class="label-discrete">Packaged as</span>
+                    <span class="label-large">How is it packaged ?</span>
                 </div>
                 <div class="body">
                     <select class="drop-down"
@@ -80,7 +69,20 @@
                            pInputText
                            formControlName="packagedUnitDoseSize"
                            [(ngModel)]="viewModel.MedicineTypeCLO.PackagedUnitDoseSize" />
-                    <div class="inner-label label">{{viewModel.MedicineTypeCLO.UnitOfMeasureName}} each</div>
+                    <i [style.display]="reactiveForm.controls.packagedUnitDoseSize.valid ? 'none' : 'block'"
+                       [tooltipZIndex]="52000"
+                       [tooltipPosition]="'bottom'"
+                       [pTooltip]="'Please enter a valid size'"
+                       class="fa fa-warning validation-error-icon"></i>
+
+                    <select class="drop-down"
+                            id="baseUnitOfMeasure"
+                            [(ngModel)]="viewModel.MedicineTypeCLO.BaseUnitOfMeasure"
+                            formControlName="baseUnitOfMeasure">
+                        <option *ngFor="let unitOfMeasure of unitsOfMeasureEnum | enumkeys" [value]="unitOfMeasure.value">{{unitOfMeasure.key}}</option>
+                    </select>
+
+                    <!--<div class="inner-label label"> each</div>-->
                 </div>
             </div>
         </div>
