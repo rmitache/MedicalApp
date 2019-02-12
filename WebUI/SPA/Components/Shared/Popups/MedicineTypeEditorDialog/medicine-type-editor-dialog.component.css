@@ -62,7 +62,14 @@ input.ng-invalid.ng-touched {
 .packaged-into-units-div {
     width: 100%;
 }
-
+    .packaged-into-units-div i {
+        display: block;
+        float: left;
+        margin-left: 5px;
+        margin-top: -2px;
+        color: #e5e5e5;
+        font-size: 1.3em;
+    }
     .packaged-into-units-div .radio-button-group {
         float: left;
         clear: both;

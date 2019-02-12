@@ -17,7 +17,7 @@
             </p-inplace>
 
         </div>
-        <split-button #splitButton [MenuItems]="viewModel.MenuItems"></split-button>
+        <split-button #splitButton *ngIf="viewModel.MenuItems!==null" [MenuItems]="viewModel.MenuItems"></split-button>
     </div>
     <div class="supply-div" *ngIf="viewModel.MedicineTypeCLO.CurrentSupplyAmount !== null"
           [pTooltip]="viewModel.CurrentSupplyInfoState?.TooltipText"

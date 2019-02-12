@@ -19,7 +19,7 @@
                              class="factor-record-item label-medium">
 
                             {{record.UnitDoseQuantifier}} x {{record.MedicineType.Name}}
-                            <span class="label-discrete" *ngIf="record.UnitDoseSize!==null">{{record.UnitDoseSize + ' ' + record.UnitOfMeasureName}}</span>
+                            <span class="label-discrete" *ngIf="!record.HasUserDefinedUnitDose">{{record.UnitDoseSize + ' ' + record.UnitOfMeasureName}}</span>
                             <span class="label-discrete" *ngIf="record.HasUserDefinedUnitDose===true">{{userDefinedUnitDoseTypesEnum[record.UserDefinedUnitDoseType]}}</span>
                             <span *ngIf="record.RecentlyAdded===true" class="recently-added-span label-small-inv">NEW</span>
                             <i class="fa fa-check"></i>

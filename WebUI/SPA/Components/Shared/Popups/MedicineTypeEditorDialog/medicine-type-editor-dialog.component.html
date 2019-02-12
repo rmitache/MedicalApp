@@ -36,6 +36,11 @@
             <!--IsPackagedIntoUnits-->
             <div class="label-input-pair packaged-into-units-div">
                 <span class="label-large">Is it packaged into Unit Doses ?</span>
+                <i class="fa fa-question-circle"
+                   [tooltipZIndex]="52000"
+                   [tooltipPosition]="'bottom'"
+                   [pTooltip]="'Packaged into Unit Doses means whether it comes as a freeform powder, liquid, etc or it is packaged into doses such as pills already.'" 
+                   tooltipPosition="bottom"></i>
                 <div class="radio-button-group">
 
 
@@ -72,7 +77,7 @@
                     <i [style.display]="reactiveForm.controls.packagedUnitDoseSize.valid ? 'none' : 'block'"
                        [tooltipZIndex]="52000"
                        [tooltipPosition]="'bottom'"
-                       [pTooltip]="'Please enter a valid size'"
+                       [pTooltip]="'Please look at the Supplement ingredients and read how much each unit dose contains'"
                        class="fa fa-warning validation-error-icon"></i>
 
                     <select class="drop-down"

@@ -46,7 +46,7 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 		newCLO.BaseUnitOfMeasure = Enums.UnitOfMeasure.mg;
 		newCLO.IsPackagedIntoUnits = true;
 		newCLO.PackagedUnitDoseType = Enums.PackagedUnitDoseType.Pills;
-		newCLO.PackagedUnitDoseSize = 100;
+        newCLO.PackagedUnitDoseSize = null;//100;
 
 		newCLO.UsageStatus = null;
 		newCLO.CurrentSupplyAmount = null;

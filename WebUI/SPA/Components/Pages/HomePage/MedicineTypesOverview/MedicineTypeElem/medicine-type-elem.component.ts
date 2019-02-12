@@ -111,7 +111,6 @@ export class MedicineTypeElemComponent {
         } else {
             return menuItemsB;
         }
-
     }
 
     // Constructor 
@@ -125,7 +124,7 @@ export class MedicineTypeElemComponent {
 
         // Setup VM fields
         this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
-        this.viewModel.MenuItems = this.getMenuItems();
+        this.viewModel.MenuItems = this.viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? this.getMenuItems() : null;
         this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
 
         // Special handlers

@@ -68,13 +68,7 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
                     Validators.pattern(new RegExp(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)),
                     Validators.min(0.00000000001)
                 ])],
-            //packagedUnitDoseSize: [null,
-            //	Validators.compose([
-            //		Validators.required,
-            //		Validators.min(1),
-            //                 Validators.pattern(new RegExp(/^\d+$/))])
 
-            //         ]
         });
 
         // Create the currentModeInstance
@@ -96,7 +90,12 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
 
         this.reactiveForm.get('isPackagedIntoUnitsRadioGroup').valueChanges.subscribe(val => {
             if (val === false) {
-                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = 100;
+                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = 1; // hack 
+                setTimeout(() => {
+                }, 1);
+            }
+            else if (val === true) {
+                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null; // hack 
                 setTimeout(() => {
                 }, 1);
             }
