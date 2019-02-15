@@ -45,7 +45,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.MedicineType = this.medicineTypeFactory.Convert_ToBLO(dataEntity.MedicineType);
 
             blo.UnitDoseQuantifier = dataEntity.UnitDoseQuantifier;
-            blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose;
+            blo.HasUserDefinedUnitDose = dataEntity.HasUserDefinedUnitDose == true ? true : false;
             blo.UserDefinedUnitDoseType = (UserDefinedUnitDoseType?)dataEntity.UserDefinedUnitDoseTypeId;
             blo.UserDefinedUnitDoseSize = dataEntity.UserDefinedUnitDoseSize;
 

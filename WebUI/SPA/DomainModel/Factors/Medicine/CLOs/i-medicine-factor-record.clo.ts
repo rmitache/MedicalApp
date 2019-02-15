@@ -47,7 +47,7 @@ export abstract class AbstractMedicineFactorRecordCLO extends BaseCLO {
     }
     public get UnitDoseSize() {
         if (this.MedicineType === null) {
-            return 0;
+            return null;
         }
 
         let doseSize: number;

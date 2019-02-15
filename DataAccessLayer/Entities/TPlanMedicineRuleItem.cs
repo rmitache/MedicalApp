@@ -14,7 +14,7 @@ namespace DataAccessLayer.Entities
         public int PlanRuleId { get; set; }
         public int MedicineTypeId { get; set; }
         public int UnitDoseQuantifier { get; set; }
-        public bool HasUserDefinedUnitDose { get; set; }
+        public bool? HasUserDefinedUnitDose { get; set; }
         public int? UserDefinedUnitDoseTypeId { get; set; }
         public decimal? UserDefinedUnitDoseSize { get; set; }
 

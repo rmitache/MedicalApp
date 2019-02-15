@@ -6,12 +6,7 @@ import * as momentRange from 'moment-range';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import * as DataStructures from 'SPA/Core/Helpers/DataStructures/data-structures';
-import { MedicineTypeCLOFactory } from 'SPA/DomainModel/Factors/Medicine/CLOFactories/medicine-type-clo.factory';
-import { BaseCLO } from 'SPA/Core/CLO/base.clo';
-import { ICLOFactory } from 'SPA/Core/CLO/i-clo.factory';
-import { RuleCLOFactory } from 'SPA/DomainModel/Plans/CLOFactories/rule-clo.factory';
-import { GetNrOfDaysBetweenDatesUsingMoment } from 'SPA/Core/Helpers/Functions/functions';
+
 
 @Injectable()
 export class VersionCLOService {
@@ -34,7 +29,7 @@ export class VersionCLOService {
 
                 // Add it's dosage calculation to the monthlyTotal for its MedicineType
                 let medTypeEntry = medTypes[medRuleItem.MedicineType.Name];
-                var dosagePerMonth = medRuleItem.TotalDosagePerTimeInMgOrMl * ruleCLO.NrOfTimesPerMonth;
+                var dosagePerMonth = medRuleItem.TotalDosagePerTime * ruleCLO.NrOfTimesPerMonth;
                 medTypeEntry.AddTotalMonthlyDosageFromMedicineRuleItem(dosagePerMonth);
             });
         }

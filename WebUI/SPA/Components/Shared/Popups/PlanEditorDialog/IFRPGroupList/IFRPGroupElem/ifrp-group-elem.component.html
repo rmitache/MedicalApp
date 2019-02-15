@@ -24,7 +24,7 @@
 
         <!--When the MedType is FreeForm (not packaged into unit doses)-->
         <ng-container *ngIf="viewModel.IFRPGroupCLO.HasUserDefinedUnitDose">
-            <!--UnitDoseType-->
+
             <div class="label-input-pair dose-type-input-pair">
                 <select class="drop-down"
                         [value]="viewModel.IFRPGroupCLO.UnitDoseType"
@@ -36,14 +36,11 @@
                 </select>
             </div>
 
-
-
-
-
         </ng-container>
 
         <!--When the MedType is Packaged-->
         <ng-container *ngIf="!viewModel.IFRPGroupCLO.HasUserDefinedUnitDose">
+            
             <div class="label-input-pair">
                 <span class="packaged-text-label label">
                     {{viewModel.UnitDoseTypesEnum[viewModel.IFRPGroupCLO.UnitDoseType]}} ({{viewModel.IFRPGroupCLO.UnitDoseSize}} {{viewModel.IFRPGroupCLO.UnitOfMeasureName}} each)

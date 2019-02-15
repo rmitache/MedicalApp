@@ -14,14 +14,16 @@ export class MedicineRuleItemCLO extends AbstractMedicineFactorRecordCLO {
     public UserDefinedUnitDoseSize: number;
 
     // Properties
-    public get TotalDosagePerTimeInMgOrMl(): number {
-        let totalDosageInMgOrMl: number;
-        if (this.HasUserDefinedUnitDose) {
-            totalDosageInMgOrMl = this.UnitDoseQuantifier * this.UserDefinedUnitDoseSize;
-        } else {
-            totalDosageInMgOrMl = this.UnitDoseQuantifier * this.MedicineType.PackagedUnitDoseSize;
+    public get TotalDosagePerTime(): number {
+
+        // If it has UnitDoseSize defined
+        if (this.UnitDoseSize !== null) {
+            return this.UnitDoseQuantifier * this.UnitDoseSize;
         }
-        return totalDosageInMgOrMl;
+        // If it doesnt have, use the quantifier
+        else {
+            return this.UnitDoseQuantifier;
+        }
     }
 
     // Constructor

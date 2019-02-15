@@ -90,12 +90,13 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
 
         this.reactiveForm.get('isPackagedIntoUnitsRadioGroup').valueChanges.subscribe(val => {
             if (val === false) {
-                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = 1; // hack 
+                this.reactiveForm.controls["packagedUnitDoseSize"].disable(); 
                 setTimeout(() => {
                 }, 1);
             }
             else if (val === true) {
-                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null; // hack 
+                this.reactiveForm.controls["packagedUnitDoseSize"].enable(); 
+                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null; 
                 setTimeout(() => {
                 }, 1);
             }
