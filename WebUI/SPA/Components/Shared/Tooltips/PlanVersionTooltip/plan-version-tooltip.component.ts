@@ -5,7 +5,7 @@ import * as moment from 'moment';
 // Project modules
 import * as CLOs from 'SPA/DomainModel/clo-exports';
 import * as Enums from 'SPA/DomainModel/enum-exports';
-import { VersionCLOService, MedicineTypeAndAvgMonthlyDosage } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
+import { VersionCLOService, MedicineTypeDosageInfo } from '../../../../DomainModel/Plans/CLOServices/version-clo.service';
 import { ConvertDictionaryToArray } from '../../../../Core/Helpers/Functions/functions';
 import { PlanElemHoverEventInfo } from './plan-version-tooltip.service';
 
@@ -130,7 +130,7 @@ export class PlanVersionTooltipComponent {
         
 
         // Load data 
-        var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithAvgDosePerMonth(hoverEventInfo.PlanCLO.GetLatestVersion());
+        var uniqueMedTypes = this.versionCLOService.GetUniqueMedicineTypesWithDosageInfo(hoverEventInfo.PlanCLO.GetLatestVersion());
         this.viewModel.CurrentPlanStatus = hoverEventInfo.PlanCLO.Status;
         let info = this.getStatusDescriptionAndTargetVersionToShow(hoverEventInfo.PlanCLO);
         this.viewModel.CurrentPlanStatusDescription = info.StatusDescription;
@@ -175,7 +175,7 @@ interface ViewModel {
     CurrentPlanStatusDescription: string;
     VersionCLOToShow: CLOs.VersionCLO;
     NrUniqueMedicineTypes: number;
-    UniqueMedTypes: MedicineTypeAndAvgMonthlyDosage[];
+    UniqueMedTypes: MedicineTypeDosageInfo[];
 
     Visible: boolean;
     TooltipPos: PosCoordinates;

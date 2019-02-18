@@ -34,17 +34,6 @@ export abstract class AbstractMedicineFactorRecordCLO extends BaseCLO {
 
         return Enums.UnitOfMeasure[this.MedicineType.BaseUnitOfMeasure];
     }
-    public get UnitDoseType() {
-        if (this.MedicineType === null) {
-            return;
-        }
-
-        if (this.HasUserDefinedUnitDose) {
-            return this.UserDefinedUnitDoseType;
-        } else {
-            return this.MedicineType.PackagedUnitDoseType;
-        }
-    }
     public get UnitDoseSize() {
         if (this.MedicineType === null) {
             return null;

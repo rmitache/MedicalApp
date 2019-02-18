@@ -29,7 +29,7 @@ export class PlanVersionChangesTooltipComponent {
         Changes_Stopped: null,
         Changes_Increased: null,
         Changes_Decreased: null,
-
+        Changes_Unspecified: null,
 
         Visible: false,
         TooltipPos: null,
@@ -81,8 +81,6 @@ export class PlanVersionChangesTooltipComponent {
 
         // Get all changes----------------------------------------------------------------------------------------------------------
         // StartPoint, on version without any previous adjacent version -> show list of all medTypes as NEW  
-
-
         if (versionHoverEventInfo.PointType === HoverInfoPointType.StartPoint &&
             (prevVersion === null || !this.versionCLOService.AreAdjacent(prevVersion, currentVersion))) {
             this.viewModel.AllChanges = this.versionCLOService.GetChangesBetween(this.viewModel.VersionCLO, null);
@@ -112,7 +110,9 @@ export class PlanVersionChangesTooltipComponent {
         this.viewModel.Changes_Decreased = this.viewModel.AllChanges.filter(change => {
             return change.ChangeType === ChangeType.Decreased;
         });
-
+        this.viewModel.Changes_Unspecified = this.viewModel.AllChanges.filter(change => {
+            return change.ChangeType === ChangeType.Unspecified;
+        });
 
         // Calculate position
         setTimeout(() => {
@@ -152,6 +152,7 @@ interface ViewModel {
     Changes_Stopped: MedicineTypeAndChangeTypePair[];
     Changes_Increased: MedicineTypeAndChangeTypePair[];
     Changes_Decreased: MedicineTypeAndChangeTypePair[];
+    Changes_Unspecified: MedicineTypeAndChangeTypePair[];
 
     Visible: boolean;
     TooltipPos: PosCoordinates;

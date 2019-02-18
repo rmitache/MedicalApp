@@ -14,7 +14,7 @@ export class MedicineRuleItemCLO extends AbstractMedicineFactorRecordCLO {
     public UserDefinedUnitDoseSize: number;
 
     // Properties
-    public get TotalDosagePerTime(): number {
+    public get DosageToTakeASingleTime(): number {
 
         // If it has UnitDoseSize defined
         if (this.UnitDoseSize !== null) {
