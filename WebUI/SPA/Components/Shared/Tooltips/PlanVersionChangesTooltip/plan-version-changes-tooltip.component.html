@@ -10,7 +10,7 @@
 
     
     <div class="body">
-        
+
         <!--Started-->
         <div class="started-div changes-div" *ngIf="viewModel.Changes_Started?.length>0">
             <div class="top">
@@ -71,12 +71,12 @@
 
             </div>
             <div class="medicine-type-div" *ngFor="let medTypeChange of viewModel.Changes_Unspecified">
-                <i class="fa fa-rev"></i>
+                <i class="fa fa-question"></i>
                 <span class="h4">{{medTypeChange.MedicineType.Name}} </span>
 
             </div>
         </div>
-
+         
         <!--Schedule-->
         <div class="schedule-div changes-div" *ngIf="viewModel.AllChanges?.length===0">
             <div class="top">

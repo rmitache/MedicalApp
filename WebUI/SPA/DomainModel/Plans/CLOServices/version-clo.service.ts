@@ -37,40 +37,28 @@ export class VersionCLOService {
             else {
 
                 // If the unitDoseTypes are different 
-                let medTypeAUnitDoseTypeName = Object.keys(medTypeA.UnitDoseTypesNamesToTotalMonthlyDosage)[0];
-                let medTypeBUnitDoseTypeName = Object.keys(medTypeB.UnitDoseTypesNamesToTotalMonthlyDosage)[0];
+                let medTypeAUnitDoseTypeName = Object.keys(medTypeA.UnitDoseTypesNames)[0];
+                let medTypeBUnitDoseTypeName = Object.keys(medTypeB.UnitDoseTypesNames)[0];
                 if (medTypeAUnitDoseTypeName !== medTypeBUnitDoseTypeName) {
                     change.ChangeType = ChangeType.Unspecified;
                 }
+                // If the unitDoseTypes are NOT different 
+                else {
+                    let medTypeAMonthlyDosage = medTypeA.UnitDoseTypesNames[medTypeAUnitDoseTypeName];
+                    let medTypeBMonthlyDosage = medTypeB.UnitDoseTypesNames[medTypeBUnitDoseTypeName];
 
 
-                //}
-                ////
-                //for (var medTypeName in medTypeA.UnitDoseTypesNamesToTotalMonthlyDosage) {
-                //    var monthlyDosage = medTypeA.UnitDoseTypesNamesToTotalMonthlyDosage[medTypeName];
-                //}
+                    // If the dosage in A is smaller than in B
+                    if (medTypeAMonthlyDosage < medTypeBMonthlyDosage) {
+                        change.ChangeType = ChangeType.Decreased;
+                    }
+                    // If the dosage in A is bigger than in B
+                    else if (medTypeAMonthlyDosage > medTypeBMonthlyDosage) {
+                        change.ChangeType = ChangeType.Increased;
+                    } 
+                }
 
-                //let medTypeADosage = Object.keys(medTypeA.UnitDoseTypesNamesToTotalMonthlyDosage)[0];
-                //let medTypeBDosage = Object.keys(medTypeB.UnitDoseTypesNamesToTotalMonthlyDosage)[0];
-
-                //if (medTypeADosage !== medTypeBDosage) {
-                //    change.ChangeType = ChangeType.Unspecified;
-                //}
-
-
-                // 
             }
-
-
-
-
-            //if (medTypeB.AvgMonthlyDosage < medTypeDosageInfo.AvgMonthlyDosage) {
-            //    medTypeChange.ChangeType = ChangeType.Increased;
-            //} else if (prevVersionMedTypeChangeSet.AvgMonthlyDosage > medTypeDosageInfo.AvgMonthlyDosage) {
-            //    medTypeChange.ChangeType = ChangeType.Decreased;
-            //} else {
-            //    medTypeChange.ChangeType = ChangeType.Unchanged;
-            //}
         }
         // Only medTypeB is present 
         else if (medTypeA === undefined && medTypeB !== undefined) {
@@ -78,7 +66,8 @@ export class VersionCLOService {
         }
 
 
-        if (change.ChangeType === null)
+        // 
+        if (change.ChangeType === null || change.ChangeType === undefined)
             return null;
         else
             return change;
@@ -109,12 +98,12 @@ export class VersionCLOService {
         // versionA - versionB -> actual differences between the two versions
         // null - versionB -> everything in versionB is shown as STOPPED
         // versionA - null -> everything in versionA is shown as NEW
-        
+
         // Variables
         let listOfChanges: MedicineTypeAndChangeTypePair[] = [];
         let versionAUniqueMedTypes = (versionA !== null) ? this.GetUniqueMedicineTypesWithDosageInfo(versionA) : {};
         let versionBUniqueMedTypes = (versionB !== null) ? this.GetUniqueMedicineTypesWithDosageInfo(versionB) : {};
-
+        
         // Loop through entries in the versionAMedTypes (find those which are NEW and CHANGED)
         for (var medicineTypeName in versionAUniqueMedTypes) {
             let medTypeDosageInfoFromA = versionAUniqueMedTypes[medicineTypeName];
@@ -128,6 +117,15 @@ export class VersionCLOService {
             delete versionBUniqueMedTypes[medicineTypeName];
         }
 
+        // Loop through remaining entries in the prevVersionUniqueMedTypes (find those which have been STOPPED)
+        for (var medicineTypeName in versionBUniqueMedTypes) {
+            let medTypeDosageInfoFromA = versionAUniqueMedTypes[medicineTypeName];
+            let medTypeDosageInfoFromB = versionBUniqueMedTypes[medicineTypeName];
+
+            let change = this.getChangeBetween(medTypeDosageInfoFromA, medTypeDosageInfoFromB);
+            if (change !== null)
+                listOfChanges.push(change);
+        }
 
         return listOfChanges;
     }
@@ -169,7 +167,7 @@ export class MedicineTypeDosageInfo {
 
     // Fields
     public readonly MedicineType: CLOs.MedicineTypeCLO;
-    public readonly UnitDoseTypesNamesToTotalMonthlyDosage: { [UnitDoseTypeName: string]: number } = {};
+    public readonly UnitDoseTypesNames: { [UnitDoseTypeName: string]: number } = {};
     private unitDoseTypesNamesCount: number = 0;
 
     // Properties
@@ -186,14 +184,14 @@ export class MedicineTypeDosageInfo {
     public AddDosageInfoFromRuleItem(ruleItem: CLOs.MedicineRuleItemCLO, parentRule: CLOs.RuleCLO) {
 
         // Initialize the total from 0 if nothing has been added to it yet for the given UnitDoseTypeName
-        if (this.UnitDoseTypesNamesToTotalMonthlyDosage[ruleItem.UnitDoseTypeName] === undefined) {
-            this.UnitDoseTypesNamesToTotalMonthlyDosage[ruleItem.UnitDoseTypeName] = 0;
+        if (this.UnitDoseTypesNames[ruleItem.UnitDoseTypeName] === undefined) {
+            this.UnitDoseTypesNames[ruleItem.UnitDoseTypeName] = 0;
             this.unitDoseTypesNamesCount++;
         }
 
         //
         var dosagePerMonth = ruleItem.DosageToTakeASingleTime * parentRule.NrOfTimesPerMonth;
-        this.UnitDoseTypesNamesToTotalMonthlyDosage[ruleItem.UnitDoseTypeName] += dosagePerMonth;
+        this.UnitDoseTypesNames[ruleItem.UnitDoseTypeName] += dosagePerMonth;
     }
 }
 export enum ChangeType {
