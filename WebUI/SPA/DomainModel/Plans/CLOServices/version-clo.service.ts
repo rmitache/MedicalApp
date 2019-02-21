@@ -17,9 +17,11 @@ export class VersionCLOService {
             medTypeA.MedicineType.Name !== medTypeB.MedicineType.Name) {
             throw new Error('Change can only be determined between the same medicine type');
         }
+        
 
         // Variables
-        let change = new MedicineTypeAndChangeTypePair(medTypeA.MedicineType);
+        let medTypeCLO = (medTypeA !== undefined) ? medTypeA.MedicineType : medTypeB.MedicineType;
+        let change = new MedicineTypeAndChangeTypePair(medTypeCLO);
 
 
         // Only medTypeA is present
@@ -98,7 +100,7 @@ export class VersionCLOService {
         // versionA - versionB -> actual differences between the two versions
         // null - versionB -> everything in versionB is shown as STOPPED
         // versionA - null -> everything in versionA is shown as NEW
-
+        
         // Variables
         let listOfChanges: MedicineTypeAndChangeTypePair[] = [];
         let versionAUniqueMedTypes = (versionA !== null) ? this.GetUniqueMedicineTypesWithDosageInfo(versionA) : {};

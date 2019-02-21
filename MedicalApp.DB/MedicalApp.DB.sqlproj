@@ -63,6 +63,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Security\" />
     <Folder Include="AppData" />
+    <Folder Include="dbo\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\t_user.sql" />
@@ -80,6 +81,7 @@
     <Build Include="dbo\Tables\t_health_status_entry.sql" />
     <Build Include="dbo\Tables\t_taken_medicine_factor_record.sql" />
     <Build Include="dbo\Tables\t_medicine_type_supply_entry.sql" />
+    <Build Include="dbo\Views\v_users_recent_logins.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompareWithLocalDB.scmp" />

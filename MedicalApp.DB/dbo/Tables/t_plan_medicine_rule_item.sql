@@ -6,8 +6,12 @@
     [has_user_defined_unit_dose]     BIT             NULL,
     [user_defined_unit_dose_type_id] INT             NULL,
     [user_defined_unit_dose_size]    DECIMAL (18, 4) NULL,
-    CONSTRAINT [PK_t_plan_medicine_rule_item] PRIMARY KEY CLUSTERED ([id] ASC)
+    CONSTRAINT [PK_t_plan_medicine_rule_item] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_t_plan_medicine_rule_item_t_medicine_type] FOREIGN KEY ([medicine_type_id]) REFERENCES [dbo].[t_medicine_type] ([id]),
+    CONSTRAINT [FK_t_plan_medicine_rule_item_t_plan_rule] FOREIGN KEY ([plan_rule_id]) REFERENCES [dbo].[t_plan_rule] ([id]) ON DELETE CASCADE
 );
+
+
 
 
 
