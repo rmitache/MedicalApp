@@ -37,7 +37,7 @@
 .when-section {
     min-height: 62px;
     padding-bottom:10px;
-    border-bottom: dashed 1px #c7c7c7;
+    /*border-bottom: dashed 1px #c7c7c7;*/
 }
 
     .when-section .when-label {

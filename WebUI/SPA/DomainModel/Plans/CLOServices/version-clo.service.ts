@@ -206,29 +206,5 @@ export enum ChangeType {
 
 
 
-//export class MedicineTypeAndAvgMonthlyDosage {
-
-//    // Ex: []
-
-//    // Idea: the avgMonthlyDosage should be for EACH UnitDoseType !!!!
-
-//    // Fields
-//    public MedicineType: CLOs.MedicineTypeCLO;
-//    private totalMonthlyDosage: number = 0; // quantity * unitdosesize 
-//    private numberOfRuleItems: number = 0;
-
-//    // Properties
-//    public get AvgMonthlyDosage(): number {
-//        return this.totalMonthlyDosage;
-//    }
-
-//    // Public methods
-//    public AddTotalMonthlyDosageFromMedicineRuleItem(totalDosageInMgOrMl) {
-//        this.totalMonthlyDosage += totalDosageInMgOrMl;
-//        this.numberOfRuleItems++;
-//    }
-//}
-
-
 
 

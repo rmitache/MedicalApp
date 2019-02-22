@@ -14,7 +14,7 @@ input.ng-invalid.ng-touched {
     width: calc(100% - 20px);
     height: calc(30px);
     border-radius: 4px;
-    background-color: white;
+    background-color: #e0e0e0;
 }
 
 .label-input-pair {
