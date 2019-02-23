@@ -32,7 +32,7 @@ export class HealthStatusEntryCLOFactory implements ICLOFactory<CLOs.HealthStatu
         newCLO.ID = 0;
 		newCLO.OccurrenceDateTime = new Date();
         newCLO.HealthLevel = Enums.HealthLevel.Unspecified;
-        newCLO.SymptomEntries = [this.symptomEntryCLOFactory.Create_DefaultCLO()];
+        newCLO.SymptomEntries = [];
 
         return newCLO;
     }

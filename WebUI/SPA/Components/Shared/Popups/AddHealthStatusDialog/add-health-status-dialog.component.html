@@ -22,16 +22,16 @@
             </div>
             <div class="recent-symptoms-div"
                  [style.display]="viewModel.ShowRecentSymptomsDiv ? 'block' : 'none'">
-                <span class="h4-alt">Do you still have any of these from {{viewModel.MostRecentHealthStatusTimestamp}}?</span>
+                <span class="h4-alt">Do you still have any of these recent symptoms ?</span>
                 <i class="fa fa-times" (click)="onCloseRecentSymptomsTriggered()"></i>
 
                 <div class="recent-symptoms-list">
-                    <div class="recent-symptom-elem" *ngFor="let clo of viewModel.MostRecentHealthStatusEntry?.SymptomEntries"
+                    <div class="recent-symptom-elem" *ngFor="let clo of viewModel.RecentSymptoms"
                          (click)="onRecentSymptomTypeClicked(clo)"
                          [pTooltip]="'Click to add this symptom'"
                          [tooltipZIndex]="52000"
                          [tooltipPosition]="'bottom'">
-                        <span class="label">{{clo.SymptomType.Name}}</span>
+                        <span class="label">{{clo.Name}}</span>
                         <i class="fa fa-plus"></i>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ export class AddHealthStatusDialogService {
     // Public methods
     public Open(viewContainerRef: ViewContainerRef, okCallBack: () => void) {
         this.spinnerService.Show();
-        this.dataService.GetMostRecentHealthEntry().then(healthStatusCLO => {
+        this.dataService.GetRecentSymptoms().then(recentSymptomsCLOs => {
             this.spinnerService.Hide();
 
             this.modalDialogService.OpenDialog({
@@ -32,7 +32,7 @@ export class AddHealthStatusDialogService {
                 showTitleAsterisk:true,
                 childComponent: AddHealthStatusDialogComponent,
                 data: {
-                    mostRecentHealthStatusEntry: healthStatusCLO
+                    recentSymptomsCLOs: recentSymptomsCLOs
                 },
                 actionButtons: [
                     {
