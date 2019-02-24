@@ -41,14 +41,13 @@ export class MedicineTypesOverviewComponent {
     private readonly medicineTypeStatusViewModes = {
         // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
         All: 'All',
-        InUse: 'In use',
-        NotUsed: 'Not used'
+        InUse: 'InUse'
     };
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
 
-        SelectedViewMode: this.medicineTypeStatusViewModes.All,
+        SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
         CurrentNoDataMode: null
     };
 
@@ -88,10 +87,6 @@ export class MedicineTypesOverviewComponent {
                 return (medType.UsageStatus === Enums.MedicineTypeStatus.InUseToday);
             }
 
-            // Inactive
-            if (medTypeViewMode === this.medicineTypeStatusViewModes.NotUsed) {
-                return (medType.UsageStatus === Enums.MedicineTypeStatus.NotInUse);
-            }
 
             return null;
         });
@@ -101,6 +96,18 @@ export class MedicineTypesOverviewComponent {
         var target = this.medicineTypeElems.find(x => x.MedicineTypeID === id);
         return target;
     }
+    private getMedicineTypeStatusViewModesAsItems() {
+        let items = [];
+        for (var key in this.medicineTypeStatusViewModes) {
+            let item = {
+                label: this.medicineTypeStatusViewModes[key],
+                value: key
+            };
+            items.push(item);
+        }
+
+        return items;
+    }
     private refreshUI() {
         this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);
 
@@ -109,8 +116,6 @@ export class MedicineTypesOverviewComponent {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailableMedicineTypes;
         } else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.InUse && this.viewModel.FilteredMedicineTypes.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesInUse;
-        } else if (this.viewModel.SelectedViewMode === this.medicineTypeStatusViewModes.NotUsed && this.viewModel.FilteredMedicineTypes.length === 0) {
-            this.viewModel.CurrentNoDataMode = NoDataModes.NoMedicineTypesNotInUse;
         } else {
             this.viewModel.CurrentNoDataMode = null;
         }
@@ -168,7 +173,8 @@ export class MedicineTypesOverviewComponent {
 
     }
     private onSelectedViewModeChanged(event) {
-        const newVal = event.target.value;
+        
+        const newVal = event.value;
         this.viewModel.SelectedViewMode = newVal;
 
         this.refreshUI();
@@ -212,6 +218,5 @@ export enum MedicineTypeActionType {
 
 enum NoDataModes {
     NoAvailableMedicineTypes = 0,
-    NoMedicineTypesInUse = 1,
-    NoMedicineTypesNotInUse = 2
+    NoMedicineTypesInUse = 1
 }

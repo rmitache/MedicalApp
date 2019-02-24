@@ -67,9 +67,9 @@ export class MedicineTypeElemComponent {
                 medicineTypeCLO.SupplyWillLastUntil);
         }
         // LowSupply - less than 3 weeks
-        else if (medicineTypeCLO.SupplyWillLastUntil !== null ) {
-        return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
-            medicineTypeCLO.SupplyWillLastUntil);
+        else if (medicineTypeCLO.SupplyWillLastUntil !== null) {
+            return new LowSupply(medicineTypeCLO.CurrentSupplyAmount, medicineTypeCLO.CurrentSupplyAmountMeasuredIn,
+                medicineTypeCLO.SupplyWillLastUntil);
         }
         // EmptySupply 
         else if (medicineTypeCLO.SupplyWillLastUntil === null) {
@@ -80,36 +80,34 @@ export class MedicineTypeElemComponent {
     }
     private getMenuItems() {
 
+        // Variables
         var medicineTypeCLO = this.medicineTypeCLO;
-
-        var menuItemsA = [
-            {
-                Label: 'Add supply',
-                OnClick: () => {
-                    this.AddSupplyTriggered.emit(medicineTypeCLO);
-                }
+        var editItem = {
+            Label: 'Edit',
+            OnClick: () => {
+                alert('edit!');
             }
-        ];
-
-        var menuItemsB = [
-            {
-                Label: 'Add supply',
-                OnClick: () => {
-                    this.AddSupplyTriggered.emit(medicineTypeCLO);
-                }
-            },
-            {
-                Label: 'Clear supply',
-                OnClick: () => {
-                    this.ClearSupplyTriggered.emit(medicineTypeCLO);
-                }
+        };
+        var addSupplyItem = {
+            Label: 'Add supply',
+            OnClick: () => {
+                this.AddSupplyTriggered.emit(medicineTypeCLO);
             }
-        ];
+        };
+        var clearSupplyItem = {
+            Label: 'Clear supply',
+            OnClick: () => {
+                this.ClearSupplyTriggered.emit(medicineTypeCLO);
+            }
+        };
 
+
+
+        // If no supply is registered
         if (medicineTypeCLO.CurrentSupplyAmount === null) {
-            return menuItemsA;
+            return [editItem, addSupplyItem];
         } else {
-            return menuItemsB;
+            return [editItem, addSupplyItem, clearSupplyItem];
         }
     }
 
@@ -140,8 +138,10 @@ export class MedicineTypeElemComponent {
 
         // Refresh
         this.viewModel.MenuItems = this.getMenuItems();
-        this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
-        this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
+        //if (this.viewModel.MenuItems === null) {
+            this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
+            this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
+        //}
     }
 
     // Events

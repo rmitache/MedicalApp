@@ -12,10 +12,14 @@
         </div>
 
         <div class="filters-section">
-            <span class="label-discrete">Show:</span>
-            <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
-                <option *ngFor="let medicineTypeStatus of medicineTypeStatusViewModes | keys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.key}}</option>
-            </select>
+            <!--<span class="label-discrete">Show:</span>
+    <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
+        <option *ngFor="let medicineTypeStatus of medicineTypeStatusViewModes | keys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.value}}</option>
+    </select>-->
+            <p-selectButton [options]="getMedicineTypeStatusViewModesAsItems()" 
+                             [ngModel]="viewModel.SelectedViewMode" (onChange)="onSelectedViewModeChanged($event)"></p-selectButton>
+
+            <span class="supplements-count-label label-alt">{{viewModel.FilteredMedicineTypes.length}} Supplements</span>
         </div>
     </div>
     <div class="body">
@@ -42,9 +46,6 @@
         </no-data-mode>
         <no-data-mode [ID]="noDataModes.NoMedicineTypesInUse">
             <span class="label-discrete">You have Supplements defined, but none of them are currently being used.</span>
-        </no-data-mode>
-        <no-data-mode [ID]="noDataModes.NoMedicineTypesNotInUse">
-            <span class="label-discrete"> All your Supplements are currently in use.</span>
         </no-data-mode>
     </no-data-panel>
 </div> 

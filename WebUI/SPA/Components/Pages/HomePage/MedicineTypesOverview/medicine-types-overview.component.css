@@ -44,17 +44,22 @@
             float: left;
             clear: both;
             margin-top: 15px;
+            width:100%;
         }
 
-            
+            .frame .header .filters-section .supplements-count-label
+            {
+                float:right;
+                margin-right:10px;
+            }
 
 
 
-    .frame .body {
-        height: calc(100% - 105px);
-        width: calc(100% - 20px);
-        padding: 5px 10px 5px 10px;
-    }
+            .frame .body {
+                height: calc(100% - 105px);
+                width: calc(100% - 20px);
+                padding: 5px 10px 5px 10px;
+            }
 
 
 #medicine-type-elems-list {

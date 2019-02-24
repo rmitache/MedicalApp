@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/primeng';
 import { InplaceModule } from 'primeng/primeng';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 // Project modules
 import { KeysPipe, EnumKeysPipe } from 'SPA/Components/Shared/Pipes/keys.pipe';
@@ -55,6 +56,7 @@ import { CustomCheckboxComponent } from './CustomCheckbox/custom-checkbox.compon
         FormsModule,
         ReactiveFormsModule,
         KeyFilterModule,
+        SelectButtonModule,
 
         CalendarModule,
         AutoCompleteModule,
@@ -119,6 +121,7 @@ import { CustomCheckboxComponent } from './CustomCheckbox/custom-checkbox.compon
         CustomSidebarModule,
         TimeLineModule,
         KeyFilterModule,
+        SelectButtonModule,
 
         AcceptTermsDialogServiceModule,
         UserAccountEditorDialogServiceModule,
