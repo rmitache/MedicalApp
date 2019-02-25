@@ -17,6 +17,7 @@ import { MedicineTypeElemComponent } from './MedicineTypeElem/medicine-type-elem
 import { AddSupplyDialogService } from '../../../Shared/Popups/AddSupplyDialog/add-supply-dialog.service';
 import { MedicineTypeEditorMode } from '../../../Shared/Popups/MedicineTypeEditorDialog/medicine-type-editor-dialog.component';
 import { MedicineTypeEditorDialogService } from '../../../Shared/Popups/MedicineTypeEditorDialog/medicine-type-editor-dialog.service';
+import { ConvertDictionaryToArray } from 'SPA/Core/Helpers/Functions/functions';
 
 
 
@@ -37,17 +38,21 @@ export class MedicineTypesOverviewComponent {
     private infoTooltipText: string =
         `Here you can see which Supplements you have. These can be herbs, vitamins, etc. <br />
         The app can also track supply for you, so you know when a Supplement will run out.`;
-
     private readonly medicineTypeStatusViewModes = {
-        // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
-        All: 'All',
-        InUse: 'InUse'
+        All: {
+            label: 'All',
+            value: 'All'
+        },
+        InUse: {
+            label: 'In use',
+            value: 'InUse'
+        },
     };
     private readonly viewModel: ViewModel = {
         AvailableMedicineTypes: null,
         FilteredMedicineTypes: null,
 
-        SelectedViewMode: this.medicineTypeStatusViewModes.InUse,
+        SelectedViewMode: this.medicineTypeStatusViewModes.InUse.value,
         CurrentNoDataMode: null
     };
 
@@ -78,12 +83,12 @@ export class MedicineTypesOverviewComponent {
         var filteredCLOs = this.viewModel.AvailableMedicineTypes.filter(medType => {
 
             // All
-            if (medTypeViewMode === this.medicineTypeStatusViewModes.All) {
+            if (medTypeViewMode === this.medicineTypeStatusViewModes.All.value) {
                 return true;
             }
 
             // InUse
-            if (medTypeViewMode === this.medicineTypeStatusViewModes.InUse) {
+            if (medTypeViewMode === this.medicineTypeStatusViewModes.InUse.value) {
                 return (medType.UsageStatus === Enums.MedicineTypeStatus.InUseToday);
             }
 
@@ -97,16 +102,8 @@ export class MedicineTypesOverviewComponent {
         return target;
     }
     private getMedicineTypeStatusViewModesAsItems() {
-        let items = [];
-        for (var key in this.medicineTypeStatusViewModes) {
-            let item = {
-                label: this.medicineTypeStatusViewModes[key],
-                value: key
-            };
-            items.push(item);
-        }
-
-        return items;
+        var itemsArray = ConvertDictionaryToArray(this.medicineTypeStatusViewModes);
+        return itemsArray;
     }
     private refreshUI() {
         this.viewModel.FilteredMedicineTypes = this.filterMedicineTypes(this.viewModel.AvailableMedicineTypes, this.viewModel.SelectedViewMode);

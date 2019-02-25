@@ -19,7 +19,7 @@
             <p-selectButton [options]="getMedicineTypeStatusViewModesAsItems()" 
                              [ngModel]="viewModel.SelectedViewMode" (onChange)="onSelectedViewModeChanged($event)"></p-selectButton>
 
-            <span class="supplements-count-label label-alt">{{viewModel.FilteredMedicineTypes.length}} Supplements</span>
+            <span class="supplements-count-label label-discrete">{{viewModel.FilteredMedicineTypes.length}} Supplements</span>
         </div>
     </div>
     <div class="body">

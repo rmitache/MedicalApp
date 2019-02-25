@@ -104,10 +104,14 @@ export class MedicineTypeElemComponent {
 
 
         // If no supply is registered
-        if (medicineTypeCLO.CurrentSupplyAmount === null) {
-            return [editItem, addSupplyItem];
+        if (this.viewModel.MedicineTypeCLO.IsPackagedIntoUnits) {
+            if (medicineTypeCLO.CurrentSupplyAmount === null) {
+                return [editItem, addSupplyItem];
+            } else {
+                return [editItem, addSupplyItem, clearSupplyItem];
+            }
         } else {
-            return [editItem, addSupplyItem, clearSupplyItem];
+            return [editItem];
         }
     }
 
@@ -122,7 +126,7 @@ export class MedicineTypeElemComponent {
 
         // Setup VM fields
         this.viewModel.MedicineTypeCLO = this.medicineTypeCLO;
-        this.viewModel.MenuItems = this.viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? this.getMenuItems() : null;
+        this.viewModel.MenuItems = this.getMenuItems();
         this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
 
         // Special handlers
@@ -138,10 +142,10 @@ export class MedicineTypeElemComponent {
 
         // Refresh
         this.viewModel.MenuItems = this.getMenuItems();
-        //if (this.viewModel.MenuItems === null) {
+        if (this.viewModel.MenuItems.length > 1) {
             this.splitButton.UpdateMenuItems(this.viewModel.MenuItems);
             this.viewModel.CurrentSupplyInfoState = this.getCurrentSupplyInfoState(this.viewModel.MedicineTypeCLO);
-        //}
+        }
     }
 
     // Events
