@@ -27,6 +27,7 @@
         <div id="medicine-type-elems-list">
             <medicine-type-elem #medicineTypeElems *ngFor="let medicineType of viewModel.FilteredMedicineTypes"
                                 [MedicineTypeCLO]="medicineType"
+                                (EditTriggered)="onEditMedicineTypeTriggered($event)"
                                 (AddSupplyTriggered)="onAddMedicineTypeSupplyTriggered($event)"
                                 (ClearSupplyTriggered)="onClearSupplyTriggered($event)"></medicine-type-elem>
 

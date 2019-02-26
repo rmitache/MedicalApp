@@ -85,7 +85,7 @@ export class MedicineTypeElemComponent {
         var editItem = {
             Label: 'Edit',
             OnClick: () => {
-                alert('edit!');
+                this.EditTriggered.emit(medicineTypeCLO);
             }
         };
         var addSupplyItem = {
@@ -149,6 +149,7 @@ export class MedicineTypeElemComponent {
     }
 
     // Events
+    @Output() public EditTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
     @Output() public AddSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
     @Output() public ClearSupplyTriggered: EventEmitter<CLOs.MedicineTypeCLO> = new EventEmitter();
 

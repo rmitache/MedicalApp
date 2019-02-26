@@ -176,6 +176,9 @@ export class MedicineTypesOverviewComponent {
 
         this.refreshUI();
     }
+    private onEditMedicineTypeTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
+        alert("edit triggered for " + medicineTypeCLO.Name);
+    }
     private onAddMedicineTypeSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 
         this.addSupplyDialogService.Open(medicineTypeCLO, () => {
