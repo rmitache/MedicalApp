@@ -46,10 +46,14 @@
 
 
                     <div class="radio-button-div" [ngClass]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" label="Yes" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
+                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" label="Yes" 
+                                       (click)="onIsPackagedIntoUnitsTrueClicked()"
+                                       [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                     </div>
                     <div class="radio-button-div" [ngClass]="!viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" label="No" [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
+                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" label="No" 
+                                        (click)="onIsPackagedIntoUnitsFalseClicked()"
+                                       [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                     </div>
                 </div>
             </div>

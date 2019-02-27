@@ -12,10 +12,6 @@
         </div>
 
         <div class="filters-section">
-            <!--<span class="label-discrete">Show:</span>
-    <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
-        <option *ngFor="let medicineTypeStatus of medicineTypeStatusViewModes | keys" [value]="medicineTypeStatus.value">{{medicineTypeStatus.value}}</option>
-    </select>-->
             <p-selectButton [options]="getMedicineTypeStatusViewModesAsItems()" 
                              [ngModel]="viewModel.SelectedViewMode" (onChange)="onSelectedViewModeChanged($event)"></p-selectButton>
 

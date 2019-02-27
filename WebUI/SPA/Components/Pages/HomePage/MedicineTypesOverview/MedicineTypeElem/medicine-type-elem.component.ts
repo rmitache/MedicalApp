@@ -9,6 +9,7 @@ import * as Enums from 'SPA/DomainModel/enum-exports';
 import { HomePageDataService } from 'SPA/Components/Pages/HomePage/home-page-data.service';
 import { SplitButtonComponent } from 'SPA/Components/Shared/SplitButton/split-button.component';
 import { CommandManager } from 'SPA/Core/Managers/CommandManager/command.manager';
+import { GenericCLOFactory } from 'SPA/DomainModel/generic-clo.factory';
 
 
 @Component({
@@ -85,6 +86,7 @@ export class MedicineTypeElemComponent {
         var editItem = {
             Label: 'Edit',
             OnClick: () => {
+                
                 this.EditTriggered.emit(medicineTypeCLO);
             }
         };
@@ -119,6 +121,8 @@ export class MedicineTypeElemComponent {
     constructor(
         private readonly dataService: HomePageDataService,
         private readonly commandManager: CommandManager,
+        private readonly genericCLOFactory: GenericCLOFactory,
+
 
     ) {
     }

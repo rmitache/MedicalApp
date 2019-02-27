@@ -291,6 +291,19 @@ export class HomePageDataService {
 
         return postDataPromise;
     }
+    public UpdateMedicineType(medicineTypeCLO: CLOs.MedicineTypeCLO): Promise<CLOs.MedicineTypeCLO> {
+        const apiMethodName: string = 'UpdateMedicineType';
+
+        let blo = this.genericCLOFactory.ConvertToBlo(medicineTypeCLO);
+        let postDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, blo)
+            .toPromise()
+            .then((bloWithUpdatedID) => {
+                let clo = this.genericCLOFactory.ConvertToCLO<CLOs.MedicineTypeCLO>(CLOs.MedicineTypeCLO.name, bloWithUpdatedID);
+                return clo;
+            });
+
+        return postDataPromise;
+    }
     public GetMedicineTypes(): Promise<CLOs.MedicineTypeCLO[]> {
         const apiMethodName: string = 'GetMedicineTypes';
 
@@ -315,6 +328,7 @@ export class HomePageDataService {
         let getDataPromise = this.httpHandlerService.Post(this.apiUrl + '/' + apiMethodName, model)
             .toPromise();
 
+        
 
         return getDataPromise;
     }

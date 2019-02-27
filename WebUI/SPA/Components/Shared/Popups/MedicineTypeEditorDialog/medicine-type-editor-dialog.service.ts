@@ -30,7 +30,10 @@ export class MedicineTypeEditorDialogService {
                 title = "New Supplement";
                 saveButtonText = "Create";
                 break;
-
+            case MedicineTypeEditorMode.EditExisting:
+                title = "Edit Supplement";
+                saveButtonText = "Update";
+                break;
         }
 
         // Open the dialog

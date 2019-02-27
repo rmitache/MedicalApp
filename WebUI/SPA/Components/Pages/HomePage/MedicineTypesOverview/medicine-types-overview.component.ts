@@ -177,7 +177,8 @@ export class MedicineTypesOverviewComponent {
         this.refreshUI();
     }
     private onEditMedicineTypeTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
-        alert("edit triggered for " + medicineTypeCLO.Name);
+        var clonedCLO = this.genericCLOFactory.CloneCLO(medicineTypeCLO);
+        this.openMedicineTypeEditor(clonedCLO, MedicineTypeEditorMode.EditExisting);
     }
     private onAddMedicineTypeSupplyTriggered(medicineTypeCLO: CLOs.MedicineTypeCLO) {
 

@@ -53,10 +53,11 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
     ngOnInit() {
 
         // Define form
+        let nameToIgnoreParameter = (this.dialogInitParameters.medicineTypeCLO !== null) ? this.dialogInitParameters.medicineTypeCLO.Name : null;
         this.reactiveForm = this.fb.group({
             name: ['',
                 Validators.required,
-                ValidateMedicineTypeNameNotTaken.createValidator(this.globalDataService)
+                ValidateMedicineTypeNameNotTaken.createValidator(this.globalDataService, nameToIgnoreParameter)
             ],
             producerName: [''],
             baseUnitOfMeasure: [''],
@@ -88,19 +89,20 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
                 this.refreshIsValid();
             });
 
-        this.reactiveForm.get('isPackagedIntoUnitsRadioGroup').valueChanges.subscribe(val => {
-            if (val === false) {
-                this.reactiveForm.controls["packagedUnitDoseSize"].disable(); 
-                setTimeout(() => {
-                }, 1);
-            }
-            else if (val === true) {
-                this.reactiveForm.controls["packagedUnitDoseSize"].enable(); 
-                this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null; 
-                setTimeout(() => {
-                }, 1);
-            }
-        });
+        //this.reactiveForm.get('isPackagedIntoUnitsRadioGroup').valueChanges.subscribe(val => {
+        //    if (val === false) {
+        //        this.reactiveForm.controls["packagedUnitDoseSize"].disable();
+        //        setTimeout(() => {
+        //        }, 1);
+        //    }
+        //    else if (val === true) {
+        //        this.reactiveForm.controls["packagedUnitDoseSize"].enable();
+        //        this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null;
+                
+        //        setTimeout(() => {
+        //        }, 1);
+        //    }
+        //});
     }
 
     // Public methods
@@ -115,6 +117,19 @@ export class MedicineTypeEditorDialogComponent implements IModalDialog {
         return this.isValid;
     }
 
+    // Event handlers
+    private onIsPackagedIntoUnitsTrueClicked() {
+        this.reactiveForm.controls["packagedUnitDoseSize"].enable();
+        this.viewModel.MedicineTypeCLO.PackagedUnitDoseSize = null;
+
+        setTimeout(() => {
+        }, 1);
+    }
+    private onIsPackagedIntoUnitsFalseClicked() {
+        this.reactiveForm.controls["packagedUnitDoseSize"].disable();
+        setTimeout(() => {
+        }, 1);
+    }
 
     // IModalDialog
     dialogInit(reference: ComponentRef<IModalDialog>, options?: IModalDialogOptions) {
@@ -129,7 +144,8 @@ interface ViewModel {
 
 // PlanMode logic and classes
 export enum MedicineTypeEditorMode {
-    CreateNew
+    CreateNew,
+    EditExisting
 }
 interface IMedicineTypeEditorModeImplementation {
     SaveData(): Promise<CLOs.MedicineTypeCLO>;
@@ -153,17 +169,46 @@ class CreateNewMode implements IMedicineTypeEditorModeImplementation {
         return saveDataPromise;
     }
 }
+class EditExistingMode implements IMedicineTypeEditorModeImplementation {
+
+    // Constructor
+    constructor(
+        private reactiveForm: FormGroup,
+        private medicineTypeCLO: CLOs.MedicineTypeCLO,
+        private vm: ViewModel,
+        private globalDataService: HomePageDataService) {
+
+        // Prepare ViewModel 
+        this.vm.MedicineTypeCLO = medicineTypeCLO;
+    }
+
+    // Public methods
+    public SaveData() {
+        alert('update medicine type!');
+        //let saveDataPromise = this.globalDataService.AddMedicineType(this.vm.MedicineTypeCLO);
+        //return saveDataPromise;
+        return null;
+    }
+}
 
 var modeImplementationsLookup = {};
 modeImplementationsLookup[MedicineTypeEditorMode.CreateNew] = CreateNewMode;
+modeImplementationsLookup[MedicineTypeEditorMode.EditExisting] = EditExistingMode;
 
 // Async validator for MedicineType Name
 export class ValidateMedicineTypeNameNotTaken {
     static createValidator(homePageDataService: HomePageDataService, nameToIgnore: string = null) {
         return (control: AbstractControl) => {
-            return homePageDataService.IsMedicineTypeNameTaken(control.value, nameToIgnore).then(isTaken => {
-                return (isTaken === false) ? null : { nameTaken: true };
-            });
+
+            if (control.value === nameToIgnore) {
+                return Promise.resolve(null);
+            } else {
+
+                return homePageDataService.IsMedicineTypeNameTaken(control.value, nameToIgnore).then(isTaken => {
+                    return (isTaken === false) ? null : { nameTaken: true };
+                });
+
+            }
         }
     }
 }
