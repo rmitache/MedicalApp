@@ -26,6 +26,27 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
 
             return dataEntity;
         }
+        public TMedicineType UpdateMedicineType(TMedicineType dataEntity, int userID)
+        {
+            // Check if the medicineType exists, and has in fact the given userID
+            TMedicineType entity = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
+            medType.Id == dataEntity.Id && medType.UserId == userID).SingleOrDefault();
+            if (entity == null)
+            {
+                throw new System.Exception("MedicineType with ID and userID cannot be found");
+            }
+
+            // Update
+            entitiesContext.TMedicineType.Update(dataEntity);
+            entitiesContext.SaveChanges();
+
+            //entitiesContext.TMedicineType.AsNoTracking().Where(x =>
+            //           x.Id == dataEntity.Id)
+            //           .Update(x =>  dataEntity);
+
+
+            return dataEntity;
+        }
         public TMedicineTypeSupplyEntry AddMedicineTypeSupplyEntry(int userID, int MedicineTypeID, int SupplyQuantity, DateTime EntryDateTime)
         {
 
@@ -101,6 +122,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
         }
         public void RenameMedicineType(int medicineTypeID, string newName, int userID)
         {
+            // Check if the medicineType exists, and has in fact the given userID
             TMedicineType entity = entitiesContext.TMedicineType.AsNoTracking().Where(medType =>
             medType.Id == medicineTypeID && medType.UserId == userID).SingleOrDefault();
             if (entity == null)
@@ -109,6 +131,7 @@ namespace DataAccessLayer.Repositories.MedicineTypeRepository
             }
 
 
+            // Update
             entitiesContext.TMedicineType.AsNoTracking().Where(x =>
                        x.Id == medicineTypeID)
                        .Update(x => new TMedicineType() { Name = newName });

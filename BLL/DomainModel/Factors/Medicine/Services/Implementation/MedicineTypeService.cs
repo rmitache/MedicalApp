@@ -82,6 +82,19 @@ namespace BLL.DomainModel.Factors.Medicine.Library.Services
 
             return blo;
         }
+        public virtual MedicineType UpdateMedicineType(MedicineType blo, int userID)
+        {
+            // Update the MedicineType
+            var dataEntity = this.medicineTypeFactory.Convert_ToDataEntity(blo, userID);
+            this.medicineTypeRepo.UpdateMedicineType(dataEntity, userID);
+
+            // 
+
+
+            blo.ID = dataEntity.Id;
+
+            return blo;
+        }
         public virtual List<MedicineType> GetAllMedicineTypes(int userID, bool retreiveSupplyAndUsageInfo = false)
         {
             // Get all the medicineTypes available for the current user 

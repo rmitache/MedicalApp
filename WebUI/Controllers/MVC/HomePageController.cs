@@ -283,6 +283,14 @@ namespace WebUI.Controllers
             var bloWithUpdatedID = this.medicineTypeService.AddMedicineType(blo, (int)userID);
             return Json(bloWithUpdatedID);
         }
+        [Route("HomePage/UpdateMedicineType")]
+        [HttpPost]
+        public JsonResult UpdateMedicineType([FromBody]MedicineType blo)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var bloWithUpdatedID = this.medicineTypeService.UpdateMedicineType(blo, (int)userID);
+            return Json(bloWithUpdatedID);
+        }
         [Route("HomePage/GetMedicineTypes")]
         [HttpPost]
         public JsonResult GetMedicineTypes()

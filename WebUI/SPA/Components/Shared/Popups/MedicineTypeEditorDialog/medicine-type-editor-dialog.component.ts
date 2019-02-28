@@ -184,10 +184,9 @@ class EditExistingMode implements IMedicineTypeEditorModeImplementation {
 
     // Public methods
     public SaveData() {
-        alert('update medicine type!');
-        //let saveDataPromise = this.globalDataService.AddMedicineType(this.vm.MedicineTypeCLO);
-        //return saveDataPromise;
-        return null;
+        
+        let saveDataPromise = this.globalDataService.UpdateMedicineType(this.vm.MedicineTypeCLO);
+        return saveDataPromise;
     }
 }
 
