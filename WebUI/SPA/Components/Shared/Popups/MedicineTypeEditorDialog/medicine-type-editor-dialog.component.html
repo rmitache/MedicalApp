@@ -1,11 +1,10 @@
 <form [formGroup]="reactiveForm">
    
     <div class="frame">
-
         <div class="top-section">
             <!--Name-->
             <div class="label-input-pair name-div">
-                <!--<span class="label-discrete">Name:</span>-->
+
                 <input type="text"
                        pInputText
                        formControlName="name"
@@ -17,13 +16,12 @@
                    [tooltipPosition]="'bottom'"
                    [pTooltip]="'Please enter a unique Name for the Supplement'"
                    class="fa fa-warning validation-error-icon"></i>
-                
+
 
             </div>
 
             <!--Producer-->
             <div class="label-input-pair producer-div">
-                <!--<span class="label-discrete">Producer:</span>-->
                 <input type="text"
                        pInputText
                        formControlName="producerName"
@@ -40,21 +38,26 @@
                 <i class="fa fa-question-circle"
                    [tooltipZIndex]="52000"
                    [tooltipPosition]="'bottom'"
-                   [pTooltip]="'Packaged into Unit Doses means whether it comes as a freeform powder, liquid, etc or it is packaged into doses such as pills already.'" 
+                   [pTooltip]="'Packaged into Unit Doses means whether it comes as a freeform powder, liquid, etc or it is packaged into doses such as pills already.'"
                    tooltipPosition="bottom"></i>
                 <div class="radio-button-group">
 
 
-                    <div class="radio-button-div" [ngClass]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" label="Yes" 
+                    <div class="radio-button-div"
+                         [ngClass]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
+                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="true" label="Yes"
                                        (click)="onIsPackagedIntoUnitsTrueClicked()"
                                        [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                     </div>
-                    <div class="radio-button-div" [ngClass]="!viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
-                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" label="No" 
-                                        (click)="onIsPackagedIntoUnitsFalseClicked()"
+                    <div class="radio-button-div" 
+                         [ngClass]="!viewModel.MedicineTypeCLO.IsPackagedIntoUnits ? 'active': ''">
+                        <p-radioButton formControlName="isPackagedIntoUnitsRadioGroup" [value]="false" label="No"
+                                       (click)="onIsPackagedIntoUnitsFalseClicked()"
                                        [(ngModel)]="viewModel.MedicineTypeCLO.IsPackagedIntoUnits"></p-radioButton>
                     </div>
+                    <div class="ispackagedintounits-disable-div"
+                         [style.visibility]="viewModel.MedicineTypeCLO.HasAssociatedRuleItems === true ? 'visible' : 'hidden'"
+                         ></div>
                 </div>
             </div>
 

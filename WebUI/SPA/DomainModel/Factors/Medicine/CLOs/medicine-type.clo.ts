@@ -19,7 +19,8 @@ export class MedicineTypeCLO extends BaseCLO {
     public UsageStatus: Enums.MedicineTypeStatus;
     public CurrentSupplyAmount: number;
 	public CurrentSupplyAmountMeasuredIn: string;
-	public SupplyWillLastUntil: Date;
+    public SupplyWillLastUntil: Date;
+    public HasAssociatedRuleItems: boolean;
 
     // Properties
     public get UnitOfMeasureName() {

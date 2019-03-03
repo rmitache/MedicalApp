@@ -61,10 +61,7 @@ export class MedicineTypesOverviewComponent {
     private openMedicineTypeEditor(medicineTypeCLO: CLOs.MedicineTypeCLO, mode: MedicineTypeEditorMode) {
 
         this.medicineTypeEditorDialogService.Open(medicineTypeCLO, mode, () => {
-            this.reloadDataFromServer()
-                .then(() => {
-                    this.refreshUI();
-                });
+            this.commandManager.InvokeCommandFlow('RefreshScheduleAndMedicineTypesOverviewFlow');
 
             setTimeout(() => {
                 this.spinnerService.Hide();

@@ -33,7 +33,8 @@ export class MedicineTypeCLOFactory implements ICLOFactory<CLOs.MedicineTypeCLO>
 		}
         newCLO.CurrentSupplyAmount = blo['CurrentSupplyAmount'];
         newCLO.CurrentSupplyAmountMeasuredIn = blo['CurrentSupplyAmountMeasuredIn'];
-		newCLO.SupplyWillLastUntil = (blo['SupplyWillLastUntil'] !== null) ? new Date(blo['SupplyWillLastUntil']) : null;
+        newCLO.SupplyWillLastUntil = (blo['SupplyWillLastUntil'] !== null) ? new Date(blo['SupplyWillLastUntil']) : null;
+        newCLO.HasAssociatedRuleItems = blo['HasAssociatedRuleItems'];
 
 		return newCLO;
 	}

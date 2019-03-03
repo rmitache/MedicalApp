@@ -32,6 +32,7 @@ namespace BLL.DomainModel.Factors.Medicine.Factories
             blo.IsInUse = isInUse;
             blo.CurrentSupplyAmount = remainingSupplyAmount;
             blo.SupplyWillLastUntil = supplyWillLastUntil;
+            blo.HasAssociatedRuleItems =  (dataEntity.TPlanMedicineRuleItem != null && dataEntity.TPlanMedicineRuleItem.Any()) ? true : (bool?)null;
 
             return blo;
         }

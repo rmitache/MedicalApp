@@ -10,11 +10,14 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
         virtual public int ID { get; set; }
         virtual public string Name { get; set; }
         virtual public string ProducerName { get; set; }
+        
 
         virtual public UnitOfMeasure BaseUnitOfMeasure { get; set; }
         virtual public bool IsPackagedIntoUnits { get; set; }
         virtual public PackagedUnitDoseType? PackagedUnitDoseType { get; set; }
         virtual public Decimal? PackagedUnitDoseSize { get; set; }
+
+        
 
         virtual public bool? IsInUse { get; set; }
         virtual public int? CurrentSupplyAmount { get; set; } // Null if no SupplyEntries exist
@@ -32,7 +35,9 @@ namespace BLL.DomainModel.Factors.Medicine.BLOs
             }
         }
         virtual public DateTime? SupplyWillLastUntil { get; set; }
-        
+
+        virtual public bool? HasAssociatedRuleItems { get; set; }
+
 
         // Constructor
         public MedicineType() { }

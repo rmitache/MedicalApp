@@ -86,7 +86,6 @@ export class PlanEditorDialogComponent implements IModalDialog {
 
                 setTimeout(() => {
                     this.spinnerService.Hide();
-                    //sourceIFRPComponent.SetMedicineType(medicineTypeCLO.Name);
                     callback(medicineTypeCLO);
                 }, 200);
             });
