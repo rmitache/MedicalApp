@@ -20,6 +20,7 @@ import { PlanEditorMode } from '../../../Shared/Popups/PlanEditorDialog/plan-edi
 import { PlanEditorDialogService } from '../../../Shared/Popups/PlanEditorDialog/plan-editor-dialog.service';
 import { PlanVersionTooltipComponent } from '../../../Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.component';
 import { PlanElemHoverEventInfo, PlanVersionTooltipService } from 'SPA/Components/Shared/Tooltips/PlanVersionTooltip/plan-version-tooltip.service';
+import { ConvertDictionaryToArray } from 'SPA/Core/Helpers/Functions/functions';
 
 
 @Component({
@@ -37,17 +38,32 @@ export class PlansOverviewComponent {
         `Your PLANS determine how your SCHEDULE looks like. <br />
         They allow you to group and define different types of treatments, which you can change as time goes by depending on your needs.
         `;
+    //private readonly planStatusViewModes = {
+    //    // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
+    //    All: 'All',
+    //    Active: 'Active',
+    //    Inactive: 'Inactive',
+    //    Upcoming: 'Upcoming'
+    //};
     private readonly planStatusViewModes = {
-        // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
-        All: 'All',
-        Active: 'Active',
-        Inactive: 'Inactive',
-        Upcoming: 'Upcoming'
+        Active: {
+            label: 'Active',
+            value: 'Active'
+        },
+        
+        Upcoming: {
+            label: 'Upcoming',
+            value: 'Upcoming'
+        },
+        Inactive: {
+            label: 'Inactive',
+            value: 'Inactive'
+        },
     };
     private readonly viewModel: ViewModel = {
         AvailablePlans: null,
         FilteredPlans: null,
-        SelectedViewMode: this.planStatusViewModes.Active,
+        SelectedViewMode: this.planStatusViewModes.Active.value,
         CurrentNoDataMode: null
     };
 
@@ -100,25 +116,20 @@ export class PlansOverviewComponent {
         let filteredPlans = this.viewModel.AvailablePlans.filter(plan => {
             let statusVal = plan.Status as number;
 
-            // All
-            if (planStatusViewMode === this.planStatusViewModes.All) {
-                return true;
-            }
-
 
             // Active 
-            if (planStatusViewMode === this.planStatusViewModes.Active) {
+            if (planStatusViewMode === this.planStatusViewModes.Active.value) {
                 return (statusVal === Enums.PlanStatus.Active);
             }
 
 
             // Inactive
-            if (planStatusViewMode === this.planStatusViewModes.Inactive) {
+            if (planStatusViewMode === this.planStatusViewModes.Inactive.value) {
                 return (statusVal === Enums.PlanStatus.Inactive);
             }
 
             // Upcoming
-            if (planStatusViewMode === this.planStatusViewModes.Upcoming) {
+            if (planStatusViewMode === this.planStatusViewModes.Upcoming.value) {
                 return (statusVal === Enums.PlanStatus.Upcoming);
             }
 
@@ -249,17 +260,22 @@ export class PlansOverviewComponent {
                 throw new Error('Action not recognized');
         }
     }
+    private getPlanStatusViewModesAsItems() {
+        var itemsArray = ConvertDictionaryToArray(this.planStatusViewModes);
+        return itemsArray;
+    }
+
     private refreshUI() {
         this.viewModel.FilteredPlans = this.filterPlans(this.viewModel.AvailablePlans, this.viewModel.SelectedViewMode);
 
         // NoData logic
         if (this.viewModel.AvailablePlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoAvailablePlans;
-        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Active && this.viewModel.FilteredPlans.length === 0) {
+        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Active.value && this.viewModel.FilteredPlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoActivePlans;
-        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Inactive && this.viewModel.FilteredPlans.length === 0) {
+        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Inactive.value && this.viewModel.FilteredPlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoInactivePlans;
-        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Upcoming && this.viewModel.FilteredPlans.length === 0) {
+        } else if (this.viewModel.SelectedViewMode === this.planStatusViewModes.Upcoming.value && this.viewModel.FilteredPlans.length === 0) {
             this.viewModel.CurrentNoDataMode = NoDataModes.NoUpcomingPlans;
         } else {
             this.viewModel.CurrentNoDataMode = null;
@@ -318,7 +334,7 @@ export class PlansOverviewComponent {
         this.triggerPlanAction(planCLO, actionTypeID);
     }
     private onSelectedViewModeChanged(event) {
-        const newVal = event.target.value;
+        const newVal = event.value;
         this.viewModel.SelectedViewMode = newVal;
 
         this.refreshUI();

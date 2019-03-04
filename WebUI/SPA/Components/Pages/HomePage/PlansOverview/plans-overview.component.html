@@ -14,10 +14,16 @@
         </div>
 
         <div class="filters-section">
-            <span class="label-discrete">Show:</span>
+            <p-selectButton [options]="getPlanStatusViewModesAsItems()"
+                            [ngModel]="viewModel.SelectedViewMode" (onChange)="onSelectedViewModeChanged($event)"></p-selectButton>
+
+            <!--<span class="supplements-count-label label-discrete">{{viewModel.FilteredPlans.length}} Supplements</span>-->
+
+
+            <!--<span class="label-discrete">Show:</span>
             <select class="drop-down view-mode-selector" [ngModel]="viewModel.SelectedViewMode" (change)="onSelectedViewModeChanged($event)">
                 <option *ngFor="let planStatusItem of planStatusViewModes | keys" [value]="planStatusItem.value">{{planStatusItem.key}}</option>
-            </select>
+            </select>-->
         </div>
     </div>
     <div class="body">
