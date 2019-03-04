@@ -57,6 +57,10 @@
                     </div>
                     <div class="ispackagedintounits-disable-div"
                          [style.visibility]="viewModel.MedicineTypeCLO.HasAssociatedRuleItems === true ? 'visible' : 'hidden'"
+                         [tooltipZIndex]="52000"
+                       [tooltipPosition]="'bottom'"
+                       [pTooltip]="'You cannot modify this field as the Supplement already has RuleItems. Please try to register a new Supplement instead.'"
+                       tooltipPosition="bottom"
                          ></div>
                 </div>
             </div>
