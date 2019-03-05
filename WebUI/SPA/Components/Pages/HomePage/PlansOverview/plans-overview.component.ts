@@ -38,13 +38,6 @@ export class PlansOverviewComponent {
         `Your PLANS determine how your SCHEDULE looks like. <br />
         They allow you to group and define different types of treatments, which you can change as time goes by depending on your needs.
         `;
-    //private readonly planStatusViewModes = {
-    //    // Explanation - this collection is necessary because we are not binding directly to the enum values, but to aggregates
-    //    All: 'All',
-    //    Active: 'Active',
-    //    Inactive: 'Inactive',
-    //    Upcoming: 'Upcoming'
-    //};
     private readonly planStatusViewModes = {
         Active: {
             label: 'Active',

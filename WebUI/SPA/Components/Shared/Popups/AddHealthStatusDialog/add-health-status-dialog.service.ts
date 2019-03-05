@@ -25,11 +25,25 @@ export class AddHealthStatusDialogService {
     public Open(viewContainerRef: ViewContainerRef, okCallBack: () => void) {
         this.spinnerService.Show();
         this.dataService.GetRecentSymptoms().then(recentSymptomsCLOs => {
-            this.spinnerService.Hide();
 
+            // Sort the recent symptoms alphabetically
+            let sortedRecentSymptoms = recentSymptomsCLOs.sort((a, b) => {
+                if (a.Name > b.Name) {
+                    return 1;
+                }
+
+                if (a.Name < b.Name) {
+                    return -1;
+                }
+
+                return 0;
+            });
+
+            // Show the dialog
+            this.spinnerService.Hide();
             this.modalDialogService.OpenDialog({
                 title: 'How are you feeling ?',
-                showTitleAsterisk:true,
+                showTitleAsterisk: true,
                 childComponent: AddHealthStatusDialogComponent,
                 data: {
                     recentSymptomsCLOs: recentSymptomsCLOs
