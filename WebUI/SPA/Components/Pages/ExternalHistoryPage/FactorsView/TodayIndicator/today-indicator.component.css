@@ -1,0 +1,16 @@
+
+.vertical-line {
+    stroke: #989898;
+    stroke-width: 1px;
+}
+
+.rect {
+    fill: black;
+    opacity: 0.8;
+    font-weight:bold;
+}
+
+.label {
+    fill: white;
+    
+}

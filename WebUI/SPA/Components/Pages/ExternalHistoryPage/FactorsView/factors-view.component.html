@@ -1,0 +1,60 @@
+<plan-version-changes-tooltip #versionTooltip></plan-version-changes-tooltip>
+<div class="frame" >
+    <div class="left-side">
+        <div class="header">
+            <div class="left-section">
+                <span class="header-label h1">FACTORS</span>
+                <i class="fa fa-question-circle"
+                   [pTooltip]="infoTooltipText" [escape]="false"
+                   tooltipPosition="bottom"></i>
+            </div>
+            <div class="center-section">
+                <div>
+                    <div class="legend-item plan-changes-item">
+                        <i class="fa fa-circle"></i>
+                        <span class="label-discrete">Plan changes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section">
+                
+            </div>
+        </div>
+        <!--Plans rendering area-->
+        <div class="body">
+            <div class="factors-rendering-area">
+                <svg xmlns="http://www.w3.org/2000/svg" height="700" width="100%" overflow="visible" >
+
+                    <!--PlanElems-->
+                    <svg:g *ngFor="let plan of viewModel.PlansInSelectedDateRange; let i = index" plan-elem
+                           overflow="visible"
+                           [PlanCLO]="plan"
+                           [SelectedDateRange]="viewModel.SelectedDateRange"
+                           [XPos]="0"
+                           [YPos]="20 + 40 * i"
+                           (VersionElemHover)="onVersionElemHover($event)"></svg:g>
+
+                    <!--Vertical TODAY indicator-->
+                    <svg:g *ngIf="viewModel.TodayXPosition!==null" today-indicator overflow="visible"
+                           [XPos]="viewModel.TodayXPosition"
+                           [YPos]="10"></svg:g>
+                </svg>
+            </div>
+            <timeline #timeline></timeline>
+        </div>
+
+    </div>
+
+    <!--<div class="right-side">
+        <factors-filters-panel #filtersPanel
+                       (PlanSelected)="onPlanSelected($event)"
+                       (PlanDeselected)="onPlanDeselected($event)"
+                       ></factors-filters-panel>
+        
+    </div>-->
+
+
+</div>
+
+
+

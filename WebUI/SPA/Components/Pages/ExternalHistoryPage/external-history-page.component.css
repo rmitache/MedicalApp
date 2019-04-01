@@ -1,0 +1,77 @@
+
+
+.outer-wrapper {
+    height: 100%;
+    background-color: #ebebeb;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.body-area {
+    width: calc(100%);
+    height: calc(100% - 70px);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #ebebeb;
+}
+
+.main-panel {
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+    .main-panel .factors-view {
+        width: calc(100%);
+        height: calc(40% - 57px - 22px);
+        float: left;
+        padding-bottom: 10px;
+    }
+
+    .main-panel .main-panel-timeline {
+        width: calc(100% - 119px);
+        height: 74px;
+        float: left;
+        padding: 20px 60px 10px 59px;
+        background-color: #ebebeb;
+        border-top: solid 1px #cccccc;
+        border-bottom: solid 1px #cccccc;
+    }
+
+        .main-panel .main-panel-timeline .navigation-panel {
+            display:block;
+            margin-bottom:8px;
+        }
+
+        .main-panel .main-panel-timeline .timeline {
+        }
+
+    .main-panel .indicators-view {
+        padding-top: 5px;
+        width: calc(100%);
+        height: calc(60% - 57px - 10px);
+        float: left;
+    }
+
+
+/*Bigger than 1024 in width*/
+@media only screen and (min-width: 1024px) {
+    .outer-wrapper {
+        min-width: calc(1024px - 24px);
+        max-width: 65%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+/*Lower than 1024px in width*/
+@media only screen and (max-width: 1024px) {
+    .outer-wrapper {
+        min-width: calc(768px - 12px);
+        max-width: 90%;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+}

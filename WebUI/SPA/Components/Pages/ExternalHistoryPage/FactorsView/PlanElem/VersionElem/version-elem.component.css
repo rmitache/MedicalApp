@@ -1,0 +1,16 @@
+.frame {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+}
+
+
+.horizontal-line {
+    stroke-width: 1;
+    stroke: #8d8ddc;
+}
+
+.label-discrete {
+    fill: gray;
+    text-transform: uppercase;
+}

@@ -27,6 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\change-highlight-date-range.flow.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\change-selected-date-range.flow.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\flow-definitions.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\init-and-start-page.flow.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\external-history-page-application-state.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\FactorsView\factors-view.module.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\color-provider.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\dataset-generator.ts" />
+    <None Remove="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\indicators-view.module.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\change-highlight-date-range.flow.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\change-selected-date-range.flow.ts" />
     <None Remove="SPA\Components\Pages\AnalysisPage\CommandFlows\flow-definitions.ts" />
@@ -157,6 +166,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\external-history-page-application-state.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\change-highlight-date-range.flow.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\change-selected-date-range.flow.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\flow-definitions.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\CommandFlows\init-and-start-page.flow.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\FactorsView\factors-view.module.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\color-provider.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\dataset-generator.ts" />
+    <TypeScriptCompile Include="SPA\Components\Pages\ExternalHistoryPage\IndicatorsView\indicators-view.module.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\analysis-page-application-state.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\CommandFlows\change-selected-date-range.flow.ts" />
     <TypeScriptCompile Include="SPA\Components\Pages\AnalysisPage\CommandFlows\flow-definitions.ts" />
@@ -271,6 +289,12 @@
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\version-status.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\rule-frequency-type.enum.ts" />
     <TypeScriptCompile Include="SPA\DomainModel\Plans\Enums\advanced-plan-status.enum.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\ExternalHistoryPage\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

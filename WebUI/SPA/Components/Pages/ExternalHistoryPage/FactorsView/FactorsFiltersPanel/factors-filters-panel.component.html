@@ -1,0 +1,13 @@
+<div class="frame" #frame>
+    <div class="header">
+        <div class="left-section">
+            <span class="header-label h2">PLANS</span>
+        </div>
+
+    </div>
+    <div class="body">
+        <filter-list-panel #filterListPanel
+                           (FilterItemToggled)="onFilterItemToggled($event)"
+                           ></filter-list-panel>
+    </div>
+</div>

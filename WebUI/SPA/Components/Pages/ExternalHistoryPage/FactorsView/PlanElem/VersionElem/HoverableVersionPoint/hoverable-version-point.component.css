@@ -1,0 +1,14 @@
+.hover-effect-rect {
+    fill: #e8e8ff;
+    border-radius: 10px;
+    fill-opacity:0.5;
+}
+
+.hit-box-rect {
+    fill: transparent;
+}
+
+.circle {
+    fill: gray;
+    stroke: black;
+}

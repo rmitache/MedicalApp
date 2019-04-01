@@ -1,0 +1,75 @@
+<health-statuses-over-day-tooltip #healthStatusTooltip></health-statuses-over-day-tooltip>
+
+<custom-sidebar [(visible)]="displaySideBar" position="right">
+    <indicators-filters-panel #filtersPanel
+                              
+                              (SymptomTypeToggleTriggered)="onSymptomTypeToggleTriggered($event)"></indicators-filters-panel>
+</custom-sidebar>
+
+
+<div class="frame">
+    <div class="left-side">
+        <div class="header">
+            <div class="left-section">
+                <span class="header-label h1">HEALTH</span>
+                <i class="fa fa-question-circle"
+                   [pTooltip]="infoTooltipText" [escape]="false"
+                   tooltipPosition="bottom"></i>
+            </div>
+            <div class="center-section">
+                <div class="legend-div">
+                    <div class="legend-item bad-day-item">
+                        <i class="fa fa-square"></i>
+                        <span class="label-discrete">Bad days</span>
+                    </div>
+                    <div class="legend-item good-day-item">
+                        <i class="fa fa-square"></i>
+                        <span class="label-discrete">Good days</span>
+                    </div>
+
+                    <ng-container *ngFor="let symptomDSItem of viewModel.SymptomTypesDatasetItems">
+                        <div *ngIf="symptomDSItem.IsSelected" class="legend-item">
+                            <i class="fa fa-circle"
+                               [style.color]="symptomDSItem.Color"></i>
+                            <span class="label-discrete">{{symptomDSItem.SymptomTypeCLO.Name}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="right-section">
+                <button pButton type="button" icon="fa fa-cog"
+                        [pTooltip]="'Toggle Symptoms'"
+                        (click)="displaySideBar = true"></button>
+            </div>
+        </div>
+        <div class="body">
+            <div id="chart-wrapper-div">
+                <canvas id="myChart"></canvas>
+
+                <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" >
+
+
+                    <!--Vertical lines-->
+                    <svg:line *ngIf="viewModel.HighlightRangeEndXPosition !== null"
+                              [attr.x1]="viewModel.HighlightRangeStartXPosition + '%'"
+                              [attr.x2]="viewModel.HighlightRangeStartXPosition + '%'"
+                              y1="0" y2="90%"
+                              [style.visibility]="(viewModel.HighlightRangeStartXPosition !== null ) ? 'visible' : 'hidden'"
+                              style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
+                    <svg:line *ngIf="viewModel.HighlightRangeEndXPosition !== null"
+                              [attr.x1]="viewModel.HighlightRangeEndXPosition + '%'"
+                              [attr.x2]="viewModel.HighlightRangeEndXPosition + '%'"
+                              y1="0" y2="90%"
+                              [style.visibility]="(viewModel.HighlightRangeEndXPosition !== null ) ? 'visible' : 'hidden'"
+                              style="stroke:gray;stroke-width:2;z-index:99999; position:absolute" stroke-dasharray="2, 5" />
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <!--<div class="right-side">
+        <indicators-filters-panel #filtersPanel
+                                  (SymptomTypeToggleTriggered)="onSymptomTypeToggleTriggered($event)"></indicators-filters-panel>
+    </div>-->
+</div> 

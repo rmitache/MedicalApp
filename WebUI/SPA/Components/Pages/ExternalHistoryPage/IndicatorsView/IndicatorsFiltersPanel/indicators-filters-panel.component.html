@@ -1,0 +1,24 @@
+<div class="frame" #frame>
+    <div class="header">
+        <div class="left-section">
+            <span class="header-label h2">SYMPTOMS</span>
+        </div>
+
+    </div>
+    <div class="body">
+
+        <div *ngFor="let filterItem of viewModel.FilterItems"
+              [style.background-color]="filterItem.IsSelected ? filterItem.Color : ''"
+             class="filter-elem"
+             (click)="onFilterItemClicked(filterItem)">
+            <span class="item-name label"
+                  [attr.class]="(isColorDark(filterItem.Color) && filterItem.IsSelected) ? 'light-item-name' : ''">
+                {{filterItem.SymptomTypeCLO.Name}}
+            </span>
+            <i class="fa fa-check"
+               [style.color]="isColorDark(filterItem.Color) ? 'white' : 'black'"
+               [style.visibility]="filterItem.IsSelected === true ? 'visible' : 'hidden'"></i>
+        </div>
+
+    </div>
+</div>

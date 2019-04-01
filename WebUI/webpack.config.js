@@ -17,7 +17,8 @@ module.exports = (env) => {
         entry: {
             'Pages/HomePage/homepage': './SPA/Components/Pages/HomePage/main.ts',
             'Pages/LoginPage/loginpage': './SPA/Components/Pages/LoginPage/main.ts',
-            'Pages/AnalysisPage/analysispage': './SPA/Components/Pages/AnalysisPage/main.ts'
+            'Pages/AnalysisPage/analysispage': './SPA/Components/Pages/AnalysisPage/main.ts',
+            'Pages/ExternalHistoryPage/externalHistoryPage': './SPA/Components/Pages/ExternalHistoryPage/main.ts'
         },
         stats: { modules: false },
         context: __dirname,

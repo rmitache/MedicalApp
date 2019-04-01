@@ -1,0 +1,94 @@
+
+.frame {
+    
+    width: calc(100%);
+    height: 100%;
+}
+
+.left-side {
+    width: calc(100%);
+    height: 100%;
+    float: left;
+}
+
+    .left-side .header {
+        width: calc(100% - 20px);
+        height: 30px;
+        padding: 5px 10px 5px 10px;
+        vertical-align: middle;
+        line-height: 30px;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+        .left-side .header .left-section {
+            display: block;
+            float: left;
+            width: calc(33%);
+        }
+
+            .left-side .header .left-section .header-label {
+                display: block;
+                float: left;
+            }
+
+            .left-side .header .left-section i {
+                display: block;
+                float: left;
+                margin-left: 5px;
+                margin-top: 4px;
+                color: #e5e5e5;
+                font-size: 1.3em;
+            }
+
+
+        .left-side .header .center-section {
+            float: left;
+            width: calc(34%);
+            text-align:center;
+        }
+
+        .left-side .header .right-section {
+            float: right;
+            width: calc(33%);
+        }
+
+    .left-side .body {
+        height: calc(100% - 15px);
+        width: calc(100% - 35px);
+        margin-left: 35px;
+    }
+
+
+.factors-rendering-area {
+    height: calc(100% - 5px);
+    width: calc(100% - 23px - 45px);
+    padding-left: 23px;
+    padding-right: 45px;
+    overflow-y: scroll;
+    float: left;
+    margin-top: -10px;
+}
+
+.timeline {
+    width: calc(100% - 75px);
+    padding-left: 21px;
+    height: 30px;
+    float: left;
+    display:none;
+}
+
+
+
+.legend-item {
+}
+
+    .legend-item i {
+        vertical-align: middle;
+        color: gray;
+        font-size:0.7em;
+    }
+
+    .legend-item span {
+        vertical-align: middle;
+    }
+
