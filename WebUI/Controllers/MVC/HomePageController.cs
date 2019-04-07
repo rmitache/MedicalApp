@@ -17,10 +17,11 @@ using Microsoft.AspNetCore.Authorization;
 using MedicalApp.WebUI.Code.WebSecurity.Implementation;
 using BLL.DomainModel.Factors.Medicine.BLOs;
 using System.Threading;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class HomePageController : Controller
     {
         // Fields 

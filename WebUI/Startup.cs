@@ -38,22 +38,42 @@ namespace WebUI
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+
+            //o =>
+            //{
+            //    o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //}
+
+
             services
-                .AddAuthentication(o =>
-                    {
-                        o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    })
+                .AddAuthentication()
                 .AddCookie(options =>
                     {
                         options.AccessDeniedPath = new PathString("/LoginPage");
                         options.LoginPath = new PathString("/LoginPage");
-                    });
+                    })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                        RequireExpirationTime = false
+                    };
+
+                });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddCors();
             services
-                .AddMvc(
+            .AddMvc(
                 config =>
                 {
                     config.Filters.Add(typeof(CustomExceptionFilter));
@@ -64,6 +84,7 @@ namespace WebUI
                         options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                     });
 
+            
 
             // DI configuration------------------------------------------------------------------------------------------------------------
             var containerBuilder = new ContainerBuilder();
@@ -121,11 +142,19 @@ namespace WebUI
 
             app.UseStaticFiles();
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            //app.UseCors(
+            //    options => options.WithOrigins("http://localhost:8100").AllowAnyMethod()
+            //);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                //template: "{controller=AnalysisPage}/{action=Index}");
                 template: "{controller=HomePage}/{action=Index}");
 
                 routes.MapSpaFallbackRoute(

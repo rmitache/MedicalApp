@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
 using Common;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
 {
@@ -54,66 +58,101 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
                 return int.Parse(claimsIdentity.GetUserId());
             }
         }
-
-        // Private methods
-        private ClaimsPrincipal CreateUserIdentity(UserAccount user)
-        {
-            // Setup standard claims
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.Email));
-
-            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-            return new ClaimsPrincipal(identity);
-        }
-
+        public IConfiguration Configuration { get; }
 
         // Constructor
-        public WebSecurityManager(IHttpContextAccessor httpContextAccessor,
+        public WebSecurityManager(
+            IConfiguration configuration,
+            IHttpContextAccessor httpContextAccessor,
             IUserAccountService userAccountService)
         {
+            this.Configuration = configuration;
             this.httpContextAccessor = httpContextAccessor;
             this.userAccountService = userAccountService;
         }
 
+        // Private methods 
+        private async Task SignInUsingCookie(UserAccount user, bool keepLoggedIn)
+        {
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.Email));
+            var identity = new ClaimsPrincipal(new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie));
+
+            await httpContextAccessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                identity,
+                new AuthenticationProperties()
+                {
+                    AllowRefresh = true,
+                    IsPersistent = keepLoggedIn,
+                    ExpiresUtc = DateTime.UtcNow.AddDays(7)
+                });
+        }
+        private string SignInUsingToken(UserAccount user, bool keepLoggedIn)
+        {
+            var claims = new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
+                    new Claim(ClaimTypes.Name, user.Email)
+                  //new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                  //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+            var identity = new ClaimsPrincipal(new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie));
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var x = Configuration["Jwt:Issuer"];
+            var token = new JwtSecurityToken(Configuration["Jwt:Issuer"],
+              Configuration["Jwt:Issuer"],
+              claims,
+              expires: null,
+              signingCredentials: creds);
+
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenString;
+        }
+
         // Public methods
-        public async Task<LoginResult> LoginUser(string email, string clearTextPassword, bool keepLoggedIn)
+        public async Task<LoginResult> LoginUser(string email, string clearTextPassword, bool keepLoggedIn, AuthMethod authMethod = AuthMethod.Cookie)
         {
             // Attempt to find a user which matches the credentials
             var user = userAccountService.FindUserAccount(email, clearTextPassword);
             var loginResult = new LoginResult();
             loginResult.User = user;
 
-            // If a user matching the credentials was found, which also has accepted the terms
+            
+            // 
             if (user != null && user.TermsAcceptedDate != null)
             {
-                var identity = CreateUserIdentity(user);
-                await httpContextAccessor.HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    identity,
-                    new AuthenticationProperties()
-                    {
-                        AllowRefresh = true,
-                        IsPersistent = keepLoggedIn,
-                        ExpiresUtc = DateTime.UtcNow.AddDays(7)
-                    });
-
+                // User matching the credentials was found, which has accepted the terms
+                switch(authMethod)
+                {
+                    case AuthMethod.Cookie:
+                        await this.SignInUsingCookie(user, keepLoggedIn);
+                        break;
+                    case AuthMethod.JWT:
+                        loginResult.Token = this.SignInUsingToken(user, keepLoggedIn);
+                        break;
+                }
                 loginResult.LoginResultStatus = LoginResultStatus.Success;
             }
-            // If there is a user, but he hasnt accepted the terms
             else if (user != null && user.TermsAcceptedDate == null)
             {
+                // User hasn't accepted the terms
                 loginResult.LoginResultStatus = LoginResultStatus.Failure_TermsNotAccepted;
             }
-            // If no user was found, or credentials were wrong
             else
             {
+                // No user was found, or credentials were wrong
                 loginResult.LoginResultStatus = LoginResultStatus.Failure_CredentialsWrongOrUserNotFound;
             }
 
             return loginResult;
         }
+        
         public UserAccount GetUserAccount(string email, string clearTextPassword)
         {
             var user = userAccountService.FindUserAccount(email, clearTextPassword);
@@ -147,10 +186,16 @@ namespace MedicalApp.WebUI.Code.WebSecurity.Implementation
         }
     }
 
+    public enum AuthMethod
+    {
+        Cookie,
+        JWT
+    }
     public class LoginResult
     {
         public UserAccount User { get; set; }
         public LoginResultStatus LoginResultStatus { get; set; }
+        public string Token { get; set; } = null;
     }
     public enum LoginResultStatus
     {

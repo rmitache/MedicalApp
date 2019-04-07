@@ -12,10 +12,11 @@ using Common;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using MedicalApp.WebUI.Code.WebSecurity.Implementation;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class AnalysisPageController : Controller
     {
         // Fields 

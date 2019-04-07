@@ -58,8 +58,17 @@ namespace WebUI.Controllers
             return Json(true);
         }
 
+        [Route("LoginPage/GenerateToken")]
+        [HttpPost]
+        public async Task<JsonResult> GenerateToken([FromBody]LogInUserModel model)
+        {
+            var result = await webSecurityManager.LoginUser(model.Email, model.Password, model.KeepLoggedIn, AuthMethod.JWT);
 
-        // Models
+            return Json(result);
+        }
+
+
+        // Models5
         public class LogInUserModel
         {
             public string Email { get; set; }

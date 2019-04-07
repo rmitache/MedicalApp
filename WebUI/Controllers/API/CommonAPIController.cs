@@ -18,10 +18,11 @@ using OfficeOpenXml;
 using BLL.DomainModel.Factors.Medicine.BLOs;
 using System.Text;
 using System.Threading;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class CommonAPIController : Controller
     {
         // Fields 
