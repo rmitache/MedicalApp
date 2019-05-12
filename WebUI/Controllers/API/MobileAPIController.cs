@@ -20,6 +20,7 @@ using System.Threading;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using static WebUI.Controllers.HomePageController;
 
 namespace WebUI.Controllers
 {
@@ -28,18 +29,20 @@ namespace WebUI.Controllers
     {
         // Fields        
         private IMedicineFactorRecordService medicineFactorRecordService { get; set; }
-
+        private IHealthStatusEntryService healthStatusEntryService { get; set; }
         private WebSecurityManager webSecurityManager { get; set; }
 
 
         // Constructor
         public MobileAPIController(
             WebSecurityManager webSecurityManager,
-            IMedicineFactorRecordService medicineFactorRecordService
+            IMedicineFactorRecordService medicineFactorRecordService,
+            IHealthStatusEntryService healthStatusEntryService
             )
         {
             this.medicineFactorRecordService = medicineFactorRecordService;
             this.webSecurityManager = webSecurityManager;
+            this.healthStatusEntryService = healthStatusEntryService;
         }
 
         [Route("MobileAPI/GetFactorRecords")]
@@ -52,6 +55,23 @@ namespace WebUI.Controllers
             return Json(blos);
         }
 
+        [Route("MobileAPI/GetHealthStatusEntries")]
+        [HttpPost]
+        public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var blos = this.healthStatusEntryService.GetHealthStatusEntries(model.DateRange, (int)userID, true);
+            var userHasAnyHealthStatusEntries = this.healthStatusEntryService.GetUserHasAnyHealthStatusEntries((int)userID);
+
+
+            var returnModel = new HealthStatusEntriesModel()
+            {
+                HealthStatusEntries = blos,
+                UserHasAnyHealthStatusEntries = userHasAnyHealthStatusEntries
+            };
+
+            return Json(returnModel);
+        }
 
 
         public class DateRangeModel
