@@ -39,8 +39,8 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
                 .Where(
                     healthStatusEntry =>
                         healthStatusEntry.UserId == userID &&
-                        healthStatusEntry.OccurrenceDateTime.Date >= dateRange.RangeStart &&
-                        healthStatusEntry.OccurrenceDateTime.Date <= dateRange.RangeEnd)
+                        healthStatusEntry.OccurrenceDateTime >= dateRange.RangeStart &&
+                        healthStatusEntry.OccurrenceDateTime <= dateRange.RangeEnd)
                 .Include(healthStatusEntry => healthStatusEntry.TSymptomEntry)
                     .ThenInclude(symptomEntry => symptomEntry.SymptomType)
                 .ToList();
@@ -53,8 +53,8 @@ namespace DataAccessLayer.Repositories.HealthStatusEntryRepository
                 .Where(
                     record =>
                         record.UserId == userID &&
-                        record.OccurrenceDateTime.Date >= dateRange.RangeStart &&
-                        record.OccurrenceDateTime.Date <= dateRange.RangeEnd)
+                        record.OccurrenceDateTime >= dateRange.RangeStart &&
+                        record.OccurrenceDateTime <= dateRange.RangeEnd)
                 .ToList();
             }
 
