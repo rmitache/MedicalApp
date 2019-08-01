@@ -49,16 +49,8 @@ namespace WebUI.Controllers
             this.healthStatusEntryService = healthStatusEntryService;
         }
 
-        [Route("MobileAPI/GetFactorRecords")]
-        [HttpPost]
-        public JsonResult GetFactorRecords([FromBody] DateRangeModel model)
-        {
-            var currentUser = this.webSecurityManager.GetCurrentUser();
-            int? userID = currentUser.ID;
-            var blos = this.medicineFactorRecordService.GetMedicineFactorRecords(model.DateRange, (int)userID);
-            return Json(blos);
-        }
 
+        // HealthStatuses
         [Route("MobileAPI/GetHealthStatusEntries")]
         [HttpPost]
         public JsonResult GetHealthStatusEntries([FromBody] DateRangeModel model)
@@ -76,23 +68,18 @@ namespace WebUI.Controllers
 
             return Json(returnModel);
         }
-        [Route("MobileAPI/GetRecentSymptoms")]
+        [Route("MobileAPI/AddHealthStatusEntry")]
         [HttpPost]
-        public JsonResult GetRecentSymptoms()
+        public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-
-            // Prepare the range (select 7 days into the past)
-            var now = Common.Functions.GetCurrentDateTimeInUTC();
-            var last7DaysRange = new Range<DateTime>(now.Subtract(new TimeSpan(7, 0, 0, 0)), now);
-
-            // Get the unique symptoms present in the above range
-            var healthStatusEntries = this.healthStatusEntryService.GetHealthStatusEntries(last7DaysRange, (int)userID, true);
-            var recentSymptoms = this.symptomTypeService.GetUniqueSymptomTypesInHealthEntries(healthStatusEntries);
-
-            // Limit the symptoms 
-            return Json(recentSymptoms);
+            var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, (int)userID);
+            return Json(bloWithUpdatedID);
         }
+
+
+
+        // Symptoms
         [Route("MobileAPI/GetAllSymptomTypes")]
         [HttpPost]
         public JsonResult GetAllSymptomTypes()
@@ -102,12 +89,12 @@ namespace WebUI.Controllers
 
             return Json(symptomTypes);
         }
-        [Route("MobileAPI/AddHealthStatusEntry")]
+        [Route("MobileAPI/AddCustomSymptomType")]
         [HttpPost]
-        public JsonResult AddHealthStatusEntry([FromBody]HealthStatusEntry blo)
+        public JsonResult AddCustomSymptomType([FromBody]SymptomType blo)
         {
             int? userID = this.webSecurityManager.CurrentUserID;
-            var bloWithUpdatedID = this.healthStatusEntryService.AddHealthStatusEntry(blo, (int)userID);
+            var bloWithUpdatedID = this.symptomTypeService.AddCustomSymptomType(blo, (int)userID);
             return Json(bloWithUpdatedID);
         }
 
