@@ -97,7 +97,14 @@ namespace WebUI.Controllers
             var bloWithUpdatedID = this.symptomTypeService.AddCustomSymptomType(blo, (int)userID);
             return Json(bloWithUpdatedID);
         }
-
+        [Route("MobileAPI/RenameCustomSymptomType")]
+        [HttpPost]
+        public JsonResult RenameCustomSymptomType([FromBody]RenameSymptomTypeModel model)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            this.symptomTypeService.RenameCustomSymptomType( model.SymptomTypeID, model.NewName, (int)userID);
+            return Json(null);
+        }
 
         public class DateRangeModel
         {
@@ -105,4 +112,10 @@ namespace WebUI.Controllers
         }
 
     }
+}
+
+public class RenameSymptomTypeModel
+{
+    public int SymptomTypeID;
+    public string NewName;
 }

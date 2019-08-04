@@ -75,6 +75,10 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return blo;
         }
+        public void RenameCustomSymptomType(int symptomTypeID, string newName, int userID)
+        {
+            this.symptomTypeRepo.UpdateName(userID, symptomTypeID, newName);
+        }
         public bool SymptomTypeNameExists(int userID, string name, string ignoreName)
         {
             var symptomTypes = this.GetSymptomTypes(userID);

@@ -431,7 +431,7 @@ export class HomePageDataService {
 }
 
 
-// Models - returned to BE
+// Models - returned from BE
 export class HealthStatusEntriesModel {
     HealthStatusEntryCLOs: CLOs.HealthStatusEntryCLO[];
     UserHasAnyHealthStatusEntries: boolean;

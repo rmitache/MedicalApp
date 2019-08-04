@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
         }
         public TSymptomType AddCustomSymptomType(TSymptomType dataEntity)
         {
-            if(dataEntity.UserId==null)
+            if (dataEntity.UserId == null)
             {
                 throw new System.Exception("Only custom Symptom Types can be created - Eg: those WITH a valid UserId");
             }
@@ -42,6 +42,16 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
             entitiesContext.SaveChanges();
 
             return dataEntity;
+        }
+
+        public void UpdateName(int userId, int symptomTypeID, string newName)
+        {
+            TSymptomType dataEntity = entitiesContext.TSymptomType.AsNoTracking().Where(entity =>
+                        entity.UserId == userId && entity.Id == symptomTypeID).SingleOrDefault();
+            dataEntity.Name = newName;
+
+            entitiesContext.Entry(dataEntity).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
         }
 
     }
