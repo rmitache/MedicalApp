@@ -20,6 +20,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Factories
             blo.ID = dataEntity.Id;
             blo.IsCustomSymptom = (dataEntity.UserId != null);
             blo.Name = dataEntity.Name;
+            blo.DeletedDateTime = dataEntity.DeletedDateTime;
 
             return blo;
         }
@@ -29,6 +30,7 @@ namespace BLL.DomainModel.Indicators.Symptoms.Factories
             dataEntity.Id = blo.ID;
             dataEntity.UserId = userID;
             dataEntity.Name = blo.Name;
+            dataEntity.DeletedDateTime = blo.DeletedDateTime;
 
             return dataEntity;
         }

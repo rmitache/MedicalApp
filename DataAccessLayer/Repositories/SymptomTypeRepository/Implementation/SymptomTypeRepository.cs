@@ -1,5 +1,7 @@
-﻿using DataAccessLayer.Entities;
+﻿using Common;
+using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +54,22 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
 
             entitiesContext.Entry(dataEntity).State = EntityState.Modified;
             entitiesContext.SaveChanges();
+        }
+
+        public TSymptomType DeleteCustomSymptomType(int userId, int symptomTypeID)
+        {
+            TSymptomType dataEntity = entitiesContext.TSymptomType.AsNoTracking().Where(entity =>
+                       entity.UserId == userId && entity.Id == symptomTypeID).SingleOrDefault();
+            if(dataEntity.UserId== null)
+            {
+                throw new Exception("Cannot delete a system SymptomType");
+            }
+            dataEntity.DeletedDateTime = Functions.GetCurrentDateTimeInUTC();
+
+            entitiesContext.Entry(dataEntity).State = EntityState.Modified;
+            entitiesContext.SaveChanges();
+
+            return dataEntity;
         }
 
     }

@@ -105,7 +105,14 @@ namespace WebUI.Controllers
             this.symptomTypeService.RenameCustomSymptomType( model.SymptomTypeID, model.NewName, (int)userID);
             return Json(null);
         }
-
+        [Route("MobileAPI/DeleteCustomSymptomType")]
+        [HttpPost]
+        public JsonResult DeleteCustomSymptomType([FromBody]SymptomType blo)
+        {
+            int? userID = this.webSecurityManager.CurrentUserID;
+            var deletedBLO = this.symptomTypeService.DeleteCustomSymptomType((int)userID,blo.ID);
+            return Json(deletedBLO);
+        }
         public class DateRangeModel
         {
             public Range<DateTime> DateRange;

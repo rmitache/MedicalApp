@@ -13,6 +13,7 @@ namespace DataAccessLayer.Entities
         public int Id { get; set; }
         public int? UserId { get; set; }
         public string Name { get; set; }
+        public DateTime? DeletedDateTime { get; set; }
 
         public TUser User { get; set; }
         public ICollection<TSymptomEntry> TSymptomEntry { get; set; }

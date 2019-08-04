@@ -87,5 +87,13 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
 
             return exists;
         }
+
+        public SymptomType DeleteCustomSymptomType(int userId, int symptomTypeID)
+        {
+            var dataEntity = this.symptomTypeRepo.DeleteCustomSymptomType(userId, symptomTypeID);
+            var blo = this.symptomTypeFactory.Convert_ToBLO(dataEntity);
+
+            return blo;
+        }
     }
 }

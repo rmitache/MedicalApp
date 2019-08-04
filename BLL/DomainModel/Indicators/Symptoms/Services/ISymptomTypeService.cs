@@ -13,5 +13,6 @@ namespace BLL.DomainModel.Indicators.Symptoms.Services
         SymptomType AddCustomSymptomType(SymptomType blo, int userID);
         void RenameCustomSymptomType(int symptomTypeID, string newName, int userID);
         bool SymptomTypeNameExists(int userID, string name, string ignoreName);
+        SymptomType DeleteCustomSymptomType(int userId, int symptomTypeID);
     }
 }

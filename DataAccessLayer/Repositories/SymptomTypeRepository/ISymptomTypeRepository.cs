@@ -13,5 +13,7 @@ namespace DataAccessLayer.Repositories.SymptomTypeRepository
         List<TSymptomType> GetOnlySymptomTypesInUse(int userID);
         TSymptomType AddCustomSymptomType(TSymptomType dataEntity);
         void UpdateName(int userId, int symptomTypeID, string newName);
+        TSymptomType DeleteCustomSymptomType(int userId, int symptomTypeID);
+
     }
 }
